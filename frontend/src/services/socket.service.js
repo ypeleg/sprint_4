@@ -1,3 +1,10 @@
+
+
+// FRONTEND SERVICE: Used in:
+// - user.actions.js (login / logout only)
+// - every single one of the pages
+
+
 import io from 'socket.io-client'
 import { userService } from './user'
 const { VITE_LOCAL, DEV } = import.meta.env
