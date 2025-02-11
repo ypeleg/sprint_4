@@ -3,7 +3,7 @@ export const uploadService = {
 }
 
 async function uploadImg(ev) {
-	const CLOUD_NAME = 'vanilla-test-images'
+	const CLOUD_NAME = 'dyyxaxobt'
 	const UPLOAD_PRESET = 'stavs_preset'
 	const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
 
@@ -23,3 +23,8 @@ async function uploadImg(ev) {
 		throw err
 	}
 }
+
+// Cloud name: dyyxaxobt
+// API key: 192483966393751
+// API secret: 9Yalt_H-NmwkL8pX8eeE1wCdmLw
+// API environment variable: CLOUDINARY_URL=cloudinary://192483966393751:9Yalt_H-NmwkL8pX8eeE1wCdmLw@dyyxaxobt

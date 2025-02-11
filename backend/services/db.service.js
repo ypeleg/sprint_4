@@ -29,3 +29,10 @@ async function _connect() {
 		throw err
 	}
 }
+
+
+// MongoDB Atlas credentials:
+// username: user
+// pass: 12345678a
+// url: mongodb+srv://user:12345678a@cluster0.joqz6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
