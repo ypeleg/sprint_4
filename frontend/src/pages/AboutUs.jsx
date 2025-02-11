@@ -33,7 +33,7 @@ export function AboutUs() {
                 <button onClick={onTellMeMore}>Tell me More</button>
             </FancyBox>
 
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni aperiam quo veniam velit dolor reprehenderit, laudantium consequatur neque numquam labore quae. Accusamus libero perferendis ducimus? Alias unde hic quisquam doloremque.</p>
+            <p>Lorem ipsum dolor sit ameaaaaaaaaaaaaat consectetur adipisicing elit. Magni aperiam quo veniam velit dolor reprehenderit, laudantium consequatur neque numquam labore quae. Accusamus libero perferendis ducimus? Alias unde hic quisquam doloremque.</p>
         </section>
     )
 }
