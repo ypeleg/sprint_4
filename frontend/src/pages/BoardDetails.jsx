@@ -282,7 +282,7 @@ export function BoardDetails() {
                             </div>
 
                             <div className="card-footer">
-                                <button className="add-card-btn">+ Add a card</button>
+                                <button className="add-card-btn"><i className="fa-regular fa-plus"></i> Add a card</button>
                                 <button className="create-from-template-btn"><i className="fa-regular fa-vector-square"></i></button>
                             </div>
                         </div>

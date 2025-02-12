@@ -482,8 +482,10 @@ input {
     font-size: 0.95em;
     padding: 6px;
     border-radius: 3px;
-
     place-self: end;    
+    gap: 0.8em;
+    display: flex;
+
 }
 
 .add-card-btn:hover {
