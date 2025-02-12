@@ -4,16 +4,46 @@
 // import { useState, useEffect } from 'react'
 // import { BoardList } from '../cmps/GroupList'
 
+
+import { useSelector } from "react-redux"
+import React, { useRef, useEffect, useState } from "react"
+
+
+import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
+
+
 import { BoradHeader } from "../cmps/BoardHeader";
 import { GroupList } from "../cmps/GroupList";
 import { SideBar } from "../cmps/SideBar";
 
 export function BoardDetails() {
 
+    const boards = useSelector(state => state.boardModule.boards)    
 
+    const [boardToShow, setBoardToShow] = useState()    
+
+    useEffect( () => {        
+        console.log(boards.length)
+        if (boards.length) {
+            const selectedBoard = boards[0]
+            // const selectedBoard = filterBy...
+            setBoardToShow(selectedBoard)
+        }
+        
+    }, [boards])
+
+    
+    useEffect(() => {       
+        getEmptyBoard().then(e => addBoard(e)).then( e => {
+            // setBoardToShow(e)
+        })
+    } , [])
+
+    if (!boardToShow) return (<>Loading..</>)
     return (
         <div className="everything">
             <header>
+                
                 <nav className="flex-space-between center-vertical">
 
                     <div className="just-flex just-flex-more center-vertical">
@@ -50,6 +80,9 @@ export function BoardDetails() {
                         </div>
                     </div>
                     <div className="just-flex">
+                        
+                         {/* <pre>{JSON.stringify(boardToShow, null, 4)}</pre> */}
+
                         <button>5 days left</button>
                         <input placeholder="     Search" />
                         <i className="bell">bellicon</i>
@@ -63,7 +96,7 @@ export function BoardDetails() {
                 <SideBar />
                 <section className="board-display">
                     <BoradHeader />
-                    <GroupList />
+                    <GroupList groups={boardToShow.groups} />
                 </section>
 
             </main>

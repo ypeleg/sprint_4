@@ -112,9 +112,21 @@ function getEmptyBoard() {
                         style: {
                             backgroundColor: '#26de81',
                         },
+                        badges: [
+                            {
+                                id: 'id',
+                                text: 'Priority: Medium',
+                                badeType: 'priority'
+                            }
+                        ],
+                        isUserWatching: false,
+                        geoLocation: (32.0853, 34.7818),
+
                     },
                 ],
-                style: {},
+                style: {
+                    backgroundColor: "#c5ecfa",
+                },
             },
         ],
         activities: [
@@ -137,8 +149,6 @@ function getEmptyBoard() {
                 },
             },
         ],
-
-        // For Monday draggable columns (optional)
         cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker'],
     }
 

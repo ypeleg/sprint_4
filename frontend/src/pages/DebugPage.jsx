@@ -3,34 +3,41 @@
 
 import { useSelector } from "react-redux"
 import React, { useRef, useEffect, useState } from "react"
-import {addBoard, getEmptyBoard, updateBoard, removeBoard, loadBoards} from "../store/store.js"
 
+
+import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
 
 
 export function DebugPage() {
+    
+    const boards = useSelector(state => state.boardModule.boards)    
+    const [boardToShow, setBoardToShow] = useState()    
 
-    const boards = useSelector(state => state.boardModule.boards)
-
-    useEffect(() => {
-
-
-        getEmptyBoard().then(e => addBoard(e))
-
-
-        // loadBoards()
-        // addBoard(getEmptyBoard())
-
+    useEffect( () => {
+        if (boards.length) {            
+            
+            const selectedBoard = boards[0]
+            // const selectedBoard = filterBy...
+            setBoardToShow(selectedBoard)
+        }
+    }, [boards])
+    
+    useEffect(() => {       
+        getEmptyBoard().then(e => addBoard(e)).then( e => {
+            // setBoardToShow(e)
+        })
     } , [])
 
 
     return (
         <section className="actually-overflow">
 
-            {boards.map(board => <div key={board._id}>
+            {/* {boards.length} */}
+            {/* {boards.map(board => <div key={board._id}> */}
 
-                <pre>{JSON.stringify(board, null, 4)}</pre>
+            <pre>{JSON.stringify(boardToShow, null, 4)}</pre>
 
-            </div>)}
+            {/* </div>)} */}
 
         </section>
     )

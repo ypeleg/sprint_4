@@ -2,7 +2,7 @@
 
     .task {
         background-color: #fff;
-        border-radius: 3px;
+        border-radius: 6px;
         box-shadow: 0 1px 0 rgba(9,30,66,0.25);
         padding: 8px;
         margin-bottom: 8px;
@@ -17,6 +17,7 @@
             .task-checkbox {
                 height: 16px;
                 width: 16px;
+                margin-left: 2px;
                 border-radius: 50%;
                 border: 2px solid #707c90;
                 
@@ -49,6 +50,10 @@
                 
             }
         
+        }
+        .labels {
+            display: flex;
+            gap: 0.5em;
         }
         .task-label {
             padding: 0px;
