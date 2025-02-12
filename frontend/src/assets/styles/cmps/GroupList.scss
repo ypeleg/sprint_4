@@ -34,11 +34,19 @@
         }
     }
     .base-components-list {
+        
+        
+        overflow:auto; 
+        // vertical-align:middle;
+        // overflow-y: scroll;
+        // overflow-y:scroll;
+
         border-radius: 12px;
         background: #c6edfb;
         display: flex;
         flex-direction: column;  
         height: 100%;
+        // height: 100vh;
         &:first-of-type{
             background-color: #f0f1f3;
         }

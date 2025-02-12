@@ -6,6 +6,32 @@ export const data = { "boards": [{ "title": "Robot Dev Proj Board #1", "isStarre
 
 import { random } from '../util.service.js'
 
+export const getRandomColor = () => {
+    const colors = [
+      "#60D394",
+      "#FFD97D",
+      "#FF9B85",
+      "#FF6B6B",
+      "#7C77B9",
+      "#56CCF2",
+      "#7ED56F",
+      "#FBC2EB"
+    ]
+    return random.choice(colors)
+  }
+
+export const getRandomColorLabels = () => {
+    const colors = [
+      "#60D394",
+      "#FFD97D",
+      "#FF9B85",
+      "#FF6B6B",
+      "#7C77B9",
+      "#56CCF2",
+    ];
+    return random.choice(colors)
+  }
+
 // Example user pool for random member generation
 const USER_POOL = [
     { _id: 'u101', fullname: 'Abi Abambi', imgUrl: 'https://example.com/abi.png' },
@@ -111,13 +137,12 @@ function getRandomGroups() {
             title: random.lorem(random.randint(1, 3)),
             archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),
             tasks,
-            style: { backgroundColor: random.choice([random.color(), null]) }
+            style: { backgroundColor: random.choice([getRandomColor(), null]) }
         })
     }
     return groups
 }
 
-// Helper to create random labels
 function getRandomLabels() {
     const labelsCount = random.randint(2, 6)
     const labels = []
@@ -125,7 +150,7 @@ function getRandomLabels() {
         labels.push({
             id: random.id(),
             title: random.lorem(random.randint(1, 2)),
-            color: random.color()
+            color: getRandomColorLabels()
         })
     }
     return labels
@@ -204,8 +229,9 @@ export function getRandomBoard() {
     // so that tasks can reflect some subset of existing labels
     board.groups.forEach(group => {
         group.tasks.forEach(task => {
-            const labelSubset = random.sample(board.labels.map(l => l.id), random.randint(0, board.labels.length))
-            task.labelIds = labelSubset
+            // const labelSubset = random.sample(board.labels.map(l => l.id), random.randint(0, board.labels.length))
+            task.labels = getRandomLabels()
+            // task.labelIds = labelSubset
         })
     })
 

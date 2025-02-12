@@ -79,16 +79,18 @@ export function BoardDetails() {
                             <i className="fa-regular fa-plus"></i>
                         </div>
                     </div>
-                    <div className="just-flex">
-                        
-                         {/* <pre>{JSON.stringify(boardToShow, null, 4)}</pre> */}
-
-                        <button>5 days left</button>
-                        <input placeholder="     Search" />
-                        <i className="bell">bellicon</i>
-                        <i className="info">?</i>
-                        <div className="user"></div>
-                    </div>
+                    <div className="just-flex and-center">
+                        <button className="days-left just-flex">
+                            <i className="fa-regular fa-star"></i>            
+                            5 days left</button>
+                        <input placeholder= "     Search"/>
+                        {/* <i className="bell">bellicon</i> */}
+                        <i className="fa-solid fa-bell"></i>
+                        <div className="info">
+                            <i className="fa-solid fa-question"></i>
+                        </div>
+                        <img className="user" src="user_spec.png"></img>
+                    </div>  
                 </nav>
             </header>
             <main className="main-layout">

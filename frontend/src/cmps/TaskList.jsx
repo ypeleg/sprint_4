@@ -70,9 +70,13 @@ export function TaskList( { tasks, style } ) {
                         {/* <pre>{JSON.stringify(task, null, 4)}</pre> */}
                         
                         <div className="labels">
-                        {(!!task.labelIds) && 
-                                <>{task.labelIds.map(label => {
-                                     return <div key={label.id} className="task-label color-green"></div>
+                        {(!!task.labels) && 
+                                <>{task.labels.map(label => {
+                                     return <div key={label.id} className="task-label color-green"
+                                     
+                                     style={{backgroundColor: label.color || '' }}
+                                     
+                                     ></div>
                                     })}</>
 
                         
