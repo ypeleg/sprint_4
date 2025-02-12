@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
-// import { store } from './store/store'
+import { store } from './store/store'
 import { RootCmp } from './RootCmp'
 
 import './assets/styles/main.scss'
@@ -15,11 +15,11 @@ import './assets/styles/font-awesome.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-	// <Provider store={store}>
+	<Provider store={store}>
 		<Router>
 			<RootCmp />
 		</Router>
-	// </Provider>
+	</Provider>
 )
 
 // If you want your app to work offline and load faster, you can change

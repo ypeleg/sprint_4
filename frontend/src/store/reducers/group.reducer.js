@@ -1,69 +1,44 @@
-export const SET_BOARDS = 'SET_BOARDS'
-export const SET_BOARD = 'SET_BOARD'
-export const REMOVE_BOARD = 'REMOVE_BOARD'
-export const ADD_BOARD = 'ADD_BOARD'
-export const UPDATE_BOARD = 'UPDATE_BOARD'
-export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
+
+
+export const SET_GROUP = 'SET_GROUP'
+export const ADD_GROUP = 'ADD_GROUP'
+export const SET_GROUPS = 'SET_GROUPS'
+export const REMOVE_GROUP = 'REMOVE_GROUP'
+export const UPDATE_GROUP = 'UPDATE_GROUP'
+export const ADD_GROUP_MSG = 'ADD_GROUP_MSG'
 
 const initialState = {
-    boards: [],
-    board: null
+    groups: [],
+    group: null
 }
 
-export function boardReducer(state = initialState, action) {
+export function groupReducer(state = initialState, action) {
     var newState = state
-    var boards
+    var groups
     switch (action.type) {
-        case SET_BOARDS:
-            newState = { ...state, boards: action.boards }
+        case SET_GROUPS:
+            newState = { ...state, groups: action.groups }
             break
-        case SET_BOARD:
-            newState = { ...state, board: action.board }
+        case SET_GROUP:
+            newState = { ...state, group: action.group }
             break
-        case REMOVE_BOARD:
-            const lastRemovedBoard = state.boards.find(board => board._id === action.boardId)
-            boards = state.boards.filter(board => board._id !== action.boardId)
-            newState = { ...state, boards, lastRemovedBoard }
+        case REMOVE_GROUP:
+            const lastRemovedGroup = state.groups.find(group => group._id === action.groupId)
+            groups = state.groups.filter(group => group._id !== action.groupId)
+            newState = { ...state, groups, lastRemovedGroup }
             break
-        case ADD_BOARD:
-            newState = { ...state, boards: [...state.boards, action.board] }
+        case ADD_GROUP:
+            newState = { ...state, groups: [...state.groups, action.group] }
             break
-        case UPDATE_BOARD:
-            boards = state.boards.map(board => (board._id === action.board._id) ? action.board : board)
-            newState = { ...state, boards }
+        case UPDATE_GROUP:
+            groups = state.groups.map(group => (group._id === action.group._id) ? action.group : group)
+            newState = { ...state, groups }
             break
-        case ADD_BOARD_MSG:
-            newState = { ...state, board: { ...state.board, msgs: [...state.board.msgs || [], action.msg] } }
+        case ADD_GROUP_MSG:
+            newState = { ...state, group: { ...state.group, msgs: [...state.group.msgs || [], action.msg] } }
             break
         default:
     }
     return newState
-}
-
-// unitTestReducer()
-
-function unitTestReducer() {
-    var state = initialState
-    const board1 = { _id: 'b101', vendor: 'Board ' + parseInt(Math.random() * 10), msgs: [] }
-    const board2 = { _id: 'b102', vendor: 'Board ' + parseInt(Math.random() * 10), msgs: [] }
-
-    state = boardReducer(state, { type: SET_BOARDS, boards: [board1] })
-    console.log('After SET_BOARDS:', state)
-
-    state = boardReducer(state, { type: ADD_BOARD, board: board2 })
-    console.log('After ADD_BOARD:', state)
-
-    state = boardReducer(state, { type: UPDATE_BOARD, board: { ...board2, vendor: 'Good' } })
-    console.log('After UPDATE_BOARD:', state)
-
-    state = boardReducer(state, { type: REMOVE_BOARD, boardId: board2._id })
-    console.log('After REMOVE_BOARD:', state)
-
-    const msg = { id: 'm' + parseInt(Math.random() * 100), txt: 'Some msg' }
-    state = boardReducer(state, { type: ADD_BOARD_MSG, boardId: board1._id, msg })
-    console.log('After ADD_BOARD_MSG:', state)
-
-    state = boardReducer(state, { type: REMOVE_BOARD, boardId: board1._id })
-    console.log('After REMOVE_BOARD:', state)
 }
 

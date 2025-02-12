@@ -19,6 +19,7 @@ import { Routes, Route } from 'react-router'
 
 
 import { BoardDetails } from './pages/BoardDetails.jsx'
+import { DebugPage } from './pages/DebugPage.jsx'
 
 
 export function RootCmp() {
@@ -32,6 +33,8 @@ export function RootCmp() {
 
 
                     <Route path="" element={<BoardDetails />} />
+
+                    <Route path="/debug" element={<DebugPage />} />
 
 
                     {/* <Route path="" element={<HomePage />} />
