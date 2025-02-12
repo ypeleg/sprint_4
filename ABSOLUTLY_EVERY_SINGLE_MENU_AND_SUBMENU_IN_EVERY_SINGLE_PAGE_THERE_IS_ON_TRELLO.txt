@@ -1,0 +1,571 @@
+
+
+Trello
+
+Authentication & Landing
+
+    Sign Up / Login
+        - Email/Username Field
+        - Password Field
+        - OAuth Integration
+            - Google
+            - Microsoft
+            - Apple
+        - “Forgot Password?” Link
+        - ReCaptcha / Bot Protection (if applicable)
+        - Submit Button / Loading State
+        - Error Handling
+            - Incorrect credentials
+            - Password reset prompts
+            - Email verification prompts
+
+    Password Reset Flow
+        - Request Password Reset
+            - Email input
+            - Success/Failure Toast
+        - Reset Via Link
+            - New password inputs
+            - Confirm password
+            - Submit
+
+    Landing Page
+        - Redirect to “Home” (a personal/overview page)
+        - Initial Onboarding (tour, if first login)
+        - Skip or Continue
+        - Basic tips on boards and workspaces
+
+---
+
+Top Bar
+
+    Trello Logo / Home Redirect
+        - Click -> Goes to “Home” (global overview).
+
+    Search Bar
+        - Autocomplete: boards, cards, workspaces
+        - Recent Searches dropdown
+        - Advanced Search link
+            - Filter by date, label, members, etc.
+
+    Create Button
+        - Create Board flow
+            - Board name
+            - Board visibility
+            - Workspace selection
+            - Template selection
+        - Create Workspace flow
+            - Workspace name
+            - Workspace type (e.g., small business, education, etc.)
+            - Members invitation
+        - Create Template flow (if implemented)
+        - Create Team Table/Workspace Table (Enterprise features)
+
+    Workspaces / Boards Dropdown
+        - Pinned / Starred Boards section
+        - Recent Boards section
+           - All Workspaces listing
+        - Expand a workspace -> list boards in that workspace
+        - Workspace Settings link
+
+    Notifications Icon
+        - Dropdown with:
+            - Notifications for card assignments
+            - Notifications for due dates
+            - @mentions
+            - “Mark all as read” option
+        - See All button -> Detailed notifications page
+
+    User Profile / Account Menu
+        - Profile & Visibility
+            - Profile picture, full name, username
+            - Manage “Public Name” or “Username”
+        - Account Settings
+            - Change password
+            - Change email
+            - Manage two-factor authentication
+        - Activity & Recent Boards (sometimes in personal menu)
+        - Log Out option
+        - Theme / Color Mode (if app supports Light/Dark mode)
+
+    Help / Information (Sometimes a “?” Icon)   
+        - Trello Help Center link
+        - Keyboard Shortcuts reference
+        - Contact Support
+
+---
+
+Home Screen
+
+        Workspace Overview  
+        - List of all Workspaces you have access to
+        - Workspace Cards:
+            - Workspace title
+            - Members (or member avatars)
+            - Boards count
+            - Settings gear (for owners/admins)
+
+        Boards Overview  
+        - Starred boards, recently viewed boards
+        - “Personal Boards” (boards not in a workspace)
+        - “Create new board” quick action
+
+        Cards Assigned to You  
+        - Summaries of each card you’re a member on
+        - Due date highlights, priority indicators
+
+        Activity Feed (optional)  
+        - Summaries of recent actions across boards: created cards, moved lists, updated due dates, etc.
+
+---
+
+Workspace
+
+    Workspace Header
+        - Workspace name
+        - Workspace avatar/logo
+        - Workspace menu (if you click the name or a gear icon)
+            - Invite members
+            - Manage members
+            - Workspace settings
+            - Billing (if paid plan)
+            - Leave workspace (for non-admins)
+            - Delete workspace (for admins only)
+
+    Workspace Menu Details
+        - Settings
+            - Workspace name
+            - Description
+            - Visibility (public, private, org-visible)
+        - Members
+            - Current members list
+            - Roles (admin, normal, observer)
+            - Invitations (pending)
+            - Invite by email / share link
+        - Billing & Upgrades (if implementing subscriptions)
+            - Upgrade plan
+            - Payment method
+            - Invoices / receipts
+        - Security (Enterprise features)
+            - SSO
+            - Membership restrictions
+        - Delete Workspace flow (confirmation modal)
+
+    Boards view within Workspace
+        - Grid/list of boards
+        - “Create Board” from workspace
+        - Archive boards
+        - Sort boards by name/last active
+
+---
+
+Board View
+
+When a user opens a specific board:
+
+        Board Header
+            - Board Title (editable inline)
+            - Star Board (toggle star icon)
+            - Favorite/Watch toggles
+            - Board Visibility indicator
+                - Private / Workspace / Public
+                - Click -> opens drop-down to change
+            - Workspace Name (click -> workspace menu)
+            - Board Menu (right side, sometimes a “Show Menu” button)
+            - Filter Cards / Search within board
+            - Power-Ups icon (Butler/Automation, etc.)
+
+        Lists Container
+            - Horizontal scroll of all lists
+            - “Add another list” button at far right
+            - Drag-and-drop reordering of lists
+
+        Each List
+            - List Title (click to rename)
+            - List Menu (3-dot icon or drop-down):
+                - Move List
+                - Copy List
+                - Archive All Cards in This List
+                - Sort By… (if implemented)
+                - “Automation” triggers
+            - Cards displayed vertically
+                - Card “Add” UI at the bottom of the list
+                - “Add a card…” text box
+                    - Press Enter to create
+                    - Esc or “x” to cancel
+
+    Sidebar
+        - Menu Sections:
+            About This Board
+                - Board description
+                - Board cover/background preview
+            Background & Colors
+                - Change background (photos, patterns, solid colors)
+            Stickers & Emojis (if you want Trello-like features)
+                - Drag stickers onto cards
+            Custom Fields (Power-Up or built-in custom fields)
+                - Field definitions
+                - Field order
+            Labels (board-wide label definitions)
+                - Create new label
+                - Edit label name
+                - Assign colors
+                - Delete label
+            Search Cards (mini search bar)
+            Filter Cards (by label, member, due date)
+            Activity (Board Activity feed)
+                - Shows all recent actions
+                - Scroll or load more
+            Automation / Butler (if included)
+                - Create rules
+                - Scheduled commands
+                - Button triggers
+            Power-Ups (Calendar, Voting, etc.)
+                - Enable / disable
+                - Configure each power-up
+            1Manage Members
+                - Current list of board members
+                - Invite new members
+                - Change admin/normal roles (if board-level roles exist)
+            1Settings (a “More…” or gear menu)
+                - Archived Items (Cards and Lists)
+                - View archived cards
+                - Restore or permanently delete
+                - Board Permissions (depends on plan)
+                - Allow workspace members to join?
+                - Commenting permissions
+                - Adding/removing members
+                - Copy Board (makes a new board with the same lists and optionally cards)
+                - Email-to-Board Settings (unique email address for card creation)
+                - Close Board (archive board)
+                - Delete Board (permanently remove, usually after closing)
+                - Export Board (CSV/JSON if that’s a feature you want)
+            Collapse Menu (closes the sidebar)
+
+---
+
+    Card (On Board)
+
+        Card Preview  
+            - Title (inline editing if you click once or open the card)
+            - Labels (colored bars/tags)
+            - Members (avatars in bottom-right)
+            - Cover Image (optional, used if set in card back)
+            - Badges (e.g., checklists progress, due date, attachments)
+                - Due date color-coded if overdue/near
+            - Dragging: move card between lists or positions
+
+        Card Quick Actions (hover over card or via right-click)
+            - Edit Labels (pop-up color selection)
+            - Change Members (pop-up member selection)
+            - Move Card (select board & list & position)
+            - Copy Card
+            - Watch Card (receive notifications)
+            - Archive Card
+
+---
+
+Modal: Card Details
+
+    Header
+        - Card Title (editable)
+        - Close Button (top-right “x”)
+        - Card Menu (3-dot icon):
+            - Share/export
+            - Copy card
+            - Move card
+            - Subscribe/watch
+            - Archive
+            - Print
+        - Move/Copy Buttons (some layouts have them as separate)
+
+    Main Panel
+        - Card Description  
+            - Rich text editor / Markdown support
+            - Editing mode vs. viewing mode
+        - Activity Feed  
+            - Shows all comments & actions
+            - Timestamps
+            - @mentions
+            - File attachments in comments
+        - Comment Box  
+            - Text area for new comment
+            - Attach file icons
+            - Emoji/sticker support
+            - Submit comment (Enter or click button)
+
+    Sidebar (On the Right)
+        Add to Card  
+            - Members  
+                - Add/remove members
+                - Display assigned members
+            - Labels  
+                - Board-level labels
+                - Create new label
+            - Checklist  
+                - Create a new checklist
+                - Name it
+                - Once created:
+                - Add items
+                - Mark items complete
+                - Drag to reorder
+                - Checklist progress bar in card badges
+            - Dates  
+                - Due date picker
+                - Date/time
+                - Reminders
+                - Start date (if implementing)
+            - Attachment  
+                - Choose file from local
+                - Attach from URLs
+                - Integrations (Google Drive, Dropbox, etc. if desired)
+            - Cover  
+                - Change card color
+                - Use image as cover
+                - Full vs. half cover style
+        Power-Ups  
+            - E.g., Calendar, Custom Fields, Voting
+            - Custom Fields: show input fields for card
+        Automation (if integrated)
+            - Butler suggestions or custom rules
+        Card Settings  
+            - Move
+            - Copy
+            - Subscribe (Watch)
+            - Archive
+            - Delete (only after archiving, typically)
+        Share & More  
+            - Card link
+            - Email-to-card address
+
+---
+
+Card Labels
+
+    Board-Level Label Definitions
+        - Each label has:
+            - Name
+            - Color
+        - Optional: advanced color pickers
+    Assigning Labels to Cards
+        - Via card quick menu
+        - Via card “back” menu
+        - Keyboard shortcuts
+    Label Filter (on board)
+        - Filter cards by label
+        - Multi-select label filters
+
+---
+
+Members
+
+    Inviting Members to Board
+        - Invite by email
+        - Link invite (optional)
+        - Access level (admin, normal, observer if your board supports it)
+    Workspace vs. Board Membership
+        - If a user is in a workspace, can they auto-join the board?
+        - Board-specific members outside the workspace
+    Card Assignment
+        - Add multiple members to a card
+        - Show avatars on the card front
+    Notifications & Watch
+        - Watch entire board
+        - Watch list
+        - Watch card
+        - Email / in-app notifications for changes
+
+---
+
+Attachments
+
+    Sources for Attachment
+        - Local file
+        - URL
+        - Cloud service integrations (Google Drive, Dropbox, OneDrive, etc.)
+    Attachment Preview
+        - Image files: thumbnails
+        - PDFs: PDF icon, no direct preview (unless integrated)
+        - Link attachments: link metadata or favicon
+    Actions
+        - Rename attachment
+        - Download
+        - Remove
+        - Open in new tab
+    Attachment Badges
+        - Display the number of attachments on card front
+
+---
+
+Checklists
+
+    Creating a Checklist
+        - Title of checklist
+        - Default title: “Checklist”
+    Adding Items
+        - Text input for each item
+        - Press “Enter” to create
+        - Check/uncheck box to mark complete
+    Editing Items
+        - Rename item
+        - Delete item
+        - Move item to another checklist
+        - Convert item to card (optional Trello feature)
+    Checklist Sorting
+        - By completeness or manual reorder
+    Progress Bar
+        - X of Y items complete
+        - Changes color if partial/complete
+
+---
+
+Power-Ups
+
+    Power-Ups Directory (within board menu)
+        - List available “plugins” or “extensions”
+        - Calendar, Custom Fields, Card Aging, Voting, etc.
+    Enable/Disable Power-Up
+        - Confirm installation
+        - Access integration settings
+    Calendar Power-Up Example
+        - Cards with due dates appear on calendar
+        - Monthly/weekly view
+    Custom Fields Power-Up Example
+        - Define new fields (text, number, dropdown, date)
+        - Assign them to cards
+        - Display them on front of card if chosen
+
+---
+
+Automation (Butler)
+
+    Butler Dashboard  
+        - Rules (triggered by events: “When a card is moved… do X”)  
+        - Card Buttons (manual triggers on card)  
+        - Board Buttons (manual triggers on board)  
+        - Calendar Commands (scheduled triggers)
+        - Due Date Commands (triggered by due date proximity)
+    Creating Rules  
+        - Condition builder (when [event], if [condition], then [action])
+        - Actions: move card, add label, comment, etc.
+    Scheduling  
+        - Daily, weekly, monthly tasks
+        - Automatic reminders
+    Butler Quotas (usage limits, if implementing)
+
+---
+
+Notifications System
+
+    In-App Notifications
+        - Bell icon count
+        - Drop-down list of notifications:
+        - Card mentions
+        - Card assignments
+        - Due date reminders
+        - Board changes
+            - Mark as read individually or “Mark all as read”
+    Email Notifications
+        - Frequency (immediate, periodic summary)
+        - Turn on/off in user settings
+    Notification Preferences
+        - Board-level (only for boards you watch)
+        - Card-level (only for cards you watch)
+        - All activity vs. mentions only
+
+---
+
+Activity Feed
+
+    Board Activity
+        - Chronological list of actions
+        - Filter by user, date range
+        - Load older activity
+    Card Activity (in the card back)
+        - Only actions relevant to that card
+        - Comments, attachments, moves, assigned users
+
+---
+
+User Profile & Settings
+
+    Profile Page
+        - Full name, username
+        - Profile picture
+        - Bio/description
+        - Email (read-only or editable if verified)
+        - Location/Time zone
+    Account Settings
+        - Change password
+        - Manage email addresses
+        - Two-Factor Authentication (2FA) setup
+        - Language preferences
+    Notifications Settings (Global)
+        - Email frequency
+        - In-app notifications
+        - Desktop notifications (if implementing)
+    Application Settings  
+        - Keyboard shortcuts list
+        - Region / date format
+        - Theme (light/dark)
+
+---
+
+Admin / Owner Controls (If Implementing for Larger Plans)
+
+    Workspace Administration  
+        - Member Management  
+            - Bulk invitations
+            - Remove members
+            - Promote/demote roles
+    - Billing  
+            - Payment method
+            - Subscription plan
+            - # of licensed seats
+    - Organization-Wide Settings  
+            - Board creation restrictions
+            - Power-Up restrictions
+            - Public board restrictions
+
+    Board Administration  
+        - Permissions  
+            - Who can add members
+            - Who can create/edit labels
+        - Visibility  
+            - Private, Workspace, Public
+        - Invite Links  
+            - Enable or disable
+        - Delete/Close Board  
+
+---
+
+Search & Filtering
+
+    Global Search (Top Bar)
+        - Filters across boards, cards, members
+        - Autocomplete suggestions
+        - Search syntax (e.g., `label:red`, `@me`, etc.)
+    Board-Level Filter  
+        - Filter by label
+        - Filter by member
+        - Filter by due date (overdue, due soon)
+        - Text search within card titles
+    Advanced Search Page  
+   
+
+---
+
+Archived Items
+
+    Archived Cards
+        - Board menu -> “More…” -> “Archived Items”
+        - List of archived cards with:
+            - Title
+            - List name (where it was archived from)
+            - Restore or Delete
+    Archived Lists
+        - Similarly accessible
+        - Restore or permanently delete
+    Board Archive
+        - If entire board is closed, it’s in archived boards in the workspace
+        - Reopen or Delete permanently
+
