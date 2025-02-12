@@ -1,0 +1,45 @@
+.board-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .header-group {
+        display: flex;
+        .dots-at-end {
+            height: 16px;
+        }
+        .share-btn {
+            display: flex;
+            align-items: center;
+            padding: 7px 12px;
+            height: fit-content;    
+            color: white;
+            gap: 0.5em;
+            background-color: #1f515d;
+        }
+        .filters-btn {
+            font-weight: bold;
+        }
+        .divider {
+            border-right: 1px solid black;
+            margin-block: 10px;
+        }
+        .users {
+            display: flex;
+            padding-inline: 10px;
+            margin-inline: 5px;    
+            .user-icon {    
+                margin-left: -5px;
+                width: 28px;
+                height: 28px;
+               img {
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 50%;
+                    margin-left: -5px;
+                
+                }
+            }
+        }
+    } 
+}
