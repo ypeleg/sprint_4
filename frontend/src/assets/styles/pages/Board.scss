@@ -1,5 +1,5 @@
 
-.everything>header {
+.everything>header {    
     background-color: #e4bcb9;
     border-bottom: 1px solid #c2a5a7;
 }
@@ -34,19 +34,26 @@
 }
 
 aside {
+    // z-index: 0;
     width: 263px;    
-    padding: 12px;
+    padding: 0px 12px 12px 12px;
     backdrop-filter: blur(4px);
     // background-color: hsl(4,44.3%,81.1%);
     background-color: hsla(4,44.3%,76.1%,0.9);
     padding-inline: calc(3px + 12px);
     border-right: 1px solid #c2a5a7;
-    margin-top: -12px;
+    // margin-top: -12px;
 
 }
 
+body {
+    overflow-y: hidden; 
+    
+}
+
 .main-layout {
-    display: flex;    
+    display: flex;
+    height: 100vh;  
 }
 
 .board-header {
@@ -143,5 +150,131 @@ header {
 
 .bold-text {
     font-weight: bold;
+}
+
+.near-logo-btn {
+    color: #6b778c;
+    font-weight: bold;
+}
+
+.sidebar-first-section {
+    padding-top: 12px;
+}
+
+.side-bar-item {
+    height: 32px;
+    padding-inline: 21px;
+    margin-inline: -16px;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.main-logo {
+    filter: brightness(0) saturate(100%) invert(30%) sepia(53%) saturate(323%) hue-rotate(179deg) brightness(91%) contrast(88%);
+}
+
+.side-bar-item i {
+    margin-right: 7px;
+}
+
+.nav-highlight-hint:hover {
+    cursor: pointer;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.16);   
+}
+
+.label {
+    margin-top: 12px;
+}
+
+
+aside>section:not(:first-of-type){
+    margin-top: 12px;
+}
+
+.side-section-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.side-bar-item>i {
+    margin-right: -8px;    
+}
+
+.fa-chevron-down {
+    color: #6b778c;
+}
+
+.share-btn {
+    padding: 7px 12px;
+    height: fit-content;    
+    color: white;
+    background-color: #1f515d;
+}
+
+.main-logo {
+    height: 16px;
+}
+
+.logo {
+    display: flex;
+    padding: 4px 8px;
+    align-items: center;
+}
+
+.center-vertical {
+    gap: 0px;
+    display: flex;
+    align-items: center;
+}
+
+.dots {
+    height: 20px;
+    filter: brightness(0) saturate(100%) invert(30%) sepia(53%) saturate(323%) hue-rotate(179deg) brightness(91%) contrast(88%);
+}
+
+.main-logo-img {
+    background-image: url("logo.gif");
+    background-repeat: no-repeat;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+
+}
+
+.dropdown-menu {
+    gap: 0.4em;
+    display: flex;
+    align-items: center;
+    justify-items: space-between;
+
+    color: #172B4D;
+    font-weight: 600;
+    padding: 0px 10px;
+
+    margin-left: 10px;
+}
+
+
+.dropdown-menu i {
+    padding-top: 5px;
+    color: #172B4D;
+}
+
+
+.dropdown-menu:last-of-type {
+    font-size: 16px;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.16);       
+}
+
+input {
+    background-color: #eacac7;
+    border-radius: 5px;
+    border: 1px solid #8590a2;
+    // background-color: #cda9a6;
 }
 
