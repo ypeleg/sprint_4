@@ -2,6 +2,7 @@
 
 import { CarList } from '../cmps/CarList'
 import { useState, useEffect } from 'react'
+import { BoardList } from '../cmps/GroupList'
 
 export function BoardDetails() {
 
@@ -178,7 +179,7 @@ export function BoardDetails() {
                         <div className="header-group">
                             <button><i className="fa-regular fa-rocket"></i></button>
                             <button><i className="fa-regular fa-bolt"></i></button>
-                            <button><i className="fa-regular fa-bars"></i> Filters</button>
+                            <button className="filters-btn"><i className="fa-regular fa-bars"></i> Filters</button>
                             <div className="divider"></div>
                             <div className="users">
                                 <div className="user-icon">
