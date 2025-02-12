@@ -1,11 +1,9 @@
-
-
-export const SET_GROUP = 'SET_GROUP'
-export const ADD_GROUP = 'ADD_GROUP'
-export const SET_GROUPS = 'SET_GROUPS'
-export const REMOVE_GROUP = 'REMOVE_GROUP'
-export const UPDATE_GROUP = 'UPDATE_GROUP'
-export const ADD_GROUP_MSG = 'ADD_GROUP_MSG'
+export const SET_BOARDS = 'SET_BOARDS'
+export const SET_BOARD = 'SET_BOARD'
+export const REMOVE_BOARD = 'REMOVE_BOARD'
+export const ADD_BOARD = 'ADD_BOARD'
+export const UPDATE_BOARD = 'UPDATE_BOARD'
+export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 
 const initialState = {
     groups: [],
@@ -40,5 +38,32 @@ export function groupReducer(state = initialState, action) {
         default:
     }
     return newState
+}
+
+// unitTestReducer()
+
+function unitTestReducer() {
+    var state = initialState
+    const board1 = { _id: 'b101', vendor: 'Board ' + parseInt(Math.random() * 10), msgs: [] }
+    const board2 = { _id: 'b102', vendor: 'Board ' + parseInt(Math.random() * 10), msgs: [] }
+
+    state = boardReducer(state, { type: SET_BOARDS, boards: [board1] })
+    console.log('After SET_BOARDS:', state)
+
+    state = boardReducer(state, { type: ADD_BOARD, board: board2 })
+    console.log('After ADD_BOARD:', state)
+
+    state = boardReducer(state, { type: UPDATE_BOARD, board: { ...board2, vendor: 'Good' } })
+    console.log('After UPDATE_BOARD:', state)
+
+    state = boardReducer(state, { type: REMOVE_BOARD, boardId: board2._id })
+    console.log('After REMOVE_BOARD:', state)
+
+    const msg = { id: 'm' + parseInt(Math.random() * 100), txt: 'Some msg' }
+    state = boardReducer(state, { type: ADD_BOARD_MSG, boardId: board1._id, msg })
+    console.log('After ADD_BOARD_MSG:', state)
+
+    state = boardReducer(state, { type: REMOVE_BOARD, boardId: board1._id })
+    console.log('After REMOVE_BOARD:', state)
 }
 
