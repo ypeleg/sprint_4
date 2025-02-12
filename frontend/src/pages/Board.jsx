@@ -2,6 +2,7 @@
 
 import { CarList } from '../cmps/CarList'
 import { useState, useEffect } from 'react'
+import { BoardList } from '../cmps/GroupList'
 
 export function Board() {
 
@@ -167,7 +168,7 @@ export function Board() {
                         </div>
 
                     </header>
-
+             
                 </section>
 
             </main>

@@ -1,0 +1,21 @@
+.board-canvas{
+    flex-grow: 1;
+    margin-top: 12px;
+    position: relative;
+    .board-list{
+        bottom: 0;
+    left: 0;
+    margin-bottom: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 8px;
+    padding-top: 2px;
+    position: absolute;
+    right: 0;
+    scrollbar-color: #fff6 #00000026;
+    scrollbar-width: auto;
+    top: -2px;
+    }
+
+
+}
