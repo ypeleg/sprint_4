@@ -1,3 +1,4 @@
+import { TaskList } from "./TaskList";
 
 
 
@@ -8,23 +9,51 @@ export function GroupList() {
 
 
     return (
-        <div className="board-canvas">
+        <section className="group-lists">
+        
+                        <div className="list base-components-list">
+                            
+                            <div className="list-header just-flex">
+                                <span>In Progress</span>
+                                <div className="group-list-headr-btns">
+                                    <i className="fa-regular fa-arrows-h"></i>
+                                    <i className="fa-regular fa-ellipsis-h"></i>
+                                </div>                              
+                            </div>
 
-            <ol className="board-list">
-                <li className="group-preview">
-                    <article> 
-                        <div className="group-header">header</div> 
-                        <ul>
-                            <li>task1</li>
-                            <li>task2</li>
-                            <li>task3</li>
-                        </ul>
-                    </article>
-                </li>
 
-                
+                            <TaskList/>
 
-            </ol>
-        </div>
+                            <div className="group-list-footer">
+                                <button className="add-card-btn"><i className="fa-regular fa-plus"></i> Add a card</button>
+                                <button className="create-from-template-btn"><i className="fa-regular fa-vector-square"></i></button>
+                            </div>
+                        </div>
+                        <div className="list base-components-list">
+                            
+                            <div className="list-header just-flex">
+                                <span>In Progress</span>
+                                <div className="group-list-headr-btns">
+                                    <i className="fa-regular fa-arrows-h"></i>
+                                    <i className="fa-regular fa-ellipsis-h"></i>
+                                </div>                              
+                            </div>
+
+
+                            <TaskList/>
+                            <TaskList/>
+                        
+                            
+                            <div className="group-list-footer">
+                                <button className="add-card-btn"><i className="fa-regular fa-plus"></i> Add a card</button>
+                                <button className="create-from-template-btn"><i className="fa-regular fa-vector-square"></i></button>
+                            </div>
+                        </div>
+                    
+             
+                        
+
+                    </section>
+
     )
 }
