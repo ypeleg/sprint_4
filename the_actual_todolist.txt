@@ -1,0 +1,365 @@
+
+---
+
+## 1. Authentication & Landing
+
+1. **Sign Up / Login Screen**
+   - Fields: Email/Username, Password
+   - OAuth Buttons (Google, Microsoft, Apple)
+   - “Forgot Password?” Link
+   - Error Handling (invalid credentials, etc.)
+   - ReCaptcha / Bot Protection (optional)
+   - Submit / Loading State
+
+2. **Password Reset Screen**
+   - Request Reset (email input, success/failure)
+   - Reset via Link (new password inputs, confirm, submit)
+
+3. **Landing / Home Redirect**
+   - Once authenticated, user either:
+     - Sees “Home” if returning user
+     - Sees Onboarding (optional) if first-time user
+
+
+---
+
+## 2. Home Screen
+
+5. **Workspace Overview Panel**
+   - All Workspaces
+   - Each Workspace Card (name, members, boards count, settings icon if admin)
+
+6. **Boards Overview Panel**
+   - Starred Boards, Recently Viewed Boards
+   - Personal Boards (not in a workspace)
+   - “Create New Board” Button
+
+7. **Cards Assigned to You Panel**
+   - List of your cards across boards
+   - Due date highlights, priority indicators
+
+8. **Recent Activity Feed**
+   - Recent changes across boards
+
+---
+
+## 3. Shared/Global Layout (Top Bar + Common Elements)
+
+This layout (or “shell”) wraps most main screens. It includes:
+
+9. **Top Bar**
+   - **Trello Logo / Home Link**
+   - **Search Bar**
+     - Autocomplete (boards, cards, workspaces)
+     - Recent searches
+     - Advanced search link
+   - **Create Button**
+     - Create Board flow
+     - Create Workspace flow
+     - Create Template
+   - **Workspaces / Boards Dropdown**
+     - Pinned/Starred Boards
+     - Recent Boards
+     - All Workspaces listing
+     - Workspace Settings link
+   - **Notifications Icon**
+     - Dropdown of notifications (assignments, due dates, @mentions)
+     - “Mark all as read”
+     - “See All” -> Notifications Screen
+   - **User Profile / Account Menu**
+     - Profile & Visibility
+     - Account Settings
+     - Activity & Recent Boards
+     - Log Out
+     - Theme / Color Mode (light/dark, if supported)
+   - **Help / Info (e.g., “?”)**
+     - Help Center link
+     - Keyboard Shortcuts
+     - Contact Support
+
+10. **Footer**
+   - Links to support, privacy, etc.
+
+---
+
+## 4. Workspace Screen
+
+When you click on a specific Workspace:
+
+11. **Workspace Header**
+   - Name, Avatar/Logo
+   - “Workspace Menu” (gear or dropdown)
+     - Invite members
+     - Manage members (roles, invites)
+     - Workspace settings (name, description, visibility)
+     - Billing & Upgrades (if relevant)
+     - Leave workspace (non-admin)
+     - Delete workspace (admin)
+
+12. **Workspace Boards List**
+   - Grid or list view
+   - “Create Board” button
+   - Archive or restore boards (admin actions)
+   - Sort boards (name, last active)
+
+13. **Workspace Menu (if expanded)**
+   - Settings (workspace name, desc, visibility)
+   - Members (list, roles, invitations)
+   - Billing & Security (paid/enterprise)
+   - Delete Workspace Flow (confirmation modal)
+
+---
+
+## 5. Board Screen
+
+When a user opens a specific board:
+
+14. **Board Header**
+   - Board Title (inline editable)
+   - Star / Favorite toggle
+   - Board Visibility (Private, Workspace, Public)
+   - Workspace Name (click -> workspace page)
+   - Filter / Search within board
+   - Power-Ups icon (Butler, etc.)
+   - “Show Menu” button -> Opens Board Sidebar
+
+15. **Lists & Cards Area**
+   - Horizontal scroll of Lists
+   - “Add another list” button
+   - Each List:
+     - Title (rename inline)
+     - List Menu (move, copy, archive all, sort, etc.)
+     - Cards stacked vertically
+       - Card “Add” input at bottom
+         - Press Enter to create
+         - Cancel with “x” or Esc
+   - Drag & drop (lists and cards)
+
+16. **Board Sidebar Menu** (opens from right side)
+   - **About This Board** (description, background preview)
+   - **Background & Colors**
+   - **Stickers & Emojis** (drag onto cards)
+   - **Custom Fields** (if power-up)
+   - **Labels** (create, edit, assign colors)
+   - **Search Cards** (mini search)
+   - **Filter Cards** (by label, member, due date)
+   - **Activity** (board-level feed)
+   - **Automation / Butler** (rules, triggers, commands)
+   - **Power-Ups** (enable/disable, configure)
+   - **Manage Members** (invite, remove, change roles)
+   - **Settings** (“More...”)
+     - Archived Items (cards/lists)
+     - Board Permissions
+     - Copy Board
+     - Email-to-Board
+     - Close Board
+     - Delete Board
+     - Export Board
+   - **Collapse Sidebar** button
+
+---
+
+## 6. Card-Related Screens/Modals
+
+### 6.1 Card Preview (On Board)
+- Displayed as part of each list
+- Title, Labels, Members, Cover, Badges (due date, checklists, attachments)
+- Quick Actions (hover or right-click):
+  - Edit Labels
+  - Change Members
+  - Move / Copy
+  - Watch
+  - Archive
+
+### 6.2 Card Detail Modal
+Opens when you click a card:
+
+17. **Header**
+   - Title (editable)
+   - Close Button (X)
+   - Card Menu (3-dot):
+     - Share/Export
+     - Move / Copy
+     - Subscribe/Watch
+     - Archive
+     - Print
+   - Move/Copy Buttons (sometimes separate)
+
+18. **Main Panel**
+   - Description (rich text/Markdown)
+   - Activity Feed (comments, timestamps, @mentions)
+   - Comment Box (text area, file attach, emojis)
+
+19. **Right Sidebar**
+   - **Add to Card**
+     - Members
+     - Labels
+     - Checklist
+     - Dates (due date, reminders, start date)
+     - Attachment
+     - Cover
+   - **Power-Ups** (custom fields, voting, etc.)
+   - **Automation / Butler** (if integrated)
+   - **Card Settings** (move, copy, subscribe, archive, delete)
+   - **Share & More** (card link, email-to-card address)
+
+---
+
+## 7. Labels Screen (Board-Level)
+
+- (Usually opened via “Labels” within Board Sidebar or Card Quick Menu)
+  - Create/Edit/Delete labels
+  - Assign name, color
+  - Filter by label (on board screen)
+  - Keyboard shortcuts
+
+---
+
+## 8. Members & Collaboration Screens
+
+20. **Invite to Board**  
+   - Pop-up or modal from Board/Workspace
+   - Email or shareable link
+   - Role selection (admin, normal, observer)
+
+21. **Manage Members** (Board or Workspace)
+   - Member list
+   - Invite new
+   - Adjust roles
+
+22. **Member Profile** 
+   - Basic info (avatar, name, username)
+   - Boards/workspaces they belong to
+
+---
+
+## 9. Attachments
+
+- **Attachment Upload/Selection Modal** (if needed):
+  - Local file or URL
+  - Cloud integrations (Drive, Dropbox)
+- **Attachment Previews** in Card Detail
+- **Attachment Actions**: rename, download, remove
+
+---
+
+## 10. Checklists
+
+- **Add Checklist** (in Card Sidebar)
+  - Checklist name
+  - Add checklist items
+- **Checklist Editing** (directly inside card detail)
+  - Rename items, mark complete
+  - Convert item to new card 
+- **Progress Bar** on card front 
+
+---
+
+## 11. Power-Ups Screen/Modal
+
+- **Power-Ups Directory** (within Board Sidebar)
+  - List of possible power-ups
+  - Enable / Disable
+  - Configure
+- Examples:
+  - Calendar (month/week view of due dates)
+  - Custom Fields (define fields, show on card)
+  - Voting (add votes on cards)
+
+---
+
+## 12. Automation (Butler)
+
+- **Butler Dashboard** (linked from Board Sidebar)
+  - Rules, Card Buttons, Board Buttons, Calendar Commands, Due Date Commands
+- **Create/Edit Rule** Modal
+  - When/if conditions
+  - Actions
+- **Scheduling** (Butler calendar-based)
+
+---
+
+## 13. Notifications Screen
+
+- **Notifications Dropdown** (top bar)
+  - Quick list of recent notifications
+  - “Mark all as read”
+  - “See All Notifications” link
+- **Notifications Page** (if separate)
+  - Full list of notifications
+  - Filters (read/unread, board-specific, etc.)
+
+---
+
+## 14. Activity Feed Screens
+
+23. **Board Activity** (in Board Sidebar)
+   - Scrollable feed of actions
+   - Load more
+24. **Card Activity** (in Card Detail)
+   - Only that card’s actions
+25. **Global Activity** 
+   - Possibly on Home or separate page
+
+---
+
+## 15. User Profile & Settings
+
+26. **Profile Screen**
+   - Name, username, avatar
+   - Bio / description
+   - Email (if verified)
+   - Location / Time zone
+
+27. **Account Settings Screen**
+   - Change password
+   - Change email
+   - Two-Factor Authentication setup
+   - Language
+   - Notification preferences (email, in-app, desktop)
+
+28. **Application Settings** (could be combined with Account Settings)
+   - Keyboard shortcuts reference
+   - Date/region format
+   - Theme (light/dark)
+
+---
+
+## 16. Admin / Owner Controls (If Implemented)
+
+29. **Workspace Administration Screen**  
+   - Member management (bulk invite, remove, roles)
+   - Billing & Payment
+   - Organization-wide settings (board creation restrictions, power-up restrictions)
+   - Security/SSO (enterprise)
+
+30. **Board Administration Screen**  
+   - Permissions (who can add members, etc.)
+   - Invite links on/off
+   - Close/Delete board
+
+---
+
+## 17. Search & Filter Screens
+
+31. **Global Search Results Page** (from top bar advanced search)
+   - Boards, Cards, Workspaces
+   - Filter by label, due date, members
+   - Possibly advanced syntax (`label:red`, `@username`)
+
+32. **Board-Level Filter** (part of Board Screen’s top or sidebar)
+   - Filter by label
+   - Filter by member
+   - Filter by due date
+   - Text search within card titles
+
+---
+
+## 18. Archived Items Screens
+
+33. **Archived Cards & Lists** (via Board Sidebar → “More…” → “Archived Items”)
+   - List of archived cards/lists
+   - Restore or permanently delete
+34. **Archived Boards** (Closed Boards at Workspace level)
+   - Reopen or delete
+
