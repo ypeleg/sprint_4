@@ -18,6 +18,8 @@ import { Routes, Route } from 'react-router'
 // import { AboutUs, AboutTeam, AboutVision } from './pages/AboutUs'
 
 
+import { BoardIndex } from './pages/BoardIndex.jsx'
+import { DebugPage } from './pages/DebugPage.jsx'
 import { BoardDetails } from './pages/BoardDetails.jsx'
 
 
