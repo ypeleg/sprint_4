@@ -1,5 +1,18 @@
 .task-list{
 
+    .cover-img {
+        margin: -10px;
+        margin-bottom: 10px;
+        img {
+            border-radius: 6px 6px 0px 0px;
+        }        
+    }
+                        
+    scrollbar-color: #091E4224 #091E420F;
+    scrollbar-width: thin;
+    overflow-y: scroll;
+    padding-inline: 2px;
+
     .task {
         background-color: #fff;
         border-radius: 6px;
@@ -10,6 +23,11 @@
         color: #172b4d;
         font-size: 0.9em;
         // gap: 0.4em;
+
+        // &:hover{
+        //     border: 1px solid blue;
+        // }
+
         .stay-same-height {
             display: flex;
             align-items: center;
@@ -18,6 +36,7 @@
                 height: 16px;
                 width: 16px;
                 margin-left: 2px;
+                aspect-ratio: 1/1;
                 border-radius: 50%;
                 border: 2px solid #707c90;
                 
@@ -51,9 +70,17 @@
             }
         
         }
-        .labels {
-            display: flex;
+
+        .stay-same-height-start {
+            display: flex;            
+            align-items: start;
             gap: 0.5em;
+        }
+        .labels {            
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5em;
+            margin-bottom: 6px;
         }
         .task-label {
             padding: 0px;
@@ -98,13 +125,13 @@
                     background-color: #ded7fc; 
                 }
                 
-                .badge-status-approved {
+                .badge-approved {
                     font-weight: 600;
                     color: #216e4e;
                     background-color: #b9f2da; 
                 }
                 
-                .badge-risk-high {
+                .badge-risk {
                     font-weight: 600;
                     color: #ad2e24;
                     background-color: #fed4d1;
@@ -154,6 +181,7 @@
             }
         }
     }
+    
 
 
 }

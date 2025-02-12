@@ -224,11 +224,13 @@ input {
     // place-self: start stretch;
     // height: 64px;
     border-radius: 7px;
+    border: 2px solid transparent;
 }
 
 .task:active {
     border: 2px solid #388afe;
 }
+
 
 
 

@@ -32,7 +32,6 @@ export const getRandomColorLabels = () => {
     return random.choice(colors)
   }
 
-// Example user pool for random member generation
 const USER_POOL = [
     { _id: 'u101', fullname: 'Abi Abambi', imgUrl: 'https://example.com/abi.png' },
     { _id: 'u102', fullname: 'Josh Ga', imgUrl: 'https://example.com/josh.png' },
@@ -42,14 +41,12 @@ const USER_POOL = [
     { _id: 'u106', fullname: 'Oliver Z', imgUrl: 'https://example.com/oliver.png' }
 ]
 
-// Possible statuses, priorities, and component order for random picks
 const STATUS_OPTIONS = ['inProgress', 'done', 'review', 'stuck', 'blocked']
 const PRIORITY_OPTIONS = ['low', 'medium', 'high']
 const CMP_ORDER_OPTIONS = ['StatusPicker', 'MemberPicker', 'DatePicker', 'SomeNewPicker', 'OtherPicker']
 
-// Helper to create random checklists
 function getRandomChecklists() {
-    const checklistsCount = random.randint(0, 2) // how many checklists to create
+    const checklistsCount = random.randint(0, 2)
     const checklists = []
     for (let i = 0; i < checklistsCount; i++) {
         const todosCount = random.randint(1, 5)
@@ -70,7 +67,6 @@ function getRandomChecklists() {
     return checklists
 }
 
-// Helper to create random comments
 function getRandomComments() {
     const commentsCount = random.randint(0, 3)
     const comments = []
@@ -90,7 +86,31 @@ function getRandomComments() {
     return comments
 }
 
-// Helper to create random tasks
+function getRandomBadges() {
+    const possibleTexts = [
+        'Low',
+        'Priority',
+        'High',
+        'Security Risk',
+        'Performance Risk',
+        'Approved',
+        'Hotfix',
+        'Heads Up'
+    ]
+    const possibleBadgeTypes = ['risk', 'approved', 'priority', 'now']
+
+    const badgeCount = random.randint(0, 4)
+    const badges = []
+    for (let i = 0; i < badgeCount; i++) {
+        badges.push({
+            id: random.id(),
+            text: random.choice(possibleTexts),
+            badeType: random.choice(possibleBadgeTypes)
+        })
+    }
+    return badges
+}
+
 function getRandomTask() {
     const randTitleWords = random.randint(1, 5)
     const dueDate = random.date('2024-01-01', '2026-12-31').toISOString()
@@ -105,24 +125,31 @@ function getRandomTask() {
         checklists: getRandomChecklists(),
         memberIds: random.sample(
             USER_POOL.map(u => u._id),
-            random.randint(0, USER_POOL.length) // randomly pick how many members
+            random.randint(0, USER_POOL.length) 
         ),
         labelIds: [],
         byMember: random.choice(USER_POOL),
-        style: { backgroundColor: random.color() },
-        badges: [
-            {
-                id: random.id(),
-                text: `Priority: ${random.choice(['Low', 'Medium', 'High'])}`,
-                badeType: 'priority'
-            }
-        ],
+        style: { 
+
+                backgroundColor: random.color(),
+                backgroundImage: random.choice([null, null,  null,  null,  null,  null,  null,  null, null, null,  null,  null,  null,  null,  null,  null,  
+                    
+                    'https://picsum.photos/600/300?random=' + random.randint(1, 1000),                    'https://picsum.photos/600/300?random=' + random.randint(1, 1000),                 'https://picsum.photos/600/300?random=' + random.randint(1, 1000),                 'https://picsum.photos/600/300?random=' + random.randint(1, 1000),                 
+                    "cover-img.png",
+                    "cover-img-1.png",
+                    "cover-img-2.png",
+                    "cover-img-3.png"
+                    
+
+
+                ])
+            },
+        badges: getRandomBadges(),
+        
         isUserWatching: random.choice([true, false])
-        // Add more random fields as needed...
     }
 }
 
-// Helper to create random groups
 function getRandomGroups() {
     const groupsCount = random.randint(2, 5)
     const groups = []
@@ -144,24 +171,22 @@ function getRandomGroups() {
 }
 
 function getRandomLabels() {
-    const labelsCount = random.randint(2, 6)
+    const labelsCount = random.choice([0, 0, 1, 1, 2, random.randint(0, 6)])
     const labels = []
     for (let i = 0; i < labelsCount; i++) {
         labels.push({
             id: random.id(),
-            title: random.lorem(random.randint(1, 2)),
+            title: random.lorem(random.randint(1, 5)),
             color: getRandomColorLabels()
         })
     }
     return labels
 }
 
-// Helper to create random members
 function getRandomMembers() {
     return random.sample(USER_POOL, random.randint(1, USER_POOL.length))
 }
 
-// Helper to create random board activities
 function getRandomActivities() {
     const activitiesCount = random.randint(2, 5)
     const activities = []
@@ -190,13 +215,11 @@ function getRandomActivities() {
 }
 
 export function getRandomBoard() {
-    // Clone whatever is in data.boards[0] just for baseline structure:
 
     console.log(data)
     const base = data.boards[0]
     const board = JSON.parse(JSON.stringify(base))
 
-    // Now randomize fields:
     board.id = random.id(random.randint(4, 10))
     board.title = random.lorem(random.randint(2, 5))
     board.isStarred = random.choice([true, false])
@@ -204,7 +227,6 @@ export function getRandomBoard() {
         null,
         random.date('2022-01-01', '2023-12-31').getTime()
     ])
-    // Randomly pick a "createdBy" from our user pool
     const createdBy = random.choice(USER_POOL)
     board.createdBy = {
         _id: createdBy._id,
@@ -212,29 +234,27 @@ export function getRandomBoard() {
         imgUrl: createdBy.imgUrl
     }
 
-    board.style.backgroundImage = random.choice([
-        '',
-        'https://picsum.photos/600/300?random=' + random.randint(1, 1000)
-    ])
+    board.style.backgroundImage = 'https://picsum.photos/600/300?random=' + random.randint(1, 1000)
+    
+    // random.choice([
+    //     '',
+    //     'https://picsum.photos/600/300?random=' + random.randint(1, 1000)
+    // ])
+
+    
 
     board.labels = getRandomLabels()
     board.members = getRandomMembers()
     board.groups = getRandomGroups()
     board.activities = getRandomActivities()
 
-    // Shuffle or expand cmpsOrder as desired
     board.cmpsOrder = random.sample(CMP_ORDER_OPTIONS, random.randint(2, CMP_ORDER_OPTIONS.length))
 
-    // Now that we have random labels, attach labelIds randomly to tasks
-    // so that tasks can reflect some subset of existing labels
     board.groups.forEach(group => {
         group.tasks.forEach(task => {
-            // const labelSubset = random.sample(board.labels.map(l => l.id), random.randint(0, board.labels.length))
             task.labels = getRandomLabels()
-            // task.labelIds = labelSubset
         })
     })
 
-    // Return the newly randomized board
     return board
 }
