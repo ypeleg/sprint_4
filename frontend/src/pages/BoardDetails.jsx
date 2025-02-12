@@ -215,41 +215,72 @@ export function BoardDetails() {
                     <section className="board-lists">
         
                         <div className="list base-components-list">
+                            
                             <div className="list-header just-flex">
                                 <span>In Progress</span>
-                                <i className="fa-regular fa-ellipsis-h"></i>
+                                <div className="card-btns">
+                                    <i className="fa-regular fa-arrows-h"></i>
+                                    <i className="fa-regular fa-ellipsis-h"></i>
+                                </div>                              
                             </div>
-                            <div className="card">
-                                <span>board component</span>
-                            </div>
-                            <div className="card">
-                                <span>board nav</span>
-                            </div>
-                            <div className="card card-with-badges">
-                                <div className="card-content">
-                                    <span>task details</span>
+
+
+                            <div className="card">                                
+                                
+                                <div className="stay-same-height flex-space-between">
+
+                                    <div className="labels">
+                                        <div className="card-label color-green">
+                                        </div>
+                                    </div>
+
+                                    <div className="right-btns flex-space-between">
+                                        <div className="right-btns-btn">
+                                            <i className="fa-regular fa-box"></i>
+                                        </div>
+                                        <div className="right-btns-btn">
+                                            <i className="fa-regular fa-edit"></i>
+                                        </div>
+                                    </div>
+
+
                                 </div>
-                                <div className="card-footer flex-space-between">
-                                    <div className="card-date">Feb 16</div>
-                                    <div className="card-badges just-flex">
+
+                                <div className="stay-same-height">
+                                    <div className="card-checkbox" type="checkbox"/>                                
+                                    <span>make trello pixel perfect</span>
+                                </div>
+
+                                <div className="card-under-text flex-space-between">
+                                    
+                                    <div className="card-badges">
+                                        <div className=""><i className="fa-regular fa-eye"></i></div>
+                                        <i className="fa-regular fa-clock"></i><div className="card-date">Feb 16</div>
+                                        <div className=""><i className="fa-regular fa-map"></i></div>
+                            
                                         <div className="badge badge-priority">Priority: Medium</div>
                                         <div className="badge badge-status-approved">Status: Approved</div>
                                     </div>
                                 </div>
+
                                 <div className="card-users">
-                                </div>
-                            </div>
-                            <div className="card card-with-badges">
-                                <div className="card-content">
-                                    <span>task details</span>
-                                </div>
-                                <div className="card-footer flex-space-between">
-                                    <div className="card-date">Feb 16</div>
-                                    <div className="card-badges just-flex">
-                                        <div className="badge badge-risk-high">Risk: High</div>
+                                    <div className="card-user-icon">
+                                        <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png" />
+                                    </div>
+                                    <div className="card-user-icon">
+                                        <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png" />
+                                    </div>
+                                    <div className="card-user-icon-no-pic">
+                                        YP
+                                    </div>
+                                    <div className="card-user-icon">
+                                        <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png" />
                                     </div>
                                 </div>
+
+
                             </div>
+
                             <button className="add-card-btn">+ Add a card</button>
                         </div>
                     
@@ -276,7 +307,7 @@ export function BoardDetails() {
                                         <div className="badge badge-status-approved">Status: Approved</div>
                                     </div>
                                 </div>
-                                <div className="card-users">
+                                <div className="card-users">                                                    
                                 </div>
                             </div>
                             <div className="card card-with-badges">
