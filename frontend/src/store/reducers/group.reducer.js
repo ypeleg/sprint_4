@@ -1,9 +1,9 @@
-export const SET_GROUPS = 'SET_GROUPS'
-export const SET_GROUP = 'SET_GROUP'
-export const REMOVE_GROUP = 'REMOVE_GROUP'
-export const ADD_GROUP = 'ADD_GROUP'
-export const UPDATE_GROUP = 'UPDATE_GROUP'
-export const ADD_GROUP_MSG = 'ADD_GROUP_MSG'
+export const SET_BOARDS = 'SET_BOARDS'
+export const SET_BOARD = 'SET_BOARD'
+export const REMOVE_BOARD = 'REMOVE_BOARD'
+export const ADD_BOARD = 'ADD_BOARD'
+export const UPDATE_BOARD = 'UPDATE_BOARD'
+export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 
 const initialState = {
     groups: [],
@@ -44,26 +44,26 @@ export function groupReducer(state = initialState, action) {
 
 function unitTestReducer() {
     var state = initialState
-    const group1 = { _id: 'b101', vendor: 'Group ' + parseInt(Math.random() * 10), msgs: [] }
-    const group2 = { _id: 'b102', vendor: 'Group ' + parseInt(Math.random() * 10), msgs: [] }
+    const board1 = { _id: 'b101', vendor: 'Board ' + parseInt(Math.random() * 10), msgs: [] }
+    const board2 = { _id: 'b102', vendor: 'Board ' + parseInt(Math.random() * 10), msgs: [] }
 
-    state = groupReducer(state, { type: SET_GROUPS, groups: [group1] })
-    console.log('After SET_GROUPS:', state)
+    state = boardReducer(state, { type: SET_BOARDS, boards: [board1] })
+    console.log('After SET_BOARDS:', state)
 
-    state = groupReducer(state, { type: ADD_GROUP, group: group2 })
-    console.log('After ADD_GROUP:', state)
+    state = boardReducer(state, { type: ADD_BOARD, board: board2 })
+    console.log('After ADD_BOARD:', state)
 
-    state = groupReducer(state, { type: UPDATE_GROUP, group: { ...group2, vendor: 'Good' } })
-    console.log('After UPDATE_GROUP:', state)
+    state = boardReducer(state, { type: UPDATE_BOARD, board: { ...board2, vendor: 'Good' } })
+    console.log('After UPDATE_BOARD:', state)
 
-    state = groupReducer(state, { type: REMOVE_GROUP, groupId: group2._id })
-    console.log('After REMOVE_GROUP:', state)
+    state = boardReducer(state, { type: REMOVE_BOARD, boardId: board2._id })
+    console.log('After REMOVE_BOARD:', state)
 
     const msg = { id: 'm' + parseInt(Math.random() * 100), txt: 'Some msg' }
-    state = groupReducer(state, { type: ADD_GROUP_MSG, groupId: group1._id, msg })
-    console.log('After ADD_GROUP_MSG:', state)
+    state = boardReducer(state, { type: ADD_BOARD_MSG, boardId: board1._id, msg })
+    console.log('After ADD_BOARD_MSG:', state)
 
-    state = groupReducer(state, { type: REMOVE_GROUP, groupId: group1._id })
-    console.log('After REMOVE_GROUP:', state)
+    state = boardReducer(state, { type: REMOVE_BOARD, boardId: board1._id })
+    console.log('After REMOVE_BOARD:', state)
 }
 

@@ -5,12 +5,13 @@ import { getRandomIntInclusive, makeId } from '../util.service'
 import { boardService as local } from './board.service.local'
 import { boardService as remote } from './board.service.remote'
 
+import { getRandomBoard } from './data.js'
+// import { random } from '../util.service.js'
+
+localStorage.clear()
+
 function getEmptyBoard() {
-    return {
-        vendor: makeId(),
-        speed: getRandomIntInclusive(80, 240),
-        msgs: [],
-    }
+    return getRandomBoard()
 }
 
 function getDefaultFilter() {

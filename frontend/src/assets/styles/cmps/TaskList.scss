@@ -1,0 +1,159 @@
+.task-list{
+
+    .task {
+        background-color: #fff;
+        border-radius: 6px;
+        box-shadow: 0 1px 0 rgba(9,30,66,0.25);
+        padding: 8px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        color: #172b4d;
+        font-size: 0.9em;
+        // gap: 0.4em;
+        .stay-same-height {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            .task-checkbox {
+                height: 16px;
+                width: 16px;
+                margin-left: 2px;
+                border-radius: 50%;
+                border: 2px solid #707c90;
+                
+            }
+            .task-task-text {
+                font-size: 14px;
+                font-weight: 400;
+                color: #626f85;
+            }
+            .right-btns {
+                margin-top: -4px;
+                gap: 0.2em;
+                .right-btns-btn {
+                    color: #172B4D;
+                    font-weight: bold;
+                    width: 16px;
+                    height: 16px;
+                    display: flex;
+                    padding: 12px;
+                    justify-content: center;
+                    justify-items: center;
+                    align-items: center;
+                    font-size: 12px;
+                    border-radius: 50%;
+                    &:hover {
+                        background-color: #f0f1f3;
+                    }
+                    
+                }
+                
+            }
+        
+        }
+        .labels {
+            display: flex;
+            gap: 0.5em;
+        }
+        .task-label {
+            padding: 0px;
+            margin: 0px;
+            background-color: #4bcd96;
+            height: 16px;
+            width: 56px;
+            border-radius: 4px;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+        .task-under-text {
+            margin-top: 6px;
+            .task-badges {
+                display: flex;
+                flex-wrap: wrap;
+                column-gap: 4px;
+                row-gap: 4px;
+                float: left;
+                align-items: center;
+                >* {
+                    margin-inline: 4px;
+                }
+                .badge {
+                    word-wrap: none;
+                    word-break: keep-all;
+                
+                    text-overflow: ellipsis;
+                    // height: 16px;
+                    font-size: 0.8em;
+                    font-weight: bold;
+                    border-radius: 3px;
+                    padding: 2px 5px;
+                    color: #ffffff;
+                    // margin-left: 6px;
+                    
+                }
+                .badge-priority {
+                    font-weight: 600;
+                    color: #5e4db1;
+                    background-color: #ded7fc; 
+                }
+                
+                .badge-status-approved {
+                    font-weight: 600;
+                    color: #216e4e;
+                    background-color: #b9f2da; 
+                }
+                
+                .badge-risk-high {
+                    font-weight: 600;
+                    color: #ad2e24;
+                    background-color: #fed4d1;
+                }
+                
+                .badge-now {
+                    font-weight: 600;
+                    color: #7f5f01;
+                    background-color: #f7e59f;
+                }
+                
+            }
+        }
+        .task-users {
+            margin-top: 6px;
+            display: flex;
+            gap: 2px;    
+            flex-wrap: wrap;
+            justify-content: right;
+            .task-user-icon {    
+                // margin-left: -5px;
+                width: 24px;
+                height: 24px;
+                img {
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                    // margin-left: -5px;
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+            }
+            .task-user-icon-no-pic {
+                display: flex;
+                justify-content: center;
+                justify-items: center;
+                align-items: center;
+                font-weight: bold;
+                font-size: 12px;
+                color: #3b5c78;
+                height: 24px;
+                width: 24px;
+                background-color: #00a2be;
+                border-radius: 50%;
+            
+            }
+        }
+    }
+
+
+}

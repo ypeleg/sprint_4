@@ -1,0 +1,95 @@
+.side-bar {
+
+
+    // z-index: 0;
+    width: 263px;
+    padding: 0px 12px 12px 12px;
+    backdrop-filter: blur(4px);
+    // background-color: hsl(4,44.3%,81.1%);
+    background-color: hsla(4, 44.3%, 76.1%, 0.9);
+    padding-inline: calc(3px + 12px);
+    border-right: 1px solid #c2a5a7;
+    // margin-top: -12px;
+
+
+    .sidebar-header {
+        padding-block: 11px;
+        padding-inline: 12px;
+        margin-inline: -16px;
+        border-bottom: 1px solid #be9494;
+
+        .logo-insider {
+            justify-content: center;
+            align-items: center;
+            gap: 0.7em;
+
+            .near-logo {
+                font-size: 12px;
+            }
+
+            .board-logo {
+                background: linear-gradient(#1F845A, #4BCE97);
+                width: 32px;
+                height: 32px;
+                aspect-ratio: 1/1;
+                display: flex;
+                justify-content: center;
+                justify-items: center;
+                align-items: center;
+                color: white;
+                font-size: 20px;
+                font-weight: bold;
+                border-radius: 5px;
+            }
+        }
+
+        .near-logo-btn {
+            color: #6b778c;
+            font-weight: bold;
+        }
+
+    }
+
+    .label {
+        margin-top: 12px;
+
+        color: #5E4DB2;
+        padding: 1px 2px;
+        font-size: 0.8em;
+        font-weight: bold;
+        background-color: #F3F0FF;
+    }
+
+    .side-section-header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        .board-sideitem {
+            display: flex;
+        }
+    }
+
+    .sidebar-first-section {
+        padding-top: 12px;
+    }
+
+    .side-bar-item {
+        height: 32px;
+        padding-inline: 21px;
+        margin-inline: -16px;
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        >i {
+            margin-right: -8px;    
+        }
+
+        .small-img {
+            height: 20px;
+            width: 24px;
+            // aspect-ratio: 1/1;
+            border-radius: 2px;
+        }
+    }
+}

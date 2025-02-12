@@ -1,21 +1,72 @@
-.board-canvas{
-    flex-grow: 1;
-    margin-top: 12px;
-    position: relative;
-    .board-list{
-        bottom: 0;
-    left: 0;
-    margin-bottom: 8px;
+.group-lists {
+    display: flex;
+    gap: 1em;
+    padding: 1em;
     overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 8px;
-    padding-top: 2px;
-    position: absolute;
-    right: 0;
-    scrollbar-color: #fff6 #00000026;
-    scrollbar-width: auto;
-    top: -2px;
+    .list {
+        width: 272px;
+        background-color: #ebecf0;
+        border-radius: 3px;
+        padding: 8px;
+        flex-shrink: 0;
     }
-
-
+    .group-list-footer {
+        display: flex;
+        justify-items: space-between;
+        .add-card-btn {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            color: #5e6c84;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95em;
+            padding: 6px;
+            border-radius: 3px;
+            place-self: end;    
+            gap: 0.8em;
+            display: flex;
+            &:hover {
+                background-color: #dadce0;
+            }
+        
+        }
+    }
+    .base-components-list {
+        border-radius: 12px;
+        background: #c6edfb;
+        display: flex;
+        flex-direction: column;  
+        height: 100%;
+        &:first-of-type{
+            background-color: #f0f1f3;
+        }
+        .list-header {
+            font-size: 14px;
+            font-weight: 600;
+            color: #172B4D;
+            display: flex;
+            justify-content: space-between;
+            padding-left: 8px;
+            padding-top: 8px;
+            font-size: 0.95em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            cursor: pointer;
+            color: #172b4d;
+            height: fit-content;
+            .group-list-headr-btns {
+                display: flex;
+                gap: 1em;
+                padding-right: 5px;
+            }
+            i {
+                font-size: 14px;
+                color: #6b778c;
+                margin-right: 5px;
+            }
+            
+        }
+    }
 }
