@@ -248,7 +248,7 @@ export function BoardDetails() {
 
                                 <div className="stay-same-height">
                                     <div className="card-checkbox" type="checkbox"/>                                
-                                    <span>make trello pixel perfect</span>
+                                    <span className="card-task-text">make trello pixel perfect</span>
                                 </div>
 
                                 <div className="card-under-text flex-space-between">
@@ -281,7 +281,10 @@ export function BoardDetails() {
 
                             </div>
 
-                            <button className="add-card-btn">+ Add a card</button>
+                            <div className="card-footer">
+                                <button className="add-card-btn">+ Add a card</button>
+                                <button className="create-from-template-btn"><i className="fa-regular fa-vector-square"></i></button>
+                            </div>
                         </div>
                     
              
