@@ -212,8 +212,48 @@ export function BoardDetails() {
 
 
 
-                    <div className="board-lists">
+                    <section className="board-lists">
         
+                        <div className="list base-components-list">
+                            <div className="list-header just-flex">
+                                <span>In Progress</span>
+                                <i className="fa-regular fa-ellipsis-h"></i>
+                            </div>
+                            <div className="card">
+                                <span>board component</span>
+                            </div>
+                            <div className="card">
+                                <span>board nav</span>
+                            </div>
+                            <div className="card card-with-badges">
+                                <div className="card-content">
+                                    <span>task details</span>
+                                </div>
+                                <div className="card-footer flex-space-between">
+                                    <div className="card-date">Feb 16</div>
+                                    <div className="card-badges just-flex">
+                                        <div className="badge badge-priority">Priority: Medium</div>
+                                        <div className="badge badge-status-approved">Status: Approved</div>
+                                    </div>
+                                </div>
+                                <div className="card-users">
+                                </div>
+                            </div>
+                            <div className="card card-with-badges">
+                                <div className="card-content">
+                                    <span>task details</span>
+                                </div>
+                                <div className="card-footer flex-space-between">
+                                    <div className="card-date">Feb 16</div>
+                                    <div className="card-badges just-flex">
+                                        <div className="badge badge-risk-high">Risk: High</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button className="add-card-btn">+ Add a card</button>
+                        </div>
+                    
+             
                         <div className="list base-components-list">
                             <div className="list-header just-flex">
                                 <span>base components</span>
@@ -252,9 +292,8 @@ export function BoardDetails() {
                             </div>
                             <button className="add-card-btn">+ Add a card</button>
                         </div>
-                    </div>
-             
 
+                    </section>
 
                 </section>
 
