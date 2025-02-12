@@ -1,8 +1,8 @@
 
 
-import { CarList } from '../cmps/CarList'
-import { useState, useEffect } from 'react'
-import { BoardList } from '../cmps/GroupList'
+// import { CarList } from '../cmps/CarList'
+// import { useState, useEffect } from 'react'
+// import { BoardList } from '../cmps/GroupList'
 
 export function Board() {
 
@@ -205,15 +205,61 @@ export function Board() {
                                 <span>Share</span>                                
                             </button>
                             <button className="dots-at-end">                                
-                                <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 14C6.10457 14 7 13.1046 7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12C3 13.1046 3.89543 14 5 14ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z" fill="currentColor"></path></svg>
+                                <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M5 14C6.10457 14 7 13.1046 7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12C3 13.1046 3.89543 14 5 14ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z" fill="currentColor"></path></svg>
                             {/* <i className="fa-solid fa-hanukiah"></i> */}
                             
                             </button>
                         </div>
 
                     </header>
+
+
+                    <div className="board-lists">
+        
+                        <div className="list base-components-list">
+                            <div className="list-header just-flex">
+                                <span>base components</span>
+                                <i className="fa-regular fa-ellipsis-h"></i>
+                            </div>
+                            <div className="card">
+                                <span>board component</span>
+                            </div>
+                            <div className="card">
+                                <span>board nav</span>
+                            </div>
+                            <div className="card card-with-badges">
+                                <div className="card-content">
+                                    <span>task details</span>
+                                </div>
+                                <div className="card-footer flex-space-between">
+                                    <div className="card-date">Feb 16</div>
+                                    <div className="card-badges just-flex">
+                                        <div className="badge badge-priority">Priority: Medium</div>
+                                        <div className="badge badge-status-approved">Status: Approved</div>
+                                    </div>
+                                </div>
+                                <div className="card-users">
+                                </div>
+                            </div>
+                            <div className="card card-with-badges">
+                                <div className="card-content">
+                                    <span>task details</span>
+                                </div>
+                                <div className="card-footer flex-space-between">
+                                    <div className="card-date">Feb 16</div>
+                                    <div className="card-badges just-flex">
+                                        <div className="badge badge-risk-high">Risk: High</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button className="add-card-btn">+ Add a card</button>
+                        </div>
+                    </div>
              
                 </section>
+
+
+
 
             </main>
         </div>
