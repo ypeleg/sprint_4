@@ -1,9 +1,13 @@
 
+
+`ABSOLUTLY_EVERY_SINGLE_MENU_AND_SUBMENU_IN_EVERY_SINGLE_PAGE_THERE_IS_ON_TRELLO.md`
+
+
 ---
 
 ## 1. Authentication & Landing
 
-1. **Sign Up / Login Screen**
+1. *Sign Up / Login Screen*
    - Fields: Email/Username, Password
    - OAuth Buttons (Google, Microsoft, Apple)
    - “Forgot Password?” Link
@@ -11,11 +15,11 @@
    - ReCaptcha / Bot Protection (optional)
    - Submit / Loading State
 
-2. **Password Reset Screen**
+2. *Password Reset Screen*
    - Request Reset (email input, success/failure)
    - Reset via Link (new password inputs, confirm, submit)
 
-3. **Landing / Home Redirect**
+3. *Landing / Home Redirect*
    - Once authenticated, user either:
      - Sees “Home” if returning user
      - Sees Onboarding (optional) if first-time user
@@ -25,20 +29,20 @@
 
 ## 2. Home Screen
 
-5. **Workspace Overview Panel**
+5. *Workspace Overview Panel*
    - All Workspaces
    - Each Workspace Card (name, members, boards count, settings icon if admin)
 
-6. **Boards Overview Panel**
+6. *Boards Overview Panel*
    - Starred Boards, Recently Viewed Boards
    - Personal Boards (not in a workspace)
    - “Create New Board” Button
 
-7. **Cards Assigned to You Panel**
+7. *Cards Assigned to You Panel*
    - List of your cards across boards
    - Due date highlights, priority indicators
 
-8. **Recent Activity Feed**
+8. *Recent Activity Feed*
    - Recent changes across boards
 
 ---
@@ -47,37 +51,37 @@
 
 This layout (or “shell”) wraps most main screens. It includes:
 
-9. **Top Bar**
-   - **Trello Logo / Home Link**
-   - **Search Bar**
+9. *Top Bar*
+   - *Trello Logo / Home Link*
+   - *Search Bar*
      - Autocomplete (boards, cards, workspaces)
      - Recent searches
      - Advanced search link
-   - **Create Button**
+   - *Create Button*
      - Create Board flow
      - Create Workspace flow
      - Create Template
-   - **Workspaces / Boards Dropdown**
+   - *Workspaces / Boards Dropdown*
      - Pinned/Starred Boards
      - Recent Boards
      - All Workspaces listing
      - Workspace Settings link
-   - **Notifications Icon**
+   - *Notifications Icon*
      - Dropdown of notifications (assignments, due dates, @mentions)
      - “Mark all as read”
      - “See All” -> Notifications Screen
-   - **User Profile / Account Menu**
+   - *User Profile / Account Menu*
      - Profile & Visibility
      - Account Settings
      - Activity & Recent Boards
      - Log Out
      - Theme / Color Mode (light/dark, if supported)
-   - **Help / Info (e.g., “?”)**
+   - *Help / Info (e.g., “?”)*
      - Help Center link
      - Keyboard Shortcuts
      - Contact Support
 
-10. **Footer**
+10. *Footer*
    - Links to support, privacy, etc.
 
 ---
@@ -86,7 +90,7 @@ This layout (or “shell”) wraps most main screens. It includes:
 
 When you click on a specific Workspace:
 
-11. **Workspace Header**
+11. *Workspace Header*
    - Name, Avatar/Logo
    - “Workspace Menu” (gear or dropdown)
      - Invite members
@@ -96,13 +100,13 @@ When you click on a specific Workspace:
      - Leave workspace (non-admin)
      - Delete workspace (admin)
 
-12. **Workspace Boards List**
+12. *Workspace Boards List*
    - Grid or list view
    - “Create Board” button
    - Archive or restore boards (admin actions)
    - Sort boards (name, last active)
 
-13. **Workspace Menu (if expanded)**
+13. *Workspace Menu (if expanded)*
    - Settings (workspace name, desc, visibility)
    - Members (list, roles, invitations)
    - Billing & Security (paid/enterprise)
@@ -114,7 +118,7 @@ When you click on a specific Workspace:
 
 When a user opens a specific board:
 
-14. **Board Header**
+14. *Board Header*
    - Board Title (inline editable)
    - Star / Favorite toggle
    - Board Visibility (Private, Workspace, Public)
@@ -123,7 +127,7 @@ When a user opens a specific board:
    - Power-Ups icon (Butler, etc.)
    - “Show Menu” button -> Opens Board Sidebar
 
-15. **Lists & Cards Area**
+15. *Lists & Cards Area*
    - Horizontal scroll of Lists
    - “Add another list” button
    - Each List:
@@ -135,19 +139,19 @@ When a user opens a specific board:
          - Cancel with “x” or Esc
    - Drag & drop (lists and cards)
 
-16. **Board Sidebar Menu** (opens from right side)
-   - **About This Board** (description, background preview)
-   - **Background & Colors**
-   - **Stickers & Emojis** (drag onto cards)
-   - **Custom Fields** (if power-up)
-   - **Labels** (create, edit, assign colors)
-   - **Search Cards** (mini search)
-   - **Filter Cards** (by label, member, due date)
-   - **Activity** (board-level feed)
-   - **Automation / Butler** (rules, triggers, commands)
-   - **Power-Ups** (enable/disable, configure)
-   - **Manage Members** (invite, remove, change roles)
-   - **Settings** (“More...”)
+16. *Board Sidebar Menu* (opens from right side)
+   - *About This Board* (description, background preview)
+   - *Background & Colors*
+   - *Stickers & Emojis* (drag onto cards)
+   - *Custom Fields* (if power-up)
+   - *Labels* (create, edit, assign colors)
+   - *Search Cards* (mini search)
+   - *Filter Cards* (by label, member, due date)
+   - *Activity* (board-level feed)
+   - *Automation / Butler* (rules, triggers, commands)
+   - *Power-Ups* (enable/disable, configure)
+   - *Manage Members* (invite, remove, change roles)
+   - *Settings* (“More...”)
      - Archived Items (cards/lists)
      - Board Permissions
      - Copy Board
@@ -155,7 +159,7 @@ When a user opens a specific board:
      - Close Board
      - Delete Board
      - Export Board
-   - **Collapse Sidebar** button
+   - *Collapse Sidebar* button
 
 ---
 
@@ -174,7 +178,7 @@ When a user opens a specific board:
 ### 6.2 Card Detail Modal
 Opens when you click a card:
 
-17. **Header**
+17. *Header*
    - Title (editable)
    - Close Button (X)
    - Card Menu (3-dot):
@@ -185,23 +189,23 @@ Opens when you click a card:
      - Print
    - Move/Copy Buttons (sometimes separate)
 
-18. **Main Panel**
+18. *Main Panel*
    - Description (rich text/Markdown)
    - Activity Feed (comments, timestamps, @mentions)
    - Comment Box (text area, file attach, emojis)
 
-19. **Right Sidebar**
-   - **Add to Card**
+19. *Right Sidebar*
+   - *Add to Card*
      - Members
      - Labels
      - Checklist
      - Dates (due date, reminders, start date)
      - Attachment
      - Cover
-   - **Power-Ups** (custom fields, voting, etc.)
-   - **Automation / Butler** (if integrated)
-   - **Card Settings** (move, copy, subscribe, archive, delete)
-   - **Share & More** (card link, email-to-card address)
+   - *Power-Ups* (custom fields, voting, etc.)
+   - *Automation / Butler* (if integrated)
+   - *Card Settings* (move, copy, subscribe, archive, delete)
+   - *Share & More* (card link, email-to-card address)
 
 ---
 
@@ -217,17 +221,17 @@ Opens when you click a card:
 
 ## 8. Members & Collaboration Screens
 
-20. **Invite to Board**  
+20. *Invite to Board*  
    - Pop-up or modal from Board/Workspace
    - Email or shareable link
    - Role selection (admin, normal, observer)
 
-21. **Manage Members** (Board or Workspace)
+21. *Manage Members* (Board or Workspace)
    - Member list
    - Invite new
    - Adjust roles
 
-22. **Member Profile** 
+22. *Member Profile* 
    - Basic info (avatar, name, username)
    - Boards/workspaces they belong to
 
@@ -235,29 +239,29 @@ Opens when you click a card:
 
 ## 9. Attachments
 
-- **Attachment Upload/Selection Modal** (if needed):
+- *Attachment Upload/Selection Modal* (if needed):
   - Local file or URL
   - Cloud integrations (Drive, Dropbox)
-- **Attachment Previews** in Card Detail
-- **Attachment Actions**: rename, download, remove
+- *Attachment Previews* in Card Detail
+- *Attachment Actions*: rename, download, remove
 
 ---
 
 ## 10. Checklists
 
-- **Add Checklist** (in Card Sidebar)
+- *Add Checklist* (in Card Sidebar)
   - Checklist name
   - Add checklist items
-- **Checklist Editing** (directly inside card detail)
+- *Checklist Editing* (directly inside card detail)
   - Rename items, mark complete
   - Convert item to new card 
-- **Progress Bar** on card front 
+- *Progress Bar* on card front 
 
 ---
 
 ## 11. Power-Ups Screen/Modal
 
-- **Power-Ups Directory** (within Board Sidebar)
+- *Power-Ups Directory* (within Board Sidebar)
   - List of possible power-ups
   - Enable / Disable
   - Configure
@@ -270,22 +274,22 @@ Opens when you click a card:
 
 ## 12. Automation (Butler)
 
-- **Butler Dashboard** (linked from Board Sidebar)
+- *Butler Dashboard* (linked from Board Sidebar)
   - Rules, Card Buttons, Board Buttons, Calendar Commands, Due Date Commands
-- **Create/Edit Rule** Modal
+- *Create/Edit Rule* Modal
   - When/if conditions
   - Actions
-- **Scheduling** (Butler calendar-based)
+- *Scheduling* (Butler calendar-based)
 
 ---
 
 ## 13. Notifications Screen
 
-- **Notifications Dropdown** (top bar)
+- *Notifications Dropdown* (top bar)
   - Quick list of recent notifications
   - “Mark all as read”
   - “See All Notifications” link
-- **Notifications Page** (if separate)
+- *Notifications Page* (if separate)
   - Full list of notifications
   - Filters (read/unread, board-specific, etc.)
 
@@ -293,32 +297,32 @@ Opens when you click a card:
 
 ## 14. Activity Feed Screens
 
-23. **Board Activity** (in Board Sidebar)
+23. *Board Activity* (in Board Sidebar)
    - Scrollable feed of actions
    - Load more
-24. **Card Activity** (in Card Detail)
+24. *Card Activity* (in Card Detail)
    - Only that card’s actions
-25. **Global Activity** 
+25. *Global Activity* 
    - Possibly on Home or separate page
 
 ---
 
 ## 15. User Profile & Settings
 
-26. **Profile Screen**
+26. *Profile Screen*
    - Name, username, avatar
    - Bio / description
    - Email (if verified)
    - Location / Time zone
 
-27. **Account Settings Screen**
+27. *Account Settings Screen*
    - Change password
    - Change email
    - Two-Factor Authentication setup
    - Language
    - Notification preferences (email, in-app, desktop)
 
-28. **Application Settings** (could be combined with Account Settings)
+28. *Application Settings* (could be combined with Account Settings)
    - Keyboard shortcuts reference
    - Date/region format
    - Theme (light/dark)
@@ -327,13 +331,13 @@ Opens when you click a card:
 
 ## 16. Admin / Owner Controls (If Implemented)
 
-29. **Workspace Administration Screen**  
+29. *Workspace Administration Screen*  
    - Member management (bulk invite, remove, roles)
    - Billing & Payment
    - Organization-wide settings (board creation restrictions, power-up restrictions)
    - Security/SSO (enterprise)
 
-30. **Board Administration Screen**  
+30. *Board Administration Screen*  
    - Permissions (who can add members, etc.)
    - Invite links on/off
    - Close/Delete board
@@ -342,12 +346,12 @@ Opens when you click a card:
 
 ## 17. Search & Filter Screens
 
-31. **Global Search Results Page** (from top bar advanced search)
+31. *Global Search Results Page* (from top bar advanced search)
    - Boards, Cards, Workspaces
    - Filter by label, due date, members
    - Possibly advanced syntax (`label:red`, `@username`)
 
-32. **Board-Level Filter** (part of Board Screen’s top or sidebar)
+32. *Board-Level Filter* (part of Board Screen’s top or sidebar)
    - Filter by label
    - Filter by member
    - Filter by due date
@@ -357,9 +361,9 @@ Opens when you click a card:
 
 ## 18. Archived Items Screens
 
-33. **Archived Cards & Lists** (via Board Sidebar → “More…” → “Archived Items”)
+33. *Archived Cards & Lists* (via Board Sidebar → “More…” → “Archived Items”)
    - List of archived cards/lists
    - Restore or permanently delete
-34. **Archived Boards** (Closed Boards at Workspace level)
+34. *Archived Boards* (Closed Boards at Workspace level)
    - Reopen or delete
 

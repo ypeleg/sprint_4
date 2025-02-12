@@ -1,11 +1,23 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
 
-// https://vitejs.dev/config/
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import Terminal from 'vite-plugin-terminal'
+
 export default defineConfig({
-	plugins: [react()],
-	build: {
-		outDir: '../backend/public',
-		emptyOutDir: true,
-	},
+  plugins: [react(),
+    Terminal({
+        console: 'terminal',
+        output: ['terminal', 'console'],
+      }),
+  ],
+  server: {
+    watch: {
+      usePolling: true,
+    },
+  },
+  build: {
+    outDir: '../backend/public',
+    emptyOutDir: true,
+  },
 })
+
