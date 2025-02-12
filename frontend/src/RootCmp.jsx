@@ -18,7 +18,7 @@ import { Routes, Route } from 'react-router'
 // import { AboutUs, AboutTeam, AboutVision } from './pages/AboutUs'
 
 
-import { Board } from './pages/Board.jsx'
+import { BoardDetails } from './pages/BoardDetails.jsx'
 
 
 export function RootCmp() {
@@ -29,11 +29,11 @@ export function RootCmp() {
 
             <main>
                 <Routes>
-                    
-                    
-                    <Route path="" element={<Board />} />
-                    
-                    
+
+
+                    <Route path="" element={<BoardDetails />} />
+
+
                     {/* <Route path="" element={<HomePage />} />
                     <Route path="about" element={<AboutUs />}>
                         <Route path="team" element={<AboutTeam />} />
