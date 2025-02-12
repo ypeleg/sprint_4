@@ -47,12 +47,17 @@ export function Board() {
                         
                     </div>
                     
-                    <div className="just-flex">
-                        <button>5 days left</button>
+                    <div className="just-flex and-center">
+                        <button className="days-left just-flex">
+                            <i className="fa-regular fa-star"></i>            
+                            5 days left</button>
                         <input placeholder= "     Search"/>
-                        <i className="bell">bellicon</i>
-                        <i className="info">?</i>
-                        <div className="user"></div>
+                        {/* <i className="bell">bellicon</i> */}
+                        <i className="fa-solid fa-bell"></i>
+                        <div className="info">
+                            <i className="fa-solid fa-question"></i>
+                        </div>
+                        <img className="user" src="user_spec.png"></img>
                     </div>                        
 
                 </nav>
@@ -178,7 +183,7 @@ export function Board() {
                         <div className="header-group">
                             <button><i className="fa-regular fa-rocket"></i></button>
                             <button><i className="fa-regular fa-bolt"></i></button>
-                            <button><i className="fa-regular fa-bars"></i> Filters</button>
+                            <button className="filters-btn"><i className="fa-regular fa-bars"></i> Filters</button>
                             <div className="divider"></div>
                             <div className="users">
                                 <div className="user-icon">
@@ -198,8 +203,9 @@ export function Board() {
                                 <i className="fa-regular fa-user"></i>
                                 <span>Share</span>                                
                             </button>
-                            <button className="">
-                            <i className="fa-solid fa-hanukiah"></i>
+                            <button className="dots-at-end">                                
+                                <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 14C6.10457 14 7 13.1046 7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12C3 13.1046 3.89543 14 5 14ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z" fill="currentColor"></path></svg>
+                            {/* <i className="fa-solid fa-hanukiah"></i> */}
                             
                             </button>
                         </div>
