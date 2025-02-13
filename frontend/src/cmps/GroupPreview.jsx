@@ -4,7 +4,7 @@ import { TaskList } from "./TaskList"
 
 
 
-export function GroupPreview({ onLoadTask, group }){
+export function GroupPreview({ currentBoard, onLoadTask, group }){
  const [showForm,setShowForm] = useState(false)
  function onSetShowForm(){
     setShowForm(!showForm)
@@ -24,7 +24,7 @@ return(
                         </div>
                     </div>
 
-                    <TaskList onLoadTask={onLoadTask} onSetShowForm={onSetShowForm} showForm={showForm} group={group} />
+                    <TaskList currentBoard = {currentBoard} currentGroup={group} onLoadTask={onLoadTask} onSetShowForm={onSetShowForm} showForm={showForm} group={group} />
 
                     {!showForm&&<ListFooter   onSetShowForm={onSetShowForm}/>}
                 </div>

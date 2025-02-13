@@ -1216,6 +1216,16 @@ input.task-title:focus {
     padding-inline: 2px;
 }
 
+.incomplete-label {
+    background-color: #c9372c;
+    color: white;
+    margin-inline: 5px;
+    font-size: 12px;
+    padding-block: 0px;
+    margin-block: 0px;
+    padding-inline: 2px;
+}
+
 .the-tasks {
     display: flex;
     flex-wrap: wrap;
@@ -1426,4 +1436,21 @@ input.task-title:focus {
     align-items: center;
     gap: 0.7em;
     margin-top: 8px;
+}
+
+.date-picker:hover {
+    background-color: #cfd3db;
+}
+
+.date-picker {
+
+    cursor: pointer;
+}
+.date-picker-input {
+    position: absolute;
+    opacity: 0;
+}
+
+.pointer-cursor {
+    cursor:  pointer;
 }

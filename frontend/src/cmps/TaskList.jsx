@@ -7,7 +7,7 @@ import { useNavigate } from "react-router"
 import { AddTaskForm } from "./AddTaskForm"
 
 
-export function TaskList({ onLoadTask, showForm, group, onSetShowForm }) {
+export function TaskList({ currentBoard, currentGroup, onLoadTask, showForm, group, onSetShowForm }) {
     const {tasks} = group
     const navgite = useNavigate()
     
@@ -22,7 +22,7 @@ export function TaskList({ onLoadTask, showForm, group, onSetShowForm }) {
             {/*<pre>{JSON.stringify(tasks.map(task => task.id), null, 4)}</pre>*/}
 
             {tasks.map((task, idx) => {
-                return (<div key={task.id} onClick={() => onLoadTask(task)} className="task">
+                return (<div key={task.id} onClick={() => onLoadTask(task, tasks, currentGroup, currentBoard)} className="task">
 
 
                     {task.style.backgroundImage &&
