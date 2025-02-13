@@ -3,10 +3,28 @@
 import { store } from '../store'
 import { boardService } from '../../services/board'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG } from '../reducers/board.reducer'
+import { random } from '../../services/util.service'
 
 
-export async function getEmptyBoard() {
-    return boardService.getEmptyBoard()
+export function getEmptyBoard() {
+    // return boardService.getEmptyBoard()
+    return {
+        // _id: random.id(random.randint(4, 10)),
+        title: "",
+        isStarred: false,
+        archivedAt: null,
+        createdBy: {
+            _id: "123",
+            fullname: "shiri",
+            imgUrl: ""
+        },
+        style: {
+            backgroundImage: ""
+        },
+        labels: [],
+        members: [],
+        groups: []
+    }
 }
 
 export async function loadBoards(filterBy) {
