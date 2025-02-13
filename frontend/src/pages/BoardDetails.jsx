@@ -11,33 +11,53 @@ import React, { useRef, useEffect, useState } from "react"
 import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
 
 
+// labels
+// due date
+// watching
+// attachments
+// checklists
+// activity
+// custom fields
+// upper names
 
 
 
 export function TaskModal({ taskToShow, onClose }) {
 
     // const [coverUrl, setCoverUrl] = useState("cover-img.png")
-    const [coverUrl, setCoverUrl] = useState("")
+    
+    const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
 
-    const [cardTitle, setCardTitle] = useState("Side nav")
+    const [cardTitle, setCardTitle] = useState(taskToShow.title)
     const [listName, setListName] = useState("BACKLOG")
-    const [isWatching, setIsWatching] = useState(false)
-    const [activeLabels, setActiveLabels] = useState([])
+    const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)
+    const [activeLabels, setActiveLabels] = useState(taskToShow.labels || [])
     const availableLabels = ["yellow", "blue", "green", "orange", "red", "purple"]
-    const [description, setDescription] = useState("sdhgsdjbsjd")
+    const [description, setDescription] = useState(taskToShow.description || [])
+    
     const [risk, setRisk] = useState("")
     const [priority, setPriority] = useState("")
     const [status, setStatus] = useState("")
-    const [attachments, setAttachments] = useState([])
+
+    const [attachments, setAttachments] = useState(taskToShow.attachments || [])
     const [newAttachment, setNewAttachment] = useState("")
-    const [checklistItems, setChecklistItems] = useState([{ id: 1, text: "item", completed: true }])
+
+    const [checklistItems, setChecklistItems] = useState(
+        taskToShow.checklists || []                
+    )
     const [newChecklistItem, setNewChecklistItem] = useState("")
+
     const [hideChecked, setHideChecked] = useState(false)
-    const [activityLog, setActivityLog] = useState(['yo'])
+
+    const [activityLog, setActivityLog] = useState(taskToShow.activity || [])
+
     const [newComment, setNewComment] = useState("")
     function handleLabelToggle(color) {
         setActiveLabels((prev) => prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color] )
     }
+
+    const [members, setMembers] = useState(taskToShow.memberIds || [])
+    
 
     function handleAddAttachment() {
         if (!newAttachment.trim()) return
@@ -126,31 +146,46 @@ export function TaskModal({ taskToShow, onClose }) {
                                 <div className="section-inner">
                                     <div className="section-label">Members</div>
                                         <div className="just-flex-without-anything">
-                                            <div className="member-circle" title="LH">
-                                                LH
-                                            </div>
+                                            {members.map( member => {
+                                            return (<div className="member-circle" title="LH">
+                                                        LH
+                                                    </div>)
+                                                // todo
+                                            })}
+
                                             <button className="add-member-btn">+</button>
                                         </div>
                                     </div>
                             </div>
+
+                            {/* <div className="labels"> */}
+                                {/* a */}
+                                {/* <pre>{JSON.stringify(taskToShow.labels, null, 4)}</pre> */}
+                                {/* <div>{taskToShow.labels}</div> */}
+
+                            {/* {(!!taskToShow.labels) &&
+                                <>{taskToShow.labels.map(label => {
+                                    return <div key={label.id} className="task-label color-green"
+                                                style={{backgroundColor: label.color || ''}}
+                                    ></div>
+                                })}</>
+                            } */}
+                            {/* </div> */}
+
                             <div className="task-labels">
                                 <div className="section-inner">
                                     <div className="section-label">Labels</div>
                                         <div className="just-flex-without-anything">
-                                        {availableLabels.slice(0, 2).map((color) => (
-                                            <div
-                                                key={color}
-                                                className={`member-label ${color}`}
-                                                onClick={() => handleLabelToggle(color)}
-                                                title={`Toggle ${color} label`}
-                                                style={{
-                                                    border:
-                                                        activeLabels.includes(color)
-                                                            ? "2px solid #fff"
-                                                            : "none",
-                                                }}
-                                            />
-                                        ))}
+                                            {(!!taskToShow.labels) &&
+                                                <>{taskToShow.labels.map(label => {
+                                                    return (<div
+                                                        key={label.color}
+                                                        className={`member-label ${label.color}`}                                                                                                
+                                                        style={{backgroundColor: label.color || ''}}
+                                                        >
+                                                            </div>)
+                                                })}</>
+                                            }
                                             <button className="add-label-btn">+</button>
                                         </div>
                                     </div>
@@ -499,18 +534,12 @@ export function BoardDetails() {
     return (
         <div className={`everything ${(isPopupShown)? 'popup-open' : ''}`}>
 
-            <button className="open-chat-btn" onClick={togglePopup}>💬</button>
+            {/* <button className="open-chat-btn" onClick={togglePopup}>💬</button> */}
             {isPopupShown && (!!taskToShow) && <>
-
                 <div className="popup">
-                    <TaskModal taskToShow={taskToShow} onClose={togglePopup}/>
+                    <TaskModal taskToShow={taskToShow} onClose={togglePopup} />
                 </div>
-                <div className="popup-backdrop" onClick={() => {
-                    console.log('clicked')
-                    togglePopup()
-                }}></div>
-
-
+                <div className="popup-backdrop"></div>
             </>}
 
 
