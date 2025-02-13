@@ -1,70 +1,20 @@
+import { useNavigate } from "react-router"
+import { loadTask } from "../store/store"
+import { useSelector } from "react-redux"
 
 
 
 export function TaskList( { tasks, style } ) {
 
-
-    const someTask = {
-        id: 'c104',
-        title: 'Help me',
-        status: 'inProgress', // monday / both
-        priority: 'high', // monday / both
-        dueDate: '2024-09-24',
-        description: 'description',
-        comments: [
-            // in Trello this is easier implemented as an activity
-            {
-                id: 'ZdPnm',
-                title: 'also @yaronb please CR this',
-                createdAt: 1590999817436,
-                byMember: {
-                    _id: 'u101',
-                    fullname: 'Tal Tarablus',
-                    imgUrl: '',
-                },
-            },
-        ],
-        checklists: [
-            {
-                id: 'YEhmF',
-                title: 'Checklist',
-                todos: [
-                    {
-                        id: '212jX',
-                        title: 'To Do 1',
-                        isDone: false,
-                    },
-                ],
-            },
-        ],
-        
-        memberIds: ['u101'],
-        labelIds: ['l101', 'l102'],
-        badges: [
-            {
-                id: 'id',
-                text: 'Priority: Medium',
-                badeType: 'priority'
-            }
-        ],
-
-        byMember: {
-            _id: 'u101',
-            fullname: 'Tal Tarablus',
-            imgUrl: '',
-        },
-        style: {
-            backgroundColor: '#26de81',
-        },
-    }
-
-
+    const navgite = useNavigate()
+   const board =useSelector(state => state.boardModule.board) 
+   
     if (!tasks.length) return (<>Loading..</>)
     console.log(tasks)
     return (
         <div className="task-list">
 
-            {tasks.map( (task, idx) => { return (<div key={task.id} className="task">
+            {tasks.map( (task, idx) => { return (<div key={task.id} onClick={()=> loadTask(task.id)} className="task">
 
 
                     {task.style.backgroundImage &&  
