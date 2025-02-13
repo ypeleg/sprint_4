@@ -18,6 +18,8 @@ dist-ssr
 .idea/*
 .idea/
 !.vscode/extensions.json
+.idea/*
+.idea/
 .idea
 .DS_Store
 *.suo
