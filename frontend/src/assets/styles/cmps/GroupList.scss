@@ -4,7 +4,7 @@
     padding: 1em;
     overflow-x: auto;
 
-    height: calc(100vh - 57px - 60px); 
+    height: calc(100vh - 57px - 60px);
 
     .list {
         width: 272px;
@@ -13,9 +13,11 @@
         padding: 8px;
         flex-shrink: 0;
     }
+
     .group-list-footer {
         display: flex;
         justify-items: space-between;
+
         .add-card-btn {
             width: 100%;
             text-align: left;
@@ -27,18 +29,20 @@
             font-size: 0.95em;
             padding: 6px;
             border-radius: 3px;
-            place-self: end;    
+            place-self: end;
             gap: 0.8em;
             display: flex;
+
             &:hover {
                 background-color: #dadce0;
             }
-        
+
         }
     }
+
     .base-components-list {
-        
-        
+
+
         // overflow:auto; 
         // vertical-align:middle;
         // overflow-y: scroll;
@@ -54,13 +58,15 @@
         border-radius: 12px;
         background: #c6edfb;
         display: flex;
-        flex-direction: column;  
+        flex-direction: column;
         height: fit-content;
         max-height: 100%;
+
         // height: 100vh;
-        &:first-of-type{
+        &:first-of-type {
             background-color: #f0f1f3;
         }
+
         .list-header {
             font-size: 14px;
             font-weight: 600;
@@ -75,17 +81,19 @@
             cursor: pointer;
             color: #172b4d;
             height: fit-content;
+
             .group-list-headr-btns {
                 display: flex;
                 gap: 1em;
                 padding-right: 5px;
             }
+
             i {
                 font-size: 14px;
                 color: #6b778c;
                 margin-right: 5px;
             }
-            
+
         }
     }
 }

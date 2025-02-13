@@ -13,25 +13,25 @@ import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoar
 export function BoardDetails() {
 
     const boardToShow = useSelector(state => state.boardModule.board)
-    const task = useSelector(state => state.boardModule.task)       
-    const {boardId} = useParams()
+    const task = useSelector(state => state.boardModule.task)
+    const { boardId } = useParams()
     console.log(boardId)
-   
 
-    useEffect( () => {        
-       onloadboard()
-        
+
+    useEffect(() => {
+        onloadboard()
+
     }, [])
 
-  async function onloadboard() {
-     await loadBoard(boardId)
-  }
+    async function onloadboard() {
+        await loadBoard(boardId)
+    }
 
     if (!boardToShow) return (<>Loading..</>)
     return (
         <div className="everything">
-           <AppHeader/>
-       
+            <AppHeader />
+
             <main className="main-layout">
 
                 <SideBar />
@@ -53,16 +53,16 @@ export function BoardDetails() {
                             <div className="divider"></div>
                             <div className="users">
                                 <div className="user-icon">
-                                    <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png"/>
+                                    <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png" />
                                 </div>
                                 <div className="user-icon">
-                                    <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png"/>
+                                    <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png" />
                                 </div>
                                 <div className="user-icon">
-                                    <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png"/>
+                                    <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png" />
                                 </div>
                                 <div className="user-icon">
-                                    <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png"/>
+                                    <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png" />
                                 </div>
                             </div>
                             <button className="share-btn">
@@ -79,7 +79,7 @@ export function BoardDetails() {
                         </div>
                     </header>
 
-                    <GroupList groups={boardToShow.groups}/>
+                    <GroupList groups={boardToShow.groups} />
 
                 </section>
 

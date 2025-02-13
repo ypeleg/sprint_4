@@ -7,7 +7,7 @@ export function SideBar() {
 
     const boards = useSelector(state => state.boardModule.boards)
 
-    if(!boards.length){
+    if (!boards.length) {
         loadBoards()
     }
 
@@ -87,18 +87,18 @@ export function SideBar() {
                 </div>
                 <article>
 
-                   {boards.map(board =>{
-                  return(  <div className="side-bar-item flex-space-between nav-highlight-hint">
+                    {boards.map(board => {
+                        return (<div className="side-bar-item flex-space-between nav-highlight-hint">
 
-                    <div className="board-sideitem just-flex">
-                        <img className="small-img" src={board.style.backgroundImage} />
-                        <span>{board.title}</span>
-                    </div>
-                    <i className="fa-regular fa-star"></i>
+                            <div className="board-sideitem just-flex">
+                                <img className="small-img" src={board.style.backgroundImage} />
+                                <span>{board.title}</span>
+                            </div>
+                            <i className="fa-regular fa-star"></i>
 
-                </div>)
+                        </div>)
 
-                   })} 
+                    })}
 
                 </article>
             </section>

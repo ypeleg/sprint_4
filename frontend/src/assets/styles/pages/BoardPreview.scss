@@ -1,48 +1,48 @@
 .board-preview {
-  position: relative;
-  width: 190px;
-  height: 96px;
-  border-radius: 10px;
-  display: flex;
-  font-size: 16px;
-  background-size: cover;
-  background-color: rgba(28, 1, 1, 0.605);
-  color: white;
-  font-weight: bold;
-  transition: 0.3s;
-  cursor: pointer;
+    position: relative;
+    width: 190px;
+    height: 96px;
+    border-radius: 10px;
+    display: flex;
+    font-size: 16px;
+    background-size: cover;
+    background-color: rgba(28, 1, 1, 0.605);
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
 
-  h4 {
-    margin: 0px 10px 10px 10px;
-  }
+    h4 {
+        margin: 0px 10px 10px 10px;
+    }
 
-  .star-btn {
-    position: absolute;
-    right: 6px;
-    bottom: 0px;
-    opacity: 0;
-    transition: 1s;
-  }
+    .star-btn {
+        position: absolute;
+        right: 6px;
+        bottom: 0px;
+        opacity: 0;
+        transition: 1s;
+    }
 }
 
 .create-board-preview {
-  background: #f1f3f5;
-  color: #1f2937;
-  justify-content: center;
-  align-items: center;
+    background: #f1f3f5;
+    color: #1f2937;
+    justify-content: center;
+    align-items: center;
 }
 
 .board-preview:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }
 
 .board-preview:hover .star-btn {
-  opacity: 1;
+    opacity: 1;
 }
 
 .create-board-preview {
-  background: #f1f3f5;
-  color: #1f2937;
-  justify-content: center;
-  align-items: center;
+    background: #f1f3f5;
+    color: #1f2937;
+    justify-content: center;
+    align-items: center;
 }

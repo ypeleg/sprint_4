@@ -9,24 +9,24 @@ import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoar
 
 
 export function DebugPage() {
-    
-    const boards = useSelector(state => state.boardModule.boards)    
-    const [boardToShow, setBoardToShow] = useState()    
 
-    useEffect( () => {
-        if (boards.length) {            
-            
+    const boards = useSelector(state => state.boardModule.boards)
+    const [boardToShow, setBoardToShow] = useState()
+
+    useEffect(() => {
+        if (boards.length) {
+
             const selectedBoard = boards[0]
             // const selectedBoard = filterBy...
             setBoardToShow(selectedBoard)
         }
     }, [boards])
-    
-    useEffect(() => {       
-        getEmptyBoard().then(e => addBoard(e)).then( e => {
+
+    useEffect(() => {
+        getEmptyBoard().then(e => addBoard(e)).then(e => {
             // setBoardToShow(e)
         })
-    } , [])
+    }, [])
 
 
     return (

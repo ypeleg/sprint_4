@@ -2,6 +2,7 @@
     // font-family: caveat;
     // src: url(../../fonts/Caveat/Caveat-Regular.ttf);
 }
+
 @font-face {
     // font-family: montserrat;
     // src: url(../../fonts/Montserrat/Montserrat-Regular.ttf);
@@ -51,9 +52,9 @@
 @font-face {
     font-family: fa;
     src: url(../fonts/FontAwesome/fa-brands-400.ttf),
-         url(../fonts/FontAwesome/fa-regular-400.ttf),
-         url(../fonts/FontAwesome/fa-solid-900.ttf),
-         url(../fonts/FontAwesome/fa-v4compatibility.ttf);
+        url(../fonts/FontAwesome/fa-regular-400.ttf),
+        url(../fonts/FontAwesome/fa-solid-900.ttf),
+        url(../fonts/FontAwesome/fa-v4compatibility.ttf);
 
 }
 
@@ -78,54 +79,63 @@
     src: url(../fonts/FontAwesome/fa-regular-400.ttf);
 }
 
-.fa-solid-fr{ font-family:'Font Awesome 5 Pro' }
+.fa-solid-fr {
+    font-family: 'Font Awesome 5 Pro'
+}
+
 .fa-solid-fr::before {
     /*font-family: fa;*/
-    font-family:'Font Awesome 5 Pro';
+    font-family: 'Font Awesome 5 Pro';
     /*font-family: fa-solid-fr;*/
     /*font-family: fa-solid-fr;*/
     /* font-family:"Font Awesome 5 Pro"; */
     /*font-style:normal;*/
     /* font-weight:400; */
     /* font-weight:400; */
-    font-display:block;
+    font-display: block;
     font-style: normal;
 }
 
 
 
-.fa-regular{ font-family:"Font Awesome 5 Pro" }
+.fa-regular {
+    font-family: "Font Awesome 5 Pro"
+}
 
-.far{font-weight:400}
+.far {
+    font-weight: 400
+}
 
-.far { font-family: fa-solid }
+.far {
+    font-family: fa-solid
+}
 
 .far::before {
     font-family: fa-solid;
     font-weight: 400;
 }
 
-    /* Font Awesome */
+/* Font Awesome */
 .fa::before {
     font-family: fa;
 }
 
 .fa-regular::before {
     /*font-family: fa-regular;*/
-    font-family:"Font Awesome 5 Pro";
+    font-family: "Font Awesome 5 Pro";
     /*font-style:normal;*/
-    font-weight:400;
-    font-display:block;
+    font-weight: 400;
+    font-display: block;
     font-style: normal;
 }
 
 .fa-solid::before {
     /*font-family: fa-solid;*/
-    font-family:"Font Awesome 5 Pro";
+    font-family: "Font Awesome 5 Pro";
     /*font-style:normal;*/
     /*font-weight:400;*/
-    font-weight:400;
-    font-display:block;
+    font-weight: 400;
+    font-display: block;
     font-style: normal;
 }
 
@@ -208,5 +218,3 @@
     content: '\f2fe';
     font-style: normal;
 }
-
-

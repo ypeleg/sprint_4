@@ -19,12 +19,12 @@ export function NavBarPageIndex() {
 
             <div>Workspace</div>
             <div className="sidebar-header flex-space-between">
-            
+
                 <div className="flex-space-between logo-insider">
-                
+
                     <div className="board-logo">T</div>
                     <div className="near-logo">
-                        <div className="bold-text">Trello Workspace</div>                        
+                        <div className="bold-text">Trello Workspace</div>
                     </div>
 
                 </div>

@@ -13,64 +13,64 @@ import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoar
 
 export function BoardIndex() {
 
-  const boards = useSelector(state => state.boardModule.boards)
-  console.log(boards);
+    const boards = useSelector(state => state.boardModule.boards)
+    console.log(boards);
 
 
-  // const [boardsToShow, setBoardsToShow] = useState()
+    // const [boardsToShow, setBoardsToShow] = useState()
 
-  useEffect(() => {
-    loadBoards()
-  }, [])
+    useEffect(() => {
+        loadBoards()
+    }, [])
 
-  // useEffect( () => {        
-  //     console.log(boards.length)
-  //     if (boards.length) {
-  //         const selectedBoard = boards[0]
-  //         // const selectedBoard = filterBy...
-  //         setBoardToShow(selectedBoard)
-  //     }
+    // useEffect( () => {        
+    //     console.log(boards.length)
+    //     if (boards.length) {
+    //         const selectedBoard = boards[0]
+    //         // const selectedBoard = filterBy...
+    //         setBoardToShow(selectedBoard)
+    //     }
 
-  // }, [boards])
+    // }, [boards])
 
 
 
-  return (
-    <>
-      <AppHeader />
+    return (
+        <>
+            <AppHeader />
 
-      <div className="home-container">
+            <div className="home-container">
 
-        <NavBarPageIndex />
+                <NavBarPageIndex />
 
-        <div className="all-boards">
-          <div className="category-container">
-            <div className="board-logo-large">T</div>
-            <div className="description-container">
-              <h2>Trello Workspaces <span>
-                <button className='fa-solid fa-pen'>
-                </button></span></h2>
-              <h3>Premium <i className="fa-regular fa-lock"></i> Private</h3>
+                <div className="all-boards">
+                    <div className="category-container">
+                        <div className="board-logo-large">T</div>
+                        <div className="description-container">
+                            <h2>Trello Workspaces <span>
+                                <button className='fa-solid fa-pen'>
+                                </button></span></h2>
+                            <h3>Premium <i className="fa-regular fa-lock"></i> Private</h3>
+                        </div>
+                    </div>
+
+
+                    <section className='star-boards'>
+                        <h3> <span className="fa-solid fa-star"></span> Starred boards</h3>
+                        <BoardList boards={boards} />
+                    </section>
+                    <section className='my-boards'>
+                        <h3> <span className="fa-solid fa-user"></span>YOUR WORKSPACES</h3>
+                        <BoardList boards={boards} addBoard={true} />
+                    </section>
+                </div>
+
+
             </div>
-          </div>
 
-
-          <section className='star-boards'>
-            <h3> <span className="fa-solid fa-star"></span> Starred boards</h3>
-            <BoardList boards={boards} />
-          </section>
-          <section className='my-boards'>
-            <h3> <span className="fa-solid fa-user"></span>YOUR WORKSPACES</h3>
-            <BoardList boards={boards} addBoard={true} />
-          </section>
-        </div>
-
-
-      </div>
-
-    </>)
+        </>)
 }
-  
+
 
 
 
