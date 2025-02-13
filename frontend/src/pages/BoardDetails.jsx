@@ -139,7 +139,7 @@ export function TaskModal({ taskToShow, onClose }) {
                                                 // todo
                                             })}
 
-                                            <button className="add-member-btn">+</button>
+                                            <button className="add-member-btn"><i className="fa-regular fa-plus"></i></button>
                                         </div>
                                     </div>
                             </div>
@@ -159,7 +159,7 @@ export function TaskModal({ taskToShow, onClose }) {
                                                             </div>)
                                                 })}</>
                                             }
-                                            <button className="add-label-btn">+</button>
+                                            <button className="add-label-btn"><i className="fa-regular fa-plus"></i></button>
                                         </div>
                                     </div>
 
@@ -248,13 +248,20 @@ export function TaskModal({ taskToShow, onClose }) {
                             </div>
                             <div className="task-custom-fields inner-component-left-padding">
                                 <div>
-                                    
-                                    <label><i className="fa-solid fa-list"></i>  Risk </label>
+
+
+                                    <div className="just-flex">
+                                        <svg width="20" height="20" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M6 8C6 8.55228 5.55228 9 5 9C4.44772 9 4 8.55228 4 8C4 7.44772 4.44772 7 5 7C5.55228 7 6 7.44772 6 8ZM8 8C8 9.65685 6.65685 11 5 11C3.34315 11 2 9.65685 2 8C2 6.34315 3.34315 5 5 5C6.65685 5 8 6.34315 8 8ZM6 16C6 16.5523 5.55228 17 5 17C4.44772 17 4 16.5523 4 16C4 15.4477 4.44772 15 5 15C5.55228 15 6 15.4477 6 16ZM8 16C8 17.6569 6.65685 19 5 19C3.34315 19 2 17.6569 2 16C2 14.3431 3.34315 13 5 13C6.65685 13 8 14.3431 8 16ZM19 7H13C12.4477 7 12 7.44772 12 8C12 8.55228 12.4477 9 13 9H19C19.5523 9 20 8.55228 20 8C20 7.44772 19.5523 7 19 7ZM13 5C11.3431 5 10 6.34315 10 8C10 9.65685 11.3431 11 13 11H19C20.6569 11 22 9.65685 22 8C22 6.34315 20.6569 5 19 5H13ZM13 15H16C16.5523 15 17 15.4477 17 16C17 16.5523 16.5523 17 16 17H13C12.4477 17 12 16.5523 12 16C12 15.4477 12.4477 15 13 15ZM10 16C10 14.3431 11.3431 13 13 13H16C17.6569 13 19 14.3431 19 16C19 17.6569 17.6569 19 16 19H13C11.3431 19 10 17.6569 10 16Z" fill="currentColor"></path>
+                                        </svg>
+                                        <label>Risk</label>
+                                    </div>
                                     <select
                                         value={risk}
                                         onChange={(e) => setRisk(e.target.value)}
                                         className="custom-dropdown"
-                                    >                                        
+                                    >
                                         <option value="">Select...</option>
                                         <option value="Low">Low</option>
                                         <option value="Moderate">Moderate</option>
@@ -263,10 +270,20 @@ export function TaskModal({ taskToShow, onClose }) {
                                 </div>
 
                                 <div>
-                                    <label><i className="fa-solid fa-list"></i>  Priority</label>
+
+                                    <div className="just-flex">
+                                        <svg width="20" height="20" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M6 8C6 8.55228 5.55228 9 5 9C4.44772 9 4 8.55228 4 8C4 7.44772 4.44772 7 5 7C5.55228 7 6 7.44772 6 8ZM8 8C8 9.65685 6.65685 11 5 11C3.34315 11 2 9.65685 2 8C2 6.34315 3.34315 5 5 5C6.65685 5 8 6.34315 8 8ZM6 16C6 16.5523 5.55228 17 5 17C4.44772 17 4 16.5523 4 16C4 15.4477 4.44772 15 5 15C5.55228 15 6 15.4477 6 16ZM8 16C8 17.6569 6.65685 19 5 19C3.34315 19 2 17.6569 2 16C2 14.3431 3.34315 13 5 13C6.65685 13 8 14.3431 8 16ZM19 7H13C12.4477 7 12 7.44772 12 8C12 8.55228 12.4477 9 13 9H19C19.5523 9 20 8.55228 20 8C20 7.44772 19.5523 7 19 7ZM13 5C11.3431 5 10 6.34315 10 8C10 9.65685 11.3431 11 13 11H19C20.6569 11 22 9.65685 22 8C22 6.34315 20.6569 5 19 5H13ZM13 15H16C16.5523 15 17 15.4477 17 16C17 16.5523 16.5523 17 16 17H13C12.4477 17 12 16.5523 12 16C12 15.4477 12.4477 15 13 15ZM10 16C10 14.3431 11.3431 13 13 13H16C17.6569 13 19 14.3431 19 16C19 17.6569 17.6569 19 16 19H13C11.3431 19 10 17.6569 10 16Z" fill="currentColor"></path>
+                                        </svg>
+                                        <label>Priority</label>
+                                    </div>
                                     <select
                                         value={priority}
                                         onChange={(e) => setPriority(e.target.value)}
+                                        style={{
+                                            backgroundColor: '#f8e6a0'
+                                        }}
                                     >
                                         <option value="">Select...</option>
                                         <option value="Low">Low</option>
@@ -276,10 +293,20 @@ export function TaskModal({ taskToShow, onClose }) {
                                 </div>
 
                                 <div>
-                                    <label> <i className="fa-solid fa-list"></i>  Status</label>
+
+                                    <div className="just-flex">
+                                        <svg width="20" height="20" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M6 8C6 8.55228 5.55228 9 5 9C4.44772 9 4 8.55228 4 8C4 7.44772 4.44772 7 5 7C5.55228 7 6 7.44772 6 8ZM8 8C8 9.65685 6.65685 11 5 11C3.34315 11 2 9.65685 2 8C2 6.34315 3.34315 5 5 5C6.65685 5 8 6.34315 8 8ZM6 16C6 16.5523 5.55228 17 5 17C4.44772 17 4 16.5523 4 16C4 15.4477 4.44772 15 5 15C5.55228 15 6 15.4477 6 16ZM8 16C8 17.6569 6.65685 19 5 19C3.34315 19 2 17.6569 2 16C2 14.3431 3.34315 13 5 13C6.65685 13 8 14.3431 8 16ZM19 7H13C12.4477 7 12 7.44772 12 8C12 8.55228 12.4477 9 13 9H19C19.5523 9 20 8.55228 20 8C20 7.44772 19.5523 7 19 7ZM13 5C11.3431 5 10 6.34315 10 8C10 9.65685 11.3431 11 13 11H19C20.6569 11 22 9.65685 22 8C22 6.34315 20.6569 5 19 5H13ZM13 15H16C16.5523 15 17 15.4477 17 16C17 16.5523 16.5523 17 16 17H13C12.4477 17 12 16.5523 12 16C12 15.4477 12.4477 15 13 15ZM10 16C10 14.3431 11.3431 13 13 13H16C17.6569 13 19 14.3431 19 16C19 17.6569 17.6569 19 16 19H13C11.3431 19 10 17.6569 10 16Z" fill="currentColor"></path>
+                                        </svg>
+                                        <label>Status</label>
+                                    </div>
                                     <select
                                         value={status}
                                         onChange={(e) => setStatus(e.target.value)}
+                                        style={{
+                                            backgroundColor: '#fdddc7'
+                                        }}
                                     >
                                         <option value="">Select...</option>
                                         <option value="Open">Open</option>
@@ -438,30 +465,22 @@ export function TaskModal({ taskToShow, onClose }) {
                     </div>
 
                     <div className="task-sidebar">
-                        <button className="sidebar-btn">Join</button>
-                        <button className="sidebar-btn">Members</button>
-                        <button className="sidebar-btn">Labels</button>
-                        <button className="sidebar-btn">Checklist</button>
-                        <button className="sidebar-btn">Dates</button>
-                        <button className="sidebar-btn">Attachment</button>
-                        <button className="sidebar-btn">Location</button>
-                        <button className="sidebar-btn">Custom Fields</button>
-
-                        {/* <h4 className="sidebar-subtitle">Power-Ups</h4>
-                        <button className="sidebar-btn">Add Power-Ups</button>
-                        <h4 className="sidebar-subtitle">Automation</h4>
-                        <button className="sidebar-btn">?</button>
-                        <button className="sidebar-btn">12/06</button>
-                        <button className="sidebar-btn">ffff</button>
-                        <button className="sidebar-btn">Add button</button> */}
+                        <button className="sidebar-btn"><i className="fa-regular fa-user-plus"></i> Join</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-user"></i> Members</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-tag"></i> Labels</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-check-square"></i> Checklist</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-calendar-alt"></i> Dates</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-paperclip"></i> Attachment</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-map-marker-alt"></i> Location</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-th-list"></i> Custom Fields</button>
 
                         <h4 className="sidebar-subtitle">Actions</h4>
-                        <button className="sidebar-btn">Move</button>
-                        <button className="sidebar-btn">Copy</button>
-                        <button className="sidebar-btn">Mirror</button>
-                        <button className="sidebar-btn">Make template</button>
-                        <button className="sidebar-btn">Archive</button>
-                        <button className="sidebar-btn">Share</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-arrow-right"></i> Move</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-copy"></i> Copy</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-clone"></i> Mirror</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-file-alt"></i> Make template</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-archive"></i> Archive</button>
+                        <button className="sidebar-btn"><i className="fa-regular fa-share-alt"></i> Share</button>
                     </div>
                 </div>
             </div>
