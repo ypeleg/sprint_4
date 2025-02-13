@@ -60,7 +60,7 @@ export function BoardIndex() {
                         <BoardList boards={boards} />
                     </section>
                     <section className='my-boards'>
-                        <h3> <span className="fa-solid fa-user"></span>YOUR WORKSPACES</h3>
+                        <h3> <span className="fa-solid fa-user"></span>Your boards</h3>
                         <BoardList boards={boards} addBoard={true} />
                     </section>
                 </div>
