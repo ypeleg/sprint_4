@@ -505,7 +505,11 @@ export function BoardDetails() {
                 <div className="popup">
                     <TaskModal taskToShow={taskToShow} onClose={togglePopup}/>
                 </div>
-                <div className="popup-backdrop" onClick={togglePopup}></div>
+                <div className="popup-backdrop" onClick={() => {
+                    console.log('clicked')
+                    togglePopup()
+                }}></div>
+
 
             </>}
 
@@ -518,7 +522,7 @@ export function BoardDetails() {
 
                 <section className="board-display">
 
-                    <header className="board-header">
+                <header className="board-header">
                         <div className="header-group">
                             <h3 className="board-name">trelloception</h3>
                             <button><i className="fa-regular fa-star"></i></button>
