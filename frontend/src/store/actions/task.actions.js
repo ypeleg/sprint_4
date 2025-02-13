@@ -4,7 +4,7 @@ import { store } from '../store'
 import { taskService } from '../../services/task'
 import { ADD_TASK, REMOVE_TASK, SET_TASKS, SET_TASK, UPDATE_TASK, ADD_TASK_MSG } from '../reducers/task.reducer'
 
-export async function getEmptyTask() {
+export  function getEmptyTask() {
     return taskService.getEmptyTask()
 }
 

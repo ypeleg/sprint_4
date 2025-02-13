@@ -1,18 +1,20 @@
 
 
+import { useEffect, useState } from "react"
 import { loadTask } from "../store/store"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router"
+import { AddTaskForm } from "./AddTaskForm"
 
 
-export function TaskList({ tasks, style }) {
-
+export function TaskList({  showForm,group,onSetShowForm }) {
+    const {tasks} = group
     const navgite = useNavigate()
-    const board = useSelector(state => state.boardModule.board)
-
+    
+   
     if (!tasks.length) return (<>Loading..</>)
 
-    console.log(tasks)
+ 
 
     return (
         <div className="task-list">
@@ -91,6 +93,7 @@ export function TaskList({ tasks, style }) {
                     </div>
                 </div>)
             })}
+            {showForm&&<AddTaskForm onSetShowForm={onSetShowForm} selectedGroup={group}/>}
         </div>
     )
 }
