@@ -33,8 +33,8 @@ export function RootCmp() {
                 <Routes>
 
 
-                    <Route path="" element={<BoardDetails />} />
-                    <Route path="board" element={<BoardIndex />} />
+                    <Route path="/" element={<BoardIndex />} />
+                    <Route path="/:boardId" element={<BoardDetails />} />
 
                     <Route path="/debug" element={<DebugPage />} />
 

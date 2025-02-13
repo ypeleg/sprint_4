@@ -2,6 +2,7 @@
 import { storageService } from '../async-storage.service'
 import { makeId } from '../util.service'
 import { userService } from '../user'
+import { getEmptyBoard } from '../../store/store'
 
 const STORAGE_KEY = 'board'
 
@@ -17,6 +18,10 @@ window.cs = boardService
 
 async function query(filterBy = { title: '', }) {
     var boards = await storageService.query(STORAGE_KEY)
+    if(boards.length===0){
+        _createBoards()
+        boards = await storageService.query(STORAGE_KEY)
+    } 
     const { title, sortField, sortDir } = filterBy
 
     if (title) {
@@ -32,7 +37,7 @@ async function query(filterBy = { title: '', }) {
     //         (board1[sortField] - board2[sortField]) * +sortDir)
     // }
 
-    boards = boards.map(({ _id, vendor, speed, owner }) => ({ _id, vendor, speed, owner }))
+    // boards = boards.map(({ _id, vendor, speed, owner }) => ({ _id, vendor, speed, owner }))
     return boards
 }
 
@@ -72,4 +77,14 @@ async function addBoardMsg(boardId, title) {
     await storageService.put(STORAGE_KEY, board)
 
     return msg
+}
+
+async function _createBoards(){
+
+    for(let i=0;i<5;i++){
+
+        let board = await getEmptyBoard()
+        console.log(board)
+        await save(board)
+    }
 }

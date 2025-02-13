@@ -15,84 +15,31 @@ import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoar
 import { BoradHeader } from "../cmps/BoardHeader";
 import { GroupList } from "../cmps/GroupList";
 import { SideBar } from "../cmps/SideBar";
+import { useParams } from "react-router";
+import { AppHeader } from "../cmps/AppHeader.jsx";
 
 export function BoardDetails() {
 
-    const boards = useSelector(state => state.boardModule.boards)    
-
-    const [boardToShow, setBoardToShow] = useState()    
+    const boardToShow = useSelector(state => state.boardModule.board)    
+    const {boardId} = useParams()
+    console.log(boardId)
+   
 
     useEffect( () => {        
-        console.log(boards.length)
-        if (boards.length) {
-            const selectedBoard = boards[0]
-            // const selectedBoard = filterBy...
-            setBoardToShow(selectedBoard)
-        }
+       onloadboard()
         
-    }, [boards])
+    }, [])
 
     
-    useEffect(() => {       
-        getEmptyBoard().then(e => addBoard(e)).then( e => {
-            // setBoardToShow(e)
-        })
-    } , [])
+  async function onloadboard() {
+     await loadBoard(boardId)
+ 
+  }
 
     if (!boardToShow) return (<>Loading..</>)
     return (
         <div className="everything">
-            <header>
-                
-                <nav className="flex-space-between center-vertical">
-
-                    <div className="just-flex just-flex-more center-vertical">
-                        {/* <button className="hamburger nav-highlight-hint">☰</button> */}
-                        <div className="logo nav-highlight-hint">
-                            <img className="dots" src="dots.svg" />
-                        </div>
-                        <div className="logo nav-highlight-hint">
-                            <img className="main-logo" src="logo-not-moving.gif" />
-                        </div>
-
-                        <div className="dropdown-menu nav-highlight-hint">
-                            <span>Workspace</span>
-                            <i className="fa-regular fa-chevron-down"></i>
-                        </div>
-
-                        <div className="dropdown-menu nav-highlight-hint">
-                            <span>Recent</span>
-                            <i className="fa-regular fa-chevron-down"></i>
-                        </div>
-
-                        <div className="dropdown-menu nav-highlight-hint">
-                            <span>Starred</span>
-                            <i className="fa-regular fa-chevron-down"></i>
-                        </div>
-
-                        <div className="dropdown-menu nav-highlight-hint">
-                            <span>More</span>
-                            <i className="fa-regular fa-chevron-down"></i>
-                        </div>
-
-                        <div className="dropdown-menu nav-highlight-hint">
-                            <i className="fa-regular fa-plus"></i>
-                        </div>
-                    </div>
-                    <div className="just-flex and-center">
-                        <button className="days-left just-flex">
-                            <i className="fa-regular fa-star"></i>            
-                            5 days left</button>
-                        <input placeholder= "     Search"/>
-                        {/* <i className="bell">bellicon</i> */}
-                        <i className="fa-solid fa-bell"></i>
-                        <div className="info">
-                            <i className="fa-solid fa-question"></i>
-                        </div>
-                        <img className="user" src="user_spec.png"></img>
-                    </div>  
-                </nav>
-            </header>
+           <AppHeader/>
             <main className="main-layout">
 
                 <SideBar />

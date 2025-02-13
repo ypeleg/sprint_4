@@ -20,11 +20,7 @@ export function BoardIndex() {
   // const [boardsToShow, setBoardsToShow] = useState()
 
   useEffect(() => {
-    getEmptyBoard().then(e => addBoard(e)).then(e => {
-      // setBoardsToShow(e)
-      console.log('sss', e)
-
-    })
+    loadBoards()
   }, [])
 
   // useEffect( () => {        

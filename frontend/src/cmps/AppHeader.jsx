@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router"
 
 
 export function AppHeader() {
+    const navgite = useNavigate()
 	// const user = useSelector(storeState => storeState.userModule.user)
 	// const navigate = useNavigate()
 
@@ -24,7 +26,7 @@ export function AppHeader() {
                 <div className="logo nav-highlight-hint">
                     <img className="dots" src="dots.svg" />
                 </div>
-                <div className="logo nav-highlight-hint">
+                <div className="logo nav-highlight-hint" onClick={() => navgite('/')}>
                     <img className="main-logo" src="logo-not-moving.gif" />
                 </div>
 
