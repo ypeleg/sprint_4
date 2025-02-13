@@ -534,7 +534,7 @@ export function BoardDetails() {
     return (
         <div className={`everything ${(isPopupShown)? 'popup-open' : ''}`}>
 
-            <button className="open-chat-btn" onClick={togglePopup}>💬</button>
+            {/* <button className="open-chat-btn" onClick={togglePopup}>💬</button> */}
             {isPopupShown && (!!taskToShow) && <>
                 <div className="popup">
                     <TaskModal taskToShow={taskToShow} onClose={togglePopup} />
