@@ -4,6 +4,7 @@
 import { useParams } from "react-router"
 import { useSelector } from "react-redux"
 import { SideBar } from "../cmps/SideBar"
+import { loadTask } from "../store/store"
 import { GroupList } from "../cmps/GroupList"
 import { AppHeader } from "../cmps/AppHeader.jsx"
 import React, { useRef, useEffect, useState } from "react"
@@ -11,9 +12,13 @@ import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoar
 
 
 
-export function TaskModal({ task, onClose }) {
+
+
+export function TaskModal({ taskToShow, onClose }) {
+
     // const [coverUrl, setCoverUrl] = useState("cover-img.png")
     const [coverUrl, setCoverUrl] = useState("")
+
     const [cardTitle, setCardTitle] = useState("Side nav")
     const [listName, setListName] = useState("BACKLOG")
     const [isWatching, setIsWatching] = useState(false)
@@ -112,62 +117,127 @@ export function TaskModal({ task, onClose }) {
                         </div>
                     </div>
 
-
-
                 </div>
                 <div className="task-layout">
                     <div className="task-main">
 
-                        <div className="task-section task-right">
+                        <div className="the-tasks task-section task-right inner-component-left-padding">                            
                             <div className="task-members">
-                                <div className="member-circle" title="LH">
-                                    LH
-                                </div>
-                                <button className="add-member-btn">+</button>
+                                <div className="section-inner">
+                                    <div className="section-label">Members</div>
+                                        <div className="just-flex-without-anything">
+                                            <div className="member-circle" title="LH">
+                                                LH
+                                            </div>
+                                            <button className="add-member-btn">+</button>
+                                        </div>
+                                    </div>
                             </div>
-
                             <div className="task-labels">
-                                {availableLabels.slice(0, 2).map((color) => (
-                                    <div
-                                        key={color}
-                                        className={`member-label ${color}`}
-                                        onClick={() => handleLabelToggle(color)}
-                                        title={`Toggle ${color} label`}
-                                        style={{
-                                            border:
-                                                activeLabels.includes(color)
-                                                    ? "2px solid #fff"
-                                                    : "none",
-                                        }}
-                                    />
-                                ))}
-                                <button className="add-label-btn">+</button>
+                                <div className="section-inner">
+                                    <div className="section-label">Labels</div>
+                                        <div className="just-flex-without-anything">
+                                        {availableLabels.slice(0, 2).map((color) => (
+                                            <div
+                                                key={color}
+                                                className={`member-label ${color}`}
+                                                onClick={() => handleLabelToggle(color)}
+                                                title={`Toggle ${color} label`}
+                                                style={{
+                                                    border:
+                                                        activeLabels.includes(color)
+                                                            ? "2px solid #fff"
+                                                            : "none",
+                                                }}
+                                            />
+                                        ))}
+                                            <button className="add-label-btn">+</button>
+                                        </div>
+                                    </div>
+
                             </div>
                             <div className="task-notifications">
-                                <button
-                                    className={`task-watch ${isWatching ? "active" : ""}`}
-                                    onClick={() => setIsWatching(!isWatching)}
-                                >
-                                    {isWatching ? "Watching" : "Watch"}
-                                </button>
+                                <div className="task-members">
+                                    <div className="section-inner">
+                                        <div className="section-label">Notifications</div>
+                                                <div className="just-flex-without-anything">
+                                                <button
+                                                    className={`task-watch ${isWatching ? "active" : ""}`}
+                                                    onClick={() => setIsWatching(!isWatching)}
+                                                >
+                                                    {isWatching ? "Watching" : "Watch"}
+                                                </button>
+                                                </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="task-notifications">
+                                <div className="task-members">
+                                    <div className="section-inner">
+                                        <div className="section-label">Due Date</div>
+                                                <div className="just-flex-without-anything">
+                                                
+                                                <div className="date-picker">
+                                                    
+                                                    <span>Feb 20, 8:43 PM</span>
+                                                    <span className="complete-label">Complete</span>
+                                                    <i className="fa-regular fa-chevron-down"></i>
+
+                                                </div>
+                                                
+                                                
+                                                </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+    
+
+                        </div>
+
+
+                        <div className="task-section">
+
+
+                            <div className="flex-space-between">
+                                <div className="section-icon-title">
+                                    <i className="fa-regular fa-align-left"></i>
+                                    <h3>Description</h3>                                    
+                                </div>
+                                <button className="delete-btn">Edit</button>
+                            </div>
+
+
+                            <div className="section-header inner-component-left-padding">
+
+
+                            </div>
+                            <div className="inner-component-left-padding">
+                                <p className="task-description">{description}</p>
                             </div>
                         </div>
 
                         <div className="task-section">
-                            <div className="section-header">
-                                <h3>Description</h3>
+                            <div className="section-icon-title">
+                                <i className="fa-regular fa-battery-empty"></i>
+                                <h3>Custom Fields</h3>
                             </div>
-                            <p className="task-description">{description}</p>
-                        </div>
-                        <div className="task-section">
-                            <h3>Custom Fields</h3>
-                            <div className="task-custom-fields">
+                            
+                            <div className="section-header inner-component-left-padding">
+                            
+                            </div>
+                            <div className="task-custom-fields inner-component-left-padding">
                                 <div>
-                                    <label>Risk</label>
+                                    
+                                    <label><i className="fa-solid fa-list"></i>  Risk </label>
                                     <select
                                         value={risk}
                                         onChange={(e) => setRisk(e.target.value)}
-                                    >
+                                        className="custom-dropdown"
+                                    >                                        
                                         <option value="">Select...</option>
                                         <option value="Low">Low</option>
                                         <option value="Moderate">Moderate</option>
@@ -175,7 +245,7 @@ export function TaskModal({ task, onClose }) {
                                     </select>
                                 </div>
                                 <div>
-                                    <label>Priority</label>
+                                    <label><i className="fa-solid fa-list"></i>  Priority</label>
                                     <select
                                         value={priority}
                                         onChange={(e) => setPriority(e.target.value)}
@@ -187,7 +257,7 @@ export function TaskModal({ task, onClose }) {
                                     </select>
                                 </div>
                                 <div>
-                                    <label>Status</label>
+                                    <label> <i className="fa-solid fa-list"></i>  Status</label>
                                     <select
                                         value={status}
                                         onChange={(e) => setStatus(e.target.value)}
@@ -201,16 +271,27 @@ export function TaskModal({ task, onClose }) {
                                 </div>
                             </div>
                         </div>
+
+
                         <div className="task-section">
-                            <h3>Attachments</h3>
-                            <div className="task-attachment-row">
-                                <input
-                                    type="text"
-                                    placeholder="Type attachment name or URL..."
-                                    value={newAttachment}
-                                    onChange={(e) => setNewAttachment(e.target.value)}
-                                />
-                                <button onClick={handleAddAttachment}>Add</button>
+
+                            <div className="flex-space-between">
+                                <div className="section-icon-title">
+                                    <i className="fa-regular fa-paperclip"></i>
+                                    <h3>Attachments</h3>                                    
+                                </div>
+                                <button className="delete-btn">Add</button>
+                            </div>
+
+                            <div className="task-attachment-row inner-component-left-padding">
+                                
+                                <div className="just-flex">
+                                    <button className="attachment-extention">PNG</button>
+                                    <div className="file-info">
+                                        <h5>roi.png</h5>
+                                        <label>Added just now</label>
+                                    </div>
+                                </div>
                             </div>
                             <ul className="task-attachments-list">
                                 {attachments.map((att, i) => (
@@ -223,64 +304,116 @@ export function TaskModal({ task, onClose }) {
                                 ))}
                             </ul>
                         </div>
-                        <div className="task-section">
-                            <div className="task-checklist-header">
-                                <h3>Checklists</h3>
-                                <div>
-                                    <button onClick={() => setHideChecked(!hideChecked)}>
-                                        {hideChecked ? "Show checked items" : "Hide checked items"}
-                                    </button>
-                                    <button onClick={handleRemoveChecklist}>Delete</button>
+                        <div className="task-section">                                                     
+                            
+                            <div className="checklist-container">                                    
+                                <div className="flex-space-between">
+                                    <div className="section-icon-title">
+                                        <i className="fa-regular fa-check-square"></i>
+                                        <h3>Checklist</h3>                                                                            
+                                    </div>
+                                    <button className="delete-btn">Delete</button>
+                                </div>                               
+                                
+                                
+                                <div className="progress inner-component-left-padding">
+
+                                <div className="progress-container">
+                                    <div className="progress-num">0%</div>
+                                    <div className="progress-bar"></div>
+                                </div>
+
+                                </div>
+                                
+                                
+                                <div className="task-checklist-add inner-component-left-padding">
+                                    <input
+                                        type="text"
+                                        placeholder="Add an item"
+                                        value={newChecklistItem}
+                                        onChange={(e) => setNewChecklistItem(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="side-by-side inner-component-left-padding">
+                                    <div className="just-flex">
+
+                                        <div className="checklist-actions">
+                                            <button className="btn-add">Add</button>
+                                            <button className="btn-cancel">Cancel</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="just-flex">
+                                        <button className="footer-action">
+                                            <i className="fa-regular fa-user"></i>
+                                            Assign
+                                        </button>
+                                        <button className="footer-action">
+                                            <i className="fa-regular fa-clock"></i>                                    
+                                            Due date
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="task-checklist-items">
-                                {checklistItems
-                                    .filter((ci) => (hideChecked ? !ci.completed : true))
-                                    .map((item) => (
-                                        <div key={item.id} className="task-checklist-item">
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={item.completed}
-                                                    onChange={() => handleChecklistToggle(item.id)}
-                                                />
-                                                <span
-                                                    className={item.completed ? "completed" : ""}
-                                                >
-                          {item.text}
-                        </span>
-                                            </label>
-                                        </div>
-                                    ))}
-                            </div>
-                            <div className="task-checklist-add">
-                                <input
-                                    type="text"
-                                    placeholder="Add an item"
-                                    value={newChecklistItem}
-                                    onChange={(e) => setNewChecklistItem(e.target.value)}
-                                />
-                                <button onClick={handleAddChecklistItem}>Add</button>
-                            </div>
+
+
                         </div>
+
+
+                        {/* geolocation, checklist */}
+
                         <div className="task-section">
-                            <div className="section-header">
-                                <h3>Activity</h3>
-                                <button className="hide-details-btn">Hide details</button>
-                            </div>
-                            <div className="task-activity-add">
-                <textarea
-                    placeholder="Write a comment..."
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                />
-                                <button onClick={handleAddComment}>Save</button>
-                            </div>
-                            <ul className="task-activity-list">
-                                {activityLog.map((entry, idx) => (
-                                    <li key={idx}>{entry}</li>
-                                ))}
-                            </ul>
+
+                                <div className="section-icon-bit-down">
+                                    {/* <i className="fa-regular fa-list"></i> */}
+                                </div>
+
+                                <div className="flex-space-between">
+                                    <div className="section-icon-title">
+                                        <i className="fa-regular fa-list"></i>
+                                        <h3>Activity</h3>                                    
+                                    </div>
+                                    <button className="delete-btn">Hide Details</button>
+                                </div>
+
+
+                                    
+
+                                <ul className="task-activity-list">
+     
+     
+                                    <li key="1">                                           
+                                        <div className="just-flex">
+                                            <div className="user-circle">
+                                                YP
+                                            </div>    
+                                            <div className="flex-col input-container">
+                                                <input className="activity-input" type="text" placeholder="Write a comment..."/>
+                                            </div>
+                                        </div>
+                                    </li>
+
+
+                                    {activityLog.map((entry, idx) => (
+                                        
+                                        <li key={idx}>                                           
+                                            <div className="just-flex">
+                                                <div className="user-circle">
+                                                    YP
+                                                </div>    
+                                                <div className="flex-col">
+                                                    <div className="text-size-activity">    
+                                                        <span className="full-name">yam peleg</span> attached <span className="file-name">roi.png</span> to this card
+                                                    </div>
+                                                    <div className="text-size-activity-2">                                             
+                                                        just now
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
                         </div>
                     </div>
 
@@ -293,13 +426,15 @@ export function TaskModal({ task, onClose }) {
                         <button className="sidebar-btn">Attachment</button>
                         <button className="sidebar-btn">Location</button>
                         <button className="sidebar-btn">Custom Fields</button>
-                        <h4 className="sidebar-subtitle">Power-Ups</h4>
+
+                        {/* <h4 className="sidebar-subtitle">Power-Ups</h4>
                         <button className="sidebar-btn">Add Power-Ups</button>
                         <h4 className="sidebar-subtitle">Automation</h4>
                         <button className="sidebar-btn">?</button>
                         <button className="sidebar-btn">12/06</button>
                         <button className="sidebar-btn">ffff</button>
-                        <button className="sidebar-btn">Add button</button>
+                        <button className="sidebar-btn">Add button</button> */}
+
                         <h4 className="sidebar-subtitle">Actions</h4>
                         <button className="sidebar-btn">Move</button>
                         <button className="sidebar-btn">Copy</button>
@@ -329,23 +464,35 @@ export function useToggle(initialState) {
 }
 
 
+// import {taskService} from '../services/task/task.service.local.js'
+
+
 export function BoardDetails() {
 
+    // taskService.query().then(res => console.log(res))
+
     const boardToShow = useSelector(state => state.boardModule.board)
-    const task = useSelector(state => state.boardModule.task)
+    const [taskToShow, setTaskToShow] = useState(null)
     const { boardId } = useParams()
-    console.log(boardId)
+    // console.log(boardId)
+
 
     const [isPopupShown, togglePopup] = useToggle(false)
 
 
     useEffect(() => {
-        onloadboard()
-
+        onLoadBoard()
     }, [])
 
-    async function onloadboard() {
-        await loadBoard(boardId)
+    async function onLoadBoard() {
+        await loadBoard(boardId).then(() => {
+            setTaskToShow(null)
+        })
+    }
+
+    async function onLoadTask(task) {
+        setTaskToShow(task)
+        togglePopup()
     }
 
     if (!boardToShow) return (<>Loading..</>)
@@ -353,12 +500,16 @@ export function BoardDetails() {
         <div className={`everything ${(isPopupShown)? 'popup-open' : ''}`}>
 
             <button className="open-chat-btn" onClick={togglePopup}>💬</button>
-            {isPopupShown && <>
+            {isPopupShown && (!!taskToShow) && <>
 
                 <div className="popup">
-                        <TaskModal onClose={togglePopup}/>
+                    <TaskModal taskToShow={taskToShow} onClose={togglePopup}/>
                 </div>
-                <div className="popup-backdrop"></div>
+                <div className="popup-backdrop" onClick={() => {
+                    console.log('clicked')
+                    togglePopup()
+                }}></div>
+
 
             </>}
 
@@ -371,7 +522,7 @@ export function BoardDetails() {
 
                 <section className="board-display">
 
-                    <header className="board-header">
+                <header className="board-header">
                         <div className="header-group">
                             <h3 className="board-name">trelloception</h3>
                             <button><i className="fa-regular fa-star"></i></button>
@@ -413,7 +564,7 @@ export function BoardDetails() {
                         </div>
                     </header>
 
-                    <GroupList groups={boardToShow.groups}/>
+                    <GroupList onLoadTask={onLoadTask} groups={boardToShow.groups}/>
 
                 </section>
 
