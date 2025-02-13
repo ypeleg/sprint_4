@@ -1,22 +1,37 @@
 
 export function CreateBoardModal() {
 
+  const [addBoard, setAddBoard] = useState();
+
+
+
   return (
     <section className="modal-content">
-      <h3>Create board</h3>
-      <img src="" alt="" />
+      <div className="flex justify-center">
+        <h3>Create board</h3>
 
+      </div>
+      <div className="main-background gray"></div>
+
+      <img src="" alt="" />
       <section className="select-background">
         <h4>Background</h4>
-        <div className="background-images">
 
-        </div>
-        <section className="select-background-color">
-          <div className="bg-option blue"></div>
-          <div className="bg-option purple"></div>
-          <div className="bg-option orange"></div>
-          <div className="bg-option gray"></div>
-          <div className="bg-option lightblue"></div>
+        <section className="select-background">
+          <section className="background-images">
+            <div className="bg-image-option gray"></div>
+          </section>
+
+
+          <section className="select-background-color">
+            <div className="bg-option gray"></div>
+            <div className="bg-option lightBlue"></div>
+            <div className="bg-option blue"></div>
+            <div className="bg-option lightPurple"></div>
+            <div className="bg-option purple"></div>
+            <div className="bg-option more-bg-btn">...</div>
+
+          </section>
 
         </section>
 
@@ -49,6 +64,7 @@ export function CreateBoardModal() {
 
         {/* Create Button */}
         <button
+          className="create-btn"
         // className={`create-btn ${boardTitle.trim() === "" ? "disabled" : ""}`}
         // onClick={handleCreate}
         // disabled={boardTitle.trim() === ""}

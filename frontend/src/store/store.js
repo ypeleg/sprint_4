@@ -17,7 +17,6 @@ export {
     loadUsers, loadUser, removeUser, login, signup, logout,
     loadBoards, loadBoard, addBoard, updateBoard, removeBoard,
     loadGroups, loadGroup, addGroup, updateGroup, removeGroup,
-
     getEmptyBoard,
 }
 

@@ -11,7 +11,8 @@ import { getRandomBoard } from './data.js'
 // localStorage.clear()
 
 function getEmptyBoard() {
-    return getRandomBoard()
+    // return getRandomBoard()
+
 }
 
 function getDefaultFilter() {
