@@ -9,9 +9,10 @@ import { useState } from 'react'
 export function BoardList({ boards, onRemoveBoard, onUpdateBoard, addBoard = false }) {
 
   const [isModalOpen, setIsModalopen] = useState(false)
-
-
   const navgite = useNavigate()
+
+  function onClose() { setIsModalopen(false) }
+
   return (
     <section>
       {/* {addBoard &&
@@ -43,13 +44,13 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, addBoard = fal
           >
             <h4>Create new board</h4>
             {isModalOpen &&
-              <CreateBoardModal />
+              <CreateBoardModal onClose={onClose} />
             }
           </article>
         }
       </ul>
 
-      <CreateBoardModal />
+      {/* <CreateBoardModal onClose={onClose} /> */}
     </section>
   )
 }
