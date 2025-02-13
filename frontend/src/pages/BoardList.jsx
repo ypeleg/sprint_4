@@ -14,12 +14,15 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard }) {
 
   return (
     <section>
-      <ul className="list">
+      <ul className="board-list">
         {boards.map(board =>
           <li key={board._id}>
             <BoardPreview board={board} />
           </li>)
         }
+        <article className="board-preview create-board-preview">
+          <h4>Create new board</h4>
+        </article>
       </ul>
     </section>
   )

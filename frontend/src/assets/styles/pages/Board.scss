@@ -1,5 +1,4 @@
-
-.everything>header {    
+.everything>header {
     background-color: #e4bcb9;
     border-bottom: 1px solid #c2a5a7;
 }
@@ -19,26 +18,25 @@
 
 
 body {
-    overflow-y: hidden; 
+    overflow-y: hidden;
     // overflow-y: scroll; 
     // height: 100vh;
-    
+
 }
 
 .main-layout {
     display: flex;
-    // height: 100vh;  
+    height: 100vh;
 }
 
 
 .board-display {
-    width: 80%;
-    height: calc(100vh - 57px); //60px
+    width: 100%;
 }
 
 header {
     padding: 12px;
-    background:#ffffff3d;
+    background: #ffffff3d;
     backdrop-filter: blur(8px);
 }
 
@@ -63,10 +61,10 @@ header {
 .nav-highlight-hint:hover {
     cursor: pointer;
     border-radius: 3px;
-    background-color: rgba(0, 0, 0, 0.16);   
+    background-color: rgba(0, 0, 0, 0.16);
 }
 
-aside>section:not(:first-of-type){
+aside>section:not(:first-of-type) {
     margin-top: 12px;
 }
 
@@ -132,7 +130,7 @@ aside>section:not(:first-of-type){
 .dropdown-menu:last-of-type {
     font-size: 16px;
     border-radius: 3px;
-    background-color: rgba(0, 0, 0, 0.16);       
+    background-color: rgba(0, 0, 0, 0.16);
 }
 
 input {
@@ -174,14 +172,14 @@ input {
 }
 
 .task-title {
-    margin: 0; 
+    margin: 0;
     font-size: 1em;
     font-weight: bold;
     color: #172b4d;
 }
 
 .task-with-badges .task-content {
-    margin-bottom: 6px; 
+    margin-bottom: 6px;
 }
 
 
@@ -229,8 +227,7 @@ input {
     border: 2px solid transparent;
 }
 
-.task:hover,
-.task:active  { 
+.task:active {
     border: 2px solid #388afe;
 }
 
@@ -240,14 +237,14 @@ input {
 .tasks-container {
     display: grid;
     align-items: start stretch;
-    grid-template-rows: repeat(auto-fit, 1fr);    
+    grid-template-rows: repeat(auto-fit, 1fr);
     height: fit-content;
 }
 
 
 
 .liast {
-    
+
 
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(var(--min-column-size), 1fr));

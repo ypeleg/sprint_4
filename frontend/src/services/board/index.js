@@ -8,7 +8,7 @@ import { boardService as remote } from './board.service.remote'
 import { getRandomBoard } from './data.js'
 // import { random } from '../util.service.js'
 
-localStorage.clear()
+// localStorage.clear()
 
 function getEmptyBoard() {
     return getRandomBoard()
