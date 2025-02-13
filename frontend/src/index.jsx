@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import './assets/styles/main.scss'
+import './assets/styles/just_css.css'
 import './assets/styles/font-awesome.css'
 import './assets/styles/setup/typography_fr.css'
 
