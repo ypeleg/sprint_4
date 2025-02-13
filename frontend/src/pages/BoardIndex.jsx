@@ -87,3 +87,16 @@ export function BoardIndex() {
 
     </>)
 }
+  
+
+
+
+
+
+
+
+
+
+
+
+

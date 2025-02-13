@@ -30,3 +30,6 @@ export const boardService = { getEmptyBoard, getDefaultFilter, ...service }
 // when using script - dev / dev:local
 
 if (DEV) window.boardService = boardService
+
+
+
