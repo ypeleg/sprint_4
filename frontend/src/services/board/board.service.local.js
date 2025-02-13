@@ -18,10 +18,10 @@ window.cs = boardService
 
 async function query(filterBy = { title: '', }) {
     var boards = await storageService.query(STORAGE_KEY)
-    if(boards.length===0){
+    if (boards.length === 0) {
         _createBoards()
         boards = await storageService.query(STORAGE_KEY)
-    } 
+    }
     const { title, sortField, sortDir } = filterBy
 
     if (title) {
@@ -79,12 +79,15 @@ async function addBoardMsg(boardId, title) {
     return msg
 }
 
-async function _createBoards(){
+async function _createBoards() {
 
-    for(let i=0;i<5;i++){
+    for (let i = 0; i < 5; i++) {
 
         let board = await getEmptyBoard()
         console.log(board)
         await save(board)
     }
 }
+
+
+
