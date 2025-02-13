@@ -1,7 +1,7 @@
 
 export function CreateBoardModal() {
 
-  const [addBoard, setAddBoard] = useState();
+  // const [addBoard, setAddBoard] = useState();
 
 
 
