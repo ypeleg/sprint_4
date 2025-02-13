@@ -1,0 +1,21 @@
+.workspace-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 40px 0 0;
+  padding: 0 0 11px;
+
+  .title-workspace {
+    display: flex;
+    align-items: center;
+
+  }
+
+  .nav-editor-board {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  h3 {
+    margin: 0;
+  }
+}
