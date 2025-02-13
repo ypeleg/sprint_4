@@ -89,9 +89,9 @@ async function _createBoards() {
     }
 }
 
-function getEmptyBoard() {
-    return {
+// function getEmptyBoard() {
+    // return {
 
-    }
-}
+    // }
+// }
 
