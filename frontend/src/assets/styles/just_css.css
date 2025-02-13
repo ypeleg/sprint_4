@@ -362,12 +362,15 @@
 }
 .task-title-section {
     display: flex;
+    width: 100%;
     flex-direction: column;
 }
 .task-title {
     font-weight: bold;
     font-size: 1.4rem;
     border: none;
+    width: fit-content;
+    width: 100%;
     background: transparent;
     outline: none;
     margin-bottom: 4px;
@@ -684,6 +687,7 @@
     font-size: 1.2rem;
     font-weight: 600;
     border: none;
+    /* width: 100%; */
     background: transparent;
     outline: none;
     margin-bottom: 4px;
@@ -1147,15 +1151,27 @@ input.activity-input{
     box-shadow: rgba(9, 30, 66, 0.25), 0px 1px 1px #091e4240, 0px 0px 1px #091e424f;
 }
 
+.task-subtitle>strong {
+    color: #44546f;
+    background-color: #dbdee3;
+    padding-inline: 4px;
+    margin-right: 5px;
+}
 
 input.task-title {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 600;
     border: none;
+    width: 100%;
     background: transparent;
     outline: none;
     margin-bottom: 4px;
     color: #172b4d;
+}
+
+input.task-title:focus {
+    border: 2px solid #388afe;
+    background-color: white;
 }
 
 .status-icon {

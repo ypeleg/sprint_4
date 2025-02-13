@@ -11,14 +11,19 @@ import React, { useRef, useEffect, useState } from "react"
 import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
 
 
-// labels
+
 // due date
-// watching
-// attachments
+// comments
 // checklists
+// attachments
 // activity
-// custom fields
-// upper names
+
+
+// data changes:
+// badges: give the task "all the possible options for a badge"
+// change memberIds to members
+// bring the task "the current list"
+// bring the task "the current group"
 
 
 
@@ -132,7 +137,7 @@ export function TaskModal({ taskToShow, onClose }) {
                                 onChange={(e) => setCardTitle(e.target.value)}
                             />
                             <div className="task-subtitle">
-                                in list <strong>{listName}</strong>
+                                in list <strong>{listName} <i className="fa-regular fa-chevron-down"></i> </strong> { isWatching && <i className="fa-regular fa-eye"></i>}
                             </div>
                         </div>
                     </div>
@@ -158,19 +163,6 @@ export function TaskModal({ taskToShow, onClose }) {
                                     </div>
                             </div>
 
-                            {/* <div className="labels"> */}
-                                {/* a */}
-                                {/* <pre>{JSON.stringify(taskToShow.labels, null, 4)}</pre> */}
-                                {/* <div>{taskToShow.labels}</div> */}
-
-                            {/* {(!!taskToShow.labels) &&
-                                <>{taskToShow.labels.map(label => {
-                                    return <div key={label.id} className="task-label color-green"
-                                                style={{backgroundColor: label.color || ''}}
-                                    ></div>
-                                })}</>
-                            } */}
-                            {/* </div> */}
 
                             <div className="task-labels">
                                 <div className="section-inner">
@@ -279,6 +271,7 @@ export function TaskModal({ taskToShow, onClose }) {
                                         <option value="High">High</option>
                                     </select>
                                 </div>
+
                                 <div>
                                     <label><i className="fa-solid fa-list"></i>  Priority</label>
                                     <select
@@ -291,6 +284,7 @@ export function TaskModal({ taskToShow, onClose }) {
                                         <option value="High">High</option>
                                     </select>
                                 </div>
+
                                 <div>
                                     <label> <i className="fa-solid fa-list"></i>  Status</label>
                                     <select
@@ -304,6 +298,7 @@ export function TaskModal({ taskToShow, onClose }) {
                                         <option value="Done">Done</option>
                                     </select>
                                 </div>
+
                             </div>
                         </div>
 
