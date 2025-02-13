@@ -12,7 +12,7 @@ export function TaskList({ onLoadTask, showForm, group, onSetShowForm }) {
     const navgite = useNavigate()
     
    
-    if (!tasks.length) return (<>Loading..</>)
+    
 
  
 

@@ -7,9 +7,11 @@ import { groupService as remote } from './group.service.remote'
 
 function getEmptyGroup() {
     return {
-        vendor: makeId(),
-        speed: getRandomIntInclusive(80, 240),
-        msgs: [],
+        archivedAt:null,
+        id: makeId(),
+        style:{ backgroundColor: "#FF9B85" },
+        tasks:[],
+        title:""
     }
 }
 

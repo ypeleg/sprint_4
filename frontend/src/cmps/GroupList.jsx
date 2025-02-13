@@ -1,5 +1,6 @@
 
 
+import { AddGroup } from "./AddGroup";
 import { GroupPreview } from "./GroupPreview";
 import { ListFooter } from "./ListFooter";
 import { TaskList } from "./TaskList";
@@ -15,7 +16,7 @@ export function GroupList({ onLoadTask, groups }) {
             return  <GroupPreview onLoadTask={onLoadTask} group={group}/>
 
             })}
-
+            <AddGroup/>
         </section>
 
     )
