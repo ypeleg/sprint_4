@@ -7,7 +7,7 @@ import { useNavigate } from "react-router"
 import { AddTaskForm } from "./AddTaskForm"
 
 
-export function TaskList({  showForm,group,onSetShowForm }) {
+export function TaskList({ onLoadTask, showForm, group, onSetShowForm }) {
     const {tasks} = group
     const navgite = useNavigate()
     
@@ -19,23 +19,27 @@ export function TaskList({  showForm,group,onSetShowForm }) {
     return (
         <div className="task-list">
 
+            {/*<pre>{JSON.stringify(tasks.map(task => task.id), null, 4)}</pre>*/}
+
             {tasks.map((task, idx) => {
-                return (<div key={task.id} onClick={() => loadTask(task.id)} className="task">
+                return (<div key={task.id} onClick={() => onLoadTask(task)} className="task">
 
 
                     {task.style.backgroundImage &&
                         <div className="cover-img">
-                            <img src={task.style.backgroundImage} />
+                            <img src={task.style.backgroundImage}/>
                         </div>
                     }
 
                     <div className="stay-same-height flex-space-between stay-same-height-start">
                         {/* <pre>{JSON.stringify(task, null, 4)}</pre> */}
+
+
                         <div className="labels">
                             {(!!task.labels) &&
                                 <>{task.labels.map(label => {
                                     return <div key={label.id} className="task-label color-green"
-                                        style={{ backgroundColor: label.color || '' }}
+                                                style={{backgroundColor: label.color || ''}}
                                     ></div>
                                 })}</>
                             }
@@ -51,7 +55,7 @@ export function TaskList({  showForm,group,onSetShowForm }) {
                     </div>
 
                     <div className="stay-same-height">
-                        <div className="task-checkbox" type="checkbox" />
+                        <div className="task-checkbox" type="checkbox"/>
                         <span className="task-task-text">{task.title}</span>
                     </div>
 
@@ -59,7 +63,9 @@ export function TaskList({  showForm,group,onSetShowForm }) {
 
                         <div className="task-badges">
                             {task.isUserWatching && (<div className=""><i className="fa-regular fa-eye"></i></div>)}
-                            {task.dueDate && (<> <i className="fa-regular fa-clock"></i><div className="task-date">{task.dueDate}</div> </>)}
+                            {task.dueDate && (<> <i className="fa-regular fa-clock"></i>
+                                <div className="task-date">{task.dueDate}</div>
+                            </>)}
                             {task.geoLocation && (<div className=""><i className="fa-regular fa-map"></i></div>)}
                             {/* {(task.badges.length)} */}
                             {(task.badges.length) && (task.badges.map(badge => {
@@ -75,7 +81,7 @@ export function TaskList({  showForm,group,onSetShowForm }) {
                             {task.memberIds.map(member => {
 
                                 return <div key={member._id} className="task-user-icon">
-                                    <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png" />
+                                    <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png"/>
                                 </div>
 
                                 // <div className="task-user-icon">
@@ -93,7 +99,7 @@ export function TaskList({  showForm,group,onSetShowForm }) {
                     </div>
                 </div>)
             })}
-            {showForm&&<AddTaskForm onSetShowForm={onSetShowForm} selectedGroup={group}/>}
+            {showForm && <AddTaskForm onSetShowForm={onSetShowForm} selectedGroup={group}/>}
         </div>
     )
 }

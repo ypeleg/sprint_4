@@ -12,7 +12,6 @@ import { getRandomBoard } from './data.js'
 
 function getEmptyBoard() {
     return getRandomBoard()
-
 }
 
 function getDefaultFilter() {

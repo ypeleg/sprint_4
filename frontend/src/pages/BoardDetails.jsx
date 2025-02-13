@@ -4,6 +4,7 @@
 import { useParams } from "react-router"
 import { useSelector } from "react-redux"
 import { SideBar } from "../cmps/SideBar"
+import { loadTask } from "../store/store"
 import { GroupList } from "../cmps/GroupList"
 import { AppHeader } from "../cmps/AppHeader.jsx"
 import React, { useRef, useEffect, useState } from "react"
@@ -11,9 +12,13 @@ import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoar
 
 
 
-export function TaskModal({ task, onClose }) {
+
+
+export function TaskModal({ taskToShow, onClose }) {
+
     // const [coverUrl, setCoverUrl] = useState("cover-img.png")
     const [coverUrl, setCoverUrl] = useState("")
+
     const [cardTitle, setCardTitle] = useState("Side nav")
     const [listName, setListName] = useState("BACKLOG")
     const [isWatching, setIsWatching] = useState(false)
@@ -111,8 +116,6 @@ export function TaskModal({ task, onClose }) {
                             </div>
                         </div>
                     </div>
-
-
 
                 </div>
                 <div className="task-layout">
@@ -461,23 +464,35 @@ export function useToggle(initialState) {
 }
 
 
+// import {taskService} from '../services/task/task.service.local.js'
+
+
 export function BoardDetails() {
 
+    // taskService.query().then(res => console.log(res))
+
     const boardToShow = useSelector(state => state.boardModule.board)
-    const task = useSelector(state => state.boardModule.task)
+    const [taskToShow, setTaskToShow] = useState(null)
     const { boardId } = useParams()
-    console.log(boardId)
+    // console.log(boardId)
+
 
     const [isPopupShown, togglePopup] = useToggle(false)
 
 
     useEffect(() => {
-        onloadboard()
-
+        onLoadBoard()
     }, [])
 
-    async function onloadboard() {
-        await loadBoard(boardId)
+    async function onLoadBoard() {
+        await loadBoard(boardId).then(() => {
+            setTaskToShow(null)
+        })
+    }
+
+    async function onLoadTask(task) {
+        setTaskToShow(task)
+        togglePopup()
     }
 
     if (!boardToShow) return (<>Loading..</>)
@@ -485,12 +500,12 @@ export function BoardDetails() {
         <div className={`everything ${(isPopupShown)? 'popup-open' : ''}`}>
 
             <button className="open-chat-btn" onClick={togglePopup}>💬</button>
-            {isPopupShown && <>
+            {isPopupShown && (!!taskToShow) && <>
 
                 <div className="popup">
-                        <TaskModal onClose={togglePopup}/>
+                    <TaskModal taskToShow={taskToShow} onClose={togglePopup}/>
                 </div>
-                <div className="popup-backdrop"></div>
+                <div className="popup-backdrop" onClick={togglePopup}></div>
 
             </>}
 
@@ -545,7 +560,7 @@ export function BoardDetails() {
                         </div>
                     </header>
 
-                    <GroupList groups={boardToShow.groups}/>
+                    <GroupList onLoadTask={onLoadTask} groups={boardToShow.groups}/>
 
                 </section>
 
