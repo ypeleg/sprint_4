@@ -3,14 +3,17 @@
 
 
 .popup {
+    display: block;
     position: fixed;
-    top: 80%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    border-radius: 20px;
     z-index: 1000;
 }
 
+.popup input {
+    background-color: white;
+}
 .popup-backdrop {
     position: fixed;
     top: 0;
@@ -81,7 +84,8 @@
 
 .task-labels {
     display: flex;
-    align-items: center;
+    align-items: stretch;
+    justify-items: stretch;
     margin: 8px 0;
     flex-wrap: wrap;
 }
@@ -164,7 +168,6 @@
     border-radius: 4px;
 }
 .task-attachment-row button {
-    background-color: #5aac44;
     color: #fff;
     border: none;
     padding: 6px 12px;
@@ -245,7 +248,7 @@
 }
 .task-activity-add button {
     align-self: flex-end;
-    background-color: #5aac44;
+
     color: #fff;
     border: none;
     padding: 6px 12px;
@@ -353,7 +356,7 @@
     gap: 10px;
 }
 .task-icon.status-icon {
-    color: #5aac44;
+
     margin-top: 5px;
 }
 .task-title-section {
@@ -387,7 +390,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: #0065ff;
+    background: #00a3bf;
     color: #fff;
     font-size: 0.8rem;
     display: flex;
@@ -412,13 +415,13 @@
     gap: 4px;
 }
 .member-label {
-    width: 20px;
-    height: 20px;
+    width: 46px;
+    height: 32px;
     border-radius: 4px;
     cursor: pointer;
 }
-.yellow  { background: #f2d600; }
-.blue    { background: #0079bf; }
+.yellow  { background: #f5cd47; }
+.blue    { background: #579dff; }
 .red     { background: #eb5a46; }
 .green   { background: #61bd4f; }
 .orange  { background: #ff9f1a; }
@@ -523,7 +526,7 @@
     border-radius: 3px;
 }
 .task-attachment-row button {
-    background-color: #5aac44;
+
     color: #fff;
     border: none;
     padding: 6px 12px;
@@ -603,7 +606,7 @@
 }
 .task-activity-add button {
     align-self: flex-end;
-    background-color: #5aac44;
+
     color: #fff;
     border: none;
     padding: 6px 12px;
@@ -642,4 +645,336 @@
     color: #6b778c;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+
+.task-modal {
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #172b4d;
+    padding: 16px;
+    width: 768px;
+    max-width: 95vw;
+    position: relative;
+}
+
+.popup-backdrop {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+}
+
+.task-modal-header {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.task-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    outline: none;
+    margin-bottom: 4px;
+    color: #172b4d;
+}
+
+.task-subtitle {
+    color: #5e6c84;
+    font-size: 0.85rem;
+}
+
+.task-labels {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+.task-label-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+.task-label-swatch:hover {
+    border-color: #172b4d;
+}
+
+.task-watch,
+.task-watch-btn {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    height: 32px;
+}
+.task-watch.active,
+.task-watch-btn.active {
+    background-color: #0079bf;
+    color: #fff;
+}
+
+.task-description {
+    background-color: #fafbfc;
+    border: 1px solid #dfe1e6;
+    border-radius: 3px;
+    padding: 8px;
+    min-height: 60px;
+    font-size: 0.9rem;
+    color: #172b4d;
+    margin-bottom: 12px;
+    resize: vertical;
+}
+
+.task-custom-fields {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+.task-custom-fields > div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    font-size: 0.85rem;
+    color: #5e6c84;
+}
+.task-custom-fields label {
+    margin-bottom: 4px;
+}
+.task-custom-fields select {
+    border: 1px solid #dfe1e6;
+    border-radius: 3px;
+    padding: 6px;
+    font-size: 0.85rem;
+    color: #172b4d;
+    background: #fff;
+    outline: none;
+}
+
+.task-attachment-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.task-attachment-row input {
+    flex: 1;
+    padding: 6px;
+    border: 1px solid #dfe1e6;
+    border-radius: 3px;
+    font-size: 0.85rem;
+}
+.task-attachment-row button {
+
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.task-checklist-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: #172b4d;
+}
+.task-checklist-items {
+    margin-bottom: 8px;
+}
+.task-checklist-item {
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+}
+.task-checklist-item .completed {
+    text-decoration: line-through;
+    color: #999;
+}
+.task-checklist-add {
+    display: flex;
+    gap: 8px;
+}
+.task-checklist-add input {
+    flex: 1;
+    border: 1px solid #dfe1e6;
+    border-radius: 3px;
+    padding: 6px;
+    font-size: 0.85rem;
+}
+
+.task-activity-add {
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.task-activity-add textarea {
+    background-color: #fafbfc;
+    border: 1px solid #dfe1e6;
+    border-radius: 3px;
+    padding: 8px;
+    font-family: sans-serif;
+    resize: vertical;
+    min-height: 50px;
+    font-size: 0.85rem;
+}
+.task-activity-add button {
+    align-self: flex-end;
+
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.task-activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.task-activity-list li {
+    background: #f4f5f7;
+    border-radius: 3px;
+    padding: 6px;
+    margin-bottom: 4px;
+    font-size: 0.85rem;
+    color: #172b4d;
+}
+
+.task-sidebar {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.sidebar-btn {
+    background: #ebecf0;
+    border: none;
+    border-radius: 3px;
+    padding: 8px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #172b4d;
+    font-weight: 500;
+}
+.sidebar-btn:hover {
+    background: #dfe1e6;
+}
+.sidebar-subtitle {
+    margin: 8px 0 4px 0;
+    font-size: 0.75rem;
+    color: #6b778c;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.task-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    border: none;
+    background: transparent;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: #6b778c;
+}
+.task-modal-close:hover {
+    color: #172b4d;
+}
+
+.task-layout {
+    display: flex;
+    gap: 24px;
+}
+.task-main {
+    width: 75%;
+}
+
+.task-section h3 {
+    margin: 0 0 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #172b4d;
+}
+.task-section {
+    margin-bottom: 16px;
+}
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+.hide-details-btn,
+.edit-btn {
+    background: #ebecf0;
+    border: none;
+    border-radius: 3px;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    color: #172b4d;
+}
+.hide-details-btn:hover,
+.edit-btn:hover {
+    background: #dfe1e6;
+}
+
+.task-custom-fields select {
+    appearance: none;
+    border: transparent;
+    border-radius: 3px;
+    padding: 8px;
+    font-size: 0.75rem;
+    color: #626f86;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+    background-color: #e2e4ea;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+.task-custom-fields select:hover {
+    background: #ebecf0;
+}
+
+.task-custom-fields select:focus {
+    background: #fff;
+    border-color: #0079bf;
+    box-shadow: 0 0 4px rgba(0, 121, 191, 0.4);
+}
+
+.popup * {
+    font-size: 12px; 
+    /* 1.0em; */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.popup-open {
+    /*display: block;*/
+    overflow-y: scroll;
+    height: fit-content;
+}
+
+.popup {
+    overflow-y: scroll;
+    height: 100vh;
+    width: 100vw;
+}
+
+.member-label {
+
 }

@@ -25,7 +25,6 @@ export function TaskModal({ task, onClose }) {
     const [status, setStatus] = useState("")
     const [attachments, setAttachments] = useState([])
     const [newAttachment, setNewAttachment] = useState("")
-    const [checklistTitle, setChecklistTitle] = useState("Checklistsasd")
     const [checklistItems, setChecklistItems] = useState([{ id: 1, text: "item", completed: true }])
     const [newChecklistItem, setNewChecklistItem] = useState("")
     const [hideChecked, setHideChecked] = useState(false)
@@ -226,7 +225,7 @@ export function TaskModal({ task, onClose }) {
                         </div>
                         <div className="task-section">
                             <div className="task-checklist-header">
-                                <h3>{checklistTitle}</h3>
+                                <h3>Checklists</h3>
                                 <div>
                                     <button onClick={() => setHideChecked(!hideChecked)}>
                                         {hideChecked ? "Show checked items" : "Hide checked items"}
@@ -351,7 +350,7 @@ export function BoardDetails() {
 
     if (!boardToShow) return (<>Loading..</>)
     return (
-        <div className="everything">
+        <div className={`everything ${(isPopupShown)? 'popup-open' : ''}`}>
 
             <button className="open-chat-btn" onClick={togglePopup}>💬</button>
             {isPopupShown && <>
