@@ -68,7 +68,8 @@ export function TaskList({ onLoadTask, showForm, group, onSetShowForm }) {
                             </>)}
                             {task.geoLocation && (<div className=""><i className="fa-regular fa-map"></i></div>)}
                             {/* {(task.badges.length)} */}
-                            {(task.badges.length) && (task.badges.map(badge => {
+                            {(task.badges.length !==0) && (task.badges.map(badge => {
+                                
                                 return <div key={badge.id} className={`badge badge-${badge.badeType}`}>{badge.text}</div>
                                 // <div className="badge badge-status-approved">Status: Approved</div>
                             }))}
