@@ -387,16 +387,16 @@ export function BoardDetails() {
                             <div className="users">
                                 <div className="user-icon">
 
-                                    <img src="https://task-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png"/>
+                                    <img src="roi.png"/>
                                 </div>
                                 <div className="user-icon">
-                                    <img src="https://task-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png"/>
+                                    <img src="roi.png"/>
                                 </div>
                                 <div className="user-icon">
-                                    <img src="https://task-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png"/>
+                                    <img src="roi.png"/>
                                 </div>
                                 <div className="user-icon">
-                                    <img src="https://task-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png"/>
+                                    <img src="roi.png"/>
                                 </div>
                             </div>
                             <button className="share-btn">
