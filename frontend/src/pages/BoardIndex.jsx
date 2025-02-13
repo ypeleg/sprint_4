@@ -49,12 +49,12 @@ export function BoardIndex() {
 
         <div className="all-boards">
           <div className="category-container">
-            <div className="board-logo">T</div>
+            <div className="board-logo-large">T</div>
             <div className="description-container">
               <h2>Trello Workspaces <span>
                 <button className='fa-solid fa-pen'>
                 </button></span></h2>
-              <h3>Premium <span>🔒</span> Private</h3>
+              <h3>Premium <i className="fa-regular fa-lock"></i> Private</h3>
             </div>
           </div>
 
@@ -66,7 +66,8 @@ export function BoardIndex() {
 
           <section className='my-boards'>
             <h3> <span className="fa-solid fa-user"></span>Your boards</h3>
-            <section className="board-list">
+            <BoardList boards={boards} />
+            {/* <section className="board-list">
               <article className="board-preview">
                 <h4>Simple project</h4>
               </article>
@@ -77,7 +78,7 @@ export function BoardIndex() {
                 <h4>Create new board</h4>
               </article>
 
-            </section>
+            </section> */}
           </section>
         </div>
 
