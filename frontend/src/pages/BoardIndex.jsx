@@ -20,11 +20,7 @@ export function BoardIndex() {
   // const [boardsToShow, setBoardsToShow] = useState()
 
   useEffect(() => {
-    getEmptyBoard().then(e => addBoard(e)).then(e => {
-      // setBoardsToShow(e)
-      console.log('sss', e)
-
-    })
+    loadBoards()
   }, [])
 
   // useEffect( () => {        
@@ -60,25 +56,12 @@ export function BoardIndex() {
 
 
           <section className='star-boards'>
-            <h3> <span className="fa-solid fa-user"></span> Starred boards</h3>
+            <h3> <span className="fa-solid fa-star"></span> Starred boards</h3>
             <BoardList boards={boards} />
           </section>
-
           <section className='my-boards'>
-            <h3> <span className="fa-solid fa-user"></span>Your boards</h3>
-            <BoardList boards={boards} />
-            {/* <section className="board-list">
-              <article className="board-preview">
-                <h4>Simple project</h4>
-              </article>
-              <article className="board-preview" style={{ backgroundColor: 'red' }}>
-                <h4>Tal's project</h4>
-              </article>
-              <article className="board-preview create-board">
-                <h4>Create new board</h4>
-              </article>
-
-            </section> */}
+            <h3> <span className="fa-solid fa-user"></span>YOUR WORKSPACES</h3>
+            <BoardList boards={boards} addBoard={true} />
           </section>
         </div>
 

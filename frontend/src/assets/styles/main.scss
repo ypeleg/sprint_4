@@ -39,8 +39,9 @@
 @import "pages/BoardIndex.scss";
 @import "pages/BoardPreview.scss";
 
-
 // @import "cmps/CarList";
+
+
 // @import "cmps/CarPreview";
 
 
@@ -51,5 +52,9 @@
 @import "cmps/SideBar";
 @import "cmps/GroupList";
 @import "cmps/TaskList";
+@import "cmps/TaskDetails";
+@import "cmps/BoardList.scss";
+@import "cmps/CreateBoardModal.scss";
+
 
 @import "pages/Board";
