@@ -1,6 +1,12 @@
-import { taskService } from '../../services/task'
+
+
 import { store } from '../store'
+import { taskService } from '../../services/task'
 import { ADD_TASK, REMOVE_TASK, SET_TASKS, SET_TASK, UPDATE_TASK, ADD_TASK_MSG } from '../reducers/task.reducer'
+
+export async function getEmptyTask() {
+    return taskService.getEmptyTask()
+}
 
 export async function loadTasks(filterBy) {
     try {
@@ -21,7 +27,6 @@ export async function loadTask(taskId) {
         throw err
     }
 }
-
 
 export async function removeTask(taskId) {
     try {
@@ -102,16 +107,4 @@ function getCmdAddTaskMsg(msg) {
         type: ADD_TASK_MSG,
         msg
     }
-}
-
-// unitTestActions()
-async function unitTestActions() {
-    await loadTasks()
-    await addTask(taskService.getEmptyTask())
-    await updateTask({
-        _id: 'm1oC7',
-        title: 'Task-Good',
-    })
-    await removeTask('m1oC7')
-    // TODO unit test addTaskMsg
 }

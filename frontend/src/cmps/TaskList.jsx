@@ -1,16 +1,19 @@
-import { useNavigate } from "react-router"
+
+
 import { loadTask } from "../store/store"
 import { useSelector } from "react-redux"
-
+import { useNavigate } from "react-router"
 
 
 export function TaskList( { tasks, style } ) {
 
     const navgite = useNavigate()
-   const board =useSelector(state => state.boardModule.board) 
+    const board =useSelector(state => state.boardModule.board)
    
     if (!tasks.length) return (<>Loading..</>)
+
     console.log(tasks)
+
     return (
         <div className="task-list">
 
@@ -85,14 +88,8 @@ export function TaskList( { tasks, style } ) {
                             })}
                         </>)}
                     </div>
-
-
                 </div>)
             })}
-
         </div>
-
-
-
     )
 }

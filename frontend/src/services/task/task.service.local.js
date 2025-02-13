@@ -1,7 +1,7 @@
 
-import { storageService } from '../async-storage.service'
-import { makeId } from '../util.service'
 import { userService } from '../user'
+import { makeId } from '../util.service'
+import { storageService } from '../async-storage.service'
 
 const STORAGE_KEY = 'task'
 
@@ -23,14 +23,6 @@ async function query(filterBy = { title: '', }) {
         const regex = new RegExp(filterBy.title, 'i')
         tasks = tasks.filter(task => regex.test(task.vendor) || regex.test(task.description))
     }
-    // if(sortField === 'vendor' || sortField === 'owner'){
-    //     tasks.sort((task1, task2) => 
-    //         task1[sortField].localeCompare(task2[sortField]) * +sortDir)
-    // }
-    // if(sortField === 'speed'){
-    //     tasks.sort((task1, task2) => 
-    //         (task1[sortField] - task2[sortField]) * +sortDir)
-    // }
 
     tasks = tasks.map(({ _id, vendor, speed, owner }) => ({ _id, vendor, speed, owner }))
     return tasks

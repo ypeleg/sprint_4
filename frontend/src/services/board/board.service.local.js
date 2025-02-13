@@ -1,8 +1,8 @@
 
-import { storageService } from '../async-storage.service'
-import { makeId } from '../util.service'
 import { userService } from '../user'
+import { makeId } from '../util.service'
 import { getEmptyBoard } from '../../store/store'
+import { storageService } from '../async-storage.service'
 
 const STORAGE_KEY = 'board'
 

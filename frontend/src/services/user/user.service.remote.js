@@ -1,15 +1,17 @@
-import { httpService } from '../http.service'
 
+
+import { httpService } from '../http.service'
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
+
 
 export const userService = {
 	login,
 	logout,
-	signup,
-	getUsers,
-	getById,
-	remove,
-	update,
+    remove,
+    update,
+    signup,
+    getById,
+    getUsers,
     getLoggedinUser,
     saveLoggedinUser,
 }

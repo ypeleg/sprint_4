@@ -1,13 +1,16 @@
+
+
 import { useSelector } from "react-redux"
 import { loadBoards } from "../store/store"
 
-
-
 export function SideBar() {
-const boards = useSelector(state => state.boardModule.boards)
-if(!boards.length){
-    loadBoards()
-}
+
+    const boards = useSelector(state => state.boardModule.boards)
+
+    if(!boards.length){
+        loadBoards()
+    }
+
     return (
         <aside className="side-bar">
             <div className="sidebar-header flex-space-between">
@@ -53,8 +56,6 @@ if(!boards.length){
 
             <button className="label"> PREMIUM </button>
 
-
-
             <section>
                 <div className="side-section-header">
                     <h5>Workspace views</h5>
@@ -79,9 +80,6 @@ if(!boards.length){
                 </article>
             </section>
 
-
-
-
             <section>
                 <div className="side-section-header">
                     <h5>Your Boards</h5>
@@ -100,9 +98,7 @@ if(!boards.length){
 
                 </div>)
 
-
                    })} 
-                   
 
                 </article>
             </section>

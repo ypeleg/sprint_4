@@ -1,8 +1,9 @@
 
-// import { userService } from '../services/user'
+
 import { useNavigate } from 'react-router'
 import { BoardPreview } from './BoardPreview.jsx'
 import { CreateBoardModal } from './CreateBoardModal.jsx'
+
 
 export function BoardList({ boards, onRemoveBoard, onUpdateBoard, addBoard = false }) {
 
@@ -13,6 +14,7 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, addBoard = fal
   //     if (user.isAdmin) return true
   //     return board.owner?._id === user._id
   // }
+
   const navgite = useNavigate()
   return (
     <section>
