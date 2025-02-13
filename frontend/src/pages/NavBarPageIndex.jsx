@@ -17,40 +17,40 @@ export function NavBarPageIndex() {
         </div>
       </div>
 
-      <div class="submenu">
-        <div class="menu-item">
-          <button class="side-btn">
-            <i class="fa-solid fa-briefcase"></i> Getting Started <span class="badge">5</span>
+      <div className="submenu">
+        <div className="menu-item">
+          <button className="side-btn">
+            <i className="fa-solid fa-briefcase"></i> Getting Started <span className="badge">5</span>
           </button>
         </div>
-        <div class="menu-item active">
-          <button class="side-btn">
-            <i class="fa-solid fa-table-columns"></i> Boards
+        <div className="menu-item active">
+          <button className="side-btn">
+            <i className="fa-solid fa-table-columns"></i> Boards
           </button>
         </div>
-        <div class="menu-item">
-          <button class="side-btn">
-            <i class="fa-solid fa-layer-group"></i> Collections
+        <div className="menu-item">
+          <button className="side-btn">
+            <i className="fa-solid fa-layer-group"></i> Collections
           </button>
         </div>
-        <div class="menu-item">
-          <button class="side-btn">
-            <i class="fa-solid fa-heart"></i> Highlights
+        <div className="menu-item">
+          <button className="side-btn">
+            <i className="fa-solid fa-heart"></i> Highlights
           </button>
         </div>
-        <div class="menu-item">
-          <button class="side-btn">
-            <i class="fa-solid fa-border-all"></i> Views
+        <div className="menu-item">
+          <button className="side-btn">
+            <i className="fa-solid fa-border-all"></i> Views
           </button>
         </div>
-        <div class="menu-item">
-          <button class="side-btn">
-            <i class="fa-solid fa-users"></i> Members <i class="fa-solid fa-plus add-icon"></i>
+        <div className="menu-item">
+          <button className="side-btn">
+            <i className="fa-solid fa-users"></i> Members <i className="fa-solid fa-plus add-icon"></i>
           </button>
         </div>
-        <div class="menu-item">
-          <button class="side-btn">
-            <i class="fa-solid fa-gear"></i> Settings
+        <div className="menu-item">
+          <button className="side-btn">
+            <i className="fa-solid fa-gear"></i> Settings
           </button>
         </div>
       </div>

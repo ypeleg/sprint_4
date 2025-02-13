@@ -43,7 +43,7 @@ export function BoardIndex() {
               <article className="board-preview" style={{ backgroundColor: 'red' }}>
                 <h4>Tal's project</h4>
               </article>
-              <article class="board-preview create-board">
+              <article className="board-preview create-board">
                 <h4>Create new board</h4>
               </article>
 
