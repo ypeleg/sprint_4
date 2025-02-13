@@ -8,7 +8,7 @@ import { AddTaskForm } from "./AddTaskForm"
 import { QuickEdit } from "./QuickEdit"
 
 
-export function TaskList({ onLoadTask, showForm, group, onSetShowForm }) {
+export function TaskList({ currentBoard, currentGroup, onLoadTask, showForm, group, onSetShowForm }) {
     const {tasks} = group
     const navgite = useNavigate()
     const [showQuickEdit,setQuickEdit] = useState(false)
@@ -28,7 +28,7 @@ export function TaskList({ onLoadTask, showForm, group, onSetShowForm }) {
             {/*<pre>{JSON.stringify(tasks.map(task => task.id), null, 4)}</pre>*/}
 
             {tasks.map((task, idx) => {
-                return (<div key={task.id} style={{ zIndex: showQuickEdit ? 20   : 0 }} onClick={() => onLoadTask(task)} className="task">
+                return (<div key={task.id} onClick={() => onLoadTask(task)} className="task">
 
 
                     {task.style.backgroundImage &&
