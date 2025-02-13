@@ -4,7 +4,7 @@ import { store } from '../store'
 import { groupService } from '../../services/group'
 import { ADD_GROUP, REMOVE_GROUP, SET_GROUPS, SET_GROUP, UPDATE_GROUP, ADD_GROUP_MSG } from '../reducers/group.reducer'
 
-export async function getEmptyGroup() {
+export  function getEmptyGroup() {
     return groupService.getEmptyGroup()
 }
 

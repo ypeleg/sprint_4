@@ -17,7 +17,7 @@ return(
                     style={{ backgroundColor: group.style?.backgroundColor || '' }}
                 >
                     <div className="list-header just-flex">
-                        <span>In Progress</span>
+                        <span>{group.title}</span>
                         <div className="group-list-headr-btns">
                             <i className="fa-regular fa-arrows-h"></i>
                             <i className="fa-regular fa-ellipsis-h"></i>
