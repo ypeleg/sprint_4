@@ -17,10 +17,12 @@ import { GroupList } from "../cmps/GroupList";
 import { SideBar } from "../cmps/SideBar";
 import { useParams } from "react-router";
 import { AppHeader } from "../cmps/AppHeader.jsx";
+import { TaskDetails } from "./TaskDetails.jsx";
 
 export function BoardDetails() {
 
-    const boardToShow = useSelector(state => state.boardModule.board)    
+    const boardToShow = useSelector(state => state.boardModule.board)
+    const task = useSelector(state => state.boardModule.task)       
     const {boardId} = useParams()
     console.log(boardId)
    
@@ -40,10 +42,12 @@ export function BoardDetails() {
     return (
         <div className="everything">
            <AppHeader/>
+       
             <main className="main-layout">
 
                 <SideBar />
                 <section className="board-display">
+                 
                     <BoradHeader />
                     <GroupList groups={boardToShow.groups} />
                 </section>

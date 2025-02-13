@@ -21,6 +21,7 @@ import { Routes, Route } from 'react-router'
 import { BoardIndex } from './pages/BoardIndex.jsx'
 import { DebugPage } from './pages/DebugPage.jsx'
 import { BoardDetails } from './pages/BoardDetails.jsx'
+import { TaskDetails } from './pages/TaskDetails.jsx'
 
 
 export function RootCmp() {
@@ -34,8 +35,10 @@ export function RootCmp() {
 
 
                     <Route path="/" element={<BoardIndex />} />
-                    <Route path="/:boardId" element={<BoardDetails />} />
-
+                    <Route path="/:boardId" element={<BoardDetails />}>
+                        <Route path="/:boardId/task/:taskId" element={<TaskDetails />}/>
+                    </Route>
+                    <Route path='/task' element={<TaskDetails/>}></Route>
                     <Route path="/debug" element={<DebugPage />} />
 
 
