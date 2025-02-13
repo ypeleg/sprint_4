@@ -66,23 +66,24 @@ export function TaskList( { tasks, style } ) {
 
             {tasks.map( (task, idx) => { return (<div key={task.id} className="task">
 
-                    <div className="stay-same-height flex-space-between">
+
+                    {task.style.backgroundImage &&  
+                        <div className="cover-img">
+                            <img src={task.style.backgroundImage}/>
+                        </div>
+                    }
+
+                    <div className="stay-same-height flex-space-between stay-same-height-start">                        
                         {/* <pre>{JSON.stringify(task, null, 4)}</pre> */}
-                        
                         <div className="labels">
                         {(!!task.labels) && 
                                 <>{task.labels.map(label => {
                                      return <div key={label.id} className="task-label color-green"
-                                     
                                      style={{backgroundColor: label.color || '' }}
-                                     
                                      ></div>
                                     })}</>
-
-                        
                         }
                         </div>
-
                         <div className="right-btns flex-space-between">
                             <div className="right-btns-btn">
                                 <i className="fa-regular fa-box"></i>
@@ -91,8 +92,6 @@ export function TaskList( { tasks, style } ) {
                                 <i className="fa-regular fa-edit"></i>
                             </div>
                         </div>
-
-
                     </div>
 
                     <div className="stay-same-height">
@@ -106,10 +105,10 @@ export function TaskList( { tasks, style } ) {
                             {task.isUserWatching && ( <div className=""><i className="fa-regular fa-eye"></i></div> )}
                             {task.dueDate && (<> <i className="fa-regular fa-clock"></i><div className="task-date">{task.dueDate}</div> </>)}                            
                             {task.geoLocation && ( <div className=""><i className="fa-regular fa-map"></i></div> )}
-                            {(!!task.badges) && (task.badges.map(badge => {
-                            
-                            return <div key={badge.id} className="badge badge-priority">Priority: Medium</div>
-                            // <div className="badge badge-status-approved">Status: Approved</div>
+                            {/* {(task.badges.length)} */}
+                            {(task.badges.length) && (task.badges.map(badge => {                            
+                                return <div key={badge.id} className={`badge badge-${badge.badeType}`}>{badge.text}</div>
+                                // <div className="badge badge-status-approved">Status: Approved</div>
                             }))}
                         </div>
                     </div>

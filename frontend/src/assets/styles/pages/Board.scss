@@ -27,12 +27,13 @@ body {
 
 .main-layout {
     display: flex;
-    height: 100vh;  
+    // height: 100vh;  
 }
 
 
 .board-display {
-    width:100%;
+    width: 80%;
+    height: calc(100vh - 57px); //60px
 }
 
 header {
@@ -225,11 +226,14 @@ input {
     // place-self: start stretch;
     // height: 64px;
     border-radius: 7px;
+    border: 2px solid transparent;
 }
 
+.task:hover,
 .task:active  { 
     border: 2px solid #388afe;
 }
+
 
 
 
