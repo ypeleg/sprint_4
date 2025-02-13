@@ -1,19 +1,25 @@
 
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { loadTask } from "../store/store"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router"
 import { AddTaskForm } from "./AddTaskForm"
+import { QuickEdit } from "./QuickEdit"
 
 
 export function TaskList({ onLoadTask, showForm, group, onSetShowForm }) {
     const {tasks} = group
     const navgite = useNavigate()
+    const [showQuickEdit,setQuickEdit] = useState(false)
+   let editpos = useRef()
     
-   
-    
-
+    function onsetQuickEdit(ev,aa){
+        const elment = ev.target
+        const pos =elment.getBoundingClientRect()
+        editpos.current = pos
+        setQuickEdit(!showQuickEdit)
+    }
  
 
     return (
@@ -22,7 +28,7 @@ export function TaskList({ onLoadTask, showForm, group, onSetShowForm }) {
             {/*<pre>{JSON.stringify(tasks.map(task => task.id), null, 4)}</pre>*/}
 
             {tasks.map((task, idx) => {
-                return (<div key={task.id} onClick={() => onLoadTask(task)} className="task">
+                return (<div key={task.id} style={{ zIndex: showQuickEdit ? 20   : 0 }} onClick={() => onLoadTask(task)} className="task">
 
 
                     {task.style.backgroundImage &&
@@ -48,7 +54,7 @@ export function TaskList({ onLoadTask, showForm, group, onSetShowForm }) {
                             <div className="right-btns-btn">
                                 <i className="fa-regular fa-box"></i>
                             </div>
-                            <div className="right-btns-btn">
+                            <div onClick={(ev) => onsetQuickEdit(ev,true)} className="right-btns-btn">
                                 <i className="fa-regular fa-edit"></i>
                             </div>
                         </div>
@@ -98,6 +104,7 @@ export function TaskList({ onLoadTask, showForm, group, onSetShowForm }) {
                             })}
                         </>)}
                     </div>
+                   {showQuickEdit&& <QuickEdit pos={editpos.current}/>}
                 </div>)
             })}
             {showForm && <AddTaskForm onSetShowForm={onSetShowForm} selectedGroup={group}/>}
