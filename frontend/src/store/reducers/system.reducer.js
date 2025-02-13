@@ -1,5 +1,7 @@
-export const LOADING_START = 'LOADING_START'
+
+
 export const LOADING_DONE = 'LOADING_DONE'
+export const LOADING_START = 'LOADING_START'
 
 const initialState = {
   isLoading: false

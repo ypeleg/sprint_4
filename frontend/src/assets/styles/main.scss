@@ -1,60 +1,21 @@
 // Setup
-@import "setup/variables";
-@import "setup/functions";
-@import "setup/mixins";
 @import "setup/typography";
 
 // Basics
-@import "basics/helpers";
-@import "basics/layout";
 @import "basics/base";
-@import "basics/links";
-@import "basics/forms";
-
 
 // pages
-@import "RootCmp";
-
-@import "pages/AboutUs";
-@import "pages/HomePage";
-@import "pages/CarIndex";
-@import "pages/ReviewIndex";
+@import "pages/Board";
 @import "pages/UserDetails";
 @import "pages/TaskDetails";
-@import "pages/LoginSignup";
-@import "pages/Chat";
 
 // Components
-@import "cmps/list";
-@import "cmps/preview";
-
-@import "cmps/AppHeader";
-@import "cmps/AppFooter";
-@import "cmps/UserMsg";
-
-@import "cmps/CarFilter";
-@import "cmps/ReviewEdit";
-@import "cmps/ReviewList";
-@import "cmps/ReviewPreview";
-@import "pages/BoardIndex.scss";
-@import "pages/BoardPreview.scss";
-
-// @import "cmps/CarList";
-
-
-// @import "cmps/CarPreview";
-
-
-
-
-@import "cmps/GroupList";
-@import "cmps/BoardHeader";
 @import "cmps/SideBar";
-@import "cmps/GroupList";
 @import "cmps/TaskList";
+@import "cmps/GroupList";
+@import "cmps/GroupList";
 @import "cmps/TaskDetails";
 @import "cmps/BoardList.scss";
+@import "pages/BoardIndex.scss";
+@import "pages/BoardPreview.scss";
 @import "cmps/CreateBoardModal.scss";
-
-
-@import "pages/Board";

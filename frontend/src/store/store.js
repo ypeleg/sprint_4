@@ -7,17 +7,17 @@ import { groupReducer } from './reducers/group.reducer'
 import { systemReducer } from './reducers/system.reducer'
 
 
-import { loadTasks, loadTask, addTask, updateTask, removeTask } from './actions/task.actions'
-import { loadUsers, loadUser, removeUser, login, signup, logout } from './actions/user.actions'
-import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from './actions/board.actions'
-import { loadGroups, loadGroup, addGroup, updateGroup, removeGroup } from './actions/group.actions'
+import { loadTasks, loadTask, addTask, updateTask, removeTask, getEmptyTask } from './actions/task.actions'
+import { loadUsers, loadUser, removeUser, login, signup, logout, getEmptyUser } from './actions/user.actions'
+import { loadBoards, loadBoard, addBoard, updateBoard, removeBoard, getEmptyBoard } from './actions/board.actions'
+import { loadGroups, loadGroup, addGroup, updateGroup, removeGroup, getEmptyGroup } from './actions/group.actions'
 
 export {
     loadTasks, loadTask, addTask, updateTask, removeTask,
     loadUsers, loadUser, removeUser, login, signup, logout,
     loadBoards, loadBoard, addBoard, updateBoard, removeBoard,
     loadGroups, loadGroup, addGroup, updateGroup, removeGroup,
-    getEmptyBoard,
+    getEmptyBoard, getEmptyGroup, getEmptyTask, getEmptyUser,
 }
 
 
@@ -34,10 +34,3 @@ const rootReducer = combineReducers({
 
 const middleware = (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() : undefined
 export const store = createStore(rootReducer, middleware)
-
-// For debug:
-// store.subscribe(() => {
-//     console.log('**** Store state changed: ****')
-//     console.log('storeState:\n', store.getState())
-//     console.log('*******************************')
-// })

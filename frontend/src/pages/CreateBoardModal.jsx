@@ -7,31 +7,20 @@ export function CreateBoardModal() {
 
   return (
     <section className="modal-content">
-      <div className="flex justify-center">
-        <h3>Create board</h3>
-
-      </div>
-      <div className="main-background gray"></div>
-
+      <h3>Create board</h3>
       <img src="" alt="" />
+
       <section className="select-background">
         <h4>Background</h4>
+        <div className="background-images">
 
-        <section className="select-background">
-          <section className="background-images">
-            <div className="bg-image-option gray"></div>
-          </section>
-
-
-          <section className="select-background-color">
-            <div className="bg-option gray"></div>
-            <div className="bg-option lightBlue"></div>
-            <div className="bg-option blue"></div>
-            <div className="bg-option lightPurple"></div>
-            <div className="bg-option purple"></div>
-            <div className="bg-option more-bg-btn">...</div>
-
-          </section>
+        </div>
+        <section className="select-background-color">
+          <div className="bg-option blue"></div>
+          <div className="bg-option purple"></div>
+          <div className="bg-option orange"></div>
+          <div className="bg-option gray"></div>
+          <div className="bg-option lightblue"></div>
 
         </section>
 
@@ -64,7 +53,6 @@ export function CreateBoardModal() {
 
         {/* Create Button */}
         <button
-          className="create-btn"
         // className={`create-btn ${boardTitle.trim() === "" ? "disabled" : ""}`}
         // onClick={handleCreate}
         // disabled={boardTitle.trim() === ""}

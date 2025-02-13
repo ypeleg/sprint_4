@@ -1,7 +1,7 @@
 
-import { storageService } from '../async-storage.service'
-import { makeId } from '../util.service'
 import { userService } from '../user'
+import { makeId } from '../util.service'
+import { storageService } from '../async-storage.service'
 
 const STORAGE_KEY = 'group'
 
@@ -23,14 +23,6 @@ async function query(filterBy = { title: '', }) {
         const regex = new RegExp(filterBy.title, 'i')
         groups = groups.filter(group => regex.test(group.vendor) || regex.test(group.description))
     }
-    // if(sortField === 'vendor' || sortField === 'owner'){
-    //     groups.sort((group1, group2) => 
-    //         group1[sortField].localeCompare(group2[sortField]) * +sortDir)
-    // }
-    // if(sortField === 'speed'){
-    //     groups.sort((group1, group2) => 
-    //         (group1[sortField] - group2[sortField]) * +sortDir)
-    // }
 
     groups = groups.map(({ _id, vendor, speed, owner }) => ({ _id, vendor, speed, owner }))
     return groups
@@ -57,7 +49,6 @@ async function save(group) {
         const groupToSave = {
             vendor: group.vendor,
             speed: group.speed,
-            // Later, owner is set by the backend
             owner: userService.getLoggedinUser(),
             msgs: []
         }

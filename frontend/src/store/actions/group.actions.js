@@ -1,6 +1,12 @@
-import { groupService } from '../../services/group'
+
+
 import { store } from '../store'
+import { groupService } from '../../services/group'
 import { ADD_GROUP, REMOVE_GROUP, SET_GROUPS, SET_GROUP, UPDATE_GROUP, ADD_GROUP_MSG } from '../reducers/group.reducer'
+
+export async function getEmptyGroup() {
+    return groupService.getEmptyGroup()
+}
 
 export async function loadGroups(filterBy) {
     try {
@@ -102,16 +108,4 @@ function getCmdAddGroupMsg(msg) {
         type: ADD_GROUP_MSG,
         msg
     }
-}
-
-// unitTestActions()
-async function unitTestActions() {
-    await loadGroups()
-    await addGroup(groupService.getEmptyGroup())
-    await updateGroup({
-        _id: 'm1oC7',
-        title: 'Group-Good',
-    })
-    await removeGroup('m1oC7')
-    // TODO unit test addGroupMsg
 }

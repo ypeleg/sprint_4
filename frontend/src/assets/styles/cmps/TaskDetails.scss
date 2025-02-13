@@ -73,7 +73,8 @@
 
         .task-details-main {
             display: grid;
-            grid-template-columns: 569px minmax(100px,1fr);
+            grid-template-columns: 569px minmax(100px, 1fr);
+
             .task-details-info {
                 .task-details-info-header {
                     padding-left: 40px;

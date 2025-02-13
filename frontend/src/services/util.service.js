@@ -1,3 +1,5 @@
+
+
 export function makeId(length = 6) {
     var txt = ''
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -24,7 +26,6 @@ export function getRandomIntInclusive(min, max) {
     max = Math.floor(max)
     return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive 
 }
-
 
 export function randomPastTime() {
     const HOUR = 1000 * 60 * 60
@@ -61,3 +62,4 @@ export const random = {
     color: () => '#' + [...'x'.repeat(6)].map(() => '0123456789ABCDEF'[Math.floor(Math.random()*16)]).join(''),
     sample: (arr, n) => [...arr].sort(()=> .5 - Math.random()).slice(0, n)
 }
+
