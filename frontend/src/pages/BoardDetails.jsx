@@ -12,13 +12,6 @@ import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoar
 
 
 
-// due date
-// comments
-// checklists
-// attachments
-// activity
-
-
 // data changes:
 // badges: give the task "all the possible options for a badge"
 // change memberIds to members
@@ -29,16 +22,14 @@ import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoar
 
 export function TaskModal({ taskToShow, onClose }) {
     
-    // comments
-    // activity
+    // geolocation    
     // badges
 
     console.log('task', taskToShow)
     const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
     const [cardTitle, setCardTitle] = useState(taskToShow.title || '')
     const [listName, setListName] = useState(taskToShow.group?.title || '')
-    const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)
-    const [activeLabels, setActiveLabels] = useState(taskToShow.labels || [])
+    const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)    
     const [description, setDescription] = useState(taskToShow.description || [])
 
     const [risk, setRisk] = useState("")
@@ -49,10 +40,7 @@ export function TaskModal({ taskToShow, onClose }) {
     const [checklists, setChecklists] = useState(
         taskToShow.checklists || []
     )
-
-    const [newChecklistItem, setNewChecklistItem] = useState([])
-
-    const [hideChecked, setHideChecked] = useState(false)
+    const [newChecklistItem, setNewChecklistItem] = useState([])    
 
     const [activityLog, setActivityLog] = useState(taskToShow.activity || [])
 
@@ -434,7 +422,7 @@ export function TaskModal({ taskToShow, onClose }) {
                         </div>
 
 
-                        {/* geolocation, checklist */}
+                        {/* geolocation */}
 
                         <div className="task-section">
 
@@ -472,15 +460,23 @@ export function TaskModal({ taskToShow, onClose }) {
 
                                     <li key={idx}>
                                         <div className="just-flex">
-                                            <div className="user-circle">
-                                                YP
-                                            </div>
+                                            {!(entry?.byMember?.imgUrl) &&
+                                                <div className="user-circle">                                                
+                                                    {entry?.byMember?.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{entry?.byMember?.fullname?.split(' ')[1][0]?.toUpperCase() || ''}                                                
+                                                </div>}
+                                            {(entry?.byMember?.imgUrl) &&
+                                                <div className="user-circle"
+                                                style={{
+                                                    backgroundImage: `url(${entry.byMember.imgUrl})`
+                                                }}>                                                     
+                                                </div>}                                                
                                             <div className="flex-col">
                                                 <div className="text-size-activity">
-                                                    <span className="full-name">yam peleg</span> attached <span className="file-name">roi.png</span> to this card
+                                                    {/* <span className="full-name">yam peleg</span> attached <span className="file-name">roi.png</span> to this card */}
+                                                    <span className="full-name">{entry?.byMember?.fullname}</span> {entry.title}
                                                 </div>
                                                 <div className="text-size-activity-2">
-                                                    just now
+                                                    {new Date(entry.createdAt).toLocaleDateString()}                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -568,6 +564,19 @@ export function BoardDetails() {
             {
                 path: 'roi.png',
                 date: Date.now()
+            }
+        ]
+
+        task.activity = [
+            {
+                "id": "rvfEjZ",
+                "title": "All a different story was .",
+                "createdAt": 1675556288449,
+                "byMember": {
+                    "_id": "u101",
+                    "fullname": "Abi Abambi",
+                    "imgUrl": "roi.png"
+                }
             }
         ]
 
