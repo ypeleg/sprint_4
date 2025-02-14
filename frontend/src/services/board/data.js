@@ -7,6 +7,20 @@ export const data = { "boards": [{ "title": "Robot Dev Proj Board #1", "isStarre
 import { random } from '../util.service.js'
 
 export const getRandomColor = () => {
+
+    const trelloBoardColors = [
+        "#60D394",
+        "#FFD97D",
+        "#fea362",
+        "#FF6B6B",
+        "#9f8fef",
+        "#579dff",
+        "#6cc3e0",
+        "#94c748",
+        "#e774bb",
+        "#8590a2",
+    ]
+
     const colors = [
       "#60D394",
       "#FFD97D",
@@ -17,7 +31,7 @@ export const getRandomColor = () => {
       "#7ED56F",
       "#FBC2EB"
     ]
-    return random.choice(colors)
+    return random.choice(trelloBoardColors)
   }
 
 export const getRandomColorLabels = () => {
@@ -150,6 +164,63 @@ function getRandomTask() {
     }
 }
 
+function getColorFromBackgroundColor(backgroundColor) {
+
+    let color = "#000000"
+
+    // green
+    if (backgroundColor === "#60D394") {
+        color = "#164b35"
+    }
+
+    // yellow
+    if (backgroundColor === "#FFD97D") {
+        color = "#4f3a0e"
+    }
+
+    // orange
+    if (backgroundColor === "#fea362") {
+        color = "#6e3b0d"
+    }
+
+    // red
+    if (backgroundColor === "#FF6B6B") {
+        color = "#6e0d0d"
+    }
+
+    // purple
+    if (backgroundColor === "#9f8fef") {
+        color = "#4f3a0e"
+    }
+
+    // blue
+    if (backgroundColor === "#579dff") {
+        color = "#0d2e6e"
+    }
+
+    // light blue
+    if (backgroundColor === "#6cc3e0") {
+        color = "#0d3a4f"
+    }
+
+    // green
+    if (backgroundColor === "#94c748") {
+        color = "#3a4f0d"
+    }
+
+    // pink
+    if (backgroundColor === "#e774bb") {
+        color = "#6e0d3a"
+    }
+
+    // grey
+    if (backgroundColor === "#8590a2") {
+        color = "#3a3a3a"
+    }
+
+    return color
+}
+
 function getRandomGroups() {
     const groupsCount = random.randint(2, 5)
     const groups = []
@@ -159,12 +230,24 @@ function getRandomGroups() {
         for (let j = 0; j < tasksCount; j++) {
             tasks.push(getRandomTask())
         }
+
+        const backgroundColor =  random.choice([getRandomColor(), getRandomColor(), null])
+        const color = getColorFromBackgroundColor(backgroundColor)
+
+        const style = {
+            backgroundColor
+        }
+        if (color) {
+            style.color = color
+        }
+
+
         groups.push({
             id: random.id(),
             title: random.lorem(random.randint(1, 3)),
             archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),
             tasks,
-            style: { backgroundColor: random.choice([getRandomColor(), null]) }
+            style: style,
         })
     }
     return groups

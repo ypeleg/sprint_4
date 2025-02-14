@@ -1489,3 +1489,39 @@ input.task-title:focus {
 .checklist-todos input {
     width: 18px;
 }
+
+.maps-container-outer {
+    border-radius: 15px;
+    background-color: #e2e4ea;
+
+}
+
+.maps-container {
+    width: 512px;
+    margin-top: 20px;
+    border-radius: 15px;
+    padding-top: -100px;
+}
+
+.maps-in-1 {
+    border-radius: 15px;
+}
+
+.maps-in-1>*>* {
+    border-radius: 15px 15px  0px 0px;
+}
+
+.maps-in-2 {
+    border-radius: 15px;
+    margin-top: 23px;   
+    margin-left: 16px;
+}
+
+.maps-in-2 h3{
+    font-weight: bold;
+}
+
+.maps-in-2 h5{
+    margin-top: 16px;
+    font-weight: normal;   
+}
