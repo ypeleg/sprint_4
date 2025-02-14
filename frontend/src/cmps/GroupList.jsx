@@ -8,7 +8,7 @@ import { TaskList } from "./TaskList";
 
 export function GroupList({ currentBoard, onLoadTask, groups }) {
 
-    if (!groups.length) return (<>Loading..</>)
+  
     return (
         <section className="group-lists">
             {groups.map(group => {

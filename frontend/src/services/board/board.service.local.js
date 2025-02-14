@@ -3,6 +3,7 @@ import { userService } from '../user'
 import { makeId } from '../util.service'
 import { getEmptyBoard } from '../../store/store'
 import { storageService } from '../async-storage.service'
+import { getRandomBoard } from './data'
 
 const STORAGE_KEY = 'board'
 
@@ -83,7 +84,7 @@ async function _createBoards() {
 
     for (let i = 0; i < 5; i++) {
 
-        let board = await getEmptyBoard()
+        let board =  getRandomBoard()
         console.log(board)
         await save(board)
     }
