@@ -21,7 +21,7 @@ export function BoardIndex() {
 
     useEffect(() => {
         loadBoards()
-    }, [])
+    }, [boards])
 
     // useEffect( () => {        
     //     console.log(boards.length)
@@ -57,7 +57,7 @@ export function BoardIndex() {
 
                     <section className='star-boards'>
                         <h3> <span className="fa-solid fa-star"></span> Starred boards</h3>
-                        <BoardList boards={boards} />
+                        <BoardList boards={boards.filter(board => board.isStarred)} />
                     </section>
                     <section className='my-boards'>
                         <h3> <span className="fa-solid fa-user"></span>Your boards</h3>

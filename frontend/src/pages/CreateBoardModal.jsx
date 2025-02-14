@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 
-import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
+import { getEmptyBoard, addBoard } from "../store/store.js"
 
 
 export function CreateBoardModal({ onClose }) {
@@ -60,7 +60,7 @@ export function CreateBoardModal({ onClose }) {
 
   return (
     <div className="modal-overlay">
-      <section className="modal-content">
+      <section className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header ">
           <div className="title">Create board</div>
           <button className="close-btn" onClick={() => onClose()}>
@@ -71,6 +71,9 @@ export function CreateBoardModal({ onClose }) {
           style={{
             backgroundImage: `url(${boardToAdd.style.backgroundImage})`
           }}>
+          {/* <div className="chart-background" style={{img}}>
+            </div> */}
+          <img src="chart-background.svg" />
         </div>
 
         <img src="" alt="" />
@@ -101,6 +104,12 @@ export function CreateBoardModal({ onClose }) {
                   onClick={() => onChangeBackgroundColor(bg.url)}
                 ></div>
               ))}
+              <div className="bg-option"
+                style={{
+                  backgroundColor: "#f1f2f4"
+                }}
+              ><img src="3dots.svg" alt="" />
+              </div>
             </section>
 
           </section>

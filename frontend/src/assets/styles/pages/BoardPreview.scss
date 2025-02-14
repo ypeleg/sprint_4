@@ -2,11 +2,11 @@
   position: relative;
   width: 190px;
   height: 96px;
-  border-radius: 5px;
+  border-radius: 3px;
   display: flex;
   font-size: 16px;
   background-size: cover;
-  background-color: rgba(28, 1, 1, 0.605);
+  background-color: hsla(0, 0%, 0%, 0.3);
   color: #fff;
   font-weight: bold;
   transition: 0.3s;
@@ -18,10 +18,33 @@
 
   .star-btn {
     position: absolute;
-    right: 6px;
+    right: -4px;
     bottom: 0px;
     opacity: 0;
-    transition: 1s;
+    width: 33px;
+    height: 30px;
+    transition: 0.3s;
+    scale: 0.8;
+
+    &:hover {
+      scale: 1;
+    }
+  }
+}
+
+.fill-star {
+  img {
+    position: absolute;
+    right: 12px;
+    bottom: 0px;
+    opacity: 1;
+    width: 14px;
+    height: 34px;
+    filter: invert(67%) sepia(78%) saturate(250%) hue-rotate(10deg);
+  }
+
+  img :hover {
+    background-color: #ab3a8f;
   }
 }
 
@@ -32,9 +55,9 @@
   align-items: center;
 }
 
-.board-preview:hover {
-  opacity: 0.8;
-}
+// .board-preview:hover {
+//   opacity: 0.8;
+// }
 
 .board-preview:hover .star-btn {
   opacity: 1;
