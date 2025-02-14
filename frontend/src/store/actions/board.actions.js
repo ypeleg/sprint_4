@@ -2,9 +2,13 @@
 
 import { store } from '../store'
 import { boardService } from '../../services/board'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG } from '../reducers/board.reducer'
-import { random } from '../../services/util.service'
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG } from '../reducers/board.reducer.js'
+import { random } from '../../services/util.service.js'
 
+
+export function getRandomBoard() {
+    return boardService.getEmptyBoard()
+}
 
 export function getEmptyBoard() {
     // return boardService.getEmptyBoard()

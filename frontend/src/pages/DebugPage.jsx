@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import React, { useRef, useEffect, useState } from "react"
 
 
-import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
+import { loadBoards, getEmptyBoard, getRandomBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
 
 
 export function DebugPage() {
@@ -23,9 +23,14 @@ export function DebugPage() {
     }, [boards])
 
     useEffect(() => {
-        getEmptyBoard().then(e => addBoard(e)).then(e => {
+        // getEmptyBoard().then(e => addBoard(e)).then(e => {
             // setBoardToShow(e)
-        })
+        // })
+        addBoard(getRandomBoard())
+        // getRandomBoard().then(e => addBoard(e)).then(e => {
+            // setBoardToShow(e)
+        // })
+
     }, [])
 
 
