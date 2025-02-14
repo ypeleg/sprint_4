@@ -1,10 +1,13 @@
 .group-lists {
     display: flex;
     gap: 1em;
-  
+
+    padding: 8px;
     overflow-x: auto;
     scrollbar-color: #fff6 #00000026;
-    height: calc(100vh - 50px - 60px);
+    height: calc(100vh - 60px - 60px);
+
+    //margin-bottom: 10px;
 
     .list {
         width: 272px;

@@ -32,7 +32,10 @@ body {
 
 .board-display {
     width: 83%;
+    //height: calc(100vh - 57px); //60px
     height: calc(100vh - 57px); //60px
+    //margin-bottom: 40px;
+    //padding-bottom: 40px;
 }
 
 header {
@@ -209,7 +212,7 @@ input {
 .task-date {
     word-break: keep-all;
 
-    font-size: 0.9em;
+    font-size: 1.0em;
     color: #5e6c84;
     margin-left: 6px;
 }
@@ -224,17 +227,35 @@ input {
 .task {
     // place-self: start stretch;
     // height: 64px;
+    overflow: hidden;
+    position: relative;
     border-radius: 7px;
-    border: 2px solid transparent;
+    //border: 2px solid transparent;
 }
 
 .task:hover,
 .task:active {
-    border: 2px solid #388afe;
+    outline: 3px solid rgb(56, 139, 255);
+    //border: 2px solid rgb(56, 139, 255);
+}
+
+div.task-list > div:nth-child(1) {
+    margin-top: 2px;
+}
+
+div.task-list > div:nth-child(-1) {
+  margin-bottom: 2px;
 }
 
 
-
+//#root > div > main > div > main > section > section > div:nth-child(1) > div.task-list > div:nth-child(1) > div.cover-img > img
+.task:hover .cover-img > img,
+.task:active .cover-img > img {
+    //display: none;
+    //border-right: 2px solid rgb(56, 139, 255);
+    //box-shadow: 1px 0px 0px 0px rgb(56, 139, 255), 2px 0px 0px px rgb(56, 139, 255);
+    //z-index: -200;
+}
 
 .tasks-container {
     display: grid;
@@ -244,4 +265,19 @@ input {
 }
 
 
+//task:hover>*>.right-btns>*
 
+.task:not(:hover) .right-btns {
+    opacity: 0;
+    //display: none;
+}
+
+.task:hover .right-btns {
+    opacity: 1;
+    //display: flex;
+}
+
+.right-btns i {
+    font-weight: 900;
+    filter: drop-shadow( 0px 1px 0px rgba(0, 0, 0, 1));
+}

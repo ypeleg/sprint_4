@@ -8,10 +8,16 @@ import { AddTaskForm } from "./AddTaskForm"
 import { QuickEdit } from "./QuickEdit"
 
 
-export function TaskList({ currentBoard, currentGroup, onLoadTask, group }) {
+
+
+
+export function TaskList({ currentBoard, currentGroup, onLoadTask, group, largeLabels, toggleLargeLabels }) {
     // onSetShowForm={onSetShowForm} showForm={showForm}
 
     const [showForm, setShowForm] = useState(false)
+
+
+
 
     function onSetShowForm() {
         setShowForm(!showForm)
@@ -21,7 +27,7 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group }) {
     const {tasks} = group
     const navgite = useNavigate()
     const [showQuickEdit,setQuickEdit] = useState(false)
-   let editpos = useRef()
+    let editpos = useRef()
     
     function onsetQuickEdit(ev,aa){
         const elment = ev.target
@@ -53,7 +59,8 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group }) {
                         <div className="labels">
                             {(!!task.labels) &&
                                 <>{task.labels.map(label => {
-                                    return <div key={label.id} className="task-label color-green"
+                                    return <div key={label.id} className={`task-label ${largeLabels ? 'task-label' : 'task-label-small'}`}
+                                                onClick={toggleLargeLabels}
                                                 style={{backgroundColor: label.color || ''}}
                                     ></div>
                                 })}</>
@@ -70,7 +77,7 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group }) {
                     </div>
 
                     <div className="stay-same-height">
-                        <div className="task-checkbox" type="checkbox"/>
+                        <div className= {`task-checkbox` + ((task.status === 'done') ? ' checked' : '')} type="checkbox"/>
                         <span className="task-task-text">{task.title}</span>
                     </div>
 
@@ -78,8 +85,8 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group }) {
 
                         <div className="task-badges">
                             {task.isUserWatching && (<div className=""><i className="fa-regular fa-eye"></i></div>)}
-                            {task.dueDate && (<> <i className="fa-regular fa-clock"></i>
-                                <div className="task-date">{task.dueDate}</div>
+                            {task.dueDate && (<>
+                                <div className="task-date"><i className="fa-regular fa-clock"></i> {new Date(task.dueDate).toLocaleDateString()} </div>
                             </>)}
                             {task.geoLocation && (<div className=""><i className="fa-regular fa-map"></i></div>)}
                             {/* {(task.badges.length)} */}

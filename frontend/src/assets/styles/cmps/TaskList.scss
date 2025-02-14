@@ -1,12 +1,15 @@
 .task-list {
 
     .cover-img {
-        margin: -10px;
+        margin: -10px -9px -9px -10px;
         margin-bottom: 10px;
+        // padding-inline: 1px;
 
         img {
-            border-radius: 6px 6px 0px 0px;
+            border-radius: 8px 8px 0px 0px;
+
         }
+
     }
 
     scrollbar-color: #091E4224 #091E420F;
@@ -14,9 +17,10 @@
     overflow-y: scroll;
     padding-inline: 2px;
 
+
     .task {
         background-color: #fff;
-        border-radius: 6px;
+        border-radius: 8px;
         box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
         padding: 8px;
         margin-bottom: 8px;
@@ -44,7 +48,24 @@
                 margin-left: 2px;
                 aspect-ratio: 1/1;
                 border-radius: 50%;
-                border: 2px solid #707c90;
+                border: 3px solid #707c90;
+                place-self: start;
+                margin-top: 4px;
+
+            }
+
+            .task-checkbox.checked {
+                background-color: #37a979;
+                border: none;
+
+            }
+
+            .task-checkbox.checked:before {
+                content: '✔';
+                font-size: 12px;
+                color: white;
+                font-weight: bold;
+                margin-left: 3px;
 
             }
 
@@ -56,20 +77,31 @@
 
             .right-btns {
                 margin-top: -4px;
-                gap: 0.2em;
+                gap: 0.4em;
+                position: absolute;
+                top: 6px;
+                right: 5px;
 
                 .right-btns-btn {
+                    //display: none;
                     color: #172B4D;
-                    font-weight: bold;
-                    width: 16px;
-                    height: 16px;
+                    //font-weight: bold;
+                    width: 24px;
+                    height: 24px;
                     display: flex;
-                    padding: 12px;
+                    //padding: 12px;
                     justify-content: center;
                     justify-items: center;
                     align-items: center;
-                    font-size: 12px;
+                    //font-size: 13px;
+                    font-weight: 1000;
                     border-radius: 50%;
+                    background-color: white;
+                    //display: none;
+                    & i {
+                        font-weight: 900;
+                    }
+
 
                     &:hover {
                         background-color: #f0f1f3;
@@ -101,16 +133,31 @@
             height: 16px;
             width: 56px;
             border-radius: 4px;
-
+            transition: 0.2s;
             &:hover {
                 opacity: 0.8;
             }
         }
 
+        .task-label-small {
+            padding: 0px;
+            margin: 0px;
+            background-color: #4bcd96;
+            height: 8px;
+            width: 40px;
+            border-radius: 4px;
+            transition: 0.2s;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+
         .task-under-text {
             margin-top: 6px;
 
             .task-badges {
+                margin-inline: 4px;
                 display: flex;
                 flex-wrap: wrap;
                 column-gap: 4px;
@@ -119,7 +166,7 @@
                 align-items: center;
 
                 >* {
-                    margin-inline: 4px;
+                    //margin-inline: 4px;
                 }
 
                 .badge {

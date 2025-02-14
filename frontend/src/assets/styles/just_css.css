@@ -1093,7 +1093,7 @@ button.attachment-extention {
 
 .task-modal {
     background-color: #eff0f3;
-
+    /*pointer-events: visible;*/
 }
 
 .full-name {
@@ -1525,3 +1525,7 @@ input.task-title:focus {
     margin-top: 16px;
     font-weight: normal;   
 }
+
+
+
+

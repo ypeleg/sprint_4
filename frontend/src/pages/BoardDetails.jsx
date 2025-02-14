@@ -753,17 +753,32 @@ export function BoardDetails() {
         togglePopup()
     }
 
+    function closePopupOnlyIfClickedOutOfIt(e) {
+        if (e.target === e.currentTarget) {
+            togglePopup()
+        }
+    }
+
+    const [largeLabels, setLargeLabels] = useState(true)
+    function toggleLargeLabels(ev) {
+        ev.stopPropagation()
+        setLargeLabels(!largeLabels)
+    }
+
     if (!boardToShow) return (<>Loading..</>)
     return (
         <div className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
 
             {/* <button className="open-chat-btn" onClick={togglePopup}>💬</button> */}
             {isPopupShown && (!!taskToShow) && <>
-                <div className="popup">
-                    <TaskModal taskToShow={taskToShow} onClose={togglePopup}/>
+                <div className="popup" onClick={closePopupOnlyIfClickedOutOfIt}>
+
+                        <TaskModal taskToShow={taskToShow} onClose={togglePopup}/>
+
                 </div>
-                <div className="popup-backdrop"></div>
-            </>}
+                <div className="popup-backdrop" onClick={togglePopup}></div>
+            </>
+            }
 
 
             <AppHeader/>
@@ -776,29 +791,33 @@ export function BoardDetails() {
 
                     <BoardHeader/>
 
-            <section className="group-lists">
-                {boardToShow.groups.map(group => {
+                    <section className="group-lists">
+                        {boardToShow.groups.map(group => {
 
-                    // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>
-                return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
-                        <div className="list-header just-flex">
-                            <span style={{color: group.style?.color || '#172b4d'}}>{group.title}</span>
-                            <div className="group-list-headr-btns" style={{color: group.style?.color || '#172b4d'}}>
-                                <i className="fa-regular fa-arrows-h"></i>
-                                <i className="fa-regular fa-ellipsis-h"></i>
-                            </div>
-                        </div>
+                            // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>
+                        return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
+                                <div className="list-header just-flex">
+                                    <span style={{color: group.style?.color || '#172b4d'}}>{group.title}</span>
+                                    <div className="group-list-headr-btns" style={{color: group.style?.color || '#172b4d'}}>
+                                        {/*<i className="fa-regular fa-arrows-h"></i>*/}
+                                        <i className="fa-regular fa-compress-alt" style={{
+                                            transform: "translateY(-0px) translateX(-0px) rotate(45deg) scale(1.2) "
+                                        }}></i>
 
-                        <TaskList currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}/>
+                                        <i className="fa-regular fa-ellipsis-h"></i>
+                                    </div>
+                                </div>
+
+                            <TaskList toggleLargeLabels = {toggleLargeLabels} largeLabels = {largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}/>
 
 
-                      </div>
+                              </div>
 
 
 
-                })}
-                <AddGroup/>
-            </section>
+                        })}
+                        <AddGroup/>
+                    </section>
 
                 </section>
 
