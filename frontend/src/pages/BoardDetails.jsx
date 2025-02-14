@@ -5,12 +5,13 @@ import { useParams } from "react-router"
 import { useSelector } from "react-redux"
 import { SideBar } from "../cmps/SideBar"
 import { loadTask } from "../store/store"
-import { GroupList } from "../cmps/GroupList"
 import { AppHeader } from "../cmps/AppHeader.jsx"
 import { BoardHeader } from "../cmps/BoardHeader.jsx";
 import React, { useRef, useEffect, useState } from "react"
 import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
 
+import { AddGroup } from "../cmps/AddGroup";
+// import { GroupPreview } from "../cmps/GroupPreview";
 
 
 // data changes:
@@ -22,6 +23,7 @@ import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoar
 
 
 import GoogleMapReact from 'google-map-react';
+import {TaskList} from "../cmps/TaskList.jsx"
 
 export function GoogleMap({ lat = 32.109333, lng = 34.855499, zm = 11 }) {
     const [center, setCenter] = useState({ lat: lat, lng: lng })
@@ -758,22 +760,45 @@ export function BoardDetails() {
             {/* <button className="open-chat-btn" onClick={togglePopup}>💬</button> */}
             {isPopupShown && (!!taskToShow) && <>
                 <div className="popup">
-                    <TaskModal taskToShow={taskToShow} onClose={togglePopup} />
+                    <TaskModal taskToShow={taskToShow} onClose={togglePopup}/>
                 </div>
                 <div className="popup-backdrop"></div>
             </>}
 
 
-            <AppHeader />
+            <AppHeader/>
 
             <main className="main-layout">
 
-                <SideBar />
+                <SideBar/>
 
                 <section className="board-display">
 
-                <BoardHeader/>
-                    <GroupList currentBoard = {boardToShow} onLoadTask={onLoadTask} groups={boardToShow.groups}/>
+                    <BoardHeader/>
+
+            <section className="group-lists">
+                {boardToShow.groups.map(group => {
+
+                    // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>
+                return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
+                        <div className="list-header just-flex">
+                            <span style={{color: group.style?.color || '#172b4d'}}>{group.title}</span>
+                            <div className="group-list-headr-btns" style={{color: group.style?.color || '#172b4d'}}>
+                                <i className="fa-regular fa-arrows-h"></i>
+                                <i className="fa-regular fa-ellipsis-h"></i>
+                            </div>
+                        </div>
+
+                        <TaskList currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}/>
+
+
+                      </div>
+
+
+
+                })}
+                <AddGroup/>
+            </section>
 
                 </section>
 
