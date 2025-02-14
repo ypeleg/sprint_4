@@ -28,23 +28,17 @@ import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoar
 
 
 export function TaskModal({ taskToShow, onClose }) {
-
-
-
-    // attachments
-    // checklists
+    
     // comments
     // activity
-
+    // badges
 
     console.log('task', taskToShow)
     const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
-
     const [cardTitle, setCardTitle] = useState(taskToShow.title || '')
     const [listName, setListName] = useState(taskToShow.group?.title || '')
     const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)
     const [activeLabels, setActiveLabels] = useState(taskToShow.labels || [])
-
     const [description, setDescription] = useState(taskToShow.description || [])
 
     const [risk, setRisk] = useState("")
@@ -52,18 +46,17 @@ export function TaskModal({ taskToShow, onClose }) {
     const [status, setStatus] = useState(taskToShow.status || "")
 
     const [attachments, setAttachments] = useState(taskToShow.attachments || [])
-    const [newAttachment, setNewAttachment] = useState("")
-
-    const [checklistItems, setChecklistItems] = useState(
+    const [checklists, setChecklists] = useState(
         taskToShow.checklists || []
     )
-    const [newChecklistItem, setNewChecklistItem] = useState("")
+
+    const [newChecklistItem, setNewChecklistItem] = useState([])
 
     const [hideChecked, setHideChecked] = useState(false)
 
     const [activityLog, setActivityLog] = useState(taskToShow.activity || [])
 
-    const [newComment, setNewComment] = useState("")
+
 
     // console.log('members', taskToShow.board)
 
@@ -292,7 +285,7 @@ export function TaskModal({ taskToShow, onClose }) {
 
                                     <div className="just-flex">
                                         <svg width="20" height="20" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                            <path 
                                                 d="M6 8C6 8.55228 5.55228 9 5 9C4.44772 9 4 8.55228 4 8C4 7.44772 4.44772 7 5 7C5.55228 7 6 7.44772 6 8ZM8 8C8 9.65685 6.65685 11 5 11C3.34315 11 2 9.65685 2 8C2 6.34315 3.34315 5 5 5C6.65685 5 8 6.34315 8 8ZM6 16C6 16.5523 5.55228 17 5 17C4.44772 17 4 16.5523 4 16C4 15.4477 4.44772 15 5 15C5.55228 15 6 15.4477 6 16ZM8 16C8 17.6569 6.65685 19 5 19C3.34315 19 2 17.6569 2 16C2 14.3431 3.34315 13 5 13C6.65685 13 8 14.3431 8 16ZM19 7H13C12.4477 7 12 7.44772 12 8C12 8.55228 12.4477 9 13 9H19C19.5523 9 20 8.55228 20 8C20 7.44772 19.5523 7 19 7ZM13 5C11.3431 5 10 6.34315 10 8C10 9.65685 11.3431 11 13 11H19C20.6569 11 22 9.65685 22 8C22 6.34315 20.6569 5 19 5H13ZM13 15H16C16.5523 15 17 15.4477 17 16C17 16.5523 16.5523 17 16 17H13C12.4477 17 12 16.5523 12 16C12 15.4477 12.4477 15 13 15ZM10 16C10 14.3431 11.3431 13 13 13H16C17.6569 13 19 14.3431 19 16C19 17.6569 17.6569 19 16 19H13C11.3431 19 10 17.6569 10 16Z" fill="currentColor"></path>
                                         </svg>
                                         <label>Priority</label>
@@ -315,7 +308,7 @@ export function TaskModal({ taskToShow, onClose }) {
 
                                     <div className="just-flex">
                                         <svg width="20" height="20" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                            <path 
                                                 d="M6 8C6 8.55228 5.55228 9 5 9C4.44772 9 4 8.55228 4 8C4 7.44772 4.44772 7 5 7C5.55228 7 6 7.44772 6 8ZM8 8C8 9.65685 6.65685 11 5 11C3.34315 11 2 9.65685 2 8C2 6.34315 3.34315 5 5 5C6.65685 5 8 6.34315 8 8ZM6 16C6 16.5523 5.55228 17 5 17C4.44772 17 4 16.5523 4 16C4 15.4477 4.44772 15 5 15C5.55228 15 6 15.4477 6 16ZM8 16C8 17.6569 6.65685 19 5 19C3.34315 19 2 17.6569 2 16C2 14.3431 3.34315 13 5 13C6.65685 13 8 14.3431 8 16ZM19 7H13C12.4477 7 12 7.44772 12 8C12 8.55228 12.4477 9 13 9H19C19.5523 9 20 8.55228 20 8C20 7.44772 19.5523 7 19 7ZM13 5C11.3431 5 10 6.34315 10 8C10 9.65685 11.3431 11 13 11H19C20.6569 11 22 9.65685 22 8C22 6.34315 20.6569 5 19 5H13ZM13 15H16C16.5523 15 17 15.4477 17 16C17 16.5523 16.5523 17 16 17H13C12.4477 17 12 16.5523 12 16C12 15.4477 12.4477 15 13 15ZM10 16C10 14.3431 11.3431 13 13 13H16C17.6569 13 19 14.3431 19 16C19 17.6569 17.6569 19 16 19H13C11.3431 19 10 17.6569 10 16Z" fill="currentColor"></path>
                                         </svg>
                                         <label>Status</label>
@@ -350,84 +343,92 @@ export function TaskModal({ taskToShow, onClose }) {
                                 </div>
                                 <button className="delete-btn">Add</button>
                             </div>
-                             (<>
+                             <>
+                                <div className="inner-component-left-padding">Files</div>
                                 <div className="task-attachment-row inner-component-left-padding">
-
+                                
+                                {(attachments.map( attachment => { return <>
                                     <div className="just-flex">
                                         <button className="attachment-extention">PNG</button>
                                         <div className="file-info">
-                                            <h5>roi.png</h5>
-                                            <label>Added just now</label>
+                                            <h5>{attachment.path}</h5>
+                                            <label>{new Date(attachment.date).toLocaleDateString()}</label>
                                         </div>
                                     </div>
+                                    </>}))}
+
                                 </div>
-                                <ul className="task-attachments-list">
-                                    {attachments.map((att, i) => (
-                                        <li key={i}>
-                                            <span>{att}</span>
-                                            <button>
-                                                Remove
-                                            </button>
-                                        </li>
-                                    ))} 
-                                </ul>
-                            </>)
+
+                            </>
                         </div>
                            }
 
 
                         <div className="task-section">
 
-                            <div className="checklist-container">
-                                <div className="flex-space-between">
-                                    <div className="section-icon-title">
-                                        <i className="fa-regular fa-check-square"></i>
-                                        <h3>Checklist</h3>
-                                    </div>
-                                    <button className="delete-btn">Delete</button>
-                                </div>
+
+                            {checklists && <>
+                                {checklists.map(checklist => {return <>
+                                    <div key={checklist.id} className="checklist-container">
+                                        <div className="flex-space-between">
+                                            <div className="section-icon-title">
+                                                <i className="fa-regular fa-check-square"></i>
+                                                <h3>{checklist.title}</h3>
+                                            </div>
+                                            <button className="delete-btn">Delete</button>
+                                        </div>
 
 
-                                <div className="progress inner-component-left-padding">
+                                        {checklist.progress &&
+                                            <div className="progress inner-component-left-padding">
+                                                <div className="progress-container">
+                                                    <div className="progress-num">0%</div>
+                                                    <div className="progress-bar"></div>
+                                                </div>
+                                            </div>}
 
-                                    <div className="progress-container">
-                                        <div className="progress-num">0%</div>
-                                        <div className="progress-bar"></div>
-                                    </div>
+                                        {checklist.todos.map(todo => {return <>
+                                                <div>
+                                                    <div className="just-flex-with-center checklist-todos">
+                                                        <input name={todo.title} type="checkbox"/>
+                                                        <label>{todo.title}</label>
+                                                    </div>
+                                                </div>
+                                            </>})}
 
-                                </div>
 
+                                        <div className="task-checklist-add inner-component-left-padding">
+                                            <input
+                                                type="text"
+                                                placeholder="Add an item"
+                                                value={newChecklistItem}
+                                                onChange={(e) => setNewChecklistItem(e.target.value)}
+                                            />
+                                        </div>
 
-                                <div className="task-checklist-add inner-component-left-padding">
-                                    <input
-                                        type="text"
-                                        placeholder="Add an item"
-                                        value={newChecklistItem}
-                                        onChange={(e) => setNewChecklistItem(e.target.value)}
-                                    />
-                                </div>
+                                        <div className="side-by-side inner-component-left-padding">
+                                            <div className="just-flex">
 
-                                <div className="side-by-side inner-component-left-padding">
-                                    <div className="just-flex">
+                                                <div className="checklist-actions">
+                                                    <button className="btn-add">Add</button>
+                                                    <button className="btn-cancel">Cancel</button>
+                                                </div>
+                                            </div>
 
-                                        <div className="checklist-actions">
-                                            <button className="btn-add">Add</button>
-                                            <button className="btn-cancel">Cancel</button>
+                                            <div className="just-flex">
+                                                <button className="footer-action">
+                                                    <i className="fa-regular fa-user"></i>
+                                                    Assign
+                                                </button>
+                                                <button className="footer-action">
+                                                    <i className="fa-regular fa-clock"></i>
+                                                    Due date
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div className="just-flex">
-                                        <button className="footer-action">
-                                            <i className="fa-regular fa-user"></i>
-                                            Assign
-                                        </button>
-                                        <button className="footer-action">
-                                            <i className="fa-regular fa-clock"></i>
-                                            Due date
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                                </>})}
+                            </>}
 
 
                         </div>
@@ -563,7 +564,12 @@ export function BoardDetails() {
         task.taskList = taskList
         task.board = currentBoard
 
-        task.attachments = []
+        task.attachments = [
+            {
+                path: 'roi.png',
+                date: Date.now()
+            }
+        ]
 
         setTaskToShow(task)
         togglePopup()
