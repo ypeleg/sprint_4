@@ -31,11 +31,11 @@ export function TaskModal({ taskToShow, onClose }) {
 
     // const [coverUrl, setCoverUrl] = useState("cover-img.png")
 
-
+    console.log('task' ,taskToShow)
     const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
 
-    const [cardTitle, setCardTitle] = useState(taskToShow.title)
-    const [listName, setListName] = useState(taskToShow.group.title)
+    const [cardTitle, setCardTitle] = useState(taskToShow.title || '')
+    const [listName, setListName] = useState(taskToShow.group?.title || '')
     const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)
     const [activeLabels, setActiveLabels] = useState(taskToShow.labels || [])
 
