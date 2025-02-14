@@ -397,6 +397,12 @@
     display: flex;
     gap: 0.3em;
 }
+.just-flex-with-center {
+    display: flex;
+    gap: 0.3em;
+    align-items: center;
+}
+
 .member-circle {
     width: 32px;
     height: 32px;
@@ -1472,4 +1478,14 @@ input.task-title:focus {
     /*padding: 0;*/
     /*margin: 0;*/
     /*padding-right: 5px;*/
+}
+
+
+.checklist-todos label {
+    font-size: 14px;
+    margin-left: 6px;
+}
+
+.checklist-todos input {
+    width: 18px;
 }

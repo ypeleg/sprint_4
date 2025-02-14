@@ -1,7 +1,7 @@
 
 
 import { useNavigate } from 'react-router'
-import { BoardPreview } from './BoardPreview.jsx'
+import { BoardPreview } from '../cmps/BoardPreview.jsx'
 import { CreateBoardModal } from './CreateBoardModal.jsx'
 import { useState } from 'react'
 
@@ -11,7 +11,11 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, addBoard = fal
   const [isModalOpen, setIsModalopen] = useState(false)
   const navgite = useNavigate()
 
-  function onClose() { setIsModalopen(false) }
+  function onClose() {
+    setIsModalopen(false)
+    console.log('sss');
+
+  }
 
   return (
     <section>
@@ -34,7 +38,9 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, addBoard = fal
 
       <ul className="board-list">
         {boards.map(board =>
-          <li key={board._id} onClick={() => navgite(`/${board._id}`)}>
+          <li key={board._id}
+            onClick={() => navgite(`/${board._id}`)}
+          >
             <BoardPreview board={board} />
           </li>)
         }
