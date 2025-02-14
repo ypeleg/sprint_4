@@ -8,7 +8,16 @@ import { AddTaskForm } from "./AddTaskForm"
 import { QuickEdit } from "./QuickEdit"
 
 
-export function TaskList({ currentBoard, currentGroup, onLoadTask, showForm, group, onSetShowForm }) {
+export function TaskList({ currentBoard, currentGroup, onLoadTask, group }) {
+    // onSetShowForm={onSetShowForm} showForm={showForm}
+
+    const [showForm, setShowForm] = useState(false)
+
+    function onSetShowForm() {
+        setShowForm(!showForm)
+    }
+
+
     const {tasks} = group
     const navgite = useNavigate()
     const [showQuickEdit,setQuickEdit] = useState(false)
@@ -22,7 +31,7 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, showForm, gro
     }
  
 
-    return (
+    return (<>
         <div className="task-list">
 
             {/*<pre>{JSON.stringify(tasks.map(task => task.id), null, 4)}</pre>*/}
@@ -108,6 +117,14 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, showForm, gro
                 </div>)
             })}
             {showForm && <AddTaskForm onSetShowForm={onSetShowForm} selectedGroup={group}/>}
+
         </div>
+        {!showForm &&
+        <div className="group-list-footer" style={{color: group.style?.color || '#172b4d'}}>
+            <button className="add-card-btn" onClick={onSetShowForm} style={{color: group.style?.color || '#172b4d'}}><i className="fa-regular fa-plus"></i> Add a card</button>
+            <button className="create-from-template-btn" style={{color: group.style?.color || '#44546f'}}><i className="fa-regular fa-vector-square" style={{color: group.style?.color || '#44546f'}}></i></button>
+        </div>}
+    </>
+
     )
 }
