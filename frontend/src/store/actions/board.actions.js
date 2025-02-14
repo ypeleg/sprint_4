@@ -2,7 +2,7 @@
 
 import { store } from '../store'
 import { boardService } from '../../services/board'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG } from '../reducers/board.reducer.js'
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_FILTER_BY } from '../reducers/board.reducer.js'
 import { random } from '../../services/util.service.js'
 
 
@@ -50,7 +50,9 @@ export async function loadBoard(boardId,filterBy= {title:''}) {
         throw err
     }
 }
-
+export function setFilterBy(filterBy){
+    store.dispatch({type:SET_FILTER_BY,filterBy})
+}
 
 export async function removeBoard(boardId) {
     try {
