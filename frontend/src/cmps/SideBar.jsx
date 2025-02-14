@@ -92,7 +92,7 @@ export function SideBar() {
 
                             <div className="board-sideitem just-flex">
                                 <img className="small-img" src={board.style.backgroundImage} />
-                                <span>{board.title}</span>
+                                <div>{board.title}</div>
                             </div>
                             <i className="fa-regular fa-star"></i>
 

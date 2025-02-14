@@ -57,9 +57,13 @@ export function AppHeader() {
                 <div className="just-flex and-center">
                     <button className="days-left just-flex">
                         <i className="fa-regular fa-star"></i>
-                        5 days left</button>
-                    <input className="input-white" placeholder="     Search" />
-                    {/* <i className="bell">bellicon</i> */}
+                        5 days left
+                    </button>
+                    {/*<input className="input-white" placeholder="     Search"/>*/}
+                    <div className="search-container">
+                        <input className="" placeholder="     Search"/>
+                        {/* <i className="bell">bellicon</i> */}
+                    </div>
                     <i className="fa-solid fa-bell"></i>
                     <div className="info">
                         <i className="fa-solid fa-question"></i>

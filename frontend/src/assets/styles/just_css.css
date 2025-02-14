@@ -1528,4 +1528,44 @@ input.task-title:focus {
 
 
 
+*:has(input){
+    position: relative;
+    /* z-index: -1; */
+}
 
+.search-container>input {
+    padding-left: 10px;
+    color: rgba(0,0,0,.8);
+}
+
+.search-container::after {
+    font-family: 'fa-regular';
+    position: absolute;
+    content: '\f044';
+    left: 0.6em;
+    top: 0.4em;
+    font-size: 1.0em;
+    color: transparent;
+    /* text-shadow: 0 0 0 black; */
+    pointer-events: none;
+    z-index: 0;
+    font-family: 'Font Awesome 5 Pro';
+    content: '\f00c';
+    position: absolute;
+    /* top: -2px; */
+    width: 4px;
+    height: 4px;
+  
+    color: rgba(0,0,0,.8);
+    /* color:  */
+  
+  
+    z-index: 1;
+    /* font-family: fa-regular; */
+    font-family: "Font Awesome 5 Pro";
+    /* font-style: normal; */
+    font-weight: 400;
+    font-display: block;
+    font-style: normal;
+    content: "\f002";
+}
