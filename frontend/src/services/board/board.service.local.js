@@ -42,8 +42,19 @@ async function query(filterBy = { title: '', }) {
     return boards
 }
 
-function getById(boardId) {
-    return storageService.get(STORAGE_KEY, boardId)
+async function getById(boardId,filterBy = {title:''}) {
+    const { title, sortField, sortDir } = filterBy
+    let board =  await storageService.get(STORAGE_KEY, boardId)
+    if(title){
+        const regex = new RegExp(title, 'i')
+        board ={ ...board,  groups:board.groups.map(group => {
+                return {
+                    ...group,
+                    tasks: group.tasks.filter(task => regex.test(task.title)) // Filter tasks
+                }
+            })}
+    }
+    return board
 }
 
 async function remove(boardId) {

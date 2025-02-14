@@ -1,0 +1,62 @@
+.filter-cards-container {
+    position: absolute;
+    width: 384px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 8px 12px #091E4226, 0px 0px 1px #091E424F, 0px 8px 12px #091e4226, 0px 0px 1px #0103064f;
+    inset: 59.4px auto auto 584.4px;
+    border-radius: 8px;
+
+    .filter-header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        .filter-title {
+            width: 300px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+
+    .filter-options {
+        padding-top: 0;
+        padding: 12px;
+        background-color: #FFFFFF;
+        min-height: 440.2px;
+
+        .keyword {
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: 600;
+            margin-top: 16px;
+            margin-bottom: 8px
+        }
+
+        .filter-text-container {
+            >* {
+                width: 100%;
+                background-color: #FFFFFF;
+                border-radius: 3px;
+                font-size: 14px;
+                font-weight: 400;
+                padding: 8px 12px;
+                outline: 0;
+
+                &:focus-visible {
+                    border: 0;
+                    box-shadow: inset 0px 0px 0px 2px #388BFF;
+                }
+            }
+        }
+
+        .serach-cards {
+            margin-top: 8px;
+            margin-bottom: 4px;
+            color:  #44546f;
+            font-size: 11px;
+            line-height: 14px
+        }
+    }
+
+}
