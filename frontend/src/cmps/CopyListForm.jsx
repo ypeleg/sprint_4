@@ -29,7 +29,7 @@ export function CopyListForm({ header, onSetCopyList, onSetGroupEdit, group }) {
                 <span className="title">Copy list</span>
                 <button onClick={onSetCopyList}>X</button>
             </div>
-            <section className="main">
+            <section className="move-list">
                 <span className="name">Name</span>
                 <textarea onChange={onSetGroupTitle} value={groupTitle} name="" id=""></textarea>
                 <button className="create" onClick={copylist}><span>Create list</span></button>

@@ -1,0 +1,66 @@
+
+.move-list-form{
+    background-color: white;
+    position: fixed;
+    width: 304px;
+    min-height: 200px;
+    border-radius: 4px;
+    .header {
+        display: flex;
+        align-items: center;
+        .title {
+            align-self: center;
+            width: 250px;
+            text-align: center;
+            line-height: 40px;
+            padding-inline: 32px;
+            color: #44546f;
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+    .main{
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        select{
+            min-height: 40px;
+            padding-inline: 8px;
+            border: 2px solid #8590a2;
+            border-radius: 3px;
+            &:focus{
+                outline: 0;
+                border-color: #388BFF;
+            }
+            .trello{
+                color: #44546F;
+                font-size: 11px;
+                font-weight: 700;
+               padding-top: 10px;
+                
+            }
+            option{
+                width: 100%;
+                border-radius: 0;
+                font-size: 14px;
+                font-weight: 400;
+                color: #172B4D;
+                padding: 6px 12px;
+               &:hover{
+                background-color: #091E420F;
+               }
+            }
+        }
+        .move{
+            margin-top: 5px;
+            width: fit-content;
+            background-color: #0c66e4;
+        color: #ffffff;
+        font-size: 14px;
+        padding: 6px 24px;
+        font-weight: 500;
+        line-height: 20px;
+        }
+    }
+
+}

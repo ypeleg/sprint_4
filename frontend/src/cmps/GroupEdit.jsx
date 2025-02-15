@@ -5,7 +5,7 @@ import { CopyListForm } from "./CopyListForm"
 
 
 
-export function GroupEdit({ onSetCopyList,header, onSetGroupEdit,group }) {
+export function GroupEdit({ onSetCopyList,header, onSetGroupEdit,group,onSetMoveList }) {
     const board = useSelector(state => state.boardModule.board)
     
     const loc = header.getBoundingClientRect()
@@ -30,7 +30,7 @@ export function GroupEdit({ onSetCopyList,header, onSetGroupEdit,group }) {
                     <button>Add card</button>
                     <button onClick={() => { onSetCopyList() ; onSetGroupEdit()}}>Copy list</button>
                     
-                    <button>Move list</button>
+                    <button onClick={() => {onSetMoveList(); onSetGroupEdit()}}>Move list</button>
                     <button>Move all cards in this list</button>
                     <button>Sort by...</button>
                     <button>Watch</button>
