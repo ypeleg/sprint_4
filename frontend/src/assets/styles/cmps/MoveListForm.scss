@@ -158,3 +158,103 @@ select {
         padding: 12px 8px;
     }
 }
+
+.copy-list-form {
+    background-color: white;
+    position: fixed;
+    width: 304px;
+    min-height: 200px;
+    border-radius: 3px;
+    box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25);
+    z-index: 1000;
+
+    .header {
+        display: flex;
+        align-items: center;
+        padding: 0 8px;
+
+        button {
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            color: #44546f;
+
+            &:hover {
+                background-color: #091e420f;
+                border-radius: 3px;
+            }
+        }
+
+        .title {
+            flex-grow: 1;
+            text-align: center;
+            color: #44546f;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 0 32px;
+            line-height: 40px;
+        }
+    }
+
+    .move-list {
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        gap: 8px;
+
+        .name {
+            color: #44546f;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 56px;
+            padding: 8px 12px;
+            border: 2px solid #dfe1e6;
+            border-radius: 3px;
+            background-color: #fafbfc;
+            color: #172b4d;
+            font-size: 14px;
+            resize: vertical;
+            font-family: inherit;
+
+            &:focus {
+                border-color: #388bff;
+                outline: none;
+                background-color: #ffffff;
+            }
+
+            &::placeholder {
+                color: #97a0af;
+            }
+        }
+
+        .create {
+            margin-top: 8px;
+            align-self: flex-start;
+            background-color: #0c66e4;
+            color: #ffffff;
+            border: none;
+            border-radius: 3px;
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            &:hover {
+                background-color: #0055cc;
+            }
+
+            span {
+                white-space: nowrap;
+            }
+        }
+    }
+}
