@@ -1432,13 +1432,6 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 <div className="picker-header">
                     <h3>Under Construction</h3>
                     <h3>sry.. 🙃 </h3>
-
-                </div>
-
-                <div className="location-content">
-                    <div className="search-container">
-                        <input type="text" placeholder="Search Google Maps" className="location-input"/>
-                    </div>
                 </div>
             </div>
 
