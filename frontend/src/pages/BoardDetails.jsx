@@ -83,7 +83,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     // const membersToShow = taskToShow.memberIds.map(memberId => {
     //     return taskToShow.board.members.find(member => (member._id === memberId))
     // })      
-    const membersToShow = taskToShow.board.members
+    // const membersToShow = taskToShow.board.members
     // console.log('---------')
     // console.log('taskToShow.memberIds', taskToShow.memberIds)
     // console.log('taskToShow.board.members', taskToShow.board.members)
@@ -91,7 +91,8 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     //////////////////////
 
     const [badges, setBadges] = useState(taskToShow.badges || [])
-    const [members, setMembers] = useState(membersToShow || [])
+    const [members, setMembers] = useState(taskToShow.members || [])
+    const [boardMembers, setBoardMembers] = useState(taskToShow.board.members || [])
     const [date, setDate] = useState(taskToShow.dueDate || "")
     const dateInputRef = useRef(null);
 
@@ -122,6 +123,24 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
 
     const [pickerTop, setPickerTop] = useState('0px')
     const [pickerLeft, setPickerLeft] = useState('0px')
+
+
+    // remove boardMembers if they are already in members
+    function dropDuplicateMembers(cardMembers, boardMembers) {
+        return boardMembers.reduce((acc, member) => {
+            if (!cardMembers.some(m => m.id === member.id))  {
+                acc.push(member)
+            }
+            return acc
+        }, [])
+    }
+
+    const [boardMembersToShow, setBoardMembersToShow] = useState(dropDuplicateMembers(boardMembers, members))
+
+    console.log('boardMembers', boardMembersToShow)
+
+
+
 
 
     function dropDuplicateLabels(labels) {
@@ -349,6 +368,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                                                      }}></div>)
                                                     } else {
                                                         return (<div key={member.id} className="member-circle" title="LH">
+
                                                             {member?.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{member?.fullname?.split(' ')[1][0]?.toUpperCase() || ''}
                                                         </div>)
                                                     }
@@ -786,51 +806,44 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 <div>
                     <h4>Card members</h4>
                     <div className="members-list">
-                        <div className="member-item just-flex">
-                            <div className="just-flex">
-                                <div className="user-circle">YP</div>
-                                <span>yam peleg</span>
-                            </div>
-                            <button className="task-modal-close">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
-                                </svg>
-                            </button>
-                        </div>
-                        <div className="member-item just-flex">
-                            <div className="just-flex">
-                                <div className="user-circle">LH</div>
-                                <span>liron heftman</span>
-                            </div>
-                            <button className="task-modal-close">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
-                                </svg>
-                            </button>
-                        </div>
-                        <div className="member-item just-flex">
-                            <div className="just-flex">
-                                <div className="user-circle">טש</div>
-                                <span>טל שירי</span>
-                            </div>
-                            <button className="task-modal-close">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
-                                </svg>
-                            </button>
-                        </div>
+                        {
+                            members.map(member => {
+                                return (<div key={member.id} className="member-item just-flex">
+                                    <div className="just-flex">
+                                        <div className="user-circle">{member.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{member.fullname?.split(' ')[1][0]?.toUpperCase() || ''}</div>
+                                        <span>{member.fullname}</span>
+                                    </div>
+                                    <button className="task-modal-close">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
+                                        </svg>
+                                    </button>
+                                </div>)
+                            })
+                        }
                     </div>
                 </div>
 
                 <div>
                     <h4>Board members</h4>
                     <div className="members-list">
-                        <div className="member-item just-flex">
-                            <div className="just-flex">
-                                <div className="user-circle"></div>
-                                <span>Roi Yotvat</span>
-                            </div>
-                        </div>
+
+                        {
+                            boardMembersToShow.map(member => {
+                                return (<div key={member.id} className="member-item just-flex">
+                                    <div className="just-flex">
+                                        <div className="user-circle">{member.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{member.fullname?.split(' ')[1][0]?.toUpperCase() || ''}</div>
+                                        <span>{member.fullname}</span>
+                                    </div>
+                                    <button className="task-modal-close">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
+                                        </svg>
+                                    </button>
+                                </div>)
+                            })
+                        }
+
                     </div>
                 </div>
             </div>
