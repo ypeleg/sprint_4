@@ -326,7 +326,13 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                                         </div>)
                                                     })}</>
                                                 }
-                                                <button className="add-label-btn"><i className="fa-regular fa-plus"></i></button>
+                                                <button className="add-label-btn"
+                                                        onClick={() => {
+                                                            hidePicker(event)
+                                                            movePickerTo(event)
+                                                            setShowPickerLabels(true)
+                                                        }}>
+                                                <i className="fa-regular fa-plus"></i></button>
                                             </div>
                                         </div>
                                     </div>
