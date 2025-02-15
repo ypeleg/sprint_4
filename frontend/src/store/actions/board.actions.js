@@ -1,8 +1,8 @@
 
 
-import {store} from '../store'
-import {boardService} from '../../services/board'
-import {ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_FILTER_BY} from '../reducers/board.reducer.js'
+import { store } from '../store'
+import { boardService } from '../../services/board'
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_FILTER_BY } from '../reducers/board.reducer.js'
 import { makeId } from '../../services/util.service.js'
 
 
@@ -34,7 +34,7 @@ export function getEmptyBoard() {
 
 export function getEmptyTask() {
     return {
-        id:  makeId(),
+        id: makeId(),
         title: '',
         status: '',
         priority: '',
@@ -56,10 +56,10 @@ export function getEmptyTask() {
 
 export function getEmptyGroup() {
     return {
-        id:  makeId(),
+        id: makeId(),
         title: '',
         tasks: [],
-        style: {backgroundColor: null, color: "#000000"}
+        style: { backgroundColor: null, color: "#000000" }
     }
 }
 
@@ -73,7 +73,7 @@ export async function loadBoards(filterBy) {
     }
 }
 
-export async function loadBoard(boardId, filterBy = {title: ''}) {
+export async function loadBoard(boardId, filterBy = { title: '' }) {
     try {
         const board = await boardService.getById(boardId, filterBy)
         store.dispatch(getCmdSetBoard(board))
@@ -84,7 +84,7 @@ export async function loadBoard(boardId, filterBy = {title: ''}) {
 }
 
 export function setFilterBy(filterBy) {
-    store.dispatch({type: SET_FILTER_BY, filterBy})
+    store.dispatch({ type: SET_FILTER_BY, filterBy })
 }
 
 export async function removeBoard(boardId) {

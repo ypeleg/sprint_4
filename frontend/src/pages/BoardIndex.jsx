@@ -1,11 +1,11 @@
 
 
-import {useSelector} from "react-redux"
-import {BoardList} from './BoardList.jsx'
-import {AppHeader} from '../cmps/AppHeader.jsx'
-import {NavBarPageIndex} from './NavBarPageIndex.jsx'
-import React, {useRef, useEffect, useState} from "react"
-import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard} from "../store/store.js"
+import { useSelector } from "react-redux"
+import { BoardList } from './BoardList.jsx'
+import { AppHeader } from '../cmps/AppHeader.jsx'
+import { NavBarPageIndex } from './NavBarPageIndex.jsx'
+import React, { useRef, useEffect, useState } from "react"
+import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
 
 
 export function BoardIndex() {
@@ -18,7 +18,7 @@ export function BoardIndex() {
 
     useEffect(() => {
         loadBoards()
-    }, [boards])
+    }, [])
 
     // useEffect( () => {        
     //     console.log(boards.length)
@@ -29,35 +29,48 @@ export function BoardIndex() {
     //     }
 
     // }, [boards])
-
+    console.log(boards.filter(board => board.isStarred));
 
     return (
         <>
-            <AppHeader/>
+            <AppHeader />
 
             <div className="home-container">
 
-                <NavBarPageIndex/>
+                <NavBarPageIndex />
 
                 <div className="all-boards">
                     <div className="category-container">
                         <div className="board-logo-large">T</div>
                         <div className="description-container">
-                            <h2>Trello Workspaces <span>
-                                <button className='fa-solid fa-pen'>
-                                </button></span></h2>
-                            <h3>Premium <i className="fa-regular fa-lock"></i> Private</h3>
+                            <div className="edit-workspace">
+                                <h2>Trello Workspaces</h2>
+                                <img src="pen.svg" />
+                            </div>
+                            <div style={{ display: 'flex', gap: 6, fontSize: 12, color: '#44546f' }}>
+                                <span>Premium </span>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <img src="lock.svg" style={{ marginTop: -2, height: 14 }} /> Private
+                                </div>
+                            </div>
                         </div>
                     </div>
 
 
+
+
+
                     <section className='star-boards'>
-                        <h3><span className="fa-solid fa-star"></span> Starred boards</h3>
-                        <BoardList boards={boards.filter(board => board.isStarred)}/>
+                        {(boards.filter(board => board.isStarred).length !== 0) &&
+                            <div>
+                                <h3><span className="fa-solid fa-star"></span> Starred boards</h3>
+                                <BoardList boards={boards.filter(board => board.isStarred)} />
+                            </div>
+                        }
                     </section>
                     <section className='my-boards'>
                         <h3><span className="fa-solid fa-user"></span>Your boards</h3>
-                        <BoardList boards={boards} addBoard={true}/>
+                        <BoardList boards={boards} addBoard={true} />
                     </section>
                 </div>
 

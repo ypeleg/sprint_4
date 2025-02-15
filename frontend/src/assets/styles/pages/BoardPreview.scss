@@ -6,11 +6,15 @@
   display: flex;
   font-size: 16px;
   background-size: cover;
-  background-color: hsla(0, 0%, 0%, 0.3);
+  background-color: hsla(0, 0%, 0%, 0.194);
+  background-blend-mode: multiply;
   color: #fff;
   font-weight: bold;
   transition: 0.3s;
   cursor: pointer;
+  padding: 8px;
+  line-height: 1.1;
+
 
   h4 {
     margin: 0px 10px 10px 10px;
