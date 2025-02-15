@@ -88,10 +88,15 @@
 
 
 .bg-image-option {
+  position: relative;
   width: 64px;
   height: 40px;
   border-radius: 5px;
   cursor: pointer;
+
+  &:hover {
+    // background-color: rgba(0, 0, 0, 0.4);
+  }
 }
 
 .bg-option {
@@ -197,4 +202,32 @@
   border-radius: 5px;
   margin-top: 15px;
   font-weight: bold;
+}
+
+.checkmark {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 14px;
+  padding: 3px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+
+  img {
+    width: 20px;
+    filter: invert(1);
+  }
+}
+
+.selected {
+  // position: absolute;
+  // z-index: 1;
+  // background: rgba(0, 0, 0, 0.5);
+  // top: 0;
+  // right: 0;
+
 }
