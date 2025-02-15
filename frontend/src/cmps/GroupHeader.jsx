@@ -19,6 +19,10 @@ export function GroupHeader({group}) {
     function onSetMoveList(){
         setMoveList(!showMoveList)
     }
+    function onSetMoveAll(){
+
+        setMoveAll(!showMoveAll)
+    }
     return (
         <div ref={elHeader} className="list-header just-flex">
             <span style={{ color: group.style?.color || '#172b4d' }}>{group.title}</span>
@@ -37,9 +41,10 @@ export function GroupHeader({group}) {
 
                 {/*<i onClick={onSetGroupEdit} className="fa-regular fa-ellipsis-h"></i>*/}
             </div>
-            {showGroupEdit && <GroupEdit onSetMoveList={onSetMoveList} onSetCopyList={onSetCopyList} group={group} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
+            {showGroupEdit && <GroupEdit onSetMoveAll={onSetMoveAll} onSetMoveList={onSetMoveList} onSetCopyList={onSetCopyList} group={group} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
             {showCopyList && <CopyListForm group={group} onSetCopyList={onSetCopyList} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
             {showMoveList && <MoveListForm onSetMoveList={onSetMoveList} onSetGroupEdit={onSetGroupEdit} group={group} header={elHeader.current}/>}
+            {showMoveAll&&<MoveAll onSetMoveAll={onSetMoveAll} group={group} header={elHeader.current} onSetGroupEdit={onSetGroupEdit}/>}
         </div>
 
     )

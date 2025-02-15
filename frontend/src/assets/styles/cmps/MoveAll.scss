@@ -1,0 +1,19 @@
+.groups{
+    display: flex;
+    flex-direction: column;
+
+    button{
+        text-align: start;
+        font-size: 13px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #172b4d;
+    &:hover{
+        background-color: #091e420f;
+    }
+    &:disabled{
+        cursor: not-allowed;
+        color: #091e424f;
+    }
+    }
+}
