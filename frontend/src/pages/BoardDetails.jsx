@@ -95,7 +95,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     const [date, setDate] = useState(taskToShow.dueDate || "")
     const dateInputRef = useRef(null);
 
-    const [showLabels, setShowLabels] = useState(false)
+    const [showLabels, setShowLabels] = useState(true)
     const [showMembers, setShowMembers] = useState(true)
     const [showCustomFields, setShowCustomFields] = useState(false)
     const [showDate, setShowDate] = useState(false)
@@ -123,6 +123,53 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     const [pickerTop, setPickerTop] = useState('0px')
     const [pickerLeft, setPickerLeft] = useState('0px')
 
+
+    function dropDuplicateLabels(labels) {
+        return labels.reduce((acc, label) => {
+            if (!acc.some(l =>((l.color === label.color))))  {
+                acc.push(label)
+            }
+            return acc
+        }, [])
+    }
+
+    const [cardLabels, setCardLabels] = useState(dropDuplicateLabels(taskToShow.labels || []))
+    const [groupLabels, setGroupLabels] = useState(dropDuplicateLabels(taskToShow.board.labels || []))
+    console.log('groupLabels2', groupLabels)
+
+    function onToggleLabel(label) {
+        setCardLabels(prev => {
+            const isAlreadyAssigned = prev.some(l => l.color === label.color);
+            if (isAlreadyAssigned) {
+                return prev.filter(l => l.color !== label.color);
+            } else {
+                return [...prev, label];
+            }
+        });
+    }
+
+    const [currentLabelText, setCurrentLabelText] = useState('')
+    const [previousLabelColor, setPreviousLabelColor] = useState('')
+    const [currentLabelColor, setCurrentLabelColor] = useState('')
+    function onChangeCurrentLabelColor(ev) {setCurrentLabelColor(ev.target.style.backgroundColor)}
+    function onChangeCurrentLabelText(ev) {setCurrentLabelText(ev.target.value)}
+    function onDeleteLabel(label) {
+        setGroupLabels(groupLabels.filter(l => l.color !== previousLabelColor))
+        setCurrentLabelText('')
+        setCurrentLabelColor('')
+        setPreviousLabelColor('')
+    }
+    function onSaveLabelChange() {
+        if (groupLabels.some(l => l.color === previousLabelColor)) {
+            setGroupLabels(prev => prev.map(l => l.color === previousLabelColor ? {color: currentLabelColor, title: currentLabelText} : l))
+        } else {
+            setGroupLabels(prev => [...prev, {color: currentLabelColor, title: currentLabelText}])
+            setCardLabels(prev => [...prev, {color: currentLabelColor, title: currentLabelText}])
+        }
+        setCurrentLabelText('')
+        setCurrentLabelColor('')
+        setPreviousLabelColor('')
+    }
     function hidePicker(ev) {
         ev.stopPropagation()
         ev.preventDefault()
@@ -213,19 +260,6 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     }
 
 
-
-    const [cardLabels, setCardLabels] = useState(taskToShow.labels || []);
-
-    function onToggleLabel(label) {
-        setCardLabels(prev => {
-            const isAlreadyAssigned = prev.some(l => l.color === label.color);
-            if (isAlreadyAssigned) {
-                return prev.filter(l => l.color !== label.color);
-            } else {
-                return [...prev, label];
-            }
-        });
-    }
 
 
 
@@ -331,8 +365,8 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                         <div className="section-inner">
                                             <div className="section-label">Labels</div>
                                             <div className="just-flex-without-anything">
-                                                {(!!taskToShow.labels) &&
-                                                    <>{taskToShow.labels.map(label => {
+                                                {(!!cardLabels) &&
+                                                    <>{cardLabels.map(label => {
                                                         return (<div
                                                             key={label.color}
                                                             className={`member-label ${label.color}`}
@@ -801,88 +835,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 </div>
             </div>
 
-            <div className="picker-popup" style={{
-                top: pickerTop,
-                left: pickerLeft,
-                display: (showPickerChangeALabel) ? 'block' : 'none',
-                width: '304px'
-            }}>
-                <div className="picker-header">
-                    <button className="back-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C6.90237 12.3166 6.90237 11.6834 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z" fill="currentColor"/>
-                        </svg>
-                    </button>
-                    <h3>Edit label</h3>
-                    <button className="task-modal-close" onClick={hidePicker}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                        </svg>
-                    </button>
-                </div>
 
-                <div className="edit-label-content">
-                    <div className="label-preview" style={{backgroundColor: '#f5cd47'}}></div>
-
-                    <div className="title-section">
-                        <label>Title</label>
-                        <input type="text" className="title-input"/>
-                    </div>
-
-                    <div className="colors-section">
-                        <label>Select a color</label>
-                        <div className="color-grid">
-                            <button className="color-btn" style={{backgroundColor: '#4BCE97'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#F5CD47'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#FAA53D'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#F87168'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#9F8FEF'}}></button>
-
-                            <button className="color-btn" style={{backgroundColor: '#2ABB7F'}}></button>
-                            <button className="color-btn selected" style={{backgroundColor: '#E6C60D'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#E67305'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#E5484D'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#8777D9'}}></button>
-
-                            <button className="color-btn" style={{backgroundColor: '#1F845A'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#946F00'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#B54D03'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#BF2600'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#6E5DC6'}}></button>
-
-                            <button className="color-btn" style={{backgroundColor: '#8CD4F5'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#79E2F2'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#7BC86C'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#FF8ED4'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#6B778C'}}></button>
-
-                            <button className="color-btn" style={{backgroundColor: '#5BA4CF'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#00C2E0'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#61BD4F'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#FF78CB'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#505F79'}}></button>
-
-                            <button className="color-btn" style={{backgroundColor: '#0747A6'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#0079BF'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#519839'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#CD519D'}}></button>
-                            <button className="color-btn" style={{backgroundColor: '#172B4D'}}></button>
-                        </div>
-
-                        <button className="remove-color-btn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
-                            </svg>
-                            Remove color
-                        </button>
-                    </div>
-
-                    <div className="label-actions">
-                        <button className="save-btn">Save</button>
-                        <button className="delete-btn">Delete</button>
-                    </div>
-                </div>
-            </div>
 
 
             {/* Labels Picker */}
@@ -894,6 +847,106 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                     display: showPickerLabels ? 'block' : 'none',
                 }}
             >
+
+                {showPickerChangeALabel && <>
+
+                    <div className="picker-header">
+                        <button className="back-btn" onClick={() => {setShowPickerChangeALabel(false)}}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C6.90237 12.3166 6.90237 11.6834 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <h3>Edit label</h3>
+                        <button className="task-modal-close" onClick={hidePicker}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div className="edit-label-content">
+                        <div className="label-preview" style={{backgroundColor: currentLabelColor}}></div>
+
+                        <div className="title-section">
+                            <label>Title</label>
+                            <input type="text" className="title-input"
+                                      value={currentLabelText}
+                                      onChange={onChangeCurrentLabelText}
+
+                            />
+                        </div>
+
+                        <div className="colors-section">
+                            <label>Select a color</label>
+                            <div className="color-grid">
+                                <button className={`color-btn ${currentLabelColor === '#4BCE97' ? 'selected' : ''}`} style={{backgroundColor: '#4BCE97'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#F5CD47' ? 'selected' : ''}`} style={{backgroundColor: '#F5CD47'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#FAA53D' ? 'selected' : ''}`} style={{backgroundColor: '#FAA53D'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#F87168' ? 'selected' : ''}`} style={{backgroundColor: '#F87168'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#9F8FEF' ? 'selected' : ''}`} style={{backgroundColor: '#9F8FEF'}} onClick={onChangeCurrentLabelColor}></button>
+
+                                <button className={`color-btn ${currentLabelColor === '#2ABB7F' ? 'selected' : ''}`} style={{backgroundColor: '#2ABB7F'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#E6C60D' ? 'selected' : ''}`} style={{backgroundColor: '#E6C60D'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#E67305' ? 'selected' : ''}`} style={{backgroundColor: '#E67305'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#E5484D' ? 'selected' : ''}`} style={{backgroundColor: '#E5484D'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#8777D9' ? 'selected' : ''}`} style={{backgroundColor: '#8777D9'}} onClick={onChangeCurrentLabelColor}></button>
+
+                                <button className={`color-btn ${currentLabelColor === '#1F845A' ? 'selected' : ''}`} style={{backgroundColor: '#1F845A'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#946F00' ? 'selected' : ''}`} style={{backgroundColor: '#946F00'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#B54D03' ? 'selected' : ''}`} style={{backgroundColor: '#B54D03'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#BF2600' ? 'selected' : ''}`} style={{backgroundColor: '#BF2600'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#6E5DC6' ? 'selected' : ''}`} style={{backgroundColor: '#6E5DC6'}} onClick={onChangeCurrentLabelColor}></button>
+
+                                <button className={`color-btn ${currentLabelColor === '#8CD4F5' ? 'selected' : ''}`} style={{backgroundColor: '#8CD4F5'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#79E2F2' ? 'selected' : ''}`} style={{backgroundColor: '#79E2F2'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#7BC86C' ? 'selected' : ''}`} style={{backgroundColor: '#7BC86C'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#FF8ED4' ? 'selected' : ''}`} style={{backgroundColor: '#FF8ED4'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#6B778C' ? 'selected' : ''}`} style={{backgroundColor: '#6B778C'}} onClick={onChangeCurrentLabelColor}></button>
+
+                                <button className={`color-btn ${currentLabelColor === '#5BA4CF' ? 'selected' : ''}`} style={{backgroundColor: '#5BA4CF'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#00C2E0' ? 'selected' : ''}`} style={{backgroundColor: '#00C2E0'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#61BD4F' ? 'selected' : ''}`} style={{backgroundColor: '#61BD4F'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#FF78CB' ? 'selected' : ''}`} style={{backgroundColor: '#FF78CB'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#505F79' ? 'selected' : ''}`} style={{backgroundColor: '#505F79'}} onClick={onChangeCurrentLabelColor}></button>
+
+                                <button className={`color-btn ${currentLabelColor === '#0747A6' ? 'selected' : ''}`} style={{backgroundColor: '#0747A6'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#0079BF' ? 'selected' : ''}`} style={{backgroundColor: '#0079BF'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#519839' ? 'selected' : ''}`} style={{backgroundColor: '#519839'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#CD519D' ? 'selected' : ''}`} style={{backgroundColor: '#CD519D'}} onClick={onChangeCurrentLabelColor}></button>
+                                <button className={`color-btn ${currentLabelColor === '#172B4D' ? 'selected' : ''}`} style={{backgroundColor: '#172B4D'}} onClick={onChangeCurrentLabelColor}></button>
+                            </div>
+
+                            <button className="remove-color-btn" onClick={
+                                () => {
+                                    setShowPickerChangeALabel(false)
+                                    onDeleteLabel()
+                            }}>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
+                                </svg>
+                                Remove color
+                            </button>
+                        </div>
+
+                        <div className="label-actions">
+                            <button className="save-btn"
+                                    onClick={() => {
+                                        setShowPickerChangeALabel(false)
+                                        onSaveLabelChange()
+                                    }}
+                                    >Save</button>
+                            <button className="delete-btn"
+                                    onClick={() => {
+                                        setShowPickerChangeALabel(false)
+                                        onDeleteLabel()
+                                    }}
+                                        >Delete</button>
+                        </div>
+                    </div>
+
+                </>}
+
+                {!showPickerChangeALabel && <>
                 <div className="picker-header">
                     <h3>Labels</h3>
                     <button className="task-modal-close" onClick={hidePicker}>
@@ -932,8 +985,8 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 <div>
                     <h4>Labels</h4>
                     <div className="labels-list">
-                        {taskToShow.board?.labels?.map((label) => {
-                            const isChecked = cardLabels.some((l) => l.color === label.color);
+                        {groupLabels.map((label) => {
+                            const isChecked = cardLabels.some((l) => l.color === label.color)
                             return (
                                 <label className="label-item" key={label.color}>
                                     <div className="label-checkbox">
@@ -948,8 +1001,9 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                     />
                                     <button className="edit-label"
                                             onClick={(event) => {
-                                                hidePicker(event)
-                                                movePickerTo(event)
+                                                setCurrentLabelText(label.title)
+                                                setCurrentLabelColor(label.color)
+                                                setPreviousLabelColor(label.color)
                                                 setShowPickerChangeALabel(true)
                                             }}
                                     >
@@ -982,12 +1036,16 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                         </svg>
                                     </button>
                                 </label>
-                            );
+                            )
                         })}
                     </div>
                 </div>
 
-                <button className="create-label-btn">Create a new label</button>
+                <button className="create-label-btn" onClick={(event) => {
+                    setCurrentLabelText('')
+                    setCurrentLabelColor('#4BCE97')
+                    setShowPickerChangeALabel(true)
+                }}>Create a new label</button>
                 <div className="just-margin"></div>
                 <div className="color-blind-toggle">
                     <label>
@@ -995,6 +1053,8 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                         <span>Enable colorblind friendly mode</span>
                     </label>
                 </div>
+            </>}
+
             </div>
 
             {/* Checklists Picker */}
