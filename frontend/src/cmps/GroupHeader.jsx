@@ -2,12 +2,14 @@ import { useRef, useState } from "react"
 import { GroupEdit } from "./GroupEdit"
 import { CopyListForm } from "./CopyListForm"
 import { MoveListForm } from "./MoveListForm"
+import { MoveAll } from "./MoveAll"
 
 export function GroupHeader({group}) {
     const elHeader = useRef()
     const [showGroupEdit,SetGroupEdit] = useState(false)
     const [showCopyList,setCopyList] = useState(false)
     const [showMoveList,setMoveList]  = useState(false)
+    const [showMoveAll,setMoveAll] = useState(false)
     function onSetGroupEdit(){
         SetGroupEdit(!showGroupEdit)
     }
@@ -31,6 +33,7 @@ export function GroupHeader({group}) {
             {showGroupEdit&&<GroupEdit onSetMoveList={onSetMoveList} onSetCopyList={onSetCopyList} group={group} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
             {showCopyList&& <CopyListForm group={group} onSetCopyList={onSetCopyList} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
             {showMoveList&&<MoveListForm onSetMoveList={onSetMoveList} onSetGroupEdit={onSetGroupEdit} group={group} header={elHeader.current}/>}
+            {showMoveAll&&<MoveAll header={elHeader.current}/>}
         </div>
 
     )
