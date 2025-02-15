@@ -54,7 +54,7 @@
         margin-top: 12px;
 
         color: #5E4DB2;
-        padding: 1px 2px;
+        padding: 2px 4px;
         font-size: 0.8em;
         font-weight: bold;
         background-color: #F3F0FF;
@@ -92,5 +92,31 @@
             // aspect-ratio: 1/1;
             border-radius: 2px;
         }
+    }
+
+    .side-bar-sec-items {
+        font-style: italic;
+    }
+}
+
+
+.side-bar-item-third i {
+    display: none;
+}
+
+.side-bar-item-third:hover i {
+    display: inline;
+}
+
+.side-bar-item-third .fa-solid-fr {
+    display: inline;
+    font-weight: bold;
+}
+
+.side-bar-item span {
+    display: flex;
+    align-items: center;
+    svg {
+        margin-right: 0.4em;
     }
 }

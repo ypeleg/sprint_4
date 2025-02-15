@@ -28,20 +28,49 @@
     align-items: center;
 
     .header-group {
+
+        h3 {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            font-weight: bold;
+        }
+        button>svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        button:nth-last-child(2) {
+            background-color: #685e66;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        
+
         display: flex;
+        align-items: center;
+        gap: 0.4em;
 
         .dots-at-end {
             height: 16px;
         }
 
-        .share-btn {
+        button.share-btn {
             display: flex;
             align-items: center;
             padding: 7px 12px;
             height: fit-content;
             color: white;
             gap: 0.5em;
-            background-color: #1f515d;
+            background-color: #1f606a;
         }
 
         .filters-btn {
@@ -70,7 +99,16 @@
                     margin-left: -5px;
 
                 }
+
+                img.admin-rank {
+                    width: 10px;
+                    height: 10px;
+                    margin-top: -10px;
+                    margin-left: 10px;
+                }
             }
         }
+
+
     }
 }
