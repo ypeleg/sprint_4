@@ -164,6 +164,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
             setGroupLabels(prev => prev.map(l => l.color === previousLabelColor ? {color: currentLabelColor, title: currentLabelText} : l))
         } else {
             setGroupLabels(prev => [...prev, {color: currentLabelColor, title: currentLabelText}])
+            setCardLabels(prev => [...prev, {color: currentLabelColor, title: currentLabelText}])
         }
         setCurrentLabelText('')
         setCurrentLabelColor('')
@@ -1035,7 +1036,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                         </svg>
                                     </button>
                                 </label>
-                            );
+                            )
                         })}
                     </div>
                 </div>
