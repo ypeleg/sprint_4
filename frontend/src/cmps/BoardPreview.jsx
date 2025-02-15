@@ -13,10 +13,10 @@ export function BoardPreview({ board }) {
     }
 
     return <article className="board-preview" style={{ backgroundImage: `url(${board.style.backgroundImage})` }}>
-        <h4>{board.title}</h4>
+        <div className="title">{board.title}</div>
         {!board.isStarred ? (<div className="fa-solid fa-star star-btn" onClick={setIsStarred}></div>)
-            :(<div className="fill-star" onClick={setIsStarred}>
-                    <img src="star-solid.svg" alt="" />
-              </div>)}
+            : (<div className="fill-star" onClick={setIsStarred}>
+                <img src="star-solid.svg" alt="" />
+            </div>)}
     </article>
 }
