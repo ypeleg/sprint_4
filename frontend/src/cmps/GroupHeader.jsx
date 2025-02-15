@@ -3,6 +3,7 @@ import { GroupEdit } from "./GroupEdit"
 import { CopyListForm } from "./CopyListForm"
 import { MoveListForm } from "./MoveListForm"
 import { MoveAll } from "./MoveAll"
+import { GroupSort } from "./GroupSort"
 
 export function GroupHeader({group}) {
     const elHeader = useRef()
@@ -10,6 +11,10 @@ export function GroupHeader({group}) {
     const [showCopyList,setCopyList] = useState(false)
     const [showMoveList,setMoveList]  = useState(false)
     const [showMoveAll,setMoveAll] = useState(false)
+    const [showSort,setSort] = useState(false)
+    function onSetSort(){
+        setSort(!showSort)
+    }
     function onSetGroupEdit(){
         SetGroupEdit(!showGroupEdit)
     }
@@ -41,10 +46,11 @@ export function GroupHeader({group}) {
 
                 {/*<i onClick={onSetGroupEdit} className="fa-regular fa-ellipsis-h"></i>*/}
             </div>
-            {showGroupEdit && <GroupEdit onSetMoveAll={onSetMoveAll} onSetMoveList={onSetMoveList} onSetCopyList={onSetCopyList} group={group} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
+            {showGroupEdit && <GroupEdit onSetSort={onSetSort} onSetMoveAll={onSetMoveAll} onSetMoveList={onSetMoveList} onSetCopyList={onSetCopyList} group={group} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
             {showCopyList && <CopyListForm group={group} onSetCopyList={onSetCopyList} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
             {showMoveList && <MoveListForm onSetMoveList={onSetMoveList} onSetGroupEdit={onSetGroupEdit} group={group} header={elHeader.current}/>}
-            {showMoveAll&&<MoveAll onSetMoveAll={onSetMoveAll} group={group} header={elHeader.current} onSetGroupEdit={onSetGroupEdit}/>}
+            {showMoveAll&&<MoveAll  onSetMoveAll={onSetMoveAll} group={group} header={elHeader.current} onSetGroupEdit={onSetGroupEdit}/>}
+            {showSort&&<GroupSort header={elHeader.current} onSetGroupEdit={onSetGroupEdit} onSetSort={onSetSort} group={group}/>}
         </div>
 
     )

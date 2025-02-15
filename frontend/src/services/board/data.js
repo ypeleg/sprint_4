@@ -100,6 +100,7 @@ function getRandomTask() {
         status: random.choice(STATUS_OPTIONS),
         priority: random.choice(PRIORITY_OPTIONS),
         dueDate: random.date('2024-01-01','2026-12-31').toISOString(),
+        createdAt: random.date('2024-01-01','2026-12-31'),
         description: random.lorem(random.randint(5,15)),
         checklists: getRandomChecklists(),
         memberIds: random.sample(USER_POOL.map(u=>u._id), random.randint(0, USER_POOL.length)),
