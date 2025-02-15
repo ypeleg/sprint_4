@@ -221,7 +221,7 @@ input {
     // place-self: start stretch;
     // height: 64px;
     overflow: hidden;
-    // position: relative;
+    position: relative;
     border-radius: 7px;
     //border: 2px solid transparent;
 }
@@ -336,4 +336,12 @@ header input {
 
 .member-item {
     position: relative;
+}
+
+.filter-content {
+    z-index: 1000;
+}
+
+.board-header {
+    z-index: 1;
 }
