@@ -2,12 +2,17 @@ import { useSelector } from "react-redux"
 import { updateBoard } from "../store/store"
 import { useState } from "react"
 import { CopyListForm } from "./CopyListForm"
+import { eventBus } from "../services/event-bus.service"
 
 
 
 export function GroupEdit({onSetMoveAll, onSetCopyList,header, onSetGroupEdit,group,onSetMoveList,onSetSort }) {
     const board = useSelector(state => state.boardModule.board)
-    
+    const eventbus = eventBus
+    function addGroup(){
+        eventBus.emit('showAddGroup',true)
+        onSetGroupEdit()
+    }
     const loc = header.getBoundingClientRect()
     const inset = `${loc.top}px auto auto ${loc.right}px`
    
@@ -27,7 +32,7 @@ export function GroupEdit({onSetMoveAll, onSetCopyList,header, onSetGroupEdit,gr
             </header>
             <section className="edit-options">
                 <section className="first-actions">
-                    <button>Add card</button>
+                    <button onClick={addGroup}>Add card</button>
                     <button onClick={() => { onSetCopyList() ; onSetGroupEdit()}}>Copy list</button>
                     
                     <button onClick={() => {onSetMoveList(); onSetGroupEdit()}}>Move list</button>
