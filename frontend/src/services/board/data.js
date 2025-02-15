@@ -13,7 +13,6 @@ const STATUS_OPTIONS = ['inProgress','done','review','stuck','blocked']
 const PRIORITY_OPTIONS = ['low','medium','high']
 const CMP_ORDER_OPTIONS = ['StatusPicker','MemberPicker','DatePicker','SomeNewPicker','OtherPicker']
 
-/** Attachments/activities for tasks **/
 function getRandomAttachments() {
     const cnt = random.randint(0,3)
     return Array.from({length: cnt}, () => ({
@@ -38,7 +37,6 @@ function getRandomActivity() {
     })
 }
 
-/** Badges that fit the UI’s shape **/
 const BADGE_OPTIONS_MAP = {
     risk:       ['Low','Moderate','High'],
     approved:   ['Open','Blocked','In Review','Done'],
@@ -219,7 +217,7 @@ export function getRandomBoard() {
             backgroundImage: 'https://picsum.photos/600/300?random=' + random.randint(1,1000)
         },
         labels: getRandomLabels(),
-        members: USER_POOL.map(u => ({ ...u })), // ensure each has `imgUrl`
+        members: USER_POOL.map(u => ({ ...u })),
         groups: getRandomGroups(),
         activities: getRandomBoardActivities(),
         cmpsOrder: random.sample(CMP_ORDER_OPTIONS, random.randint(2, CMP_ORDER_OPTIONS.length))
