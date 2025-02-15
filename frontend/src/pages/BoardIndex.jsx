@@ -1,14 +1,11 @@
 
-import { useSelector } from "react-redux"
-import React, { useRef, useEffect, useState } from "react"
 
-import { BoardList } from './BoardList.jsx'
-import { NavBarPageIndex } from './NavBarPageIndex.jsx'
-import { AppHeader } from '../cmps/AppHeader.jsx'
-
-import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
-
-
+import {useSelector} from "react-redux"
+import {BoardList} from './BoardList.jsx'
+import {AppHeader} from '../cmps/AppHeader.jsx'
+import {NavBarPageIndex} from './NavBarPageIndex.jsx'
+import React, {useRef, useEffect, useState} from "react"
+import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard} from "../store/store.js"
 
 
 export function BoardIndex() {
@@ -34,14 +31,13 @@ export function BoardIndex() {
     // }, [boards])
 
 
-
     return (
         <>
-            <AppHeader />
+            <AppHeader/>
 
             <div className="home-container">
 
-                <NavBarPageIndex />
+                <NavBarPageIndex/>
 
                 <div className="all-boards">
                     <div className="category-container">
@@ -56,12 +52,12 @@ export function BoardIndex() {
 
 
                     <section className='star-boards'>
-                        <h3> <span className="fa-solid fa-star"></span> Starred boards</h3>
-                        <BoardList boards={boards.filter(board => board.isStarred)} />
+                        <h3><span className="fa-solid fa-star"></span> Starred boards</h3>
+                        <BoardList boards={boards.filter(board => board.isStarred)}/>
                     </section>
                     <section className='my-boards'>
-                        <h3> <span className="fa-solid fa-user"></span>Your boards</h3>
-                        <BoardList boards={boards} addBoard={true} />
+                        <h3><span className="fa-solid fa-user"></span>Your boards</h3>
+                        <BoardList boards={boards} addBoard={true}/>
                     </section>
                 </div>
 

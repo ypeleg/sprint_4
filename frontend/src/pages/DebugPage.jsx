@@ -1,11 +1,10 @@
 
 
+import {useSelector} from "react-redux"
+import React, {useRef, useEffect, useState} from "react"
 
-import { useSelector } from "react-redux"
-import React, { useRef, useEffect, useState } from "react"
 
-
-import { loadBoards, getEmptyBoard, getRandomBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
+import {loadBoards, getEmptyBoard, getRandomBoard, loadBoard, addBoard, updateBoard, removeBoard} from "../store/store.js"
 
 
 export function DebugPage() {
@@ -24,11 +23,11 @@ export function DebugPage() {
 
     useEffect(() => {
         // getEmptyBoard().then(e => addBoard(e)).then(e => {
-            // setBoardToShow(e)
+        // setBoardToShow(e)
         // })
         addBoard(getRandomBoard())
         // getRandomBoard().then(e => addBoard(e)).then(e => {
-            // setBoardToShow(e)
+        // setBoardToShow(e)
         // })
 
     }, [])

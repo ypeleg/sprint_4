@@ -1,9 +1,11 @@
 
-import { userService } from '../user'
-import { makeId } from '../util.service'
-import { getEmptyBoard } from '../../store/store'
-import { storageService } from '../async-storage.service'
-import { getRandomBoard } from './data'
+
+import {userService} from '../user'
+import {getRandomBoard} from './data'
+import {makeId} from '../util.service'
+import {getEmptyBoard} from '../../store/store'
+import {storageService} from '../async-storage.service'
+
 
 const STORAGE_KEY = 'board'
 
@@ -17,13 +19,13 @@ export const boardService = {
 window.cs = boardService
 
 
-async function query(filterBy = { title: '', }) {
+async function query(filterBy = {title: '',}) {
     var boards = await storageService.query(STORAGE_KEY)
     if (boards.length === 0) {
         _createBoards()
         boards = await storageService.query(STORAGE_KEY)
     }
-    const { title, sortField, sortDir } = filterBy
+    const {title, sortField, sortDir} = filterBy
 
     if (title) {
         const regex = new RegExp(filterBy.title, 'i')
@@ -42,29 +44,33 @@ async function query(filterBy = { title: '', }) {
     return boards
 }
 
-async function getById(boardId,filterBy = {title:''}) {
-    const { title, members, sortDir } = filterBy
-    let board =  await storageService.get(STORAGE_KEY, boardId)
-    if(title){
+async function getById(boardId, filterBy = {title: ''}) {
+    const {title, members, sortDir} = filterBy
+    let board = await storageService.get(STORAGE_KEY, boardId)
+    if (title) {
         const regex = new RegExp(title, 'i')
-        board ={ ...board,  groups:board.groups.map(group => {
+        board = {
+            ...board, groups: board.groups.map(group => {
                 return {
                     ...group,
-                    tasks: group.tasks.filter(task => regex.test(task.title)) 
+                    tasks: group.tasks.filter(task => regex.test(task.title))
                 }
-            })}
+            })
+        }
     }
 
-    if(members?.length){
-        
-        board = {...board,groups:board.groups.map(group => {
-            return {
-                ...group,
-                tasks: group.tasks.filter(task =>(!task.memberIds.length&&members.includes('1'))? task: task.memberIds.some(member => {
-                    return members.some(m1 => m1 === member )
-                })) 
-            }
-        })}
+    if (members?.length) {
+
+        board = {
+            ...board, groups: board.groups.map(group => {
+                return {
+                    ...group,
+                    tasks: group.tasks.filter(task => (!task.memberIds.length && members.includes('1')) ? task : task.memberIds.some(member => {
+                        return members.some(m1 => m1 === member)
+                    }))
+                }
+            })
+        }
     }
     console.log(board.groups.tasks)
     return board
@@ -108,7 +114,7 @@ async function _createBoards() {
 
     for (let i = 0; i < 5; i++) {
 
-        let board =  getRandomBoard()
+        let board = getRandomBoard()
         console.log(board)
         await save(board)
     }

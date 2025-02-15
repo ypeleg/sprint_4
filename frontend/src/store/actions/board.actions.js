@@ -1,9 +1,8 @@
 
 
-import { store } from '../store'
-import { boardService } from '../../services/board'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_FILTER_BY } from '../reducers/board.reducer.js'
-import { random } from '../../services/util.service.js'
+import {store} from '../store'
+import {boardService} from '../../services/board'
+import {ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_FILTER_BY} from '../reducers/board.reducer.js'
 
 
 export function getRandomBoard() {
@@ -70,17 +69,18 @@ export async function loadBoards(filterBy) {
     }
 }
 
-export async function loadBoard(boardId,filterBy= {title:''}) {
+export async function loadBoard(boardId, filterBy = {title: ''}) {
     try {
-        const board = await boardService.getById(boardId,filterBy)
+        const board = await boardService.getById(boardId, filterBy)
         store.dispatch(getCmdSetBoard(board))
     } catch (err) {
         console.log('Cannot load board', err)
         throw err
     }
 }
-export function setFilterBy(filterBy){
-    store.dispatch({type:SET_FILTER_BY,filterBy})
+
+export function setFilterBy(filterBy) {
+    store.dispatch({type: SET_FILTER_BY, filterBy})
 }
 
 export async function removeBoard(boardId) {
@@ -116,7 +116,6 @@ export async function updateBoard(board) {
 }
 
 
-
 // Command Creators:
 function getCmdSetBoards(boards) {
     return {
@@ -124,30 +123,35 @@ function getCmdSetBoards(boards) {
         boards
     }
 }
+
 function getCmdSetBoard(board) {
     return {
         type: SET_BOARD,
         board
     }
 }
+
 function getCmdRemoveBoard(boardId) {
     return {
         type: REMOVE_BOARD,
         boardId
     }
 }
+
 function getCmdAddBoard(board) {
     return {
         type: ADD_BOARD,
         board
     }
 }
+
 function getCmdUpdateBoard(board) {
     return {
         type: UPDATE_BOARD,
         board
     }
 }
+
 function getCmdAddBoardMsg(msg) {
     return {
         type: ADD_BOARD_MSG,

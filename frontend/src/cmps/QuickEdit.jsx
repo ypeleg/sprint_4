@@ -1,6 +1,5 @@
 
 
-
 export function QuickEdit({pos}){
 
     const {top,bottom,right,left} =pos

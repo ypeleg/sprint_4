@@ -1,7 +1,7 @@
 
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
-import { storageService } from '../async-storage.service'
+import {storageService} from '../async-storage.service'
 
 
 export const userService = {
@@ -32,7 +32,7 @@ function remove(userId) {
     return storageService.remove('user', userId)
 }
 
-async function update({ _id, score }) {
+async function update({_id, score}) {
     const user = await storageService.get('user', _id)
     user.score = score
     await storageService.put('user', user)
@@ -64,15 +64,15 @@ function getLoggedinUser() {
 }
 
 function saveLoggedinUser(user) {
-	user = { 
-        _id: user._id, 
-        fullname: user.fullname, 
-        imgUrl: user.imgUrl, 
-        score: user.score, 
-        isAdmin: user.isAdmin 
+    user = {
+        _id: user._id,
+        fullname: user.fullname,
+        imgUrl: user.imgUrl,
+        score: user.score,
+        isAdmin: user.isAdmin
     }
-	sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
-	return user
+    sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
+    return user
 }
 
 async function _createAdmin() {

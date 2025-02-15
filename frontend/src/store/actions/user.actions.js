@@ -1,9 +1,9 @@
 
 
-import { store } from '../store'
-import { userService } from '../../services/user'
+import {store} from '../store'
+import {userService} from '../../services/user'
 // import { socketService } from '../../services/socket.service'
-import { REMOVE_USER, SET_USER, SET_USERS, SET_WATCHED_USER } from '../reducers/user.reducer'
+import {REMOVE_USER, SET_USER, SET_USERS, SET_WATCHED_USER} from '../reducers/user.reducer'
 
 
 export async function getEmptyUser() {
@@ -14,7 +14,7 @@ export async function loadUsers() {
     try {
 
         const users = await userService.getUsers()
-        store.dispatch({ type: SET_USERS, users })
+        store.dispatch({type: SET_USERS, users})
     } catch (err) {
         console.log('UserActions: err in loadUsers', err)
     } finally {
@@ -25,7 +25,7 @@ export async function loadUsers() {
 export async function removeUser(userId) {
     try {
         await userService.remove(userId)
-        store.dispatch({ type: REMOVE_USER, userId })
+        store.dispatch({type: REMOVE_USER, userId})
     } catch (err) {
         console.log('UserActions: err in removeUser', err)
     }
@@ -78,7 +78,7 @@ export async function logout() {
 export async function loadUser(userId) {
     try {
         const user = await userService.getById(userId)
-        store.dispatch({ type: SET_WATCHED_USER, user })
+        store.dispatch({type: SET_WATCHED_USER, user})
     } catch (err) {
         console.log('Cannot load user', err)
     }

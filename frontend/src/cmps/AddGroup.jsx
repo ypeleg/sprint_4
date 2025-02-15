@@ -1,8 +1,8 @@
 
 
-import { useState } from "react"
-import { useSelector } from "react-redux"
-import { getEmptyGroup, updateBoard } from "../store/store"
+import {useState} from "react"
+import {useSelector} from "react-redux"
+import {getEmptyGroup, updateBoard} from "../store/store"
 
 
 export function AddGroup() {
@@ -25,7 +25,7 @@ export function AddGroup() {
         board.groups.push(group)
         await updateBoard(board)
 
-        setTask(getEmptyTask())
+        // setTask(getEmptyTask())
         setForm(false)
     }
 

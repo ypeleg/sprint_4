@@ -3,6 +3,7 @@
 import { useSelector } from "react-redux"
 import { loadBoards } from "../store/store"
 
+
 export function SideBar() {
 
     const boards = useSelector(state => state.boardModule.boards)

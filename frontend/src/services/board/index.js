@@ -1,11 +1,9 @@
-const { DEV, VITE_LOCAL } = import.meta.env
 
 
-import { boardService as local } from './board.service.local'
-import { boardService as remote } from './board.service.remote'
-
-import { getRandomBoard } from './data.js'
-// import { random } from '../util.service.js'
+import {getRandomBoard} from './data.js'
+const {DEV, VITE_LOCAL} = import.meta.env
+import {boardService as local} from './board.service.local'
+import {boardService as remote} from './board.service.remote'
 
 // localStorage.clear()
 
@@ -17,12 +15,12 @@ function getDefaultFilter() {
     return {
         title: '',
         members: [],
-       labels: []
+        labels: []
     }
 }
 
 const service = (VITE_LOCAL === 'true') ? local : remote
-export const boardService = { getEmptyBoard, getDefaultFilter, ...service }
+export const boardService = {getEmptyBoard, getDefaultFilter, ...service}
 
 // Easy access to this service from the dev tools console
 // when using script - dev / dev:local

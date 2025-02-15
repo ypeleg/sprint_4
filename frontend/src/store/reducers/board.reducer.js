@@ -1,4 +1,6 @@
-import { boardService } from "../../services/board"
+
+
+import {boardService} from "../../services/board"
 
 
 export const SET_BOARD = 'SET_BOARD'
@@ -8,6 +10,8 @@ export const REMOVE_BOARD = 'REMOVE_BOARD'
 export const UPDATE_BOARD = 'UPDATE_BOARD'
 export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 export const SET_FILTER_BY = 'SET_FILTER_BY'
+
+
 const initialState = {
     boards: [],
     board: null,
@@ -19,28 +23,28 @@ export function boardReducer(state = initialState, action) {
     var boards
     switch (action.type) {
         case SET_BOARDS:
-            newState = { ...state, boards: action.boards }
+            newState = {...state, boards: action.boards}
             break
         case SET_BOARD:
-            newState = { ...state, board: action.board }
+            newState = {...state, board: action.board}
             break
         case REMOVE_BOARD:
             const lastRemovedBoard = state.boards.find(board => board._id === action.boardId)
             boards = state.boards.filter(board => board._id !== action.boardId)
-            newState = { ...state, boards, lastRemovedBoard }
+            newState = {...state, boards, lastRemovedBoard}
             break
         case ADD_BOARD:
-            newState = { ...state, boards: [...state.boards, action.board] }
+            newState = {...state, boards: [...state.boards, action.board]}
             break
         case UPDATE_BOARD:
-           
-            newState = { ...state, board: action.board }
+
+            newState = {...state, board: action.board}
             break
         case ADD_BOARD_MSG:
-            newState = { ...state, board: { ...state.board, msgs: [...state.board.msgs || [], action.msg] } }
+            newState = {...state, board: {...state.board, msgs: [...state.board.msgs || [], action.msg]}}
             break
         case SET_FILTER_BY:
-            newState = {...state, filterBy:action.filterBy}
+            newState = {...state, filterBy: action.filterBy}
         default:
     }
     return newState

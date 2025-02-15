@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 
 
@@ -29,7 +31,7 @@ export function NavBarPageIndex() {
 
                 </div>
                 <div>
-                    <button className=""> <i className="near-logo-btn fa-regular fa-less-than"></i> </button>
+                    <button className=""><i className="near-logo-btn fa-regular fa-less-than"></i></button>
                 </div>
             </div>
 

@@ -1,12 +1,9 @@
 
 
-import { useEffect, useRef, useState } from "react"
-import { useSelector } from "react-redux"
+import { QuickEdit } from "./QuickEdit"
 import { useNavigate } from "react-router"
 import { AddTaskForm } from "./AddTaskForm"
-import { QuickEdit } from "./QuickEdit"
-
-
+import { useEffect, useRef, useState } from "react"
 
 
 
@@ -15,13 +12,9 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group, largeL
 
     const [showForm, setShowForm] = useState(false)
 
-
-
-
     function onSetShowForm() {
         setShowForm(!showForm)
     }
-
 
     const {tasks} = group
     const navgite = useNavigate()

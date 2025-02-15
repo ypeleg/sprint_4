@@ -1,16 +1,13 @@
 
 
-
-import { useParams } from "react-router"
-import { useSelector } from "react-redux"
-import { SideBar } from "../cmps/SideBar"
-import { AppHeader } from "../cmps/AppHeader.jsx"
-import { BoardHeader } from "../cmps/BoardHeader.jsx";
-import React, { useRef, useEffect, useState } from "react"
-import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
-
-import { AddGroup } from "../cmps/AddGroup";
-// import { GroupPreview } from "../cmps/GroupPreview";
+import {useParams} from "react-router"
+import {useSelector} from "react-redux"
+import {SideBar} from "../cmps/SideBar"
+import {AddGroup} from "../cmps/AddGroup";
+import {AppHeader} from "../cmps/AppHeader.jsx"
+import {BoardHeader} from "../cmps/BoardHeader.jsx";
+import React, {useRef, useEffect, useState} from "react"
+import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard} from "../store/store.js"
 
 
 // data changes:
@@ -20,26 +17,25 @@ import { AddGroup } from "../cmps/AddGroup";
 // bring the task "the current group"
 
 
-
 import GoogleMapReact from 'google-map-react';
 import {TaskList} from "../cmps/TaskList.jsx"
 
-export function GoogleMap({ lat = 32.109333, lng = 34.855499, zm = 11 }) {
-    const [center, setCenter] = useState({ lat: lat, lng: lng })
+export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
+    const [center, setCenter] = useState({lat: lat, lng: lng})
     const zoom = zm
 
-    function onHandleClick({ lat, lng }) {
+    function onHandleClick({lat, lng}) {
         // console.log('Click', ev)
         // console.log('lat,lng:', lat, lng)
-        setCenter({ lat, lng })
+        setCenter({lat, lng})
     }
 
 
-    return (        
+    return (
         <div className="maps-container maps-container-outer">
-            <div className="maps-in-1" style={{ height: '160px', width: '100%' }}>
+            <div className="maps-in-1" style={{height: '160px', width: '100%'}}>
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: "AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc" }}
+                    bootstrapURLKeys={{key: "AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc"}}
                     // defaultCenter={center}
                     center={center}
                     defaultZoom={zoom}
@@ -53,29 +49,29 @@ export function GoogleMap({ lat = 32.109333, lng = 34.855499, zm = 11 }) {
                     />
                 </GoogleMapReact>
             </div>
-            <div className="maps-in-2" style={{ height: '52px', width: '512px' }}>
+            <div className="maps-in-2" style={{height: '52px', width: '512px'}}>
                 <h3>Tel Aviv-Yafo</h3>
-                <h5>Tel Aviv-Yafo, Israel</h5>                    
+                <h5>Tel Aviv-Yafo, Israel</h5>
             </div>
         </div>
     )
 }
 
-const AnyReactComponent = ({ text }) => <div style={{ fontSize: '22px' }}>{text}</div>;
+const AnyReactComponent = ({text}) => <div style={{fontSize: '22px'}}>{text}</div>;
 
 
-export function TaskModal({ taskToShow, onClose }) {
-        
+export function TaskModal({taskToShow, onClose}) {
+
 
     console.log('task', taskToShow)
     const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
     const [cardTitle, setCardTitle] = useState(taskToShow.title || '')
     const [listName, setListName] = useState(taskToShow.group?.title || '')
-    const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)    
+    const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)
     const [description, setDescription] = useState(taskToShow.description || [])
     const [attachments, setAttachments] = useState(taskToShow.attachments || [])
     const [checklists, setChecklists] = useState(taskToShow.checklists || [])
-    const [newChecklistItem, setNewChecklistItem] = useState([])    
+    const [newChecklistItem, setNewChecklistItem] = useState([])
     const [activityLog, setActivityLog] = useState(taskToShow.activity || [])
 
     // console.log('members', taskToShow.board)
@@ -110,9 +106,9 @@ export function TaskModal({ taskToShow, onClose }) {
     function saveTask() {
         // TODO: saves the ENTIRE states back to the task in the store
     }
+
     // TODO: IMPLEMENT
     ////////////////////////
-
 
 
     return (
@@ -120,12 +116,12 @@ export function TaskModal({ taskToShow, onClose }) {
 
             {coverUrl ? (<div
                 className="task-cover"
-                style={{ backgroundImage: `url(${coverUrl})` }}
+                style={{backgroundImage: `url(${coverUrl})`}}
             >
                 <button className="task-modal-close" onClick={onClose}>x</button>
             </div>) : (<div
                 className="task-no-cover"
-            // style={{ backgroundImage: `url(${coverUrl})` }}
+                // style={{ backgroundImage: `url(${coverUrl})` }}
             >
                 <button className="task-modal-close" onClick={onClose}>x</button>
             </div>)
@@ -136,7 +132,7 @@ export function TaskModal({ taskToShow, onClose }) {
                 <div className="task-modal-header">
                     <div className="task-left">
                         <div className="task-icon status-icon" title="Card is complete">
-                            <i className="fa-regular fa-check" ></i>
+                            <i className="fa-regular fa-check"></i>
                         </div>
 
                         <div className="task-title-section">
@@ -148,7 +144,7 @@ export function TaskModal({ taskToShow, onClose }) {
                             />
                             <div className="task-subtitle">
                                 in list <strong
-                                style={{ backgroundColor: taskToShow.group.style?.backgroundColor || '' }}
+                                style={{backgroundColor: taskToShow.group.style?.backgroundColor || ''}}
                             >{listName} <i className="fa-regular fa-chevron-down"></i> </strong> {isWatching && <i className="fa-regular fa-eye"></i>}
                             </div>
                         </div>
@@ -166,9 +162,9 @@ export function TaskModal({ taskToShow, onClose }) {
                                         {members.map(member => {
                                             if (member?.imgUrl) {
                                                 return (<div className="user-circle"
-                                                     style={{
-                                                         backgroundImage: `url(${member.imgUrl})`
-                                                     }}> </div>)
+                                                             style={{
+                                                                 backgroundImage: `url(${member.imgUrl})`
+                                                             }}></div>)
                                             } else {
                                                 return (<div key={member.id} className="member-circle" title="LH">
                                                     {member?.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{member?.fullname?.split(' ')[1][0]?.toUpperCase() || ''}
@@ -190,7 +186,7 @@ export function TaskModal({ taskToShow, onClose }) {
                                                 return (<div
                                                     key={label.color}
                                                     className={`member-label ${label.color}`}
-                                                    style={{ backgroundColor: label.color || '' }}
+                                                    style={{backgroundColor: label.color || ''}}
                                                 >
                                                 </div>)
                                             })}</>
@@ -226,8 +222,8 @@ export function TaskModal({ taskToShow, onClose }) {
                                                 <span className="pointer-cursor">{new Date(date).toLocaleDateString()} </span>
                                                 {(new Date(date) < Date.now()) ?
                                                     ((taskToShow.status === 'done') ?
-                                                        (<span className="complete-label">Complete</span>) :
-                                                        (<span className="incomplete-label">Overdue</span>)
+                                                            (<span className="complete-label">Complete</span>) :
+                                                            (<span className="incomplete-label">Overdue</span>)
                                                     ) : <span>a</span>
                                                 }
                                                 <i className="fa-regular fa-chevron-down"></i>
@@ -268,12 +264,11 @@ export function TaskModal({ taskToShow, onClose }) {
 
                             <div className="inner-component-left-padding">
                                 <p contentEditable
-                                    className="task-description"
-                                    onChange={setDescription}>{description}
+                                   className="task-description"
+                                   onChange={setDescription}>{description}
                                     onFocusOut={saveTask}</p>
                             </div>
                         </div>
-
 
 
                         <div className="task-section">
@@ -285,9 +280,9 @@ export function TaskModal({ taskToShow, onClose }) {
                                 </div>
                                 {/* <button className="delete-btn">Edit</button> */}
                             </div>
-                            
-                            <div className="inner-component-left-padding">                            
-                                <GoogleMap />
+
+                            <div className="inner-component-left-padding">
+                                <GoogleMap/>
 
                             </div>
                         </div>
@@ -317,9 +312,9 @@ export function TaskModal({ taskToShow, onClose }) {
                                             value={badge.text}
                                             onChange={(e) => setBadges(e.target.value)}
                                             className="custom-dropdown"
-                                                    style={{
-                                                        backgroundColor: `${badge.color}`
-                                                    }}
+                                            style={{
+                                                backgroundColor: `${badge.color}`
+                                            }}
                                         >
                                             <option value="">Select...</option>
                                             {badge.badgeOptions.map(option => {
@@ -403,102 +398,108 @@ export function TaskModal({ taskToShow, onClose }) {
                         </div>
 
 
-                            {(attachments.length !== 0) &&
+                        {(attachments.length !== 0) &&
 
-                        <div className="task-section">
+                            <div className="task-section">
 
-                            <div className="flex-space-between">
-                                <div className="section-icon-title">
-                                    <i className="fa-regular fa-paperclip"></i>
-                                    <h3>Attachments</h3>
-                                </div>
-                                <button className="delete-btn">Add</button>
-                            </div>
-                             <>
-                                <div className="inner-component-left-padding">Files</div>
-                                <div className="task-attachment-row inner-component-left-padding">
-                                
-                                {(attachments.map( attachment => { return <>
-                                    <div className="just-flex">
-                                        <button className="attachment-extention">PNG</button>
-                                        <div className="file-info">
-                                            <h5>{attachment.path}</h5>
-                                            <label>{new Date(attachment.date).toLocaleDateString()}</label>
-                                        </div>
+                                <div className="flex-space-between">
+                                    <div className="section-icon-title">
+                                        <i className="fa-regular fa-paperclip"></i>
+                                        <h3>Attachments</h3>
                                     </div>
-                                    </>}))}
-
+                                    <button className="delete-btn">Add</button>
                                 </div>
+                                <>
+                                    <div className="inner-component-left-padding">Files</div>
+                                    <div className="task-attachment-row inner-component-left-padding">
 
-                            </>
-                        </div>
-                           }
+                                        {(attachments.map(attachment => {
+                                            return <>
+                                                <div className="just-flex">
+                                                    <button className="attachment-extention">PNG</button>
+                                                    <div className="file-info">
+                                                        <h5>{attachment.path}</h5>
+                                                        <label>{new Date(attachment.date).toLocaleDateString()}</label>
+                                                    </div>
+                                                </div>
+                                            </>
+                                        }))}
+
+                                    </div>
+
+                                </>
+                            </div>
+                        }
 
 
                         <div className="task-section">
 
 
                             {checklists && <>
-                                {checklists.map(checklist => {return <>
-                                    <div key={checklist.id} className="checklist-container">
-                                        <div className="flex-space-between">
-                                            <div className="section-icon-title">
-                                                <i className="fa-regular fa-check-square"></i>
-                                                <h3>{checklist.title}</h3>
-                                            </div>
-                                            <button className="delete-btn">Delete</button>
-                                        </div>
-
-
-                                        {checklist.progress &&
-                                            <div className="progress inner-component-left-padding">
-                                                <div className="progress-container">
-                                                    <div className="progress-num">0%</div>
-                                                    <div className="progress-bar"></div>
+                                {checklists.map(checklist => {
+                                    return <>
+                                        <div key={checklist.id} className="checklist-container">
+                                            <div className="flex-space-between">
+                                                <div className="section-icon-title">
+                                                    <i className="fa-regular fa-check-square"></i>
+                                                    <h3>{checklist.title}</h3>
                                                 </div>
-                                            </div>}
+                                                <button className="delete-btn">Delete</button>
+                                            </div>
 
-                                        {checklist.todos.map(todo => {return <>
-                                                <div>
-                                                    <div className="just-flex-with-center checklist-todos">
-                                                        <input name={todo.title} type="checkbox"/>
-                                                        <label>{todo.title}</label>
+
+                                            {checklist.progress &&
+                                                <div className="progress inner-component-left-padding">
+                                                    <div className="progress-container">
+                                                        <div className="progress-num">0%</div>
+                                                        <div className="progress-bar"></div>
+                                                    </div>
+                                                </div>}
+
+                                            {checklist.todos.map(todo => {
+                                                return <>
+                                                    <div>
+                                                        <div className="just-flex-with-center checklist-todos">
+                                                            <input name={todo.title} type="checkbox"/>
+                                                            <label>{todo.title}</label>
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            })}
+
+
+                                            <div className="task-checklist-add inner-component-left-padding">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Add an item"
+                                                    value={newChecklistItem}
+                                                    onChange={(e) => setNewChecklistItem(e.target.value)}
+                                                />
+                                            </div>
+
+                                            <div className="side-by-side inner-component-left-padding">
+                                                <div className="just-flex">
+
+                                                    <div className="checklist-actions">
+                                                        <button className="btn-add">Add</button>
+                                                        <button className="btn-cancel">Cancel</button>
                                                     </div>
                                                 </div>
-                                            </>})}
 
-
-                                        <div className="task-checklist-add inner-component-left-padding">
-                                            <input
-                                                type="text"
-                                                placeholder="Add an item"
-                                                value={newChecklistItem}
-                                                onChange={(e) => setNewChecklistItem(e.target.value)}
-                                            />
-                                        </div>
-
-                                        <div className="side-by-side inner-component-left-padding">
-                                            <div className="just-flex">
-
-                                                <div className="checklist-actions">
-                                                    <button className="btn-add">Add</button>
-                                                    <button className="btn-cancel">Cancel</button>
+                                                <div className="just-flex">
+                                                    <button className="footer-action">
+                                                        <i className="fa-regular fa-user"></i>
+                                                        Assign
+                                                    </button>
+                                                    <button className="footer-action">
+                                                        <i className="fa-regular fa-clock"></i>
+                                                        Due date
+                                                    </button>
                                                 </div>
                                             </div>
-
-                                            <div className="just-flex">
-                                                <button className="footer-action">
-                                                    <i className="fa-regular fa-user"></i>
-                                                    Assign
-                                                </button>
-                                                <button className="footer-action">
-                                                    <i className="fa-regular fa-clock"></i>
-                                                    Due date
-                                                </button>
-                                            </div>
                                         </div>
-                                    </div>
-                                </>})}
+                                    </>
+                                })}
                             </>}
 
 
@@ -522,8 +523,6 @@ export function TaskModal({ taskToShow, onClose }) {
                             </div>
 
 
-
-
                             <ul className="task-activity-list">
 
 
@@ -533,7 +532,7 @@ export function TaskModal({ taskToShow, onClose }) {
                                             YP
                                         </div>
                                         <div className="flex-col input-container">
-                                            <input className="activity-input" type="text" placeholder="Write a comment..." />
+                                            <input className="activity-input" type="text" placeholder="Write a comment..."/>
                                         </div>
                                     </div>
                                 </li>
@@ -544,22 +543,22 @@ export function TaskModal({ taskToShow, onClose }) {
                                     <li key={idx}>
                                         <div className="just-flex">
                                             {!(entry?.byMember?.imgUrl) &&
-                                                <div className="user-circle">                                                
-                                                    {entry?.byMember?.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{entry?.byMember?.fullname?.split(' ')[1][0]?.toUpperCase() || ''}                                                
+                                                <div className="user-circle">
+                                                    {entry?.byMember?.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{entry?.byMember?.fullname?.split(' ')[1][0]?.toUpperCase() || ''}
                                                 </div>}
                                             {(entry?.byMember?.imgUrl) &&
                                                 <div className="user-circle"
-                                                style={{
-                                                    backgroundImage: `url(${entry.byMember.imgUrl})`
-                                                }}>                                                     
-                                                </div>}                                                
+                                                     style={{
+                                                         backgroundImage: `url(${entry.byMember.imgUrl})`
+                                                     }}>
+                                                </div>}
                                             <div className="flex-col">
                                                 <div className="text-size-activity">
                                                     {/* <span className="full-name">yam peleg</span> attached <span className="file-name">roi.png</span> to this card */}
                                                     <span className="full-name">{entry?.byMember?.fullname}</span> {entry.title}
                                                 </div>
                                                 <div className="text-size-activity-2">
-                                                    {new Date(entry.createdAt).toLocaleDateString()}                                                    
+                                                    {new Date(entry.createdAt).toLocaleDateString()}
                                                 </div>
                                             </div>
                                         </div>
@@ -604,6 +603,7 @@ export function useToggle(initialState) {
             setIsOn(isOn => !isOn)
         }
     }
+
     return [isOn, onToggle]
 }
 
@@ -617,7 +617,7 @@ export function BoardDetails() {
 
     const boardToShow = useSelector(state => state.boardModule.board)
     const [taskToShow, setTaskToShow] = useState(null)
-    const { boardId } = useParams()
+    const {boardId} = useParams()
     // console.log(boardId)
 
 
@@ -640,7 +640,6 @@ export function BoardDetails() {
         console.log('group', group)
 
         task.group = group
-
 
 
         // green
@@ -692,10 +691,6 @@ export function BoardDetails() {
         if (task.group.style.backgroundColor === "#8590a2") {
             task.group.style.color = "#3a3a3a"
         }
-
-
-
-
 
 
         task.taskList = taskList
@@ -759,6 +754,7 @@ export function BoardDetails() {
     }
 
     const [largeLabels, setLargeLabels] = useState(true)
+
     function toggleLargeLabels(ev) {
         ev.stopPropagation()
         setLargeLabels(!largeLabels)
@@ -772,7 +768,7 @@ export function BoardDetails() {
             {isPopupShown && (!!taskToShow) && <>
                 <div className="popup" onClick={closePopupOnlyIfClickedOutOfIt}>
 
-                        <TaskModal taskToShow={taskToShow} onClose={togglePopup}/>
+                    <TaskModal taskToShow={taskToShow} onClose={togglePopup}/>
 
                 </div>
                 <div className="popup-backdrop" onClick={togglePopup}></div>
@@ -794,7 +790,7 @@ export function BoardDetails() {
                         {boardToShow.groups.map(group => {
 
                             // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>
-                        return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
+                            return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
                                 <div className="list-header just-flex">
                                     <span style={{color: group.style?.color || '#172b4d'}}>{group.title}</span>
                                     <div className="group-list-headr-btns" style={{color: group.style?.color || '#172b4d'}}>
@@ -807,11 +803,10 @@ export function BoardDetails() {
                                     </div>
                                 </div>
 
-                            <TaskList toggleLargeLabels = {toggleLargeLabels} largeLabels = {largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}/>
+                                <TaskList toggleLargeLabels={toggleLargeLabels} largeLabels={largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}/>
 
 
-                              </div>
-
+                            </div>
 
 
                         })}

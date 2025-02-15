@@ -1,20 +1,10 @@
-import { useNavigate } from "react-router"
+
+
+import {useNavigate} from "react-router"
 
 
 export function AppHeader() {
     const navgite = useNavigate()
-    // const user = useSelector(storeState => storeState.userModule.user)
-    // const navigate = useNavigate()
-
-    // async function onLogout() {
-    // 	try {
-    // 		await logout()
-    // 		navigate('/')
-    // 		showSuccessMsg(`Bye now`)
-    // 	} catch (err) {
-    // 		showErrorMsg('Cannot logout')
-    // 	}
-    // }
 
     return (
         <header className="board-index-header">
@@ -24,10 +14,10 @@ export function AppHeader() {
                 <div className="just-flex just-flex-more center-vertical">
                     {/* <button className="hamburger nav-highlight-hint">☰</button> */}
                     <div className="logo nav-highlight-hint">
-                        <img className="dots" src="dots.svg" />
+                        <img className="dots" src="dots.svg"/>
                     </div>
                     <div className="logo nav-highlight-hint" onClick={() => navgite('/')}>
-                        <img className="main-logo" src="logo-not-moving.gif" />
+                        <img className="main-logo" src="logo-not-moving.gif"/>
                     </div>
 
                     <div className="dropdown-menu nav-highlight-hint">

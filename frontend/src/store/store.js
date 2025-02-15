@@ -1,11 +1,12 @@
 
 
-import { userReducer } from './reducers/user.reducer'
-import { boardReducer } from './reducers/board.reducer'
+import {userReducer} from './reducers/user.reducer'
+import {boardReducer} from './reducers/board.reducer'
 
 
-import { loadUsers, loadUser, removeUser, login, signup, logout, getEmptyUser } from './actions/user.actions'
-import { loadBoards, loadBoard, addBoard, updateBoard, removeBoard, getEmptyBoard, getRandomBoard, getEmptyTask, getEmptyGroup } from './actions/board.actions'
+import {loadUsers, loadUser, removeUser, login, signup, logout, getEmptyUser} from './actions/user.actions'
+import {loadBoards, loadBoard, addBoard, updateBoard, removeBoard, getEmptyBoard, getRandomBoard, getEmptyTask, getEmptyGroup} from './actions/board.actions'
+
 
 export {
     // users
@@ -21,7 +22,7 @@ export {
     getRandomBoard,
 }
 
-import { legacy_createStore as createStore, combineReducers } from 'redux'
+import {legacy_createStore as createStore, combineReducers} from 'redux'
 
 const rootReducer = combineReducers({
     userModule: userReducer,
