@@ -157,7 +157,8 @@ function getRandomGroups() {
             title: random.lorem(random.randint(1,3)),
             archivedAt: random.choice([null, random.date('2022-01-01','2023-12-31').getTime()]),
             tasks: Array.from({length: tasksCount}, getRandomTask),
-            style
+            style,
+            watched: random.choice([true,false])
         }
     })
 }
