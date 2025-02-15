@@ -19,6 +19,7 @@ import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard
 
 import GoogleMapReact from 'google-map-react';
 import {TaskList} from "../cmps/TaskList.jsx"
+import { GroupHeader } from "../cmps/GroupHeader.jsx";
 
 export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
     const [center, setCenter] = useState({lat: lat, lng: lng})
@@ -791,18 +792,7 @@ export function BoardDetails() {
 
                             // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>
                             return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
-                                <div className="list-header just-flex">
-                                    <span style={{color: group.style?.color || '#172b4d'}}>{group.title}</span>
-                                    <div className="group-list-headr-btns" style={{color: group.style?.color || '#172b4d'}}>
-                                        {/*<i className="fa-regular fa-arrows-h"></i>*/}
-                                        <i className="fa-regular fa-compress-alt" style={{
-                                            transform: "translateY(-0px) translateX(-0px) rotate(45deg) scale(1.2) "
-                                        }}></i>
-
-                                        <i className="fa-regular fa-ellipsis-h"></i>
-                                    </div>
-                                </div>
-
+                                <GroupHeader group={group}/>
                                 <TaskList toggleLargeLabels={toggleLargeLabels} largeLabels={largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}/>
 
 

@@ -58,7 +58,8 @@ export function getEmptyGroup() {
     return {
         id:  makeId(),
         title: '',
-        tasks: []
+        tasks: [],
+        style: {backgroundColor: null, color: "#000000"}
     }
 }
 
