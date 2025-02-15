@@ -2514,3 +2514,162 @@ label {
 .card-info span {
     color: #44546f;
 }
+
+
+.edit-label-content {
+    padding: 0 12px 12px;
+}
+
+.back-btn {
+    border: none;
+    background: none;
+    padding: 8px;
+    color: #44546f;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.back-btn:hover {
+    background-color: #f4f5f7;
+    color: #172b4d;
+}
+
+.label-preview {
+    height: 32px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+}
+
+.title-section {
+    margin-bottom: 16px;
+}
+
+.title-section label {
+    display: block;
+    color: #44546f;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.title-input {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #dfe1e6;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #172b4d;
+}
+
+.title-input:focus {
+    border-color: #388bff;
+    outline: none;
+}
+
+.colors-section {
+    margin-bottom: 16px;
+}
+
+.colors-section label {
+    display: block;
+    color: #44546f;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.color-btn {
+    height: 32px;
+    width: 100%;
+    padding-bottom: 100%;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+}
+
+.color-btn:hover::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 2px solid #388bff;
+    border-radius: 5px;
+}
+
+.color-btn.selected::after {
+
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 2px solid #388bff;
+    border-radius: 5px;
+}
+
+.remove-color-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    padding: 6px 12px;
+    background: none;
+    background-color: #f0f1f4;
+    border: none;
+    border-radius: 3px;
+    color: #44546f;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.remove-color-btn:hover {
+    background-color: #f4f5f7;
+    color: #172b4d;
+}
+
+.label-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.picker-popup .save-btn,
+.picker-popup .delete-btn {
+    flex: 1;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.picker-popup .save-btn {
+    background-color: #0052cc;
+    color: white;
+}
+
+.picker-popup .save-btn:hover {
+    background-color: #0047b3;
+}
+
+.picker-popup .delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.picker-popup .delete-btn:hover {
+    background-color: #c82333;
+}

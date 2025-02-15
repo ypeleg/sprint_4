@@ -115,15 +115,12 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     const [showPickerCopyCard, setShowPickerCopyCard] = useState(false)
     const [showPickerMirrorCard, setShowPickerMirrorCard] = useState(false)
     const [showPickerShareCard, setShowPickerShareCard] = useState(false)
+    const [showPickerChangeALabel, setShowPickerChangeALabel] = useState(false)
 
     const [showPickerUnderConstruction, setShowPickerUnderConstruction] = useState(false)
 
-
-
     const [pickerTop, setPickerTop] = useState('0px')
     const [pickerLeft, setPickerLeft] = useState('0px')
-
-
 
     function hidePicker(ev) {
         ev.stopPropagation()
@@ -141,6 +138,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
         setShowPickerMirrorCard(false)
         setShowPickerShareCard(false)
         setShowPickerUnderConstruction(false)
+        setShowPickerChangeALabel(false)
     }
 
     function movePickerTo(ev) {
@@ -212,6 +210,22 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
             .then(() => onClose())
             .catch(err => console.error(err))
     }
+
+
+
+    const [cardLabels, setCardLabels] = useState(taskToShow.labels || []);
+
+    function onToggleLabel(label) {
+        setCardLabels(prev => {
+            const isAlreadyAssigned = prev.some(l => l.color === label.color);
+            if (isAlreadyAssigned) {
+                return prev.filter(l => l.color !== label.color);
+            } else {
+                return [...prev, label];
+            }
+        });
+    }
+
 
 
 
@@ -332,7 +346,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                                             movePickerTo(event)
                                                             setShowPickerLabels(true)
                                                         }}>
-                                                <i className="fa-regular fa-plus"></i></button>
+                                                    <i className="fa-regular fa-plus"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -692,13 +706,15 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                         hidePicker(event)
                                         movePickerTo(event)
                                         setShowPickerUnderConstruction(true)
-                                    }}><i className="fa-regular fa-file-alt"></i> Make template</button>
+                                    }}><i className="fa-regular fa-file-alt"></i> Make template
+                            </button>
                             <button className="sidebar-btn"
                                     onClick={(event) => {
                                         hidePicker(event)
                                         movePickerTo(event)
                                         setShowPickerUnderConstruction(true)
-                                    }}><i className="fa-regular fa-archive"></i> Archive</button>
+                                    }}><i className="fa-regular fa-archive"></i> Archive
+                            </button>
                             <button className="sidebar-btn"
                                     onClick={(event) => {
                                         hidePicker(event)
@@ -784,18 +800,126 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 </div>
             </div>
 
-
-            {/* Labels Picker */}
             <div className="picker-popup" style={{
                 top: pickerTop,
                 left: pickerLeft,
-                display: (showPickerLabels) ? 'block' : 'none'
+                display: (showPickerChangeALabel) ? 'block' : 'none',
+                width: '304px'
             }}>
                 <div className="picker-header">
-                    <h3>Labels</h3>
+                    <button className="back-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C6.90237 12.3166 6.90237 11.6834 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                    <h3>Edit label</h3>
                     <button className="task-modal-close" onClick={hidePicker}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div className="edit-label-content">
+                    <div className="label-preview" style={{backgroundColor: '#f5cd47'}}></div>
+
+                    <div className="title-section">
+                        <label>Title</label>
+                        <input type="text" className="title-input"/>
+                    </div>
+
+                    <div className="colors-section">
+                        <label>Select a color</label>
+                        <div className="color-grid">
+                            <button className="color-btn" style={{backgroundColor: '#4BCE97'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#F5CD47'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#FAA53D'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#F87168'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#9F8FEF'}}></button>
+
+                            <button className="color-btn" style={{backgroundColor: '#2ABB7F'}}></button>
+                            <button className="color-btn selected" style={{backgroundColor: '#E6C60D'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#E67305'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#E5484D'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#8777D9'}}></button>
+
+                            <button className="color-btn" style={{backgroundColor: '#1F845A'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#946F00'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#B54D03'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#BF2600'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#6E5DC6'}}></button>
+
+                            <button className="color-btn" style={{backgroundColor: '#8CD4F5'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#79E2F2'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#7BC86C'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#FF8ED4'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#6B778C'}}></button>
+
+                            <button className="color-btn" style={{backgroundColor: '#5BA4CF'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#00C2E0'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#61BD4F'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#FF78CB'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#505F79'}}></button>
+
+                            <button className="color-btn" style={{backgroundColor: '#0747A6'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#0079BF'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#519839'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#CD519D'}}></button>
+                            <button className="color-btn" style={{backgroundColor: '#172B4D'}}></button>
+                        </div>
+
+                        <button className="remove-color-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
+                            </svg>
+                            Remove color
+                        </button>
+                    </div>
+
+                    <div className="label-actions">
+                        <button className="save-btn">Save</button>
+                        <button className="delete-btn">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+
+            {/* Labels Picker */}
+            <div
+                className="picker-popup"
+                style={{
+                    top: pickerTop,
+                    left: pickerLeft,
+                    display: showPickerLabels ? 'block' : 'none',
+                }}
+            >
+                <div className="picker-header">
+                    <h3>Labels</h3>
+                    <button className="task-modal-close" onClick={hidePicker}>
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M10.5858 12L5.29289 6.70711C4.90237
+                                  6.31658 4.90237 5.68342 5.29289 5.29289C5.68342
+                                  4.90237 6.31658 4.90237 6.70711 5.29289L12
+                                  10.5858L17.2929 5.29289C17.6834 4.90237
+                                  18.3166 4.90237 18.7071 5.29289C19.0976
+                                  5.68342 19.0976 6.31658 18.7071 6.70711L13.4142
+                                  12L18.7071 17.2929C19.0976 17.6834 19.0976
+                                  18.3166 18.7071 18.7071C18.3166 19.0976
+                                  17.6834 19.0976 17.2929 18.7071L12
+                                  13.4142L6.70711 18.7071C6.31658 19.0976
+                                  5.68342 19.0976 5.29289 18.7071C4.90237
+                                  18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z"
+                                fill="currentColor"
+                            />
                         </svg>
                     </button>
                 </div>
@@ -807,79 +931,63 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 <div>
                     <h4>Labels</h4>
                     <div className="labels-list">
-                        <label className="label-item">
-                            <div className="label-checkbox">
-                                <input type="checkbox" checked/>
-                            </div>
-                            <div className="label-color green"></div>
-                            <button className="edit-label">
-                                <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M7.82034 14.4893L9.94134 16.6103L18.4303 8.12131L16.3093 6.00031H16.3073L7.82034 14.4893ZM17.7233 4.58531L19.8443 6.70731C20.6253 7.48831 20.6253 8.7543 19.8443 9.53531L10.0873 19.2933L5.13734 14.3433L14.8943 4.58531C15.2853 4.19531 15.7973 4.00031 16.3093 4.00031C16.8203 4.00031 17.3323 4.19531 17.7233 4.58531ZM5.20094 20.4097C4.49794 20.5537 3.87694 19.9327 4.02094 19.2297L4.80094 15.4207L9.00994 19.6297L5.20094 20.4097Z" fill="currentColor"></path>
-                                </svg>
-                            </button>
-                        </label>
-                        <label className="label-item">
-                            <div className="label-checkbox">
-                                <input type="checkbox"/>
-                            </div>
-                            <div className="label-color yellow"></div>
-                            <button className="edit-label">
-                                <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M7.82034 14.4893L9.94134 16.6103L18.4303 8.12131L16.3093 6.00031H16.3073L7.82034 14.4893ZM17.7233 4.58531L19.8443 6.70731C20.6253 7.48831 20.6253 8.7543 19.8443 9.53531L10.0873 19.2933L5.13734 14.3433L14.8943 4.58531C15.2853 4.19531 15.7973 4.00031 16.3093 4.00031C16.8203 4.00031 17.3323 4.19531 17.7233 4.58531ZM5.20094 20.4097C4.49794 20.5537 3.87694 19.9327 4.02094 19.2297L4.80094 15.4207L9.00994 19.6297L5.20094 20.4097Z" fill="currentColor"></path>
-                                </svg>
-                            </button>
-                        </label>
-                        <label className="label-item">
-                            <div className="label-checkbox">
-                                <input type="checkbox"/>
-                            </div>
-                            <div className="label-color orange"></div>
-                            <button className="edit-label">
-                                <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M7.82034 14.4893L9.94134 16.6103L18.4303 8.12131L16.3093 6.00031H16.3073L7.82034 14.4893ZM17.7233 4.58531L19.8443 6.70731C20.6253 7.48831 20.6253 8.7543 19.8443 9.53531L10.0873 19.2933L5.13734 14.3433L14.8943 4.58531C15.2853 4.19531 15.7973 4.00031 16.3093 4.00031C16.8203 4.00031 17.3323 4.19531 17.7233 4.58531ZM5.20094 20.4097C4.49794 20.5537 3.87694 19.9327 4.02094 19.2297L4.80094 15.4207L9.00994 19.6297L5.20094 20.4097Z" fill="currentColor"></path>
-                                </svg>
-                            </button>
-                        </label>
-                        <label className="label-item">
-                            <div className="label-checkbox">
-                                <input type="checkbox"/>
-                            </div>
-                            <div className="label-color red"></div>
-                            <button className="edit-label">
-                                <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M7.82034 14.4893L9.94134 16.6103L18.4303 8.12131L16.3093 6.00031H16.3073L7.82034 14.4893ZM17.7233 4.58531L19.8443 6.70731C20.6253 7.48831 20.6253 8.7543 19.8443 9.53531L10.0873 19.2933L5.13734 14.3433L14.8943 4.58531C15.2853 4.19531 15.7973 4.00031 16.3093 4.00031C16.8203 4.00031 17.3323 4.19531 17.7233 4.58531ZM5.20094 20.4097C4.49794 20.5537 3.87694 19.9327 4.02094 19.2297L4.80094 15.4207L9.00994 19.6297L5.20094 20.4097Z" fill="currentColor"></path>
-                                </svg>
-                            </button>
-                        </label>
-                        <label className="label-item">
-                            <div className="label-checkbox">
-                                <input type="checkbox"/>
-                            </div>
-                            <div className="label-color purple"></div>
-                            <button className="edit-label">
-                                <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M7.82034 14.4893L9.94134 16.6103L18.4303 8.12131L16.3093 6.00031H16.3073L7.82034 14.4893ZM17.7233 4.58531L19.8443 6.70731C20.6253 7.48831 20.6253 8.7543 19.8443 9.53531L10.0873 19.2933L5.13734 14.3433L14.8943 4.58531C15.2853 4.19531 15.7973 4.00031 16.3093 4.00031C16.8203 4.00031 17.3323 4.19531 17.7233 4.58531ZM5.20094 20.4097C4.49794 20.5537 3.87694 19.9327 4.02094 19.2297L4.80094 15.4207L9.00994 19.6297L5.20094 20.4097Z" fill="currentColor"></path>
-                                </svg>
-                            </button>
-                        </label>
-                        <label className="label-item">
-                            <div className="label-checkbox">
-                                <input type="checkbox"/>
-                            </div>
-                            <div className="label-color blue"></div>
-                            <button className="edit-label">
-                                <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M7.82034 14.4893L9.94134 16.6103L18.4303 8.12131L16.3093 6.00031H16.3073L7.82034 14.4893ZM17.7233 4.58531L19.8443 6.70731C20.6253 7.48831 20.6253 8.7543 19.8443 9.53531L10.0873 19.2933L5.13734 14.3433L14.8943 4.58531C15.2853 4.19531 15.7973 4.00031 16.3093 4.00031C16.8203 4.00031 17.3323 4.19531 17.7233 4.58531ZM5.20094 20.4097C4.49794 20.5537 3.87694 19.9327 4.02094 19.2297L4.80094 15.4207L9.00994 19.6297L5.20094 20.4097Z" fill="currentColor"></path>
-                                </svg>
-                            </button>
-                        </label>
+                        {taskToShow.board?.labels?.map((label) => {
+                            const isChecked = cardLabels.some((l) => l.color === label.color);
+                            return (
+                                <label className="label-item" key={label.color}>
+                                    <div className="label-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            checked={isChecked}
+                                            onChange={() => onToggleLabel(label)}
+                                        />
+                                    </div>
+                                    <div className={`label-color`}
+                                         style={{backgroundColor: label.color}}
+                                    />
+                                    <button className="edit-label"
+                                            onClick={(event) => {
+                                                hidePicker(event)
+                                                movePickerTo(event)
+                                                setShowPickerChangeALabel(true)
+                                            }}
+                                    >
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            role="presentation"
+                                            focusable="false"
+                                            viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                clipRule="evenodd"
+                                                d="M7.82034 14.4893L9.94134 16.6103L18.4303
+                                                  8.12131L16.3093 6.00031H16.3073L7.82034
+                                                  14.4893ZM17.7233 4.58531L19.8443
+                                                  6.70731C20.6253 7.48831 20.6253 8.7543
+                                                  19.8443 9.53531L10.0873
+                                                  19.2933L5.13734 14.3433L14.8943
+                                                  4.58531C15.2853 4.19531 15.7973
+                                                  4.00031 16.3093 4.00031C16.8203
+                                                  4.00031 17.3323 4.19531 17.7233
+                                                  4.58531ZM5.20094 20.4097C4.49794
+                                                  20.5537 3.87694 19.9327 4.02094
+                                                  19.2297L4.80094 15.4207L9.00994
+                                                  19.6297L5.20094 20.4097Z"
+                                                fill="currentColor"
+                                            />
+                                        </svg>
+                                    </button>
+                                </label>
+                            );
+                        })}
                     </div>
                 </div>
 
-
                 <button className="create-label-btn">Create a new label</button>
-                <div className="just-margin">
-                </div>
+                <div className="just-margin"></div>
                 <div className="color-blind-toggle">
                     <label>
                         <input type="checkbox"/>
@@ -888,6 +996,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 </div>
             </div>
 
+            {/* Checklists Picker */}
             <div className="picker-popup" style={{
                 top: pickerTop,
                 left: pickerLeft,
@@ -922,6 +1031,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 </div>
             </div>
 
+            {/* Dates Picker */}
             <div className="picker-popup" style={{
                 top: pickerTop,
                 left: pickerLeft,
@@ -999,6 +1109,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 </div>
             </div>
 
+            {/* Location Picker */}
             <div className="picker-popup" style={{
                 top: pickerTop,
                 left: pickerLeft,
@@ -1021,6 +1132,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 </div>
             </div>
 
+            {/* CustomBadge Picker */}
             <div className="picker-popup" style={{
                 top: pickerTop,
                 left: pickerLeft,
@@ -1085,6 +1197,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 </div>
             </div>
 
+            {/* Dates Picker */}
             <div className="picker-popup date-picker-popup" style={{
                 top: pickerTop,
                 left: pickerLeft,
@@ -1209,7 +1322,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 </div>
             </div>
 
-
+            {/* MoveCards Picker */}
             <div className="picker-popup" style={{
                 top: pickerTop,
                 left: pickerLeft,
@@ -1257,6 +1370,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 </div>
             </div>
 
+            {/* CopyCards Picker */}
             <div className="picker-popup" style={{
                 top: pickerTop,
                 left: pickerLeft,
@@ -1330,7 +1444,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 </div>
             </div>
 
-
+            {/* MirrorCards Picker */}
             <div className="picker-popup" style={{
                 top: pickerTop,
                 left: pickerLeft,
@@ -1428,7 +1542,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 </div>
             </div>
 
-
+            {/* Construction Picker */}
             <div className="picker-popup" style={{
                 top: pickerTop,
                 left: pickerLeft,
@@ -1540,9 +1654,9 @@ export function BoardDetails() {
             {/* <button className="open-chat-btn" onClick={togglePopup}>💬</button> */}
             {isPopupShown && (!!taskToShow) && <>
 
-                <div className="popup" ref={popupRef} onClick={closePopupOnlyIfClickedOutOfIt} >
+                <div className="popup" ref={popupRef} onClick={closePopupOnlyIfClickedOutOfIt}>
 
-                    <TaskModal taskToShow={taskToShow} onClose={togglePopup} popupRef = {popupRef}/>
+                    <TaskModal taskToShow={taskToShow} onClose={togglePopup} popupRef={popupRef}/>
 
                 </div>
                 <div className="popup-backdrop" onClick={togglePopup}></div>
