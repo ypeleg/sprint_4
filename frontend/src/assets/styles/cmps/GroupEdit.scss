@@ -52,11 +52,13 @@
         }
 
         .color-picker {
+            border-top: 1px solid #091e4224;
+            margin-top: 2px;
             .color-picker-header {
                 display: flex;
                 justify-content: start;
                 column-gap: 4px;
-
+                margin-top: 6px;
                 .title {
                     font-size: 12px;
                     font-weight: 600;

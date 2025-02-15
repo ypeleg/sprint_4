@@ -1,19 +1,22 @@
 import { useSelector } from "react-redux"
 import { updateBoard } from "../store/store"
+import { useState } from "react"
+import { CopyListForm } from "./CopyListForm"
 
 
 
-export function GroupEdit({ header, onSetGroupEdit,group }) {
+export function GroupEdit({ onSetCopyList,header, onSetGroupEdit,group }) {
     const board = useSelector(state => state.boardModule.board)
+    
     const loc = header.getBoundingClientRect()
     const inset = `${loc.top}px auto auto ${loc.right}px`
-
+   
     function changeColor({target}){
       const color = target.value
       group.style.backgroundColor = color
       updateBoard(board)
     }
-
+  
 
     return (
         <div 
@@ -25,7 +28,8 @@ export function GroupEdit({ header, onSetGroupEdit,group }) {
             <section className="edit-options">
                 <section className="first-actions">
                     <button>Add card</button>
-                    <button>Copy list</button>
+                    <button onClick={() => { onSetCopyList() ; onSetGroupEdit()}}>Copy list</button>
+                    
                     <button>Move list</button>
                     <button>Move all cards in this list</button>
                     <button>Sort by...</button>

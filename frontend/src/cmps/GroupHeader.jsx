@@ -1,11 +1,16 @@
 import { useRef, useState } from "react"
 import { GroupEdit } from "./GroupEdit"
+import { CopyListForm } from "./CopyListForm"
 
 export function GroupHeader({group}) {
     const elHeader = useRef()
     const [showGroupEdit,SetGroupEdit] = useState(false)
+    const [showCopyList,setCopyList] = useState(false)
     function onSetGroupEdit(){
         SetGroupEdit(!showGroupEdit)
+    }
+    function onSetCopyList(){
+        setCopyList(!showCopyList)
     }
     return (
         <div ref={elHeader} className="list-header just-flex">
@@ -18,7 +23,8 @@ export function GroupHeader({group}) {
 
                 <i onClick={onSetGroupEdit} className="fa-regular fa-ellipsis-h"></i>
             </div>
-            {showGroupEdit&&<GroupEdit group={group} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
+            {showGroupEdit&&<GroupEdit onSetCopyList={onSetCopyList} group={group} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
+            {showCopyList&& <CopyListForm group={group} onSetCopyList={onSetCopyList} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
         </div>
 
     )
