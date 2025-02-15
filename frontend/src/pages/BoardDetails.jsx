@@ -3,12 +3,12 @@
 import {useParams} from "react-router"
 import {useSelector} from "react-redux"
 import {SideBar} from "../cmps/SideBar"
+import {useNavigate} from "react-router"
 import {AddGroup} from "../cmps/AddGroup";
 import {AppHeader} from "../cmps/AppHeader.jsx"
 import {BoardHeader} from "../cmps/BoardHeader.jsx";
 import React, {useRef, useEffect, useState} from "react"
-import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard} from "../store/store.js"
-
+import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store} from "../store/store.js"
 
 // data changes:
 // badges: give the task "all the possible options for a badge"
@@ -616,8 +616,13 @@ export function BoardDetails() {
     // taskService.query().then(res => console.log(res))
 
     const boardToShow = useSelector(state => state.boardModule.board)
+    // const allBoards = useSelector(state => state.boardModule.boards)
+
     const [taskToShow, setTaskToShow] = useState(null)
     const {boardId} = useParams()
+    const navigate = useNavigate()
+
+
     // console.log(boardId)
 
 
@@ -628,10 +633,23 @@ export function BoardDetails() {
         onLoadBoard()
     }, [])
 
-    async function onLoadBoard() {
-        await loadBoard(boardId).then(() => {
+    function onLoadBoard() {
+        loadBoard(boardId).then(() => {
             setTaskToShow(null)
         })
+        // }).catch(err => {
+        //     // just load the first board
+        //     loadBoards().then(() => {
+        //         // const firstBoard = store.getState().boardModule.boards[0].id
+        //
+        //         const firstBoard = allBoards
+        //         console.log('firstBoard', firstBoard)
+        //         navigate(`/${firstBoard}`)
+        //         loadBoard(firstBoard).then(() => {
+        //             setTaskToShow(null)
+        //         })
+        //     })
+        // })
     }
 
     async function onLoadTask(task, taskList, group, currentBoard) {
@@ -790,7 +808,7 @@ export function BoardDetails() {
                         {boardToShow.groups.map(group => {
 
                             // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>
-                            return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
+                            return <div key={group.id} className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
                                 <div className="list-header just-flex">
                                     <span style={{color: group.style?.color || '#172b4d'}}>{group.title}</span>
                                     <div className="group-list-headr-btns" style={{color: group.style?.color || '#172b4d'}}>

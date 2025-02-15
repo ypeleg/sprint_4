@@ -105,12 +105,12 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group, largeL
 
                     <div className="task-users">
 
-                        {(!!task.memberIds) && (<>
+                        {(!!task.memberIds) && (<div key = {task.id} className="task-user-icons">
                             {task.memberIds.map(member => {
 
                                 return <div key={member._id} className="task-user-icon">
-                                    <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png"/>
-                                </div>
+                                            <img key={'img' + member._id} src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png"/>
+                                        </div>
 
                                 // <div className="task-user-icon">
                                 //     <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png" />
@@ -123,7 +123,7 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group, largeL
                                 // </div>
 
                             })}
-                        </>)}
+                        </div>)}
                     </div>
                    {showQuickEdit&& <QuickEdit pos={editpos.current}/>}
                 </div>)
