@@ -93,4 +93,30 @@
             border-radius: 2px;
         }
     }
+
+    .side-bar-sec-items {
+        font-style: italic;
+    }
+}
+
+
+.side-bar-item-third i {
+    display: none;
+}
+
+.side-bar-item-third:hover i {
+    display: inline;
+}
+
+.side-bar-item-third .fa-solid-fr {
+    display: inline;
+    font-weight: bold;
+}
+
+.side-bar-item span {
+    display: flex;
+    align-items: center;
+    svg {
+        margin-right: 0.4em;
+    }
 }

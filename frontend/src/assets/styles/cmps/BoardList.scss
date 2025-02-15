@@ -28,7 +28,36 @@
     align-items: center;
 
     .header-group {
+
+        h3 {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            font-weight: bold;
+        }
+        button>svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        button:nth-last-child(2) {
+            background-color: #685e66;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        
+
         display: flex;
+        align-items: center;
+        gap: 0.4em;
 
         .dots-at-end {
             height: 16px;

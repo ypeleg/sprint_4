@@ -40,9 +40,14 @@ export function AppHeader() {
                         <i className="fa-regular fa-chevron-down"></i>
                     </div>
 
-                    <div id="board-index-plus" className="dropdown-menu nav-highlight-hint board-index-plus">
-                        <i className="fa-regular fa-plus"></i>
+                    {/*<div id="board-index-plus" className="dropdown-menu nav-highlight-hint board-index-plus">*/}
+                    {/*    <i className="fa-regular fa-plus"></i>*/}
+                    {/*</div>*/}
+
+                    <div className="highlighted-btn nav-highlight-hint">
+                        <span>Create</span>
                     </div>
+
                 </div>
                 <div className="just-flex and-center">
                     <button className="days-left just-flex">
