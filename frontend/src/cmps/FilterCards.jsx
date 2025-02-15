@@ -36,7 +36,7 @@ export function FilterCards({ el, setShowFilter }) {
     console.log(filterBy)
     return (
         <div tabIndex="0" className="filter-cards-container"  >
-            <div>
+            <div className="filter-content">
                 <header className="filter-header">
 
                     <div className="filter-title">Filter</div>

@@ -5,7 +5,10 @@
     box-shadow: 0px 8px 12px #091E4226, 0px 0px 1px #091E424F, 0px 8px 12px #091e4226, 0px 0px 1px #0103064f;
     inset: 59.4px auto auto 584.4px;
     border-radius: 8px;
+    .filter-content{
+        z-index: 1;
 
+    }
     .filter-header {
         display: flex;
         justify-content: flex-end;

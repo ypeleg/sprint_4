@@ -3,6 +3,7 @@
 import {store} from '../store'
 import {boardService} from '../../services/board'
 import {ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_FILTER_BY} from '../reducers/board.reducer.js'
+import { makeId } from '../../services/util.service.js'
 
 
 export function getRandomBoard() {
@@ -33,6 +34,7 @@ export function getEmptyBoard() {
 
 export function getEmptyTask() {
     return {
+        id:  makeId(),
         title: '',
         status: '',
         priority: '',
@@ -54,6 +56,7 @@ export function getEmptyTask() {
 
 export function getEmptyGroup() {
     return {
+        id:  makeId(),
         title: '',
         tasks: []
     }
