@@ -31,6 +31,35 @@ export function getEmptyBoard() {
     }
 }
 
+
+export function getEmptyTask() {
+    return {
+        title: '',
+        status: '',
+        priority: '',
+        dueDate: '',
+        description: '',
+        comments: [],
+        checklists: [],
+        memberIds: [],
+        labelIds: [],
+        byMember: '',
+        style: {
+            backgroundColor: '',
+            backgroundImage: ''
+        },
+        badges: [],
+        isUserWatching: false
+    }
+}
+
+export function getEmptyGroup() {
+    return {
+        title: '',
+        tasks: []
+    }
+}
+
 export async function loadBoards(filterBy) {
     try {
         const boards = await boardService.query(filterBy)

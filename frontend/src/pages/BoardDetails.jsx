@@ -4,7 +4,6 @@
 import { useParams } from "react-router"
 import { useSelector } from "react-redux"
 import { SideBar } from "../cmps/SideBar"
-import { loadTask } from "../store/store"
 import { AppHeader } from "../cmps/AppHeader.jsx"
 import { BoardHeader } from "../cmps/BoardHeader.jsx";
 import React, { useRef, useEffect, useState } from "react"
