@@ -10,6 +10,8 @@ import {BoardHeader} from "../cmps/BoardHeader.jsx";
 import React, {useRef, useEffect, useState} from "react"
 import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store} from "../store/store.js"
 
+
+
 // data changes:
 // badges: give the task "all the possible options for a badge"
 // change memberIds to members
@@ -110,19 +112,70 @@ export function TaskModal({taskToShow, onClose}) {
         dateInputRef.current?.showPicker()
     }
 
-
-    ////////////////////////
-    // TODO: IMPLEMENT
     function saveTask() {
-        // TODO: saves the ENTIRE states back to the task in the store
+        const boardCopy = {
+            ...taskToShow.board,
+            groups: taskToShow.board.groups.map(g => ({
+                ...g,
+                tasks: g.tasks.map(t => {
+                    const { group, board, taskList, ...rest } = t
+                    return { ...rest }
+                })
+            }))
+        }
+        const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id)
+        if (groupIdx === -1) return
+        const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id)
+        if (taskIdx === -1) return
+        const updatedTask = {
+            ...taskToShow,
+            title: cardTitle,
+            description,
+            isWatching,
+            style: {
+                ...taskToShow.style,
+                backgroundImage: coverUrl || null
+            },
+            attachments,
+            checklists,
+            activity: activityLog,
+            badges,
+            members,
+            dueDate: date,
+            location,
+            group: {
+                ...taskToShow.group,
+                title: listName
+            }
+        }
+        const { group, board, taskList, ...cleanTask } = updatedTask
+        boardCopy.groups[groupIdx].tasks[taskIdx] = { ...cleanTask }
+        updateBoard(boardCopy)
+            .then(() => onClose())
+            .catch(err => console.error(err))
     }
 
-    // TODO: IMPLEMENT
-    ////////////////////////
+
+
+
+
+
+    // return (
+    //     <div className="task-modal">
+    //         {/* ... */}
+    //         <button onClick={saveTask}>Save</button>
+    //         {/* ... */}
+    //     </div>
+    // )
+
+
 
 
     return (
         <div className="task-modal">
+
+
+
 
             {coverUrl ? (<div
                 className="task-cover"
@@ -139,6 +192,7 @@ export function TaskModal({taskToShow, onClose}) {
             }
 
             <div className="task-modal-content">
+                <button onClick={saveTask}>---DEBUG---Save---</button>
                 <div className="task-modal-header">
                     <div className="task-left">
                         <div className="task-icon status-icon" title="Card is complete">
@@ -263,7 +317,8 @@ export function TaskModal({taskToShow, onClose}) {
                                 </div>
                             }
 
-                        </div> {/* closing div for: upper bar - members, notifications, due date  */}
+                        </div>
+                        {/* closing div for: upper bar - members, notifications, due date  */}
 
                         {/* Description */}
                         <div className="task-section">
@@ -348,12 +403,12 @@ export function TaskModal({taskToShow, onClose}) {
                                 <div className="task-attachment-row inner-component-left-padding">
                                     {(attachments.map(attachment => {
                                         return <div key={attachment.id} className="just-flex">
-                                                    <button className="attachment-extention">PNG</button>
-                                                    <div className="file-info">
-                                                        <h5>{attachment.path}</h5>
-                                                        <label>{new Date(attachment.date).toLocaleDateString()}</label>
-                                                    </div>
-                                               </div>
+                                            <button className="attachment-extention">PNG</button>
+                                            <div className="file-info">
+                                                <h5>{attachment.path}</h5>
+                                                <label>{new Date(attachment.date).toLocaleDateString()}</label>
+                                            </div>
+                                        </div>
                                     }))}
                                 </div>
                             </div>
@@ -432,67 +487,67 @@ export function TaskModal({taskToShow, onClose}) {
                         {/* Activity */}
                         {(activityLog.length || showActivity) &&
                             <div className="task-section">
-                            <div className="section-icon-bit-down">
-                            </div>
-                            <div className="flex-space-between">
-                                <div className="section-icon-title">
-                                    <i className="fa-regular fa-list"></i>
-                                    <h3>Activity</h3>
+                                <div className="section-icon-bit-down">
                                 </div>
-                                <button className="delete-btn">Hide Details</button>
-                            </div>
-                            <ul className="task-activity-list">
-                                <li key="1">
-                                    <div className="just-flex">
-                                        <div className="user-circle">
-                                            YP
-                                        </div>
-                                        <div className="flex-col input-container">
-                                            <input className="activity-input" type="text" placeholder="Write a comment..."/>
-                                        </div>
+                                <div className="flex-space-between">
+                                    <div className="section-icon-title">
+                                        <i className="fa-regular fa-list"></i>
+                                        <h3>Activity</h3>
                                     </div>
-                                </li>
-                                {activityLog.map((entry, idx) => (
-
-                                    <li key={idx}>
+                                    <button className="delete-btn">Hide Details</button>
+                                </div>
+                                <ul className="task-activity-list">
+                                    <li key="1">
                                         <div className="just-flex">
-                                            {!(entry?.byMember?.imgUrl) &&
-                                                <div className="user-circle">
-                                                    {entry?.byMember?.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{entry?.byMember?.fullname?.split(' ')[1][0]?.toUpperCase() || ''}
-                                                </div>}
-                                            {(entry?.byMember?.imgUrl) &&
-                                                <div className="user-circle"
-                                                     style={{
-                                                         backgroundImage: `url(${entry.byMember.imgUrl})`
-                                                     }}>
-                                                </div>}
-                                            <div className="flex-col">
-                                                <div className="text-size-activity">
-                                                    {/* <span className="full-name">yam peleg</span> attached <span className="file-name">roi.png</span> to this card */}
-                                                    <span className="full-name">{entry?.byMember?.fullname}</span> {entry.title}
-                                                </div>
-                                                <div className="text-size-activity-2">
-                                                    {new Date(entry.createdAt).toLocaleDateString()}
-                                                </div>
+                                            <div className="user-circle">
+                                                YP
+                                            </div>
+                                            <div className="flex-col input-container">
+                                                <input className="activity-input" type="text" placeholder="Write a comment..."/>
                                             </div>
                                         </div>
                                     </li>
-                                ))}
-                            </ul>
-                        </div>
+                                    {activityLog.map((entry, idx) => (
+
+                                        <li key={idx}>
+                                            <div className="just-flex">
+                                                {!(entry?.byMember?.imgUrl) &&
+                                                    <div className="user-circle">
+                                                        {entry?.byMember?.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{entry?.byMember?.fullname?.split(' ')[1][0]?.toUpperCase() || ''}
+                                                    </div>}
+                                                {(entry?.byMember?.imgUrl) &&
+                                                    <div className="user-circle"
+                                                         style={{
+                                                             backgroundImage: `url(${entry.byMember.imgUrl})`
+                                                         }}>
+                                                    </div>}
+                                                <div className="flex-col">
+                                                    <div className="text-size-activity">
+                                                        {/* <span className="full-name">yam peleg</span> attached <span className="file-name">roi.png</span> to this card */}
+                                                        <span className="full-name">{entry?.byMember?.fullname}</span> {entry.title}
+                                                    </div>
+                                                    <div className="text-size-activity-2">
+                                                        {new Date(entry.createdAt).toLocaleDateString()}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         }
 
                     </div>
 
                     <div className="task-sidebar">
-                        <button className="sidebar-btn"><i className="fa-regular fa-user-plus"></i> Join</button>
-                        <button className="sidebar-btn"><i className="fa-regular fa-user"></i> Members</button>
-                        <button className="sidebar-btn"><i className="fa-regular fa-tag"></i> Labels</button>
-                        <button className="sidebar-btn"><i className="fa-regular fa-check-square"></i> Checklist</button>
-                        <button className="sidebar-btn"><i className="fa-regular fa-calendar-alt"></i> Dates</button>
-                        <button className="sidebar-btn"><i className="fa-regular fa-paperclip"></i> Attachment</button>
-                        <button className="sidebar-btn"><i className="fa-regular fa-map-marker-alt"></i> Location</button>
-                        <button className="sidebar-btn"><i className="fa-regular fa-th-list"></i> Custom Fields</button>
+                        <button className="sidebar-btn" onClick={() => setShowMembers(!showMembers)}><i className="fa-regular fa-user-plus"></i> Join</button>
+                        <button className="sidebar-btn" onClick={() => setShowMembers(!showMembers)}><i className="fa-regular fa-user"></i> Members</button>
+                        <button className="sidebar-btn" onClick={() => setShowLabels(!showLabels)}><i className="fa-regular fa-tag"></i> Labels</button>
+                        <button className="sidebar-btn" onClick={() => setShowChecklist(!showChecklist)}><i className="fa-regular fa-check-square"></i> Checklist</button>
+                        <button className="sidebar-btn" onClick={() => setShowDate(!showDate)}><i className="fa-regular fa-calendar-alt"></i> Dates</button>
+                        <button className="sidebar-btn" onClick={() => setShowAttachments(!showAttachments)}><i className="fa-regular fa-paperclip"></i> Attachment</button>
+                        <button className="sidebar-btn" onClick={() => setShowMaps(!showMaps)}><i className="fa-regular fa-map-marker-alt"></i> Location</button>
+                        <button className="sidebar-btn" onClick={() => setShowCustomFields(!showCustomFields)}><i className="fa-regular fa-th-list"></i> Custom Fields</button>
 
                         <h4 className="sidebar-subtitle">Actions</h4>
                         <button className="sidebar-btn"><i className="fa-regular fa-arrow-right"></i> Move</button>
