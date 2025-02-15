@@ -795,13 +795,15 @@ export function BoardDetails() {
                                     <span style={{color: group.style?.color || '#172b4d'}}>{group.title}</span>
                                     <div className="group-list-headr-btns" style={{color: group.style?.color || '#172b4d'}}>
                                         {/*<i className="fa-regular fa-arrows-h"></i>*/}
-                                        <i className="fa-regular fa-compress-alt" style={{
+                                        <i className="tooltip fa-regular fa-compress-alt" style={{
                                             transform: "translateY(-0px) translateX(-0px) rotate(45deg) scale(1.2) ",
                                             color: group.style?.color || '#172b4d'
-                                        }}></i>
+                                        }}
+                                        ></i>
 
-                                        <i className="fa-regular fa-ellipsis-h"
+                                        <i className="tooltip fa-regular fa-ellipsis-h"
                                         style={{color: group.style?.color || '#172b4d'}}
+                                           data-tip="List actions"
                                         ></i>
                                     </div>
                                 </div>
