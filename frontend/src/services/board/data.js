@@ -13,6 +13,18 @@ const STATUS_OPTIONS = ['inProgress','done','review','stuck','blocked']
 const PRIORITY_OPTIONS = ['low','medium','high']
 const CMP_ORDER_OPTIONS = ['StatusPicker','MemberPicker','DatePicker','SomeNewPicker','OtherPicker']
 
+export function getRandomLocation() {
+    const locations = [
+        { name: "Tel Aviv-Yafo", lat: 32.109333, lng: 34.855499, zoom: 11 },
+        { name: "New York City", lat: 40.7128, lng: -74.0060, zoom: 12 },
+        { name: "Paris", lat: 48.8566, lng: 2.3522, zoom: 12 },
+        { name: "Tokyo", lat: 35.6895, lng: 139.6917, zoom: 12 },
+        { name: "London", lat: 51.5074, lng: -0.1278, zoom: 12 },
+        { name: "Sydney", lat: -33.8688, lng: 151.2093, zoom: 12 }
+    ];
+    return random.choice(locations);
+}
+
 function getRandomAttachments() {
     const cnt = random.randint(0,3)
     return Array.from({length: cnt}, () => ({
@@ -101,7 +113,8 @@ function getRandomTask() {
         badges: getRandomBadges(),
         attachments: getRandomAttachments(),
         activity: getRandomActivity(),
-        isUserWatching: random.choice([true,false])
+        isUserWatching: random.choice([true,false]),
+        location: random.choice([null, null, null, getRandomLocation()])
     }
 }
 
@@ -132,6 +145,23 @@ function getColorFromBackgroundColor(bg) {
 }
 
 function getRandomGroups() {
+    const groupCount = random.randint(2,5)
+    return Array.from({length: groupCount}, () => {
+        const tasksCount = random.randint(3,8)
+        const backgroundColor = getRandomColor()
+        const style = { backgroundColor, color: getColorFromBackgroundColor(backgroundColor) }
+
+        return {
+            id: random.id(),
+            title: random.lorem(random.randint(1,3)),
+            archivedAt: random.choice([null, random.date('2022-01-01','2023-12-31').getTime()]),
+            tasks: Array.from({length: tasksCount}, getRandomTask),
+            style
+        }
+    })
+}
+
+function getRandomGroups1() {
     const groupCount = random.randint(2,5)
     return Array.from({length: groupCount}, () => {
         const tasksCount = random.randint(3,8)
