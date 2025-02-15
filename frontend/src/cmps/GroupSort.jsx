@@ -36,7 +36,7 @@ export function GroupSort({ onSetGroupEdit, onSetSort, group,header }) {
     }
 
     return (
-        <div className="copy-list-form" style={{ inset }}>
+        <div className="copy-list-form" style={{ inset,minHeight:'163px' }}>
             <div className="header">
                 <button onClick={() => { onSetSort(); onSetGroupEdit() }}>
 
