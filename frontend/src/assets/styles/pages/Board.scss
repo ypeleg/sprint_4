@@ -14,6 +14,8 @@
 }
 
 
+
+
 body {
     overflow-y: hidden;
     // overflow-y: scroll;
@@ -326,3 +328,12 @@ header input {
     background-color: rgba(0, 0, 0, 0.16);
 }
 
+
+
+.picker-popup .search-container input::after {
+    margin-top: 8px;
+}
+
+.member-item {
+    position: relative;
+}
