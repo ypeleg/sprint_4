@@ -61,7 +61,7 @@ export function GroupEdit({onSetMoveAll,group, onSetCopyList,header, onSetGroupE
                         <button value={'#e774bb'} onClick={changeColor} className="magenta"></button>
                         <button value={'#8590a2'} onClick={changeColor} className="gray"></button>
                     </div>
-                    <button className="remove-color"> X Remove color</button>
+                    <button onClick={changeColor} className="remove-color"> X Remove color</button>
                 </section>
             </section>
 
