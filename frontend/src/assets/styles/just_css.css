@@ -221,7 +221,7 @@
 }
 
 .task-modal-close:hover {
-    background: #fff
+    /*background: #fff*/
 }
 
 .task-modal-content {
@@ -244,7 +244,7 @@
 
 .task-title-section {
     display: flex;
-    width: 100%;
+    width: 80%;
     flex-direction: column
 }
 
@@ -614,14 +614,66 @@
 
 .task-modal-close {
     position: absolute;
-    top: 32px;
-    right: 32px;
-    border: 0;
-    background: 0 0;
-    font-size: 1.3rem;
+    top: 20px;
+    right: 20px;
+    border: none;
+    font-size: 1.0rem;
     cursor: pointer;
-    color: #6b778c;
-    background: #fff;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    margin: 0;
+    border-radius: 50%;
+    /*width: 24px;*/
+    /*height: 24px;*/
+    width: 50px;
+    height: 50px;
+}
+
+.task-modal-close svg {
+    mix-blend-mode: difference;
+    fill: currentColor;
+    stroke: currentColor;
+    /*width: 50px;*/
+    /*height: 50px;*/
+    width: 24px;
+    height: 24px;
+
+}
+
+.task-cover>.task-modal-close svg,
+.task-no-cover>.task-modal-close svg {
+    scale: 1.5;
+}
+
+.task-no-cover>.task-modal-close svg {
+    mix-blend-mode:unset;
+    color: #172b4d;
+}
+
+.task-no-cover>.task-modal-close:hover {
+    background: #e1e3e9;
+}
+
+.task-no-cover>.task-modal-close {
+    margin-top: -16px;
+    margin-right: -16px;
+}
+
+
+
+
+.task-modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+
+
+
+.task-modal-close svg{
+
 }
 
 .change-cover-btn {
@@ -643,9 +695,7 @@
 }
 
 
-.task-modal-close:hover {
-    color: #172b4d
-}
+
 
 .task-layout {
     display: flex;
@@ -748,7 +798,8 @@
 
 .section-icon-title>i {
     position: absolute;
-    font-size: 18px
+    font-size: 18px;
+    /*font-size: 24px;*/
 }
 
 .bit-down {
@@ -869,7 +920,7 @@ input.task-title {
     font-size: 1.3rem;
     font-weight: 600;
     border: 0;
-    width: 100%;
+    width: 80%;
     background: 0 0;
     outline: 0;
     margin-bottom: 4px;
@@ -1100,7 +1151,7 @@ input.task-title:focus {
 
 .task-description {
     /*background-color: #f0f1f4;*/
-    border-radius: 8px;
+    border-radius: 4px;
     font-weight: 600;
     background-color: #e2e4ea;
 }
@@ -1165,7 +1216,17 @@ input.task-title:focus {
 .sidebar-btn {
     display: flex;
     gap: 1em;
-    padding-inline: 14px
+    padding-inline: 14px;
+    align-items: center;
+    justify-content: start;
+
+
+}
+
+.sidebar-btn i {
+    padding: 0;
+    margin: 0;
+    /*font-size: 1.2em;*/
 }
 
 .task-modal svg {
@@ -3285,8 +3346,13 @@ img, a {
     opacity: 1 !important;
     transition: opacity 0.2s ease;
   }
-  
-[data-draggable-id] {
-    background: var(--ds-surface-sunken, #F5F6F8) !important;
-    box-shadow: var(--ds-shadow-overlay, 0 8px 12px rgba(0,0,0,0.1)) !important;
-  }
+
+.section-icon-title svg {
+    height: 24px;
+    width: 24px;
+}
+
+.task-no-cover {
+    position: relative;
+    z-index: 1;
+}
