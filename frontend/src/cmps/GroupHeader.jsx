@@ -16,11 +16,16 @@ export function GroupHeader({group}) {
     const [showMoveAll,setMoveAll] = useState(false)
     const [showSort,setSort] = useState(false)
     const [groupTitle,setGroupTitle] = useState(group.title)
+    const [showTitleEdit,setTitleEdit] = useState(false)
+    function onSetTitlEdit(){
+        setTitleEdit(!showTitleEdit)
+    }
     function onChangeGroupTitle({target}){
         setGroupTitle(target.value)
     }
     function saveGroupTitle(){
         group.title = groupTitle
+        onSetTitlEdit()
         updateBoard(boardToShow)
     }
     function onSetSort(){
@@ -39,9 +44,13 @@ export function GroupHeader({group}) {
 
         setMoveAll(!showMoveAll)
     }
+    
+        const height = ((groupTitle.length/20 * 20) + 32) + 'px'
+   
     return (
         <div ref={elHeader} className="list-header just-flex">
-            <input onChange={onChangeGroupTitle} onBlur={saveGroupTitle} className="change-header" style={{ color: group.style?.color || '#172b4d' }} value={groupTitle}/>
+           {!showTitleEdit&&<span style={{ color: group.style?.color || '#172b4d' }} onClick={onSetTitlEdit}>{groupTitle}</span>} 
+            {showTitleEdit&&<textarea style={{height}} onChange={onChangeGroupTitle} onBlur={saveGroupTitle} className="change-header"  value={groupTitle}/>}
             <div className="group-list-headr-btns" style={{color: group.style?.color || '#172b4d'}}>
                 {/*<i className="fa-regular fa-arrows-h"></i>*/}
                 {/*<i className="fa-regular fa-compress-alt" style={{*/}
