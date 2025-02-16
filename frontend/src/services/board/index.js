@@ -15,7 +15,8 @@ function getDefaultFilter() {
     return {
         title: '',
         members: [],
-        labels: []
+        labels: [],
+        status:''
     }
 }
 

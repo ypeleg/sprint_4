@@ -5,15 +5,19 @@
     box-shadow: 0px 8px 12px #091E4226, 0px 0px 1px #091E424F, 0px 8px 12px #091e4226, 0px 0px 1px #0103064f;
     inset: 59.4px auto auto 584.4px;
     border-radius: 8px;
-    .filter-content{
+
+    .filter-content {
         z-index: 1;
+       
 
     }
+
     .filter-header {
         display: flex;
         justify-content: flex-end;
         align-items: center;
         border-radius: 40px;
+
         .filter-title {
             width: 300px;
             text-align: center;
@@ -28,6 +32,26 @@
         background-color: #FFFFFF;
         min-height: 440.2px;
         border-radius: 40px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 404.2px;
+
+        -webkit-transform: translate3d(0, 0, 0);
+        &::-webkit-scrollbar-track-piece {
+         
+            
+              
+        }
+        &::-webkit-scrollbar{
+            width: 8px;
+            height: 8px; 
+        }
+        &::-webkit-scrollbar-thumb{
+            background: #d2cfdb;
+            border-radius: 10px;
+            width: 5px;
+            height: 5px;
+        }
         .keyword {
             font-size: 12px;
             line-height: 16px;
@@ -35,24 +59,34 @@
             margin-top: 16px;
             margin-bottom: 8px
         }
-        .member-input{
+
+        .member-input,
+        .complete-input {
             display: flex;
             align-items: center;
             width: 100%;
-            .member-label{
-              display: flex;
-              width: 100%;
-              align-items: center;
-              margin-left: 10px;
-              column-gap: 4px;
-              .user-pic{
+
+            span {
+                font-size: 14px;
+                color: #44546f;
+            }
+
+            .member-label {
+                display: flex;
+                width: 100%;
+                align-items: center;
+                margin-left: 10px;
+                column-gap: 4px;
+
+                .user-pic {
                     border-radius: 50%;
                     background-color: #091e420f;
                     padding: 2px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    img{
+
+                    img {
                         width: 24px;
                         height: 24px;
                         border-radius: 50%;
@@ -60,6 +94,7 @@
                 }
             }
         }
+
         .filter-text-container {
             >* {
                 width: 100%;
@@ -80,7 +115,7 @@
         .serach-cards {
             margin-top: 8px;
             margin-bottom: 4px;
-            color:  #44546f;
+            color: #44546f;
             font-size: 11px;
             line-height: 14px
         }

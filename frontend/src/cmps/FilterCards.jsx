@@ -1,6 +1,6 @@
 
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { loadBoard } from "../store/store"
 import { setFilterBy } from "../store/actions/board.actions"
@@ -9,14 +9,19 @@ import { setFilterBy } from "../store/actions/board.actions"
 export function FilterCards({ el, setShowFilter }) {
     let boardToShow = useSelector(state => state.boardModule.board)
     const filterBy = useSelector(state => state.boardModule.filterBy)
+    const [completedSelected,setCompletedSelected] = useState()
+    function onSetCompltedSelected(value){
+        if(completedSelected===value) setCompletedSelected(null)
+        else setCompletedSelected(value)
+    }
     function handleChange({ target }) {
-        const { type, value, name: feild } = target
+        let { type, value, name: feild } = target
         console.log(type, value, feild)
         if (type === 'text') {
 
             const UpdatedFilterBy = { ...filterBy, title: value }
             setFilterBy(UpdatedFilterBy)
-        } else if (type === 'checkbox') {
+        } else if (feild === 'members') {
             const index = filterBy[feild].findIndex(f => f === value)
             let updatedArray;
             if (index !== -1) {
@@ -27,6 +32,13 @@ export function FilterCards({ el, setShowFilter }) {
                 updatedArray = [...filterBy[feild], value];
             }
             const UpdatedFilterBy = { ...filterBy, [feild]: updatedArray }
+            setFilterBy(UpdatedFilterBy)
+        }else if(feild === 'status' ){
+            onSetCompltedSelected(value)
+            if(value === filterBy[feild]){
+                value = ''
+            }
+            const UpdatedFilterBy = { ...filterBy, [feild]: value }
             setFilterBy(UpdatedFilterBy)
         }
     }
@@ -72,6 +84,25 @@ export function FilterCards({ el, setShowFilter }) {
                     </div>
                         )
                     })}
+                    <p className="keyword">Members</p>
+                    <div className="member-input">
+                        <input value={'done'} checked={completedSelected==='done'} type="checkBox" onChange={handleChange}    name="status" id="status" />
+                        <label className="member-label" htmlFor="status">
+
+                            
+                            <span>Marked as complete</span>
+
+                        </label>
+                    </div>
+                    <div className="complete-input">
+                        <input checked={completedSelected==='aaaa'} value={'aaaa'} type="checkBox" onChange={handleChange}    name="status" id="status" />
+                        <label className="member-label" htmlFor="status">
+
+                            
+                            <span>Not marked as complete</span>
+
+                        </label>
+                    </div>
                 </section>
 
 
