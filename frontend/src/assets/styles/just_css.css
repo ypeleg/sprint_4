@@ -3237,10 +3237,11 @@ button.delete-btn-del:hover {
 .cover-color {
     width: 100%;
     /*padding-bottom: 100%;*/
-    border-radius: 3px;
+    border-radius: 3px 3px 0 0;
     cursor: pointer;
     position: relative;
     height: 40px;
+    z-index: -1;
 }
 
 
@@ -3330,3 +3331,52 @@ button.delete-btn-del:hover {
     height: auto;
 }
 
+.add-task-form textarea {
+
+/*.add-task-form textarea:focus-within {*/
+    margin-top: 8px;
+    outline: 3px solid #4c9aff;
+    outline-offset: -4px;
+}
+
+
+.task-checkbox {
+    cursor: pointer;
+}
+
+.task-checkbox {
+
+}
+
+.task-checkbox-checked {
+    height: 16px;
+    width: 16px;
+    margin-left: 2px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    /*border: 3px solid #707c90;*/
+    place-self: start;
+    margin-top: 4px;
+    cursor: pointer;
+}
+
+.task-checkbox:hover,
+.task-checkbox-checked:hover {
+    outline: 3px solid #4c9aff;
+    outline-offset: 2px;
+}
+
+.status-icon-incomplete:hover,
+.status-icon:hover {
+    outline: 3px solid #4c9aff;
+    outline-offset: 2px;
+}
+
+.picker-popup .task-modal-close {
+    top: 4px;
+    right: 4px;
+}
+
+.picker-popup .task-modal-close:hover {
+    background-color: #f4f5f7;
+}
