@@ -69,12 +69,12 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
     }
 
     return (<>
-        <div className="task-list" ref={taskListRef}>
+        <div className="task-list">
 
             {/*<pre>{JSON.stringify(tasks.map(task => task.id), null, 4)}</pre>*/}
             {showFirstForm && <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
             {tasks.map((task, idx) => {
-                return (<div key={task.id} onClick={() => onLoadTask(task, currentGroup, group, boardToSho)} className="task">
+                return (<div key={task.id} onClick={() => onLoadTask(task, currentGroup, group, boardToShow)} className="task">
 
 
                     {task.style.backgroundImage &&
