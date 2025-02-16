@@ -29,7 +29,9 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group, largeL
         setShowForm(!showForm)
     }
 
-    const { tasks } = group
+    // const { tasksTemp } = group
+    const [tasks, setTasks] = useState(group.tasks)
+
     const navgite = useNavigate()
     const [showQuickEdit, setQuickEdit] = useState(false)
     let editpos = useRef()
@@ -41,6 +43,19 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group, largeL
         setQuickEdit(!showQuickEdit)
     }
 
+    function onToggleDone(ev, task) {
+        ev.stopPropagation()
+        // task.status = (task.status === 'done') ? '' : 'done'
+
+        setTasks([
+            ...tasks.map(t => {
+                if (t.id === task.id) {
+                    t.status = (t.status === 'done') ? '' : 'done'
+                }
+                return t
+            })
+        ])
+    }
 
     return (<>
         <div className="task-list">
@@ -87,7 +102,8 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group, largeL
                     </div>
 
                     <div className="stay-same-height">
-                        <div className={`task-checkbox` + ((task.status === 'done') ? ' checked' : '')} type="checkbox" />
+                        <div className={`task-checkbox` + ((task.status === 'done') ? ' checked' : '')}
+                        onClick={(ev) => onToggleDone(ev, task)}/>
                         <span className="task-task-text">{task.title}</span>
                     </div>
 
@@ -118,6 +134,21 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group, largeL
                                 >{badge.categ}: {badge.chosenOption}</div>
                                 // <div className="badge badge-status-approved">Status: Approved</div>
                             }))}
+
+                            {task.activity.length > 0 && (<div className="tasklist-icon tooltip"
+                                data-tip="Comments"
+                            ><i className="fa-regular fa-comment"></i> {task.activity.length}</div>)}
+                            {task.checklists.length > 0 && (<div className="tasklist-icon tooltip"
+                                data-tip="Checklist"
+                            ><i className="fa-regular fa-check-square"></i> {task.checklists.length}</div>)}
+                            {task.attachments.length > 0 && (<div className="tasklist-icon tooltip"
+                                data-tip="Attachments"
+                            ><i className="fa-regular fa-paperclip"></i> {task.attachments.length}</div>)}
+                            {task.description && (<div className="tasklist-icon tooltip"
+                                data-tip="Description"
+                            ><i className="fa-regular fa-align-left"></i></div>)}
+
+
                         </div>
                     </div>
 

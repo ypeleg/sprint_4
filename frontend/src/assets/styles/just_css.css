@@ -455,12 +455,22 @@
 
 .task-watch,.task-watch-btn {
     border-radius: 4px;
-    height: 32px
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+}
+
+.task-watch i,.task-watch-btn i {
+    margin-top: 4px;
+    margin-inline: 3px;
 }
 
 .task-watch-btn.active,.task-watch.active {
     background-color: #0079bf;
-    color: #fff
+    color: #fff;
+
 }
 
 .task-description {
@@ -845,13 +855,27 @@ input.task-title:focus {
 }
 
 .status-icon {
-    translate: 0 .5em;
+    translate: 0 .2em;
     height: 18px;
     width: 18px;
     background-color: #36a678;
     border-radius: 50%;
     justify-items: center;
-    justify-content: center
+    justify-content: center;
+    cursor: pointer;
+}
+
+.status-icon-incomplete {
+    /*background-color: #f2d600;*/
+    translate: 0 .5em;
+    height: 18px;
+    width: 18px;
+    /*background-color: #36a678;*/
+    border-radius: 50%;
+    justify-items: center;
+    justify-content: center;
+    border: 3px solid #707c90;
+    cursor: pointer;
 }
 
 .status-icon>i {
@@ -3041,4 +3065,22 @@ label {
 
 .task-description {
     margin-top: 16px;
+}
+
+.tasklist-icon {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-inline: 4px;
+}
+
+.hinted {
+    padding: 4px;
+    margin-top: -6px;
+}
+
+.hinted:hover {
+    background-color: rgba(0, 0, 0, 0.16);
+    border-radius: 3px;
+
 }

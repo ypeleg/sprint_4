@@ -70,6 +70,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     console.log('task', taskToShow)
     // const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
 
+    const [isDone, setIsDone] = useState(taskToShow.status === 'done')
     const [cardTitle, setCardTitle] = useState(taskToShow.title || '')
     const [listName, setListName] = useState(taskToShow.group?.title || '')
     const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)
@@ -97,6 +98,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     const [boardMembers, setBoardMembers] = useState(taskToShow.board.members || [])
     const [date, setDate] = useState(taskToShow.dueDate || "")
     const dateInputRef = useRef(null);
+    const activityInputRef = useRef(null);
 
     const [showLabels, setShowLabels] = useState(true)
     const [showMembers, setShowMembers] = useState(true)
@@ -572,9 +574,17 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                     <button onClick={saveTask}>---DEBUG---Save---</button>
                     <div className="task-modal-header">
                         <div className="task-left">
-                            <div className="task-icon status-icon" title="Card is complete">
-                                <i className="fa-regular fa-check"></i>
-                            </div>
+
+                                {isDone?<div className="task-icon status-icon" title="Card is complete"
+                                             onClick={() => setIsDone(!isDone)}
+                                    ><i className="fa-regular fa-check"></i></div>:
+                                        <div className="task-icon status-icon-incomplete" title="Card is incomplete"
+                                             onClick={() => setIsDone(!isDone)}
+                                        ></div>}
+
+
+                                        {/*<i className="fa-regular fa-check"></i>*/}
+
 
                             <div className="task-title-section">
                                 <input
@@ -670,10 +680,12 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                             <div className="section-label">Notifications</div>
                                             <div className="just-flex-without-anything">
                                                 <button
-                                                    className={`task-watch ${isWatching ? "active" : ""}`}
+                                                    className={`task-watch ${isWatching ? "" : ""}`}
                                                     onClick={() => setIsWatching(!isWatching)}
                                                 >
+                                                    <i className="fa-regular fa-eye"></i>
                                                     {isWatching ? "Watching" : "Watch"}
+                                                    {isWatching && <i className="fa-regular fa-check"></i>}
                                                 </button>
                                             </div>
                                         </div>
@@ -793,7 +805,13 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                             <i className="fa-regular fa-paperclip"></i>
                                             <h3>Attachments</h3>
                                         </div>
-                                        <button className="delete-btn">Add</button>
+                                        <button className="delete-btn"
+                                                onClick={() => {
+                                                    hidePicker(event)
+                                                    movePickerTo(event)
+                                                    setShowPickerAttachments(true)
+                                                }}
+                                        >Add</button>
                                     </div>
                                     <div className="inner-component-left-padding">Files</div>
                                     <div className="task-attachment-row inner-component-left-padding">
@@ -821,7 +839,11 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                                         <i className="fa-regular fa-check-square"></i>
                                                         <h3>{checklist.title}</h3>
                                                     </div>
-                                                    <button className="delete-btn">Delete</button>
+                                                    <button className="delete-btn"
+                                                            onClick={() => {
+                                                                setChecklists(checklists.filter(c => c.id !== checklist.id))
+                                                            }}
+                                                    >Delete</button>
                                                 </div>
 
 
@@ -858,8 +880,31 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                                     <div className="just-flex">
 
                                                         <div className="checklist-actions">
-                                                            <button className="btn-add">Add</button>
-                                                            <button className="btn-cancel">Cancel</button>
+                                                            <button className="btn-add"
+                                                                    onClick={() => {
+                                                                        setChecklists(checklists.map(c => {
+                                                                            if (c.id === checklist.id) {
+                                                                                return {
+                                                                                    ...c,
+                                                                                    todos: [...c.todos, {
+                                                                                        id: Date.now(),
+                                                                                        title: newChecklistItem,
+                                                                                        isDone: false
+                                                                                    }]
+                                                                                }
+                                                                            }
+                                                                            return c
+                                                                        })
+                                                                        )
+                                                                        setNewChecklistItem('')
+                                                                    }}
+                                                            >Add</button>
+                                                            <button className="btn-cancel"
+                                                            onClick={()     => {
+                                                                setNewChecklistItem('')
+
+                                                            }}
+                                                            >Cancel</button>
                                                         </div>
                                                     </div>
 
@@ -890,7 +935,10 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                             <i className="fa-regular fa-list"></i>
                                             <h3>Activity</h3>
                                         </div>
-                                        <button className="delete-btn">Hide Details</button>
+                                        <button className="delete-btn"
+                                                onClick={() => {
+
+                                                }}>Hide Details</button>
                                     </div>
                                     <ul className="task-activity-list">
                                         <li key="1">
@@ -899,7 +947,27 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                                     YP
                                                 </div>
                                                 <div className="flex-col input-container">
-                                                    <input className="activity-input" type="text" placeholder="Write a comment..."/>
+                                                    <input className="activity-input" type="text" placeholder="Write a comment..."
+                                                           ref={activityInputRef}
+                                                    />
+                                                    <button className="activity-btn"
+                                                    onClick={
+                                                        (e) => {
+                                                            setActivityLog(
+                                                                [...activityLog, {
+                                                                    id: Date.now(),
+                                                                    title: activityInputRef.current.value,
+                                                                    byMember: {
+                                                                        fullname: 'Yam Peleg',
+                                                                        imgUrl: ''
+                                                                    },
+                                                                    createdAt: Date.now()
+                                                                }]
+                                                            )
+                                                            activityInputRef.current.value = ''
+                                                        }
+                                                    }
+                                                    >Save</button>
                                                 </div>
                                             </div>
                                         </li>
@@ -2485,6 +2553,11 @@ export function BoardDetails() {
         setLargeLabels(!largeLabels)
     }
 
+    function onStarBoard(ev) {
+        ev.stopPropagation()
+        // need to implement
+    }
+
     if (!boardToShow) return (<>Loading..</>)
     return (
         <div className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
@@ -2510,7 +2583,7 @@ export function BoardDetails() {
 
                 <section className="board-display">
 
-                    <BoardHeader/>
+                    <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred}/>
 
                     <section className="group-lists">
                         {boardToShow.groups.map(group => {
