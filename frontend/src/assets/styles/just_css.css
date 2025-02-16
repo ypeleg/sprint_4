@@ -3110,3 +3110,7 @@ button.delete-btn-del {
     padding: 6px 12px;
     cursor: pointer;
 }
+
+div.task-user-icon {
+    font-size: 10px;
+}

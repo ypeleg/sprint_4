@@ -924,7 +924,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                             ((taskToShow.status === 'done') ?
                                                                     (<span className="complete-label">Complete</span>) :
                                                                     (<span className="incomplete-label">Overdue</span>)
-                                                            ) : <span>a</span>
+                                                            ) : <span></span>
                                                         }
                                                         <i className="fa-regular fa-chevron-down"></i>
                                                         <input
