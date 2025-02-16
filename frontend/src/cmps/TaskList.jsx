@@ -83,6 +83,13 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
                         </div>
                     }
 
+                    { (!(task.style.backgroundImage) && (task.style.backgroundColor)) &&
+                        <div className="task-cover-color">
+                            <div className="cover-color" style={{ backgroundColor: task.style.backgroundColor }}></div>
+                        </div>
+                    }
+
+
                     <div className="stay-same-height flex-space-between stay-same-height-start">
                         {/* <pre>{JSON.stringify(task, null, 4)}</pre> */}
 

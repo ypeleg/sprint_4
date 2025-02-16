@@ -3126,3 +3126,34 @@ button.delete-btn-del:hover {
 .checklist-todos {
     margin-left: 8px;
 }
+
+.cover-color {
+    width: 100%;
+    /*padding-bottom: 100%;*/
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    height: 40px;
+}
+
+
+.task-cover-color {
+    margin: -10px -9px -9px -10px;
+    margin-bottom: 10px;
+    padding-inline: 1px;
+    aspect-ratio: unset;
+    height: 40px;
+
+    /*height: 40px;*/
+
+    img {
+        border-radius: 8px 8px 0px 0px;
+
+    }
+    /*scrollbar-color: #091E4224 #091E420F;*/
+    /*scrollbar-width: thin;*/
+    /*overflow-y: scroll;*/
+    /*padding-inline: 2px;*/
+
+}
+

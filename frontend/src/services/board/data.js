@@ -116,14 +116,31 @@ function getRandomTask() {
         checklists: getRandomChecklists(),
         // memberIds: random.sample(USER_POOL.map(u=>u._id), random.randint(0, USER_POOL.length)),
         members: random.sample(USER_POOL, random.randint(0, USER_POOL.length)),
-        style: {
-            backgroundColor: random.color(),
-            backgroundImage: random.choice([
-                null,null,null,'https://picsum.photos/600/300?random=' + random.randint(1,1000),
-                'cover-img.png','cover-img-1.png','cover-img-2.png','cover-img-3.png'
+        style:
+            random.choice([
+                {
+                    backgroundColor: (getRandomColorLabels()),
+                    coverSize: random.choice(['small', 'large'])
+                },
+                {
+                    backgroundImage: random.choice([
+                        null, null, null, 'https://picsum.photos/600/300?random=' + random.randint(1, 1000),
+                        'cover-img.png', 'cover-img-1.png', 'cover-img-2.png', 'cover-img-3.png'
+                    ]),
+                    coverSize: random.choice(['small', 'large'])
+                },
+                {
+
+                },
+                {
+
+                },
+                {
+
+                }
+
             ]),
-            coverSize: random.choice(['small','large'])
-        },
+
         badges: getRandomBadges(),
         attachments: getRandomAttachments(),
         activity: getRandomActivity(),
