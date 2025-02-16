@@ -204,7 +204,7 @@ function getRandomColor() {
         '#dfd8fd',
         '#cce0ff',
         '#c6edfb',
-        '#d3f1a7',
+        // '#d3f1a7',
         '#fdd0ec',
         '#f1f2f4',
     ]
