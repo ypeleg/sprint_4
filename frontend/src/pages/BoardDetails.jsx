@@ -23,6 +23,7 @@ import GoogleMapReact from 'google-map-react'
 import {TaskList} from "../cmps/TaskList.jsx"
 import { GroupHeader } from "../cmps/GroupHeader.jsx"
 import {random, makeId} from "../services/util.service.js"
+import { GroupList } from "../cmps/GroupList.jsx"
 
 export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
     const [center, setCenter] = useState({lat: lat, lng: lng})
@@ -3172,8 +3173,8 @@ export function BoardDetails() {
                 <section className="board-display">
 
                     <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred}/>
-
-                    <section className="group-lists">
+                        <GroupList onMoveCard={onMoveCard} onLoadTask={onLoadTask}/>
+                    {/* <section className="group-lists">
                         {boardToShow.groups.map(group => {
 
                             // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>
@@ -3188,7 +3189,7 @@ export function BoardDetails() {
 
                         })}
                         <AddGroup/>
-                    </section>
+                    </section> */}
 
                 </section>
 

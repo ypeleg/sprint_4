@@ -45,6 +45,8 @@ export function getEmptyTask() {
         memberIds: [],
         labelIds: [],
         byMember: '',
+        activity:[],
+        attachments:[],
         style: {
             backgroundColor: '',
             backgroundImage: ''
