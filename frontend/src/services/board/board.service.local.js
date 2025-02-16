@@ -45,8 +45,8 @@ async function query(filterBy = {title: '',}) {
 }
 
 async function getById(boardId, filterBy = {title: ''}) {
-    const {title, members, status} = filterBy
-    
+    const {title, members, status,dueDate} = filterBy
+    console.log(dueDate)
     let board = await storageService.get(STORAGE_KEY, boardId)
     if (title) {
         const regex = new RegExp(title, 'i')
@@ -72,6 +72,26 @@ async function getById(boardId, filterBy = {title: ''}) {
                 }
             })
         }
+    }
+    if(dueDate?.length){
+        board = {
+            ...board, groups: board.groups.map(group => {
+                return {
+                    ...group,
+                    tasks: group.tasks.filter(task => dueDate.some(date => {
+                        if(date === 'no'){
+                            return   task.dueDate===null
+                        }else if(date === 'week'){
+                            return new Date(new Date().setDate(new Date().getDate() + 7)).getTime() <  new Date(task.dueDate).getTime() &&  new Date(task.dueDate).getTime() > Date.now()
+                        }else if(date == 'over'){
+                            return  new Date(task.dueDate).getTime() < Date.now() 
+                        }
+                       
+                    }))
+                }
+            })
+        }
+       
     }
     if(status){
         board = {
