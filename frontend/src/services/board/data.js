@@ -93,7 +93,7 @@ function getRandomChecklists() {
         return {
             id: random.id(),
             title: random.lorem(random.randint(1,3)),
-            progress: true,
+            progress: random.randint(0,100),
             todos: Array.from({length: tCount}, () => ({
                 id: random.id(),
                 title: random.lorem(random.randint(2,4)),

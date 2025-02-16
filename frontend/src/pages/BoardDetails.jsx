@@ -479,6 +479,12 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         setShowPickerUnderConstruction(false)
         setShowPickerChangeALabel(false)
         setShowPickerCover(false)
+        setShowPickerAttachments(false)
+        setShowPickerChecklists(false)
+        setShowPickerMembers(false)
+        setShowPickerMoveCard(false)
+        setShowPickerCopyCard(false)
+        setShowPickerMirrorCard(false)
     }
 
     function movePickerTo(ev) {
@@ -524,6 +530,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             checklists,
             activity: activityLog,
             badges,
+            labels: cardLabels,
             location,
             startDate: isStartDateEnabled ? startDate : null,
             dueDate: isDueDateEnabled ? date : null,
@@ -539,10 +546,9 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 title: listName
             }
         }
-        onSaveTaskOuter(updatedTask)
-        const { group, board, taskList, ...cleanTask } = updatedTask;
-        boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask;
-        await updateBoard(boardCopy)
+        const { group, board, taskList, ...cleanTask } = updatedTask
+        boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask
+        updateBoard(boardCopy).then(onSaveTaskOuter(cleanTask))
         // try {
         //     await updateBoard(boardCopy);
         //     onClose()
@@ -615,7 +621,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         if (file) setAttachmentFile(file)
     }
 
-    function onInsertAttachment() {
+    function onInsertAttachment(ev) {
         if (attachmentFile) {
             const newAttachment = {
                 id: Date.now(),
@@ -625,6 +631,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 type: 'file'
             }
             setAttachments((prev) => [...prev, newAttachment])
+            hidePicker(ev)
 
         } else if (attachmentLink) {
             const newAttachment = {
@@ -636,11 +643,12 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             }
 
             setAttachments((prev) => [...prev, newAttachment])
+            hidePicker(ev)
         }
         setAttachmentFile(null)
         setAttachmentLink("")
         setAttachmentDisplayText("")
-        hidePicker()
+        hidePicker(ev)
     }
 
 
@@ -734,6 +742,13 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             attachmentDisplayText
         ])
 
+    function onModalCloseInner(ev) {
+        ev.stopPropagation()
+        ev.preventDefault()
+        saveTask().then(onClose(ev))
+            .catch(err => console.error(err))
+
+    }
 
     return (
         <>
@@ -749,7 +764,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                         backgroundColor: coverColor || ''
                     }}
                 >
-                    <button className="task-modal-close" onClick={onClose}>
+                    <button className="task-modal-close" onClick={onModalCloseInner}>
                         <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
                         </svg>
@@ -1018,14 +1033,24 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                         </button>
                                     </div>
                                     <div className="inner-component-left-padding">Files</div>
-                                    <div className="task-attachment-row inner-component-left-padding">
+                                    <div className="task-attachment-row inner-component-left-padding just-flex-cols">
                                         {(attachments.map(attachment => {
-                                            return <div key={attachment.id} className="just-flex">
-                                                <button className="attachment-extention">PNG</button>
-                                                <div className="file-info">
-                                                    <h5>{attachment.path}</h5>
-                                                    <label>{new Date(attachment.date).toLocaleDateString()}</label>
+                                            return <div key={attachment.id} className="flex-space-between-align full-width">
+                                                <div className="flex-space-between-align">
+                                                    <button className="attachment-extention">PNG</button>
+                                                    <div className="file-info">
+                                                        <h5>{attachment.path}</h5>
+                                                        <label>{new Date(attachment.date).toLocaleDateString()}</label>
+                                                    </div>
                                                 </div>
+                                                <button className="delete-btn-del"
+                                                        onClick={() => {
+                                                            hidePicker(event)
+                                                            movePickerTo(event)
+                                                            setShowPickerAttachments(true)
+                                                        }}
+                                                >Delete
+                                                </button>
                                             </div>
                                         }))}
                                     </div>
@@ -1055,8 +1080,12 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                 {checklist.progress &&
                                                     <div className="progress inner-component-left-padding">
                                                         <div className="progress-container">
-                                                            <div className="progress-num">0%</div>
-                                                            <div className="progress-bar"></div>
+                                                            <div className="progress-num">{checklist.progress}%</div>
+                                                            <div className="progress-bar">
+                                                                <div className="progress-bar-internal"
+                                                                style={{width: `${checklist.progress}%`}}
+                                                                ></div>
+                                                            </div>
                                                         </div>
                                                     </div>}
 
@@ -1064,8 +1093,32 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                     return <>
                                                         <div>
                                                             <div className="just-flex-with-center checklist-todos">
-                                                                <input name={todo.title} type="checkbox"/>
-                                                                <label>{todo.title}</label>
+                                                                <input name={todo.title} type="checkbox"
+                                                                       checked={todo.isDone}
+                                                                    onChange={() => {
+                                                                        const newChecklists = checklists.map(c => {
+                                                                            if (c.id === checklist.id) {
+                                                                                return {...c, todos: c.todos.map(t => {if (t.id === todo.id) {
+                                                                                        return {...t, isDone: !t.isDone}
+                                                                                    }
+                                                                                        return t
+                                                                                    })
+                                                                                }}
+                                                                            return c
+                                                                        })
+
+                                                                        newChecklists.map(c => {
+                                                                            if (c.id === checklist.id) {
+                                                                                let doneTodos = c.todos.filter(t => t.isDone)
+                                                                                c.progress = Math.floor((doneTodos.length / c.todos.length) * 100)
+                                                                            }
+                                                                        })
+                                                                        setChecklists(newChecklists)
+                                                                    }}
+                                                                />
+                                                                <label
+                                                                    style={{textDecoration: todo.isDone ? 'line-through' : 'none'}}
+                                                                >{todo.title}</label>
                                                             </div>
                                                         </div>
                                                     </>
@@ -2835,6 +2888,12 @@ export function BoardDetails() {
         }
     }
 
+    function closePopup2(e) {
+        onModalClose()
+        togglePopup()
+    }
+
+
     const [largeLabels, setLargeLabels] = useState(true)
 
     function toggleLargeLabels(ev) {
@@ -2850,7 +2909,7 @@ export function BoardDetails() {
     const [taskToEdit, setTaskToEdit] = useState(null)
 
     function onSaveTaskOuter(updatedTask) {
-        // console.log(updatedTask.title)
+        // console.log(updatedTask.labels)
         setTaskToEdit(updatedTask)
     }
 
@@ -2889,7 +2948,7 @@ export function BoardDetails() {
 
                 <div className="popup" ref={popupRef} onClick={closePopupOnlyIfClickedOutOfIt}>
 
-                    <TaskModal taskToShow={taskToShow} onClose={togglePopup} popupRef={popupRef} onSaveTaskOuter = {onSaveTaskOuter}/>
+                    <TaskModal taskToShow={taskToShow} onClose={closePopup2} popupRef={popupRef} onSaveTaskOuter = {onSaveTaskOuter}/>
 
                 </div>
                 <div className="popup-backdrop" onClick={closePopupOnlyIfClickedOutOfIt}></div>
