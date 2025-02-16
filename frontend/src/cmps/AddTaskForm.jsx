@@ -30,7 +30,7 @@ export function AddTaskForm({selectedGroup, onSetShowForm}) {
     }
 
     return (<form onSubmit={onSubmit} className="add-task-form">
-        <textarea onChange={ev => handleChange(ev)} value={task.title} placeholder="Enter a title or paste a link" className="task-title" name="title" id="title"></textarea>
+        <textarea autoFocus onChange={ev => handleChange(ev)} value={task.title} placeholder="Enter a title or paste a link" className="task-title" name="title" id="title"></textarea>
         <div>
             <button className="add-card-btn" type="submit">Add card</button>
             <button className="cancel-btn" onClick={() => onSetShowForm()} type="button">X</button>

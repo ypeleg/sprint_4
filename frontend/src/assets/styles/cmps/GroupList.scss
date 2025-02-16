@@ -3,10 +3,11 @@
     gap: 1em;
 
     padding: 8px;
+    padding-left: 12px;
     overflow-x: auto;
     scrollbar-color: #fff6 #00000026;
     height: calc(100vh - 60px - 60px);
-
+    //box-shadow: 0px 1px 1px #091e4240, 0px 0px 1px #091e424f;
 
     //margin-bottom: 10px;
 
@@ -23,6 +24,7 @@
         justify-items: space-between;
         margin-top: 7px;
         width: 100%;
+
         .add-card-btn {
             width: 80%;
             text-align: left;
@@ -44,6 +46,7 @@
             }
 
         }
+
         button:last-child {
             place-self: end;
             margin-left: auto;
@@ -83,6 +86,7 @@
             color: #172B4D;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding-left: 8px;
             padding-top: 8px;
             font-size: 0.95em;
@@ -91,11 +95,32 @@
             cursor: pointer;
             color: #172b4d;
             height: fit-content;
+
             //overflow: hidden;
             span {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+            }
+
+            .change-header {
+                overflow-y: hidden;
+                font-size: 14px;
+                background-color: white;
+                color: #172B4D;
+                outline: none;
+                border: none;
+                font-size: 0.95em;
+                font-weight: bold;
+                resize: none;
+                font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+                box-shadow: inset 0 0 0 2px #388bff;
+                padding: 6px 12px;
+                border-radius: 3px;
+                font-weight: 600;
+                line-height: 20px;
+
+
             }
 
             .group-list-headr-btns {

@@ -4,10 +4,11 @@ import {useParams} from "react-router"
 import {useSelector} from "react-redux"
 import {SideBar} from "../cmps/SideBar"
 import {useNavigate} from "react-router"
-import {AddGroup} from "../cmps/AddGroup";
+import {AddGroup} from "../cmps/AddGroup"
 import {AppHeader} from "../cmps/AppHeader.jsx"
-import {BoardHeader} from "../cmps/BoardHeader.jsx";
+import {BoardHeader} from "../cmps/BoardHeader.jsx"
 import React, {useRef, useEffect, useState} from "react"
+import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge"
 import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store} from "../store/store.js"
 
 
@@ -19,10 +20,10 @@ import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard
 // bring the task "the current group"
 
 
-import GoogleMapReact from 'google-map-react';
+import GoogleMapReact from 'google-map-react'
 import {TaskList} from "../cmps/TaskList.jsx"
-import { GroupHeader } from "../cmps/GroupHeader.jsx";
-import {random} from "../services/util.service.js"
+import { GroupHeader } from "../cmps/GroupHeader.jsx"
+import {random, makeId} from "../services/util.service.js"
 
 export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
     const [center, setCenter] = useState({lat: lat, lng: lng})
@@ -61,15 +62,16 @@ export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
     )
 }
 
-const AnyReactComponent = ({text}) => <div style={{fontSize: '22px'}}>{text}</div>;
+const AnyReactComponent = ({text}) => <div style={{fontSize: '22px'}}>{text}</div>
 
 
-export function TaskModal({taskToShow, onClose, popupRef}) {
-
+export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
+    // const { board, group, taskList, ...cleanTask } = taskToShow
 
     console.log('task', taskToShow)
     // const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
 
+    const [isDone, setIsDone] = useState(taskToShow.status === 'done')
     const [cardTitle, setCardTitle] = useState(taskToShow.title || '')
     const [listName, setListName] = useState(taskToShow.group?.title || '')
     const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)
@@ -96,7 +98,8 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     const [members, setMembers] = useState(taskToShow.members || [])
     const [boardMembers, setBoardMembers] = useState(taskToShow.board.members || [])
     const [date, setDate] = useState(taskToShow.dueDate || "")
-    const dateInputRef = useRef(null);
+    const dateInputRef = useRef(null)
+    const activityInputRef = useRef(null)
 
     const [showLabels, setShowLabels] = useState(true)
     const [showMembers, setShowMembers] = useState(true)
@@ -129,6 +132,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     const [pickerLeft, setPickerLeft] = useState('0px')
 
     const coverFileInputRef = useRef(null)
+
 
     function onCoverFileSelected(ev) {
         const file = ev.target.files?.[0]
@@ -254,6 +258,89 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
         setPreviousLabelColor('')
     }
 
+
+
+    // move board
+    const boards = useSelector((state) => state.boardModule.boards)
+    const currentBoard = taskToShow.board
+    const currentGroup = taskToShow.group
+    const [selectedBoardId, setSelectedBoardId] = useState(currentBoard?._id || '')
+    const [selectedGroupId, setSelectedGroupId] = useState(currentGroup?.id || '')
+    const [selectedPosition, setSelectedPosition] = useState(1)
+
+    function getSelectedBoard() {
+        return (boards.find((b) => b._id === selectedBoardId))
+    }
+
+    function getSelectedGroup() {
+        const board = getSelectedBoard()
+        if (!board) return null
+        return board.groups.find((g) => g.id === selectedGroupId)
+    }
+
+    function cleanBoard(board) {
+        const boardCopy = { ...board }
+        boardCopy.groups = board.groups.map(group => {
+            const groupCopy = { ...group }
+            groupCopy.tasks = group.tasks.map(task => {
+                const { board, group, ...cleanTask } = task
+                return cleanTask
+            })
+            return groupCopy
+        })
+        return boardCopy
+    }
+
+    async function onMoveCard(ev) {
+        const targetBoard = getSelectedBoard()
+        const targetGroup = getSelectedGroup()
+        if (!targetBoard || !targetGroup) return
+
+        if (targetBoard._id === currentBoard._id) {
+            const boardCopy = JSON.parse(JSON.stringify(currentBoard))
+            const oldGroupIdx = boardCopy.groups.findIndex(g => g.id === currentGroup.id)
+            if (oldGroupIdx >= 0) {
+                const taskIdx = boardCopy.groups[oldGroupIdx].tasks.findIndex(
+                    t => t.id === taskToShow.id
+                )
+                if (taskIdx >= 0) {
+                    boardCopy.groups[oldGroupIdx].tasks.splice(taskIdx, 1)
+                }
+            }
+            const newGroupIdx = boardCopy.groups.findIndex(g => g.id === targetGroup.id)
+            if (newGroupIdx < 0) return
+            const { board, group, taskList, ...cleanTask } = taskToShow
+            const tasksArray = boardCopy.groups[newGroupIdx].tasks
+            const pos = Math.min(selectedPosition - 1, tasksArray.length)
+            tasksArray.splice(pos, 0, cleanTask)
+            const cleaned = cleanBoard(boardCopy)
+            await updateBoard(cleaned)
+            hidePicker(ev)
+            return
+        }
+        const boardCopyOld = JSON.parse(JSON.stringify(currentBoard))
+        const oldGroupIdx = boardCopyOld.groups.findIndex(g => g.id === currentGroup.id)
+        if (oldGroupIdx >= 0) {
+            const taskIdx = boardCopyOld.groups[oldGroupIdx].tasks.findIndex(
+                t => t.id === taskToShow.id
+            )
+            if (taskIdx >= 0) {
+                boardCopyOld.groups[oldGroupIdx].tasks.splice(taskIdx, 1)
+            }
+        }
+        const boardCopyNew = JSON.parse(JSON.stringify(targetBoard))
+        const newGroupIdx = boardCopyNew.groups.findIndex(g => g.id === targetGroup.id)
+        if (newGroupIdx < 0) return
+        const { board, group, taskList, ...cleanTask } = taskToShow
+        const tasksArr = boardCopyNew.groups[newGroupIdx].tasks
+        const pos = Math.min(selectedPosition - 1, tasksArr.length)
+        tasksArr.splice(pos, 0, cleanTask)
+        const cleanedOld = cleanBoard(boardCopyOld)
+        const cleanedNew = cleanBoard(boardCopyNew)
+        await updateBoard(cleanedOld)
+        await updateBoard(cleanedNew)
+        hidePicker(ev)
+    }
 
     // dates
     const [calendarMonth, setCalendarMonth] = useState(new Date())
@@ -393,6 +480,12 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
         setShowPickerUnderConstruction(false)
         setShowPickerChangeALabel(false)
         setShowPickerCover(false)
+        setShowPickerAttachments(false)
+        setShowPickerChecklists(false)
+        setShowPickerMembers(false)
+        setShowPickerMoveCard(false)
+        setShowPickerCopyCard(false)
+        setShowPickerMirrorCard(false)
     }
 
     function movePickerTo(ev) {
@@ -412,7 +505,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     function onDateChange(e) { setDate(e.target.value) }
     function onDateClick() { dateInputRef.current?.showPicker() }
 
-    function saveTask() {
+    async function saveTask() {
         const boardCopy = {
             ...taskToShow.board,
             groups: taskToShow.board.groups.map(g => ({
@@ -431,30 +524,39 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
             ...taskToShow,
             title: cardTitle,
             description,
+            status: isDone ? 'done' : 'in-progress',
             isWatching,
-            style: {
-                ...taskToShow.style,
-                backgroundImage: coverUrl || null
-            },
+            members,
             attachments,
             checklists,
             activity: activityLog,
             badges,
-            members,
-            dueDate: date,
+            labels: cardLabels,
             location,
+            startDate: isStartDateEnabled ? startDate : null,
+            dueDate: isDueDateEnabled ? date : null,
+            dueDateReminder: isDueDateEnabled ? dueDateReminder : null,
+            style: {
+                ...taskToShow.style,
+                backgroundColor: coverColor || '',
+                backgroundImage: coverImage || '',
+                coverSize: coverSize || 'small',
+            },
             group: {
                 ...taskToShow.group,
                 title: listName
             }
         }
         const { group, board, taskList, ...cleanTask } = updatedTask
-        boardCopy.groups[groupIdx].tasks[taskIdx] = { ...cleanTask }
-        updateBoard(boardCopy)
-            .then(() => onClose())
-            .catch(err => console.error(err))
+        boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask
+        updateBoard(boardCopy).then(onSaveTaskOuter(cleanTask))
+        // try {
+        //     await updateBoard(boardCopy)
+        //     onClose()
+        // } catch (err) {
+        //     console.error('Failed to save task:', err)
+        // }
     }
-
 
     // return (
     //     <div className="task-modal">
@@ -464,10 +566,9 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     //     </div>
     // )
 
-
     const [attachmentFile, setAttachmentFile] = useState(null)
     const [attachmentLink, setAttachmentLink] = useState("")
-    const [attachmentDisplayText, setAttachmentDisplayText] = useState("")
+    const [attachmentText, setAttachmentText] = useState("")
     const fileInputRef = useRef(null)
 
     function onFileSelected(ev) {
@@ -475,38 +576,41 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
         if (file) setAttachmentFile(file)
     }
 
-    function onInsertAttachment() {
+    function onInsertAttachment(ev) {
         if (attachmentFile) {
             const newAttachment = {
                 id: Date.now(),
                 path: attachmentFile.name,
                 date: Date.now(),
-                displayText: attachmentDisplayText || attachmentFile.name,
+                text: attachmentText || attachmentFile.name,
                 type: 'file'
             }
             setAttachments((prev) => [...prev, newAttachment])
+            hidePicker(ev)
 
         } else if (attachmentLink) {
             const newAttachment = {
                 id: Date.now(),
                 path: attachmentLink,
                 date: Date.now(),
-                displayText: attachmentDisplayText || attachmentLink,
+                text: attachmentText || attachmentLink,
                 type: 'link'
             }
 
             setAttachments((prev) => [...prev, newAttachment])
+            hidePicker(ev)
         }
         setAttachmentFile(null)
         setAttachmentLink("")
-        setAttachmentDisplayText("")
-        hidePicker()
+        setAttachmentText("")
+        hidePicker(ev)
     }
-
 
     const [coverColor, setCoverColor] = useState( taskToShow.style.backgroundColor || '')
     const [coverImage, setCoverImage] = useState(taskToShow.style.backgroundImage || '')
     const [coverSize, setCoverSize] = useState(taskToShow.style.backgroundSize || 'small')
+
+    const [addingToChecklist, setAddingToChecklist] = useState(0)
 
     function onPickColor(color) {
         setCoverColor(color)
@@ -529,6 +633,206 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     }
 
 
+    useEffect(
+        () => {
+            saveTask()
+        },[
+            isDone,
+            cardTitle,
+            listName,
+            isWatching,
+            description,
+            attachments,
+            checklists,
+            newChecklistItem,
+            activityLog,
+            location,
+            badges,
+            members,
+            boardMembers,
+            date,
+            showLabels,
+            showMembers,
+            showCustomFields,
+            showDate,
+            showMaps,
+            showChecklist,
+            showActivity,
+            showAttachments,
+            showPicker,
+            showPickerDate,
+            showPickerCustomBadges,
+            showPickerLocation,
+            showPickerAttachments,
+            showPickerChecklists,
+            showPickerLabels,
+            showPickerMembers,
+            showPickerMoveCard,
+            showPickerCopyCard,
+            showPickerMirrorCard,
+            showPickerShareCard,
+            showPickerChangeALabel,
+            showPickerUnderConstruction,
+            showPickerCover,
+            showFieldsEditor,
+            pickerTop,
+            pickerLeft,
+            coverColor,
+            coverImage,
+            coverSize,
+            calendarMonth,
+            isStartDateEnabled,
+            isDueDateEnabled,
+            startDate,
+            dueDate,
+            dueTime,
+            dueDateReminder,
+            currentLabelText,
+            previousLabelColor,
+            currentLabelColor,
+            selectedBoardId,
+            selectedGroupId,
+            selectedPosition,
+            attachmentFile,
+            attachmentLink,
+            attachmentText
+        ])
+
+    const [firsts, setFirsts] = useState([])
+
+    function addActivityLog(fullName, actionText, paramName) {
+        if (!firsts.includes(paramName)) {
+            setFirsts(prev => [...prev, paramName])
+            return
+        }
+        setActivityLog(prev => [
+            ...prev,
+            {
+                id: Date.now(),
+                createdAt: Date.now(),
+                byMember: {
+                    _id: 'u101',
+                    fullName,
+                    imgUrl: ''
+                },
+                title: actionText
+            }
+        ])
+    }
+
+    useEffect(() => { addActivityLog('Roi', 'changed the card title', 'cardTitle') }, [cardTitle])
+    useEffect(() => { addActivityLog('Roi', 'updated the card description', 'description') }, [description])
+    useEffect(() => { addActivityLog('Roi', 'assigned/unassigned members', 'members') }, [members])
+    useEffect(() => { addActivityLog('Roi', 'added/removed labels', 'cardLabels') }, [cardLabels])
+    useEffect(() => { addActivityLog('Roi', 'updated location', 'location') }, [location])
+    useEffect(() => { addActivityLog('Roi', 'adjusted custom badges', 'badges') }, [badges])
+    useEffect(() => { addActivityLog('Roi', 'changed cover color/image', 'cover') }, [coverColor, coverImage])
+    useEffect(() => { addActivityLog('Roi', isDone ? 'marked this card as done' : 'marked this card as in progress', 'isDone') }, [isDone])
+    useEffect(() => { addActivityLog('Roi', isWatching ? 'started watching this card' : 'stopped watching this card', 'isWatching') }, [isWatching])
+    useEffect(() => { addActivityLog('Roi', 'changed checklists', 'checklists') }, [checklists])
+    useEffect(() => { addActivityLog('Roi', 'attached or removed files/links', 'attachments') }, [attachments])
+    useEffect(() => { addActivityLog('Roi', 'changed the due date', 'date') }, [date])
+    useEffect(() => { addActivityLog('Roi', 'changed the due time', 'dueTime') }, [dueTime])
+    useEffect(() => { addActivityLog('Roi', 'changed the due date reminder', 'dueDateReminder') }, [dueDateReminder])
+    useEffect(() => { addActivityLog('Roi', 'changed the start date', 'startDate') }, [startDate])
+    useEffect(() => { addActivityLog('Roi', 'moved the card to a different board', 'selectedBoardId') }, [selectedBoardId])
+    useEffect(() => { addActivityLog('Roi', 'moved the card to a different group', 'selectedGroupId') }, [selectedGroupId])
+    useEffect(() => { addActivityLog('Roi', 'changed the card’s position in the list', 'selectedPosition') }, [selectedPosition])
+    useEffect(() => { addActivityLog('Roi', 'renamed the list', 'listName') }, [listName])
+
+
+    function onModalCloseInner(ev) {
+        ev.stopPropagation()
+        ev.preventDefault()
+        saveTask().then(onClose(ev))
+            .catch(err => console.error(err))
+
+    }
+
+
+
+    // Redux boards and the current card details
+    // const boards = useSelector((state) => state.boardModule.boards)
+    // const currentBoard = taskToShow.board    // The board that the original card belongs to
+    // const currentGroup = taskToShow.group    // The group that the original card belongs to
+
+// "Name" for the new card
+    const [copyTitle, setCopyTitle] = useState(taskToShow.title || '')
+
+// Checkboxes to keep checklists, labels, members
+    const [keepChecklists, setKeepChecklists] = useState(true)
+    const [keepLabels, setKeepLabels] = useState(true)
+    const [keepMembers, setKeepMembers] = useState(true)
+
+// Where to copy the card
+//     const [selectedBoardId, setSelectedBoardId] = useState(currentBoard?._id || '')
+//     const [selectedGroupId, setSelectedGroupId] = useState(currentGroup?.id || '')
+//     const [selectedPosition, setSelectedPosition] = useState(1) // 1-based
+
+    // function getSelectedBoard() {
+    //     return boards.find((b) => b._id === selectedBoardId)
+    // }
+    //
+    // function getSelectedGroup() {
+    //     const board = getSelectedBoard()
+    //     if (!board) return null
+    //     return board.groups.find((g) => g.id === selectedGroupId)
+    // }
+
+
+
+    async function onCopyCard(ev) {
+        const targetBoard = getSelectedBoard()
+        const targetGroup = getSelectedGroup()
+        if (!targetBoard || !targetGroup) return
+
+        const boardCopy = JSON.parse(JSON.stringify(targetBoard))
+        const groupIdx = boardCopy.groups.findIndex(g => g.id === targetGroup.id)
+        if (groupIdx < 0) return
+
+        const newCard = {
+            id: makeId(),
+            title: copyTitle,
+            description: taskToShow.description || '',
+            checklists: keepChecklists ? JSON.parse(JSON.stringify(taskToShow.checklists || [])) : [],
+            labels: keepLabels ? JSON.parse(JSON.stringify(taskToShow.labels || [])) : [],
+            members: keepMembers ? JSON.parse(JSON.stringify(taskToShow.members || [])) : [],
+            attachments: [], // or copy if you want them
+            status: taskToShow.status || '',
+            style: { ...taskToShow.style },
+            priority: taskToShow.priority || '',
+            dueDate: taskToShow.dueDate || '',
+            comments: [],
+            labelIds: keepLabels ? JSON.parse(JSON.stringify(taskToShow.labelIds || [])) : [],
+            byMember: taskToShow.byMember || '',
+            badges: keepLabels ? [...(taskToShow.badges || [])] : [],
+            isUserWatching: false,
+            activity: [],
+            location: { ...taskToShow.location },
+            group: { ...taskToShow.group }
+
+        }
+
+        const pos = Math.min(selectedPosition - 1, boardCopy.groups[groupIdx].tasks.length)
+        boardCopy.groups[groupIdx].tasks.splice(pos, 0, newCard)
+
+        const cleaned = cleanBoard(boardCopy)
+        await updateBoard(cleaned)
+        hidePicker(ev)
+    }
+
+    function onDeleteTask(ev) {
+        onClose(ev)
+        const boardCopy = cleanBoard(taskToShow.board)
+        const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id)
+        if (groupIdx >= 0) {
+            const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id)
+            if (taskIdx >= 0) {
+                boardCopy.groups[groupIdx].tasks.splice(taskIdx, 1)
+            }
+        }
+        updateBoard(boardCopy)
+    }
 
     return (
         <>
@@ -540,11 +844,11 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 {(coverImage || coverColor) ? (<div
                     className="task-cover"
                     style={{
-                            backgroundImage: `url(${coverImage})` || '',
-                            backgroundColor: coverColor || ''
-                            }}
+                        backgroundImage: `url(${coverImage})` || '',
+                        backgroundColor: coverColor || ''
+                    }}
                 >
-                    <button className="task-modal-close" onClick={onClose}>
+                    <button className="task-modal-close" onClick={onModalCloseInner}>
                         <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
                         </svg>
@@ -572,9 +876,17 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                     <button onClick={saveTask}>---DEBUG---Save---</button>
                     <div className="task-modal-header">
                         <div className="task-left">
-                            <div className="task-icon status-icon" title="Card is complete">
-                                <i className="fa-regular fa-check"></i>
-                            </div>
+
+                            {isDone ? <div className="task-icon status-icon" title="Card is complete"
+                                           onClick={() => setIsDone(!isDone)}
+                                ><i className="fa-regular fa-check"></i></div> :
+                                <div className="task-icon status-icon-incomplete" title="Card is incomplete"
+                                     onClick={() => setIsDone(!isDone)}
+                                ></div>}
+
+
+                            {/*<i className="fa-regular fa-check"></i>*/}
+
 
                             <div className="task-title-section">
                                 <input
@@ -670,10 +982,12 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                             <div className="section-label">Notifications</div>
                                             <div className="just-flex-without-anything">
                                                 <button
-                                                    className={`task-watch ${isWatching ? "active" : ""}`}
+                                                    className={`task-watch ${isWatching ? "" : ""}`}
                                                     onClick={() => setIsWatching(!isWatching)}
                                                 >
+                                                    <i className="fa-regular fa-eye"></i>
                                                     {isWatching ? "Watching" : "Watch"}
+                                                    {isWatching && <i className="fa-regular fa-check"></i>}
                                                 </button>
                                             </div>
                                         </div>
@@ -694,7 +1008,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                                             ((taskToShow.status === 'done') ?
                                                                     (<span className="complete-label">Complete</span>) :
                                                                     (<span className="incomplete-label">Overdue</span>)
-                                                            ) : <span>a</span>
+                                                            ) : <span></span>
                                                         }
                                                         <i className="fa-regular fa-chevron-down"></i>
                                                         <input
@@ -768,7 +1082,14 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                                 </div>
                                                 <select
                                                     value={badge.text}
-                                                    onChange={(e) => setBadges(e.target.value)}
+                                                    onChange={(e) => setBadges(
+                                                        badges.map(b => {
+                                                            if (b.categ === badge.categ) {
+                                                                return {...b, text: e.target.value}
+                                                            }
+                                                            return b
+                                                        }))}
+
                                                     className="custom-dropdown"
                                                     style={{
                                                         backgroundColor: `${badge.color}`
@@ -793,17 +1114,33 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                             <i className="fa-regular fa-paperclip"></i>
                                             <h3>Attachments</h3>
                                         </div>
-                                        <button className="delete-btn">Add</button>
+                                        <button className="delete-btn"
+                                                onClick={() => {
+                                                    hidePicker(event)
+                                                    movePickerTo(event)
+                                                    setShowPickerAttachments(true)
+                                                }}
+                                        >Add
+                                        </button>
                                     </div>
                                     <div className="inner-component-left-padding">Files</div>
-                                    <div className="task-attachment-row inner-component-left-padding">
+                                    <div className="task-attachment-row inner-component-left-padding just-flex-cols">
                                         {(attachments.map(attachment => {
-                                            return <div key={attachment.id} className="just-flex">
-                                                <button className="attachment-extention">PNG</button>
-                                                <div className="file-info">
-                                                    <h5>{attachment.path}</h5>
-                                                    <label>{new Date(attachment.date).toLocaleDateString()}</label>
+                                            return <div key={attachment.id} className="flex-space-between-align full-width">
+                                                <div className="flex-space-between-align">
+                                                    <button className="attachment-extention">PNG</button>
+                                                    <div className="file-info">
+                                                        {attachment.text && <h5>{attachment.text}</h5>}
+                                                        {!attachment.text && <h5>{attachment.path}</h5>}
+                                                        <label>{new Date(attachment.date).toLocaleDateString()}</label>
+                                                    </div>
                                                 </div>
+                                                <button className="delete-btn-del"
+                                                        onClick={() => {
+                                                            setAttachments(attachments.filter(a => a.id !== attachment.id))
+                                                        }}
+                                                >Delete
+                                                </button>
                                             </div>
                                         }))}
                                     </div>
@@ -821,15 +1158,24 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                                         <i className="fa-regular fa-check-square"></i>
                                                         <h3>{checklist.title}</h3>
                                                     </div>
-                                                    <button className="delete-btn">Delete</button>
+                                                    <button className="delete-btn"
+                                                            onClick={() => {
+                                                                setChecklists(checklists.filter(c => c.id !== checklist.id))
+                                                            }}
+                                                    >Delete
+                                                    </button>
                                                 </div>
 
 
                                                 {checklist.progress &&
                                                     <div className="progress inner-component-left-padding">
                                                         <div className="progress-container">
-                                                            <div className="progress-num">0%</div>
-                                                            <div className="progress-bar"></div>
+                                                            <div className="progress-num">{checklist.progress}%</div>
+                                                            <div className="progress-bar">
+                                                                <div className="progress-bar-internal"
+                                                                     style={{width: `${checklist.progress}%`}}
+                                                                ></div>
+                                                            </div>
                                                         </div>
                                                     </div>}
 
@@ -837,43 +1183,112 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                                     return <>
                                                         <div>
                                                             <div className="just-flex-with-center checklist-todos">
-                                                                <input name={todo.title} type="checkbox"/>
-                                                                <label>{todo.title}</label>
+                                                                <input name={todo.title} type="checkbox"
+                                                                       checked={todo.isDone}
+                                                                       onChange={() => {
+                                                                           const newChecklists = checklists.map(c => {
+                                                                               if (c.id === checklist.id) {
+                                                                                   return {
+                                                                                       ...c, todos: c.todos.map(t => {
+                                                                                           if (t.id === todo.id) {
+                                                                                               return {...t, isDone: !t.isDone}
+                                                                                           }
+                                                                                           return t
+                                                                                       })
+                                                                                   }
+                                                                               }
+                                                                               return c
+                                                                           })
+
+                                                                           newChecklists.map(c => {
+                                                                               if (c.id === checklist.id) {
+                                                                                   let doneTodos = c.todos.filter(t => t.isDone)
+                                                                                   c.progress = Math.floor((doneTodos.length / c.todos.length) * 100)
+                                                                               }
+                                                                           })
+                                                                           setChecklists(newChecklists)
+                                                                       }}
+                                                                />
+                                                                <label
+                                                                    style={{textDecoration: todo.isDone ? 'line-through' : 'none'}}
+                                                                >{todo.title}</label>
                                                             </div>
                                                         </div>
                                                     </>
                                                 })}
 
-
+                                                {(addingToChecklist === 0) && <>
                                                 <div className="task-checklist-add inner-component-left-padding">
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Add an item"
-                                                        value={newChecklistItem}
-                                                        onChange={(e) => setNewChecklistItem(e.target.value)}
-                                                    />
+
+                                                    <button className="delete-btn-del" onClick={() => {
+                                                        setAddingToChecklist(checklist.id)
+                                                        }}>
+                                                        Add an item
+                                                    </button>
+
                                                 </div>
+                                                </>}
 
-                                                <div className="side-by-side inner-component-left-padding">
-                                                    <div className="just-flex">
-
-                                                        <div className="checklist-actions">
-                                                            <button className="btn-add">Add</button>
-                                                            <button className="btn-cancel">Cancel</button>
+                                                {(addingToChecklist === checklist.id)
+                                                    && <>
+                                                        <div className="task-checklist-add inner-component-left-padding">
+                                                            <input
+                                                                className="checklist-input"
+                                                                type="text"
+                                                                placeholder="Add an item"
+                                                                value={newChecklistItem}
+                                                                onChange={(e) => setNewChecklistItem(e.target.value)}
+                                                            />
                                                         </div>
-                                                    </div>
 
-                                                    <div className="just-flex">
-                                                        <button className="footer-action">
-                                                            <i className="fa-regular fa-user"></i>
-                                                            Assign
-                                                        </button>
-                                                        <button className="footer-action">
-                                                            <i className="fa-regular fa-clock"></i>
-                                                            Due date
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                                        <div className="side-by-side inner-component-left-padding">
+                                                            <div className="just-flex">
+
+                                                                <div className="checklist-actions">
+                                                                    <button className="btn-add"
+                                                                            onClick={() => {
+                                                                                setChecklists(checklists.map(c => {
+                                                                                        if (c.id === checklist.id) {
+                                                                                            return {
+                                                                                                ...c,
+                                                                                                todos: [...c.todos, {
+                                                                                                    id: Date.now(),
+                                                                                                    title: newChecklistItem,
+                                                                                                    isDone: false
+                                                                                                }]
+                                                                                            }
+                                                                                        }
+                                                                                        return c
+                                                                                    })
+                                                                                )
+                                                                                setNewChecklistItem('')
+                                                                            }}
+                                                                    >Add
+                                                                    </button>
+                                                                    <button className="btn-cancel"
+                                                                            onClick={() => {
+                                                                                setNewChecklistItem('')
+                                                                                setAddingToChecklist(0)
+                                                                            }}
+                                                                    >Cancel
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
+                                                            {/*<div className="just-flex">*/}
+                                                            {/*    <button className="footer-action">*/}
+                                                            {/*        <i className="fa-regular fa-user"></i>*/}
+                                                            {/*        Assign*/}
+                                                            {/*    </button>*/}
+                                                            {/*    <button className="footer-action">*/}
+                                                            {/*        <i className="fa-regular fa-clock"></i>*/}
+                                                            {/*        Due date*/}
+                                                            {/*    </button>*/}
+                                                            {/*</div>*/}
+                                                        </div>
+                                                    </>}
+
+
                                             </div>
                                         </>
                                     })}
@@ -890,7 +1305,11 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                             <i className="fa-regular fa-list"></i>
                                             <h3>Activity</h3>
                                         </div>
-                                        <button className="delete-btn">Hide Details</button>
+                                        {/*<button className="delete-btn"*/}
+                                        {/*        onClick={() => {*/}
+
+                                        {/*        }}>Hide Details*/}
+                                        {/*</button>*/}
                                     </div>
                                     <ul className="task-activity-list">
                                         <li key="1">
@@ -899,7 +1318,28 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                                     YP
                                                 </div>
                                                 <div className="flex-col input-container">
-                                                    <input className="activity-input" type="text" placeholder="Write a comment..."/>
+                                                    <input className="activity-input" type="text" placeholder="Write a comment..."
+                                                           ref={activityInputRef}
+                                                    />
+                                                    <button className="activity-btn"
+                                                            onClick={
+                                                                (e) => {
+                                                                    setActivityLog(
+                                                                        [...activityLog, {
+                                                                            id: Date.now(),
+                                                                            title: activityInputRef.current.value,
+                                                                            byMember: {
+                                                                                fullname: 'Yam Peleg',
+                                                                                imgUrl: ''
+                                                                            },
+                                                                            createdAt: Date.now()
+                                                                        }]
+                                                                    )
+                                                                    activityInputRef.current.value = ''
+                                                                }
+                                                            }
+                                                    >Save
+                                                    </button>
                                                 </div>
                                             </div>
                                         </li>
@@ -1025,11 +1465,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                     }}><i className="fa-regular fa-file-alt"></i> Make template
                             </button>
                             <button className="sidebar-btn"
-                                    onClick={(event) => {
-                                        hidePicker(event)
-                                        movePickerTo(event)
-                                        setShowPickerUnderConstruction(true)
-                                    }}><i className="fa-regular fa-archive"></i> Archive
+                                    onClick={onDeleteTask}><i className="fa-regular fa-archive"></i> Archive
                             </button>
                             <button className="sidebar-btn"
                                     onClick={(event) => {
@@ -1464,8 +1900,8 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                 type="text"
                                 placeholder="Text to display"
                                 className="display-text-input"
-                                value={attachmentDisplayText}
-                                onChange={(ev) => setAttachmentDisplayText(ev.target.value)}
+                                value={attachmentText}
+                                onChange={(ev) => setAttachmentText(ev.target.value)}
                             />
                         </div>
                     </div>
@@ -1870,66 +2306,168 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
             </div>
 
 
-            {/* MoveCards Picker */}
-            <div className="picker-popup" style={{
-                top: pickerTop,
-                left: pickerLeft,
-                display: (showPickerMoveCard) ? 'block' : 'none',
-                width: '304px'
-            }}>
+            {/* MoveCard Picker */}
+            <div
+                className="picker-popup"
+                style={{
+                    top: pickerTop,
+                    left: pickerLeft,
+                    display: showPickerMoveCard ? "block" : "none",
+                    width: "304px",
+                }}
+            >
                 <div className="picker-header">
                     <h3>Move card</h3>
                     <button className="task-modal-close" onClick={hidePicker}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M10.5858 12L5.29289
+             6.70711C4.90237 6.31658 4.90237
+             5.68342 5.29289 5.29289C5.68342
+             4.90237 6.31658 4.90237 6.70711
+             5.29289L12 10.5858L17.2929
+             5.29289C17.6834 4.90237 18.3166
+             4.90237 18.7071 5.29289C19.0976
+             5.68342 19.0976 6.31658 18.7071
+             6.70711L13.4142 12L18.7071
+             17.2929C19.0976 17.6834 19.0976
+             18.3166 18.7071 18.7071C18.3166
+             19.0976 17.6834 19.0976 17.2929
+             18.7071L12 13.4142L6.70711
+             18.7071C6.31658 19.0976 5.68342
+             19.0976 5.29289 18.7071C4.90237
+             18.3166 4.90237 17.6834 5.29289
+             17.2929L10.5858 12Z"
+                                fill="currentColor"
+                            />
                         </svg>
                     </button>
                 </div>
 
                 <div className="move-card-content">
-
                     <div className="select-section">
                         <h4>Select destination</h4>
 
                         <div className="select-group">
                             <label>Board</label>
-                            <select className="board-select">
-                                <option>trelloception</option>
+                            <select
+                                className="board-select"
+                                value={selectedBoardId}
+                                onChange={(e) => {
+                                    setSelectedBoardId(e.target.value)
+                                    setSelectedGroupId('')
+                                    setSelectedPosition(1)
+                                }}
+                            >
+                                {boards.map((b) => (
+                                    <option key={b._id} value={b._id}>
+                                        {b.title}
+                                    </option>
+                                ))}
                             </select>
                         </div>
 
                         <div className="select-row">
                             <div className="select-group">
                                 <label>List</label>
-                                <select className="list-select">
-                                    <option>In Progress</option>
+                                <select
+                                    className="list-select"
+                                    value={selectedGroupId}
+                                    onChange={(e) => {
+                                        setSelectedGroupId(e.target.value)
+                                        setSelectedPosition(1)
+                                    }}
+                                >
+                                    {getSelectedBoard()?.groups.map((group) => (
+                                        <option key={group.id} value={group.id}>
+                                            {group.title}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
+
                             <div className="select-group">
                                 <label>Position</label>
-                                <select className="position-select">
-                                    <option>1</option>
+                                <select
+                                    className="position-select"
+                                    value={selectedPosition}
+                                    onChange={(e) => setSelectedPosition(+e.target.value)}
+                                >
+                                    {(() => {
+                                        const grp = getSelectedGroup()
+                                        const numTasks = grp ? grp.tasks.length : 0
+                                        const positions = []
+                                        for (let i = 1; i <= numTasks + 1; i++) {
+                                            positions.push(i)
+                                        }
+                                        return positions.map((pos) => (
+                                            <option key={pos} value={pos}>
+                                                {pos}
+                                            </option>
+                                        ))
+                                    })()}
                                 </select>
                             </div>
                         </div>
                     </div>
 
-                    <button className="move-btn">Move</button>
+                    <button className="move-btn" onClick={onMoveCard}>
+                        Move
+                    </button>
                 </div>
             </div>
 
+
             {/* CopyCards Picker */}
-            <div className="picker-popup" style={{
-                top: pickerTop,
-                left: pickerLeft,
-                display: (showPickerCopyCard) ? 'block' : 'none',
-                width: '304px'
-            }}>
+            <div
+                className="picker-popup"
+                style={{
+                    top: pickerTop,
+                    left: pickerLeft,
+                    display: showPickerCopyCard ? 'block' : 'none',
+                    width: '304px',
+                }}
+            >
                 <div className="picker-header">
                     <h3>Copy card</h3>
                     <button className="task-modal-close" onClick={hidePicker}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M10.5858 12L5.29289
+             6.70711C4.90237 6.31658 4.90237
+             5.68342 5.29289 5.29289C5.68342
+             4.90237 6.31658 4.90237 6.70711
+             5.29289L12 10.5858L17.2929
+             5.29289C17.6834 4.90237 18.3166
+             4.90237 18.7071 5.29289C19.0976
+             5.68342 19.0976 6.31658 18.7071
+             6.70711L13.4142 12L18.7071
+             17.2929C19.0976 17.6834 19.0976
+             18.3166 18.7071 18.7071C18.3166
+             19.0976 17.6834 19.0976 17.2929
+             18.7071L12 13.4142L6.70711
+             18.7071C6.31658 19.0976 5.68342
+             19.0976 5.29289 18.7071C4.90237
+             18.3166 4.90237 17.6834 5.29289
+             17.2929L10.5858 12Z"
+                                fill="currentColor"
+                            />
                         </svg>
                     </button>
                 </div>
@@ -1940,24 +2478,36 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                         <input
                             type="text"
                             className="title-input"
-                            value="give every member a task to start working on"
+                            value={copyTitle}
+                            onChange={(e) => setCopyTitle(e.target.value)}
                         />
                     </div>
-
                     <div className="keep-section">
                         <label>Keep...</label>
                         <div className="keep-options">
                             <label className="keep-option">
-                                <input type="checkbox" checked/>
-                                <span>Checklists (1)</span>
+                                <input
+                                    type="checkbox"
+                                    checked={keepChecklists}
+                                    onChange={(e) => setKeepChecklists(e.target.checked)}
+                                />
+                                <span>Checklists ({taskToShow.checklists?.length || 0})</span>
                             </label>
                             <label className="keep-option">
-                                <input type="checkbox" checked/>
-                                <span>Labels (1)</span>
+                                <input
+                                    type="checkbox"
+                                    checked={keepLabels}
+                                    onChange={(e) => setKeepLabels(e.target.checked)}
+                                />
+                                <span>Labels ({taskToShow.labelIds?.length || 0})</span>
                             </label>
                             <label className="keep-option">
-                                <input type="checkbox" checked/>
-                                <span>Members (2)</span>
+                                <input
+                                    type="checkbox"
+                                    checked={keepMembers}
+                                    onChange={(e) => setKeepMembers(e.target.checked)}
+                                />
+                                <span>Members ({taskToShow.memberIds?.length || 0})</span>
                             </label>
                         </div>
                     </div>
@@ -1967,28 +2517,69 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
 
                         <div className="select-group">
                             <label>Board</label>
-                            <select className="board-select">
-                                <option>trelloception</option>
+                            <select
+                                className="board-select"
+                                value={selectedBoardId}
+                                onChange={(e) => {
+                                    setSelectedBoardId(e.target.value)
+                                    setSelectedGroupId('')
+                                    setSelectedPosition(1)
+                                }}
+                            >
+                                {boards.map((b) => (
+                                    <option key={b._id} value={b._id}>
+                                        {b.title}
+                                    </option>
+                                ))}
                             </select>
                         </div>
-
                         <div className="select-row">
                             <div className="select-group">
                                 <label>List</label>
-                                <select className="list-select">
-                                    <option>In Progress</option>
+                                <select
+                                    className="list-select"
+                                    value={selectedGroupId}
+                                    onChange={(e) => {
+                                        setSelectedGroupId(e.target.value)
+                                        setSelectedPosition(1)
+                                    }}
+                                >
+                                    {getSelectedBoard()?.groups.map((group) => (
+                                        <option key={group.id} value={group.id}>
+                                            {group.title}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
+
                             <div className="select-group">
                                 <label>Position</label>
-                                <select className="position-select">
-                                    <option>1</option>
+                                <select
+                                    className="position-select"
+                                    value={selectedPosition}
+                                    onChange={(e) => setSelectedPosition(+e.target.value)}
+                                >
+                                    {(() => {
+                                        const grp = getSelectedGroup()
+                                        const numTasks = grp ? grp.tasks.length : 0
+                                        const positions = []
+                                        for (let i = 1; i <= numTasks + 1; i++) {
+                                            positions.push(i)
+                                        }
+                                        return positions.map((pos) => (
+                                            <option key={pos} value={pos}>
+                                                {pos}
+                                            </option>
+                                        ))
+                                    })()}
                                 </select>
                             </div>
                         </div>
                     </div>
 
-                    <button className="create-btn">Create card</button>
+                    <button className="create-btn" onClick={onCopyCard}>
+                        Create card
+                    </button>
                 </div>
             </div>
 
@@ -2175,60 +2766,60 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                         <div className="color-grid">
                             <button
                                 className={`color-btn ${coverColor === '#4BCE97' ? 'selected' : ''}`}
-                                style={{ backgroundColor: '#4BCE97' }}
+                                style={{backgroundColor: '#4BCE97'}}
                                 onClick={() => onPickColor('#4BCE97')}
                             ></button>
                             <button
                                 className={`color-btn ${coverColor === '#F5CD47' ? 'selected' : ''}`}
-                                style={{ backgroundColor: '#F5CD47' }}
+                                style={{backgroundColor: '#F5CD47'}}
                                 onClick={() => onPickColor('#F5CD47')}
                             ></button>
                             <button
                                 className={`color-btn ${coverColor === '#FAA53D' ? 'selected' : ''}`}
-                                style={{ backgroundColor: '#FAA53D' }}
+                                style={{backgroundColor: '#FAA53D'}}
                                 onClick={() => onPickColor('#FAA53D')}
                             ></button>
                             <button
                                 className={`color-btn ${coverColor === '#F87168' ? 'selected' : ''}`}
-                                style={{ backgroundColor: '#F87168' }}
+                                style={{backgroundColor: '#F87168'}}
                                 onClick={() => onPickColor('#F87168')}
                             ></button>
                             <button
                                 className={`color-btn ${coverColor === '#9F8FEF' ? 'selected' : ''}`}
-                                style={{ backgroundColor: '#9F8FEF' }}
+                                style={{backgroundColor: '#9F8FEF'}}
                                 onClick={() => onPickColor('#9F8FEF')}
                             ></button>
 
                             <button
                                 className={`color-btn ${coverColor === '#579DFF' ? 'selected' : ''}`}
-                                style={{ backgroundColor: '#579DFF' }}
+                                style={{backgroundColor: '#579DFF'}}
                                 onClick={() => onPickColor('#579DFF')}
                             ></button>
                             <button
                                 className={`color-btn ${coverColor === '#79E2F2' ? 'selected' : ''}`}
-                                style={{ backgroundColor: '#79E2F2' }}
+                                style={{backgroundColor: '#79E2F2'}}
                                 onClick={() => onPickColor('#79E2F2')}
                             ></button>
                             <button
                                 className={`color-btn ${coverColor === '#7BC86C' ? 'selected' : ''}`}
-                                style={{ backgroundColor: '#7BC86C' }}
+                                style={{backgroundColor: '#7BC86C'}}
                                 onClick={() => onPickColor('#7BC86C')}
                             ></button>
                             <button
                                 className={`color-btn ${coverColor === '#FF8ED4' ? 'selected' : ''}`}
-                                style={{ backgroundColor: '#FF8ED4' }}
+                                style={{backgroundColor: '#FF8ED4'}}
                                 onClick={() => onPickColor('#FF8ED4')}
                             ></button>
                             <button
                                 className={`color-btn ${coverColor === '#8590A2' ? 'selected' : ''}`}
-                                style={{ backgroundColor: '#8590A2' }}
+                                style={{backgroundColor: '#8590A2'}}
                                 onClick={() => onPickColor('#8590A2')}
                             ></button>
                         </div>
 
                         <div className="color-blind-toggle">
                             <label>
-                                <input type="checkbox" />
+                                <input type="checkbox"/>
                                 <span>Enable colorblind friendly mode</span>
                             </label>
                         </div>
@@ -2263,37 +2854,37 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                                 className="photo-item"
                                 onClick={() => onPickImage('unsplash1.jpg')}
                             >
-                                <img src="unsplash1.jpg" alt="Aerial view" />
+                                <img src="unsplash1.jpg" alt="Aerial view"/>
                             </div>
                             <div
                                 className="photo-item"
                                 onClick={() => onPickImage('unsplash2.jpg')}
                             >
-                                <img src="unsplash2.jpg" alt="Sunset" />
+                                <img src="unsplash2.jpg" alt="Sunset"/>
                             </div>
                             <div
                                 className="photo-item"
                                 onClick={() => onPickImage('unsplash3.jpg')}
                             >
-                                <img src="unsplash3.jpg" alt="Ocean waves" />
+                                <img src="unsplash3.jpg" alt="Ocean waves"/>
                             </div>
                             <div
                                 className="photo-item"
                                 onClick={() => onPickImage('unsplash4.jpg')}
                             >
-                                <img src="unsplash4.jpg" alt="Palm trees" />
+                                <img src="unsplash4.jpg" alt="Palm trees"/>
                             </div>
                             <div
                                 className="photo-item"
                                 onClick={() => onPickImage('unsplash5.jpg')}
                             >
-                                <img src="unsplash5.jpg" alt="Night sky" />
+                                <img src="unsplash5.jpg" alt="Night sky"/>
                             </div>
                             <div
                                 className="photo-item"
                                 onClick={() => onPickImage('unsplash6.jpg')}
                             >
-                                <img src="unsplash6.jpg" alt="Pool" />
+                                <img src="unsplash6.jpg" alt="Pool"/>
                             </div>
                         </div>
                         <button className="search-photos-btn">Search for photos</button>
@@ -2422,6 +3013,8 @@ export function BoardDetails() {
     // taskService.query().then(res => console.log(res))
 
     const boardToShow = useSelector(state => state.boardModule.board)
+    console.log('bordDetails')
+    console.log(boardToShow)
     // const allBoards = useSelector(state => state.boardModule.boards)
 
     const [taskToShow, setTaskToShow] = useState(null)
@@ -2469,35 +3062,145 @@ export function BoardDetails() {
         task.board = currentBoard
 
         setTaskToShow(task)
+        setTaskToEdit(task)
         togglePopup()
     }
 
     function closePopupOnlyIfClickedOutOfIt(e) {
         if (e.target === e.currentTarget) {
+            onModalClose()
             togglePopup()
+
         }
     }
 
-    const [largeLabels, setLargeLabels] = useState(true)
+    function closePopup2(e) {
+        onModalClose()
+        togglePopup()
+    }
+
+
+    const [largeLabels, setLargeLabels] = useState(false)
 
     function toggleLargeLabels(ev) {
         ev.stopPropagation()
         setLargeLabels(!largeLabels)
     }
 
+    function onStarBoard(ev) {
+        ev.stopPropagation()
+        // need to implement
+    }
+
+    const [taskToEdit, setTaskToEdit] = useState(null)
+
+    function onSaveTaskOuter(updatedTask) {
+        // console.log(updatedTask.labels)
+        setTaskToEdit(updatedTask)
+    }
+
+    async function onModalClose() {
+        try {
+            // console.log('modal close')
+            const updatedTask = taskToEdit
+            console.log('modal close ', updatedTask.title)
+            const boardCopy = JSON.parse(JSON.stringify(boardToShow))
+            const groupIdx = boardCopy.groups.findIndex(
+                (g) => g.id === updatedTask.group.id
+            )
+            console.log('groupIdx', groupIdx)
+            if (groupIdx === -1) return
+            const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(
+                (t) => t.id === updatedTask.id
+            )
+            console.log('taskIdx', taskIdx)
+            if (taskIdx === -1) return
+            const {board, group, taskList, ...cleanTask} = updatedTask
+            boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask
+            await updateBoard(boardCopy)
+            setTaskToShow(null)
+            togglePopup()
+        } catch (err) {
+            console.error("Failed to save task:", err)
+        }
+    }
+
+    function onMoveaCard(card, fromGroupId, toGroupId) {
+        // 1) Copy board
+        const boardCopy = JSON.parse(JSON.stringify(boardToShow));
+        // 2) Remove from old group
+        const fromGroupIdx = boardCopy.groups.findIndex((g) => g.id === fromGroupId);
+        if (fromGroupIdx > -1) {
+            const taskIdx = boardCopy.groups[fromGroupIdx].tasks.findIndex((t) => t.id === card.id);
+            if (taskIdx > -1) {
+                boardCopy.groups[fromGroupIdx].tasks.splice(taskIdx, 1);
+            }
+        }
+
+        // 3) Insert into new group
+        const toGroupIdx = boardCopy.groups.findIndex((g) => g.id === toGroupId);
+        if (toGroupIdx > -1) {
+            boardCopy.groups[toGroupIdx].tasks.push(card);
+        }
+
+        // 4) Update the board
+        updateBoard(boardCopy);
+    }
+
+
+    function onMoveCard(card, fromGroupId, toGroupId, targetTask = null, edge = null) {
+        // 1) Copy board
+        const boardCopy = JSON.parse(JSON.stringify(boardToShow));
+        // 2) Remove from old group
+        const fromGroupIdx = boardCopy.groups.findIndex((g) => g.id === fromGroupId);
+        if (fromGroupIdx > -1) {
+            const taskIdx = boardCopy.groups[fromGroupIdx].tasks.findIndex((t) => t.id === card.id);
+            if (taskIdx > -1) boardCopy.groups[fromGroupIdx].tasks.splice(taskIdx, 1);
+        }
+        // 3) Insert into new group
+        const toGroupIdx = boardCopy.groups.findIndex((g) => g.id === toGroupId);
+        if (toGroupIdx > -1) {
+            // add at the end, or do more advanced logic if you want a specific position
+            boardCopy.groups[toGroupIdx].tasks.push(card);
+        }
+        updateBoard(boardCopy);
+    }
+
+    function onReorderCard(dragged, targetTask, edge, groupId) {
+        const boardCopy = JSON.parse(JSON.stringify(boardToShow));
+        const groupIdx = boardCopy.groups.findIndex((g) => g.id === groupId);
+        if (groupIdx === -1) return;
+
+        const tasks = boardCopy.groups[groupIdx].tasks;
+        const startIndex = tasks.findIndex((t) => t.id === dragged.id);
+        const targetIndex = tasks.findIndex((t) => t.id === targetTask.id);
+
+        const reordered = reorderWithEdge({
+            axis: "vertical",
+            list: tasks,
+            startIndex,
+            indexOfTarget: targetIndex,
+            closestEdgeOfTarget: edge, // top or bottom
+        });
+
+        boardCopy.groups[groupIdx].tasks = reordered;
+        updateBoard(boardCopy);
+    }
+
+
     if (!boardToShow) return (<>Loading..</>)
     return (
-        <div className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
+        <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
 
             {/* <button className="open-chat-btn" onClick={togglePopup}>💬</button> */}
             {isPopupShown && (!!taskToShow) && <>
 
                 <div className="popup" ref={popupRef} onClick={closePopupOnlyIfClickedOutOfIt}>
 
-                    <TaskModal taskToShow={taskToShow} onClose={togglePopup} popupRef={popupRef}/>
+                    <TaskModal taskToShow={taskToShow} onClose={closePopup2} popupRef={popupRef} onSaveTaskOuter={onSaveTaskOuter}/>
 
                 </div>
-                <div className="popup-backdrop" onClick={togglePopup}></div>
+                <div className="popup-backdrop" onClick={closePopupOnlyIfClickedOutOfIt}></div>
             </>
             }
 
@@ -2510,15 +3213,21 @@ export function BoardDetails() {
 
                 <section className="board-display">
 
-                    <BoardHeader/>
+                    <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred}/>
 
                     <section className="group-lists">
                         {boardToShow.groups.map(group => {
 
                             // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>
                             return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
-                                <GroupHeader group={group}/>
-                                <TaskList toggleLargeLabels={toggleLargeLabels} largeLabels={largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}/>
+                            <GroupHeader group={group}/>
+                                <TaskList toggleLargeLabels={toggleLargeLabels} largeLabels={largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}
+
+
+
+
+                                          onReorderCard={onReorderCard}
+                                          onMoveCard={onMoveCard}/>
 
 
                             </div>

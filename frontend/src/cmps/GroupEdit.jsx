@@ -10,7 +10,7 @@ export function GroupEdit({onSetMoveAll,group, onSetCopyList,header, onSetGroupE
     const board = useSelector(state => state.boardModule.board)
     
     function addGroup(){
-        eventBus.emit('showAddGroup',true)
+        eventBus.emit('showAddGroup',group.id)
         onSetGroupEdit()
     }
     function onSetIsWatched(){
@@ -25,7 +25,12 @@ export function GroupEdit({onSetMoveAll,group, onSetCopyList,header, onSetGroupE
       group.style.backgroundColor = color
       updateBoard(board)
     }
-  
+    function onArchiveList(){
+        const idx = board.groups.findIndex( grp => grp.id === group.id)
+        board.groups.splice(idx,1)
+        onSetGroupEdit()
+        updateBoard(board)
+    }
 
     return (
         <div 
@@ -50,19 +55,20 @@ export function GroupEdit({onSetMoveAll,group, onSetCopyList,header, onSetGroupE
                         <span className="premium">PREMIUM</span>
                     </div>
                     <div className="colors">
-                        <button value={'#4BCE97'} onClick={changeColor} className="green"></button>
-                        <button value={'#F5CD47'} onClick={changeColor} className="yellow"></button>
-                        <button  value={'#E56910'} onClick={changeColor} className="orange"></button>
-                        <button value={'#f87168'} onClick={changeColor} className="red"></button>
-                        <button value={'#9f8fef'} onClick={changeColor} className="purple"></button>
-                        <button value={'#579dff'} onClick={changeColor} className="blue"></button>
-                        <button  value={'#60c6d2'} onClick={changeColor} className="teal"></button>
-                        <button value={'#94c748'} onClick={changeColor} className="lime"></button>
-                        <button value={'#e774bb'} onClick={changeColor} className="magenta"></button>
-                        <button value={'#8590a2'} onClick={changeColor} className="gray"></button>
+                        <button value={'#164b35'} onClick={changeColor} className="green"></button>
+                        <button value={'#4f3a0e'} onClick={changeColor} className="yellow"></button>
+                        <button  value={'#6e3b0d'} onClick={changeColor} className="orange"></button>
+                        <button value={'6e0d0d'} onClick={changeColor} className="red"></button>
+                        <button value={'#4f3a0e'} onClick={changeColor} className="purple"></button>
+                        <button value={'#0d2e6e'} onClick={changeColor} className="blue"></button>
+                        <button  value={'#0d3a4f'} onClick={changeColor} className="teal"></button>
+                        <button value={'#3a4f0d'} onClick={changeColor} className="lime"></button>
+                        <button value={'#6e0d3a'} onClick={changeColor} className="magenta"></button>
+                        <button value={'#3a3a3a'} onClick={changeColor} className="gray"></button>
                     </div>
                     <button onClick={changeColor} className="remove-color"> X Remove color</button>
                 </section>
+                <button onClick={onArchiveList} className="archive">Archive this list</button>
             </section>
 
         </div>

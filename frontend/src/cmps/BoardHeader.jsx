@@ -1,29 +1,35 @@
 
 
-import {useRef, useState} from "react"
-import {FilterCards} from "./FilterCards"
+import { useRef, useState } from "react"
+import { FilterCards } from "./FilterCards"
+import { useSelector } from "react-redux"
 
-export function BoardHeader() {
+export function BoardHeader({ onStarBoard, isStarred }) {
     const elFilter = useRef()
     const [ShowFilter, setShowFilter] = useState(false)
+    const boardToShow = useSelector(state => state.boardModule.board)
 
     return (
         <header className="board-header">
             <div className="header-group">
-                <h3 className="board-name">trelloception</h3>
-                <button>
-                    <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <h3 className="board-name">{boardToShow.title}</h3>
+                <button
+                    onClick={onStarBoard}
+                >
+                    {isStarred ? <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd" clipRule="evenodd" d="M7.49495 20.995L11.9999 18.6266L16.5049 20.995C16.8059 21.1533 17.1507 21.2079 17.4859 21.1504C18.3276 21.006 18.893 20.2066 18.7486 19.3649L17.8882 14.3485L21.5328 10.7959C21.7763 10.5585 21.9348 10.2475 21.9837 9.91094C22.1065 9.06576 21.5209 8.28106 20.6758 8.15825L15.6391 7.42637L13.3866 2.86236C13.2361 2.55739 12.9892 2.31054 12.6843 2.16003C11.9184 1.78206 10.9912 2.0965 10.6132 2.86236L8.36072 7.42637L3.32403 8.15825C2.98747 8.20715 2.67643 8.36564 2.43904 8.60917C1.84291 9.22074 1.85542 10.1998 2.46699 10.7959L6.11158 14.3485L5.25121 19.3649C5.19372 19.7 5.24833 20.0448 5.40658 20.3459C5.80401 21.1018 6.739 21.3924 7.49495 20.995ZM19.3457 10.0485L15.6728 13.6287L16.5398 18.684L11.9999 16.2972L7.45995 18.684L8.327 13.6287L4.65411 10.0485L9.72993 9.31093L11.9999 4.71146L14.2699 9.31093L19.3457 10.0485Z" fill="currentColor"></path>
-                    </svg>
+                    </svg> : <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.9999 18.6266L7.49495 20.995C6.739 21.3924 5.80401 21.1018 5.40658 20.3459C5.24833 20.0448 5.19372 19.7 5.25121 19.3649L6.11158 14.3485L2.46699 10.7959C1.85542 10.1998 1.84291 9.22074 2.43904 8.60917C2.67643 8.36564 2.98747 8.20715 3.32403 8.15825L8.36072 7.42637L10.6132 2.86236C10.9912 2.0965 11.9184 1.78206 12.6843 2.16003C12.9892 2.31054 13.2361 2.55739 13.3866 2.86236L15.6391 7.42637L20.6758 8.15825C21.5209 8.28106 22.1065 9.06576 21.9837 9.91094C21.9348 10.2475 21.7763 10.5585 21.5328 10.7959L17.8882 14.3485L18.7486 19.3649C18.893 20.2066 18.3276 21.006 17.4859 21.1504C17.1507 21.2079 16.8059 21.1533 16.5049 20.995L11.9999 18.6266Z" fill="currentColor"></path>
+                    </svg>}
 
                 </button>
                 <button>
                     <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd" clipRule="evenodd"
-                              d="M12.5048 5.67168C11.9099 5.32669 11.2374 5.10082 10.5198 5.0267C11.2076 3.81639 12.5085 3 14 3C16.2092 3 18 4.79086 18 7C18 7.99184 17.639 8.89936 17.0413 9.59835C19.9512 10.7953 22 13.6584 22 17C22 17.5523 21.5523 18 21 18H18.777C18.6179 17.2987 18.3768 16.6285 18.0645 16H19.917C19.4892 13.4497 17.4525 11.445 14.8863 11.065C14.9608 10.7218 15 10.3655 15 10C15 9.58908 14.9504 9.18974 14.857 8.80763C15.5328 8.48668 16 7.79791 16 7C16 5.89543 15.1046 5 14 5C13.4053 5 12.8711 5.25961 12.5048 5.67168ZM10 12C11.1046 12 12 11.1046 12 10C12 8.89543 11.1046 8 10 8C8.89543 8 8 8.89543 8 10C8 11.1046 8.89543 12 10 12ZM14 10C14 10.9918 13.639 11.8994 13.0412 12.5984C15.9512 13.7953 18 16.6584 18 20C18 20.5523 17.5523 21 17 21H3C2.44772 21 2 20.5523 2 20C2 16.6584 4.04879 13.7953 6.95875 12.5984C6.36099 11.8994 6 10.9918 6 10C6 7.79086 7.79086 6 10 6C12.2091 6 14 7.79086 14 10ZM9.99999 14C12.973 14 15.441 16.1623 15.917 19H4.08295C4.55902 16.1623 7.02699 14 9.99999 14Z"
-                              fill="currentColor"></path>
+                            d="M12.5048 5.67168C11.9099 5.32669 11.2374 5.10082 10.5198 5.0267C11.2076 3.81639 12.5085 3 14 3C16.2092 3 18 4.79086 18 7C18 7.99184 17.639 8.89936 17.0413 9.59835C19.9512 10.7953 22 13.6584 22 17C22 17.5523 21.5523 18 21 18H18.777C18.6179 17.2987 18.3768 16.6285 18.0645 16H19.917C19.4892 13.4497 17.4525 11.445 14.8863 11.065C14.9608 10.7218 15 10.3655 15 10C15 9.58908 14.9504 9.18974 14.857 8.80763C15.5328 8.48668 16 7.79791 16 7C16 5.89543 15.1046 5 14 5C13.4053 5 12.8711 5.25961 12.5048 5.67168ZM10 12C11.1046 12 12 11.1046 12 10C12 8.89543 11.1046 8 10 8C8.89543 8 8 8.89543 8 10C8 11.1046 8.89543 12 10 12ZM14 10C14 10.9918 13.639 11.8994 13.0412 12.5984C15.9512 13.7953 18 16.6584 18 20C18 20.5523 17.5523 21 17 21H3C2.44772 21 2 20.5523 2 20C2 16.6584 4.04879 13.7953 6.95875 12.5984C6.36099 11.8994 6 10.9918 6 10C6 7.79086 7.79086 6 10 6C12.2091 6 14 7.79086 14 10ZM9.99999 14C12.973 14 15.441 16.1623 15.917 19H4.08295C4.55902 16.1623 7.02699 14 9.99999 14Z"
+                            fill="currentColor"></path>
                     </svg>
-                    </button>
+                </button>
                 <button>
                     <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd" clipRule="evenodd" d="M1.66683 9.66665C0.93045 9.66665 0.333496 9.06969 0.333496 8.33331V1.66665C0.333496 0.930267 0.93045 0.333313 1.66683 0.333313H12.3335C13.0699 0.333313 13.6668 0.930267 13.6668 1.66665V8.33331C13.6668 9.06969 13.0699 9.66665 12.3335 9.66665H1.66683ZM12.3335 5.66665V4.33331H5.66683V5.66665H12.3335ZM12.3335 2.99998V1.66665H5.66683V2.99998H12.3335ZM12.3335 6.99998V8.33331H5.66683V6.99998H12.3335ZM1.66683 4.33331V5.66665H4.3335V4.33331H1.66683ZM1.66683 6.99998V8.33331H4.3335V6.99998H1.66683ZM1.66683 2.99998V1.66665H4.3335V2.99998H1.66683Z" fill="currentColor"></path>
@@ -61,7 +67,7 @@ export function BoardHeader() {
                         <path d="M10.1838 4.78749C10.2664 4.61167 10.4433 4.49957 10.6375 4.5L17.0011 4.51406C17.1951 4.51449 17.3713 4.62709 17.4532 4.80294C17.5352 4.97879 17.508 5.18614 17.3835 5.33492L13.9446 9.44482H16.8597C17.0645 9.44482 17.2486 9.5697 17.3243 9.76C17.4 9.95029 17.352 10.1675 17.2032 10.3082L7.62319 19.3634C7.44433 19.5324 7.16903 19.5462 6.97421 19.3958C6.77938 19.2454 6.72297 18.9756 6.84122 18.7598L9.86254 13.2448H7C6.82891 13.2448 6.66969 13.1573 6.57795 13.0129C6.48621 12.8685 6.47469 12.6872 6.54741 12.5323L10.1838 4.78749Z" fill="currentColor"></path>
                     </svg>
 
-                    </button>
+                </button>
                 <button ref={elFilter} className="filters-btn" onClick={() => setShowFilter(true)}>
                     <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd" clipRule="evenodd" d="M4.61799 6C3.87461 6 3.39111 6.78231 3.72356 7.44721L3.99996 8H20L20.2763 7.44721C20.6088 6.78231 20.1253 6 19.3819 6H4.61799ZM10.8618 17.7236C10.9465 17.893 11.1196 18 11.309 18H12.6909C12.8803 18 13.0535 17.893 13.1382 17.7236L14 16H9.99996L10.8618 17.7236ZM17 13H6.99996L5.99996 11H18L17 13Z" fill="currentColor"></path>
@@ -71,20 +77,20 @@ export function BoardHeader() {
                 <div className="divider"></div>
                 <div className="users">
                     <div className="user-icon">
-                        <img src="roi.png"/>
-                        <img className="admin-rank" src="admin.png"/>
+                        <img src="roi.png" />
+                        <img className="admin-rank" src="admin.png" />
                     </div>
                     <div className="user-icon">
-                        <img src="roi.png"/>
-                        <img className="admin-rank" src="admin.png"/>
+                        <img src="roi.png" />
+                        <img className="admin-rank" src="admin.png" />
                     </div>
                     <div className="user-icon">
-                        <img src="roi.png"/>
-                        <img className="admin-rank" src="admin.png"/>
+                        <img src="roi.png" />
+                        <img className="admin-rank" src="admin.png" />
                     </div>
                     <div className="user-icon">
-                        <img src="roi.png"/>
-                        <img className="admin-rank" src="admin.png"/>
+                        <img src="roi.png" />
+                        <img className="admin-rank" src="admin.png" />
                     </div>
                 </div>
                 <button className="share-btn">
@@ -103,7 +109,7 @@ export function BoardHeader() {
 
                 </button>
             </div>
-            {ShowFilter && <FilterCards setShowFilter={setShowFilter} el={elFilter}/>}
+            {ShowFilter && <FilterCards setShowFilter={setShowFilter} el={elFilter} />}
         </header>
 
     )

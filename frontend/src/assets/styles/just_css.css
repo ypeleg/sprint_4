@@ -479,13 +479,23 @@
 .task-watch,
 .task-watch-btn {
     border-radius: 4px;
-    height: 32px
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+}
+
+.task-watch i,.task-watch-btn i {
+    margin-top: 4px;
+    margin-inline: 3px;
 }
 
 .task-watch-btn.active,
 .task-watch.active {
     background-color: #0079bf;
-    color: #fff
+    color: #fff;
+
 }
 
 .task-description {
@@ -878,13 +888,27 @@ input.task-title:focus {
 }
 
 .status-icon {
-    translate: 0 .5em;
+    translate: 0 .2em;
     height: 18px;
     width: 18px;
     background-color: #36a678;
     border-radius: 50%;
     justify-items: center;
-    justify-content: center
+    justify-content: center;
+    cursor: pointer;
+}
+
+.status-icon-incomplete {
+    /*background-color: #f2d600;*/
+    translate: 0 .5em;
+    height: 18px;
+    width: 18px;
+    /*background-color: #36a678;*/
+    border-radius: 50%;
+    justify-items: center;
+    justify-content: center;
+    border: 3px solid #707c90;
+    cursor: pointer;
 }
 
 .status-icon>i {
@@ -998,6 +1022,7 @@ input.task-title:focus {
     display: flex;
     align-items: center;
     gap: 4px
+
 }
 
 .btn-add,
@@ -1104,6 +1129,13 @@ input.task-title:focus {
     width: 100%;
     height: 6px;
     border-radius: 5px
+}
+
+.progress-bar-internal {
+    background-color: #1f845a;
+    height: 6px;
+    border-radius: 5px;
+    transition: width .2s ease
 }
 
 .progress-container {
@@ -3081,3 +3113,86 @@ label {
 .task-description {
     margin-top: 16px;
 }
+
+.tasklist-icon {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-inline: 4px;
+}
+
+.hinted {
+    padding: 4px;
+    margin-top: -6px;
+}
+
+.hinted:hover {
+    background-color: rgba(0, 0, 0, 0.16);
+    border-radius: 3px;
+
+}
+
+.just-flex-cols {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+button.delete-btn-del {
+    background-color: #e2e4ea;
+    color: #42526e;
+    border: none;
+    /*border-radius: 3px;*/
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+div.task-user-icon {
+    font-size: 10px;
+}
+
+button.delete-btn-del:hover {
+    background-color: #dfe1e6;
+    color: #172b4d;
+}
+
+.checklist-todos {
+    margin-left: 8px;
+}
+
+.cover-color {
+    width: 100%;
+    /*padding-bottom: 100%;*/
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    height: 40px;
+}
+
+
+.task-cover-color {
+    margin: -10px -9px -9px -10px;
+    margin-bottom: 10px;
+    padding-inline: 1px;
+    aspect-ratio: unset;
+    height: 40px;
+
+    /*height: 40px;*/
+
+    img {
+        border-radius: 8px 8px 0px 0px;
+
+    }
+    /*scrollbar-color: #091E4224 #091E420F;*/
+    /*scrollbar-width: thin;*/
+    /*overflow-y: scroll;*/
+    /*padding-inline: 2px;*/
+
+}
+

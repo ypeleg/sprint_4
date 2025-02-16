@@ -58,6 +58,7 @@
 
         .color-picker {
             border-top: 1px solid #091e4224;
+            border-bottom:1px solid #091e4224 ;
             margin-top: 2px;
             .color-picker-header {
                 display: flex;
@@ -152,9 +153,19 @@
             padding: 8px 12px;
             font-size: 13px;
             font-weight: 600;
+            margin-bottom: 6px;
             &:hover{
                 background-color: #091e4224;
             }
+        }
+        .archive{
+            text-align: start;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 20px;
+            color: #172B4D;
+            width: 100%;
+            margin-top: 4px;
         }
     }
 }
