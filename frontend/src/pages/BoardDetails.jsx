@@ -68,7 +68,8 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
 
 
     console.log('task', taskToShow)
-    const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
+    // const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
+
     const [cardTitle, setCardTitle] = useState(taskToShow.title || '')
     const [listName, setListName] = useState(taskToShow.group?.title || '')
     const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)
@@ -127,6 +128,21 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     const [pickerTop, setPickerTop] = useState('0px')
     const [pickerLeft, setPickerLeft] = useState('0px')
 
+    const coverFileInputRef = useRef(null)
+
+    function onCoverFileSelected(ev) {
+        const file = ev.target.files?.[0]
+        if (!file) return
+        const reader = new FileReader()
+        reader.onload = (event) => {
+            const dataUrl = event.target.result
+            setCoverColor('')
+            setCoverImage(dataUrl)
+        }
+        reader.readAsDataURL(file)
+    }
+
+
     // custom fields
     const [newFieldId, setNewFieldId] = useState(null)
     const [newFieldTitle, setNewFieldTitle] = useState('')
@@ -167,10 +183,10 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     function dropDuplicateMembers(cardMembers, boardMembers) {
         return boardMembers.reduce((acc, member) => {
             if (!cardMembers.some(m => m._id === member._id)) {
-                acc.push(member);
+                acc.push(member)
             }
-            return acc;
-        }, []);
+            return acc
+        }, [])
     }
 
     const [boardMembersToShow, setBoardMembersToShow] = useState(dropDuplicateMembers(members, boardMembers))
@@ -217,13 +233,13 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
 
     function onToggleLabel(label) {
         setCardLabels(prev => {
-            const isAlreadyAssigned = prev.some(l => l.color === label.color);
+            const isAlreadyAssigned = prev.some(l => l.color === label.color)
             if (isAlreadyAssigned) {
-                return prev.filter(l => l.color !== label.color);
+                return prev.filter(l => l.color !== label.color)
             } else {
-                return [...prev, label];
+                return [...prev, label]
             }
-        });
+        })
     }
 
     const [currentLabelText, setCurrentLabelText] = useState('')
@@ -338,7 +354,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
             dueDate: null,
             dueDateReminder: null,
         }
-        // updateBoard(...);
+        // updateBoard(...)
     }
     function formatMMDDYYYY(dateObj) {
         if (!dateObj) return ''
@@ -440,13 +456,6 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     }
 
 
-
-
-
-
-
-
-
     // return (
     //     <div className="task-modal">
     //         {/* ... */}
@@ -454,7 +463,6 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     //         {/* ... */}
     //     </div>
     // )
-
 
 
     const [attachmentFile, setAttachmentFile] = useState(null)
@@ -496,6 +504,32 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     }
 
 
+    const [coverColor, setCoverColor] = useState( taskToShow.style.backgroundColor || '')
+    const [coverImage, setCoverImage] = useState(taskToShow.style.backgroundImage || '')
+    const [coverSize, setCoverSize] = useState(taskToShow.style.backgroundSize || 'small')
+
+    function onPickColor(color) {
+        setCoverColor(color)
+        setCoverImage('')
+    }
+
+    function onPickImage(url) {
+        setCoverImage(url)
+        setCoverColor('')
+    }
+
+    function onPickSize(size) {
+        setCoverSize(size)
+    }
+
+    function onRemoveCover() {
+        setCoverColor('')
+        setCoverImage('')
+        setCoverSize('small')
+    }
+
+
+
     return (
         <>
             <div className="task-modal">
@@ -503,11 +537,28 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 {/*onClick={hidePicker}>*/}
 
 
-                {coverUrl ? (<div
+                {(coverImage || coverColor) ? (<div
                     className="task-cover"
-                    style={{backgroundImage: `url(${coverUrl})`}}
+                    style={{
+                            backgroundImage: `url(${coverImage})` || '',
+                            backgroundColor: coverColor || ''
+                            }}
                 >
-                    <button className="task-modal-close" onClick={onClose}>x</button>
+                    <button className="task-modal-close" onClick={onClose}>
+                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
+                        </svg>
+                    </button>
+                    <button className="change-cover-btn" onClick={(ev) => {
+                        hidePicker(ev)
+                        movePickerTo(ev)
+                        setShowPickerCover(true)
+                    }}>
+                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path fillRule="evenodd" clipRule="evenodd" d="M5 5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5ZM19 7H5V13H19V7Z" fill="currentColor"></path>
+                        </svg>
+                        Cover
+                    </button>
                 </div>) : (<div
                     className="task-no-cover"
                     // style={{ backgroundImage: `url(${coverUrl})` }}
@@ -2053,10 +2104,213 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
             </div>
 
             {/* Cover Picker */}
+
+            <div
+                className="picker-popup"
+                style={{
+                    top: pickerTop,
+                    left: pickerLeft,
+                    display: showPickerCover ? 'block' : 'none',
+                    width: '304px',
+                }}
+            >
+                <div className="picker-header">
+                    <h3>Cover</h3>
+                    <button className="task-modal-close" onClick={hidePicker}>
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M10.5858 12L5.29289
+             6.70711C4.90237 6.31658 4.90237
+             5.68342 5.29289 5.29289C5.68342
+             4.90237 6.31658 4.90237 6.70711
+             5.29289L12 10.5858L17.2929
+             5.29289C17.6834 4.90237 18.3166
+             4.90237 18.7071 5.29289C19.0976
+             5.68342 19.0976 6.31658 18.7071
+             6.70711L13.4142 12L18.7071
+             17.2929C19.0976 17.6834 19.0976
+             18.3166 18.7071 18.7071C18.3166
+             19.0976 17.6834 19.0976 17.2929
+             18.7071L12 13.4142L6.70711
+             18.7071C6.31658 19.0976 5.68342
+             19.0976 5.29289 18.7071C4.90237
+             18.3166 4.90237 17.6834 5.29289
+             17.2929L10.5858 12Z"
+                                fill="currentColor"
+                            />
+                        </svg>
+                    </button>
+                </div>
+
+                <div className="cover-content">
+                    {/* SIZE SECTION */}
+                    <div className="size-section">
+                        <label>Size</label>
+                        <div className="size-options">
+                            <button
+                                className={`size-preview small ${coverSize === 'small' ? 'selected' : ''}`}
+                                onClick={() => onPickSize('small')}
+                            ></button>
+                            <button
+                                className={`size-preview large ${coverSize === 'large' ? 'selected' : ''}`}
+                                onClick={() => onPickSize('large')}
+                            ></button>
+                        </div>
+                        <button className="remove-cover-btn" onClick={onRemoveCover}>
+                            Remove cover
+                        </button>
+                    </div>
+
+                    {/* COLORS SECTION */}
+                    <div className="colors-section">
+                        <label>Colors</label>
+                        <div className="color-grid">
+                            <button
+                                className={`color-btn ${coverColor === '#4BCE97' ? 'selected' : ''}`}
+                                style={{ backgroundColor: '#4BCE97' }}
+                                onClick={() => onPickColor('#4BCE97')}
+                            ></button>
+                            <button
+                                className={`color-btn ${coverColor === '#F5CD47' ? 'selected' : ''}`}
+                                style={{ backgroundColor: '#F5CD47' }}
+                                onClick={() => onPickColor('#F5CD47')}
+                            ></button>
+                            <button
+                                className={`color-btn ${coverColor === '#FAA53D' ? 'selected' : ''}`}
+                                style={{ backgroundColor: '#FAA53D' }}
+                                onClick={() => onPickColor('#FAA53D')}
+                            ></button>
+                            <button
+                                className={`color-btn ${coverColor === '#F87168' ? 'selected' : ''}`}
+                                style={{ backgroundColor: '#F87168' }}
+                                onClick={() => onPickColor('#F87168')}
+                            ></button>
+                            <button
+                                className={`color-btn ${coverColor === '#9F8FEF' ? 'selected' : ''}`}
+                                style={{ backgroundColor: '#9F8FEF' }}
+                                onClick={() => onPickColor('#9F8FEF')}
+                            ></button>
+
+                            <button
+                                className={`color-btn ${coverColor === '#579DFF' ? 'selected' : ''}`}
+                                style={{ backgroundColor: '#579DFF' }}
+                                onClick={() => onPickColor('#579DFF')}
+                            ></button>
+                            <button
+                                className={`color-btn ${coverColor === '#79E2F2' ? 'selected' : ''}`}
+                                style={{ backgroundColor: '#79E2F2' }}
+                                onClick={() => onPickColor('#79E2F2')}
+                            ></button>
+                            <button
+                                className={`color-btn ${coverColor === '#7BC86C' ? 'selected' : ''}`}
+                                style={{ backgroundColor: '#7BC86C' }}
+                                onClick={() => onPickColor('#7BC86C')}
+                            ></button>
+                            <button
+                                className={`color-btn ${coverColor === '#FF8ED4' ? 'selected' : ''}`}
+                                style={{ backgroundColor: '#FF8ED4' }}
+                                onClick={() => onPickColor('#FF8ED4')}
+                            ></button>
+                            <button
+                                className={`color-btn ${coverColor === '#8590A2' ? 'selected' : ''}`}
+                                style={{ backgroundColor: '#8590A2' }}
+                                onClick={() => onPickColor('#8590A2')}
+                            ></button>
+                        </div>
+
+                        <div className="color-blind-toggle">
+                            <label>
+                                <input type="checkbox" />
+                                <span>Enable colorblind friendly mode</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    {/* ATTACHMENTS SECTION */}
+                    <div className="attachments-section">
+                        <label>Attachments</label>
+                        <input
+                            type="file"
+                            style={{display: 'none'}}
+                            ref={coverFileInputRef}
+                            onChange={onCoverFileSelected}
+                        />
+
+                        <button
+                            className="upload-btn"
+                            onClick={() => coverFileInputRef.current.click()}
+                        >
+                            Upload a cover image
+                        </button>
+                        <p className="upload-tip">
+                            Tip: Drag an image on to the card to upload it.
+                        </p>
+                    </div>
+
+                    {/* UNSPLASH SECTION */}
+                    <div className="unsplash-section">
+                        <label>Photos from Unsplash</label>
+                        <div className="photo-grid">
+                            <div
+                                className="photo-item"
+                                onClick={() => onPickImage('unsplash1.jpg')}
+                            >
+                                <img src="unsplash1.jpg" alt="Aerial view" />
+                            </div>
+                            <div
+                                className="photo-item"
+                                onClick={() => onPickImage('unsplash2.jpg')}
+                            >
+                                <img src="unsplash2.jpg" alt="Sunset" />
+                            </div>
+                            <div
+                                className="photo-item"
+                                onClick={() => onPickImage('unsplash3.jpg')}
+                            >
+                                <img src="unsplash3.jpg" alt="Ocean waves" />
+                            </div>
+                            <div
+                                className="photo-item"
+                                onClick={() => onPickImage('unsplash4.jpg')}
+                            >
+                                <img src="unsplash4.jpg" alt="Palm trees" />
+                            </div>
+                            <div
+                                className="photo-item"
+                                onClick={() => onPickImage('unsplash5.jpg')}
+                            >
+                                <img src="unsplash5.jpg" alt="Night sky" />
+                            </div>
+                            <div
+                                className="photo-item"
+                                onClick={() => onPickImage('unsplash6.jpg')}
+                            >
+                                <img src="unsplash6.jpg" alt="Pool" />
+                            </div>
+                        </div>
+                        <button className="search-photos-btn">Search for photos</button>
+                        <p className="unsplash-credit">
+                            By using images from Unsplash, you agree to their
+                            <a href="#" className="terms-link"> Terms of Service</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
             <div className="picker-popup" style={{
                 top: pickerTop,
                 left: pickerLeft,
-                display: (showPickerCover) ? 'block' : 'none',
+                // display: (showPickerCover) ? 'block' : 'none',
+                display: 'none',
                 width: '304px'
             }}>
                 <div className="picker-header">

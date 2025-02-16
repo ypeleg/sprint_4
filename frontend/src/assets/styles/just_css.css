@@ -216,7 +216,8 @@
 .task-modal-close {
     width: 32px;
     height: 32px;
-    border-radius: 50%
+    border-radius: 50%;
+
 }
 
 .task-modal-close:hover {
@@ -575,14 +576,34 @@
 
 .task-modal-close {
     position: absolute;
-    top: 3px;
-    right:6px;
+    top: 32px;
+    right:32px;
     border: 0;
     background: 0 0;
     font-size: 1.3rem;
     cursor: pointer;
-    color: #6b778c
+    color: #6b778c;
+    background: #fff;
 }
+
+.change-cover-btn {
+    position: absolute;
+    bottom: 10px;
+    right:32px;
+    border: 0;
+    background: 0 0;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: #f0f1f4;
+    /*background: #fff;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-weight: 600;
+
+}
+
 
 .task-modal-close:hover {
     color: #172b4d
