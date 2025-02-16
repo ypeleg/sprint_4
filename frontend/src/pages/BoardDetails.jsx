@@ -312,8 +312,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             const tasksArray = boardCopy.groups[newGroupIdx].tasks
             const pos = Math.min(selectedPosition - 1, tasksArray.length)
             tasksArray.splice(pos, 0, cleanTask)
-            const sanitized = cleanBoard(boardCopy)
-            await updateBoard(sanitized)
+            const cleaned = cleanBoard(boardCopy)
+            await updateBoard(cleaned)
             hidePicker(ev)
             return
         }
@@ -776,18 +776,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     //     return board.groups.find((g) => g.id === selectedGroupId)
     // }
 
-    function sanitizeBoard(board) {
-        const boardCopy = { ...board }
-        boardCopy.groups = board.groups.map((group) => {
-            const groupCopy = { ...group }
-            groupCopy.tasks = group.tasks.map((t) => {
-                const { board, group, ...cleanTask } = t
-                return cleanTask
-            })
-            return groupCopy
-        })
-        return boardCopy
-    }
+
 
     async function onCopyCard(ev) {
         const targetBoard = getSelectedBoard()
@@ -824,9 +813,22 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         const pos = Math.min(selectedPosition - 1, boardCopy.groups[groupIdx].tasks.length)
         boardCopy.groups[groupIdx].tasks.splice(pos, 0, newCard)
 
-        const sanitized = sanitizeBoard(boardCopy)
-        await updateBoard(sanitized)
+        const cleaned = cleanBoard(boardCopy)
+        await updateBoard(cleaned)
         hidePicker(ev)
+    }
+
+    function onDeleteTask(ev) {
+        onClose(ev)
+        const boardCopy = cleanBoard(taskToShow.board)
+        const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id)
+        if (groupIdx >= 0) {
+            const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id)
+            if (taskIdx >= 0) {
+                boardCopy.groups[groupIdx].tasks.splice(taskIdx, 1)
+            }
+        }
+        updateBoard(boardCopy)
     }
 
     return (
@@ -1443,11 +1445,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                     }}><i className="fa-regular fa-file-alt"></i> Make template
                             </button>
                             <button className="sidebar-btn"
-                                    onClick={(event) => {
-                                        hidePicker(event)
-                                        movePickerTo(event)
-                                        setShowPickerUnderConstruction(true)
-                                    }}><i className="fa-regular fa-archive"></i> Archive
+                                    onClick={onDeleteTask}><i className="fa-regular fa-archive"></i> Archive
                             </button>
                             <button className="sidebar-btn"
                                     onClick={(event) => {
@@ -2503,9 +2501,9 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                 className="board-select"
                                 value={selectedBoardId}
                                 onChange={(e) => {
-                                    setSelectedBoardId(e.target.value);
-                                    setSelectedGroupId('');
-                                    setSelectedPosition(1);
+                                    setSelectedBoardId(e.target.value)
+                                    setSelectedGroupId('')
+                                    setSelectedPosition(1)
                                 }}
                             >
                                 {boards.map((b) => (
@@ -2522,8 +2520,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                     className="list-select"
                                     value={selectedGroupId}
                                     onChange={(e) => {
-                                        setSelectedGroupId(e.target.value);
-                                        setSelectedPosition(1);
+                                        setSelectedGroupId(e.target.value)
+                                        setSelectedPosition(1)
                                     }}
                                 >
                                     {getSelectedBoard()?.groups.map((group) => (
@@ -2542,17 +2540,17 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                     onChange={(e) => setSelectedPosition(+e.target.value)}
                                 >
                                     {(() => {
-                                        const grp = getSelectedGroup();
-                                        const numTasks = grp ? grp.tasks.length : 0;
-                                        const positions = [];
+                                        const grp = getSelectedGroup()
+                                        const numTasks = grp ? grp.tasks.length : 0
+                                        const positions = []
                                         for (let i = 1; i <= numTasks + 1; i++) {
-                                            positions.push(i);
+                                            positions.push(i)
                                         }
                                         return positions.map((pos) => (
                                             <option key={pos} value={pos}>
                                                 {pos}
                                             </option>
-                                        ));
+                                        ))
                                     })()}
                                 </select>
                             </div>
@@ -3103,7 +3101,7 @@ export function BoardDetails() {
             setTaskToShow(null)
             togglePopup()
         } catch (err) {
-            console.error("Failed to save task:", err);
+            console.error("Failed to save task:", err)
         }
     }
 
