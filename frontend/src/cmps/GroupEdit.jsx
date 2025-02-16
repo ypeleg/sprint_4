@@ -10,7 +10,7 @@ export function GroupEdit({onSetMoveAll,group, onSetCopyList,header, onSetGroupE
     const board = useSelector(state => state.boardModule.board)
     
     function addGroup(){
-        eventBus.emit('showAddGroup',true)
+        eventBus.emit('showAddGroup',group.id)
         onSetGroupEdit()
     }
     function onSetIsWatched(){

@@ -15,6 +15,7 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
     const eventbus = eventBus
     const [showForm, setShowForm] = useState(false)
     const [showFirstForm, SetFirstForm] = useState(false)
+    const [grouAdd,setGroupAdd] = useState('')
     const [tasks, setTasks] = useState(group.tasks)
     console.log(tasks)
 
@@ -27,11 +28,12 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
     },[boardToShow])
     useEffect(() => {
         const unsubscribe = eventbus.on('showAddGroup', (data) => {
-            onSetFirstForm(data);  // Handle the received data
+            onSetFirstForm(true); 
+            setGroupAdd(data)
         });
 
         return () => {
-            unsubscribe();  // Cleanup listener when the component is unmounted
+            unsubscribe();  
         };
     }, []);
   
@@ -72,7 +74,7 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
         <div className="task-list">
 
             {/*<pre>{JSON.stringify(tasks.map(task => task.id), null, 4)}</pre>*/}
-            {showFirstForm && <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
+            {showFirstForm &&(grouAdd === group.id)&& <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
             {tasks.map((task, idx) => {
                 return (<div key={task.id} onClick={() => onLoadTask(task, currentGroup, group, boardToShow)} className="task">
 
