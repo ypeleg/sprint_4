@@ -510,15 +510,15 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             groups: taskToShow.board.groups.map(g => ({
                 ...g,
                 tasks: g.tasks.map(t => {
-                    const { group, board, taskList, ...rest } = t;
-                    return { ...rest };
+                    const { group, board, taskList, ...rest } = t
+                    return { ...rest }
                 })
             }))
-        };
-        const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id);
-        if (groupIdx === -1) return;
-        const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id);
-        if (taskIdx === -1) return;
+        }
+        const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id)
+        if (groupIdx === -1) return
+        const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id)
+        if (taskIdx === -1) return
         const updatedTask = {
             ...taskToShow,
             title: cardTitle,
@@ -550,10 +550,10 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask
         updateBoard(boardCopy).then(onSaveTaskOuter(cleanTask))
         // try {
-        //     await updateBoard(boardCopy);
+        //     await updateBoard(boardCopy)
         //     onClose()
         // } catch (err) {
-        //     console.error('Failed to save task:', err);
+        //     console.error('Failed to save task:', err)
         // }
     }
 
@@ -652,6 +652,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     }
 
 
+
+
     const [coverColor, setCoverColor] = useState( taskToShow.style.backgroundColor || '')
     const [coverImage, setCoverImage] = useState(taskToShow.style.backgroundImage || '')
     const [coverSize, setCoverSize] = useState(taskToShow.style.backgroundSize || 'small')
@@ -741,6 +743,49 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             attachmentLink,
             attachmentText
         ])
+
+    const [firsts, setFirsts] = useState([])
+
+    function addActivityLog(fullName, actionText, paramName) {
+        if (!firsts.includes(paramName)) {
+            setFirsts(prev => [...prev, paramName])
+            return
+        }
+        setActivityLog(prev => [
+            ...prev,
+            {
+                id: Date.now(),
+                createdAt: Date.now(),
+                byMember: {
+                    _id: 'u101',
+                    fullName,
+                    imgUrl: ''
+                },
+                title: actionText
+            }
+        ])
+    }
+
+    useEffect(() => { addActivityLog('Roi', 'changed the card title', 'cardTitle') }, [cardTitle])
+    useEffect(() => { addActivityLog('Roi', 'updated the card description', 'description') }, [description])
+    useEffect(() => { addActivityLog('Roi', 'assigned/unassigned members', 'members') }, [members])
+    useEffect(() => { addActivityLog('Roi', 'added/removed labels', 'cardLabels') }, [cardLabels])
+    useEffect(() => { addActivityLog('Roi', 'updated location', 'location') }, [location])
+    useEffect(() => { addActivityLog('Roi', 'adjusted custom badges', 'badges') }, [badges])
+    useEffect(() => { addActivityLog('Roi', 'changed cover color/image', 'cover') }, [coverColor, coverImage])
+    useEffect(() => { addActivityLog('Roi', isDone ? 'marked this card as done' : 'marked this card as in progress', 'isDone') }, [isDone])
+    useEffect(() => { addActivityLog('Roi', isWatching ? 'started watching this card' : 'stopped watching this card', 'isWatching') }, [isWatching])
+    useEffect(() => { addActivityLog('Roi', 'changed checklists', 'checklists') }, [checklists])
+    useEffect(() => { addActivityLog('Roi', 'attached or removed files/links', 'attachments') }, [attachments])
+    useEffect(() => { addActivityLog('Roi', 'changed the due date', 'date') }, [date])
+    useEffect(() => { addActivityLog('Roi', 'changed the due time', 'dueTime') }, [dueTime])
+    useEffect(() => { addActivityLog('Roi', 'changed the due date reminder', 'dueDateReminder') }, [dueDateReminder])
+    useEffect(() => { addActivityLog('Roi', 'changed the start date', 'startDate') }, [startDate])
+    useEffect(() => { addActivityLog('Roi', 'moved the card to a different board', 'selectedBoardId') }, [selectedBoardId])
+    useEffect(() => { addActivityLog('Roi', 'moved the card to a different group', 'selectedGroupId') }, [selectedGroupId])
+    useEffect(() => { addActivityLog('Roi', 'changed the card’s position in the list', 'selectedPosition') }, [selectedPosition])
+    useEffect(() => { addActivityLog('Roi', 'renamed the list', 'listName') }, [listName])
+
 
     function onModalCloseInner(ev) {
         ev.stopPropagation()
