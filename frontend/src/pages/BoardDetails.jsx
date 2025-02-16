@@ -293,6 +293,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     }
 
     async function onMoveCard(ev) {
+        hidePicker(ev)
         const targetBoard = getSelectedBoard()
         const targetGroup = getSelectedGroup()
         if (!targetBoard || !targetGroup) return
@@ -3215,66 +3216,37 @@ export function BoardDetails() {
         }
     }
 
-    function onMoveaCard(card, fromGroupId, toGroupId) {
-        // 1) Copy board
-        const boardCopy = JSON.parse(JSON.stringify(boardToShow));
-        // 2) Remove from old group
-        const fromGroupIdx = boardCopy.groups.findIndex((g) => g.id === fromGroupId);
-        if (fromGroupIdx > -1) {
-            const taskIdx = boardCopy.groups[fromGroupIdx].tasks.findIndex((t) => t.id === card.id);
-            if (taskIdx > -1) {
-                boardCopy.groups[fromGroupIdx].tasks.splice(taskIdx, 1);
-            }
-        }
-
-        // 3) Insert into new group
-        const toGroupIdx = boardCopy.groups.findIndex((g) => g.id === toGroupId);
-        if (toGroupIdx > -1) {
-            boardCopy.groups[toGroupIdx].tasks.push(card);
-        }
-
-        // 4) Update the board
-        updateBoard(boardCopy);
-    }
-
 
     function onMoveCard(card, fromGroupId, toGroupId, targetTask = null, edge = null) {
-        // 1) Copy board
-        const boardCopy = JSON.parse(JSON.stringify(boardToShow));
-        // 2) Remove from old group
-        const fromGroupIdx = boardCopy.groups.findIndex((g) => g.id === fromGroupId);
+        const boardCopy = JSON.parse(JSON.stringify(boardToShow))
+        const fromGroupIdx = boardCopy.groups.findIndex((g) => g.id === fromGroupId)
         if (fromGroupIdx > -1) {
-            const taskIdx = boardCopy.groups[fromGroupIdx].tasks.findIndex((t) => t.id === card.id);
-            if (taskIdx > -1) boardCopy.groups[fromGroupIdx].tasks.splice(taskIdx, 1);
+            const taskIdx = boardCopy.groups[fromGroupIdx].tasks.findIndex((t) => t.id === card.id)
+            if (taskIdx > -1) boardCopy.groups[fromGroupIdx].tasks.splice(taskIdx, 1)
         }
-        // 3) Insert into new group
-        const toGroupIdx = boardCopy.groups.findIndex((g) => g.id === toGroupId);
+        const toGroupIdx = boardCopy.groups.findIndex((g) => g.id === toGroupId)
         if (toGroupIdx > -1) {
-            // add at the end, or do more advanced logic if you want a specific position
-            boardCopy.groups[toGroupIdx].tasks.push(card);
+            boardCopy.groups[toGroupIdx].tasks.push(card)
         }
-        updateBoard(boardCopy);
+        updateBoard(boardCopy)
     }
 
     function onReorderCard(dragged, targetTask, edge, groupId) {
-        const boardCopy = JSON.parse(JSON.stringify(boardToShow));
-        const groupIdx = boardCopy.groups.findIndex((g) => g.id === groupId);
-        if (groupIdx === -1) return;
-
-        const tasks = boardCopy.groups[groupIdx].tasks;
-        const startIndex = tasks.findIndex((t) => t.id === dragged.id);
-        const targetIndex = tasks.findIndex((t) => t.id === targetTask.id);
-
+        const boardCopy = JSON.parse(JSON.stringify(boardToShow))
+        const groupIdx = boardCopy.groups.findIndex((g) => g.id === groupId)
+        if (groupIdx === -1) return
+        const tasks = boardCopy.groups[groupIdx].tasks
+        const startIndex = tasks.findIndex((t) => t.id === dragged.id)
+        const targetIndex = tasks.findIndex((t) => t.id === targetTask.id)
         const reordered = reorderWithEdge({
             axis: "vertical",
             list: tasks,
             startIndex,
             indexOfTarget: targetIndex,
-            closestEdgeOfTarget: edge, // top or bottom
-        });
-
-        boardCopy.groups[groupIdx].tasks = reordered;
-        updateBoard(boardCopy);
+            closestEdgeOfTarget: edge,
+        })
+        boardCopy.groups[groupIdx].tasks = reordered
+        updateBoard(boardCopy)
     }
 
 
@@ -3304,7 +3276,7 @@ export function BoardDetails() {
                 <section className="board-display">
 
                     <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred}/>
-                        <GroupList onMoveCard={onMoveCard} onLoadTask={onLoadTask}/>
+                        <GroupList onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>
                     {/* <section className="group-lists">
                         {boardToShow.groups.map(group => {
 

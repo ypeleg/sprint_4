@@ -6,7 +6,7 @@ import { AddGroup } from "./AddGroup"
 
 
 
-export function GroupList({onLoadTask,onMoveCard}){
+export function GroupList({onLoadTask,onMoveCard, onReorderCard}){
      const boardToShow = useSelector(state => state.boardModule.board)
      const [largeLabels, setLargeLabels] = useState(false)
     
@@ -22,7 +22,7 @@ export function GroupList({onLoadTask,onMoveCard}){
                                     return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
                                     <GroupHeader group={group}/>
                                         <TaskList toggleLargeLabels={toggleLargeLabels} largeLabels={largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}
-                                                  onMoveCard={onMoveCard}/>
+                                                  onMoveCard={onMoveCard} onReorderCard={onReorderCard}/>
         
         
                                     </div>
