@@ -45,8 +45,6 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
     }
     function onSetShowForm() {
         setShowForm(!showForm)
-        // taskListRef.current.scrollTop = taskListRef.current.scrollHeight
-
     }
 
     function onsetQuickEdit(ev, aa) {
@@ -58,8 +56,6 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
 
     function onToggleDone(ev, task) {
         ev.stopPropagation()
-        // task.status = (task.status === 'done') ? '' : 'done'
-
         setTasks([
             ...tasks.map(t => {
                 if (t.id === task.id) {
@@ -73,7 +69,7 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
     return (<>
         <div className="task-list">
 
-            {/*<pre>{JSON.stringify(tasks.map(task => task.id), null, 4)}</pre>*/}
+          
             {showFirstForm &&(grouAdd === group.id)&& <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
             {tasks.map((task, idx) => {
                 return (<div key={task.id} onClick={() => onLoadTask(task, currentGroup, group, boardToShow)} className="task">
@@ -90,12 +86,7 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
                             <div className="cover-color" style={{ backgroundColor: task.style.backgroundColor }}></div>
                         </div>
                     }
-
-
                     <div className="stay-same-height flex-space-between stay-same-height-start">
-                        {/* <pre>{JSON.stringify(task, null, 4)}</pre> */}
-
-
                         <div className="labels">
                             {(!!task.labels) &&
                                 <>{task.labels.map(label => {
@@ -141,7 +132,7 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
                             {task.geoLocation && (<div className="tooltip"
                                 data-tip="Location"
                             ><i className="fa-regular fa-map"></i></div>)}
-                            {/* {(task.badges.length)} */}
+                            
                             {(task.badges.length !==0) && (task.badges.map(badge => {
                                 
                                 return <div key={badge.id} className={`tooltip badge`}
@@ -152,7 +143,7 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
 
                                             data-tip={badge.categ}
                                 >{badge.categ}: {badge.chosenOption}</div>
-                                // <div className="badge badge-status-approved">Status: Approved</div>
+                               
                             }))}
 
                             {task.activity.length > 0 && (<div className="tasklist-icon tooltip"
@@ -189,22 +180,6 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
                                             {member?.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{member?.fullname?.split(' ')[1][0]?.toUpperCase() || ''}
                                         </div>)
                                     }
-
-
-                                // return <div key={member._id} className="task-user-icon">
-                                //             <img key={'img' + member._id} src={member.imgUrl} />
-                                //         </div>
-
-                                // <div className="task-user-icon">
-                                //     <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png" />
-                                // </div>
-                                // <div className="task-user-icon-no-pic">
-                                //     YP
-                                // </div>
-                                // <div className="task-user-icon">
-                                //     <img src="https://trello-members.s3.amazonaws.com/61e183e3a32cfd70b3fb7d14/86c826158bb121d5a356790f113e3934/30.png" />
-                                // </div>
-
                             })}
                         </div>)}
                     </div>

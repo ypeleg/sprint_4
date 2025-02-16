@@ -24,8 +24,6 @@ export function AddGroup() {
 
         board.groups.push(group)
         await updateBoard(board)
-
-        // setTask(getEmptyTask())
         setForm(false)
     }
 
