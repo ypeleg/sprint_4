@@ -25,7 +25,12 @@ export function GroupEdit({onSetMoveAll,group, onSetCopyList,header, onSetGroupE
       group.style.backgroundColor = color
       updateBoard(board)
     }
-  
+    function onArchiveList(){
+        const idx = board.groups.findIndex( grp => grp.id === group.id)
+        board.groups.splice(idx,1)
+        onSetGroupEdit()
+        updateBoard(board)
+    }
 
     return (
         <div 
@@ -63,7 +68,7 @@ export function GroupEdit({onSetMoveAll,group, onSetCopyList,header, onSetGroupE
                     </div>
                     <button onClick={changeColor} className="remove-color"> X Remove color</button>
                 </section>
-                <button>Archive this list</button>
+                <button onClick={onArchiveList} className="archive">Archive this list</button>
             </section>
 
         </div>
