@@ -750,37 +750,10 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
 
     }
 
-
-
-    // Redux boards and the current card details
-    // const boards = useSelector((state) => state.boardModule.boards)
-    // const currentBoard = taskToShow.board    // The board that the original card belongs to
-    // const currentGroup = taskToShow.group    // The group that the original card belongs to
-
-// "Name" for the new card
     const [copyTitle, setCopyTitle] = useState(taskToShow.title || '')
-
-// Checkboxes to keep checklists, labels, members
     const [keepChecklists, setKeepChecklists] = useState(true)
     const [keepLabels, setKeepLabels] = useState(true)
     const [keepMembers, setKeepMembers] = useState(true)
-
-// Where to copy the card
-//     const [selectedBoardId, setSelectedBoardId] = useState(currentBoard?._id || '')
-//     const [selectedGroupId, setSelectedGroupId] = useState(currentGroup?.id || '')
-//     const [selectedPosition, setSelectedPosition] = useState(1) // 1-based
-
-    // function getSelectedBoard() {
-    //     return boards.find((b) => b._id === selectedBoardId)
-    // }
-    //
-    // function getSelectedGroup() {
-    //     const board = getSelectedBoard()
-    //     if (!board) return null
-    //     return board.groups.find((g) => g.id === selectedGroupId)
-    // }
-
-
 
     async function onCopyCard(ev) {
         const targetBoard = getSelectedBoard()
@@ -798,7 +771,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             checklists: keepChecklists ? JSON.parse(JSON.stringify(taskToShow.checklists || [])) : [],
             labels: keepLabels ? JSON.parse(JSON.stringify(taskToShow.labels || [])) : [],
             members: keepMembers ? JSON.parse(JSON.stringify(taskToShow.members || [])) : [],
-            attachments: [], // or copy if you want them
+            attachments: [],
             status: taskToShow.status || '',
             style: { ...taskToShow.style },
             priority: taskToShow.priority || '',
