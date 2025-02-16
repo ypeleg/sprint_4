@@ -2854,15 +2854,19 @@ export function BoardDetails() {
 
     async function onModalClose() {
         try {
+            // console.log('modal close')
             const updatedTask = taskToEdit
+            console.log('modal close ', updatedTask.title)
             const boardCopy = JSON.parse(JSON.stringify(boardToShow))
             const groupIdx = boardCopy.groups.findIndex(
                 (g) => g.id === updatedTask.group.id
             )
+            console.log('groupIdx', groupIdx)
             if (groupIdx === -1) return
             const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(
                 (t) => t.id === updatedTask.id
             )
+            console.log('taskIdx', taskIdx)
             if (taskIdx === -1) return
             const { board, group, taskList, ...cleanTask } = updatedTask
             boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask
