@@ -84,7 +84,7 @@ async function getById(boardId, filterBy = {title: ''}) {
         }
 
     }
-    console.log(board.groups.tasks)
+    console.log(board)
     return board
 }
 
