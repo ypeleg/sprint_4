@@ -479,6 +479,12 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         setShowPickerUnderConstruction(false)
         setShowPickerChangeALabel(false)
         setShowPickerCover(false)
+        setShowPickerAttachments(false)
+        setShowPickerChecklists(false)
+        setShowPickerMembers(false)
+        setShowPickerMoveCard(false)
+        setShowPickerCopyCard(false)
+        setShowPickerMirrorCard(false)
     }
 
     function movePickerTo(ev) {
@@ -504,15 +510,15 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             groups: taskToShow.board.groups.map(g => ({
                 ...g,
                 tasks: g.tasks.map(t => {
-                    const { group, board, taskList, ...rest } = t;
-                    return { ...rest };
+                    const { group, board, taskList, ...rest } = t
+                    return { ...rest }
                 })
             }))
-        };
-        const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id);
-        if (groupIdx === -1) return;
-        const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id);
-        if (taskIdx === -1) return;
+        }
+        const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id)
+        if (groupIdx === -1) return
+        const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id)
+        if (taskIdx === -1) return
         const updatedTask = {
             ...taskToShow,
             title: cardTitle,
@@ -524,6 +530,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             checklists,
             activity: activityLog,
             badges,
+            labels: cardLabels,
             location,
             startDate: isStartDateEnabled ? startDate : null,
             dueDate: isDueDateEnabled ? date : null,
@@ -539,15 +546,14 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 title: listName
             }
         }
-        onSaveTaskOuter(updatedTask)
-        const { group, board, taskList, ...cleanTask } = updatedTask;
-        boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask;
-        await updateBoard(boardCopy)
+        const { group, board, taskList, ...cleanTask } = updatedTask
+        boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask
+        updateBoard(boardCopy).then(onSaveTaskOuter(cleanTask))
         // try {
-        //     await updateBoard(boardCopy);
+        //     await updateBoard(boardCopy)
         //     onClose()
         // } catch (err) {
-        //     console.error('Failed to save task:', err);
+        //     console.error('Failed to save task:', err)
         // }
     }
 
@@ -607,7 +613,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
 
     const [attachmentFile, setAttachmentFile] = useState(null)
     const [attachmentLink, setAttachmentLink] = useState("")
-    const [attachmentDisplayText, setAttachmentDisplayText] = useState("")
+    const [attachmentText, setAttachmentText] = useState("")
     const fileInputRef = useRef(null)
 
     function onFileSelected(ev) {
@@ -615,33 +621,37 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         if (file) setAttachmentFile(file)
     }
 
-    function onInsertAttachment() {
+    function onInsertAttachment(ev) {
         if (attachmentFile) {
             const newAttachment = {
                 id: Date.now(),
                 path: attachmentFile.name,
                 date: Date.now(),
-                displayText: attachmentDisplayText || attachmentFile.name,
+                text: attachmentText || attachmentFile.name,
                 type: 'file'
             }
             setAttachments((prev) => [...prev, newAttachment])
+            hidePicker(ev)
 
         } else if (attachmentLink) {
             const newAttachment = {
                 id: Date.now(),
                 path: attachmentLink,
                 date: Date.now(),
-                displayText: attachmentDisplayText || attachmentLink,
+                text: attachmentText || attachmentLink,
                 type: 'link'
             }
 
             setAttachments((prev) => [...prev, newAttachment])
+            hidePicker(ev)
         }
         setAttachmentFile(null)
         setAttachmentLink("")
-        setAttachmentDisplayText("")
-        hidePicker()
+        setAttachmentText("")
+        hidePicker(ev)
     }
+
+
 
 
     const [coverColor, setCoverColor] = useState( taskToShow.style.backgroundColor || '')
@@ -731,9 +741,59 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             selectedPosition,
             attachmentFile,
             attachmentLink,
-            attachmentDisplayText
+            attachmentText
         ])
 
+    const [firsts, setFirsts] = useState([])
+
+    function addActivityLog(fullName, actionText, paramName) {
+        if (!firsts.includes(paramName)) {
+            setFirsts(prev => [...prev, paramName])
+            return
+        }
+        setActivityLog(prev => [
+            ...prev,
+            {
+                id: Date.now(),
+                createdAt: Date.now(),
+                byMember: {
+                    _id: 'u101',
+                    fullName,
+                    imgUrl: ''
+                },
+                title: actionText
+            }
+        ])
+    }
+
+    useEffect(() => { addActivityLog('Roi', 'changed the card title', 'cardTitle') }, [cardTitle])
+    useEffect(() => { addActivityLog('Roi', 'updated the card description', 'description') }, [description])
+    useEffect(() => { addActivityLog('Roi', 'assigned/unassigned members', 'members') }, [members])
+    useEffect(() => { addActivityLog('Roi', 'added/removed labels', 'cardLabels') }, [cardLabels])
+    useEffect(() => { addActivityLog('Roi', 'updated location', 'location') }, [location])
+    useEffect(() => { addActivityLog('Roi', 'adjusted custom badges', 'badges') }, [badges])
+    useEffect(() => { addActivityLog('Roi', 'changed cover color/image', 'cover') }, [coverColor, coverImage])
+    useEffect(() => { addActivityLog('Roi', isDone ? 'marked this card as done' : 'marked this card as in progress', 'isDone') }, [isDone])
+    useEffect(() => { addActivityLog('Roi', isWatching ? 'started watching this card' : 'stopped watching this card', 'isWatching') }, [isWatching])
+    useEffect(() => { addActivityLog('Roi', 'changed checklists', 'checklists') }, [checklists])
+    useEffect(() => { addActivityLog('Roi', 'attached or removed files/links', 'attachments') }, [attachments])
+    useEffect(() => { addActivityLog('Roi', 'changed the due date', 'date') }, [date])
+    useEffect(() => { addActivityLog('Roi', 'changed the due time', 'dueTime') }, [dueTime])
+    useEffect(() => { addActivityLog('Roi', 'changed the due date reminder', 'dueDateReminder') }, [dueDateReminder])
+    useEffect(() => { addActivityLog('Roi', 'changed the start date', 'startDate') }, [startDate])
+    useEffect(() => { addActivityLog('Roi', 'moved the card to a different board', 'selectedBoardId') }, [selectedBoardId])
+    useEffect(() => { addActivityLog('Roi', 'moved the card to a different group', 'selectedGroupId') }, [selectedGroupId])
+    useEffect(() => { addActivityLog('Roi', 'changed the card’s position in the list', 'selectedPosition') }, [selectedPosition])
+    useEffect(() => { addActivityLog('Roi', 'renamed the list', 'listName') }, [listName])
+
+
+    function onModalCloseInner(ev) {
+        ev.stopPropagation()
+        ev.preventDefault()
+        saveTask().then(onClose(ev))
+            .catch(err => console.error(err))
+
+    }
 
     return (
         <>
@@ -749,7 +809,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                         backgroundColor: coverColor || ''
                     }}
                 >
-                    <button className="task-modal-close" onClick={onClose}>
+                    <button className="task-modal-close" onClick={onModalCloseInner}>
                         <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
                         </svg>
@@ -909,7 +969,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                             ((taskToShow.status === 'done') ?
                                                                     (<span className="complete-label">Complete</span>) :
                                                                     (<span className="incomplete-label">Overdue</span>)
-                                                            ) : <span>a</span>
+                                                            ) : <span></span>
                                                         }
                                                         <i className="fa-regular fa-chevron-down"></i>
                                                         <input
@@ -983,7 +1043,14 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                 </div>
                                                 <select
                                                     value={badge.text}
-                                                    onChange={(e) => setBadges(e.target.value)}
+                                                    onChange={(e) => setBadges(
+                                                        badges.map(b => {
+                                                            if (b.categ === badge.categ) {
+                                                                return {...b, text: e.target.value}
+                                                            }
+                                                            return b
+                                                        }))}
+
                                                     className="custom-dropdown"
                                                     style={{
                                                         backgroundColor: `${badge.color}`
@@ -1018,14 +1085,23 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                         </button>
                                     </div>
                                     <div className="inner-component-left-padding">Files</div>
-                                    <div className="task-attachment-row inner-component-left-padding">
+                                    <div className="task-attachment-row inner-component-left-padding just-flex-cols">
                                         {(attachments.map(attachment => {
-                                            return <div key={attachment.id} className="just-flex">
-                                                <button className="attachment-extention">PNG</button>
-                                                <div className="file-info">
-                                                    <h5>{attachment.path}</h5>
-                                                    <label>{new Date(attachment.date).toLocaleDateString()}</label>
+                                            return <div key={attachment.id} className="flex-space-between-align full-width">
+                                                <div className="flex-space-between-align">
+                                                    <button className="attachment-extention">PNG</button>
+                                                    <div className="file-info">
+                                                        {attachment.text && <h5>{attachment.text}</h5>}
+                                                        {!attachment.text && <h5>{attachment.path}</h5>}
+                                                        <label>{new Date(attachment.date).toLocaleDateString()}</label>
+                                                    </div>
                                                 </div>
+                                                <button className="delete-btn-del"
+                                                        onClick={() => {
+                                                            setAttachments(attachments.filter(a => a.id !== attachment.id))
+                                                        }}
+                                                >Delete
+                                                </button>
                                             </div>
                                         }))}
                                     </div>
@@ -1055,8 +1131,12 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                 {checklist.progress &&
                                                     <div className="progress inner-component-left-padding">
                                                         <div className="progress-container">
-                                                            <div className="progress-num">0%</div>
-                                                            <div className="progress-bar"></div>
+                                                            <div className="progress-num">{checklist.progress}%</div>
+                                                            <div className="progress-bar">
+                                                                <div className="progress-bar-internal"
+                                                                style={{width: `${checklist.progress}%`}}
+                                                                ></div>
+                                                            </div>
                                                         </div>
                                                     </div>}
 
@@ -1064,8 +1144,32 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                     return <>
                                                         <div>
                                                             <div className="just-flex-with-center checklist-todos">
-                                                                <input name={todo.title} type="checkbox"/>
-                                                                <label>{todo.title}</label>
+                                                                <input name={todo.title} type="checkbox"
+                                                                       checked={todo.isDone}
+                                                                    onChange={() => {
+                                                                        const newChecklists = checklists.map(c => {
+                                                                            if (c.id === checklist.id) {
+                                                                                return {...c, todos: c.todos.map(t => {if (t.id === todo.id) {
+                                                                                        return {...t, isDone: !t.isDone}
+                                                                                    }
+                                                                                        return t
+                                                                                    })
+                                                                                }}
+                                                                            return c
+                                                                        })
+
+                                                                        newChecklists.map(c => {
+                                                                            if (c.id === checklist.id) {
+                                                                                let doneTodos = c.todos.filter(t => t.isDone)
+                                                                                c.progress = Math.floor((doneTodos.length / c.todos.length) * 100)
+                                                                            }
+                                                                        })
+                                                                        setChecklists(newChecklists)
+                                                                    }}
+                                                                />
+                                                                <label
+                                                                    style={{textDecoration: todo.isDone ? 'line-through' : 'none'}}
+                                                                >{todo.title}</label>
                                                             </div>
                                                         </div>
                                                     </>
@@ -1115,16 +1219,16 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                         </div>
                                                     </div>
 
-                                                    <div className="just-flex">
-                                                        <button className="footer-action">
-                                                            <i className="fa-regular fa-user"></i>
-                                                            Assign
-                                                        </button>
-                                                        <button className="footer-action">
-                                                            <i className="fa-regular fa-clock"></i>
-                                                            Due date
-                                                        </button>
-                                                    </div>
+                                                    {/*<div className="just-flex">*/}
+                                                    {/*    <button className="footer-action">*/}
+                                                    {/*        <i className="fa-regular fa-user"></i>*/}
+                                                    {/*        Assign*/}
+                                                    {/*    </button>*/}
+                                                    {/*    <button className="footer-action">*/}
+                                                    {/*        <i className="fa-regular fa-clock"></i>*/}
+                                                    {/*        Due date*/}
+                                                    {/*    </button>*/}
+                                                    {/*</div>*/}
                                                 </div>
                                             </div>
                                         </>
@@ -1142,11 +1246,11 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                             <i className="fa-regular fa-list"></i>
                                             <h3>Activity</h3>
                                         </div>
-                                        <button className="delete-btn"
-                                                onClick={() => {
-
-                                                }}>Hide Details
-                                        </button>
+                                        {/*<button className="delete-btn"*/}
+                                        {/*        onClick={() => {*/}
+                                        
+                                        {/*        }}>Hide Details*/}
+                                        {/*</button>*/}
                                     </div>
                                     <ul className="task-activity-list">
                                         <li key="1">
@@ -1741,8 +1845,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                 type="text"
                                 placeholder="Text to display"
                                 className="display-text-input"
-                                value={attachmentDisplayText}
-                                onChange={(ev) => setAttachmentDisplayText(ev.target.value)}
+                                value={attachmentText}
+                                onChange={(ev) => setAttachmentText(ev.target.value)}
                             />
                         </div>
                     </div>
@@ -2835,6 +2939,12 @@ export function BoardDetails() {
         }
     }
 
+    function closePopup2(e) {
+        onModalClose()
+        togglePopup()
+    }
+
+
     const [largeLabels, setLargeLabels] = useState(true)
 
     function toggleLargeLabels(ev) {
@@ -2850,7 +2960,7 @@ export function BoardDetails() {
     const [taskToEdit, setTaskToEdit] = useState(null)
 
     function onSaveTaskOuter(updatedTask) {
-        // console.log(updatedTask.title)
+        // console.log(updatedTask.labels)
         setTaskToEdit(updatedTask)
     }
 
@@ -2889,7 +2999,7 @@ export function BoardDetails() {
 
                 <div className="popup" ref={popupRef} onClick={closePopupOnlyIfClickedOutOfIt}>
 
-                    <TaskModal taskToShow={taskToShow} onClose={togglePopup} popupRef={popupRef} onSaveTaskOuter = {onSaveTaskOuter}/>
+                    <TaskModal taskToShow={taskToShow} onClose={closePopup2} popupRef={popupRef} onSaveTaskOuter = {onSaveTaskOuter}/>
 
                 </div>
                 <div className="popup-backdrop" onClick={closePopupOnlyIfClickedOutOfIt}></div>

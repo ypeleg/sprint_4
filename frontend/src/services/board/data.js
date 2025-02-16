@@ -29,7 +29,8 @@ function getRandomAttachments() {
     const cnt = random.randint(0,3)
     return Array.from({length: cnt}, () => ({
         path: `file-${random.randint(1,999)}.png`,
-        date: Date.now() - random.randint(0,1_000_000_000)
+        date: Date.now() - random.randint(0,1_000_000_000),
+        text: random.choice([random.lorem(random.randint(1,5)), ''])
     }))
 }
 function getRandomActivity() {
@@ -93,7 +94,7 @@ function getRandomChecklists() {
         return {
             id: random.id(),
             title: random.lorem(random.randint(1,3)),
-            progress: true,
+            progress: random.randint(0,100),
             todos: Array.from({length: tCount}, () => ({
                 id: random.id(),
                 title: random.lorem(random.randint(2,4)),
