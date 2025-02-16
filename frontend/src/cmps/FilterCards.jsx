@@ -4,15 +4,27 @@ import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { loadBoard } from "../store/store"
 import { setFilterBy } from "../store/actions/board.actions"
+import { boardService } from "../services/board"
 
 
 export function FilterCards({ el, setShowFilter }) {
     let boardToShow = useSelector(state => state.boardModule.board)
     const filterBy = useSelector(state => state.boardModule.filterBy)
     const [completedSelected,setCompletedSelected] = useState()
+    useEffect(() => {
+        loadBoard(boardToShow._id, filterBy)
+    }, [filterBy])
+    useEffect(()=>{
+        console.log(boardService.getDefaultFilter())
+        return () =>{
+            setFilterBy(boardService.getDefaultFilter())
+            loadBoard(boardToShow._id, filterBy)  
+        } 
+    },[])
     function onSetCompltedSelected(value){
         if(completedSelected===value) setCompletedSelected(null)
         else setCompletedSelected(value)
+   
     }
     function handleChange({ target }) {
         let { type, value, name: feild } = target
@@ -42,9 +54,6 @@ export function FilterCards({ el, setShowFilter }) {
             setFilterBy(UpdatedFilterBy)
         }
     }
-    useEffect(() => {
-        loadBoard(boardToShow._id, filterBy)
-    }, [filterBy])
     console.log(filterBy)
     return (
         <div tabIndex="0" className="filter-cards-container"  >
