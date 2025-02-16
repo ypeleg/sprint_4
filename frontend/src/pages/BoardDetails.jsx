@@ -998,7 +998,14 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                 </div>
                                                 <select
                                                     value={badge.text}
-                                                    onChange={(e) => setBadges(e.target.value)}
+                                                    onChange={(e) => setBadges(
+                                                        badges.map(b => {
+                                                            if (b.categ === badge.categ) {
+                                                                return {...b, text: e.target.value}
+                                                            }
+                                                            return b
+                                                        }))}
+
                                                     className="custom-dropdown"
                                                     style={{
                                                         backgroundColor: `${badge.color}`
@@ -1045,9 +1052,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                 </div>
                                                 <button className="delete-btn-del"
                                                         onClick={() => {
-                                                            hidePicker(event)
-                                                            movePickerTo(event)
-                                                            setShowPickerAttachments(true)
+                                                            setAttachments(attachments.filter(a => a.id !== attachment.id))
                                                         }}
                                                 >Delete
                                                 </button>
@@ -1168,16 +1173,16 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                         </div>
                                                     </div>
 
-                                                    <div className="just-flex">
-                                                        <button className="footer-action">
-                                                            <i className="fa-regular fa-user"></i>
-                                                            Assign
-                                                        </button>
-                                                        <button className="footer-action">
-                                                            <i className="fa-regular fa-clock"></i>
-                                                            Due date
-                                                        </button>
-                                                    </div>
+                                                    {/*<div className="just-flex">*/}
+                                                    {/*    <button className="footer-action">*/}
+                                                    {/*        <i className="fa-regular fa-user"></i>*/}
+                                                    {/*        Assign*/}
+                                                    {/*    </button>*/}
+                                                    {/*    <button className="footer-action">*/}
+                                                    {/*        <i className="fa-regular fa-clock"></i>*/}
+                                                    {/*        Due date*/}
+                                                    {/*    </button>*/}
+                                                    {/*</div>*/}
                                                 </div>
                                             </div>
                                         </>
@@ -1195,11 +1200,11 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                             <i className="fa-regular fa-list"></i>
                                             <h3>Activity</h3>
                                         </div>
-                                        <button className="delete-btn"
-                                                onClick={() => {
-
-                                                }}>Hide Details
-                                        </button>
+                                        {/*<button className="delete-btn"*/}
+                                        {/*        onClick={() => {*/}
+                                        
+                                        {/*        }}>Hide Details*/}
+                                        {/*</button>*/}
                                     </div>
                                     <ul className="task-activity-list">
                                         <li key="1">
