@@ -127,39 +127,39 @@ export function TaskList({
                       nativeSetDragImage,
                       getOffset: preserveOffsetOnSource({ element: el, input: location.current.input }),
                       render({ container }) {
-                        const { width, height } = el.getBoundingClientRect();
-                        const computedStyles = window.getComputedStyle(el);
-                        const wrapper = document.createElement("div");
-                        wrapper.className = "task-list";
-                        wrapper.style.opacity = "1";
-                        wrapper.style.filter = "none";
+                        const { width, height } = el.getBoundingClientRect()
+                        const computedStyles = window.getComputedStyle(el)
+                        const wrapper = document.createElement("div")
+                        wrapper.className = "task-list"
+                        wrapper.style.opacity = "1"
+                        wrapper.style.filter = "none"
                         
-                        let bg = computedStyles.backgroundColor;
+                        let bg = computedStyles.backgroundColor
                         if (bg === "transparent" || bg === "rgba(0, 0, 0, 0)") {
-                          bg = "#fff";
+                          bg = "#fff"
                         }
                         
-                        const clone = el.cloneNode(true);
-                        clone.style.width = `${width}px`;
-                        clone.style.height = `${height}px`;
-                        clone.style.backgroundColor = bg;
-                        clone.style.opacity = "1";
-                        clone.style.filter = "none";
-                        clone.style.pointerEvents = "none";
-                        clone.style.borderRadius = computedStyles.borderRadius;
-                        clone.style.boxShadow = "0 6px 16px rgba(0, 0, 0, 0.3)";
-                        clone.style.transform = "translateY(-2px) scale(1.02)";
+                        const clone = el.cloneNode(true)
+                        clone.style.width = `${width}px`
+                        clone.style.height = `${height}px`
+                        clone.style.backgroundColor = bg
+                        clone.style.opacity = "1"
+                        clone.style.filter = "none"
+                        clone.style.pointerEvents = "none"
+                        clone.style.borderRadius = computedStyles.borderRadius
+                        clone.style.boxShadow = "0 6px 16px rgba(0, 0, 0, 0.3)"
+                        clone.style.transform = "translateY(-2px) scale(1.02)"
                         
                         clone.classList.forEach((cls) => {
                           if (cls.includes("opacity")) {
-                            clone.classList.remove(cls);
+                            clone.classList.remove(cls)
                           }
-                        });
+                        })
                         
-                        wrapper.appendChild(clone);
-                        container.appendChild(wrapper);
+                        wrapper.appendChild(clone)
+                        container.appendChild(wrapper)
                       },
-                    });
+                    })
                   }
 
             })
