@@ -43,6 +43,8 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
     }
     function onSetShowForm() {
         setShowForm(!showForm)
+        // taskListRef.current.scrollTop = taskListRef.current.scrollHeight
+
     }
 
     function onsetQuickEdit(ev, aa) {
@@ -67,7 +69,7 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
     }
 
     return (<>
-        <div className="task-list">
+        <div className="task-list" ref={taskListRef}>
 
             {/*<pre>{JSON.stringify(tasks.map(task => task.id), null, 4)}</pre>*/}
             {showFirstForm && <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
