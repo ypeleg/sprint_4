@@ -1,11 +1,12 @@
 
 
 import { useSelector } from "react-redux"
-import { loadBoards } from "../store/store"
+import { loadBoard, loadBoards } from "../store/store"
+import { useNavigate } from "react-router"
 
 
 export function SideBar() {
-
+    const navgite = useNavigate()
     const boards = useSelector(state => state.boardModule.boards)
 
     if (!boards.length) {
@@ -98,7 +99,7 @@ export function SideBar() {
                 <article>
 
                     {boards.map(board => {
-                        return (<div key={board.id} className="side-bar-item side-bar-item-third flex-space-between nav-highlight-hint">
+                        return (<div key={board.id} onClick={() => loadBoard(board._id)} className="side-bar-item side-bar-item-third flex-space-between nav-highlight-hint">
 
                             <div className="board-sideitem just-flex">
                                 <img className="small-img" src={board.style.backgroundImage}/>
