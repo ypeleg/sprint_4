@@ -8,6 +8,7 @@ import {AddGroup} from "../cmps/AddGroup"
 import {AppHeader} from "../cmps/AppHeader.jsx"
 import {BoardHeader} from "../cmps/BoardHeader.jsx"
 import React, {useRef, useEffect, useState} from "react"
+import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge"
 import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store} from "../store/store.js"
 
 
@@ -3124,7 +3125,7 @@ export function BoardDetails() {
         }
     }
 
-    function onMoveCard(card, fromGroupId, toGroupId) {
+    function onMoveaCard(card, fromGroupId, toGroupId) {
         // 1) Copy board
         const boardCopy = JSON.parse(JSON.stringify(boardToShow));
         // 2) Remove from old group
@@ -3145,6 +3146,47 @@ export function BoardDetails() {
         // 4) Update the board
         updateBoard(boardCopy);
     }
+
+
+    function onMoveCard(card, fromGroupId, toGroupId, targetTask = null, edge = null) {
+        // 1) Copy board
+        const boardCopy = JSON.parse(JSON.stringify(boardToShow));
+        // 2) Remove from old group
+        const fromGroupIdx = boardCopy.groups.findIndex((g) => g.id === fromGroupId);
+        if (fromGroupIdx > -1) {
+            const taskIdx = boardCopy.groups[fromGroupIdx].tasks.findIndex((t) => t.id === card.id);
+            if (taskIdx > -1) boardCopy.groups[fromGroupIdx].tasks.splice(taskIdx, 1);
+        }
+        // 3) Insert into new group
+        const toGroupIdx = boardCopy.groups.findIndex((g) => g.id === toGroupId);
+        if (toGroupIdx > -1) {
+            // add at the end, or do more advanced logic if you want a specific position
+            boardCopy.groups[toGroupIdx].tasks.push(card);
+        }
+        updateBoard(boardCopy);
+    }
+
+    function onReorderCard(dragged, targetTask, edge, groupId) {
+        const boardCopy = JSON.parse(JSON.stringify(boardToShow));
+        const groupIdx = boardCopy.groups.findIndex((g) => g.id === groupId);
+        if (groupIdx === -1) return;
+
+        const tasks = boardCopy.groups[groupIdx].tasks;
+        const startIndex = tasks.findIndex((t) => t.id === dragged.id);
+        const targetIndex = tasks.findIndex((t) => t.id === targetTask.id);
+
+        const reordered = reorderWithEdge({
+            axis: "vertical",
+            list: tasks,
+            startIndex,
+            indexOfTarget: targetIndex,
+            closestEdgeOfTarget: edge, // top or bottom
+        });
+
+        boardCopy.groups[groupIdx].tasks = reordered;
+        updateBoard(boardCopy);
+    }
+
 
     if (!boardToShow) return (<>Loading..</>)
     return (
@@ -3180,6 +3222,11 @@ export function BoardDetails() {
                             return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
                             <GroupHeader group={group}/>
                                 <TaskList toggleLargeLabels={toggleLargeLabels} largeLabels={largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}
+
+
+
+
+                                          onReorderCard={onReorderCard}
                                           onMoveCard={onMoveCard}/>
 
 
