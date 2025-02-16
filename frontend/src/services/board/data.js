@@ -127,6 +127,7 @@ function getRandomTask() {
         attachments: getRandomAttachments(),
         activity: getRandomActivity(),
         isUserWatching: random.choice([true,false]),
+        labels: getRandomLabels(),
         location: random.choice([null, null, null, getRandomLocation()])
     }
 }
