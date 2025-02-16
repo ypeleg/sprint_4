@@ -8,7 +8,7 @@ import { useNavigate } from "react-router"
 export function SideBar() {
     const navgite = useNavigate()
     const boards = useSelector(state => state.boardModule.boards)
-
+    const selectedBoard = useSelector(state => state.boardModule.board)
     if (!boards.length) {
         loadBoards()
     }
@@ -99,7 +99,8 @@ export function SideBar() {
                 <article>
 
                     {boards.map(board => {
-                        return (<div key={board.id} onClick={() => loadBoard(board._id)} className="side-bar-item side-bar-item-third flex-space-between nav-highlight-hint">
+                       
+                        return (<div key={board.id} style={(board._id === selectedBoard._id)? {backgroundColor:'hsla(0, 0%, 0%, 0.16)'}:null} onClick={() => loadBoard(board._id)} className="side-bar-item side-bar-item-third flex-space-between nav-highlight-hint">
 
                             <div className="board-sideitem just-flex">
                                 <img className="small-img" src={board.style.backgroundImage}/>
