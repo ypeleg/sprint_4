@@ -3098,8 +3098,17 @@ export function useToggle(initialState) {
 
 // import {taskService} from '../services/task/task.service.local.js'
 
+function Placeholder({placeholderHeight}) {
+    return <div style={{ height: placeholderHeight+"px", background: "rgba(0,0,0,0.2)", borderRadius:"8px", margin: "4px 0" }} />
+}
 
 export function BoardDetails() {
+    const [placeholderHeight, setPlaceholderHeight] = useState(8)
+
+    function onSetPlaceholderHeight(height) {
+        setPlaceholderHeight(height)
+    }
+
 
     // taskService.query().then(res => console.log(res))
 
@@ -3287,7 +3296,9 @@ export function BoardDetails() {
                 <section className="board-display">
 
                     <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred}/>
-                    <GroupList onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>
+                    <GroupList
+                        onSetPlaceholderHeight={onSetPlaceholderHeight} Placeholder={Placeholder} placeholderHeight={placeholderHeight}
+                        onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>
                     {/* <section className="group-lists">
                         {boardToShow.groups.map(group => {
 

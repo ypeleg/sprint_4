@@ -6,7 +6,7 @@ import { AddGroup } from "./AddGroup"
 
 
 
-export function GroupList({onLoadTask,onMoveCard, onReorderCard}){
+export function GroupList({onLoadTask,onMoveCard, onReorderCard, Placeholder, onSetPlaceholderHeight, placeholderHeight}){
      const boardToShow = useSelector(state => state.boardModule.board)
      const [largeLabels, setLargeLabels] = useState(false)
     
@@ -21,7 +21,9 @@ export function GroupList({onLoadTask,onMoveCard, onReorderCard}){
                                     // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>
                                     return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
                                     <GroupHeader group={group}/>
-                                        <TaskList toggleLargeLabels={toggleLargeLabels} largeLabels={largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}
+                                        <TaskList
+                                            onSetPlaceholderHeight={onSetPlaceholderHeight} Placeholder={Placeholder} placeholderHeight={placeholderHeight}
+                                            toggleLargeLabels={toggleLargeLabels} largeLabels={largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}
                                                   onMoveCard={onMoveCard} onReorderCard={onReorderCard}/>
         
         

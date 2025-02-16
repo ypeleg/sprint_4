@@ -28,9 +28,7 @@ function isCardData(obj) {
     return Boolean(obj && obj[CARD_SYMBOL])
 }
 
-function Placeholder({placeholderHeight}) {
-    return <div style={{ height: placeholderHeight+"px", background: "rgba(0,0,0,0.2)", borderRadius:"8px", margin: "4px 0" }} />
-}
+
 // drag and drop
 
 
@@ -43,9 +41,12 @@ export function TaskList({
                              toggleLargeLabels,
                              onMoveCard,
                              onReorderCard,
+                             Placeholder,
+                             onSetPlaceholderHeight,
+                             placeholderHeight,
                          }) {
 
-    const [placeholderHeight, setPlaceholderHeight] = useState(8)
+
     const boardToShow = useSelector((state) => state.boardModule.board)
     const eventbus = eventBus
     const navigate = useNavigate()
@@ -151,7 +152,7 @@ export function TaskList({
                         clone.querySelectorAll("*").forEach(child => {
                               child.style.removeProperty('opacity')
                         })
-                        setPlaceholderHeight(height)
+                        onSetPlaceholderHeight(height)
                         // nearly there.. not following the mouse..
                         // clone.style.position = "fixed"
                         // clone.style.top = location.current.input.clientY - 20 + "px"
