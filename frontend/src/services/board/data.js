@@ -61,17 +61,27 @@ const BADGE_COLOR_MAP = {
     priority: '#ffe2bd',
     now:      '#ffc0cb'
 }
+
+const BADGE_TEXT_COLOR_MAP = {
+    risk:     '#6e3b0d',
+    approved: '#4f3a0e',
+    priority: '#6e3b0d',
+    now:      '#6e0d3a'
+}
+
 function getRandomBadges() {
     const count = random.randint(0,3)
     return Array.from({length: count}, () => {
         const badgeType  = random.choice(['risk','approved','priority','now'])
         return {
             id: random.id(),
-            text: random.choice(BADGE_OPTIONS_MAP[badgeType]),
+            // text: random.choice(BADGE_OPTIONS_MAP[badgeType]),
             categ: random.choice(['Risk','Status','Priority','Heads Up']),
-            badeType: badgeType,
+            // badeType: badgeType,
             color: BADGE_COLOR_MAP[badgeType] || '#ccc',
-            badgeOptions: BADGE_OPTIONS_MAP[badgeType] || []
+            textColor: BADGE_TEXT_COLOR_MAP[badgeType] || '#000',
+            badgeOptions: BADGE_OPTIONS_MAP[badgeType] || [],
+            chosenOption: random.choice(BADGE_OPTIONS_MAP[badgeType])
         }
     })
 }

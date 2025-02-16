@@ -95,9 +95,14 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group, largeL
                             {/* {(task.badges.length)} */}
                             {(task.badges.length !==0) && (task.badges.map(badge => {
                                 
-                                return <div key={badge.id} className={`tooltip badge badge-${badge.badeType}`}
-                                            data-tip={badge.text}
-                                >{badge.text}</div>
+                                return <div key={badge.id} className={`tooltip badge`}
+                                            style={{
+                                                backgroundColor: badge.color,
+                                                color: badge.textColor,
+                                            }}
+
+                                            data-tip={badge.categ}
+                                >{badge.categ}: {badge.chosenOption}</div>
                                 // <div className="badge badge-status-approved">Status: Approved</div>
                             }))}
                         </div>
