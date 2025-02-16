@@ -29,7 +29,8 @@ function getRandomAttachments() {
     const cnt = random.randint(0,3)
     return Array.from({length: cnt}, () => ({
         path: `file-${random.randint(1,999)}.png`,
-        date: Date.now() - random.randint(0,1_000_000_000)
+        date: Date.now() - random.randint(0,1_000_000_000),
+        text: random.choice([random.lorem(random.randint(1,5)), ''])
     }))
 }
 function getRandomActivity() {

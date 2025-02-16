@@ -613,7 +613,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
 
     const [attachmentFile, setAttachmentFile] = useState(null)
     const [attachmentLink, setAttachmentLink] = useState("")
-    const [attachmentDisplayText, setAttachmentDisplayText] = useState("")
+    const [attachmentText, setAttachmentText] = useState("")
     const fileInputRef = useRef(null)
 
     function onFileSelected(ev) {
@@ -627,7 +627,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 id: Date.now(),
                 path: attachmentFile.name,
                 date: Date.now(),
-                displayText: attachmentDisplayText || attachmentFile.name,
+                text: attachmentText || attachmentFile.name,
                 type: 'file'
             }
             setAttachments((prev) => [...prev, newAttachment])
@@ -638,7 +638,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 id: Date.now(),
                 path: attachmentLink,
                 date: Date.now(),
-                displayText: attachmentDisplayText || attachmentLink,
+                text: attachmentText || attachmentLink,
                 type: 'link'
             }
 
@@ -647,7 +647,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         }
         setAttachmentFile(null)
         setAttachmentLink("")
-        setAttachmentDisplayText("")
+        setAttachmentText("")
         hidePicker(ev)
     }
 
@@ -739,7 +739,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             selectedPosition,
             attachmentFile,
             attachmentLink,
-            attachmentDisplayText
+            attachmentText
         ])
 
     function onModalCloseInner(ev) {
@@ -1046,7 +1046,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                 <div className="flex-space-between-align">
                                                     <button className="attachment-extention">PNG</button>
                                                     <div className="file-info">
-                                                        <h5>{attachment.path}</h5>
+                                                        {attachment.text && <h5>{attachment.text}</h5>}
+                                                        {!attachment.text && <h5>{attachment.path}</h5>}
                                                         <label>{new Date(attachment.date).toLocaleDateString()}</label>
                                                     </div>
                                                 </div>
@@ -1799,8 +1800,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                 type="text"
                                 placeholder="Text to display"
                                 className="display-text-input"
-                                value={attachmentDisplayText}
-                                onChange={(ev) => setAttachmentDisplayText(ev.target.value)}
+                                value={attachmentText}
+                                onChange={(ev) => setAttachmentText(ev.target.value)}
                             />
                         </div>
                     </div>
