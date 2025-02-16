@@ -1,12 +1,12 @@
 import { random } from '../util.service.js'
 
 const USER_POOL = [
-    {_id: 'u101', fullname: 'Abi Abambi', imgUrl: 'https://example.com/abi.png'},
-    {_id: 'u102', fullname: 'Josh Ga',    imgUrl: 'https://example.com/josh.png'},
-    {_id: 'u103', fullname: 'Nina X',     imgUrl: 'https://example.com/nina.png'},
-    {_id: 'u104', fullname: 'Megan X',    imgUrl: 'https://example.com/megan.png'},
-    {_id: 'u105', fullname: 'Sam L',      imgUrl: 'https://example.com/sam.png'},
-    {_id: 'u106', fullname: 'Oliver Z',   imgUrl: 'https://example.com/oliver.png'}
+    {_id: 'u101', fullname: 'Abi Abambi', imgUrl: 'roi.png'},
+    {_id: 'u102', fullname: 'Josh Ga',    imgUrl: 'roi.png'},
+    {_id: 'u103', fullname: 'Nina X',     imgUrl: 'roi.png'},
+    {_id: 'u104', fullname: 'Megan X',    imgUrl: ''},
+    {_id: 'u105', fullname: 'Sam L',      imgUrl: ''},
+    {_id: 'u106', fullname: 'Oliver Z',   imgUrl: ''}
 ]
 
 const STATUS_OPTIONS = ['inProgress','done','review','stuck','blocked']
@@ -61,17 +61,27 @@ const BADGE_COLOR_MAP = {
     priority: '#ffe2bd',
     now:      '#ffc0cb'
 }
+
+const BADGE_TEXT_COLOR_MAP = {
+    risk:     '#6e3b0d',
+    approved: '#4f3a0e',
+    priority: '#6e3b0d',
+    now:      '#6e0d3a'
+}
+
 function getRandomBadges() {
     const count = random.randint(0,3)
     return Array.from({length: count}, () => {
         const badgeType  = random.choice(['risk','approved','priority','now'])
         return {
             id: random.id(),
-            text: random.choice(BADGE_OPTIONS_MAP[badgeType]),
+            // text: random.choice(BADGE_OPTIONS_MAP[badgeType]),
             categ: random.choice(['Risk','Status','Priority','Heads Up']),
-            badeType: badgeType,
+            // badeType: badgeType,
             color: BADGE_COLOR_MAP[badgeType] || '#ccc',
-            badgeOptions: BADGE_OPTIONS_MAP[badgeType] || []
+            textColor: BADGE_TEXT_COLOR_MAP[badgeType] || '#000',
+            badgeOptions: BADGE_OPTIONS_MAP[badgeType] || [],
+            chosenOption: random.choice(BADGE_OPTIONS_MAP[badgeType])
         }
     })
 }
@@ -103,13 +113,15 @@ function getRandomTask() {
         createdAt: random.date('2024-01-01','2026-12-31'),
         description: random.lorem(random.randint(5,15)),
         checklists: getRandomChecklists(),
-        memberIds: random.sample(USER_POOL.map(u=>u._id), random.randint(0, USER_POOL.length)),
+        // memberIds: random.sample(USER_POOL.map(u=>u._id), random.randint(0, USER_POOL.length)),
+        members: random.sample(USER_POOL, random.randint(0, USER_POOL.length)),
         style: {
             backgroundColor: random.color(),
             backgroundImage: random.choice([
                 null,null,null,'https://picsum.photos/600/300?random=' + random.randint(1,1000),
                 'cover-img.png','cover-img-1.png','cover-img-2.png','cover-img-3.png'
-            ])
+            ]),
+            coverSize: random.choice(['small','large'])
         },
         badges: getRandomBadges(),
         attachments: getRandomAttachments(),
@@ -249,7 +261,7 @@ export function getRandomBoard() {
             backgroundImage: 'https://picsum.photos/600/300?random=' + random.randint(1,1000)
         },
         labels: getRandomLabels(),
-        members: USER_POOL.map(u => ({ ...u })),
+        members: USER_POOL,
         groups: getRandomGroups(),
         activities: getRandomBoardActivities(),
         cmpsOrder: random.sample(CMP_ORDER_OPTIONS, random.randint(2, CMP_ORDER_OPTIONS.length))

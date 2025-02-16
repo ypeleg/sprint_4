@@ -20,33 +20,37 @@ const initialState = {
 
 export function boardReducer(state = initialState, action) {
     var newState = state
-    var boards
     switch (action.type) {
-        case SET_BOARDS:
+        case SET_BOARDS: {
             newState = {...state, boards: action.boards}
             break
-        case SET_BOARD:
+        }
+        case SET_BOARD: {
             newState = {...state, board: action.board}
             break
-        case REMOVE_BOARD:
+        }
+        case REMOVE_BOARD: {
             const lastRemovedBoard = state.boards.find(board => board._id === action.boardId)
-            boards = state.boards.filter(board => board._id !== action.boardId)
+            const boards = state.boards.filter(board => board._id !== action.boardId)
             newState = {...state, boards, lastRemovedBoard}
             break
-        case ADD_BOARD:
+        }
+        case ADD_BOARD: {
             newState = {...state, boards: [...state.boards, action.board]}
             break
-        case UPDATE_BOARD:
+        }
 
-            newState = {...state, board: action.board}
+        case UPDATE_BOARD: {
+            const updatedBoards = state.boards.map(board => board._id === action.board._id ? action.board : board)
+            newState = {...state, board: action.board, boards: updatedBoards}
             break
-        case ADD_BOARD_MSG:
-            newState = {...state, board: {...state.board, msgs: [...state.board.msgs || [], action.msg]}}
-            break
-        case SET_FILTER_BY:
+        }
+        case SET_FILTER_BY: {
             newState = {...state, filterBy: action.filterBy}
+            break
+        }
         default:
+
     }
     return newState
 }
-
