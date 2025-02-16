@@ -70,7 +70,28 @@
                 font-size: 14px;
                 color: #44546f;
             }
+            .date-container{
+                display: flex;
+                align-items: center;
+                .circle{
+                    align-self: center;
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-right: 4px;
+                    &.red{
+                        background-color: #c9372c;
+                    }
+                    &.grey{
+                        background-color: #091e420f;
+                    }
 
+            }
+            
+            }
             .member-label {
                 display: flex;
                 width: 100%;

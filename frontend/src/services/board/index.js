@@ -16,7 +16,8 @@ function getDefaultFilter() {
         title: '',
         members: [],
         labels: [],
-        status:''
+        status:'',
+        dueDate:[]
     }
 }
 
