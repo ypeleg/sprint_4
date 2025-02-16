@@ -23,7 +23,7 @@ export function getEmptyBoard() {
             imgUrl: ""
         },
         style: {
-            backgroundImage: ""
+            backgroundImage: "https://images.unsplash.com/photo-1738249034650-6a789a081a04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDY2fDB8MXxjb2xsZWN0aW9ufDF8MzE3MDk5fHx8fHwyfHwxNzM5NDYxMzA5fA&ixlib=rb-4.0.3&q=80&w=400"
         },
         labels: [],
         members: [],
@@ -45,6 +45,8 @@ export function getEmptyTask() {
         memberIds: [],
         labelIds: [],
         byMember: '',
+        activity:[],
+        attachments:[],
         style: {
             backgroundColor: '',
             backgroundImage: ''

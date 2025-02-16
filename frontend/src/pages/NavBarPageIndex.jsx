@@ -64,7 +64,7 @@ export function NavBarPageIndex() {
         </div>
         <div className="menu-item">
           <button className="workspace-side-btn">
-            <i className="fa-solid fa-users"></i> Members <i className="fa-solid fa-plus add-icon"></i>
+            <i className="fa-solid fa-users"></i> Members <i className="fa-solid fa-plus add-icon plus"></i>
           </button>
         </div>
         <div className="menu-item">
