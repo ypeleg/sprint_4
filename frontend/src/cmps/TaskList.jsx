@@ -124,23 +124,43 @@ export function TaskList({
                 },
                 onGenerateDragPreview({ location, nativeSetDragImage, source }) {
                     setCustomNativeDragPreview({
-                        nativeSetDragImage,
-                        getOffset: preserveOffsetOnSource({ element: el, input: location.current.input }),
-                        render({ container }) {
-                            const clone = el.cloneNode(true)
-                            clone.style.width = `${el.offsetWidth}px`
-                            clone.style.height = `${el.offsetHeight}px`
-                            clone.style.transition = "none"
-                            clone.style.opacity = "1"
-                            clone.style.pointerEvents = "none"
-                            clone.style.backgroundColor = window.getComputedStyle(el).backgroundColor || "#fff"
-                            clone.style.boxShadow = "0px 4px 12px rgba(0,0,0,0.5)"
-                            clone.style.border = "2px solid #333"
-                            clone.style.transform = "rotate(3deg) scale(1.05)"
-                            container.appendChild(clone)
-                        },
-                    })
-                }
+                      nativeSetDragImage,
+                      getOffset: preserveOffsetOnSource({ element: el, input: location.current.input }),
+                      render({ container }) {
+                        const { width, height } = el.getBoundingClientRect();
+                        const computedStyles = window.getComputedStyle(el);
+                        const wrapper = document.createElement("div");
+                        wrapper.className = "task-list";
+                        wrapper.style.opacity = "1";
+                        wrapper.style.filter = "none";
+                        
+                        let bg = computedStyles.backgroundColor;
+                        if (bg === "transparent" || bg === "rgba(0, 0, 0, 0)") {
+                          bg = "#fff";
+                        }
+                        
+                        const clone = el.cloneNode(true);
+                        clone.style.width = `${width}px`;
+                        clone.style.height = `${height}px`;
+                        clone.style.backgroundColor = bg;
+                        clone.style.opacity = "1";
+                        clone.style.filter = "none";
+                        clone.style.pointerEvents = "none";
+                        clone.style.borderRadius = computedStyles.borderRadius;
+                        clone.style.boxShadow = "0 6px 16px rgba(0, 0, 0, 0.3)";
+                        clone.style.transform = "translateY(-2px) scale(1.02)";
+                        
+                        clone.classList.forEach((cls) => {
+                          if (cls.includes("opacity")) {
+                            clone.classList.remove(cls);
+                          }
+                        });
+                        
+                        wrapper.appendChild(clone);
+                        container.appendChild(wrapper);
+                      },
+                    });
+                  }
 
             })
         })
