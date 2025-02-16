@@ -1,0 +1,36 @@
+.group-table {
+    background-color: white;
+
+    thead {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        th {
+            color: #44546F;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+    }
+
+    tbody {
+        overflow: hidden;
+        tr {
+            td {
+                color: #172B4D;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 20px;
+                white-space: nowrap;
+            }
+
+            height: 40px;
+            display: flex;
+            justify-content: space-evenly;
+
+        }
+
+    }
+
+}
