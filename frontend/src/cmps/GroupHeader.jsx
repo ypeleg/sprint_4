@@ -4,14 +4,25 @@ import { CopyListForm } from "./CopyListForm"
 import { MoveListForm } from "./MoveListForm"
 import { MoveAll } from "./MoveAll"
 import { GroupSort } from "./GroupSort"
+import { updateBoard } from "../store/store"
+import { useSelector } from "react-redux"
 
 export function GroupHeader({group}) {
+      const boardToShow = useSelector(state => state.boardModule.board)
     const elHeader = useRef()
     const [showGroupEdit,SetGroupEdit] = useState(false)
     const [showCopyList,setCopyList] = useState(false)
     const [showMoveList,setMoveList]  = useState(false)
     const [showMoveAll,setMoveAll] = useState(false)
     const [showSort,setSort] = useState(false)
+    const [groupTitle,setGroupTitle] = useState(group.title)
+    function onChangeGroupTitle({target}){
+        setGroupTitle(target.value)
+    }
+    function saveGroupTitle(){
+        group.title = groupTitle
+        updateBoard(boardToShow)
+    }
     function onSetSort(){
         setSort(!showSort)
     }
@@ -30,7 +41,7 @@ export function GroupHeader({group}) {
     }
     return (
         <div ref={elHeader} className="list-header just-flex">
-            <span style={{ color: group.style?.color || '#172b4d' }}>{group.title}</span>
+            <input onChange={onChangeGroupTitle} onBlur={saveGroupTitle} className="change-header" style={{ color: group.style?.color || '#172b4d' }} value={groupTitle}/>
             <div className="group-list-headr-btns" style={{color: group.style?.color || '#172b4d'}}>
                 {/*<i className="fa-regular fa-arrows-h"></i>*/}
                 {/*<i className="fa-regular fa-compress-alt" style={{*/}
