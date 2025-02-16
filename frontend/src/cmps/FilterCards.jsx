@@ -103,6 +103,36 @@ export function FilterCards({ el, setShowFilter }) {
 
                         </label>
                     </div>
+                    <p className="keyword">Due date</p>
+                    <div className="complete-input">
+                        <input  type="checkBox" onChange={handleChange}    name="status" id="status" />
+                        <label className="member-label" htmlFor="status">
+
+                            
+                            <span>Not marked as complete</span>
+
+                        </label>
+                    </div>
+                    <p className="keyword">Due date</p>
+                    
+                    <div className="member-input">
+                        <input  type="checkBox" onChange={handleChange}    name="status" id="status" />
+                        <label className="member-label" htmlFor="status">
+
+                            
+                            <span>No dates</span>
+
+                        </label>
+                    </div>
+                    <div className="member-input">
+                        <input value={'done'} checked={completedSelected==='done'} type="checkBox" onChange={handleChange}    name="status" id="status" />
+                        <label className="member-label" htmlFor="status">
+
+                            
+                            <span>Marked as complete</span>
+
+                        </label>
+                    </div>
                 </section>
 
 
