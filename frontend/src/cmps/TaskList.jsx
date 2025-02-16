@@ -9,7 +9,30 @@ import { useSelector } from "react-redux"
 
 
 
-export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggleLargeLabels }) {
+// drag and drop
+import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter'
+import { setCustomNativeDragPreview } from '@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview'
+import { preserveOffsetOnSource } from '@atlaskit/pragmatic-drag-and-drop/element/preserve-offset-on-source'
+
+const CARD_SYMBOL = Symbol('card')
+
+export function getCardData({ card, groupId, rect }) {
+    return {
+        [CARD_SYMBOL]: true,
+        card,
+        groupId,
+        rect,
+    }
+}
+export function isCardData(obj) {
+    return Boolean(obj && obj[CARD_SYMBOL])
+}
+// drag and drop
+
+
+
+
+export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggleLargeLabels, onMoveCard }) {
     // onSetShowForm={onSetShowForm} showForm={showForm}
     const boardToShow = useSelector(state => state.boardModule.board)
     const eventbus = eventBus
@@ -66,13 +89,105 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
         ])
     }
 
-    return (<>
-        <div className="task-list">
+    // drag and drop
+    const cardRefs = useRef({})
 
-          
-            {showFirstForm &&(grouAdd === group.id)&& <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
+    function getOrCreateRef(taskId) {
+        if (!cardRefs.current[taskId]) {
+            cardRefs.current[taskId] = React.createRef()
+        }
+        return cardRefs.current[taskId]
+    }
+
+    useEffect(() => {
+        tasks.forEach((task) => {
+            const ref = cardRefs.current[task.id]
+            if (!ref?.current) return
+            const el = ref.current
+            draggable({
+                element: el,
+                getInitialData({ element }) {
+                    return getCardData({
+                        card: task,
+                        groupId: group.id,
+                        rect: element.getBoundingClientRect(),
+                    })
+                },
+                onGenerateDragPreview({ location, nativeSetDragImage, source }) {
+                    setCustomNativeDragPreview({
+                        nativeSetDragImage,
+                        getOffset: preserveOffsetOnSource({ element: el, input: location.current.input }),
+                        render({ container }) {
+                            const clone = el.cloneNode(true)
+                            container.appendChild(clone)
+                        },
+                    })
+                },
+                onDragStart() {
+                },
+                onDrop() {
+                },
+            })
+        })
+    }, [tasks, group.id])
+
+
+    const listRef = useRef(null)
+
+    useEffect(() => {
+        const el = listRef.current
+        if (!el) return
+
+        return dropTargetForElements({
+            element: el,
+            canDrop({ source }) {
+                return isCardData(source.data)
+            },
+            getData() {
+                return { groupId: group.id }
+            },
+            onDragEnter() {
+            },
+            onDrop({ source, self }) {
+                if (!isCardData(source.data)) return
+                const { card, groupId: fromGroupId } = source.data
+                const toGroupId = self.data.groupId
+                onMoveCard(card, fromGroupId, toGroupId)
+            },
+        })
+    }, [group.id, onMoveCard])
+
+
+    useEffect(() => {
+        if (!listRef.current) return
+        return dropTargetForElements({
+            element: listRef.current,
+            canDrop({ source }) {
+                return isCardData(source.data)
+            },
+            getData() {
+                return { groupId: group.id }
+            },
+            onDrop({ source, self }) {
+                if (!isCardData(source.data)) return
+                const { card, groupId: fromGroupId } = source.data
+                const toGroupId = self.data.groupId
+                if (fromGroupId !== toGroupId) {
+                    onMoveCard(card, fromGroupId, toGroupId)
+                }
+            },
+        })
+    }, [group.id, onMoveCard])
+    // drag and drop
+
+    return (<>
+        <div ref={listRef} className="task-list">
+
+            {/*<pre>{JSON.stringify(tasks.map(task => task.id), null, 4)}</pre>*/}
+            {showFirstForm && (grouAdd === group.id)&& <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
             {tasks.map((task, idx) => {
-                return (<div key={task.id} onClick={() => onLoadTask(task, currentGroup, group, boardToShow)} className="task">
+                return (<div key={task.id} onClick={() => onLoadTask(task, currentGroup, group, boardToShow)} className="task"
+                             ref={getOrCreateRef(task.id)}>
 
 
                     {task.style.backgroundImage &&

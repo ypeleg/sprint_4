@@ -3124,6 +3124,28 @@ export function BoardDetails() {
         }
     }
 
+    function onMoveCard(card, fromGroupId, toGroupId) {
+        // 1) Copy board
+        const boardCopy = JSON.parse(JSON.stringify(boardToShow));
+        // 2) Remove from old group
+        const fromGroupIdx = boardCopy.groups.findIndex((g) => g.id === fromGroupId);
+        if (fromGroupIdx > -1) {
+            const taskIdx = boardCopy.groups[fromGroupIdx].tasks.findIndex((t) => t.id === card.id);
+            if (taskIdx > -1) {
+                boardCopy.groups[fromGroupIdx].tasks.splice(taskIdx, 1);
+            }
+        }
+
+        // 3) Insert into new group
+        const toGroupIdx = boardCopy.groups.findIndex((g) => g.id === toGroupId);
+        if (toGroupIdx > -1) {
+            boardCopy.groups[toGroupIdx].tasks.push(card);
+        }
+
+        // 4) Update the board
+        updateBoard(boardCopy);
+    }
+
     if (!boardToShow) return (<>Loading..</>)
     return (
         <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
@@ -3157,7 +3179,8 @@ export function BoardDetails() {
                             // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>
                             return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
                             <GroupHeader group={group}/>
-                                <TaskList toggleLargeLabels={toggleLargeLabels} largeLabels={largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}/>
+                                <TaskList toggleLargeLabels={toggleLargeLabels} largeLabels={largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}
+                                          onMoveCard={onMoveCard}/>
 
 
                             </div>
