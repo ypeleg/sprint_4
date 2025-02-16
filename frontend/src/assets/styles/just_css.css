@@ -988,6 +988,7 @@ input.task-title:focus {
     display: flex;
     align-items: center;
     gap: 4px
+
 }
 
 .btn-add,.btn-cancel {
@@ -3103,14 +3104,25 @@ label {
 }
 
 button.delete-btn-del {
-    background-color: #e6e8ec;
+    background-color: #e2e4ea;
     color: #42526e;
     border: none;
-    border-radius: 3px;
+    /*border-radius: 3px;*/
     padding: 6px 12px;
     cursor: pointer;
+    font-weight: 500;
+    border-radius: 4px;
 }
 
 div.task-user-icon {
     font-size: 10px;
+}
+
+button.delete-btn-del:hover {
+    background-color: #dfe1e6;
+    color: #172b4d;
+}
+
+.checklist-todos {
+    margin-left: 8px;
 }

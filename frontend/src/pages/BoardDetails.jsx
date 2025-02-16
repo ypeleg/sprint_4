@@ -609,6 +609,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     const [coverImage, setCoverImage] = useState(taskToShow.style.backgroundImage || '')
     const [coverSize, setCoverSize] = useState(taskToShow.style.backgroundSize || 'small')
 
+    const [addingToChecklist, setAddingToChecklist] = useState(0)
+
     function onPickColor(color) {
         setCoverColor(color)
         setCoverImage('')
@@ -1214,61 +1216,78 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                     </>
                                                 })}
 
-
+                                                {(addingToChecklist === 0) && <>
                                                 <div className="task-checklist-add inner-component-left-padding">
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Add an item"
-                                                        value={newChecklistItem}
-                                                        onChange={(e) => setNewChecklistItem(e.target.value)}
-                                                    />
+
+                                                    <button className="delete-btn-del" onClick={() => {
+                                                        setAddingToChecklist(checklist.id)
+                                                        }}>
+                                                        Add an item
+                                                    </button>
+
                                                 </div>
+                                                </>}
 
-                                                <div className="side-by-side inner-component-left-padding">
-                                                    <div className="just-flex">
-
-                                                        <div className="checklist-actions">
-                                                            <button className="btn-add"
-                                                                    onClick={() => {
-                                                                        setChecklists(checklists.map(c => {
-                                                                                if (c.id === checklist.id) {
-                                                                                    return {
-                                                                                        ...c,
-                                                                                        todos: [...c.todos, {
-                                                                                            id: Date.now(),
-                                                                                            title: newChecklistItem,
-                                                                                            isDone: false
-                                                                                        }]
-                                                                                    }
-                                                                                }
-                                                                                return c
-                                                                            })
-                                                                        )
-                                                                        setNewChecklistItem('')
-                                                                    }}
-                                                            >Add
-                                                            </button>
-                                                            <button className="btn-cancel"
-                                                                    onClick={() => {
-                                                                        setNewChecklistItem('')
-
-                                                                    }}
-                                                            >Cancel
-                                                            </button>
+                                                {(addingToChecklist === checklist.id)
+                                                    && <>
+                                                        <div className="task-checklist-add inner-component-left-padding">
+                                                            <input
+                                                                className="checklist-input"
+                                                                type="text"
+                                                                placeholder="Add an item"
+                                                                value={newChecklistItem}
+                                                                onChange={(e) => setNewChecklistItem(e.target.value)}
+                                                            />
                                                         </div>
-                                                    </div>
 
-                                                    {/*<div className="just-flex">*/}
-                                                    {/*    <button className="footer-action">*/}
-                                                    {/*        <i className="fa-regular fa-user"></i>*/}
-                                                    {/*        Assign*/}
-                                                    {/*    </button>*/}
-                                                    {/*    <button className="footer-action">*/}
-                                                    {/*        <i className="fa-regular fa-clock"></i>*/}
-                                                    {/*        Due date*/}
-                                                    {/*    </button>*/}
-                                                    {/*</div>*/}
-                                                </div>
+                                                        <div className="side-by-side inner-component-left-padding">
+                                                            <div className="just-flex">
+
+                                                                <div className="checklist-actions">
+                                                                    <button className="btn-add"
+                                                                            onClick={() => {
+                                                                                setChecklists(checklists.map(c => {
+                                                                                        if (c.id === checklist.id) {
+                                                                                            return {
+                                                                                                ...c,
+                                                                                                todos: [...c.todos, {
+                                                                                                    id: Date.now(),
+                                                                                                    title: newChecklistItem,
+                                                                                                    isDone: false
+                                                                                                }]
+                                                                                            }
+                                                                                        }
+                                                                                        return c
+                                                                                    })
+                                                                                )
+                                                                                setNewChecklistItem('')
+                                                                            }}
+                                                                    >Add
+                                                                    </button>
+                                                                    <button className="btn-cancel"
+                                                                            onClick={() => {
+                                                                                setNewChecklistItem('')
+                                                                                setAddingToChecklist(0)
+                                                                            }}
+                                                                    >Cancel
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
+                                                            {/*<div className="just-flex">*/}
+                                                            {/*    <button className="footer-action">*/}
+                                                            {/*        <i className="fa-regular fa-user"></i>*/}
+                                                            {/*        Assign*/}
+                                                            {/*    </button>*/}
+                                                            {/*    <button className="footer-action">*/}
+                                                            {/*        <i className="fa-regular fa-clock"></i>*/}
+                                                            {/*        Due date*/}
+                                                            {/*    </button>*/}
+                                                            {/*</div>*/}
+                                                        </div>
+                                                    </>}
+
+
                                             </div>
                                         </>
                                     })}
@@ -3060,7 +3079,7 @@ export function BoardDetails() {
     }
 
 
-    const [largeLabels, setLargeLabels] = useState(true)
+    const [largeLabels, setLargeLabels] = useState(false)
 
     function toggleLargeLabels(ev) {
         ev.stopPropagation()

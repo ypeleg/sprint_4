@@ -211,16 +211,22 @@ function getRandomColor() {
     return random.choice(trelloColors)
 }
 function getRandomColorLabels() {
-    const colors = ["#60D394","#FFD97D","#FF9B85","#FF6B6B","#7C77B9","#56CCF2"]
+    const colors = [
+        '#9f8fef', '#c9372c', '#f87168', '#fea362', '#f5cd47', '#4bce97', '#579dff']
+        // "#60D394","#FFD97D","#FF9B85","#FF6B6B","#7C77B9","#56CCF2"]
     return random.choice(colors)
+}
+
+function dropDuplicatedLabels(arr) {
+    return arr.filter((v,i,a)=>a.findIndex(t=>(t.color === v.color))===i)
 }
 function getRandomLabels() {
     const count = random.randint(0,5)
-    return Array.from({length: count}, () => ({
+    return dropDuplicatedLabels(Array.from({length: count}, () => ({
         id: random.id(),
         title: random.lorem(random.randint(1,5)),
         color: getRandomColorLabels()
-    }))
+    })))
 }
 
 function getRandomBoardActivities() {
