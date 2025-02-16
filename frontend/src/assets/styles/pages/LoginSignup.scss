@@ -1,0 +1,149 @@
+.login-page {
+  background-color: #FAFBFC;
+
+}
+
+.login-modal {
+  display: flex;
+  flex-direction: column;
+  margin: 0px auto;
+  width: 400px;
+  padding: 32px 40px;
+  background: rgb(255, 255, 255);
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
+  box-sizing: border-box;
+  margin-top: 50px;
+  color: var(--ds-text-subtle, #42526E);
+
+
+  input {
+    background-color: inherit;
+  }
+}
+
+.signup-logo {
+  margin: auto;
+  width: 120px;
+
+  img {
+    height: 40px;
+  }
+}
+
+.sub-title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: rgb(23, 43, 77);
+  margin: 10px auto 0;
+}
+
+.signup-form {
+  margin-top: 10px;
+
+}
+
+.input-field {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #dfe1e6;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  border: 1px solid #8590A1;
+}
+
+.input-field:focus {
+  border-color: #0052cc;
+}
+
+.terms-text {
+  font-size: 12px;
+  color: #6b778c;
+}
+
+.signup-button {
+  width: 100%;
+  background-color: #0052cc;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.signup-button:hover {
+  background-color: #0065ff;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.divider hr {
+  flex: 1;
+  border: none;
+  border-top: 1px solid #dfe1e6;
+}
+
+.divider span {
+  margin: 0 10px;
+  color: #6b778c;
+  font-size: 12px;
+}
+
+.social-logins {
+  display: grid;
+  grid-gap: 10px;
+  margin-top: 10px;
+}
+
+.social-button {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dfe1e6;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+
+  img {
+    height: 24px;
+    width: 24px;
+    margin-right: 10px;
+  }
+
+}
+
+
+
+.social-button:hover {
+  background-color: #f4f5f7;
+}
+
+.login-text {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.footer-text {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #6b778c;
+  text-align: center;
+}
+
+.footer-text a {
+  color: #0052cc;
+  text-decoration: none;
+}
+
+.footer-text a:hover {
+  text-decoration: underline;
+}

@@ -45,12 +45,11 @@ export function BoardIndex() {
                         <div className="description-container">
                             <div className="edit-workspace">
                                 <h2>Trello Workspaces</h2>
-                                <img src="pen.svg" />
                             </div>
                             <div style={{ display: 'flex', gap: 6, fontSize: 12, color: '#44546f' }}>
                                 <span>Premium </span>
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <img src="lock.svg" style={{ marginTop: -2, height: 14 }} /> Private
+                                    <img src="lock.svg" /> Private
                                 </div>
                             </div>
                         </div>

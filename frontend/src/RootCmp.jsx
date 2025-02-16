@@ -2,10 +2,11 @@
 
 import React from 'react'
 
-import {Routes, Route} from 'react-router'
-import {DebugPage} from './pages/DebugPage.jsx'
-import {BoardIndex} from './pages/BoardIndex.jsx'
-import {BoardDetails} from './pages/BoardDetails.jsx'
+import { Routes, Route } from 'react-router'
+import { DebugPage } from './pages/DebugPage.jsx'
+import { BoardIndex } from './pages/BoardIndex.jsx'
+import { BoardDetails } from './pages/BoardDetails.jsx'
+import { LoginSignup } from './pages/LoginSignup.jsx'
 
 
 export function RootCmp() {
@@ -13,10 +14,12 @@ export function RootCmp() {
         <div className="main-container">
             <main>
                 <Routes>
-                    <Route path="/" element={<BoardIndex/>}/>
-                    <Route path="/:boardId" element={<BoardDetails/>}>
+                    <Route path="/" element={<BoardIndex />} />
+                    <Route path="/:boardId" element={<BoardDetails />}>
+
                     </Route>
-                    <Route path="/debug" element={<DebugPage/>}/>
+                    <Route path="/login" element={<LoginSignup />} />
+                    <Route path="/debug" element={<DebugPage />} />
                 </Routes>
             </main>
         </div>

@@ -46,6 +46,12 @@
                     width: 16px;
                 }
 
+                img {
+                    margin-top: -2px;
+                    height: 14px;
+                    filter: invert(24%) sepia(10%) saturate(500%) hue-rotate(180deg);
+                }
+
                 .edit-workspace {
                     display: flex;
                     align-items: center;
@@ -55,15 +61,6 @@
                         line-height: normal;
                     }
 
-                    img {
-                        width: 16px;
-                        height: 16px;
-                        // padding: 10px;
-
-                        &:hover {
-                            background-color: rgba(0, 0, 0, 0.16);
-                        }
-                    }
                 }
 
                 .sub-title {
@@ -101,9 +98,10 @@ h3 {
     font-weight: 300;
 }
 
-.fa-lock {
-    font-size: 12px;
+.plus {
+    margin-left: 58px;
 }
+
 
 
 .board-logo-large {
