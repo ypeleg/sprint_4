@@ -54,7 +54,7 @@ export function FilterCards({ el, setShowFilter }) {
             setFilterBy(UpdatedFilterBy)
         }
     }
-    console.log(filterBy)
+    console.log(boardToShow)
     return (
         <div tabIndex="0" className="filter-cards-container"  >
             <div className="filter-content">

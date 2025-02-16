@@ -2654,6 +2654,8 @@ export function BoardDetails() {
     // taskService.query().then(res => console.log(res))
 
     const boardToShow = useSelector(state => state.boardModule.board)
+    console.log('bordDetails')
+    console.log(boardToShow)
     // const allBoards = useSelector(state => state.boardModule.boards)
 
     const [taskToShow, setTaskToShow] = useState(null)
@@ -2666,7 +2668,7 @@ export function BoardDetails() {
 
     const [isPopupShown, togglePopup] = useToggle(false)
 
-
+    
     useEffect(() => {
         onLoadBoard()
     }, [])
@@ -2724,7 +2726,7 @@ export function BoardDetails() {
 
     if (!boardToShow) return (<>Loading..</>)
     return (
-        <div className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
+        <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
 
             {/* <button className="open-chat-btn" onClick={togglePopup}>💬</button> */}
             {isPopupShown && (!!taskToShow) && <>

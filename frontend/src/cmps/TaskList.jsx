@@ -5,14 +5,26 @@ import { useNavigate } from "react-router"
 import { AddTaskForm } from "./AddTaskForm"
 import React, { useEffect, useRef, useState } from "react"
 import { eventBus } from "../services/event-bus.service"
+import { useSelector } from "react-redux"
 
 
 
-export function TaskList({ currentBoard, currentGroup, onLoadTask, group, largeLabels, toggleLargeLabels }) {
+export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggleLargeLabels }) {
     // onSetShowForm={onSetShowForm} showForm={showForm}
+    const boardToShow = useSelector(state => state.boardModule.board)
     const eventbus = eventBus
     const [showForm, setShowForm] = useState(false)
     const [showFirstForm, SetFirstForm] = useState(false)
+    const [tasks, setTasks] = useState(group.tasks)
+    console.log(tasks)
+
+    const navgite = useNavigate()
+    const [showQuickEdit, setQuickEdit] = useState(false)
+    let editpos = useRef()
+    console.log('render')
+    useEffect(()=>{
+        setTasks(group.tasks)
+    },[boardToShow])
     useEffect(() => {
         const unsubscribe = eventbus.on('showAddGroup', (data) => {
             onSetFirstForm(data);  // Handle the received data
@@ -22,19 +34,16 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group, largeL
             unsubscribe();  // Cleanup listener when the component is unmounted
         };
     }, []);
+  
+
+    // const { tasksTemp } = group
+  
     function onSetFirstForm(){
         SetFirstForm(!showFirstForm)
     }
     function onSetShowForm() {
         setShowForm(!showForm)
     }
-
-    // const { tasksTemp } = group
-    const [tasks, setTasks] = useState(group.tasks)
-
-    const navgite = useNavigate()
-    const [showQuickEdit, setQuickEdit] = useState(false)
-    let editpos = useRef()
 
     function onsetQuickEdit(ev, aa) {
         const elment = ev.target
@@ -63,7 +72,7 @@ export function TaskList({ currentBoard, currentGroup, onLoadTask, group, largeL
             {/*<pre>{JSON.stringify(tasks.map(task => task.id), null, 4)}</pre>*/}
             {showFirstForm && <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
             {tasks.map((task, idx) => {
-                return (<div key={task.id} onClick={() => onLoadTask(task, currentGroup, group, currentBoard)} className="task">
+                return (<div key={task.id} onClick={() => onLoadTask(task, currentGroup, group, boardToSho)} className="task">
 
 
                     {task.style.backgroundImage &&
