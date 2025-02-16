@@ -116,14 +116,31 @@ function getRandomTask() {
         checklists: getRandomChecklists(),
         // memberIds: random.sample(USER_POOL.map(u=>u._id), random.randint(0, USER_POOL.length)),
         members: random.sample(USER_POOL, random.randint(0, USER_POOL.length)),
-        style: {
-            backgroundColor: random.color(),
-            backgroundImage: random.choice([
-                null,null,null,'https://picsum.photos/600/300?random=' + random.randint(1,1000),
-                'cover-img.png','cover-img-1.png','cover-img-2.png','cover-img-3.png'
+        style:
+            random.choice([
+                {
+                    backgroundColor: (getRandomColorLabels()),
+                    coverSize: random.choice(['small', 'large'])
+                },
+                {
+                    backgroundImage: random.choice([
+                        null, null, null, 'https://picsum.photos/600/300?random=' + random.randint(1, 1000),
+                        'cover-img.png', 'cover-img-1.png', 'cover-img-2.png', 'cover-img-3.png'
+                    ]),
+                    coverSize: random.choice(['small', 'large'])
+                },
+                {
+
+                },
+                {
+
+                },
+                {
+
+                }
+
             ]),
-            coverSize: random.choice(['small','large'])
-        },
+
         badges: getRandomBadges(),
         attachments: getRandomAttachments(),
         activity: getRandomActivity(),
@@ -204,23 +221,29 @@ function getRandomColor() {
         '#dfd8fd',
         '#cce0ff',
         '#c6edfb',
-        '#d3f1a7',
+        // '#d3f1a7',
         '#fdd0ec',
         '#f1f2f4',
     ]
     return random.choice(trelloColors)
 }
 function getRandomColorLabels() {
-    const colors = ["#60D394","#FFD97D","#FF9B85","#FF6B6B","#7C77B9","#56CCF2"]
+    const colors = [
+        '#9f8fef', '#c9372c', '#f87168', '#fea362', '#f5cd47', '#4bce97', '#579dff']
+        // "#60D394","#FFD97D","#FF9B85","#FF6B6B","#7C77B9","#56CCF2"]
     return random.choice(colors)
+}
+
+function dropDuplicatedLabels(arr) {
+    return arr.filter((v,i,a)=>a.findIndex(t=>(t.color === v.color))===i)
 }
 function getRandomLabels() {
     const count = random.randint(0,5)
-    return Array.from({length: count}, () => ({
+    return dropDuplicatedLabels(Array.from({length: count}, () => ({
         id: random.id(),
         title: random.lorem(random.randint(1,5)),
         color: getRandomColorLabels()
-    }))
+    })))
 }
 
 function getRandomBoardActivities() {

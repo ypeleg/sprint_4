@@ -22,7 +22,7 @@ import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard
 import GoogleMapReact from 'google-map-react'
 import {TaskList} from "../cmps/TaskList.jsx"
 import { GroupHeader } from "../cmps/GroupHeader.jsx"
-import {random} from "../services/util.service.js"
+import {random, makeId} from "../services/util.service.js"
 
 export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
     const [center, setCenter] = useState({lat: lat, lng: lng})
@@ -312,8 +312,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             const tasksArray = boardCopy.groups[newGroupIdx].tasks
             const pos = Math.min(selectedPosition - 1, tasksArray.length)
             tasksArray.splice(pos, 0, cleanTask)
-            const sanitized = cleanBoard(boardCopy)
-            await updateBoard(sanitized)
+            const cleaned = cleanBoard(boardCopy)
+            await updateBoard(cleaned)
             hidePicker(ev)
             return
         }
@@ -557,51 +557,6 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         // }
     }
 
-
-    function saveTaska() {
-        const boardCopy = {
-            ...taskToShow.board,
-            groups: taskToShow.board.groups.map(g => ({
-                ...g,
-                tasks: g.tasks.map(t => {
-                    const { group, board, taskList, ...rest } = t
-                    return { ...rest }
-                })
-            }))
-        }
-        const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id)
-        if (groupIdx === -1) return
-        const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id)
-        if (taskIdx === -1) return
-        const updatedTask = {
-            ...taskToShow,
-            title: cardTitle,
-            description,
-            isWatching,
-            style: {
-                ...taskToShow.style,
-                backgroundImage: coverUrl || null
-            },
-            attachments,
-            checklists,
-            activity: activityLog,
-            badges,
-            members,
-            dueDate: date,
-            location,
-            group: {
-                ...taskToShow.group,
-                title: listName
-            }
-        }
-        const { group, board, taskList, ...cleanTask } = updatedTask
-        boardCopy.groups[groupIdx].tasks[taskIdx] = { ...cleanTask }
-        updateBoard(boardCopy)
-            .then(() => onClose())
-            .catch(err => console.error(err))
-    }
-
-
     // return (
     //     <div className="task-modal">
     //         {/* ... */}
@@ -609,7 +564,6 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     //         {/* ... */}
     //     </div>
     // )
-
 
     const [attachmentFile, setAttachmentFile] = useState(null)
     const [attachmentLink, setAttachmentLink] = useState("")
@@ -651,12 +605,11 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         hidePicker(ev)
     }
 
-
-
-
     const [coverColor, setCoverColor] = useState( taskToShow.style.backgroundColor || '')
     const [coverImage, setCoverImage] = useState(taskToShow.style.backgroundImage || '')
     const [coverSize, setCoverSize] = useState(taskToShow.style.backgroundSize || 'small')
+
+    const [addingToChecklist, setAddingToChecklist] = useState(0)
 
     function onPickColor(color) {
         setCoverColor(color)
@@ -793,6 +746,91 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         saveTask().then(onClose(ev))
             .catch(err => console.error(err))
 
+    }
+
+
+
+    // Redux boards and the current card details
+    // const boards = useSelector((state) => state.boardModule.boards)
+    // const currentBoard = taskToShow.board    // The board that the original card belongs to
+    // const currentGroup = taskToShow.group    // The group that the original card belongs to
+
+// "Name" for the new card
+    const [copyTitle, setCopyTitle] = useState(taskToShow.title || '')
+
+// Checkboxes to keep checklists, labels, members
+    const [keepChecklists, setKeepChecklists] = useState(true)
+    const [keepLabels, setKeepLabels] = useState(true)
+    const [keepMembers, setKeepMembers] = useState(true)
+
+// Where to copy the card
+//     const [selectedBoardId, setSelectedBoardId] = useState(currentBoard?._id || '')
+//     const [selectedGroupId, setSelectedGroupId] = useState(currentGroup?.id || '')
+//     const [selectedPosition, setSelectedPosition] = useState(1) // 1-based
+
+    // function getSelectedBoard() {
+    //     return boards.find((b) => b._id === selectedBoardId)
+    // }
+    //
+    // function getSelectedGroup() {
+    //     const board = getSelectedBoard()
+    //     if (!board) return null
+    //     return board.groups.find((g) => g.id === selectedGroupId)
+    // }
+
+
+
+    async function onCopyCard(ev) {
+        const targetBoard = getSelectedBoard()
+        const targetGroup = getSelectedGroup()
+        if (!targetBoard || !targetGroup) return
+
+        const boardCopy = JSON.parse(JSON.stringify(targetBoard))
+        const groupIdx = boardCopy.groups.findIndex(g => g.id === targetGroup.id)
+        if (groupIdx < 0) return
+
+        const newCard = {
+            id: makeId(),
+            title: copyTitle,
+            description: taskToShow.description || '',
+            checklists: keepChecklists ? JSON.parse(JSON.stringify(taskToShow.checklists || [])) : [],
+            labels: keepLabels ? JSON.parse(JSON.stringify(taskToShow.labels || [])) : [],
+            members: keepMembers ? JSON.parse(JSON.stringify(taskToShow.members || [])) : [],
+            attachments: [], // or copy if you want them
+            status: taskToShow.status || '',
+            style: { ...taskToShow.style },
+            priority: taskToShow.priority || '',
+            dueDate: taskToShow.dueDate || '',
+            comments: [],
+            labelIds: keepLabels ? JSON.parse(JSON.stringify(taskToShow.labelIds || [])) : [],
+            byMember: taskToShow.byMember || '',
+            badges: keepLabels ? [...(taskToShow.badges || [])] : [],
+            isUserWatching: false,
+            activity: [],
+            location: { ...taskToShow.location },
+            group: { ...taskToShow.group }
+
+        }
+
+        const pos = Math.min(selectedPosition - 1, boardCopy.groups[groupIdx].tasks.length)
+        boardCopy.groups[groupIdx].tasks.splice(pos, 0, newCard)
+
+        const cleaned = cleanBoard(boardCopy)
+        await updateBoard(cleaned)
+        hidePicker(ev)
+    }
+
+    function onDeleteTask(ev) {
+        onClose(ev)
+        const boardCopy = cleanBoard(taskToShow.board)
+        const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id)
+        if (groupIdx >= 0) {
+            const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id)
+            if (taskIdx >= 0) {
+                boardCopy.groups[groupIdx].tasks.splice(taskIdx, 1)
+            }
+        }
+        updateBoard(boardCopy)
     }
 
     return (
@@ -1134,7 +1172,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                             <div className="progress-num">{checklist.progress}%</div>
                                                             <div className="progress-bar">
                                                                 <div className="progress-bar-internal"
-                                                                style={{width: `${checklist.progress}%`}}
+                                                                     style={{width: `${checklist.progress}%`}}
                                                                 ></div>
                                                             </div>
                                                         </div>
@@ -1146,26 +1184,29 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                             <div className="just-flex-with-center checklist-todos">
                                                                 <input name={todo.title} type="checkbox"
                                                                        checked={todo.isDone}
-                                                                    onChange={() => {
-                                                                        const newChecklists = checklists.map(c => {
-                                                                            if (c.id === checklist.id) {
-                                                                                return {...c, todos: c.todos.map(t => {if (t.id === todo.id) {
-                                                                                        return {...t, isDone: !t.isDone}
-                                                                                    }
-                                                                                        return t
-                                                                                    })
-                                                                                }}
-                                                                            return c
-                                                                        })
+                                                                       onChange={() => {
+                                                                           const newChecklists = checklists.map(c => {
+                                                                               if (c.id === checklist.id) {
+                                                                                   return {
+                                                                                       ...c, todos: c.todos.map(t => {
+                                                                                           if (t.id === todo.id) {
+                                                                                               return {...t, isDone: !t.isDone}
+                                                                                           }
+                                                                                           return t
+                                                                                       })
+                                                                                   }
+                                                                               }
+                                                                               return c
+                                                                           })
 
-                                                                        newChecklists.map(c => {
-                                                                            if (c.id === checklist.id) {
-                                                                                let doneTodos = c.todos.filter(t => t.isDone)
-                                                                                c.progress = Math.floor((doneTodos.length / c.todos.length) * 100)
-                                                                            }
-                                                                        })
-                                                                        setChecklists(newChecklists)
-                                                                    }}
+                                                                           newChecklists.map(c => {
+                                                                               if (c.id === checklist.id) {
+                                                                                   let doneTodos = c.todos.filter(t => t.isDone)
+                                                                                   c.progress = Math.floor((doneTodos.length / c.todos.length) * 100)
+                                                                               }
+                                                                           })
+                                                                           setChecklists(newChecklists)
+                                                                       }}
                                                                 />
                                                                 <label
                                                                     style={{textDecoration: todo.isDone ? 'line-through' : 'none'}}
@@ -1175,61 +1216,78 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                     </>
                                                 })}
 
-
+                                                {(addingToChecklist === 0) && <>
                                                 <div className="task-checklist-add inner-component-left-padding">
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Add an item"
-                                                        value={newChecklistItem}
-                                                        onChange={(e) => setNewChecklistItem(e.target.value)}
-                                                    />
+
+                                                    <button className="delete-btn-del" onClick={() => {
+                                                        setAddingToChecklist(checklist.id)
+                                                        }}>
+                                                        Add an item
+                                                    </button>
+
                                                 </div>
+                                                </>}
 
-                                                <div className="side-by-side inner-component-left-padding">
-                                                    <div className="just-flex">
-
-                                                        <div className="checklist-actions">
-                                                            <button className="btn-add"
-                                                                    onClick={() => {
-                                                                        setChecklists(checklists.map(c => {
-                                                                                if (c.id === checklist.id) {
-                                                                                    return {
-                                                                                        ...c,
-                                                                                        todos: [...c.todos, {
-                                                                                            id: Date.now(),
-                                                                                            title: newChecklistItem,
-                                                                                            isDone: false
-                                                                                        }]
-                                                                                    }
-                                                                                }
-                                                                                return c
-                                                                            })
-                                                                        )
-                                                                        setNewChecklistItem('')
-                                                                    }}
-                                                            >Add
-                                                            </button>
-                                                            <button className="btn-cancel"
-                                                                    onClick={() => {
-                                                                        setNewChecklistItem('')
-
-                                                                    }}
-                                                            >Cancel
-                                                            </button>
+                                                {(addingToChecklist === checklist.id)
+                                                    && <>
+                                                        <div className="task-checklist-add inner-component-left-padding">
+                                                            <input
+                                                                className="checklist-input"
+                                                                type="text"
+                                                                placeholder="Add an item"
+                                                                value={newChecklistItem}
+                                                                onChange={(e) => setNewChecklistItem(e.target.value)}
+                                                            />
                                                         </div>
-                                                    </div>
 
-                                                    {/*<div className="just-flex">*/}
-                                                    {/*    <button className="footer-action">*/}
-                                                    {/*        <i className="fa-regular fa-user"></i>*/}
-                                                    {/*        Assign*/}
-                                                    {/*    </button>*/}
-                                                    {/*    <button className="footer-action">*/}
-                                                    {/*        <i className="fa-regular fa-clock"></i>*/}
-                                                    {/*        Due date*/}
-                                                    {/*    </button>*/}
-                                                    {/*</div>*/}
-                                                </div>
+                                                        <div className="side-by-side inner-component-left-padding">
+                                                            <div className="just-flex">
+
+                                                                <div className="checklist-actions">
+                                                                    <button className="btn-add"
+                                                                            onClick={() => {
+                                                                                setChecklists(checklists.map(c => {
+                                                                                        if (c.id === checklist.id) {
+                                                                                            return {
+                                                                                                ...c,
+                                                                                                todos: [...c.todos, {
+                                                                                                    id: Date.now(),
+                                                                                                    title: newChecklistItem,
+                                                                                                    isDone: false
+                                                                                                }]
+                                                                                            }
+                                                                                        }
+                                                                                        return c
+                                                                                    })
+                                                                                )
+                                                                                setNewChecklistItem('')
+                                                                            }}
+                                                                    >Add
+                                                                    </button>
+                                                                    <button className="btn-cancel"
+                                                                            onClick={() => {
+                                                                                setNewChecklistItem('')
+                                                                                setAddingToChecklist(0)
+                                                                            }}
+                                                                    >Cancel
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
+                                                            {/*<div className="just-flex">*/}
+                                                            {/*    <button className="footer-action">*/}
+                                                            {/*        <i className="fa-regular fa-user"></i>*/}
+                                                            {/*        Assign*/}
+                                                            {/*    </button>*/}
+                                                            {/*    <button className="footer-action">*/}
+                                                            {/*        <i className="fa-regular fa-clock"></i>*/}
+                                                            {/*        Due date*/}
+                                                            {/*    </button>*/}
+                                                            {/*</div>*/}
+                                                        </div>
+                                                    </>}
+
+
                                             </div>
                                         </>
                                     })}
@@ -1248,7 +1306,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                         </div>
                                         {/*<button className="delete-btn"*/}
                                         {/*        onClick={() => {*/}
-                                        
+
                                         {/*        }}>Hide Details*/}
                                         {/*</button>*/}
                                     </div>
@@ -1406,11 +1464,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                     }}><i className="fa-regular fa-file-alt"></i> Make template
                             </button>
                             <button className="sidebar-btn"
-                                    onClick={(event) => {
-                                        hidePicker(event)
-                                        movePickerTo(event)
-                                        setShowPickerUnderConstruction(true)
-                                    }}><i className="fa-regular fa-archive"></i> Archive
+                                    onClick={onDeleteTask}><i className="fa-regular fa-archive"></i> Archive
                             </button>
                             <button className="sidebar-btn"
                                     onClick={(event) => {
@@ -2371,21 +2425,48 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             </div>
 
 
-
-
-
             {/* CopyCards Picker */}
-            <div className="picker-popup" style={{
-                top: pickerTop,
-                left: pickerLeft,
-                display: (showPickerCopyCard) ? 'block' : 'none',
-                width: '304px'
-            }}>
+            <div
+                className="picker-popup"
+                style={{
+                    top: pickerTop,
+                    left: pickerLeft,
+                    display: showPickerCopyCard ? 'block' : 'none',
+                    width: '304px',
+                }}
+            >
                 <div className="picker-header">
                     <h3>Copy card</h3>
                     <button className="task-modal-close" onClick={hidePicker}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M10.5858 12L5.29289
+             6.70711C4.90237 6.31658 4.90237
+             5.68342 5.29289 5.29289C5.68342
+             4.90237 6.31658 4.90237 6.70711
+             5.29289L12 10.5858L17.2929
+             5.29289C17.6834 4.90237 18.3166
+             4.90237 18.7071 5.29289C19.0976
+             5.68342 19.0976 6.31658 18.7071
+             6.70711L13.4142 12L18.7071
+             17.2929C19.0976 17.6834 19.0976
+             18.3166 18.7071 18.7071C18.3166
+             19.0976 17.6834 19.0976 17.2929
+             18.7071L12 13.4142L6.70711
+             18.7071C6.31658 19.0976 5.68342
+             19.0976 5.29289 18.7071C4.90237
+             18.3166 4.90237 17.6834 5.29289
+             17.2929L10.5858 12Z"
+                                fill="currentColor"
+                            />
                         </svg>
                     </button>
                 </div>
@@ -2396,24 +2477,36 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                         <input
                             type="text"
                             className="title-input"
-                            value="give every member a task to start working on"
+                            value={copyTitle}
+                            onChange={(e) => setCopyTitle(e.target.value)}
                         />
                     </div>
-
                     <div className="keep-section">
                         <label>Keep...</label>
                         <div className="keep-options">
                             <label className="keep-option">
-                                <input type="checkbox" checked/>
-                                <span>Checklists (1)</span>
+                                <input
+                                    type="checkbox"
+                                    checked={keepChecklists}
+                                    onChange={(e) => setKeepChecklists(e.target.checked)}
+                                />
+                                <span>Checklists ({taskToShow.checklists?.length || 0})</span>
                             </label>
                             <label className="keep-option">
-                                <input type="checkbox" checked/>
-                                <span>Labels (1)</span>
+                                <input
+                                    type="checkbox"
+                                    checked={keepLabels}
+                                    onChange={(e) => setKeepLabels(e.target.checked)}
+                                />
+                                <span>Labels ({taskToShow.labelIds?.length || 0})</span>
                             </label>
                             <label className="keep-option">
-                                <input type="checkbox" checked/>
-                                <span>Members (2)</span>
+                                <input
+                                    type="checkbox"
+                                    checked={keepMembers}
+                                    onChange={(e) => setKeepMembers(e.target.checked)}
+                                />
+                                <span>Members ({taskToShow.memberIds?.length || 0})</span>
                             </label>
                         </div>
                     </div>
@@ -2423,28 +2516,69 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
 
                         <div className="select-group">
                             <label>Board</label>
-                            <select className="board-select">
-                                <option>trelloception</option>
+                            <select
+                                className="board-select"
+                                value={selectedBoardId}
+                                onChange={(e) => {
+                                    setSelectedBoardId(e.target.value)
+                                    setSelectedGroupId('')
+                                    setSelectedPosition(1)
+                                }}
+                            >
+                                {boards.map((b) => (
+                                    <option key={b._id} value={b._id}>
+                                        {b.title}
+                                    </option>
+                                ))}
                             </select>
                         </div>
-
                         <div className="select-row">
                             <div className="select-group">
                                 <label>List</label>
-                                <select className="list-select">
-                                    <option>In Progress</option>
+                                <select
+                                    className="list-select"
+                                    value={selectedGroupId}
+                                    onChange={(e) => {
+                                        setSelectedGroupId(e.target.value)
+                                        setSelectedPosition(1)
+                                    }}
+                                >
+                                    {getSelectedBoard()?.groups.map((group) => (
+                                        <option key={group.id} value={group.id}>
+                                            {group.title}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
+
                             <div className="select-group">
                                 <label>Position</label>
-                                <select className="position-select">
-                                    <option>1</option>
+                                <select
+                                    className="position-select"
+                                    value={selectedPosition}
+                                    onChange={(e) => setSelectedPosition(+e.target.value)}
+                                >
+                                    {(() => {
+                                        const grp = getSelectedGroup()
+                                        const numTasks = grp ? grp.tasks.length : 0
+                                        const positions = []
+                                        for (let i = 1; i <= numTasks + 1; i++) {
+                                            positions.push(i)
+                                        }
+                                        return positions.map((pos) => (
+                                            <option key={pos} value={pos}>
+                                                {pos}
+                                            </option>
+                                        ))
+                                    })()}
                                 </select>
                             </div>
                         </div>
                     </div>
 
-                    <button className="create-btn">Create card</button>
+                    <button className="create-btn" onClick={onCopyCard}>
+                        Create card
+                    </button>
                 </div>
             </div>
 
@@ -2892,7 +3026,7 @@ export function BoardDetails() {
 
     const [isPopupShown, togglePopup] = useToggle(false)
 
-    
+
     useEffect(() => {
         onLoadBoard()
     }, [])
@@ -2945,7 +3079,7 @@ export function BoardDetails() {
     }
 
 
-    const [largeLabels, setLargeLabels] = useState(true)
+    const [largeLabels, setLargeLabels] = useState(false)
 
     function toggleLargeLabels(ev) {
         ev.stopPropagation()
@@ -2980,13 +3114,13 @@ export function BoardDetails() {
             )
             console.log('taskIdx', taskIdx)
             if (taskIdx === -1) return
-            const { board, group, taskList, ...cleanTask } = updatedTask
+            const {board, group, taskList, ...cleanTask} = updatedTask
             boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask
             await updateBoard(boardCopy)
             setTaskToShow(null)
             togglePopup()
         } catch (err) {
-            console.error("Failed to save task:", err);
+            console.error("Failed to save task:", err)
         }
     }
 
@@ -2999,7 +3133,7 @@ export function BoardDetails() {
 
                 <div className="popup" ref={popupRef} onClick={closePopupOnlyIfClickedOutOfIt}>
 
-                    <TaskModal taskToShow={taskToShow} onClose={closePopup2} popupRef={popupRef} onSaveTaskOuter = {onSaveTaskOuter}/>
+                    <TaskModal taskToShow={taskToShow} onClose={closePopup2} popupRef={popupRef} onSaveTaskOuter={onSaveTaskOuter}/>
 
                 </div>
                 <div className="popup-backdrop" onClick={closePopupOnlyIfClickedOutOfIt}></div>
