@@ -28,8 +28,8 @@ function isCardData(obj) {
     return Boolean(obj && obj[CARD_SYMBOL])
 }
 
-function Placeholder() {
-    return <div style={{ height: "8px", background: "rgba(0,0,0,0.2)", margin: "4px 0" }} />
+function Placeholder({placeholderHeight}) {
+    return <div style={{ height: placeholderHeight+"px", background: "rgba(0,0,0,0.2)", borderRadius:"8px", margin: "4px 0" }} />
 }
 // drag and drop
 
@@ -45,6 +45,7 @@ export function TaskList({
                              onReorderCard,
                          }) {
 
+    const [placeholderHeight, setPlaceholderHeight] = useState(8)
     const boardToShow = useSelector((state) => state.boardModule.board)
     const eventbus = eventBus
     const navigate = useNavigate()
@@ -129,46 +130,38 @@ export function TaskList({
                       nativeSetDragImage,
                       getOffset: preserveOffsetOnSource({ element: el, input: location.current.input }),
                       render({ container }) {
-                        const { width, height } = el.getBoundingClientRect();
-                        const computedStyles = window.getComputedStyle(el);
-
-                        // Create a wrapper div with class "task-list"
-                        const wrapper = document.createElement("div");
-                        wrapper.className = "task-list";
-                        // Optionally, you can copy over any specific CSS properties from your actual task-list container
-
-                        // Clone the original element
-                        const clone = el.cloneNode(true);
+                        const { width, height } = el.getBoundingClientRect()
+                        const computedStyles = window.getComputedStyle(el)
+                        const wrapper = document.createElement("div")
+                        wrapper.className = "task-list"
+                        const clone = el.cloneNode(true)
                         clone.style.removeProperty('opacity')
-                        clone.style.width = width + "px";
-                        clone.style.height = height + "px";
-                        clone.style.backgroundColor = computedStyles.backgroundColor || "#fff";
-                        clone.style.opacity = "1";
-                        clone.style.pointerEvents = "none";
-                        clone.style.borderRadius = computedStyles.borderRadius;
-                        clone.style.boxShadow = "0 6px 16px rgba(0,0,0,0.3)";
-                        clone.style.transform = "translateY(-2px) scale(1.02)";
+                        clone.style.width = width + "px"
+                        clone.style.height = height + "px"
+                        clone.style.backgroundColor = computedStyles.backgroundColor || "#fff"
+                        clone.style.opacity = "1"
+                        clone.style.pointerEvents = "none"
+                        clone.style.borderRadius = computedStyles.borderRadius
+                        clone.style.boxShadow = "0 6px 16px rgba(0,0,0,0.3)"
+                        clone.style.transform = "translateY(-2px) scale(1.02)"
                         clone.style.zIndex = '1000'
                         clone.style.setProperty("opacity", "1", "important")
-
                         clone.style.pointerEvents = "none"
                         clone.style.borderRadius = computedStyles.borderRadius
                         clone.querySelectorAll("*").forEach(child => {
-                              child.style.removeProperty('opacity');
+                              child.style.removeProperty('opacity')
                         })
-
+                        setPlaceholderHeight(height)
                         // nearly there.. not following the mouse..
-                        // clone.style.position = "fixed";
-                        // clone.style.top = location.current.input.clientY - 20 + "px";
-                        // clone.style.left = location.current.input.clientX - 20 + "px";
-
-
-                        // clone.style.opacity = "";
+                        // clone.style.position = "fixed"
+                        // clone.style.top = location.current.input.clientY - 20 + "px"
+                        // clone.style.left = location.current.input.clientX - 20 + "px"
+                        // clone.style.opacity = ""
                         // Append the cloned element into the wrapper
-                        wrapper.appendChild(clone);
-                        container.appendChild(wrapper);
+                        wrapper.appendChild(clone)
+                        container.appendChild(wrapper)
                       },
-                    });
+                    })
                   }
 
             })
@@ -187,9 +180,9 @@ export function TaskList({
             getData() {
                 return { groupId: group.id, task: null }
             },
-            // onDragStart({ event }) {
-            //     event.dataTransfer.effectAllowed = 'move';
-            // },
+            onDragStart({ event }) {
+                event.dataTransfer.effectAllowed = 'move'
+            },
             onDragEnter() {
             },
             onDragLeave() {
@@ -238,7 +231,7 @@ export function TaskList({
                     setShadow({ taskId: task.id, edge })
                 },
                 // onDragStart({ event }) {
-                //     event.dataTransfer.effectAllowed = 'move';
+                //     event.dataTransfer.effectAllowed = 'move'
                 // },
                 onDrag({ source, self }) {
 
@@ -286,7 +279,7 @@ export function TaskList({
                 {tasks.map((task, idx) => (
 
                     <>
-                    {shadow?.taskId === task.id && shadow.edge === "top" && <Placeholder />}
+                    {shadow?.taskId === task.id && shadow.edge === "top" && <Placeholder placeholderHeight={placeholderHeight} />}
 
                     <div
                         key={task.id}
@@ -417,7 +410,7 @@ export function TaskList({
                         {showQuickEdit && <QuickEdit pos={editpos.current} />}
 
                     </div>
-                    {shadow?.taskId === task.id && shadow.edge === "bottom" && <Placeholder />}
+                    {shadow?.taskId === task.id && shadow.edge === "bottom" && <Placeholder placeholderHeight={placeholderHeight} />}
                 </>
                 ))}
                 {showForm && <AddTaskForm onSetShowForm={onSetShowForm} selectedGroup={group} />}
