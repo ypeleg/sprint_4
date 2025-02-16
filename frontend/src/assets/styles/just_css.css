@@ -3196,3 +3196,97 @@ button.delete-btn-del:hover {
 
 }
 
+
+
+[data-dragandrop-dragging] {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.task-list .task {
+    transition: transform 0.2s ease;
+    will-change: transform;
+}
+
+.task-list .task[data-dragandrop-dragging] {
+    transform: rotate(0) !important;
+    cursor: grabbing;
+}
+
+.task-list .task {
+    transition: transform 0.2s ease;
+    will-change: transform;
+}
+
+.task-list .task[data-dragandrop-dragging],
+.task-list .task[data-dragandrop-dragging] * {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+}
+
+[data-dragandrop-preview] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    z-index: 9999 !important;
+}
+
+.task-list .task {
+    user-select: none;
+}
+
+.task-list .task:active {
+    cursor: grabbing;
+}
+
+
+.task-list .task {
+    cursor: grab;
+    user-select: none;
+    -webkit-user-drag: element;
+}
+
+.task-list .task:active {
+    cursor: grabbing;
+}
+
+[data-drop-target="true"] {
+    cursor: inherit;
+}
+
+img, a {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.dragging {
+    cursor: grabbing !important;
+}  
+
+[data-draggable-id] {
+    opacity: 1 !important;
+    background: white !important;
+  }
+
+[data-draggable-id] {
+    opacity: 1 !important;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+.drag-preview {
+    opacity: 1 !important;
+    transform: translateZ(0);
+  }  
+
+.drag-preview {
+    opacity: 1 !important;
+    transition: opacity 0.2s ease;
+  }
+  
+[data-draggable-id] {
+    background: var(--ds-surface-sunken, #F5F6F8) !important;
+    box-shadow: var(--ds-shadow-overlay, 0 8px 12px rgba(0,0,0,0.1)) !important;
+  }

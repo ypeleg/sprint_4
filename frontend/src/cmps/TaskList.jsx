@@ -13,6 +13,7 @@ import { attachClosestEdge, extractClosestEdge } from "@atlaskit/pragmatic-drag-
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview"
 
 
+
 // drag and drop
 const CARD_SYMBOL = Symbol("card")
 function getCardData({ task, groupId, rect }) {
@@ -36,13 +37,14 @@ function Placeholder() {
 export function TaskList({
                              group,
                              currentBoard,
-                             currentGroup, 
+                             currentGroup,
                              onLoadTask,
                              largeLabels,
                              toggleLargeLabels,
                              onMoveCard,
                              onReorderCard,
                          }) {
+
     const boardToShow = useSelector((state) => state.boardModule.board)
     const eventbus = eventBus
     const navigate = useNavigate()
@@ -53,10 +55,10 @@ export function TaskList({
     const [showQuickEdit, setShowQuickEdit] = useState(false)
     const editpos = useRef(null)
 
-    
+
     const [shadow, setShadow] = useState(null)
 
-    
+
     const cardRefs = useRef({})
     function getCardRef(taskId) {
         if (!cardRefs.current[taskId]) {
@@ -106,7 +108,7 @@ export function TaskList({
         setShowQuickEdit(!showQuickEdit)
     }
 
-    
+
     useEffect(() => {
         tasks.forEach((task) => {
             const ref = cardRefs.current[task.id]
@@ -127,39 +129,46 @@ export function TaskList({
                       nativeSetDragImage,
                       getOffset: preserveOffsetOnSource({ element: el, input: location.current.input }),
                       render({ container }) {
-                        const { width, height } = el.getBoundingClientRect()
-                        const computedStyles = window.getComputedStyle(el)
-                        const wrapper = document.createElement("div")
-                        wrapper.className = "task-list"
-                        wrapper.style.opacity = "1"
-                        wrapper.style.filter = "none"
-                        
-                        let bg = computedStyles.backgroundColor
-                        if (bg === "transparent" || bg === "rgba(0, 0, 0, 0)") {
-                          bg = "#fff"
-                        }
-                        
-                        const clone = el.cloneNode(true)
-                        clone.style.width = `${width}px`
-                        clone.style.height = `${height}px`
-                        clone.style.backgroundColor = bg
-                        clone.style.opacity = "1"
-                        clone.style.filter = "none"
+                        const { width, height } = el.getBoundingClientRect();
+                        const computedStyles = window.getComputedStyle(el);
+
+                        // Create a wrapper div with class "task-list"
+                        const wrapper = document.createElement("div");
+                        wrapper.className = "task-list";
+                        // Optionally, you can copy over any specific CSS properties from your actual task-list container
+
+                        // Clone the original element
+                        const clone = el.cloneNode(true);
+                        clone.style.removeProperty('opacity')
+                        clone.style.width = width + "px";
+                        clone.style.height = height + "px";
+                        clone.style.backgroundColor = computedStyles.backgroundColor || "#fff";
+                        clone.style.opacity = "1";
+                        clone.style.pointerEvents = "none";
+                        clone.style.borderRadius = computedStyles.borderRadius;
+                        clone.style.boxShadow = "0 6px 16px rgba(0,0,0,0.3)";
+                        clone.style.transform = "translateY(-2px) scale(1.02)";
+                        clone.style.zIndex = '1000'
+                        clone.style.setProperty("opacity", "1", "important")
+
                         clone.style.pointerEvents = "none"
                         clone.style.borderRadius = computedStyles.borderRadius
-                        clone.style.boxShadow = "0 6px 16px rgba(0, 0, 0, 0.3)"
-                        clone.style.transform = "translateY(-2px) scale(1.02)"
-                        
-                        clone.classList.forEach((cls) => {
-                          if (cls.includes("opacity")) {
-                            clone.classList.remove(cls)
-                          }
+                        clone.querySelectorAll("*").forEach(child => {
+                              child.style.removeProperty('opacity');
                         })
-                        
-                        wrapper.appendChild(clone)
-                        container.appendChild(wrapper)
+
+                        // nearly there.. not following the mouse..
+                        // clone.style.position = "fixed";
+                        // clone.style.top = location.current.input.clientY - 20 + "px";
+                        // clone.style.left = location.current.input.clientX - 20 + "px";
+
+
+                        // clone.style.opacity = "";
+                        // Append the cloned element into the wrapper
+                        wrapper.appendChild(clone);
+                        container.appendChild(wrapper);
                       },
-                    })
+                    });
                   }
 
             })
@@ -169,6 +178,7 @@ export function TaskList({
     useEffect(() => {
         if (!listRef.current) return
 
+        // actual drag start event
         return dropTargetForElements({
             element: listRef.current,
             canDrop({ source }) {
@@ -177,6 +187,9 @@ export function TaskList({
             getData() {
                 return { groupId: group.id, task: null }
             },
+            // onDragStart({ event }) {
+            //     event.dataTransfer.effectAllowed = 'move';
+            // },
             onDragEnter() {
             },
             onDragLeave() {
@@ -193,7 +206,7 @@ export function TaskList({
             },
         })
     }, [group.id, onMoveCard])
-    
+
     useEffect(() => {
         tasks.forEach((task) => {
             const ref = cardRefs.current[task.id]
@@ -207,7 +220,7 @@ export function TaskList({
                 },
                 getIsSticky: () => true,
                 getData({ element, input }) {
-                    
+
                     return attachClosestEdge({ task, groupId: group.id }, {
                         element,
                         input,
@@ -215,6 +228,7 @@ export function TaskList({
                     })
                 },
                 onDragEnter({ source, self }) {
+
                     if (!isCardData(source.data)) return
                     const { task: dragged } = source.data
                     if (dragged.id === task.id) {
@@ -223,7 +237,11 @@ export function TaskList({
                     const edge = extractClosestEdge(self.data)
                     setShadow({ taskId: task.id, edge })
                 },
+                // onDragStart({ event }) {
+                //     event.dataTransfer.effectAllowed = 'move';
+                // },
                 onDrag({ source, self }) {
+
                     if (!isCardData(source.data)) return
                     const { task: dragged } = source.data
                     if (dragged.id === task.id) {
@@ -250,7 +268,7 @@ export function TaskList({
 
                         onReorderCard(dragged, targetTask, edge, fromGroupId)
                     } else {
-                        
+
                         onMoveCard(dragged, fromGroupId, toGroupId, targetTask, edge)
                     }
                 },
@@ -268,7 +286,6 @@ export function TaskList({
                 {tasks.map((task, idx) => (
 
                     <>
-                    {/* Render placeholder above if needed */}
                     {shadow?.taskId === task.id && shadow.edge === "top" && <Placeholder />}
 
                     <div
@@ -276,10 +293,9 @@ export function TaskList({
                         className="task"
                         onClick={() => onLoadTask(task, currentGroup, group, boardToShow)}
                         ref={getCardRef(task.id)}
+                        draggable="false"
                     >
 
-
-                        {/* Card cover color / image */}
                         {task.style.backgroundImage && (
                             <div className="cover-img">
                                 <img src={task.style.backgroundImage} alt="" />
@@ -396,11 +412,9 @@ export function TaskList({
                                 </div>
                             )}
                         </div>
-                        {/* If user clicks edit -> QuickEdit */}
                         {showQuickEdit && <QuickEdit pos={editpos.current} />}
 
                     </div>
-                    {/* Render placeholder below if needed */}
                     {shadow?.taskId === task.id && shadow.edge === "bottom" && <Placeholder />}
                 </>
                 ))}
