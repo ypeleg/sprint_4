@@ -2,15 +2,17 @@
 
 import {useRef, useState} from "react"
 import {FilterCards} from "./FilterCards"
+import { useSelector } from "react-redux"
 
 export function BoardHeader({onStarBoard, isStarred}) {
     const elFilter = useRef()
     const [ShowFilter, setShowFilter] = useState(false)
+    const boardToShow = useSelector(state => state.boardModule.board)
 
     return (
         <header className="board-header">
             <div className="header-group">
-                <h3 className="board-name">trelloception</h3>
+                <h3 className="board-name">{boardToShow.title}</h3>
                 <button
                 onClick={onStarBoard}
                 >
