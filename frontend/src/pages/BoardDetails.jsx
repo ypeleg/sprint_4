@@ -2026,7 +2026,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
                 </div>
             </div>
 
-            
+
             {/* MoveCard Picker */}
             <div
                 className="picker-popup"

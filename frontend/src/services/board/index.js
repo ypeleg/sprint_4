@@ -5,7 +5,7 @@ const {DEV, VITE_LOCAL} = import.meta.env
 import {boardService as local} from './board.service.local'
 import {boardService as remote} from './board.service.remote'
 
-//localStorage.clear()
+// localStorage.clear()
 
 function getEmptyBoard() {
     return getRandomBoard()
