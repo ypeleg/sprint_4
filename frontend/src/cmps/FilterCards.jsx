@@ -163,4 +163,3 @@ export function FilterCards({ el, setShowFilter }) {
     )
 }
 
-// new Date(new Date().setDate(new Date().getDate() + 7)).getTime()
