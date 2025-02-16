@@ -1,25 +1,25 @@
 
 
-import {useState} from 'react'
-import {useNavigate} from 'react-router'
-import {BoardPreview} from '../cmps/BoardPreview.jsx'
-import {CreateBoardModal} from './CreateBoardModal.jsx'
+import { useState } from 'react'
+import { useNavigate } from 'react-router'
+import { BoardPreview } from '../cmps/BoardPreview.jsx'
+import { CreateBoardModal } from './CreateBoardModal.jsx'
 
 
-export function BoardList({boards, onRemoveBoard, onUpdateBoard, addBoard = false}) {
+export function BoardList({ boards, onRemoveBoard, onUpdateBoard, addBoard = false }) {
 
-    const [isModalOpen, setIsModalopen] = useState(false)
-    const navgite = useNavigate()
+  const [isModalOpen, setIsModalopen] = useState(false)
+  const navgite = useNavigate()
 
-    function onClose() {
-        setIsModalopen(false)
-        console.log('sss');
+  function onClose() {
+    setIsModalopen(false)
+    console.log('sss');
 
-    }
+  }
 
-    return (
-        <section>
-            {/* {addBoard &&
+  return (
+    <section>
+      {/* {addBoard &&
         <section className='workspace-header'>
           <div className='title-workspace'>
             <div className='board-logo'>T</div>
@@ -36,27 +36,27 @@ export function BoardList({boards, onRemoveBoard, onUpdateBoard, addBoard = fals
       } */}
 
 
-            <ul className="board-list">
-                {boards.map(board =>
-                    <li key={board._id}
-                        onClick={() => navgite(`/${board._id}`)}
-                    >
-                        <BoardPreview board={board}/>
-                    </li>)
-                }
-                {addBoard &&
-                    <article className="board-preview create-board-preview"
-                             onClick={() => setIsModalopen(!isModalOpen)}
-                    >
-                        <h4>Create new board</h4>
-                        {isModalOpen &&
-                            <CreateBoardModal onClose={onClose}/>
-                        }
-                    </article>
-                }
-            </ul>
+      <ul className="board-list">
+        {boards.map(board =>
+          <li key={board._id}
+            onClick={() => navgite(`/${board._id}`)}
+          >
+            <BoardPreview board={board} />
+          </li>)
+        }
+        {addBoard &&
+          <article className="board-preview create-board-preview"
+            onClick={() => setIsModalopen(!isModalOpen)}
+          >
+            <div className="create-board-title">Create new board</div>
+            {isModalOpen &&
+              <CreateBoardModal onClose={onClose} />
+            }
+          </article>
+        }
+      </ul>
 
-            {/* <CreateBoardModal onClose={onClose} /> */}
-        </section>
-    )
+      {/* <CreateBoardModal onClose={onClose} /> */}
+    </section>
+  )
 }

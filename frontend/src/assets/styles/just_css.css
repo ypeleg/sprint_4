@@ -3,7 +3,7 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     z-index: 1000
 }
 
@@ -17,7 +17,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,.4);
+    background: rgba(0, 0, 0, .4);
     z-index: 999
 }
 
@@ -136,7 +136,7 @@
     font-weight: 500;
     outline: 0;
     cursor: pointer;
-    transition: background .2s ease,box-shadow .2s ease;
+    transition: background .2s ease, box-shadow .2s ease;
     background-color: #e2e4ea;
     background-repeat: no-repeat;
     background-position: right 10px center;
@@ -228,7 +228,8 @@
     padding: 16px
 }
 
-.task-attachments-list li,.task-modal-header {
+.task-attachments-list li,
+.task-modal-header {
     justify-content: space-between
 }
 
@@ -251,7 +252,8 @@
     width: 100%
 }
 
-.task-members,.task-right {
+.task-members,
+.task-right {
     display: flex;
     align-items: center;
     gap: 16px
@@ -276,7 +278,8 @@
     align-items: center
 }
 
-.add-member-btn,.member-circle {
+.add-member-btn,
+.member-circle {
     border-radius: 50%;
     width: 32px;
     height: 32px;
@@ -310,12 +313,29 @@
     cursor: pointer
 }
 
-.green { background: #4bce97; }
-.yellow { background: #f5cd47; }
-.orange { background: #fea362; }
-.red { background: #c9372c; }
-.purple { background: #9f8fef; }
-.blue { background: #579dff; }
+.green {
+    background: #4bce97;
+}
+
+.yellow {
+    background: #f5cd47;
+}
+
+.orange {
+    background: #fea362;
+}
+
+.red {
+    background: #c9372c;
+}
+
+.purple {
+    background: #9f8fef;
+}
+
+.blue {
+    background: #579dff;
+}
 
 .add-label-btn {
     width: 32px;
@@ -336,7 +356,8 @@
     margin-bottom: 12px
 }
 
-.edit-btn,.hide-details-btn {
+.edit-btn,
+.hide-details-btn {
     background: #e2e4e6
 }
 
@@ -391,8 +412,8 @@
 
 .task-modal {
     border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0,0,0,.2);
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, .2);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #172b4d;
     padding: 0;
     width: 768px;
@@ -401,7 +422,7 @@
 }
 
 .popup-backdrop {
-    background: rgba(0,0,0,.3);
+    background: rgba(0, 0, 0, .3);
     /*backdrop-filter: blur(2px)*/
 }
 
@@ -445,7 +466,9 @@
     border-color: #172b4d
 }
 
-.task-attachment-row button,.task-watch,.task-watch-btn {
+.task-attachment-row button,
+.task-watch,
+.task-watch-btn {
     border: 0;
     padding: 6px 12px;
     cursor: pointer;
@@ -453,7 +476,8 @@
     font-weight: 600
 }
 
-.task-watch,.task-watch-btn {
+.task-watch,
+.task-watch-btn {
     border-radius: 4px;
     height: 32px;
     display: flex;
@@ -467,7 +491,8 @@
     margin-inline: 3px;
 }
 
-.task-watch-btn.active,.task-watch.active {
+.task-watch-btn.active,
+.task-watch.active {
     background-color: #0079bf;
     color: #fff;
 
@@ -527,7 +552,8 @@
     gap: 8px
 }
 
-.task-attachment-row input,.task-checklist-add input {
+.task-attachment-row input,
+.task-checklist-add input {
     flex: 1;
     border: 1px solid #dfe1e6;
     border-radius: 3px;
@@ -535,7 +561,8 @@
     font-size: .85rem
 }
 
-.task-activity-add,.task-sidebar {
+.task-activity-add,
+.task-sidebar {
     display: flex;
     flex-direction: column
 }
@@ -556,7 +583,8 @@
     gap: 8px
 }
 
-.sidebar-btn,.task-activity-add button {
+.sidebar-btn,
+.task-activity-add button {
     border: 0;
     border-radius: 3px;
     cursor: pointer;
@@ -587,7 +615,7 @@
 .task-modal-close {
     position: absolute;
     top: 32px;
-    right:32px;
+    right: 32px;
     border: 0;
     background: 0 0;
     font-size: 1.3rem;
@@ -599,7 +627,7 @@
 .change-cover-btn {
     position: absolute;
     bottom: 10px;
-    right:32px;
+    right: 32px;
     border: 0;
     background: 0 0;
     font-size: 1.6rem;
@@ -645,7 +673,8 @@
     justify-content: space-between
 }
 
-.edit-btn,.hide-details-btn {
+.edit-btn,
+.hide-details-btn {
     background: #ebecf0;
     border: 0;
     border-radius: 3px;
@@ -655,7 +684,8 @@
     color: #172b4d
 }
 
-.edit-btn:hover,.hide-details-btn:hover {
+.edit-btn:hover,
+.hide-details-btn:hover {
     background: #dfe1e6
 }
 
@@ -666,12 +696,12 @@
 .task-custom-fields select:focus {
     background: #fff;
     border-color: #0079bf;
-    box-shadow: 0 0 4px rgba(0,121,191,.4)
+    box-shadow: 0 0 4px rgba(0, 121, 191, .4)
 }
 
 .popup * {
     font-size: 14px;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif
 }
 
 .popup-open {
@@ -743,7 +773,7 @@ button.attachment-extention {
     color: #44546f;
     font-weight: 700;
     background-color: #e1e3e9;
-    box-shadow: 0 2px 2px #091e4240,0 0 2px #091e424f
+    box-shadow: 0 2px 2px #091e4240, 0 0 2px #091e424f
 }
 
 .file-info {
@@ -769,7 +799,8 @@ button.attachment-extention {
     background-color: #eff0f3
 }
 
-.full-name,.maps-in-2 h3 {
+.full-name,
+.maps-in-2 h3 {
     font-weight: 700
 }
 
@@ -790,7 +821,8 @@ button.attachment-extention {
     aspect-ratio: 1/1
 }
 
-.text-size-activity,.text-size-activity>span {
+.text-size-activity,
+.text-size-activity>span {
     font-size: 14px;
     margin-bottom: 4px
 }
@@ -817,13 +849,13 @@ input.activity-input {
     padding-left: 16px;
     font-size: 14px;
     color: #626f85;
-    box-shadow: rgba(9,30,66,.25)0 1px 1px 0
+    box-shadow: rgba(9, 30, 66, .25)0 1px 1px 0
 }
 
 .input-container {
     margin-right: -16px;
     width: 100%;
-    box-shadow: rgba(9,30,66,.25),0 1px 1px #091e4240,0 0 1px #091e424f
+    box-shadow: rgba(9, 30, 66, .25), 0 1px 1px #091e4240, 0 0 1px #091e424f
 }
 
 .task-subtitle>strong {
@@ -849,7 +881,8 @@ input.task-title:focus {
     background-color: #fff
 }
 
-.date-picker,.status-icon {
+.date-picker,
+.status-icon {
     display: flex;
     align-items: center
 }
@@ -892,7 +925,8 @@ input.task-title:focus {
     background-color: #e1e3e9
 }
 
-.complete-label,.incomplete-label {
+.complete-label,
+.incomplete-label {
     background-color: #1f835a;
     color: #fff;
     margin-inline: 5px;
@@ -935,7 +969,7 @@ input.task-title:focus {
 
 .delete-btn {
     color: #42526e;
-    background: rgba(9,30,66,.04);
+    background: rgba(9, 30, 66, .04);
     border: 0;
     padding: 6px 12px;
     border-radius: 3px;
@@ -944,7 +978,7 @@ input.task-title:focus {
 }
 
 .delete-btn:hover {
-    background: rgba(9,30,66,.08);
+    background: rgba(9, 30, 66, .08);
     color: #172b4d
 }
 
@@ -991,7 +1025,8 @@ input.task-title:focus {
 
 }
 
-.btn-add,.btn-cancel {
+.btn-add,
+.btn-cancel {
     border: 0;
     padding: 6px 12px;
     font-size: 14px;
@@ -1015,8 +1050,9 @@ input.task-title:focus {
     color: #42526e
 }
 
-.btn-cancel:hover,.footer-action:hover {
-    background: rgba(9,30,66,.08);
+.btn-cancel:hover,
+.footer-action:hover {
+    background: rgba(9, 30, 66, .08);
     color: #172b4d
 }
 
@@ -1026,7 +1062,9 @@ input.task-title:focus {
     padding: 0 8px
 }
 
-.checklist-footer,.footer-action,.side-by-side {
+.checklist-footer,
+.footer-action,
+.side-by-side {
     display: flex;
     align-items: center
 }
@@ -1156,7 +1194,8 @@ input.task-title:focus {
     padding-top: -100px
 }
 
-.maps-container,.maps-in-1 {
+.maps-container,
+.maps-in-1 {
     border-radius: 15px
 }
 
@@ -1181,7 +1220,7 @@ input.task-title:focus {
 
 .search-container>input {
     padding-left: 10px;
-    color: rgba(0,0,0,.8)
+    color: rgba(0, 0, 0, .8)
 }
 
 .search-container::after {
@@ -1193,7 +1232,7 @@ input.task-title:focus {
     position: absolute;
     width: 4px;
     height: 4px;
-    color: rgba(0,0,0,.8);
+    color: rgba(0, 0, 0, .8);
     z-index: 1;
     font-family: "Font Awesome 5 Pro";
     font-weight: 400;
@@ -1259,7 +1298,7 @@ input.task-title:focus {
     background: #fff;
     border: 1px solid #dfe1e6;
     border-radius: 3px;
-    box-shadow: 0 4px 12px rgba(9,30,66,.25);
+    box-shadow: 0 4px 12px rgba(9, 30, 66, .25);
     padding: 8px;
     font-size: .85rem;
     color: #172b4d;
@@ -1275,7 +1314,7 @@ input.task-title:focus {
     background: #fff;
     border: 1px solid #dfe1e6;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(9,30,66,.25);
+    box-shadow: 0 4px 12px rgba(9, 30, 66, .25);
     padding: 8px;
     font-size: .85rem;
     color: #172b4d;
@@ -1962,8 +2001,8 @@ input.task-title:focus {
 }
 
 .date-picker-popup {
-     background-color: #f4f5f7;
- }
+    background-color: #f4f5f7;
+}
 
 .date-picker-content {
     padding: 0 12px 12px;
@@ -2298,7 +2337,7 @@ div.task-subtitle>strong:hover {
     margin-bottom: 16px;
 }
 
-.keep-section > label {
+.keep-section>label {
     display: block;
     color: #44546f;
     font-size: 12px;
@@ -2384,7 +2423,6 @@ div.task-subtitle>strong:hover {
 
 .create-btn {
     width: 100%;
-    padding: 6px 12px;
     background-color: #0052cc;
     color: white;
     border: none;
@@ -2893,8 +2931,8 @@ label {
     cursor: pointer;
     background-color: #ebecf0;
     background-image:
-            linear-gradient(90deg, #dfe1e6 25%, transparent 25%),
-            linear-gradient(90deg, #dfe1e6 25%, transparent 25%);
+        linear-gradient(90deg, #dfe1e6 25%, transparent 25%),
+        linear-gradient(90deg, #dfe1e6 25%, transparent 25%);
     background-position: top, bottom;
     background-size: 80% 8px;
     background-repeat: no-repeat;
@@ -3062,6 +3100,7 @@ label {
     overflow: hidden;
 
 }
+
 .task-custom-fields {
     margin-top: 16px;
 }

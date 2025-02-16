@@ -185,9 +185,17 @@ export function CreateBoardModal({ onClose }) {
           </button>
 
           {/* Premium Div */}
-          <div className="premium-banner">
-            PREMIUM
+          <div className="premium-section">
+            <span className="premium-label">PREMIUM</span>
+            <p className="premium-title">Create unlimited boards in Premium</p>
+            <p className="premium-text">Free Workspaces can only have up to 10 boards.</p>
           </div>
+
+          {/* License Info */}
+          <p className="license-text">
+            By using images from Unsplash, you agree to their license and Terms of Service.
+          </p>
+
 
         </section>
       </section>
