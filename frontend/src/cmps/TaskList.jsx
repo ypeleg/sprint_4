@@ -47,7 +47,7 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
         setShowForm(!showForm)
     }
 
-    function onsetQuickEdit(ev, aa) {
+    function onsetQuickEdit(ev) {
         const elment = ev.target
         const pos = elment.getBoundingClientRect()
         editpos.current = pos
@@ -183,7 +183,7 @@ export function TaskList({  currentGroup, onLoadTask, group, largeLabels, toggle
                             })}
                         </div>)}
                     </div>
-                    {showQuickEdit && <QuickEdit pos={editpos.current} />}
+                    {showQuickEdit && <QuickEdit setQuickEdit={setQuickEdit} pos={editpos.current} />}
                 </div>)
             })}
             {showForm && <AddTaskForm onSetShowForm={onSetShowForm} selectedGroup={group} />}

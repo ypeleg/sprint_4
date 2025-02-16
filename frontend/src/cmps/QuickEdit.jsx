@@ -1,11 +1,11 @@
 
 
-export function QuickEdit({pos}){
+export function QuickEdit({setQuickEdit,pos}){
 
     const {top,bottom,right,left} =pos
 
     return(
-        <div className="quick-edit-container">
+        <div  onClick={() =>setQuickEdit(false)} className="quick-edit-container">
             <div className="quick-edit-content" style={{top,bottom,right,left}}>
                 <aside>
 
