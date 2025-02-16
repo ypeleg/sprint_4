@@ -158,8 +158,17 @@ export function TaskList({
                         // clone.style.left = location.current.input.clientX - 20 + "px"
                         // clone.style.opacity = ""
                         // Append the cloned element into the wrapper
+                        const fixedContainer = document.getElementById('drag-preview-container')
+                        fixedContainer.innerHTML = ''
+
+
+
+
+
                         wrapper.appendChild(clone)
                         container.appendChild(wrapper)
+                        fixedContainer.appendChild(wrapper)
+
                       },
                     })
                   }
@@ -181,6 +190,7 @@ export function TaskList({
                 return { groupId: group.id, task: null }
             },
             onDragStart({ event }) {
+                event.stopPropagation()
                 event.dataTransfer.effectAllowed = 'move'
             },
             onDragEnter() {
@@ -231,6 +241,7 @@ export function TaskList({
                     setShadow({ taskId: task.id, edge })
                 },
                 // onDragStart({ event }) {
+                //     event.stopPropagation()
                 //     event.dataTransfer.effectAllowed = 'move'
                 // },
                 onDrag({ source, self }) {
@@ -278,7 +289,8 @@ export function TaskList({
 
                 {tasks.map((task, idx) => (
 
-                    <>
+                    <React.Fragment key={task.id}>
+
                     {shadow?.taskId === task.id && shadow.edge === "top" && <Placeholder placeholderHeight={placeholderHeight} />}
 
                     <div
@@ -286,7 +298,7 @@ export function TaskList({
                         className="task"
                         onClick={() => onLoadTask(task, currentGroup, group, boardToShow)}
                         ref={getCardRef(task.id)}
-                        draggable="false"
+                        //draggable="false"
                     >
 
                         {task.style.backgroundImage && (
@@ -323,10 +335,10 @@ export function TaskList({
                         </div>
 
                         <div className="stay-same-height">
-                           
+
                             {(task.status === "done") ? <svg style={{color:'rgb(34, 160, 107)'}} onClick={(ev) => onToggleDone(ev, task)} width='16' height='16' fill="none" viewBox="0 0 16 16" role="presentation" class="css-1t4wpzr"><path fill="currentcolor" fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m12.326-2.52-1.152-.96L6.75 9.828 4.826 7.52l-1.152.96 2.5 3a.75.75 0 0 0 1.152 0z" clip-rule="evenodd"></path></svg>: <div
                                 className={`task-checkbox`}
-                                
+
                                 onClick={(ev) => onToggleDone(ev, task)}
                             />}
                             <span className="task-task-text">{task.title}</span>
@@ -411,7 +423,7 @@ export function TaskList({
 
                     </div>
                     {shadow?.taskId === task.id && shadow.edge === "bottom" && <Placeholder placeholderHeight={placeholderHeight} />}
-                </>
+                    </React.Fragment>
                 ))}
                 {showForm && <AddTaskForm onSetShowForm={onSetShowForm} selectedGroup={group} />}
             </div>

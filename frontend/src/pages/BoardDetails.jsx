@@ -3248,11 +3248,22 @@ export function BoardDetails() {
         boardCopy.groups[groupIdx].tasks = reordered
         updateBoard(boardCopy)
     }
-
+    // const [coord, setCoord] = useState({ x: 0, y: 0 });
+    // const handleMouseMove = (e) => {
+    //     setCoord({ x: e.clientX, y: e.clientY  });
+    // };
 
     if (!boardToShow) return (<>Loading..</>)
     return (
         <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
+            {/*onMouseMove={handleMouseMove}>*/}
+
+            {/*<div id="drag-preview-container"*/}
+            {/*style={{*/}
+            {/*    top: coord.y + 'px',*/}
+            {/*    left: coord.x + 'px',*/}
+            {/*}}*/}
+            {/*></div>*/}
 
             {/* <button className="open-chat-btn" onClick={togglePopup}>💬</button> */}
             {isPopupShown && (!!taskToShow) && <>
@@ -3276,7 +3287,7 @@ export function BoardDetails() {
                 <section className="board-display">
 
                     <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred}/>
-                        <GroupList onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>
+                    <GroupList onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>
                     {/* <section className="group-lists">
                         {boardToShow.groups.map(group => {
 
