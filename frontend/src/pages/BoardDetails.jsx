@@ -64,7 +64,7 @@ export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
 const AnyReactComponent = ({text}) => <div style={{fontSize: '22px'}}>{text}</div>
 
 
-export function TaskModal({taskToShow, onClose, popupRef}) {
+export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     // const { board, group, taskList, ...cleanTask } = taskToShow
 
     console.log('task', taskToShow)
@@ -131,6 +131,7 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     const [pickerLeft, setPickerLeft] = useState('0px')
 
     const coverFileInputRef = useRef(null)
+
 
     function onCoverFileSelected(ev) {
         const file = ev.target.files?.[0]
@@ -497,7 +498,61 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
     function onDateChange(e) { setDate(e.target.value) }
     function onDateClick() { dateInputRef.current?.showPicker() }
 
-    function saveTask() {
+    async function saveTask() {
+        const boardCopy = {
+            ...taskToShow.board,
+            groups: taskToShow.board.groups.map(g => ({
+                ...g,
+                tasks: g.tasks.map(t => {
+                    const { group, board, taskList, ...rest } = t;
+                    return { ...rest };
+                })
+            }))
+        };
+        const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id);
+        if (groupIdx === -1) return;
+        const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id);
+        if (taskIdx === -1) return;
+        const updatedTask = {
+            ...taskToShow,
+            title: cardTitle,
+            description,
+            status: isDone ? 'done' : 'in-progress',
+            isWatching,
+            members,
+            attachments,
+            checklists,
+            activity: activityLog,
+            badges,
+            location,
+            startDate: isStartDateEnabled ? startDate : null,
+            dueDate: isDueDateEnabled ? date : null,
+            dueDateReminder: isDueDateEnabled ? dueDateReminder : null,
+            style: {
+                ...taskToShow.style,
+                backgroundColor: coverColor || '',
+                backgroundImage: coverImage || '',
+                coverSize: coverSize || 'small',
+            },
+            group: {
+                ...taskToShow.group,
+                title: listName
+            }
+        }
+        onSaveTaskOuter(updatedTask)
+        const { group, board, taskList, ...cleanTask } = updatedTask;
+        boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask;
+        await updateBoard(boardCopy)
+        // try {
+        //     await updateBoard(boardCopy);
+        //     onClose()
+        // } catch (err) {
+        //     console.error('Failed to save task:', err);
+        // }
+    }
+
+
+    function saveTaska() {
         const boardCopy = {
             ...taskToShow.board,
             groups: taskToShow.board.groups.map(g => ({
@@ -613,6 +668,71 @@ export function TaskModal({taskToShow, onClose, popupRef}) {
         setCoverSize('small')
     }
 
+
+    useEffect(
+        () => {
+            saveTask()
+        },[
+            isDone,
+            cardTitle,
+            listName,
+            isWatching,
+            description,
+            attachments,
+            checklists,
+            newChecklistItem,
+            activityLog,
+            location,
+            badges,
+            members,
+            boardMembers,
+            date,
+            showLabels,
+            showMembers,
+            showCustomFields,
+            showDate,
+            showMaps,
+            showChecklist,
+            showActivity,
+            showAttachments,
+            showPicker,
+            showPickerDate,
+            showPickerCustomBadges,
+            showPickerLocation,
+            showPickerAttachments,
+            showPickerChecklists,
+            showPickerLabels,
+            showPickerMembers,
+            showPickerMoveCard,
+            showPickerCopyCard,
+            showPickerMirrorCard,
+            showPickerShareCard,
+            showPickerChangeALabel,
+            showPickerUnderConstruction,
+            showPickerCover,
+            showFieldsEditor,
+            pickerTop,
+            pickerLeft,
+            coverColor,
+            coverImage,
+            coverSize,
+            calendarMonth,
+            isStartDateEnabled,
+            isDueDateEnabled,
+            startDate,
+            dueDate,
+            dueTime,
+            dueDateReminder,
+            currentLabelText,
+            previousLabelColor,
+            currentLabelColor,
+            selectedBoardId,
+            selectedGroupId,
+            selectedPosition,
+            attachmentFile,
+            attachmentLink,
+            attachmentDisplayText
+        ])
 
 
     return (
@@ -2701,12 +2821,15 @@ export function BoardDetails() {
         task.board = currentBoard
 
         setTaskToShow(task)
+        setTaskToEdit(task)
         togglePopup()
     }
 
     function closePopupOnlyIfClickedOutOfIt(e) {
         if (e.target === e.currentTarget) {
+            onModalClose()
             togglePopup()
+
         }
     }
 
@@ -2722,6 +2845,35 @@ export function BoardDetails() {
         // need to implement
     }
 
+    const [taskToEdit, setTaskToEdit] = useState(null)
+
+    function onSaveTaskOuter(updatedTask) {
+        // console.log(updatedTask.title)
+        setTaskToEdit(updatedTask)
+    }
+
+    async function onModalClose() {
+        try {
+            const updatedTask = taskToEdit
+            const boardCopy = JSON.parse(JSON.stringify(boardToShow))
+            const groupIdx = boardCopy.groups.findIndex(
+                (g) => g.id === updatedTask.group.id
+            )
+            if (groupIdx === -1) return
+            const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(
+                (t) => t.id === updatedTask.id
+            )
+            if (taskIdx === -1) return
+            const { board, group, taskList, ...cleanTask } = updatedTask
+            boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask
+            await updateBoard(boardCopy)
+            setTaskToShow(null)
+            togglePopup()
+        } catch (err) {
+            console.error("Failed to save task:", err);
+        }
+    }
+
     if (!boardToShow) return (<>Loading..</>)
     return (
         <div className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
@@ -2731,10 +2883,10 @@ export function BoardDetails() {
 
                 <div className="popup" ref={popupRef} onClick={closePopupOnlyIfClickedOutOfIt}>
 
-                    <TaskModal taskToShow={taskToShow} onClose={togglePopup} popupRef={popupRef}/>
+                    <TaskModal taskToShow={taskToShow} onClose={togglePopup} popupRef={popupRef} onSaveTaskOuter = {onSaveTaskOuter}/>
 
                 </div>
-                <div className="popup-backdrop" onClick={togglePopup}></div>
+                <div className="popup-backdrop" onClick={closePopupOnlyIfClickedOutOfIt}></div>
             </>
             }
 
