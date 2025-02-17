@@ -1433,12 +1433,14 @@ input.task-title:focus {
     font-size: 14px;
     color: #172b4d;
     height: 42px;
+    background-color: #e2e4ea;
 }
 
 
 
 .picker-popup .search-container input:focus {
     border-color: #388bff;
+    background-color: #fff;
     outline: none;
 }
 
@@ -3714,4 +3716,9 @@ body:has(.home) {
 
 .quick-edit-content .option:hover {
     background-color: #dbdee3;
+}
+
+
+.picker-popup {
+    z-index: 1000;
 }
