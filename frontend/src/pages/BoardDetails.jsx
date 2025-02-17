@@ -1,16 +1,107 @@
 
 
+
 import {useParams} from "react-router"
 import {useSelector} from "react-redux"
 import {SideBar} from "../cmps/SideBar"
 import {useNavigate} from "react-router"
 import {AddGroup} from "../cmps/AddGroup"
 import {GroupTable} from "../cmps/GroupTable"
+import GoogleMapReact from 'google-map-react'
+import {TaskList} from "../cmps/TaskList.jsx"
 import {AppHeader} from "../cmps/AppHeader.jsx"
+import { GroupList } from "../cmps/GroupList.jsx"
 import {BoardHeader} from "../cmps/BoardHeader.jsx"
+import { GroupHeader } from "../cmps/GroupHeader.jsx"
 import React, {useRef, useEffect, useState} from "react"
+import {random, makeId} from "../services/util.service.js"
 import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge"
 import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store} from "../store/store.js"
+
+
+
+
+export function QuickEdit({setQuickEdit, closePopupOnlyIfClickedOutOfIt, pos, togglePopup, onDeleteTask}){
+
+    const {rect, card, coords} = pos
+    const {top,bottom,right,left} = rect
+    const {y, x, w, h} = coords
+
+    // render the card element from the pos object, it was obtained with cloneNode
+    // const card = pos.card.cloneNode(true)
+    // card.style.position = "absolute"
+    // card.style.top = "0"
+    // card.style.left = "0"
+    // card.style.right = "0"
+    // card.style.bottom = "0"
+
+    // put it in popup-backdrop-plus-plus
+    useEffect(() => {
+        const cardContainer = document.querySelector(".quick-edit-card-container")
+        const wrapper = document.createElement("div")
+        wrapper.className = "task-list"
+        wrapper.style.maxWidth = w + "px"
+        wrapper.style.width = w + "px"
+        wrapper.style.height = h + "px"
+        wrapper.style.display = "contents"
+        wrapper.style.margin = 0
+        wrapper.style.padding = 0
+        // wrapper.style.boxShadow = "0 8px 16px rgba(0, 0, 0, .2)"
+
+        cardContainer.style.marginInline = "0"
+        cardContainer.style.width = w + "px"
+        cardContainer.style.height = h + "px"
+        cardContainer.style.top = 0;
+        cardContainer.style.left = 0;
+        cardContainer.style.boxShadow = "rgba(0, 0, 0, 0.35) 0px 5px 15px"
+        wrapper.appendChild(card)
+        cardContainer.appendChild(wrapper)
+    }, [])
+
+
+
+
+
+    return (
+        <>
+            <div onClick={(ev) => closePopupOnlyIfClickedOutOfIt(ev)} className="quick-edit-container">
+                <div className="quick-edit-content" style={{top:y, left:x}}>
+                    {/*bottom, right,*/}
+                    <div className="just-flex-quick-edit">
+                        <div className="quick-edit-card-container"></div>
+                        <button style={{top: y,  marginTop: (h * 1.05) + 'px'}} className="quick-edit-save-button">Save</button>
+                        <aside style={{marginLeft: w * 1.05}}>
+                            <div className="option" onClick={(ev) => {
+                                closePopupOnlyIfClickedOutOfIt(ev)
+                                togglePopup(ev)
+                            }}><i class="fa-sharp-duotone fa-regular fa-address-card"></i>Open card</div>
+                            <div className="option"><i class="fa-regular fa-tag"></i>Edit Labels</div>
+                            <div className="option"><i class="fa-regular fa-user"></i>Change members</div>
+                            <div className="option"><i class="fa-sharp fa-regular fa-blanket"></i>Change cover</div>
+                            <div className="option"><i class="fa-regular fa-clock"></i>Edit Dates</div>
+                            <div className="option"><i class="fa-regular fa-arrow-right"></i>Move</div>
+                            <div className="option"><i class="fa-regular fa-file"></i>Copy Card</div>
+                            <div className="option"><i class="fa-regular fa-link"></i>Copy Link</div>
+                            <div className="option"><i class="fa-regular fa-tv"></i>Mirror</div>
+                            <div className="option" onClick={(ev) => {
+                                console.log('clicked')
+                                onDeleteTask(ev)
+                                closePopupOnlyIfClickedOutOfIt(ev)
+                            }}><i class="fa-regular fa-archive"></i>Archive</div>
+                        </aside>
+
+                    </div>
+                </div>
+            </div>
+            <div className="popup-backdrop-plus-plus" onClick={closePopupOnlyIfClickedOutOfIt}>
+
+            </div>
+        </>
+    )
+}
+
+
+
 
 
 
@@ -21,12 +112,7 @@ import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard
 // bring the task "the current group"
 
 
-import GoogleMapReact from 'google-map-react'
-import {TaskList} from "../cmps/TaskList.jsx"
-import { GroupHeader } from "../cmps/GroupHeader.jsx"
-import {random, makeId} from "../services/util.service.js"
-import { GroupList } from "../cmps/GroupList.jsx"
-import {QuickEdit} from "../cmps/QuickEdit.jsx"
+
 
 export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
     const [center, setCenter] = useState({lat: lat, lng: lng})
@@ -3292,6 +3378,24 @@ export function BoardDetails() {
 
         // TODO: [17.02.2025 | 16:20] learn how to use this interface. (yam's personal todo)
         const card = ev.target.closest('.task')
+        const taskId = ev.target.closest('.task').dataset.taskId
+        const groupId = ev.target.closest('.task').dataset.groupId
+
+        const task = boardToShow.groups.find(g => g.id === groupId).tasks.find(t => t.id === taskId)
+        const taskList = boardToShow.groups.find(g => g.id === groupId)
+        const group = boardToShow.groups.find(g => g.id === groupId)
+        const currentBoard = boardToShow
+
+        console.log('task', task)
+        console.log('taskList', taskList)
+        console.log('group', group)
+
+        task.group = group
+        task.taskList = taskList
+        task.board = currentBoard
+
+        console.log('taskId: ', taskId)
+        console.log('groupId: ', groupId)
         const copy = card.cloneNode(true)
         const currentCardWidth = card.offsetWidth
         const currentCardHeight = card.offsetHeight
@@ -3308,6 +3412,9 @@ export function BoardDetails() {
                                     h: currentCardHeight,
                                 }
                           }
+        setTaskToShow(task)
+        setTaskToEdit(task)
+        // togglePopup()
         setShowQuickEdit(!showQuickEdit)
     }
 
@@ -3317,7 +3424,32 @@ export function BoardDetails() {
 
         }
     }
+    
+    function cleanBoard(board) {
+        const boardCopy = { ...board }
+        boardCopy.groups = board.groups.map(group => {
+            const groupCopy = { ...group }
+            groupCopy.tasks = group.tasks.map(task => {
+                const { board, group, ...cleanTask } = task
+                return cleanTask
+            })
+            return groupCopy
+        })
+        return boardCopy
+    }
 
+    function onDeleteTask(ev) {
+        const boardCopy = cleanBoard(taskToShow.board)
+        const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id)
+        if (groupIdx >= 0) {
+            const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id)
+            if (taskIdx >= 0) {
+                boardCopy.groups[groupIdx].tasks.splice(taskIdx, 1)
+            }
+        }
+        console.log('on delete')
+        updateBoard(boardCopy)
+    }
 
     // const [coord, setCoord] = useState({ x: 0, y: 0 })
     // const handleMouseMove = (e) => {
@@ -3363,7 +3495,8 @@ export function BoardDetails() {
                 <SideBar/>
 
                 <section className="board-display">
-                    {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit}/>}
+                    {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit} 
+                                                 togglePopup={togglePopup} onDeleteTask={onDeleteTask}/>}
                     <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable}/>
 
                     {showTable && <GroupTable></GroupTable>}

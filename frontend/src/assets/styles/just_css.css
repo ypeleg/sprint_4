@@ -3706,3 +3706,12 @@ body:has(.home) {
 .cards-and-img-cards article {
     cursor: pointer;
 }
+
+
+.quick-edit-content .option {
+    cursor: pointer;
+}
+
+.quick-edit-content .option:hover {
+    background-color: #dbdee3;
+}
