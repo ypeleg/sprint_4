@@ -25,6 +25,7 @@ export function AddGroup() {
             elTextArea?.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
         }
          async function handleKey(ev){
+            
             if(ev.key === "Enter"){
                 ev.preventDefault()
                 
@@ -33,7 +34,9 @@ export function AddGroup() {
             }
         }
         window.addEventListener("keydown",handleKey)
-        return window.removeEventListener("keydown",handleKey)
+        return ()=>{
+            window.removeEventListener("keydown",handleKey)
+        } 
     },[group])
 
 
