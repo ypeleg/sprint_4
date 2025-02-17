@@ -192,39 +192,6 @@ export function TaskList({
     }, [tasks, group.id])
 
     useEffect(() => {
-        if (!listRef.current) return
-
-        // actual drag start event
-        return dropTargetForElements({
-            element: listRef.current,
-            canDrop({ source }) {
-                return isCardData(source.data)
-            },
-            getData() {
-                return { groupId: group.id, task: null }
-            },
-            onDragStart({ event }) {
-                event.stopPropagation()
-                event.dataTransfer.effectAllowed = 'move'
-            },
-            onDragEnter() {
-            },
-            onDragLeave() {
-            },
-            onDrop({ source, self }) {
-                setShadow(null)
-                if (!isCardData(source.data)) return
-                const { task: dragged, groupId: fromGroupId } = source.data
-                const toGroupId = self.data.groupId
-                if (fromGroupId !== toGroupId) {
-                    onMoveCard(dragged, fromGroupId, toGroupId, null, null)
-                } else {
-                }
-            },
-        })
-    }, [group.id, onMoveCard])
-
-    useEffect(() => {
         tasks.forEach((task) => {
             const ref = cardRefs.current[task.id]
             if (!ref?.current) return
@@ -272,24 +239,24 @@ export function TaskList({
                     setShadow(null)
                 },
                 onDrop({ source, self }) {
-                    setShadow(null)
-                    if (!isCardData(source.data)) return
-                    const { task: dragged, groupId: fromGroupId } = source.data
-                    const toGroupId = self.data.groupId
-                    const edge = extractClosestEdge(self.data)
-                    const targetTask = self.data.task
-
+                    setShadow(null);
+                    if (!isCardData(source.data)) return;
+                    const { task: dragged, groupId: fromGroupId } = source.data;
+                    const toGroupId = self.data.groupId;
+                    const edge = extractClosestEdge(self.data);
+                    const targetTask = self.data.task;
                     if (!targetTask) {
-                        return
+                        console.log('inside')
+                        onMoveCard(dragged, fromGroupId, toGroupId, null, null);
+                        return;
                     }
                     if (fromGroupId === toGroupId && onReorderCard) {
-
-                        onReorderCard(dragged, targetTask, edge, fromGroupId)
+                        onReorderCard(dragged, targetTask, edge, fromGroupId);
                     } else {
-
-                        onMoveCard(dragged, fromGroupId, toGroupId, targetTask, edge)
+                        console.log('1targetTask', targetTask)
+                        onMoveCard(dragged, fromGroupId, toGroupId, targetTask, edge);
                     }
-                },
+                }
             })
         })
     }, [tasks, group.id, onMoveCard, onReorderCard])
@@ -302,6 +269,8 @@ export function TaskList({
                 {showFirstForm && <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
 
                 {tasks.map((task, idx) => (
+
+
 
                     <React.Fragment key={task.id}>
 

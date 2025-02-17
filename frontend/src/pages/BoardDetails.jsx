@@ -3226,18 +3226,31 @@ export function BoardDetails() {
     }
 
 
-    function onMoveCard(card, fromGroupId, toGroupId, targetTask = null, edge = null) {
-        const boardCopy = JSON.parse(JSON.stringify(boardToShow))
-        const fromGroupIdx = boardCopy.groups.findIndex((g) => g.id === fromGroupId)
-        if (fromGroupIdx > -1) {
-            const taskIdx = boardCopy.groups[fromGroupIdx].tasks.findIndex((t) => t.id === card.id)
-            if (taskIdx > -1) boardCopy.groups[fromGroupIdx].tasks.splice(taskIdx, 1)
+    function onMoveCard(card, fromGroupId, toGroupId, targetTask, edge) {
+        const boardCopy = JSON.parse(JSON.stringify(boardToShow));
+        const fromGroupIdx = boardCopy.groups.findIndex(g => g.id === fromGroupId);
+        if (fromGroupIdx >= 0) {
+            const taskIdx = boardCopy.groups[fromGroupIdx].tasks.findIndex(t => t.id === card.id);
+            if (taskIdx >= 0) boardCopy.groups[fromGroupIdx].tasks.splice(taskIdx, 1);
         }
-        const toGroupIdx = boardCopy.groups.findIndex((g) => g.id === toGroupId)
-        if (toGroupIdx > -1) {
-            boardCopy.groups[toGroupIdx].tasks.push(card)
+        const toGroupIdx = boardCopy.groups.findIndex(g => g.id === toGroupId);
+        if (toGroupIdx < 0) return;
+        const toTasks = boardCopy.groups[toGroupIdx].tasks;
+        if (targetTask && edge) {
+            const targetIndex = toTasks.findIndex(t => t.id === targetTask.id);
+            if (targetIndex >= 0) {
+                if (edge === 'top') {
+                    toTasks.splice(targetIndex, 0, card);
+                } else {
+                    toTasks.splice(targetIndex + 1, 0, card);
+                }
+            } else {
+                toTasks.push(card);
+            }
+        } else {
+            toTasks.push(card);
         }
-        updateBoard(boardCopy)
+        updateBoard(boardCopy);
     }
 
     function onReorderCard(dragged, targetTask, edge, groupId) {
