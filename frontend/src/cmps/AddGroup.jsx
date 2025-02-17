@@ -29,7 +29,7 @@ export function AddGroup() {
             if(ev.key === "Enter"){
                 ev.preventDefault()
                 
-                console.log(group)
+               
                 await onSubmit(ev)
             }
         }
