@@ -3290,17 +3290,6 @@ export function BoardDetails() {
         const currentCardTop = card.getBoundingClientRect().top
         const currentCardLeft = card.getBoundingClientRect().left
 
-        // now compensate the current x scroll of group-lists
-
-        // const groupLists = document.querySelector('.group-lists')
-
-
-
-
-
-
-
-
         editpos.current = {
                                 rect: rect,
                                 card: copy,
