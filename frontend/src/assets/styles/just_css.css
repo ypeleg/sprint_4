@@ -433,6 +433,16 @@
     /*backdrop-filter: blur(2px)*/
 }
 
+.popup-backdrop-plus-plus {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .5);
+    z-index: 999;
+}
+
 .task-modal-header {
     display: flex;
     flex-direction: column;
@@ -3398,4 +3408,42 @@ button.delete-btn-del:hover {
 
 .task-modal-header {
     margin-top: 16px;
+}
+
+
+.quick-edit-card-container {
+    position: absolute;
+    /*width: 100px;*/
+    /*height: 100px;*/
+    /*background-color: white;*/
+    right: 100%;
+    width: fit-content;
+
+}
+
+.just-flex-quick-edit {
+    /*display: grid;*/
+    /*grid-template-columns: 1fr 1fr;*/
+
+}
+
+.quick-edit-content .task {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.quick-edit-content aside .option {
+    /*margin-left: 100%;*/
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quick-edit-save-button {
+    position: fixed;
+    background-color: #0c66e4;
+    color: white;
+    padding: 8px 12px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
 }

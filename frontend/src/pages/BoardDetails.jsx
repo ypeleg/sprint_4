@@ -25,6 +25,7 @@ import {TaskList} from "../cmps/TaskList.jsx"
 import { GroupHeader } from "../cmps/GroupHeader.jsx"
 import {random, makeId} from "../services/util.service.js"
 import { GroupList } from "../cmps/GroupList.jsx"
+import {QuickEdit} from "../cmps/QuickEdit.jsx"
 
 export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
     const [center, setCenter] = useState({lat: lat, lng: lng})
@@ -3270,6 +3271,46 @@ export function BoardDetails() {
         boardCopy.groups[groupIdx].tasks = reordered
         updateBoard(boardCopy)
     }
+
+
+    const editpos = useRef(null)
+
+    const [showQuickEdit, setShowQuickEdit] = useState(false)
+
+    function onsetQuickEdit(ev) {
+        ev.stopPropagation()
+        ev.preventDefault()
+        const rect = ev.target.getBoundingClientRect()
+
+        // TODO: [17.02.2025 | 16:20] learn how to use this interface. (yam's personal todo)
+        const card = ev.target.closest('.task')
+        const copy = card.cloneNode(true)
+        const currentCardWidth = card.offsetWidth
+        const currentCardHeight = card.offsetHeight
+        const currentCardTop = card.getBoundingClientRect().top
+        const currentCardLeft = card.getBoundingClientRect().left
+
+        editpos.current = {
+                                rect: rect,
+                                card: copy,
+                                coords: {
+                                    y: currentCardTop,
+                                    x: currentCardLeft,
+                                    w: currentCardWidth,
+                                    h: currentCardHeight,
+                                }
+                          }
+        setShowQuickEdit(!showQuickEdit)
+    }
+
+    function closeQuickEdit(e) {
+        if (e.target === e.currentTarget) {
+            setShowQuickEdit(false)
+
+        }
+    }
+
+
     // const [coord, setCoord] = useState({ x: 0, y: 0 })
     // const handleMouseMove = (e) => {
     //     setCoord({ x: e.clientX, y: e.clientY  })
@@ -3314,10 +3355,10 @@ export function BoardDetails() {
                 <SideBar/>
 
                 <section className="board-display">
-
+                    {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit}/>}
                     <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred}/>
                     <GroupList
-                        onSetPlaceholderHeight={onSetPlaceholderHeight} Placeholder={Placeholder} placeholderHeight={placeholderHeight}
+                        onSetPlaceholderHeight={onSetPlaceholderHeight} Placeholder={Placeholder} placeholderHeight={placeholderHeight} onsetQuickEdit={onsetQuickEdit} showQuickEdit={showQuickEdit}
                         onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>
                     {/* <section className="group-lists">
                         {boardToShow.groups.map(group => {
