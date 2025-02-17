@@ -239,22 +239,22 @@ export function TaskList({
                     setShadow(null)
                 },
                 onDrop({ source, self }) {
-                    setShadow(null);
-                    if (!isCardData(source.data)) return;
-                    const { task: dragged, groupId: fromGroupId } = source.data;
-                    const toGroupId = self.data.groupId;
-                    const edge = extractClosestEdge(self.data);
-                    const targetTask = self.data.task;
+                    setShadow(null)
+                    if (!isCardData(source.data)) return
+                    const { task: dragged, groupId: fromGroupId } = source.data
+                    const toGroupId = self.data.groupId
+                    const edge = extractClosestEdge(self.data)
+                    const targetTask = self.data.task
                     if (!targetTask) {
                         console.log('inside')
-                        onMoveCard(dragged, fromGroupId, toGroupId, null, null);
-                        return;
+                        onMoveCard(dragged, fromGroupId, toGroupId, null, null)
+                        return
                     }
                     if (fromGroupId === toGroupId && onReorderCard) {
-                        onReorderCard(dragged, targetTask, edge, fromGroupId);
+                        onReorderCard(dragged, targetTask, edge, fromGroupId)
                     } else {
                         console.log('1targetTask', targetTask)
-                        onMoveCard(dragged, fromGroupId, toGroupId, targetTask, edge);
+                        onMoveCard(dragged, fromGroupId, toGroupId, targetTask, edge)
                     }
                 }
             })
