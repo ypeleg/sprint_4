@@ -9,7 +9,7 @@
 
     .header {
         display: flex;
-        align-items: center;        
+        align-items: center;
         padding: 0 8px;
 
         button {
@@ -49,39 +49,65 @@
             margin-bottom: 4px;
         }
 
-        select {
+        .select {
             width: 100%;
             min-height: 40px;
             padding: 6px 8px;
             border: 2px solid #dfe1e6;
             border-radius: 3px;
             background-color: #fafbfc;
-            color: #172b4d;
+            color: #172B4D;
             font-size: 14px;
-
-            &:focus {
-                border-color: #388bff;
-                outline: none;
+            font-weight: 400;
+            display: flex;
+            justify-content: space-between;
+            svg{
+              color:rgb(68, 84, 111) ;  
             }
 
-            .trello {
-                color: #44546f;
-                font-size: 12px;
-                font-weight: 600;
-                background-color: #f4f5f7;
-                padding-top: 10px;
+            &.active {
+                box-shadow: inset 0 0 0 var(--ds-border-width, 1px) var(--ds-border-focused, #388BFF);
+                border-color: var(--ds-border-focused, #388BFF);
             }
+        }
 
-            option {
+        &:focus {
+            border-color: #388bff;
+            outline: none;
+        }
+
+        .trello {
+            color: #44546f;
+            font-size: 12px;
+            font-weight: 600;
+            background-color: #f4f5f7;
+            padding-top: 10px;
+        }
+
+        option:nth-child(1):hover {
+            background-color: green;
+
+        }
+
+        option {
+            width: 100%;
+            border-radius: 0;
+            font-size: 14px;
+            font-weight: 400;
+            color: #172b4d;
+            padding: 6px 12px;
+            background-color: transparent;
+
+            .test {
                 width: 100%;
-                border-radius: 0;
-                font-size: 14px;
-                font-weight: 400;
-                color: #172b4d;
-                padding: 6px 12px;
+                height: 100%;
 
                 &:hover {
-                    background-color: #091e420f;
+                    background-color: red;
+                }
+
+                &:hover {
+                    background-color: #ff00000f;
                 }
 
                 &:disabled {
@@ -147,7 +173,7 @@ select {
         &:not([disabled]) {
             background-color: #ffffff;
             padding: 12px 12px;
-            
+
             &:hover {
                 background-color: #091e420f;
             }
@@ -255,6 +281,45 @@ select {
             span {
                 white-space: nowrap;
             }
+        }
+    }
+}
+
+.options {
+    z-index: 1;
+    box-shadow: 0 0 0 1px hsl(0deg 0% 0% / 10%), 0 4px 11px hsl(0deg 0% 0% / 10%);
+    border-radius: 4px;
+    padding-block: 10px;
+
+    .options-head {
+        padding-left: 8px;
+        font-weight: 700;
+        color: #44546f;
+        margin-bottom: 2.75px;
+    }
+
+    .option {
+        padding: 6px 12px;
+        color: #172b4d;
+        font-weight: 400;
+        font-size: 14px;
+
+        .current {
+            font-size: 12px;
+            line-height: 16px;  
+            color: #44546f;
+            font-weight: 400;
+        }
+
+        &.active {
+            color: #0c66e4;
+            box-shadow: inset 2px 0px 0px #0c66e4;
+            background-color: #cce0ff;
+        }
+
+        &:hover {
+            box-shadow: inset 2px 0px 0px #0c66e4;
+            background-color: #091e420f;
         }
     }
 }
