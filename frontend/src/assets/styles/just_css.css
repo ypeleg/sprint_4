@@ -3453,19 +3453,31 @@ button.delete-btn-del:hover {
 /* .col-3-labels */
 /* .col-2-group-title */
 /* .span-task-title */
-/* .col-1-check-title */
+.col-1 {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    gap: 0.9em;
+}
 
 table {
     table-layout: fixed;
     width: 100%;
     text-align:left;
     /* padding-left: 24px; */
+    overflow-y: scroll;
 }
 
 td, th {
     padding-left: 36px;
     overflow: hidden;
+    height:100%;
 }
+
+td:hover {
+    background-color: #f0f1f3;
+}
+
 th {
     height: 33px;
 }
@@ -3484,6 +3496,22 @@ th {
     /* background-color: red; */
     border-bottom: 2px solid #dbdee3;
 }
+
+tr:not(:last-of-type) {
+    position: relative;
+}
+
+tr::after {
+    content: ' ';
+    position: absolute;
+    width: 96%;
+    top: 100%;
+    left: 2%;
+    height: 2px;    
+    /* background-color: red; */
+    border-bottom: 1px solid #dbdee3;
+}
+
 
 .board-table {
     /* width: 100%; */
@@ -3534,9 +3562,57 @@ th {
 }
 
 
+.col-1{
+    height:40px;
+}
 
 .labels-table {
     display: flex;
     overflow: hidden;
     width: 200%;
 }
+
+.status-indicator {
+    color: #229f6b;
+}
+
+
+.task-checkbox-table {
+    border-radius: 50%;
+    border: 2px solid #626f85;
+    height: 16px;
+    width: 16px;
+}
+
+.col-4-members .task-users .task-user-icons{
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    
+}
+
+.col-4-members .task-users .task-user-icons .member-circle,
+.col-4-members .task-users .task-user-icons .user-circle {
+    aspect-ratio: 1/1;
+    width: 24px;
+    height: 24px;
+    margin-left: -3px;
+}
+
+.col-4-members .task-users .task-user-icons .member-circle:first-of-type,
+.col-4-members .task-users .task-user-icons .user-circle:first-of-type {
+    margin-left: 0px;
+}
+
+table {
+    display: block;
+    overflow-y: scroll;
+
+    height: 87%;
+    border-radius: 10px;
+}
+
+
+/* .not-group-table {
+    height: 100px;
+} */
