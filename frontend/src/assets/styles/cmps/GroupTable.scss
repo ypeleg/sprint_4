@@ -2,14 +2,15 @@
     background-color: white;
 
     thead {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
+        // display: flex;
+        // justify-content: space-between;
+        // width: 100%;
 
         th {
             color: #44546F;
             font-size: 12px;
             font-weight: 600;
+            
         }
 
     }
@@ -26,8 +27,8 @@
             }
 
             height: 40px;
-            display: flex;
-            justify-content: space-evenly;
+            // display: flex;
+            // justify-content: space-evenly;
 
         }
 

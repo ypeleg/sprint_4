@@ -3447,3 +3447,96 @@ button.delete-btn-del:hover {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
 }
+
+/* .col-5-due-date */
+/* .col-4-members */
+/* .col-3-labels */
+/* .col-2-group-title */
+/* .span-task-title */
+/* .col-1-check-title */
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    text-align:left;
+    /* padding-left: 24px; */
+}
+
+td, th {
+    padding-left: 36px;
+    overflow: hidden;
+}
+th {
+    height: 33px;
+}
+
+.first-row {
+    position: relative;
+}
+
+.first-row::after {
+    content: ' ';
+    position: absolute;
+    width: 96%;
+    top: 100%;
+    left: 2%;
+    height: 2px;    
+    /* background-color: red; */
+    border-bottom: 2px solid #dbdee3;
+}
+
+.board-table {
+    /* width: 100%; */
+}
+
+.group-table {
+    width: 98%;
+    margin: 8px;
+    border-radius: 10px;
+}
+
+.group-table thead tr {
+    /* width: 100%; */
+    /* background-color: red; */
+}
+
+.labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3em;
+    margin-bottom: 6px;
+}
+
+.task-label {
+    padding: 0px;
+    margin: 0px;
+    background-color: #4bcd96;
+    height: 16px;
+    width: 56px;
+    border-radius: 4px;
+    transition: 0.2s;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.task-label-small {
+    padding: 0px;
+    margin: 0px;
+    background-color: #4bcd96;
+    height: 8px;
+    width: 40px;
+    border-radius: 4px;
+    transition: 0.2s;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+
+
+.labels-table {
+    display: flex;
+    overflow: hidden;
+    width: 200%;
+}
