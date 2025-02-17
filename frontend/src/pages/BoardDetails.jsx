@@ -26,6 +26,7 @@ import { GroupHeader } from "../cmps/GroupHeader.jsx"
 import {random, makeId} from "../services/util.service.js"
 import { GroupList } from "../cmps/GroupList.jsx"
 import {QuickEdit} from "../cmps/QuickEdit.jsx"
+import { GroupTable } from "../cmps/GroupTable.jsx"
 
 export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
     const [center, setCenter] = useState({lat: lat, lng: lng})
@@ -3323,7 +3324,10 @@ export function BoardDetails() {
             </div>
         )
     // if (!boardToShow) return (<>Loading..</>)
-
+        const [showTable,setTable] = useState(false)
+    function onSetTable(){
+        setTable(!showTable)
+    }
     return (
         <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
             {/*onMouseMove={handleMouseMove}>*/}
@@ -3356,10 +3360,11 @@ export function BoardDetails() {
 
                 <section className="board-display">
                     {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit}/>}
-                    <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred}/>
-                    <GroupList
+                    <BoardHeader  onSetTable={onSetTable} onStarBoard={onStarBoard} isStarred={boardToShow.isStarred}/>
+                    {showTable&&<GroupTable/> }
+                    {!showTable&&<GroupList
                         onSetPlaceholderHeight={onSetPlaceholderHeight} Placeholder={Placeholder} placeholderHeight={placeholderHeight} onsetQuickEdit={onsetQuickEdit} showQuickEdit={showQuickEdit}
-                        onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>
+                        onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>}
                     {/* <section className="group-lists">
                         {boardToShow.groups.map(group => {
 
