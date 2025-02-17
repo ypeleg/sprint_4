@@ -14,8 +14,8 @@ export function MoveListForm({header,group,onSetMoveList,onSetGroupEdit}){
     const inset = `${loc.top}px auto auto ${loc.right}px`
 
     function onChangeBoard({target}){
-        console.log(target)
-        const newBoard = JSON.parse(target.value)
+       
+        const newBoard = boards.find(brd => brd._id ===  target.value)
         console.log(newBoard)
         setSelectedBoard(prevboard=>({...newBoard}) )
 
@@ -53,7 +53,7 @@ export function MoveListForm({header,group,onSetMoveList,onSetGroupEdit}){
                     
                     {boards.map((brd,idx) =>{
                         return(
-                            <option key={idx} value={JSON.stringify(brd)} defaultValue={(brd._id===selectedBoard._id)? true:false} >{brd.title}</option>
+                            <option key={idx} value={brd._id} defaultValue={(brd._id===selectedBoard._id)? true:false} >{brd.title}</option>
                         )
                     })}
                 </select>
