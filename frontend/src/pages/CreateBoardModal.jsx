@@ -30,20 +30,16 @@ export function CreateBoardModal({ onClose }) {
   const [hasError, setHasError] = useState(false);
   const navgite = useNavigate()
 
-  // console.log(selectedBg);
-
   useEffect(() => {
     if (boardToAdd.title === "") {
       setHasError(true)
     }
-    console.log(selectedBg);
+    console.log(selectedBg)
 
   }, [boardToAdd, selectedBg])
 
-
-  // Function to change background
   function onChangeBackgroundColor(selectedBg) {
-    console.log('selctedBG:', selectedBg);
+    console.log('selctedBG:', selectedBg)
 
     setBoardToAdd((prevBoard) => ({
       ...prevBoard,
@@ -60,11 +56,7 @@ export function CreateBoardModal({ onClose }) {
 
     setBackgroundImages(updatedBackgroundsimages)
     setBackgroundColors(updatedBackgroundsColors)
-    // console.log(updatedBackgroundsimages);
-
     setSelectedBg(selectedBg)
-
-
   }
 
   function handleChange({ target }) {
@@ -73,7 +65,6 @@ export function CreateBoardModal({ onClose }) {
 
     setBoardToAdd((prevBoard) => ({ ...prevBoard, [field]: value }));
     setHasError(false);
-    // setHasUnsavedChanges(true);
   }
 
   async function handleCreateBoard() {
@@ -81,7 +72,6 @@ export function CreateBoardModal({ onClose }) {
     navgite(`/${createdBoard._id}`)
     onClose()
   }
-
 
   return (
     <div className="modal-overlay">
@@ -195,7 +185,6 @@ export function CreateBoardModal({ onClose }) {
           <p className="license-text">
             By using images from Unsplash, you agree to their license and Terms of Service.
           </p>
-
 
         </section>
       </section>

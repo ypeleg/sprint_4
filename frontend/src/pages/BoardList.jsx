@@ -13,30 +13,12 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, addBoard = fal
 
   function onClose() {
     setIsModalopen(false)
-    console.log('sss');
-
   }
 
   return (
     <section>
-      {/* {addBoard &&
-        <section className='workspace-header'>
-          <div className='title-workspace'>
-            <div className='board-logo'>T</div>
-            <h3>Trello Workspace</h3>
-          </div>
-
-          <nav className="nav-editor-board">
-            <button className='board-btn'>Boards</button>
-            <button className='board-btn'>Views</button>
-            <button className='board-btn'>Memmber <span>1</span></button>
-            <button className='board-btn'>Settings</button>
-          </nav>
-        </section>
-      } */}
-
-
       <ul className="board-list">
+
         {boards.map(board =>
           <li key={board._id}
             onClick={() => navgite(`/${board._id}`)}
@@ -55,8 +37,6 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, addBoard = fal
           </article>
         }
       </ul>
-
-      {/* <CreateBoardModal onClose={onClose} /> */}
     </section>
   )
 }

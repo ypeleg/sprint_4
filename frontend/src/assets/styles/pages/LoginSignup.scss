@@ -1,9 +1,11 @@
 .login-page {
-  background-color: #FAFBFC;
 
+  height: 100vh;
+  background-color: #FAFBFC;
+  padding: 50px;
 }
 
-.login-modal {
+.signup-login-modal {
   display: flex;
   flex-direction: column;
   margin: 0px auto;
@@ -13,7 +15,7 @@
   border-radius: 3px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
   box-sizing: border-box;
-  margin-top: 50px;
+  // margin-top: 50px;
   color: var(--ds-text-subtle, #42526E);
 
 
@@ -63,14 +65,32 @@
 }
 
 .signup-button {
-  width: 100%;
-  background-color: #0052cc;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
+  -webkit-box-align: baseline;
+  align-items: baseline;
+  border-width: 0px;
+  border-radius: var(--ds-border-radius, 3px);
+  box-sizing: border-box;
+  display: inline-flex;
+  font-size: inherit;
+  font-style: normal;
+  font-family: inherit;
+  font-weight: 500;
+  max-width: 100%;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  background: var(--ds-background-brand-bold, #0052CC);
+  transition: background 0.1s ease-out, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38);
+  white-space: nowrap;
   cursor: pointer;
-  transition: background-color 0.3s;
+  padding: 0px 10px;
+  vertical-align: middle;
+  width: 100%;
+  -webkit-box-pack: center;
+  justify-content: center;
+  color: var(--ds-text-inverse, #FFFFFF) !important;
+  height: 40px !important;
+  line-height: 40px !important;
 }
 
 .signup-button:hover {
@@ -146,4 +166,30 @@
 
 .footer-text a:hover {
   text-decoration: underline;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  label {
+    font-size: 14px;
+    margin: 0 0;
+    color: #172b4d;
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+}
+
+.img-background-1 {
+  position: absolute;
+  bottom: 35px;
+  left: 120px;
+  width: 450px;
+  height: 400px;
 }
