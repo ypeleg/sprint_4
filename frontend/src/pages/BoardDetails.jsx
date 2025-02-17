@@ -413,7 +413,7 @@ export function QuickEdit({
             setDueDate(clickedDate)
         }
     }
-    function onSaveDates() {
+    function onSaveDates(ev) {
         let finalDue = isDueDateEnabled && dueDate ? dueDate : null
         if (finalDue && dueTime) {
             const [hrsMins, ampm] = dueTime.split(" ")
@@ -449,8 +449,20 @@ export function QuickEdit({
         return `${mm}/${dd}/${yyyy}`
     }
 
+    function cleanBoard(board) {
+        const boardCopy = { ...board }
+        boardCopy.groups = board.groups.map(group => {
+            const groupCopy = { ...group }
+            groupCopy.tasks = group.tasks.map(task => {
+                const { board, group, ...cleanTask } = task
+                return cleanTask
+            })
+            return groupCopy
+        })
+        return boardCopy
+    }
     function updateTaskState(changes) {
-        const boardCopy = structuredClone(task.board)
+        const boardCopy = cleanBoard(task.board)
         const groupIdx = boardCopy.groups.findIndex((g) => g.id === task.group.id)
         if (groupIdx === -1) return
         const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex((t) => t.id === task.id)
