@@ -20,7 +20,10 @@ export function AddGroup() {
         })
     }
     useEffect(()=>{
-        elTextArea?.current?.focus()
+        if(showForm && elTextArea.current    ){
+            elTextArea?.current?.focus()
+            elTextArea?.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
          async function handleKey(ev){
             if(ev.key === "Enter"){
                 ev.preventDefault()
@@ -30,14 +33,9 @@ export function AddGroup() {
             }
         }
         window.addEventListener("keydown",handleKey)
-        return () => {window.removeEventListener("keydown",handleKey)} 
+        return window.removeEventListener("keydown",handleKey)
     },[group])
-    useEffect(()=>{
-        if(showForm && elTextArea.current    ){
-            elTextArea?.current?.focus()
-            elTextArea?.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        }
-    },[])
+
 
     async function onSubmit(ev) {
         
