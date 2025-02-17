@@ -3528,7 +3528,7 @@ tr::after {
     /* background-color: red; */
 }
 
-.labels {
+.labelss {
     display: flex;
     flex-wrap: wrap;
     gap: 0.3em;
@@ -3605,9 +3605,11 @@ tr::after {
 }
 
 table {
-    display: block;
+    /* display: block; */
     overflow-y: scroll;
+    
 
+    
     height: 87%;
     border-radius: 10px;
 }
