@@ -3275,7 +3275,14 @@ export function BoardDetails() {
     //     setCoord({ x: e.clientX, y: e.clientY  })
     // }
 
-    if (!boardToShow) return (<>Loading..</>)
+    if (!boardToShow)
+        return (
+            <div className="trello-loader">
+                <img src="trello-loader.svg" alt="" />
+            </div>
+        )
+    // if (!boardToShow) return (<>Loading..</>)
+
     return (
         <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
             {/*onMouseMove={handleMouseMove}>*/}
