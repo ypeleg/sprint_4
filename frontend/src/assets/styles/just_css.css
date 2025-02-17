@@ -3394,3 +3394,8 @@ button.delete-btn-del:hover {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+
+.task-modal-header {
+    margin-top: 16px;
+}
