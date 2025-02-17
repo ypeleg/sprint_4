@@ -278,7 +278,8 @@ export function QuickEdit({
     }
 
     async function onMoveCard(ev) {
-        hidePicker(ev)
+        closePopupOnlyIfClickedOutOfIt(ev)
+        // hidePicker(ev)
         const targetBoard = getSelectedBoard()
         const targetGroup = getSelectedGroup()
         if (!targetBoard || !targetGroup) return
@@ -346,11 +347,13 @@ export function QuickEdit({
         const pos = Math.min(selectedPosition - 1, boardCopy.groups[groupIdx].tasks.length)
         boardCopy.groups[groupIdx].tasks.splice(pos, 0, newCard)
         await updateBoard(boardCopy)
-        hidePicker(ev)
+        // hidePicker(ev)
+        closePopupOnlyIfClickedOutOfIt(ev)
     }
 
     function onMirrorCard(ev) {
-        hidePicker(ev)
+        closePopupOnlyIfClickedOutOfIt(ev)
+        // hidePicker(ev)
     }
 
     const [isDueDateEnabled, setIsDueDateEnabled] = useState(!!task.dueDate)
@@ -425,7 +428,8 @@ export function QuickEdit({
             dueDate: finalDue,
             dueDateReminder: isDueDateEnabled ? dueDateReminder : null,
         })
-        hidePicker(null)
+        closePopupOnlyIfClickedOutOfIt(ev)
+        // hidePicker(null)
     }
     function onRemoveDates() {
         setIsDueDateEnabled(false)
@@ -1824,7 +1828,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     // TODO: change to the ACTUAL members..
     // const membersToShow = taskToShow.memberIds.map(memberId => {
     //     return taskToShow.board.members.find(member => (member._id === memberId))
-    // })      
+    // })
     // const membersToShow = taskToShow.board.members
     // console.log('---------')
     // console.log('taskToShow.memberIds', taskToShow.memberIds)
@@ -5073,7 +5077,7 @@ export function BoardDetails() {
 
         }
     }
-    
+
     function cleanBoard(board) {
         const boardCopy = { ...board }
         boardCopy.groups = board.groups.map(group => {
