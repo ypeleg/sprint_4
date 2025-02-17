@@ -24,6 +24,16 @@
             font-size: 14px;
             font-weight: 600;
         }
+        .close-header{
+            width: 32px;
+            height: 32px;
+           
+            display: flex;
+            align-items: center;
+            span{
+                color: rgb(98, 111, 134);
+            }
+        }
     }
 
     .filter-options {

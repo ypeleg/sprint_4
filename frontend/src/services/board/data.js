@@ -150,7 +150,7 @@ function getRandomTask() {
     }
 }
 
-function getColorFromBackgroundColor(bg) {
+ export function getColorFromBackgroundColor(bg) {
     switch (bg) {
         case '#baf3db': return '#164b35' // trello green
         case '#f8e6a0': return '#4f3a0e' // trello yellow
