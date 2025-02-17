@@ -852,7 +852,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 }
 
                 <div className="task-modal-content">
-                    {/*<button onClick={saveTask}>---DEBUG---Save---</button>*/}
+                    <button onClick={saveTask}>---DEBUG---Save---</button>
                     <div className="task-modal-header">
                         <div className="task-left">
 
