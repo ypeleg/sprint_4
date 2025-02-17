@@ -189,7 +189,8 @@ function getRandomGroups() {
             archivedAt: random.choice([null, random.date('2022-01-01','2023-12-31').getTime()]),
             tasks: Array.from({length: tasksCount}, getRandomTask),
             style,
-            watched: random.choice([true,false])
+            watched: random.choice([true,false]),
+            isMinimaized:random.choice([true,false])
         }
     })
 }

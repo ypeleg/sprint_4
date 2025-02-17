@@ -5,6 +5,7 @@ import {TaskList} from "./TaskList"
 import {AddGroup} from "./AddGroup"
 import {useSelector} from "react-redux"
 import {GroupHeader} from "./GroupHeader"
+import { MinimaizedGRoup } from "./MinimaizedGroup"
 
 
 export function GroupList({onLoadTask, onMoveCard, onReorderCard, Placeholder, onSetPlaceholderHeight, placeholderHeight, onsetQuickEdit, showQuickEdit}) {
@@ -19,9 +20,9 @@ export function GroupList({onLoadTask, onMoveCard, onReorderCard, Placeholder, o
     return (
         <section className="group-lists">
             {boardToShow.groups.map(group => {
-
+               return  ((group.isMinimaized)? <MinimaizedGRoup style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}} group={group}/>:
                 // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>
-                return <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
+                 <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
                     <GroupHeader group={group}/>
                     <TaskList
                         onsetQuickEdit={onsetQuickEdit} showQuickEdit={showQuickEdit}
@@ -29,8 +30,8 @@ export function GroupList({onLoadTask, onMoveCard, onReorderCard, Placeholder, o
                         toggleLargeLabels={toggleLargeLabels} largeLabels={largeLabels} currentBoard={boardToShow} currentGroup={group} onLoadTask={onLoadTask} group={group}
                         onMoveCard={onMoveCard} onReorderCard={onReorderCard}/>
 
-
-                </div>
+                        
+                </div>)
 
 
             })}
