@@ -16,10 +16,7 @@ export function FilterCards({ el, setShowFilter }) {
     }, [filterBy])
     useEffect(() => {
         console.log(boardService.getDefaultFilter())
-        return () => {
-            setFilterBy(boardService.getDefaultFilter())
-            loadBoard(boardToShow._id, filterBy)
-        }
+      
     }, [])
     function onSetCompltedSelected(value) {
         if (completedSelected === value) setCompletedSelected(null)

@@ -3,12 +3,18 @@
 import { useRef, useState } from "react"
 import { FilterCards } from "./FilterCards"
 import { useSelector } from "react-redux"
+import { loadBoard, setFilterBy } from "../store/actions/board.actions"
 
 export function BoardHeader({ onStarBoard, isStarred }) {
     const elFilter = useRef()
     const [ShowFilter, setShowFilter] = useState(false)
     const boardToShow = useSelector(state => state.boardModule.board)
-
+    const filterBy = useSelector(state => state.boardModule.filterBy)
+    const isFilterd = (filterBy.title || filterBy.members.length > 0 || filterBy.status || filterBy.dueDate.length > 0)
+    function clearFilter() {
+        setFilterBy(boardService.getDefaultFilter())
+        loadBoard(boardToShow._id)
+    }
     return (
         <header className="board-header">
             <div className="header-group">
@@ -68,12 +74,15 @@ export function BoardHeader({ onStarBoard, isStarred }) {
                     </svg>
 
                 </button>
-                <button ref={elFilter} className="filters-btn" onClick={() => setShowFilter(true)}>
-                    <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M4.61799 6C3.87461 6 3.39111 6.78231 3.72356 7.44721L3.99996 8H20L20.2763 7.44721C20.6088 6.78231 20.1253 6 19.3819 6H4.61799ZM10.8618 17.7236C10.9465 17.893 11.1196 18 11.309 18H12.6909C12.8803 18 13.0535 17.893 13.1382 17.7236L14 16H9.99996L10.8618 17.7236ZM17 13H6.99996L5.99996 11H18L17 13Z" fill="currentColor"></path>
-                    </svg>
-                    Filters
-                </button>
+                <div className="filter-btns-header">
+                    <button ref={elFilter} className={`filters-btn ${isFilterd ? 'active' : ''}`} onClick={() => setShowFilter(true)}>
+                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path fillRule="evenodd" clipRule="evenodd" d="M4.61799 6C3.87461 6 3.39111 6.78231 3.72356 7.44721L3.99996 8H20L20.2763 7.44721C20.6088 6.78231 20.1253 6 19.3819 6H4.61799ZM10.8618 17.7236C10.9465 17.893 11.1196 18 11.309 18H12.6909C12.8803 18 13.0535 17.893 13.1382 17.7236L14 16H9.99996L10.8618 17.7236ZM17 13H6.99996L5.99996 11H18L17 13Z" fill="currentColor"></path>
+                        </svg>
+                        Filters
+                    </button>
+                    {isFilterd && <button onClick={clearFilter} className="clear-filter">Clear all</button>}
+                </div>
                 <div className="divider"></div>
                 <div className="users">
                     <div className="user-icon">

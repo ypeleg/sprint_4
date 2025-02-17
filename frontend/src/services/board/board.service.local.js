@@ -82,7 +82,7 @@ async function getById(boardId, filterBy = {title: ''}) {
                         if(date === 'no'){
                             return   task.dueDate===null
                         }else if(date === 'week'){
-                            return new Date(new Date().setDate(new Date().getDate() + 7)).getTime() <  new Date(task.dueDate).getTime() &&  new Date(task.dueDate).getTime() > Date.now()
+                            return new Date(new Date().setDate(new Date().getDate() + 7)).getTime() >  new Date(task.dueDate).getTime() &&  new Date(task.dueDate).getTime() > Date.now()
                         }else if(date == 'over'){
                             return  new Date(task.dueDate).getTime() < Date.now() 
                         }
