@@ -10,6 +10,7 @@ import { login } from '../store/actions/user.actions'
 export function Login() {
 
   //todos: 
+  const navigate = useNavigate()
 
   return (
     <div className="signup-login-modal">
@@ -41,7 +42,14 @@ export function Login() {
           <label htmlFor="remember">Remember me</label>
         </div>
 
-        <button type="submit" className="signup-button">Log in</button>
+        <button type="submit" className="signup-button"
+        onClick={
+            (ev) => {
+                ev.stopPropagation()
+                ev.preventDefault()
+            navigate('/')}}
+        >Log in</button>
+
       </form>
 
       <span style={{ margin: "auto", color: "rgb(94, 108, 132)", fontWeight: 600 }}>Or continue with:</span>

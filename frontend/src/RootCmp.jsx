@@ -19,7 +19,7 @@ export function RootCmp() {
                     <Route path="/:boardId" element={<BoardDetails />}>
 
                     </Route>
-                    <Route path="login" element={<LoginSignup />}>
+                    <Route path="/login" element={<LoginSignup />}>
                         <Route index element={<Login />} />  {/* Default is Login */}
                         <Route path="signup" element={<Signup />} />  {/* Relative path, no `/` */}
                     </Route>
