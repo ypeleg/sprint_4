@@ -979,7 +979,7 @@ input.task-title:focus {
     border-radius: 50%;
     justify-items: center;
     justify-content: center;
-    border: 3px solid #707c90;
+    border: 2px solid #707c90;
     cursor: pointer;
 }
 
@@ -3351,7 +3351,7 @@ button.delete-btn-del:hover {
 
     /*.add-task-form textarea:focus-within {*/
     margin-top: 8px;
-    outline: 3px solid #4c9aff;
+    outline: 2px solid #4c9aff;
     outline-offset: -4px;
 }
 
@@ -3368,7 +3368,7 @@ button.delete-btn-del:hover {
     margin-left: 2px;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
-    /*border: 3px solid #707c90;*/
+    /*border: 2px solid #707c90;*/
     place-self: start;
     margin-top: 4px;
     cursor: pointer;
@@ -3376,13 +3376,13 @@ button.delete-btn-del:hover {
 
 .task-checkbox:hover,
 .task-checkbox-checked:hover {
-    outline: 3px solid #4c9aff;
+    outline: 2px solid #4c9aff;
     outline-offset: 2px;
 }
 
 .status-icon-incomplete:hover,
 .status-icon:hover {
-    outline: 3px solid #4c9aff;
+    outline: 2px solid #4c9aff;
     outline-offset: 2px;
 }
 

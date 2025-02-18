@@ -48,7 +48,7 @@
                 margin-left: 2px;
                 aspect-ratio: 1/1;
                 border-radius: 50%;
-                border: 3px solid #707c90;
+                border: 2px solid #707c90;
                 place-self: start;
                 margin-top: 4px;
 
@@ -79,15 +79,16 @@
                 margin-top: -3px;
                 gap: 0.4em;
                 position: absolute;
-                top: 6px;
-                right: 5px;
+                top: 7px;
+                right: 6px;
+                cursor: pointer;
 
                 .right-btns-btn {
                     //display: none;
                     color: #172B4D;
                     //font-weight: bold;
-                    width: 24px;
-                    height: 24px;
+                    width: 28px;
+                    height: 28px;
                     display: flex;
                     //padding: 12px;
                     justify-content: center;
@@ -97,9 +98,12 @@
                     font-weight: 1000;
                     border-radius: 50%;
                     background-color: white;
+                    filter: drop-shadow(0 0 0.6rem rgba(190, 182, 184, 0.467));
                     //display: none;
-                    & i {
-                        font-weight: 900;
+                    & svg {
+                        width: 14px;
+                        height: 14px;
+                        // font-weight: 900;
                     }
 
 
