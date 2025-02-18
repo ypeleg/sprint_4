@@ -307,10 +307,12 @@ export function TaskList({
                             </div>
                             <div className="right-btns flex-space-between">
                                 <div className="right-btns-btn" onClick={(ev) => onDeleteTask(ev, task.id)}>
-                                    <i className="fa-regular fa-box tooltip" data-tip="Archive"></i>
+                                    {/* <i className="fa-regular fa-box tooltip" data-tip="Archive"></i> */}
+                                    <svg fill="none" viewBox="0 0 16 16" role="presentation"><path stroke="currentcolor" stroke-width="1.5" d="M2.75 5.25h-1v-3.5h12.5v3.5h-1m-10.5 0V13c0 .69.56 1.25 1.25 1.25h8c.69 0 1.25-.56 1.25-1.25V5.25m-10.5 0h10.5m-7.75 3h5"></path></svg>
                                 </div>
                                 <div onClick={(ev) => onsetQuickEdit(ev)} className="right-btns-btn">
-                                    <i className="fa-regular fa-edit tooltip" data-tip="Edit Card"></i>
+                                    <svg fill="none" viewBox="0 0 16 16" role="presentation"><path stroke="currentcolor" stroke-linejoin="round" stroke-width="1.5" d="M6 1.751H3c-.69 0-1.25.56-1.25 1.25v10c0 .69.56 1.25 1.25 1.25h10c.69 0 1.25-.56 1.25-1.25V10m-.75-5 1.116-1.116a1.25 1.25 0 0 0 0-1.768l-.732-.732a1.25 1.25 0 0 0-1.768 0L11 2.5M13.5 5 9.479 9.021c-.15.15-.336.26-.54.318l-3.189.911.911-3.189a1.25 1.25 0 0 1 .318-.54L11 2.5M13.5 5 11 2.5"></path></svg>
+                                    {/* <i className="fa-regular fa-edit tooltip" data-tip="Edit Card"></i> */}
                                 </div>
                             </div>
                         </div>

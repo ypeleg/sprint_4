@@ -41,6 +41,8 @@ export function QuickEdit({
         wrapper.style.width = w + "px"
         wrapper.style.height = h + "px"
         wrapper.style.display = "contents"
+        wrapper.draggable="false"
+        cardContainer.draggable="false"
         cardContainer.style.marginInline = "0"
         cardContainer.style.width = w + "px"
         cardContainer.style.height = h + "px"
