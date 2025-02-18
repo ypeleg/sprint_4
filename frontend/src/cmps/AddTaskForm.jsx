@@ -49,9 +49,9 @@ export function AddTaskForm({selectedGroup, onSetShowForm}) {
     async function onSubmit(ev) {
    
         selectedGroup.tasks.push(task)
+        setTask(getEmptyTask())
         await updateBoard(board)
 
-        setTask(getEmptyTask())
        
     }
 
