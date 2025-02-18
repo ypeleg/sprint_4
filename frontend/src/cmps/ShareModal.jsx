@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { userService } from "../services/user"
 import { updateBoard } from "../store/store"
@@ -11,19 +11,17 @@ export function ShareModal({onSetShowShare}) {
     const [pickedUser, setPickedUser] = useState(null)
     const [userFilter, setUserFilter] = useState('')
     const [users, SetUsers] = useState([])
-    function onSetShowUserPicker() {
-        setShowUserPicker(!showUserPicker)
-    }
-    function onSetPickedUser(user) {
-        setPickedUser(user)
-        setUserFilter(user.fullname)
+   
+    function checkClick(ev){
+        if (ev.target === ev.currentTarget) onSetShowShare()
     }
 
     async function onUserFilter({ target }) {
+        setUserFilter(target.value)
         if (!target.value) {
             setShowUserPicker(false)
+            
         } else {
-            setUserFilter(target.value)
             const newUsers = await userService.getUsers()
             SetUsers(newUsers)
             setShowUserPicker(true)
@@ -37,8 +35,8 @@ export function ShareModal({onSetShowShare}) {
     }
 
     return (
-        <div className="sharemodal-container">
-            <div className="sharemodal">
+        <div onClick={checkClick} className="sharemodal-container">
+            <div onClick={checkClick} className="sharemodal">
                 <header>
                     <span className="title">Share board</span>
                     <svg onClick={onSetShowShare} width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path></svg>
