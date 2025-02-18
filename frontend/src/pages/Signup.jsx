@@ -1,28 +1,61 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { getEmptyUser, signup } from "../store/store.js"
+import { useNavigate } from 'react-router'
 
 
 export function Signup() {
+  const [credentials, setCredentials] = useState(getEmptyUser())
+  const [emailError, setEmailError] = useState(null) // ✅ Error state
   const [email, setEmail] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
-    console.log(email);
+    console.log(credentials);
   }, [])
 
-  function handleChange(ev) {
-    console.log(ev.target.value);
+  async function onSignup(ev) {
+    ev.preventDefault() // ✅ Prevent full page reload, but keep form behavior
 
-    // const type = ev.target.type
-    setEmail(ev.target.value);
-    if (ev.target.value.includes("@")) {
-      setShowPassword(true); // Show password field if email is entered
-    } else {
-      setShowPassword(false);
+    // ✅ Allow the browser's built-in email validation
+    const form = ev.target
+    if (!form.checkValidity()) {
+      form.reportValidity() // ✅ Shows built-in validation error
+      return
     }
-    // const field = ev.target.name
-    // const value = ev.target.value
-    // setCredentials({ ...credentials, [field]: value })
+
+    // ✅ Custom email validation (optional)
+    if (!validateEmail(credentials.username)) {
+      setEmailError("⚠ Please enter a valid email address")
+      return
+    } else {
+      setEmailError(null)
+    }
+
+    if (!credentials.password || !credentials.username || !credentials.fullname) return
+
+    try {
+      await signup(credentials)
+      navigate('/') // ✅ Redirect on success
+    } catch (err) {
+      console.error("Signup failed:", err)
+      showErrorMsg("Oops, try again")
+    }
+  }
+
+  function handleChange(ev) {
+    console.log(ev.target.value)
+
+    const type = ev.target.type
+    const field = ev.target.name
+    const value = ev.target.value
+    setCredentials({ ...credentials, [field]: value })
+    console.log(credentials)
+  }
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) // ✅ Email regex check
   }
 
 
@@ -36,36 +69,54 @@ export function Signup() {
       <div className='sub-title'>Sign up to continue</div>
 
       {/* Signup Form */}
-      <form className="signup-form" >
+      <form className="signup-form" onSubmit={onSignup}  >
         <input
           type="email"
-          className="input-field"
+          className={`input-field ${emailError ? "error-input" : ""}`}
           placeholder="Enter your email"
-          name="email"
-          value={email}
+          name="username"
+          value={credentials.username}
+          onChange={handleChange}
+          required
+        />
+        {emailError && <p className="error-text">{emailError}</p>}
+
+        <input
+          className="input-field"
+          type="password"
+          placeholder="Enter your password"
+          name="password"
+          value={credentials.password}
           onChange={handleChange}
           required
         />
 
-        {showPassword && (
-          <input
-            className="input-field"
-            type="password"
-            placeholder="Enter your password"
-            // value={password}
-            required
-          />
-        )}
+        <input
+          className="input-field"
+          type="text"
+          placeholder="Enter full name"
+          name="fullname"
+          value={credentials.fullname}
+          onChange={handleChange}
+          required
+        />
 
         <p className="terms-text">
           By signing up, I accept the Atlassian <a href="#">Cloud Terms of Service</a> and acknowledge the <a href="#">Privacy Policy</a>.
         </p>
 
-        <button type="submit" className="signup-button">Sign up</button>
+
       </form>
 
+      <button
+        type="submit"
+        onClick={onSignup}
+        className="signup-button">
+        Sign up
+      </button>
 
-      <span style={{ margin: "auto", color: "rgb(94, 108, 132)", fontWeight: 600 }}>Or continue with:</span>
+
+      <span className="continue-text" >Or continue with:</span>
 
 
       {/* Social Logins */}

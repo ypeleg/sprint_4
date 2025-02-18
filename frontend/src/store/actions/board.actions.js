@@ -18,8 +18,8 @@ export function getEmptyBoard() {
         isStarred: false,
         archivedAt: null,
         createdBy: {
-            _id: "123",
-            fullname: "shiri",
+            _id: "",
+            fullname: "",
             imgUrl: ""
         },
         style: {
@@ -45,8 +45,8 @@ export function getEmptyTask() {
         memberIds: [],
         labelIds: [],
         byMember: '',
-        activity:[],
-        attachments:[],
+        activity: [],
+        attachments: [],
         style: {
             backgroundColor: '',
             backgroundImage: ''

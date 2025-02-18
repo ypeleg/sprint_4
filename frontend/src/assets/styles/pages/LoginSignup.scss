@@ -3,6 +3,7 @@
   height: 100vh;
   background-color: #FAFBFC;
   padding: 50px;
+  overflow: scroll;
 }
 
 .signup-login-modal {
@@ -192,4 +193,26 @@ footer {
   left: 120px;
   width: 450px;
   height: 400px;
+}
+
+.error-input {
+  border: 1px solid #d9534f;
+  /* Red border for invalid input */
+}
+
+.error-text {
+  color: #d9534f;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.continue-text {
+  display: block;
+  /* Makes it behave like a separate row */
+  margin: 19px auto 0;
+  /* Same margin as your inline style */
+  color: rgb(94, 108, 132);
+  font-weight: 600;
+  text-align: center;
+  /* Ensures it's centered */
 }

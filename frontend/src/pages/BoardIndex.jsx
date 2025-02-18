@@ -6,6 +6,7 @@ import { AppHeader } from '../cmps/AppHeader.jsx'
 import { NavBarPageIndex } from './NavBarPageIndex.jsx'
 import React, { useRef, useEffect, useState } from "react"
 import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
+import { MoveLeft } from "lucide-react"
 
 export function BoardIndex() {
 
@@ -41,14 +42,14 @@ export function BoardIndex() {
                     <section className='star-boards'>
                         {(boards.filter(board => board.isStarred).length !== 0) &&
                             <div>
-                                <h3><span className="fa-solid fa-star"></span> Starred boards</h3>
+                                <h3><span className="fa-solid fa-user"></span> Starred boards</h3>
                                 <BoardList boards={boards.filter(board => board.isStarred)} />
                             </div>
                         }
 
                     </section>
                     <section className='my-boards'>
-                        <h3><span className="fa-solid fa-user"></span>Your boards</h3>
+                        <h3><span className="fa-solid fa-user" style={{ marginLeft: 5 }}></span>Your boards</h3>
                         <BoardList boards={boards} addBoard={true} />
                     </section>
                 </div>

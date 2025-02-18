@@ -2,15 +2,54 @@
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { userService } from '../services/user'
-import { login } from '../store/actions/user.actions'
-
+import { getEmptyUser, login } from "../store/store.js"
+import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
 
 
 export function Login() {
 
   //todos: 
+  const [email, setEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [credentials, setCredentials] = useState(getEmptyUser())
+
   const navigate = useNavigate()
+
+  function handleChange(ev) {
+    console.log(ev.target.value);
+    ev.preventDefault()
+
+    const type = ev.target.type
+    const field = ev.target.name
+    const value = ev.target.value
+    setCredentials({ ...credentials, [field]: value })
+    console.log(credentials);
+  }
+
+  function handleEmailChange(ev) {
+    ev.preventDefault()
+    handleChange(ev)
+    setEmail(ev.target.value);
+    if (ev.target.value.includes("@")) {
+      setShowPassword(true); // Show password field if email is entered
+    } else {
+      setShowPassword(false);
+    }
+  }
+
+  async function onLogin() {
+    console.log('sss', credentials)
+    try {
+      // debugger
+      const user = await login(credentials)
+      console.log(user);
+      navigate('/')
+      showSuccessMsg('Logged in successfully')
+    } catch (err) {
+      showErrorMsg('Oops, try again')
+    }
+  }
+
 
   return (
     <div className="signup-login-modal">
@@ -27,10 +66,23 @@ export function Login() {
           type="email"
           className="input-field"
           placeholder="Enter your email"
-          // value={email}
-          // onChange={)}
+          name="username"
+          value={credentials.username}
+          onChange={handleEmailChange}
           required
         />
+
+        {showPassword && (
+          <input
+            className="input-field"
+            type="password"
+            placeholder="Enter your password"
+            name="password"
+            value={credentials.password}
+            onChange={handleChange}
+            required
+          />
+        )}
 
         <div className="remember-me">
           <input
@@ -41,18 +93,15 @@ export function Login() {
           />
           <label htmlFor="remember">Remember me</label>
         </div>
-
-        <button type="submit" className="signup-button"
-        onClick={
-            (ev) => {
-                ev.stopPropagation()
-                ev.preventDefault()
-            navigate('/')}}
-        >Log in</button>
-
       </form>
 
-      <span style={{ margin: "auto", color: "rgb(94, 108, 132)", fontWeight: 600 }}>Or continue with:</span>
+      <button
+        // type="submit"
+        onClick={onLogin}
+        className="signup-button"
+      >Log in</button>
+
+      <span className="continue-text" >Or continue with:</span>
 
       {/* Social Logins */}
       <div className="social-logins">
@@ -71,6 +120,6 @@ export function Login() {
           </NavLink>
         </p>
       </footer>
-    </div>
+    </div >
   )
 }

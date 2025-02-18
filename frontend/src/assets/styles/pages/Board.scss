@@ -1,4 +1,4 @@
-.everything > header {
+.everything>header {
     background-color: #e4bcb9;
     border-bottom: 1px solid #c2a5a7;
 }
@@ -74,7 +74,7 @@ header {
     background-color: rgba(0, 0, 0, 0.16);
 }
 
-aside > section:not(:first-of-type) {
+aside>section:not(:first-of-type) {
     margin-top: 12px;
 }
 
@@ -157,7 +157,6 @@ input {
     font-weight: bold;
     align-items: center;
     background: linear-gradient(79.47deg, var(--ds-background-discovery-bold, #6e5dc6) 25.62%, var(--ds-text-selected, #0c66e4) 99.57%)
-
 }
 
 .info {
@@ -240,18 +239,18 @@ input {
     //border: 2px solid rgb(56, 139, 255);
 }
 
-div.task-list > div:nth-child(1) {
+div.task-list>div:nth-child(1) {
     margin-top: 2px;
 }
 
-div.task-list > div:nth-child(-1) {
+div.task-list>div:nth-child(-1) {
     margin-bottom: 2px;
 }
 
 
 //#root > div > main > div > main > section > section > div:nth-child(1) > div.task-list > div:nth-child(1) > div.cover-img > img
-.task:hover .cover-img > img,
-.task:active .cover-img > img {
+.task:hover .cover-img>img,
+.task:active .cover-img>img {
     //display: none;
     //border-right: 2px solid rgb(56, 139, 255);
     //box-shadow: 1px 0px 0px 0px rgb(56, 139, 255), 2px 0px 0px px rgb(56, 139, 255);
@@ -288,7 +287,7 @@ div.task-list > div:nth-child(-1) {
 // min-width: 100%;
 // }
 
-aside article > div > div {
+aside article>div>div {
     height: 20px;
     word-break: keep-all;
     max-width: 100%;
@@ -297,7 +296,7 @@ aside article > div > div {
     text-transform: capitalize;
 }
 
-aside article > div > div > div > div {
+aside article>div>div>div>div {
     //max-width: 50%;
     // overflow: hidden;
     // display: block;
@@ -330,10 +329,16 @@ header input {
     padding: 0px 10px;
 
     margin-left: 10px;
-    font-size: 16px;
+    font-size: 14px;
     border-radius: 3px;
-    padding: 4px 8px;
-    background-color: rgba(0, 0, 0, 0.16);
+    padding: 4px 12px;
+    background-color: #0c66e4;
+    color: #fff;
+
+    &:hover {
+        background-color: #0055CC;
+
+    }
 }
 
 

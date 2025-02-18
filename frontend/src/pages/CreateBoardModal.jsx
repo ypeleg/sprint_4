@@ -27,7 +27,7 @@ export function CreateBoardModal({ onClose }) {
   const [selectedBg, setSelectedBg] = useState(initialBackgroundImages[0])
   const [backgroundImagesImages, setBackgroundImages] = useState(initialBackgroundImages)
   const [backgroundImagesColors, setBackgroundColors] = useState(initialBackgroundColor)
-  const [hasError, setHasError] = useState(false);
+  const [hasError, setHasError] = useState(true);
   const navgite = useNavigate()
 
   useEffect(() => {
@@ -164,7 +164,7 @@ export function CreateBoardModal({ onClose }) {
 
           {/* Create Button */}
           <button
-            className={`create-btn ${hasError ? 'disabled' : ''}`}
+            className={`create-board-btn ${hasError ? 'disabled' : ''}`}
             onClick={handleCreateBoard}
           >
             Create

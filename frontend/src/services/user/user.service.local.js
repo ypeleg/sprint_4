@@ -1,7 +1,7 @@
 
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
-import {storageService} from '../async-storage.service'
+import { storageService } from '../async-storage.service'
 
 
 export const userService = {
@@ -32,7 +32,7 @@ function remove(userId) {
     return storageService.remove('user', userId)
 }
 
-async function update({_id, score}) {
+async function update({ _id, score }) {
     const user = await storageService.get('user', _id)
     user.score = score
     await storageService.put('user', user)
@@ -44,9 +44,12 @@ async function update({_id, score}) {
 async function login(userCred) {
     const users = await storageService.query('user')
     const user = users.find(user => user.username === userCred.username)
-
+    console.log(user, 'the selected user');
     if (user) return saveLoggedinUser(user)
+    return Promise.reject('Invalid login')
 }
+
+
 
 async function signup(userCred) {
     if (!userCred.imgUrl) userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
@@ -68,8 +71,6 @@ function saveLoggedinUser(user) {
         _id: user._id,
         fullname: user.fullname,
         imgUrl: user.imgUrl,
-        score: user.score,
-        isAdmin: user.isAdmin
     }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
     return user

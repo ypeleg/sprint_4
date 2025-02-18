@@ -493,7 +493,8 @@
     gap: 4px;
 }
 
-.task-watch i,.task-watch-btn i {
+.task-watch i,
+.task-watch-btn i {
     margin-top: 4px;
     margin-inline: 3px;
 }
@@ -656,7 +657,7 @@
 }
 
 .task-no-cover>.task-modal-close svg {
-    mix-blend-mode:unset;
+    mix-blend-mode: unset;
     color: #172b4d;
 }
 
@@ -679,9 +680,7 @@
 
 
 
-.task-modal-close svg{
-
-}
+.task-modal-close svg {}
 
 .change-cover-btn {
     position: absolute;
@@ -1080,7 +1079,6 @@ input.task-title:focus {
     display: flex;
     align-items: center;
     gap: 4px
-
 }
 
 .btn-add,
@@ -3258,6 +3256,7 @@ button.delete-btn-del:hover {
         border-radius: 8px 8px 0px 0px;
 
     }
+
     /*scrollbar-color: #091E4224 #091E420F;*/
     /*scrollbar-width: thin;*/
     /*overflow-y: scroll;*/
@@ -3333,7 +3332,7 @@ button.delete-btn-del:hover {
 
 .add-task-form textarea {
 
-/*.add-task-form textarea:focus-within {*/
+    /*.add-task-form textarea:focus-within {*/
     margin-top: 8px;
     outline: 3px solid #4c9aff;
     outline-offset: -4px;
@@ -3344,9 +3343,7 @@ button.delete-btn-del:hover {
     cursor: pointer;
 }
 
-.task-checkbox {
-
-}
+.task-checkbox {}
 
 .task-checkbox-checked {
     height: 16px;

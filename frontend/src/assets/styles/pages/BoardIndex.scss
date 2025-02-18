@@ -27,7 +27,8 @@
 
 
     .all-boards {
-        width: 811px;
+        max-width: 830px;
+        margin-block-start: 36px;
 
         .category-container {
             display: flex;
@@ -74,7 +75,9 @@
 
 .board-list {
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 18px;
+
 }
 
 .side-btn {
@@ -121,20 +124,23 @@ h3 {
 
 
 .star-boards {
-    max-width: 811px;
+    // max-width: 811px;
     margin-block: 24px;
 
     h3 {
-        font-weight: 900;
+        font-weight: 700;
         display: flex;
         gap: 0.7em;
         margin-block: 24px;
+        margin-left: 3px;
+        padding-top: 10px;
+        margin-inline-start: 10px;
     }
 }
 
 
 .my-boards {
-    max-width: 811px;
+    // max-width: 811px;
     margin-block: 24px;
 
     h4 {
@@ -151,23 +157,12 @@ h3 {
 
     h4,
     h3 {
-        font-weight: 900;
+        font-weight: 700;
         display: flex;
         gap: 0.7em;
         margin-block: 24px;
+        margin-inline-start: 10px;
     }
-
-    h3 {
-        font-weight: 900;
-        margin-top: 56px;
-    }
-}
-
-
-.board-list {
-    display: flex;
-    flex-wrap: wrap;
-
 }
 
 .input-white {
