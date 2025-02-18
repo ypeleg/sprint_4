@@ -6,11 +6,14 @@ import { AppHeader } from '../cmps/AppHeader.jsx'
 import { NavBarPageIndex } from './NavBarPageIndex.jsx'
 import React, { useRef, useEffect, useState } from "react"
 import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
+import { getFirstName } from '../services/util.service.js'
 import { MoveLeft } from "lucide-react"
 
 export function BoardIndex() {
 
     const boards = useSelector(state => state.boardModule.boards)
+    const loggedUser = useSelector(state => state.userModule.user)
+    const userFirstName = getFirstName(loggedUser.fullname)
     // console.log(boards);
 
     useEffect(() => {
@@ -25,13 +28,13 @@ export function BoardIndex() {
 
                 <div className="all-boards">
                     <div className="category-container">
-                        <div className="board-logo-large">T</div>
+                        <div className="board-logo-large">{userFirstName.charAt(0)}</div>
                         <div className="description-container">
                             <div className="edit-workspace">
-                                <h2>Trello Workspaces</h2>
+                                <h2>{`${userFirstName}'s Workspace`}</h2>
                             </div>
                             <div style={{ display: 'flex', gap: 6, fontSize: 12, color: '#44546f' }}>
-                                <span>Premium </span>
+                                <span style={{ marginBlockEnd: 1 }}>Premium </span>
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                     <img src="lock.svg" /> Private
                                 </div>

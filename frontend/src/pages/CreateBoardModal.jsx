@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { getEmptyBoard, addBoard } from "../store/store.js"
 import { useNavigate } from 'react-router'
+import { MoreBackgroundsBtn } from "../cmps/MoreBackgroundsBtn.jsx";
 
 
 export function CreateBoardModal({ onClose }) {
@@ -27,6 +28,9 @@ export function CreateBoardModal({ onClose }) {
   const [selectedBg, setSelectedBg] = useState(initialBackgroundImages[0])
   const [backgroundImagesImages, setBackgroundImages] = useState(initialBackgroundImages)
   const [backgroundImagesColors, setBackgroundColors] = useState(initialBackgroundColor)
+  const [isModalOpen, setIsModalopen] = useState(false)
+
+
   const [hasError, setHasError] = useState(true);
   const navgite = useNavigate()
 
@@ -34,7 +38,7 @@ export function CreateBoardModal({ onClose }) {
     if (boardToAdd.title === "") {
       setHasError(true)
     }
-    console.log(selectedBg)
+    console.log('selcted board:', selectedBg)
 
   }, [boardToAdd, selectedBg])
 
@@ -56,6 +60,8 @@ export function CreateBoardModal({ onClose }) {
 
     setBackgroundImages(updatedBackgroundsimages)
     setBackgroundColors(updatedBackgroundsColors)
+    console.log(selectedBg);
+
     setSelectedBg(selectedBg)
   }
 
@@ -71,6 +77,10 @@ export function CreateBoardModal({ onClose }) {
     const createdBoard = await addBoard(boardToAdd)
     navgite(`/${createdBoard._id}`)
     onClose()
+  }
+
+  function onCloseMoreBgModal() {
+    setIsModalopen(false)
   }
 
   return (
@@ -123,12 +133,21 @@ export function CreateBoardModal({ onClose }) {
                   {bg.isSelected && <div className="checkmark"><img src="check-mark.svg" alt="" /></div>}
                 </div>
               ))}
-              <div className="bg-option"
+              <button className="bg-option"
+                onClick={() => setIsModalopen(true)}
                 style={{
                   backgroundColor: "#f1f2f4"
                 }}
               ><img src="3dots.svg" alt="" />
-              </div>
+              </button>
+              {isModalOpen &&
+                <MoreBackgroundsBtn
+                  onClose={onCloseMoreBgModal}
+                  onChangeBg={onChangeBackgroundColor}
+                  selectedBg={selectedBg}
+                  setSelectedBg={setSelectedBg}
+                />
+              }
             </section>
 
           </section>

@@ -46,6 +46,11 @@ export function debounce(func, timeout = 300) {
     }
 }
 
+export function getFirstName(fullname) {
+    const firstName = fullname.trim().split(" ")[0]
+    return firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase()
+}
+
 export function saveToStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value))
 }

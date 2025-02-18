@@ -1,13 +1,8 @@
 * {
-    /*draggable: false;*/
-
-    /* experimental */
     font-weight: 400;
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
-
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
     user-select: none;
-    -webkit-user-drag: none;
-
+    -webkit-user-drag: none
 }
 
 .popup {
@@ -225,17 +220,6 @@
     background-repeat: no-repeat
 }
 
-.task-modal-close {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-
-}
-
-.task-modal-close:hover {
-    /*background: #fff*/
-}
-
 .task-modal-content {
     padding: 16px
 }
@@ -264,10 +248,14 @@
     width: 100%
 }
 
+.task-attachments-list li,
 .task-members,
 .task-right {
     display: flex;
-    align-items: center;
+    align-items: center
+}
+
+.task-right {
     gap: 16px
 }
 
@@ -326,27 +314,27 @@
 }
 
 .green {
-    background: #4bce97;
+    background: #4bce97
 }
 
 .yellow {
-    background: #f5cd47;
+    background: #f5cd47
 }
 
 .orange {
-    background: #fea362;
+    background: #fea362
 }
 
 .red {
-    background: #c9372c;
+    background: #c9372c
 }
 
 .purple {
-    background: #9f8fef;
+    background: #9f8fef
 }
 
 .blue {
-    background: #579dff;
+    background: #579dff
 }
 
 .add-label-btn {
@@ -385,8 +373,6 @@
 }
 
 .task-attachments-list li {
-    display: flex;
-    align-items: center;
     background: #f4f5f7;
     border-radius: 4px;
     margin-bottom: 4px;
@@ -434,8 +420,7 @@
 }
 
 .popup-backdrop {
-    background: rgba(0, 0, 0, .3);
-    /*backdrop-filter: blur(2px)*/
+    background: rgba(0, 0, 0, .3)
 }
 
 .popup-backdrop-plus-plus {
@@ -445,7 +430,7 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, .5);
-    z-index: 999;
+    z-index: 999
 }
 
 .task-modal-header {
@@ -505,20 +490,19 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 4px;
+    gap: 4px
 }
 
 .task-watch i,
 .task-watch-btn i {
     margin-top: 4px;
-    margin-inline: 3px;
+    margin-inline: 3px
 }
 
 .task-watch-btn.active,
 .task-watch.active {
     background-color: #0079bf;
-    color: #fff;
-
+    color: #fff
 }
 
 .task-description {
@@ -635,88 +619,68 @@
     font-weight: 600
 }
 
+.change-cover-btn,
 .task-modal-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    border: none;
-    font-size: 1.0rem;
+    border: 0;
     cursor: pointer;
-    color: #ffffff;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center
+}
+
+.task-modal-close {
+    top: 20px;
+    right: 20px;
+    font-size: 1rem;
+    color: #fff;
     padding: 2px;
     margin: 0;
     border-radius: 50%;
-    /*width: 24px;*/
-    /*height: 24px;*/
     width: 50px;
-    height: 50px;
+    height: 50px
 }
 
 .task-modal-close svg {
     mix-blend-mode: difference;
     fill: currentColor;
     stroke: currentColor;
-    /*width: 50px;*/
-    /*height: 50px;*/
     width: 24px;
-    height: 24px;
-
+    height: 24px
 }
 
 .task-cover>.task-modal-close svg,
 .task-no-cover>.task-modal-close svg {
-    scale: 1.5;
+    scale: 1.5
 }
 
 .task-no-cover>.task-modal-close svg {
     mix-blend-mode: unset;
-    color: #172b4d;
+    color: #172b4d
 }
 
 .task-no-cover>.task-modal-close:hover {
-    background: #e1e3e9;
+    background: #e1e3e9
 }
 
 .task-no-cover>.task-modal-close {
     margin-top: -16px;
-    margin-right: -16px;
+    margin-right: -16px
 }
-
-
-
 
 .task-modal-close:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, .2)
 }
-
-
-
-
-.task-modal-close svg {}
 
 .change-cover-btn {
-    position: absolute;
     bottom: 10px;
     right: 32px;
-    border: 0;
     background: 0 0;
     font-size: 1.6rem;
-    cursor: pointer;
     color: #f0f1f4;
-    /*background: #fff;*/
-    display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 4px;
-    font-weight: 600;
-
+    font-weight: 600
 }
-
-
-
 
 .task-layout {
     display: flex;
@@ -819,8 +783,7 @@
 
 .section-icon-title>i {
     position: absolute;
-    font-size: 18px;
-    /*font-size: 24px;*/
+    font-size: 18px
 }
 
 .bit-down {
@@ -881,15 +844,7 @@ button.attachment-extention {
 }
 
 .user-circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     justify-items: center;
-    font-weight: 900;
-    background-color: #00a2be;
-    height: 32px;
-    width: 32px;
-    border-radius: 50%;
     aspect-ratio: 1/1
 }
 
@@ -959,28 +914,24 @@ input.task-title:focus {
     align-items: center
 }
 
-.status-icon {
-    translate: 0 .2em;
+.status-icon,
+.status-icon-incomplete {
     height: 18px;
     width: 18px;
-    background-color: #36a678;
     border-radius: 50%;
     justify-items: center;
     justify-content: center;
-    cursor: pointer;
+    cursor: pointer
+}
+
+.status-icon {
+    translate: 0 .2em;
+    background-color: #36a678
 }
 
 .status-icon-incomplete {
-    /*background-color: #f2d600;*/
     translate: 0 .5em;
-    height: 18px;
-    width: 18px;
-    /*background-color: #36a678;*/
-    border-radius: 50%;
-    justify-items: center;
-    justify-content: center;
-    border: 2px solid #707c90;
-    cursor: pointer;
+    border: 2px solid #707c90
 }
 
 .status-icon>i {
@@ -1170,10 +1121,9 @@ input.task-title:focus {
 }
 
 .task-description {
-    /*background-color: #f0f1f4;*/
     border-radius: 4px;
     font-weight: 600;
-    background-color: #e2e4ea;
+    background-color: #e2e4ea
 }
 
 .custom-dropdown {
@@ -1238,15 +1188,12 @@ input.task-title:focus {
     gap: 1em;
     padding-inline: 14px;
     align-items: center;
-    justify-content: start;
-
-
+    justify-content: start
 }
 
 .sidebar-btn i {
     padding: 0;
-    margin: 0;
-    /*font-size: 1.2em;*/
+    margin: 0
 }
 
 .task-modal svg {
@@ -1368,26 +1315,9 @@ input.task-title:focus {
     top: 0
 }
 
-
 .task-sidebar {
-    position: relative;
+    position: relative
 }
-
-.picker-popup {
-    position: absolute;
-    top: 0;
-    background: #fff;
-    border: 1px solid #dfe1e6;
-    border-radius: 3px;
-    box-shadow: 0 4px 12px rgba(9, 30, 66, .25);
-    padding: 8px;
-    font-size: .85rem;
-    color: #172b4d;
-    width: 332px;
-    display: flex;
-    flex-direction: column;
-}
-
 
 .picker-popup {
     position: absolute;
@@ -1396,22 +1326,19 @@ input.task-title:focus {
     border: 1px solid #dfe1e6;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(9, 30, 66, .25);
-    padding: 8px;
     font-size: .85rem;
     color: #172b4d;
     width: 332px;
     padding: 16px;
-
     display: flex;
-    flex-direction: column;
-
+    flex-direction: column
 }
 
 .picker-popup h3 {
     font-size: 14px;
     font-weight: 500;
     margin: 0;
-    padding: 4px;
+    padding: 4px
 }
 
 .picker-popup h4 {
@@ -1419,77 +1346,78 @@ input.task-title:focus {
     font-size: 12px;
     font-weight: 600;
     margin: 8px 0 4px;
-    padding: 4px;
+    padding: 4px
 }
 
 .picker-popup .search-container {
     margin: 8px 0;
-    position: relative;
+    position: relative
 }
 
 .picker-popup .search-container input {
     width: 100%;
-    padding: 8px;
-    padding-left: 30px;
+    padding: 8px 8px 8px 30px;
     border-radius: 3px;
     border: 2px solid #dfe1e6;
     font-size: 14px;
     color: #172b4d;
     height: 42px;
-    background-color: #e2e4ea;
+    background-color: #e2e4ea
 }
-
-
 
 .picker-popup .search-container input:focus {
     border-color: #388bff;
     background-color: #fff;
-    outline: none;
+    outline: 0
 }
 
 .members-list {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 2px
 }
 
 .member-item {
     padding: 6px 4px;
     border-radius: 3px;
     cursor: pointer;
-    justify-content: space-between;
+    justify-content: space-between
 }
 
 .member-item:hover {
-    background-color: #f4f5f7;
+    background-color: #f4f5f7
 }
 
 .member-item .just-flex {
     gap: 8px;
-    align-items: center;
+    align-items: center
 }
 
+.field-info span,
+.keep-option span,
 .member-item span {
     font-size: 14px;
-    color: #172b4d;
+    color: #172b4d
 }
 
 .member-item .task-modal-close {
     visibility: hidden;
-    border: none;
-    background: none;
+    border: 0;
+    background: 0 0;
     color: #6b778c;
     cursor: pointer;
     font-size: 14px;
-    padding: 4px 8px;
+    padding: 4px 8px
 }
 
 .member-item:hover .task-modal-close {
-    visibility: visible;
+    visibility: visible
 }
 
-.member-item .task-modal-close:hover {
-    color: #172b4d;
+.member-item .task-modal-close:hover,
+.new-field-btn:hover svg,
+.user-circle {
+    color: #172b4d
 }
 
 .user-circle {
@@ -1499,209 +1427,146 @@ input.task-title:focus {
     width: 32px;
     height: 32px;
     background-color: #00a2be;
-    color: #172b4d;
     border-radius: 50%;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 14px
 }
 
 .picker-header h3 {
     margin-inline: auto;
     text-align: center;
-    padding-block: 12px;
+    padding-block: 12px
 }
 
 .picker-popup .search-container::after {
-    content: '';
-    margin-top: 6px;
+    content: "";
+    margin-top: 6px
 }
-
-
-
-/*labels picker*/
 
 .labels-list {
     display: flex;
-    flex-direction: column;
-    /*gap: 4px;*/
+    flex-direction: column
 }
 
 .label-item {
-    display: flex;
-    align-items: center;
     padding: 2px 8px;
     gap: 8px;
     border-radius: 3px;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .label-item:hover {
-    background-color: #f4f5f7;
+    background-color: #f4f5f7
 }
 
-.label-checkbox {
+.label-checkbox,
+.label-item {
     display: flex;
-    align-items: center;
+    align-items: center
 }
 
+.color-blind-toggle input,
 .label-checkbox input {
     width: 16px;
     height: 16px;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .label-color {
     flex: 1;
     height: 32px;
-    border-radius: 3px;
+    border-radius: 3px
 }
 
 .edit-label {
-
-    border: none;
-    background: none;
+    border: 0;
+    background: 0 0;
     padding: 6px;
     color: #6b778c;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 3px
 }
 
 .label-item:hover .edit-label {
-    visibility: visible;
+    visibility: visible
 }
 
 .edit-label:hover {
     background-color: #ebecf0;
+    color: #172b4d
+}
+
+.color-blind-toggle label,
+.create-label-btn {
+    font-size: 14px;
     color: #172b4d;
+    cursor: pointer;
+    text-align: center
 }
 
 .create-label-btn {
     background-color: #f0f1f4;
     margin-top: 8px;
     padding: 6px 12px;
-    border: none;
-    color: #172b4d;
-    font-size: 14px;
+    border: 0;
     font-weight: 600;
     width: 100%;
-    text-align: center;
-    cursor: pointer;
     border-radius: 3px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    justify-content: center
 }
 
 .create-label-btn:hover {
-    background-color: #f4f5f7;
+    background-color: #f4f5f7
 }
-
 
 .color-blind-toggle input {
     display: none;
+    text-align: center
 }
 
 .just-margin {
-
     padding-bottom: 8px;
-    border-bottom: 1px solid #dfe1e6;
+    border-bottom: 1px solid #dfe1e6
 }
 
 .color-blind-toggle {
     font-weight: 600;
     background-color: #f0f1f4;
     margin-top: 8px;
-
     padding: 6px 0;
-
-    /*border-top: 1px solid #dfe1e6;*/
     display: flex;
     align-items: center;
-    justify-content: center;
-
+    justify-content: center
 }
 
 .color-blind-toggle label {
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: space-between;*/
-    gap: 8px;
-    font-size: 14px;
-    color: #172b4d;
-    cursor: pointer;
-    text-align: center;
+    gap: 8px
 }
-
-.color-blind-toggle input {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-    text-align: center;
-}
-
 
 .checklist-content {
-    padding: 0 12px 12px;
+    padding: 0 12px 12px
 }
 
-.suggested-section {
-    margin-bottom: 16px;
-}
-
-.suggested-text {
-    display: flex;
-    align-items: center;
-    color: #5e6c84;
-    font-size: 12px;
-    margin-bottom: 4px;
-}
-
-.suggested-item {
-    display: flex;
-    align-items: center;
-    padding: 6px 8px;
-    border-radius: 3px;
-    cursor: pointer;
-    color: #172b4d;
-    font-size: 14px;
-}
-
-.suggested-item:hover {
-    background-color: #f4f5f7;
-}
-
-.title-section {
-    margin-bottom: 16px;
-}
-
-.title-section label,
 .copy-section label {
     display: block;
     color: #5e6c84;
     font-size: 12px;
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 4px
 }
 
-.title-input {
-    width: 100%;
-    padding: 8px;
-    border-radius: 3px;
-    border: 2px solid #dfe1e6;
-    font-size: 14px;
-    color: #172b4d;
-}
-
-.title-input:focus {
+.copy-select select:focus {
     border-color: #388bff;
-    outline: none;
+    outline: 0
 }
 
 .copy-section {
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
+.add-checklist-btn,
 .copy-select select {
     width: 100%;
     padding: 8px;
@@ -1709,116 +1574,97 @@ input.task-title:focus {
     border: 2px solid #dfe1e6;
     font-size: 14px;
     color: #172b4d;
-    background-color: white;
-    cursor: pointer;
-}
-
-.copy-select select:focus {
-    border-color: #388bff;
-    outline: none;
+    background-color: #fff;
+    cursor: pointer
 }
 
 .add-checklist-btn {
-    width: 100%;
     padding: 6px 12px;
     background-color: #0052cc;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    font-size: 14px;
-    font-weight: 400;
-    cursor: pointer;
+    color: #fff;
+    border: 0;
+    font-weight: 400
 }
 
 .add-checklist-btn:hover {
-    background-color: #0047b3;
+    background-color: #0047b3
 }
 
 .attachment-content {
-    padding: 0 12px 12px;
+    padding: 0 12px 12px
 }
 
 .header-with-icon {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #44546f;
+    color: #44546f
 }
 
 .file-upload-section {
-    /*background-color: #f7f8f9;*/
     border-radius: 3px;
-    /*padding: 16px;*/
-    /*text-align: center;*/
     margin-bottom: 16px;
-    border-bottom: 1px solid #dfe1e6;
+    border-bottom: 1px solid #dfe1e6
 }
 
 .file-upload-section h4 {
     color: #172b4d;
     font-size: 14px;
-    margin: 0 0 4px;
-    margin-left: -4px;
-    font-weight: 600;
-
+    margin: 0 0 4px -4px;
+    font-weight: 600
 }
 
 .upload-hint {
     color: #44546f;
     font-size: 12px;
-    margin: 0 0 12px;
+    margin: 0 0 12px
+}
+
+.choose-file-btn,
+.display-text-input,
+.link-input {
+    width: 100%;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #172b4d
 }
 
 .choose-file-btn {
     background-color: #e9ebee;
-    border: none;
-    border-radius: 3px;
+    border: 0;
     padding: 6px 12px;
-    color: #172b4d;
-    font-size: 14px;
     cursor: pointer;
-    width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
 .choose-file-btn:hover {
-    background-color: #dfe1e6;
+    background-color: #dfe1e6
 }
 
-.link-section {
-    margin-bottom: 16px;
-}
-
-.link-input,
-.display-text-input {
-    width: 100%;
+.display-text-input,
+.link-input {
     padding: 8px;
-    border-radius: 3px;
     border: 2px solid #8590a2;
-    font-size: 14px;
-    color: #172b4d;
     margin-bottom: 8px;
-    height: 40px;
-
+    height: 40px
 }
 
-.link-input:focus,
-.display-text-input:focus {
+.display-text-input:focus,
+.link-input:focus {
     border-color: #388bff;
-    outline: none;
+    outline: 0
 }
 
 .recent-section h4 {
     color: #44546f;
     font-size: 12px;
-    font-weight: 600;
-    /*margin: 0 0 8px;*/
+    font-weight: 600
 }
 
 .recent-items {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 4px
 }
 
 .recent-item {
@@ -1827,16 +1673,17 @@ input.task-title:focus {
     gap: 8px;
     padding: 8px;
     border-radius: 3px;
-    cursor: pointer;
+    cursor: pointer
 }
 
+.cancel-btn:hover,
 .recent-item:hover {
-    background-color: #f4f5f7;
+    background-color: #f4f5f7
 }
 
 .item-details {
     flex: 1;
-    min-width: 0;
+    min-width: 0
 }
 
 .item-title {
@@ -1845,7 +1692,7 @@ input.task-title:focus {
     margin-bottom: 4px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis
 }
 
 .item-meta {
@@ -1853,16 +1700,16 @@ input.task-title:focus {
     align-items: center;
     gap: 8px;
     color: #44546f;
-    font-size: 12px;
+    font-size: 12px
 }
 
 .item-meta span::after {
     content: "•";
-    margin-left: 8px;
+    margin-left: 8px
 }
 
 .item-meta span:last-child::after {
-    display: none;
+    display: none
 }
 
 .popup-footer {
@@ -1870,7 +1717,7 @@ input.task-title:focus {
     justify-content: flex-end;
     gap: 4px;
     margin-top: 16px;
-    padding-top: 12px;
+    padding-top: 12px
 }
 
 .cancel-btn,
@@ -1878,31 +1725,27 @@ input.task-title:focus {
     padding: 6px 12px;
     border-radius: 3px;
     font-size: 14px;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .cancel-btn {
-    background: none;
-    border: none;
-    color: #44546f;
-}
-
-.cancel-btn:hover {
-    background-color: #f4f5f7;
+    background: 0 0;
+    border: 0;
+    color: #44546f
 }
 
 .insert-btn {
     background-color: #0052cc;
-    border: none;
-    color: white;
+    border: 0;
+    color: #fff
 }
 
 .insert-btn:hover {
-    background-color: #0047b3;
+    background-color: #0047b3
 }
 
 .location-content {
-    padding: 0 12px 12px;
+    padding: 0 12px 12px
 }
 
 .location-input {
@@ -1911,43 +1754,24 @@ input.task-title:focus {
     border-radius: 3px;
     border: 2px solid #dfe1e6;
     font-size: 14px;
-    color: #172b4d;
+    color: #172b4d
 }
 
 .location-input:focus {
     border-color: #388bff;
-    outline: none;
-}
-
-.custom-fields-content {
-    padding: 0 12px 12px;
-}
-
-.fields-list {
-    margin-bottom: 16px;
-}
-
-.field-item {
-    display: flex;
-    align-items: center;
-
-    padding: 6px 8px;
-    border-radius: 3px;
-    cursor: pointer;
-    gap: 8px;
+    outline: 0
 }
 
 .field-item:hover {
-    background-color: #f4f5f7;
+    background-color: #f4f5f7
 }
 
-
 .custom-fields-content {
-    padding: 0 12px 12px;
+    padding: 0 12px 12px
 }
 
 .fields-list {
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
 .field-item {
@@ -1957,57 +1781,48 @@ input.task-title:focus {
     border-radius: 3px;
     cursor: pointer;
     gap: 8px;
-    background-color: #f7f8f9;
-}
-
-.field-item:hover {
-    background-color: #f4f5f7;
+    background-color: #f7f8f9
 }
 
 .field-grip {
-    color: #44546f;
-    cursor: grab;
-    /*opacity: 0;*/
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    cursor: grab
 }
 
 .field-item:hover .field-grip {
-    opacity: 1;
+    opacity: 1
 }
 
+.field-grip,
 .field-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #44546f;
+    color: #44546f
 }
 
 .field-name {
     flex: 1;
     font-size: 14px;
-    color: #172b4d;
+    color: #172b4d
 }
 
 .field-chevron {
-    border: none;
-    background: none;
+    border: 0;
+    background: 0 0;
     padding: 4px;
     color: #44546f;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 3px
 }
 
 .field-chevron:hover {
     background-color: #ebecf0;
-    color: #172b4d;
+    color: #172b4d
 }
 
 .suggested-section {
-    margin-bottom: 8px;
     padding-top: 8px;
-    border-top: 1px solid #dfe1e6;
+    border-top: 1px solid #dfe1e6
 }
 
 .suggested-section h4 {
@@ -2015,107 +1830,87 @@ input.task-title:focus {
     font-size: 12px;
     font-weight: 600;
     margin: 0 0 4px;
-    padding: 0 8px;
+    padding: 0 8px
+}
+
+.field-info,
+.suggested-field {
+    display: flex;
+    align-items: center
 }
 
 .suggested-field {
-    display: flex;
-    align-items: center;
     justify-content: space-between;
     padding: 6px 8px;
     border-radius: 3px;
-    background-color: #f4f5f7;
+    background-color: #f4f5f7
 }
 
 .field-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.field-info span {
-    font-size: 14px;
-    color: #172b4d;
+    gap: 8px
 }
 
 .add-btn {
-    padding: 6px 12px;
-    background: none;
-    border: none;
-    color: #0052cc;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    border-radius: 3px;
-}
-
-.add-btn:hover {
-    background-color: #e2e4e9;
+    background: 0 0
 }
 
 .new-field-btn {
-    display: flex;
     align-items: center;
     gap: 8px;
     width: 100%;
     padding: 6px 12px;
-    background: none;
-    border: none;
+    background: 0 0;
+    border: 0;
     color: #44546f;
     font-size: 14px;
     cursor: pointer;
     border-radius: 3px;
     display: flex;
     justify-content: center;
-    background-color: #f0f1f4;
+    background-color: #f0f1f4
 }
 
 .new-field-btn:hover {
-    background-color: #f4f5f7;
-    color: #172b4d;
+    color: #172b4d
 }
 
 .new-field-btn svg {
-    color: #44546f;
+    color: #44546f
 }
 
-.new-field-btn:hover svg {
-    color: #172b4d;
-}
-
-.date-picker-popup {
-    background-color: #f4f5f7;
+.date-picker-popup,
+.new-field-btn:hover {
+    background-color: #f4f5f7
 }
 
 .date-picker-content {
-    padding: 0 12px 12px;
+    padding: 0 12px 12px
 }
 
 .calendar-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
 .nav-btn {
-    border: none;
-    background: none;
+    border: 0;
+    background: 0 0;
     padding: 8px;
     color: #44546f;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 3px
 }
 
+.month-year,
 .nav-btn:hover {
-    background-color: #e2e4e9;
-    color: #172b4d;
+    color: #172b4d
 }
 
 .month-year {
     font-size: 14px;
-    font-weight: 500;
-    color: #172b4d;
+    font-weight: 500
 }
 
 .calendar-grid {
@@ -2126,90 +1921,93 @@ input.task-title:focus {
     border: 1px solid #dfe1e6;
     border-radius: 3px;
     overflow: hidden;
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
+.date-section label,
+.weekday {
+    color: #44546f;
+    font-size: 12px;
+    font-weight: 500
+}
+
+.day,
 .weekday {
     padding: 8px 0;
     text-align: center;
-    font-size: 12px;
-    font-weight: 500;
-    color: #44546f;
-    background-color: #f4f5f7;
+    background-color: #f4f5f7
 }
 
 .day {
-    padding: 8px 0;
-    text-align: center;
     font-size: 14px;
     color: #172b4d;
     cursor: pointer;
-    background-color: #fff;
+    background-color: #fff
 }
 
-.day:hover {
-    background-color: #e2e4e9;
+.day:hover,
+.nav-btn:hover {
+    background-color: #e2e4e9
 }
 
-.day.prev-month,
-.day.next-month {
-    color: #97a0af;
+.day.next-month,
+.day.prev-month {
+    color: #97a0af
 }
 
 .day.current {
     background-color: #0052cc;
-    color: #fff;
+    color: #fff
 }
 
 .date-section {
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
 .date-section label {
     display: block;
-    color: #44546f;
-    font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 4px;
+    margin-bottom: 4px
 }
 
+.date-input,
 .date-inputs {
     display: flex;
-    gap: 8px;
+    gap: 8px
 }
 
 .date-input {
-    display: flex;
     align-items: center;
-    gap: 8px;
     background-color: #fff;
     border: 2px solid #dfe1e6;
     border-radius: 3px;
-    padding: 4px 8px;
+    padding: 4px 8px
 }
 
-.date-input input[type="text"],
+.date-input input[type=text] {
+    border: 0
+}
+
+.date-input input[type=text],
 .time-input {
-    border: none;
     font-size: 14px;
     color: #172b4d;
-    width: 100%;
+    width: 100%
 }
 
-.date-input input[type="text"]:focus,
+.date-input input[type=text]:focus,
 .time-input:focus {
-    outline: none;
+    outline: 0
 }
 
 .time-input {
     background-color: #fff;
     border: 2px solid #dfe1e6;
     border-radius: 3px;
-    padding: 6px 8px;
+    padding: 6px 8px
 }
 
 .reminder-section {
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
 .reminder-select {
@@ -2220,62 +2018,63 @@ input.task-title:focus {
     font-size: 14px;
     color: #172b4d;
     background-color: #fff;
-    margin-bottom: 8px;
+    margin-bottom: 8px
 }
 
 .reminder-note {
     font-size: 12px;
     color: #44546f;
-    margin: 0;
+    margin: 0
 }
 
 .date-actions {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 8px
 }
 
-.save-btn,
-.remove-btn {
+.remove-btn,
+.save-btn {
     width: 100%;
     padding: 6px 12px;
-    border: none;
+    border: 0;
     border-radius: 3px;
     font-size: 14px;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .save-btn {
     background-color: #0052cc;
-    color: #fff;
+    color: #fff
 }
 
 .save-btn:hover {
-    background-color: #0047b3;
+    background-color: #0047b3
 }
 
 .remove-btn {
     background-color: #ebecf0;
-    color: #44546f;
+    color: #44546f
 }
 
 .remove-btn:hover {
     background-color: #dfe1e6;
-    color: #172b4d;
+    color: #172b4d
 }
 
-.date-input input[type="checkbox"] {
+.date-input input[type=checkbox],
+.keep-option input[type=checkbox] {
     width: 16px;
     height: 16px;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .move-card-content {
-    padding: 0 12px 12px;
+    padding: 0 12px 12px
 }
 
 .suggested-section {
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
 .suggested-text {
@@ -2283,13 +2082,13 @@ input.task-title:focus {
     align-items: center;
     color: #44546f;
     font-size: 12px;
-    margin-bottom: 4px;
+    margin-bottom: 4px
 }
 
 .suggested-items {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 2px
 }
 
 .suggested-item {
@@ -2300,191 +2099,101 @@ input.task-title:focus {
     border-radius: 3px;
     cursor: pointer;
     color: #172b4d;
-    font-size: 14px;
+    font-size: 14px
 }
 
 .suggested-item:hover {
-    background-color: #f4f5f7;
+    background-color: #f4f5f7
 }
 
 .select-section {
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
+.copy-to-section h4,
 .select-section h4 {
     color: #44546f;
     font-size: 12px;
     font-weight: 600;
-    margin: 0 0 8px;
-}
-
-.select-group {
-    margin-bottom: 12px;
-}
-
-.select-group label {
-    display: block;
-    color: #44546f;
-    font-size: 12px;
-    font-weight: 400;
-    margin-bottom: 4px;
-}
-
-.select-row {
-    display: flex;
-    gap: 8px;
-}
-
-.select-row .select-group {
-    flex: 1;
-}
-
-.board-select,
-.list-select,
-.position-select {
-    width: 100%;
-    padding: 8px;
-    border: 2px solid #dfe1e6;
-    border-radius: 3px;
-    font-size: 14px;
-    color: #172b4d;
-    background-color: white;
-    cursor: pointer;
-}
-
-.board-select:focus,
-.list-select:focus,
-.position-select:focus {
-    border-color: #388bff;
-    outline: none;
+    margin: 0 0 8px
 }
 
 .move-btn {
     width: 100%;
     padding: 6px 12px;
     background-color: #0052cc;
-    color: white;
-    border: none;
+    color: #fff;
+    border: 0;
     border-radius: 3px;
     font-size: 14px;
-    font-weight: 400;
-    cursor: pointer;
+    font-weight: 400
 }
 
 .move-btn:hover {
-    background-color: #0047b3;
+    background-color: #0047b3
 }
 
+.move-btn,
 .task-subtitle {
-    cursor: pointer;
+    cursor: pointer
 }
 
 div.task-subtitle>strong:hover {
     background-color: #dbdee3;
-    text-decoration: underline;
+    text-decoration: underline
 }
-
 
 .copy-card-content {
-    padding: 0 12px 12px;
+    padding: 0 12px 12px
 }
 
-.title-section {
-    margin-bottom: 16px;
-}
-
-.title-section label {
+.keep-section>label,
+.select-group label {
     display: block;
     color: #44546f;
     font-size: 12px;
     font-weight: 500;
-    margin-bottom: 4px;
-}
-
-.title-input {
-    width: 100%;
-    padding: 8px;
-    border: 2px solid #dfe1e6;
-    border-radius: 3px;
-    font-size: 14px;
-    color: #172b4d;
-    background-color: #0055ff12;
-}
-
-.title-input:focus {
-    border-color: #388bff;
-    outline: none;
+    margin-bottom: 4px
 }
 
 .keep-section {
-    margin-bottom: 16px;
-}
-
-.keep-section>label {
-    display: block;
-    color: #44546f;
-    font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 4px;
+    margin-bottom: 16px
 }
 
 .keep-options {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 8px
 }
 
 .keep-option {
     display: flex;
     align-items: center;
     gap: 8px;
-    cursor: pointer;
-}
-
-.keep-option input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-}
-
-.keep-option span {
-    font-size: 14px;
-    color: #172b4d;
+    cursor: pointer
 }
 
 .copy-to-section {
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
 .copy-to-section h4 {
-    color: #44546f;
-    font-size: 12px;
-    font-weight: 500;
-    margin: 0 0 8px;
-}
-
-.select-group {
-    margin-bottom: 12px;
+    font-weight: 500
 }
 
 .select-group label {
-    display: block;
-    color: #44546f;
-    font-size: 12px;
-    font-weight: 400;
-    margin-bottom: 4px;
+    font-weight: 400
 }
 
 .select-row {
     display: flex;
-    gap: 8px;
+    gap: 8px
 }
 
 .select-row .select-group {
-    flex: 1;
+    flex: 1
 }
 
-.board-select,
 .list-select,
 .position-select {
     width: 100%;
@@ -2493,53 +2202,43 @@ div.task-subtitle>strong:hover {
     border-radius: 3px;
     font-size: 14px;
     color: #172b4d;
-    background-color: white;
-    cursor: pointer;
+    background-color: #fff;
+    cursor: pointer
 }
 
-.board-select:focus,
 .list-select:focus,
 .position-select:focus {
     border-color: #388bff;
-    outline: none;
+    outline: 0
 }
 
 .create-btn {
     width: 100%;
     background-color: #0052cc;
-    color: white;
-    border: none;
+    color: #fff;
+    border: 0;
     border-radius: 3px;
     font-size: 14px;
     font-weight: 400;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .create-btn:hover {
-    background-color: #0047b3;
+    background-color: #0047b3
 }
 
-
 .mirror-card-content {
-    padding: 0 12px 12px;
+    padding: 0 12px 12px
 }
 
 .mirror-description {
     font-size: 14px;
     color: #172b4d;
-    margin: 0 0 16px;
+    margin: 0 0 16px
 }
 
 .select-group {
-    margin-bottom: 16px;
-}
-
-.select-group label {
-    display: block;
-    color: #44546f;
-    font-size: 12px;
-    font-weight: 400;
-    margin-bottom: 4px;
+    margin-bottom: 16px
 }
 
 .board-select {
@@ -2549,30 +2248,34 @@ div.task-subtitle>strong:hover {
     border-radius: 3px;
     font-size: 14px;
     color: #172b4d;
-    background-color: white;
-    cursor: pointer;
+    background-color: #fff;
+    cursor: pointer
 }
 
-.board-select:focus {
+.board-select:focus,
+.email-field input:focus,
+.embed-field input:focus,
+.link-field input:focus {
     border-color: #388bff;
-    outline: none;
+    outline: 0
 }
 
 .mirror-btn {
     width: 100%;
     padding: 6px 12px;
     background-color: #0052cc;
-    color: white;
-    border: none;
+    color: #fff;
+    border: 0;
     border-radius: 3px;
     font-size: 14px;
     font-weight: 400;
     cursor: pointer;
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
-.mirror-btn:hover {
-    background-color: #0047b3;
+.mirror-btn:hover,
+.picker-popup .save-btn:hover {
+    background-color: #0047b3
 }
 
 .mirror-info {
@@ -2581,310 +2284,214 @@ div.task-subtitle>strong:hover {
     gap: 8px;
     padding: 8px;
     background-color: #f4f5f7;
-    border-radius: 3px;
+    border-radius: 3px
 }
 
 .mirror-info svg {
     color: #44546f;
     flex-shrink: 0;
-    margin-top: 2px;
+    margin-top: 2px
 }
 
 .mirror-info span {
     font-size: 12px;
     color: #44546f;
-    line-height: 1.4;
+    line-height: 1.4
 }
 
 .share-card-content {
-    padding: 0 12px 12px;
+    padding: 0 12px 12px
 }
 
 .action-group {
-    margin-bottom: 8px;
+    margin-bottom: 8px
 }
 
 .action-item {
     padding: 6px 8px;
     border-radius: 3px;
-    cursor: pointer;
+    cursor: pointer
 }
 
-.action-item:hover {
-    background-color: #f4f5f7;
+.action-item:hover,
+.qr-button:hover,
+.remove-color-btn:hover {
+    background-color: #f4f5f7
 }
 
 .action-item span {
     font-size: 14px;
-    color: #172b4d;
+    color: #172b4d
 }
 
 .divider {
     height: 16px;
     background-color: #dfe1e6;
-    margin: 8px 0;
+    margin: 8px 0
 }
 
-
-.link-section,
+.email-section,
 .embed-section,
-.email-section {
-    margin-bottom: 16px;
+.link-section {
+    margin-bottom: 16px
 }
 
 .link-group {
-    margin-bottom: 8px;
+    margin-bottom: 8px
 }
 
-label {
-    display: block;
-    color: #44546f;
-    font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 4px;
-}
-
-.link-field input,
+.email-field input,
 .embed-field input,
-.email-field input {
+.link-field input {
     width: 100%;
     padding: 8px;
     border: 2px solid #dfe1e6;
     border-radius: 3px;
     font-size: 14px;
     color: #172b4d;
-    background-color: #f4f5f7;
-}
-
-.link-field input:focus,
-.embed-field input:focus,
-.email-field input:focus {
-    border-color: #388bff;
-    outline: none;
+    background-color: #f4f5f7
 }
 
 .qr-button {
     width: 100%;
     padding: 6px 8px;
-    background: none;
-    border: none;
+    background: 0 0;
+    border: 0;
     color: #0052cc;
     font-size: 14px;
     cursor: pointer;
     border-radius: 3px;
-    text-align: left;
-}
-
-.qr-button:hover {
-    background-color: #f4f5f7;
+    text-align: left
 }
 
 .email-note {
     font-size: 12px;
     color: #44546f;
     margin: 4px 0 0;
-    line-height: 1.4;
+    line-height: 1.4
 }
 
 .card-info {
     font-size: 12px;
-    color: #44546f;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 4px
 }
 
+.card-info,
 .card-info span {
-    color: #44546f;
+    color: #44546f
 }
-
 
 .edit-label-content {
-    padding: 0 12px 12px;
-}
-
-.back-btn {
-    border: none;
-    background: none;
-    padding: 8px;
-    color: #44546f;
-    cursor: pointer;
-    border-radius: 3px;
-}
-
-.back-btn:hover {
-    background-color: #f4f5f7;
-    color: #172b4d;
+    padding: 0 12px 12px
 }
 
 .label-preview {
     height: 32px;
-    border-radius: 3px;
-    margin-bottom: 16px;
+    border-radius: 3px
 }
 
+.label-preview,
 .title-section {
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
+.colors-section label,
+.field-section label,
 .title-section label {
     display: block;
     color: #44546f;
     font-size: 12px;
     font-weight: 500;
-    margin-bottom: 4px;
-}
-
-.title-input {
-    width: 100%;
-    padding: 8px;
-    border: 2px solid #dfe1e6;
-    border-radius: 3px;
-    font-size: 14px;
-    color: #172b4d;
-}
-
-.title-input:focus {
-    border-color: #388bff;
-    outline: none;
-}
-
-.colors-section {
-    margin-bottom: 16px;
-}
-
-.colors-section label {
-    display: block;
-    color: #44546f;
-    font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 4px;
-}
-
-.color-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
-    margin-bottom: 8px;
+    margin-bottom: 4px
 }
 
 .color-btn {
-    height: 32px;
-    width: 100%;
-    padding-bottom: 100%;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    position: relative;
-}
-
-.color-btn:hover::after {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    border: 2px solid #388bff;
-    border-radius: 5px;
+    height: 32px
 }
 
 .color-btn.selected::after {
-
-    content: '';
+    content: "";
     position: absolute;
     top: -3px;
     left: -3px;
     right: -3px;
     bottom: -3px;
     border: 2px solid #388bff;
-    border-radius: 5px;
+    border-radius: 5px
 }
 
 .remove-color-btn {
-    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
     width: 100%;
     padding: 6px 12px;
-    background: none;
+    background: 0 0;
     background-color: #f0f1f4;
-    border: none;
+    border: 0;
     border-radius: 3px;
     color: #44546f;
     font-size: 14px;
     cursor: pointer;
     margin-top: 8px;
-    text-align: center;
+    text-align: center
 }
 
 .remove-color-btn:hover {
-    background-color: #f4f5f7;
-    color: #172b4d;
+    color: #172b4d
 }
 
-.label-actions {
+.label-actions,
+.remove-color-btn {
     display: flex;
-    gap: 4px;
+    gap: 4px
 }
 
-.picker-popup .save-btn,
-.picker-popup .delete-btn {
+.picker-popup .delete-btn,
+.picker-popup .save-btn {
     flex: 1;
     padding: 6px 12px;
-    border: none;
+    border: 0;
     border-radius: 3px;
     font-size: 14px;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .picker-popup .save-btn {
     background-color: #0052cc;
-    color: white;
-}
-
-.picker-popup .save-btn:hover {
-    background-color: #0047b3;
+    color: #fff
 }
 
 .picker-popup .delete-btn {
     background-color: #dc3545;
-    color: white;
+    color: #fff
 }
 
 .picker-popup .delete-btn:hover {
-    background-color: #c82333;
+    background-color: #c82333
 }
 
 .edit-field-content {
-    padding: 0 12px 12px;
+    padding: 0 12px 12px
 }
 
 .back-btn {
-    border: none;
-    background: none;
+    border: 0;
+    background: 0 0;
     padding: 8px;
     color: #44546f;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 3px
 }
 
 .back-btn:hover {
     background-color: #f4f5f7;
-    color: #172b4d;
+    color: #172b4d
 }
 
 .field-section {
-    margin-bottom: 16px;
-}
-
-.field-section label {
-    display: block;
-    color: #44546f;
-    font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 4px;
+    margin-bottom: 16px
 }
 
 .title-input,
@@ -2895,18 +2502,19 @@ label {
     border-radius: 3px;
     font-size: 14px;
     color: #172b4d;
-    background-color: white;
+    background-color: #fff
 }
 
+.option-input:focus,
 .title-input:focus,
 .type-select:focus {
     border-color: #388bff;
-    outline: none;
+    outline: 0
 }
 
 .options-input {
     display: flex;
-    gap: 4px;
+    gap: 4px
 }
 
 .option-input {
@@ -2915,428 +2523,353 @@ label {
     border: 2px solid #dfe1e6;
     border-radius: 3px;
     font-size: 14px;
-    color: #172b4d;
+    color: #172b4d
 }
 
-.option-input:focus {
-    border-color: #388bff;
-    outline: none;
+.add-btn,
+label {
+    color: #44546f;
+    font-weight: 500
 }
 
 .add-btn {
     padding: 6px 12px;
     background-color: #f4f5f7;
-    border: none;
+    border: 0;
     border-radius: 3px;
-    color: #44546f;
     font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
+    cursor: pointer
 }
 
-.add-btn:hover {
+.add-btn:hover,
+button.delete-btn-del:hover {
     background-color: #dfe1e6;
-    color: #172b4d;
+    color: #172b4d
 }
 
 .checkbox-section {
-    margin-bottom: 24px;
+    margin-bottom: 24px
 }
 
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-}
-
-.checkbox-label input[type="checkbox"] {
+.checkbox-label input[type=checkbox] {
     width: 16px;
     height: 16px;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .checkbox-label span {
     font-size: 14px;
-    color: #172b4d;
+    color: #172b4d
 }
 
 .delete-field-btn {
     width: 100%;
     text-align: left;
     padding: 6px 0;
-    background: none;
-    border: none;
+    background: 0 0;
+    border: 0;
     color: #0052cc;
     font-size: 14px;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .delete-field-btn:hover {
-    text-decoration: underline;
+    text-decoration: underline
 }
 
 .save-field-btn {
     width: 100%;
     padding: 6px 12px;
     background-color: #0052cc;
-    color: white;
-
+    color: #fff
 }
 
 .cover-content {
-    padding: 0 12px 12px;
+    padding: 0 12px 12px
 }
 
-.size-section,
-.colors-section,
 .attachments-section,
+.colors-section,
+.size-section,
 .unsplash-section {
-    margin-bottom: 16px;
+    margin-bottom: 16px
 }
 
 label {
     display: block;
-    color: #44546f;
     font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 8px;
+    margin-bottom: 8px
 }
 
 .size-options {
     display: flex;
-    gap: 8px;
+    gap: 8px
 }
 
 .size-preview {
     height: 32px;
-    border: none;
+    border: 0;
     border-radius: 3px;
     cursor: pointer;
     background-color: #ebecf0;
-    background-image:
-        linear-gradient(90deg, #dfe1e6 25%, transparent 25%),
-        linear-gradient(90deg, #dfe1e6 25%, transparent 25%);
+    background-image: linear-gradient(90deg, #dfe1e6 25%, transparent 25%), linear-gradient(90deg, #dfe1e6 25%, transparent 25%);
     background-position: top, bottom;
     background-size: 80% 8px;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat
 }
 
 .size-preview.small {
-    width: 140px;
+    width: 140px
 }
 
 .size-preview.large {
     width: 140px;
-    height: 48px;
+    height: 48px
 }
 
 .size-preview:hover {
-    background-color: #dfe1e6;
+    background-color: #dfe1e6
 }
 
 .color-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 4px;
-    margin-bottom: 8px;
+    margin-bottom: 8px
 }
 
 .color-btn {
     width: 100%;
     padding-bottom: 100%;
-    border: none;
+    border: 0;
     border-radius: 3px;
     cursor: pointer;
-    position: relative;
+    position: relative
 }
 
 .color-btn:hover::after {
-    content: '';
+    content: "";
     position: absolute;
     top: -2px;
     left: -2px;
     right: -2px;
     bottom: -2px;
     border: 2px solid #388bff;
-    border-radius: 5px;
+    border-radius: 5px
 }
 
 .colorblind-toggle {
     margin-top: 12px;
     padding-top: 12px;
-    border-top: 1px solid #dfe1e6;
+    border-top: 1px solid #dfe1e6
 }
 
 .checkbox-label {
     display: flex;
     align-items: center;
     gap: 8px;
-    cursor: pointer;
-}
-
-.checkbox-label input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-}
-
-.checkbox-label span {
-    font-size: 14px;
-    color: #172b4d;
+    cursor: pointer
 }
 
 .upload-btn {
     width: 100%;
     padding: 24px;
     background-color: #f4f5f7;
-    border: none;
+    border: 0;
     border-radius: 3px;
     color: #172b4d;
     font-size: 14px;
     cursor: pointer;
-    margin-bottom: 8px;
+    margin-bottom: 8px
 }
 
 .upload-btn:hover {
-    background-color: #ebecf0;
+    background-color: #ebecf0
 }
 
 .upload-tip {
     font-size: 12px;
     color: #44546f;
-    margin: 0;
+    margin: 0
 }
 
 .photo-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 4px;
-    margin-bottom: 8px;
+    margin-bottom: 8px
+}
+
+.photo-item,
+.search-photos-btn {
+    cursor: pointer;
+    border-radius: 3px
 }
 
 .photo-item {
-    border-radius: 3px;
     overflow: hidden;
-    cursor: pointer;
-    height: 40px;
+    height: 40px
 }
 
 .photo-item img {
     width: 100%;
     height: auto;
-    display: block;
+    display: block
 }
 
 .photo-item:hover {
-    opacity: 0.85;
+    opacity: .85
 }
 
 .search-photos-btn {
     width: 100%;
     padding: 6px 12px;
-    background: none;
-    border: none;
+    background: 0 0;
+    border: 0;
     color: #44546f;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 3px;
+    font-size: 14px
 }
 
 .search-photos-btn:hover {
     background-color: #f4f5f7;
-    color: #172b4d;
+    color: #172b4d
 }
 
 .unsplash-credit {
     font-size: 12px;
     color: #44546f;
-    margin: 8px 0 0;
+    margin: 8px 0 0
 }
 
 .terms-link {
     color: #0052cc;
     text-decoration: none;
-    margin-left: 4px;
+    margin-left: 4px
 }
 
 .terms-link:hover {
-    text-decoration: underline;
+    text-decoration: underline
+}
+
+.remove-cover-btn,
+button.delete-btn-del {
+    border: 0;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: 500
 }
 
 .remove-cover-btn {
     width: 100%;
-    padding: 6px 12px;
-    border: none;
     border-radius: 3px;
     font-size: 14px;
-    cursor: pointer;
     background-color: #f0f1f4;
-    font-weight: 500;
-    margin-top: 8px;
+    margin-top: 8px
 }
 
-
 .unsplash-section .photo-item {
-    /*padding: 6px 8px;*/
     border-radius: 6px;
     cursor: pointer;
-    overflow: hidden;
-
+    overflow: hidden
 }
 
 .task-custom-fields {
-    margin-top: 16px;
+    margin-top: 16px
 }
 
 .task-custom-fields>* {
-    max-width: 33.3333%;
+    max-width: 33.3333%
 }
 
-
 .task-description {
-    margin-top: 16px;
+    margin-top: 16px
 }
 
 .tasklist-icon {
     display: flex;
     align-items: center;
     gap: 4px;
-    margin-inline: 4px;
+    margin-inline: 4px
 }
 
 .hinted {
     padding: 4px;
-    margin-top: -6px;
+    margin-top: -6px
 }
 
 .hinted:hover {
-    background-color: rgba(0, 0, 0, 0.16);
-    border-radius: 3px;
-
+    background-color: rgba(0, 0, 0, .16);
+    border-radius: 3px
 }
 
 .just-flex-cols {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 8px
 }
 
-.full-width {
-    width: 100%;
+.full-width,
+table {
+    width: 100%
 }
 
 button.delete-btn-del {
     background-color: #e2e4ea;
     color: #42526e;
-    border: none;
-    /*border-radius: 3px;*/
-    padding: 6px 12px;
-    cursor: pointer;
-    font-weight: 500;
-    border-radius: 4px;
+    border-radius: 4px
 }
 
 div.task-user-icon {
-    font-size: 10px;
-}
-
-button.delete-btn-del:hover {
-    background-color: #dfe1e6;
-    color: #172b4d;
+    font-size: 10px
 }
 
 .checklist-todos {
-    margin-left: 8px;
+    margin-left: 8px
 }
 
 .cover-color {
     width: 100%;
-    /*padding-bottom: 100%;*/
     border-radius: 3px 3px 0 0;
     cursor: pointer;
     position: relative;
     height: 40px;
-    z-index: -1;
+    z-index: -1
 }
-
 
 .task-cover-color {
-    margin: -10px -9px -9px -10px;
-    margin-bottom: 10px;
+    margin: -10px -9px 10px -10px;
     padding-inline: 1px;
     aspect-ratio: unset;
-    height: 40px;
-
-    /*height: 40px;*/
-
-    img {
-        border-radius: 8px 8px 0px 0px;
-
-    }
-
-    /*scrollbar-color: #091E4224 #091E420F;*/
-    /*scrollbar-width: thin;*/
-    /*overflow-y: scroll;*/
-    /*padding-inline: 2px;*/
-
+    height: 40px
 }
 
-
-
-
-.task-list .task {
-    transition: transform 0.2s ease;
+.task-list .task,
+.task-list,
+.base-components-list {
+    transition: transform .2s ease;
     will-change: transform;
-}
-
-
-.task-list .task {
-    transition: transform 0.2s ease;
-    will-change: transform;
-}
-
-
-
-.task-list .task {
-    user-select: none;
-}
-
-.task-list .task:active {
-    cursor: grabbing;
-}
-
-
-.task-list .task {
     cursor: grab;
     user-select: none;
-    -webkit-user-drag: element;
+    -webkit-user-drag: element
 }
 
 .task-list .task:active {
-    cursor: grabbing;
+    cursor: grabbing
 }
 
-[data-drop-target="true"] {
-    cursor: inherit;
+[data-drop-target=true] {
+    cursor: inherit
 }
-
-/*img, a {*/
-/*    pointer-events: none;*/
-/*    user-select: none;*/
-/*    -webkit-user-drag: none;*/
-/*}*/
 
 .section-icon-title svg {
     height: 24px;
-    width: 24px;
+    width: 24px
 }
 
 .task-no-cover {
     position: relative;
-    z-index: 1;
+    z-index: 1
 }
-
 
 #drag-preview-container {
     position: absolute;
@@ -3345,259 +2878,204 @@ button.delete-btn-del:hover {
     pointer-events: none;
     z-index: 1000;
     width: auto;
-    height: auto;
+    height: auto
 }
 
 .add-task-form textarea {
-
-    /*.add-task-form textarea:focus-within {*/
     margin-top: 8px;
     outline: 2px solid #4c9aff;
-    outline-offset: -4px;
+    outline-offset: -4px
 }
 
-
+.cards-and-img-cards article,
 .task-checkbox {
-    cursor: pointer;
+    cursor: pointer
 }
-
-.task-checkbox {}
 
 .task-checkbox-checked {
     height: 16px;
     width: 16px;
     margin-left: 2px;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1/1;
     border-radius: 50%;
-    /*border: 2px solid #707c90;*/
     place-self: start;
     margin-top: 4px;
-    cursor: pointer;
-}
-
-.task-checkbox:hover,
-.task-checkbox-checked:hover {
-    outline: 2px solid #4c9aff;
-    outline-offset: 2px;
+    cursor: pointer
 }
 
 .status-icon-incomplete:hover,
-.status-icon:hover {
+.status-icon:hover,
+.task-checkbox-checked:hover,
+.task-checkbox:hover {
     outline: 2px solid #4c9aff;
-    outline-offset: 2px;
+    outline-offset: 2px
 }
 
 .picker-popup .task-modal-close {
     top: 4px;
-    right: 4px;
+    right: 4px
 }
 
 .picker-popup .task-modal-close:hover {
-    background-color: #f4f5f7;
+    background-color: #f4f5f7
 }
-
 
 .group-lists {
     display: flex;
-    flex-direction: row;
-    /*gap: 16px;    */
+    flex-direction: row
 }
 
 .trello-loader {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)
 }
-
 
 .task-modal-header {
-    margin-top: 16px;
+    margin-top: 16px
 }
-
 
 .quick-edit-card-container {
     position: absolute;
-    /*width: 100px;*/
-    /*height: 100px;*/
-    /*background-color: white;*/
     right: 100%;
-    width: fit-content;
-
+    width: fit-content
 }
 
-.just-flex-quick-edit {
-    /*display: grid;*/
-    /*grid-template-columns: 1fr 1fr;*/
-
-}
 .quick-edit-container .picker-popup {
-    position:fixed;
+    position: fixed
 }
 
-
-.quick-edit-content .task {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+.quick-edit-content .task,
+.quick-edit-content aside .option,
+.quick-edit-save-button {
+    box-shadow: rgba(0, 0, 0, .35)0 5px 15px
 }
 
 .quick-edit-content aside .option {
-    /*margin-left: 100%;*/
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 8px
 }
 
 .quick-edit-save-button {
     position: fixed;
     background-color: #0c66e4;
-    color: white;
-    padding: 8px 12px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-
+    color: #fff;
+    padding: 8px 12px
 }
 
-/* .col-5-due-date */
-/* .col-4-members */
-/* .col-3-labels */
-/* .col-2-group-title */
-/* .span-task-title */
 .col-1 {
     display: flex;
     align-items: center;
-    /* justify-content: space-between; */
-    gap: 0.9em;
+    gap: .9em
 }
 
 table {
     table-layout: fixed;
-    width: 100%;
-    text-align:left;
-    /* padding-left: 24px; */
+    text-align: left;
     overflow-y: scroll;
+    height: 87%;
+    border-radius: 10px
 }
 
-td, th {
+td,
+th {
     padding-left: 36px;
     overflow: hidden;
-    height:100%;
-}
-
-td:hover {
-    background-color: #f0f1f3;
+    height: 100%
 }
 
 th {
-    height: 33px;
+    height: 33px
+}
+
+td:hover {
+    background-color: #f0f1f3
 }
 
 .first-row {
-    position: relative;
+    position: relative
 }
 
 .first-row::after {
-    content: ' ';
+    content: " ";
     position: absolute;
     width: 96%;
     top: 100%;
     left: 2%;
-    height: 2px;    
-    /* background-color: red; */
-    border-bottom: 2px solid #dbdee3;
+    height: 2px;
+    border-bottom: 2px solid #dbdee3
 }
 
 tr:not(:last-of-type) {
-    position: relative;
+    position: relative
 }
 
 tr::after {
-    content: ' ';
+    content: " ";
     position: absolute;
     width: 96%;
     top: 100%;
     left: 2%;
-    height: 2px;    
-    /* background-color: red; */
-    border-bottom: 1px solid #dbdee3;
-}
-
-
-.board-table {
-    /* width: 100%; */
+    height: 2px;
+    border-bottom: 1px solid #dbdee3
 }
 
 .group-table {
     width: 98%;
     margin: 8px;
-    border-radius: 10px;
-}
-
-.group-table thead tr {
-    /* width: 100%; */
-    /* background-color: red; */
+    border-radius: 10px
 }
 
 .labelss {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.3em;
-    margin-bottom: 6px;
+    gap: .3em;
+    margin-bottom: 6px
 }
 
-.task-label {
-    padding: 0px;
-    margin: 0px;
+.task-label,
+.task-label-small {
+    padding: 0;
+    margin: 0;
     background-color: #4bcd96;
     height: 16px;
     width: 56px;
     border-radius: 4px;
-    transition: 0.2s;
-    &:hover {
-        opacity: 0.8;
-    }
+    transition: .2s
 }
 
 .task-label-small {
-    padding: 0px;
-    margin: 0px;
-    background-color: #4bcd96;
     height: 8px;
-    width: 40px;
-    border-radius: 4px;
-    transition: 0.2s;
-    &:hover {
-        opacity: 0.8;
-    }
+    width: 40px
 }
 
-
-.col-1{
-    height:40px;
+.col-1 {
+    height: 40px
 }
 
 .labels-table {
     display: flex;
     overflow: hidden;
-    width: 200%;
+    width: 200%
 }
 
 .status-indicator {
-    color: #229f6b;
+    color: #229f6b
 }
-
 
 .task-checkbox-table {
     border-radius: 50%;
     border: 2px solid #626f85;
     height: 16px;
-    width: 16px;
+    width: 16px
 }
 
-.col-4-members .task-users .task-user-icons{
+.col-4-members .task-users .task-user-icons {
     display: flex;
     flex-direction: row;
-    overflow: hidden;
-    
+    overflow: hidden
 }
 
 .col-4-members .task-users .task-user-icons .member-circle,
@@ -3605,77 +3083,57 @@ tr::after {
     aspect-ratio: 1/1;
     width: 24px;
     height: 24px;
-    margin-left: -3px;
+    margin-left: -3px
 }
 
 .col-4-members .task-users .task-user-icons .member-circle:first-of-type,
 .col-4-members .task-users .task-user-icons .user-circle:first-of-type {
-    margin-left: 0px;
+    margin-left: 0
 }
-
-table {
-    /* display: block; */
-    overflow-y: scroll;
-    
-
-    
-    height: 87%;
-    border-radius: 10px;
-}
-
-
-/* .not-group-table {
-    height: 100px;
-} */
 
 body:has(.home) {
-    display:block;
-    overflow: auto;
+    display: block;
+    overflow: auto
 }
 
 .padded-home-section {
     max-width: 1140px;
-    margin-inline: auto;
-}
-
-.home {
-    /* overflow-y: scroll; */
-    /* display: block; */
+    margin-inline: auto
 }
 
 .homepage-titles h5 {
-    font-size: 1rem;    
+    font-size: 1rem
 }
 
 .homepage-titles h1 {
-    font-size: 2.25rem;
+    font-size: 2.25rem
 }
 
 .homepage-titles p {
     font-size: 1.25rem;
-    max-width: 630px;
+    max-width: 630px
 }
 
 .section-3 {
-    margin-top: 50px;
+    margin-top: 50px
 }
 
 .cards-and-img {
-    margin-inline: 0px;
+    margin-inline: 0;
     max-width: 100%;
-    padding-inline: calc((100% - 1140px) / 2 );
+    padding-inline: calc((100% - 1140px)/2);
     display: flex;
     gap: 32px;
     background-color: #e5fbfe;
-    padding-block: 50px;
+    padding-block: 50px
 }
 
 .cards-and-img-cards {
-    width: 40%;
+    width: 40%
 }
 
 .cards-and-img-img {
-    width: 60%;
+    width: 60%
 }
 
 .home-card {
@@ -3684,8 +3142,7 @@ body:has(.home) {
     padding-inline: 20px;
     height: 157px;
     display: flex;
-    align-items: center;
-    
+    align-items: center
 }
 
 .home-card.active {
@@ -3693,111 +3150,85 @@ body:has(.home) {
     font-size: 1rem;
     width: 350px;
     background-color: #fefefe;
-    box-shadow: rgba(9, 30, 66, 0.15) 0px 0.5rem 1rem 0px;
-    border-radius: 10px;
+    box-shadow: rgba(9, 30, 66, .15)0 .5rem 1rem 0;
+    border-radius: 10px
 }
 
 .home-card.active::after {
     position: absolute;
-    content: ' ';
+    content: " ";
     background-color: #00c6e4;
     height: 100%;
     width: 7px;
-    left: 0px;
-    top: 0px;
-    border-radius: 10px 0px 0px 10px; 
+    left: 0;
+    top: 0;
+    border-radius: 10px 0 0 10px
 }
 
-.home-card  h3 {
-    font-size: 1.3rem;
+.home-card h3 {
+    font-size: 1.3rem
 }
-
-.cards-and-img-cards article {
-    cursor: pointer;
-}
-
 
 .quick-edit-content .option {
-    cursor: pointer;
+    cursor: pointer
 }
 
 .quick-edit-content .option:hover {
-    background-color: #dbdee3;
+    background-color: #dbdee3
 }
 
-
 .picker-popup {
-    z-index: 1000;
+    z-index: 1000
 }
 
 .header-group .board-header-title {
+    overflow: hidden
+}
+
+.board-header-title,
+.board-name {
+    word-break: keep-all;
     overflow: hidden;
-    /* max-width:  100px; */
+    text-transform: capitalize
 }
 
 .board-header-title {
-    
-    overflow: hidden;
-    /* max-width:  100px; */
     display: block;
-    
     max-height: 2em;
-    word-break: keep-all;
-    /* max-width: 100%; */
-    overflow: hidden;
-    text-transform: capitalize;
     margin-block: auto;
     padding: 0;
-    inset: 0;
+    inset: 0
 }
 
 .board-name {
-    overflow: hidden;
-    /* max-width:  100px; */
     display: contents;
-    
-    /* height: 20px; */
-    word-break: keep-all;
-    /* max-width: 100%; */
-    overflow: hidden;
-    text-transform: capitalize;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 700
 }
 
-* > * {
+*>* {
     font-weight: 400;
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
-}
-
-.just-flex-quick-edit * {
-    /* cursor: default; */
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif
 }
 
 .just-flex-quick-edit .right-btns {
-    display: none;
+    display: none
 }
 
 .just-flex-quick-edit .task {
-    outline: none;
-    cursor: default;
+    outline: 0;
+    cursor: default
 }
 
 .just-flex-quick-edit .task:focus-within {
     draggable: false;
-    outline: none;
-    cursor: default;
+    outline: 0;
+    cursor: default
 }
-
 
 .just-flex-quick-edit button:hover {
-    background-color: #2777e7;    
+    background-color: #2777e7
 }
-
-.just-flex-quick-edit *::after {
-    /* content: ''; */
-}
-
 
 .quick-edit-container {
     position: absolute;
@@ -3805,27 +3236,12 @@ body:has(.home) {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1000; /* Ensure it’s above other content */
-}
-
-.side-menu-container {
-    /*width: 100px;*/
-    /*height: 100px;*/
-    /*background-color: red;*/
-
-    /*position: fixed;*/
-    /*!*top: 0;*!*/
-    /*!*left: 0;*!*/
-    /*!*width: 100%;*!*/
-    /*!*height: 100%;*!*/
-    /*z-index: 1000;*/
+    z-index: 1000
 }
 
 textarea.change-header.header-textarea {
-
-    border-radius: 0.5rem;
+    border-radius: .5rem
 }
-
 
 .user-profile {
     border-radius: 50%;
@@ -3833,61 +3249,51 @@ textarea.change-header.header-textarea {
     height: 24px;
     width: 24px;
     margin-right: 8px;
-    border: 1px solid #006a7c;
+    border: 1px solid #006a7c
 }
 
+.divider-white,
 .white-colors-btn {
-    /* background-color: #73706b; */
-    background-color: rgba(55, 52, 48, 0.5);
+    background-color: rgba(55, 52, 48, .5)
 }
 
 #share-white-ver {
-    /* display: none; */
     background-color: #dbdee3;
     color: #172b4d;
-    
-    
-    border-radius: 4px;
-    span {
-        font-weight: 600;
-    }
+    border-radius: 4px
 }
 
 .divider-white {
-    color: white;
-    height: 16px;
+    color: #fff;
     width: 1px;
     height: 16px;
-    background-color: rgba(55, 52, 48, 0.5);
-    margin: 8px 0;
+    margin: 8px 0
 }
 
-
 .main-logo-white {
-        height: 16px;
+    height: 16px
 }
 
 .white-search,
 .white-search::after {
-    color: white;
-    border-color:  rgba(204, 204, 204, 0.5);
-    background-color:  rgba(112, 112, 112, 0.5);
+    color: #fff;
+    border-color: rgba(204, 204, 204, .5);
+    background-color: rgba(112, 112, 112, .5)
 }
 
 .white-search::placeholder {
-    color: white;
+    color: #fff
 }
 
 .search-container:has(.white-search)::after {
     left: .6em;
     top: .4em;
     font-size: 1em;
-    color: transparent;
     pointer-events: none;
     position: absolute;
     width: 4px;
     height: 4px;
-    color: white;
+    color: #fff;
     z-index: 1;
     font-family: "Font Awesome 5 Pro";
     font-weight: 400;
@@ -3898,10 +3304,22 @@ textarea.change-header.header-textarea {
 
 .task-badges>div {
     display: flex;
-    align-items: center;
+    align-items: center
 }
 
-.task-badges svg {    
+.task-badges svg {
     color: #4f5e77;
-    margin-right: 3px;
+    margin-right: 3px
+}
+
+.group-placeholder {
+    width: 272px;
+    height: 16px;
+    width: 16px;
+    margin-left: 2px;
+    /*aspect-ratio: 1/1;*/
+    border-radius: 50%;
+    /*place-self: start;*/
+    margin-top: 4px;
+    cursor: pointer
 }

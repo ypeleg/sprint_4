@@ -16,7 +16,7 @@
   background: #fff;
   padding: 20px;
   border-radius: 10px;
-  width: 304px;
+  width: 306px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   max-height: 98vh;
   overflow-y: scroll;
@@ -107,6 +107,12 @@
   }
 }
 
+.larger {
+  box-sizing: content-box;
+  width: 82px;
+  height: 56px;
+}
+
 .bg-option {
   width: 40px;
   height: 32px;
@@ -114,6 +120,7 @@
   cursor: pointer;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   img {
     width: 15px;
@@ -273,4 +280,18 @@
 
 .white {
   background-color: inherit;
+}
+
+.mini-modal-content {
+  position: fixed;
+  top: 200px;
+  right: 90px;
+  align-content: center;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 306px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  max-height: 98vh;
+  overflow-y: scroll;
 }
