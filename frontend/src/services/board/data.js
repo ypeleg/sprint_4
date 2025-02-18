@@ -150,7 +150,7 @@ function getRandomTask() {
     }
 }
 
-function getColorFromBackgroundColor(bg) {
+ export function getColorFromBackgroundColor(bg) {
     switch (bg) {
         case '#baf3db': return '#164b35' // trello green
         case '#f8e6a0': return '#4f3a0e' // trello yellow
@@ -189,7 +189,8 @@ function getRandomGroups() {
             archivedAt: random.choice([null, random.date('2022-01-01','2023-12-31').getTime()]),
             tasks: Array.from({length: tasksCount}, getRandomTask),
             style,
-            watched: random.choice([true,false])
+            watched: random.choice([true,false]),
+            isMinimaized:random.choice([true,false])
         }
     })
 }
@@ -229,7 +230,8 @@ function getRandomColor() {
 }
 function getRandomColorLabels() {
     const colors = [
-        '#9f8fef', '#c9372c', '#f87168', '#fea362', '#f5cd47', '#4bce97', '#579dff']
+        '#9f8fef', '#f87168', '#fea362', '#f5cd47', '#4bce97', '#579dff']
+        // '#c9372c' // ugly red
         // "#60D394","#FFD97D","#FF9B85","#FF6B6B","#7C77B9","#56CCF2"]
     return random.choice(colors)
 }

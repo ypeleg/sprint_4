@@ -1,6 +1,6 @@
 
 
-import { QuickEdit } from "./QuickEdit"
+
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router"
 import { AddTaskForm } from "./AddTaskForm"
@@ -44,6 +44,8 @@ export function TaskList({
                              Placeholder,
                              onSetPlaceholderHeight,
                              placeholderHeight,
+                             onsetQuickEdit,
+                             showQuickEdit
                          }) {
 
     function onDeleteTask(ev, taskId) {
@@ -65,8 +67,8 @@ export function TaskList({
     const [showForm, setShowForm] = useState(false)
     const [showFirstForm, setShowFirstForm] = useState(false)
     const [tasks, setTasks] = useState(group.tasks)
-    const [showQuickEdit, setShowQuickEdit] = useState(false)
-    const editpos = useRef(null)
+
+
 
 
     const [shadow, setShadow] = useState(null)
@@ -115,13 +117,7 @@ export function TaskList({
         setShowFirstForm(!showFirstForm)
     }
 
-    function onsetQuickEdit(ev) {
-        ev.stopPropagation()
-        ev.preventDefault()
-        const rect = ev.target.getBoundingClientRect()
-        editpos.current = rect
-        setShowQuickEdit(!showQuickEdit)
-    }
+
 
 
     useEffect(() => {
@@ -278,6 +274,8 @@ export function TaskList({
 
                     <div
                         key={task.id}
+                        data-task-id={task.id}
+                        data-group-id={group.id}
                         className="task"
                         onClick={() => onLoadTask(task, currentGroup, group, boardToShow)}
                         ref={getCardRef(task.id)}
@@ -403,7 +401,7 @@ export function TaskList({
                                 </div>
                             )}
                         </div>
-                        {showQuickEdit && <QuickEdit pos={editpos.current} />}
+
 
                     </div>
                     {shadow?.taskId === task.id && shadow.edge === "bottom" && <Placeholder placeholderHeight={placeholderHeight} />}

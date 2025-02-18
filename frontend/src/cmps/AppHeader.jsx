@@ -1,12 +1,18 @@
 
 
+import { useState } from "react"
 import { useNavigate } from "react-router"
 import { UserMsg } from './UserMsg.jsx'
 
-
+import { CreateBoardModal } from '../pages/CreateBoardModal.jsx'
 export function AppHeader() {
-    const navgite = useNavigate()
+    
+    const [isModalOpen, setIsModalopen] = useState(false)
+  const navgite = useNavigate()
 
+  function onClose() {
+    setIsModalopen(false)
+  }
     return (
         <header className="board-index-header">
 
@@ -43,7 +49,7 @@ export function AppHeader() {
 
 
 
-                    <div className="highlighted-btn nav-highlight-hint">
+                    <div onClick={()=>setIsModalopen(true)} className="highlighted-btn nav-highlight-hint">
                         <span>Create</span>
                     </div>
 
@@ -72,6 +78,9 @@ export function AppHeader() {
                     <img className="user" src="user_spec.png"></img>
                 </div>
             </nav>
+            {isModalOpen &&
+              <CreateBoardModal onClose={onClose} />
+            }
         </header>
 
     )

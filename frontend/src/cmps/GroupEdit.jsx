@@ -3,6 +3,7 @@ import { updateBoard } from "../store/store"
 import { useState } from "react"
 import { CopyListForm } from "./CopyListForm"
 import { eventBus } from "../services/event-bus.service"
+import { getColorFromBackgroundColor } from "../services/board/data"
 
 
 
@@ -21,8 +22,12 @@ export function GroupEdit({onSetMoveAll,group, onSetCopyList,header, onSetGroupE
     const inset = `${loc.top}px auto auto ${loc.right}px`
    
     function changeColor({target}){
-      const color = target.value
-      group.style.backgroundColor = color
+      const backgroundColor = target.value
+      if(backgroundColor){
+        const color = getColorFromBackgroundColor(backgroundColor)
+        group.style.color = color
+      } 
+      group.style.backgroundColor = backgroundColor
       updateBoard(board)
     }
     function onArchiveList(){
@@ -55,16 +60,16 @@ export function GroupEdit({onSetMoveAll,group, onSetCopyList,header, onSetGroupE
                         <span className="premium">PREMIUM</span>
                     </div>
                     <div className="colors">
-                        <button value={'#164b35'} onClick={changeColor} className="green"></button>
-                        <button value={'#4f3a0e'} onClick={changeColor} className="yellow"></button>
-                        <button  value={'#6e3b0d'} onClick={changeColor} className="orange"></button>
-                        <button value={'6e0d0d'} onClick={changeColor} className="red"></button>
-                        <button value={'#4f3a0e'} onClick={changeColor} className="purple"></button>
-                        <button value={'#0d2e6e'} onClick={changeColor} className="blue"></button>
-                        <button  value={'#0d3a4f'} onClick={changeColor} className="teal"></button>
-                        <button value={'#3a4f0d'} onClick={changeColor} className="lime"></button>
-                        <button value={'#6e0d3a'} onClick={changeColor} className="magenta"></button>
-                        <button value={'#3a3a3a'} onClick={changeColor} className="gray"></button>
+                        <button value={'#baf3db'} onClick={changeColor} className="green"></button>
+                        <button value={'#f8e6a0'} onClick={changeColor} className="yellow"></button>
+                        <button  value={'#fedec8'} onClick={changeColor} className="orange"></button>
+                        <button value={'#ffd5d2'} onClick={changeColor} className="red"></button>
+                        <button value={'#dfd8fd'} onClick={changeColor} className="purple"></button>
+                        <button value={'#cce0ff'} onClick={changeColor} className="blue"></button>
+                        <button  value={'#c6edfb'} onClick={changeColor} className="teal"></button>
+                        <button value={'#d3f1a7'} onClick={changeColor} className="lime"></button>
+                        <button value={'#fdd0ec'} onClick={changeColor} className="magenta"></button>
+                        <button value={'#f1f2f4'} onClick={changeColor} className="gray"></button>
                     </div>
                     <button onClick={changeColor} className="remove-color"> X Remove color</button>
                 </section>

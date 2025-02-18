@@ -9,15 +9,17 @@ import { BoardDetails } from './pages/BoardDetails.jsx'
 import { LoginSignup } from './pages/LoginSignup.jsx'
 import { Signup } from './pages/Signup.jsx'
 import { Login } from './pages/Login.jsx'
+import { HomePage } from './pages/HomePage.jsx'
 
 export function RootCmp() {
     return (
         <div className="main-container">
             <main>
                 <Routes>
+                <Route path='/home' element={<HomePage/>}/>
                     <Route path="/" element={<BoardIndex />} />
                     <Route path="/:boardId" element={<BoardDetails />}>
-
+                   
                     </Route>
                     <Route path="/login" element={<LoginSignup />}>
                         <Route index element={<Login />} />  {/* Default is Login */}

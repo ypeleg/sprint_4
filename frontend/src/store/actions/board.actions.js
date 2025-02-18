@@ -61,7 +61,10 @@ export function getEmptyGroup() {
         id: makeId(),
         title: '',
         tasks: [],
-        style: { backgroundColor: null, color: "#000000" }
+        style: { backgroundColor: null, color: "#000000" },
+        archivedAt:null,
+        isMinimaized: false,
+        watched:false,
     }
 }
 
