@@ -3,7 +3,7 @@
 
     /* experimental */
     font-weight: 400;
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
 
     user-select: none;
     -webkit-user-drag: none;
@@ -3467,15 +3467,16 @@ button.delete-btn-del:hover {
 table {
     table-layout: fixed;
     width: 100%;
-    text-align:left;
+    text-align: left;
     /* padding-left: 24px; */
     overflow-y: scroll;
 }
 
-td, th {
+td,
+th {
     padding-left: 36px;
     overflow: hidden;
-    height:100%;
+    height: 100%;
 }
 
 td:hover {
@@ -3496,7 +3497,7 @@ th {
     width: 96%;
     top: 100%;
     left: 2%;
-    height: 2px;    
+    height: 2px;
     /* background-color: red; */
     border-bottom: 2px solid #dbdee3;
 }
@@ -3511,7 +3512,7 @@ tr::after {
     width: 96%;
     top: 100%;
     left: 2%;
-    height: 2px;    
+    height: 2px;
     /* background-color: red; */
     border-bottom: 1px solid #dbdee3;
 }
@@ -3547,6 +3548,7 @@ tr::after {
     width: 56px;
     border-radius: 4px;
     transition: 0.2s;
+
     &:hover {
         opacity: 0.8;
     }
@@ -3560,14 +3562,15 @@ tr::after {
     width: 40px;
     border-radius: 4px;
     transition: 0.2s;
+
     &:hover {
         opacity: 0.8;
     }
 }
 
 
-.col-1{
-    height:40px;
+.col-1 {
+    height: 40px;
 }
 
 .labels-table {
@@ -3588,11 +3591,11 @@ tr::after {
     width: 16px;
 }
 
-.col-4-members .task-users .task-user-icons{
+.col-4-members .task-users .task-user-icons {
     display: flex;
     flex-direction: row;
     overflow: hidden;
-    
+
 }
 
 .col-4-members .task-users .task-user-icons .member-circle,
@@ -3611,9 +3614,9 @@ tr::after {
 table {
     /* display: block; */
     overflow-y: scroll;
-    
 
-    
+
+
     height: 87%;
     border-radius: 10px;
 }
@@ -3624,7 +3627,7 @@ table {
 } */
 
 body:has(.home) {
-    display:block;
+    display: block;
     overflow: auto;
 }
 
@@ -3639,7 +3642,7 @@ body:has(.home) {
 }
 
 .homepage-titles h5 {
-    font-size: 1rem;    
+    font-size: 1rem;
 }
 
 .homepage-titles h1 {
@@ -3658,7 +3661,7 @@ body:has(.home) {
 .cards-and-img {
     margin-inline: 0px;
     max-width: 100%;
-    padding-inline: calc((100% - 1140px) / 2 );
+    padding-inline: calc((100% - 1140px) / 2);
     display: flex;
     gap: 32px;
     background-color: #e5fbfe;
@@ -3680,7 +3683,7 @@ body:has(.home) {
     height: 157px;
     display: flex;
     align-items: center;
-    
+
 }
 
 .home-card.active {
@@ -3700,10 +3703,10 @@ body:has(.home) {
     width: 7px;
     left: 0px;
     top: 0px;
-    border-radius: 10px 0px 0px 10px; 
+    border-radius: 10px 0px 0px 10px;
 }
 
-.home-card  h3 {
+.home-card h3 {
     font-size: 1.3rem;
 }
 
@@ -3731,11 +3734,11 @@ body:has(.home) {
 }
 
 .board-header-title {
-    
+
     overflow: hidden;
     /* max-width:  100px; */
     display: block;
-    
+
     max-height: 2em;
     word-break: keep-all;
     /* max-width: 100%; */
@@ -3750,7 +3753,7 @@ body:has(.home) {
     overflow: hidden;
     /* max-width:  100px; */
     display: contents;
-    
+
     /* height: 20px; */
     word-break: keep-all;
     /* max-width: 100%; */
@@ -3760,9 +3763,9 @@ body:has(.home) {
     font-weight: bold;
 }
 
-* > * {
+*>* {
     font-weight: 400;
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 .just-flex-quick-edit * {
@@ -3786,9 +3789,13 @@ body:has(.home) {
 
 
 .just-flex-quick-edit button:hover {
-    background-color: #2777e7;    
+    background-color: #2777e7;
 }
 
 .just-flex-quick-edit *::after {
     /* content: ''; */
+}
+
+.wrap {
+    flex-wrap: wrap;
 }

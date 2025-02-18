@@ -12,6 +12,7 @@ export function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [credentials, setCredentials] = useState(getEmptyUser())
   const passwordInputRef = useRef(null); // 🔹 Reference to the password input
+  const [loginError, setloginError] = useState(null) // ✅ Error state
 
   const navigate = useNavigate()
 
@@ -53,6 +54,7 @@ export function Login() {
       navigate('/')
       showSuccessMsg('Logged in successfully')
     } catch (err) {
+      setloginError('⚠ Somthing wrong, please try again')
       showErrorMsg('Oops, try again')
     }
   }
@@ -93,6 +95,7 @@ export function Login() {
             required
           />
         )}
+        {loginError && <p className="error-text">{loginError}</p>}
 
         <div className="remember-me">
           <input
@@ -103,6 +106,8 @@ export function Login() {
           />
           <label htmlFor="remember">Remember me</label>
         </div>
+
+
       </form>
 
       <button

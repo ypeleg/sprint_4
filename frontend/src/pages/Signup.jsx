@@ -24,7 +24,7 @@ export function Signup() {
     }
 
     if (!validateEmail(credentials.username)) {
-      setEmailError("⚠ Please enter a valid email address")
+      setEmailError('⚠ Please enter a valid email address')
       return
     } else {
       setEmailError(null)
