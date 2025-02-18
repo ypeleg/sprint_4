@@ -3895,3 +3895,13 @@ textarea.change-header.header-textarea {
     font-style: normal;
     content: ""
 }
+
+.task-badges>div {
+    display: flex;
+    align-items: center;
+}
+
+.task-badges svg {    
+    color: #4f5e77;
+    margin-right: 3px;
+}
