@@ -230,7 +230,8 @@ function getRandomColor() {
 }
 function getRandomColorLabels() {
     const colors = [
-        '#9f8fef', '#c9372c', '#f87168', '#fea362', '#f5cd47', '#4bce97', '#579dff']
+        '#9f8fef', '#f87168', '#fea362', '#f5cd47', '#4bce97', '#579dff']
+        // '#c9372c' // ugly red
         // "#60D394","#FFD97D","#FF9B85","#FF6B6B","#7C77B9","#56CCF2"]
     return random.choice(colors)
 }
