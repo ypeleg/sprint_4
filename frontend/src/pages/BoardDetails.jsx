@@ -20,7 +20,7 @@ import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard
 import { ShareModal } from "../cmps/ShareModal.jsx"
 
 
-
+import {  StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api'
 
 
 
@@ -1792,7 +1792,7 @@ export function QuickEdit({
 // bring the task "the current list"
 // bring the task "the current group"
 
-export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
+export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11,name}) {
     const [center, setCenter] = useState({lat: lat, lng: lng})
     const zoom = zm
 
@@ -1809,6 +1809,7 @@ export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
                 <GoogleMapReact
                     bootstrapURLKeys={{key: "AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc"}}
                     // defaultCenter={center}
+                    
                     center={center}
                     defaultZoom={zoom}
                     onClick={onHandleClick}
@@ -1822,7 +1823,7 @@ export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
                 </GoogleMapReact>
             </div>
             <div className="maps-in-2" style={{height: '52px', width: '512px'}}>
-                <h3>Tel Aviv-Yafo</h3>
+                <h3>{name||'Tel Aviv'}</h3>
                 <h5>Tel Aviv-Yafo, Israel</h5>
             </div>
         </div>
@@ -1834,7 +1835,11 @@ const AnyReactComponent = ({text}) => <div style={{fontSize: '22px'}}>{text}</di
 
 export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     // const { board, group, taskList, ...cleanTask } = taskToShow
-
+    const {isLoaded} = useJsApiLoader({
+        id:'google-map-script',
+        googleMapsApiKey:'AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc',
+        libraries:["places"]
+    })
     console.log('task', taskToShow)
     // const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
 
@@ -1860,7 +1865,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     // console.log('taskToShow.board.members', taskToShow.board.members)
     // console.log('---------')
     //////////////////////
-
+    const elGoogleSearch = useRef()
     const [badges, setBadges] = useState(taskToShow.badges || [])
     const [members, setMembers] = useState(taskToShow.members || [])
     const [boardMembers, setBoardMembers] = useState(taskToShow.board.members || [])
@@ -1900,7 +1905,14 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
 
     const coverFileInputRef = useRef(null)
 
-
+    function handlePlaceChange(ev){
+        let address = elGoogleSearch.current.getPlaces()
+        const newLocation ={lat: address[0].geometry.location.lat(),lng: address[0].geometry.location.lng(),name:address[0].name,zoom:12}
+        taskToShow.location = newLocation
+        setLocation(newLocation)
+        hidePicker(ev)
+        updateBoard(getSelectedBoard())
+    }
     function onCoverFileSelected(ev) {
         const file = ev.target.files?.[0]
         if (!file) return
@@ -2811,7 +2823,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                         </div>
                                     </div>
                                     <div className="inner-component-left-padding">
-                                        <GoogleMap lat={location.lat} lng={location.lng} zm={location.zoom}/>
+                                        <GoogleMap name={location.name} lat={location.lat} lng={location.lng} zm={location.zoom}/>
 
                                     </div>
                                 </div>
@@ -3793,7 +3805,10 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
 
                 <div className="location-content">
                     <div className="search-container">
+                        {isLoaded&&<StandaloneSearchBox   libraries={["places"]} onPlacesChanged={handlePlaceChange}  onLoad={(ref) => elGoogleSearch.current = ref} >
+
                         <input type="text" placeholder="Search Google Maps" className="location-input"/>
+                        </StandaloneSearchBox>}
                     </div>
                 </div>
             </div>

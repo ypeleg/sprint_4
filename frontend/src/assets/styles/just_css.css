@@ -2843,7 +2843,9 @@ div.task-user-icon {
     height: 40px
 }
 
-.task-list .task {
+.task-list .task,
+.task-list,
+.base-components-list {
     transition: transform .2s ease;
     will-change: transform;
     cursor: grab;
@@ -3308,4 +3310,16 @@ textarea.change-header.header-textarea {
 .task-badges svg {
     color: #4f5e77;
     margin-right: 3px
+}
+
+.group-placeholder {
+    width: 272px;
+    height: 16px;
+    width: 16px;
+    margin-left: 2px;
+    /*aspect-ratio: 1/1;*/
+    border-radius: 50%;
+    /*place-self: start;*/
+    margin-top: 4px;
+    cursor: pointer
 }
