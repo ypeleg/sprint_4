@@ -2054,7 +2054,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         if (!targetBoard || !targetGroup) return
 
         if (targetBoard._id === currentBoard._id) {
-            const boardCopy = JSON.parse(JSON.stringify(currentBoard))
+            const boardCopy = cleanBoard(currentBoard)
             const oldGroupIdx = boardCopy.groups.findIndex(g => g.id === currentGroup.id)
             if (oldGroupIdx >= 0) {
                 const taskIdx = boardCopy.groups[oldGroupIdx].tasks.findIndex(
@@ -2075,7 +2075,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             hidePicker(ev)
             return
         }
-        const boardCopyOld = JSON.parse(JSON.stringify(currentBoard))
+        const boardCopyOld = cleanBoard(currentBoard)
         const oldGroupIdx = boardCopyOld.groups.findIndex(g => g.id === currentGroup.id)
         if (oldGroupIdx >= 0) {
             const taskIdx = boardCopyOld.groups[oldGroupIdx].tasks.findIndex(
@@ -2085,7 +2085,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 boardCopyOld.groups[oldGroupIdx].tasks.splice(taskIdx, 1)
             }
         }
-        const boardCopyNew = JSON.parse(JSON.stringify(targetBoard))
+        const boardCopyNew = cleanBoard(targetBoard)
         const newGroupIdx = boardCopyNew.groups.findIndex(g => g.id === targetGroup.id)
         if (newGroupIdx < 0) return
         const { board, group, taskList, ...cleanTask } = taskToShow
@@ -2516,7 +2516,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         const targetGroup = getSelectedGroup()
         if (!targetBoard || !targetGroup) return
 
-        const boardCopy = JSON.parse(JSON.stringify(targetBoard))
+        const boardCopy = cleanBoard(targetBoard)
         const groupIdx = boardCopy.groups.findIndex(g => g.id === targetGroup.id)
         if (groupIdx < 0) return
 
@@ -4966,7 +4966,7 @@ export function BoardDetails() {
             // console.log('modal close')
             const updatedTask = taskToEdit
             console.log('modal close ', updatedTask.title)
-            const boardCopy = JSON.parse(JSON.stringify(boardToShow))
+            const boardCopy = cleanBoard(boardToShow)
             const groupIdx = boardCopy.groups.findIndex(
                 (g) => g.id === updatedTask.group.id
             )
@@ -4989,7 +4989,7 @@ export function BoardDetails() {
 
 
     function onMoveCard(card, fromGroupId, toGroupId, targetTask, edge) {
-        const boardCopy = JSON.parse(JSON.stringify(boardToShow))
+        const boardCopy = cleanBoard(boardToShow)
         const fromGroupIdx = boardCopy.groups.findIndex(g => g.id === fromGroupId)
         if (fromGroupIdx >= 0) {
             const taskIdx = boardCopy.groups[fromGroupIdx].tasks.findIndex(t => t.id === card.id)
@@ -5016,7 +5016,7 @@ export function BoardDetails() {
     }
 
     function onReorderCard(dragged, targetTask, edge, groupId) {
-        const boardCopy = JSON.parse(JSON.stringify(boardToShow))
+        const boardCopy = cleanBoard(boardToShow)
         const groupIdx = boardCopy.groups.findIndex((g) => g.id === groupId)
         if (groupIdx === -1) return
         const tasks = boardCopy.groups[groupIdx].tasks
