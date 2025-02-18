@@ -94,33 +94,56 @@ export function setFilterBy(filterBy) {
 
 export async function removeBoard(boardId) {
     try {
-        await boardService.remove(boardId)
         store.dispatch(getCmdRemoveBoard(boardId))
+        await boardService.remove(boardId)
     } catch (err) {
-        console.log('Cannot remove board', err)
-        throw err
+        try {
+            await boardService.remove(boardId)
+            store.dispatch(getCmdRemoveBoard(boardId))
+        } catch (err) {
+            console.log('Cannot remove board', err)
+            throw err
+        }
     }
 }
 
 export async function addBoard(board) {
     try {
+        store.dispatch(getCmdAddBoard(board))
         const savedBoard = await boardService.save(board)
-        store.dispatch(getCmdAddBoard(savedBoard))
         return savedBoard
     } catch (err) {
-        console.log('Cannot add board', err)
-        throw err
+        try {
+            const savedBoard = await boardService.save(board)
+            store.dispatch(getCmdAddBoard(savedBoard))
+            return savedBoard
+        } catch (err) {
+            console.log('Cannot add board', err)
+            throw err
+        }
+        // console.log('Cannot add board', err)
+        // throw err
     }
 }
 
 export async function updateBoard(board) {
     try {
+        board = structuredClone(board)
+        store.dispatch(getCmdUpdateBoard(board))
         const savedBoard = await boardService.save(board)
-        store.dispatch(getCmdUpdateBoard(savedBoard))
         return savedBoard
     } catch (err) {
-        console.log('Cannot save board', err)
-        throw err
+        // if any error: just do it non optimistically
+        try {
+            const savedBoard = await boardService.save(board)
+            store.dispatch(getCmdUpdateBoard(savedBoard))
+            return savedBoard
+        } catch (err) {
+            console.log('Cannot save board', err)
+            throw err
+        }
+        // console.log('Cannot save board', err)
+        // throw err
     }
 }
 

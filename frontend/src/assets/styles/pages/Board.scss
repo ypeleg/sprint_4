@@ -39,16 +39,23 @@ body {
 .board-display {
     width: 83%;
     //height: calc(100vh - 57px); //60px
-    height: calc(100vh - 57px); //60px
+    height: calc(100vh - 40px); //60px
     //margin-bottom: 40px;
     //padding-bottom: 40px;
 }
 
 header {
+    padding: 4px;
+    background: #ffffff3d;
+    backdrop-filter: blur(8px);
+}
+
+.board-header {
     padding: 12px;
     background: #ffffff3d;
     backdrop-filter: blur(8px);
 }
+
 
 .everything {
     background-size: cover;
@@ -80,7 +87,7 @@ aside>section:not(:first-of-type) {
 
 
 .fa-chevron-down {
-    color: #6b778c;
+    //color: #6b778c;
 }
 
 
@@ -121,7 +128,7 @@ aside>section:not(:first-of-type) {
     align-items: center;
     justify-items: space-between;
 
-    color: #172B4D;
+    //color: #172B4D;
     font-weight: 600;
     padding: 0px 10px;
 
@@ -131,7 +138,7 @@ aside>section:not(:first-of-type) {
 
 .dropdown-menu i {
     padding-top: 5px;
-    color: #172B4D;
+    //color: #172B4D;
 }
 
 
@@ -234,8 +241,8 @@ input {
 
 .task:hover,
 .task:active {
-    outline-offset: -4px;
-    outline: 3px solid rgb(56, 139, 255);
+    outline-offset: -3px;
+    outline: 2px solid rgb(56, 139, 255);
     //border: 2px solid rgb(56, 139, 255);
 }
 

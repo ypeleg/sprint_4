@@ -6,7 +6,7 @@ import { useSelector } from "react-redux"
 import { loadBoard, setFilterBy, updateBoard } from "../store/actions/board.actions"
 import { ShareModal } from "./ShareModal"
 
-export function BoardHeader({onSetShowShare, onSetTable, onStarBoard, isStarred }) {
+export function BoardHeader({ onSetTable, onStarBoard, isStarred,backgrounColor, borderColor,onSetShowShare, }) {
     const elFilter = useRef()
     const [ShowFilter, setShowFilter] = useState(false)
     
@@ -23,10 +23,17 @@ export function BoardHeader({onSetShowShare, onSetTable, onStarBoard, isStarred 
         updateBoard(boardToShow)
     }
     return (
-        <header className="board-header">
+        <header className="board-header"
+                style={{
+                    // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
+                    // backgroundColor: backgrounColor,
+                    // borderColor: borderColor,
+
+                }}>
+
             <div className="header-group">
                 <div className="board-header-title">
-                    <h3 className="board-name">{boardToShow.title}</h3>
+                    <div className="board-name">{boardToShow.title}</div>
                 </div>
                 <button
                     onClick={onStarBoard}
