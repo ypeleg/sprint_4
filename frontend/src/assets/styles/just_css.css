@@ -3729,10 +3729,35 @@ body:has(.home) {
     overflow: hidden;
     /* max-width:  100px; */
 }
-.header-group .board-header-title h3 {
+
+.board-header-title {
+    
     overflow: hidden;
-    max-width:  100px;
+    /* max-width:  100px; */
+    display: block;
+    
+    max-height: 2em;
+    word-break: keep-all;
+    /* max-width: 100%; */
+    overflow: hidden;
+    text-transform: capitalize;
+    margin-block: auto;
+    padding: 0;
+    inset: 0;
+}
+
+.board-name {
+    overflow: hidden;
+    /* max-width:  100px; */
     display: contents;
+    
+    /* height: 20px; */
+    word-break: keep-all;
+    /* max-width: 100%; */
+    overflow: hidden;
+    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 * > * {

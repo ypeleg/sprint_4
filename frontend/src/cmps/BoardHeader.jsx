@@ -23,7 +23,7 @@ export function BoardHeader({ onSetTable, onStarBoard, isStarred }) {
         <header className="board-header">
             <div className="header-group">
                 <div className="board-header-title">
-                    <h3 className="board-name">{boardToShow.title}</h3>
+                    <div className="board-name">{boardToShow.title}</div>
                 </div>
                 <button
                     onClick={onStarBoard}
