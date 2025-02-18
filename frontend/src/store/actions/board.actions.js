@@ -115,12 +115,22 @@ export async function addBoard(board) {
 
 export async function updateBoard(board) {
     try {
+        board = structuredClone(board)
+        store.dispatch(getCmdUpdateBoard(board))
         const savedBoard = await boardService.save(board)
-        store.dispatch(getCmdUpdateBoard(savedBoard))
         return savedBoard
     } catch (err) {
-        console.log('Cannot save board', err)
-        throw err
+        // if any error: just do it non optimistically
+        try {
+            const savedBoard = await boardService.save(board)
+            store.dispatch(getCmdUpdateBoard(savedBoard))
+            return savedBoard
+        } catch (err) {
+            console.log('Cannot save board', err)
+            throw err
+        }
+        // console.log('Cannot save board', err)
+        // throw err
     }
 }
 
