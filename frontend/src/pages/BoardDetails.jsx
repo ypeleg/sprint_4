@@ -88,26 +88,27 @@ export function QuickEdit({
         setShowPickerUnderConstruction(false)
     }
 
-    function movePickerTo(ev) {
-        ev.stopPropagation()
-        ev.preventDefault()
-        const parentRect = ev.target
-            .closest(".quick-edit-content")
-            ?.getBoundingClientRect()
-        const targetRect = ev.target.getBoundingClientRect()
-        if (!parentRect) {
-            setPickerTop(targetRect.bottom + 5 + "px")
-            console.log('inside')
-            setPickerLeft(targetRect.left + "px")
-            setShowPicker(true)
-            return
-        }
-        const topOffset = targetRect.bottom - parentRect.top
-        const leftOffset = targetRect.left - parentRect.left //- 200
-        setPickerTop(`${topOffset}px`)
-        setPickerLeft(`${leftOffset}px`)
+    function movePickerTo(
+        ev,
+        popupWidth = 322,
+        popupHeight = 385
+    ) {
+        ev.stopPropagation();
+        ev.preventDefault();
+
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        let desiredLeft = x + w * 1.05
+        let desiredTop  = y
+        if (desiredLeft + popupWidth > windowWidth) { desiredLeft = windowWidth - popupWidth - 8 }
+        if (desiredLeft < 0) desiredLeft = 0
+        if (desiredTop + popupHeight > windowHeight) { desiredTop = windowHeight - popupHeight - 8 }
+        if (desiredTop < 0) desiredTop = 0
+        setPickerLeft(desiredLeft)
+        setPickerTop(desiredTop)
         setShowPicker(true)
     }
+
 
     const boardMembers = task.board.members || []
     const [members, setMembers] = useState(task.members || [])
@@ -495,7 +496,13 @@ export function QuickEdit({
                         >
                             Save
                         </button>
-                        <aside style={{ marginLeft: w * 1.05 }}>
+                        {/*<div style={{marginLeft: w * 1.05}} className="side-menu-container">*/}
+
+
+
+                        {/*</div>*/}
+
+                        <aside style={{marginLeft: w * 1.05}}>
                             <div
                                 className="option"
                                 onClick={(ev) => {
@@ -598,18 +605,11 @@ export function QuickEdit({
                         </aside>
                     </div>
                 </div>
-            </div>
-
-            <div
-                className="popup-backdrop-plus-plus"
-                onClick={closePopupOnlyIfClickedOutOfIt}
-            ></div>
-
-            {/* MEMBERS PICKER */}
+                            {/* MEMBERS PICKER */}
             {showPickerMembers && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Members</h3>
@@ -773,7 +773,8 @@ export function QuickEdit({
             {showPickerLabels && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft }}
+
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     {!showPickerChangeALabel && (
                         <>
@@ -1045,7 +1046,7 @@ export function QuickEdit({
             {showPickerCover && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Cover</h3>
@@ -1179,7 +1180,7 @@ export function QuickEdit({
             {showPickerDate && (
                 <div
                     className="picker-popup date-picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Dates</h3>
@@ -1333,7 +1334,7 @@ export function QuickEdit({
             {showPickerMoveCard && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px", translate: "71%" }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Move card</h3>
@@ -1442,7 +1443,7 @@ export function QuickEdit({
             {showPickerCopyCard && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Copy card</h3>
@@ -1589,7 +1590,7 @@ export function QuickEdit({
             {showPickerMirrorCard && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px", translate: "71%" }}
+                    style={{ top: y, left: x, }}
                 >
                     <div className="picker-header">
                         <h3>Mirror card</h3>
@@ -1670,7 +1671,7 @@ export function QuickEdit({
             {showPickerShareCard && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Share and more...</h3>
@@ -1764,7 +1765,7 @@ export function QuickEdit({
             {showPickerUnderConstruction && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Under Construction</h3>
@@ -1772,6 +1773,14 @@ export function QuickEdit({
                     </div>
                 </div>
             )}
+            </div>
+
+            <div
+                className="popup-backdrop-plus-plus"
+                onClick={closePopupOnlyIfClickedOutOfIt}
+            ></div>
+
+
         </>
     )
 }
