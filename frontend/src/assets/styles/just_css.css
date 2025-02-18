@@ -3727,3 +3727,18 @@ body:has(.home) {
 .picker-popup {
     z-index: 1000;
 }
+
+.header-group .board-header-title {
+    overflow: hidden;
+    /* max-width:  100px; */
+}
+.header-group .board-header-title h3 {
+    overflow: hidden;
+    max-width:  100px;
+    display: contents;
+}
+
+* > * {
+    font-weight: 400;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+}
