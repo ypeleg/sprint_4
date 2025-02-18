@@ -1,7 +1,14 @@
 
 
+import { useNavigate } from 'react-router'
+import { useState } from 'react'
+
 
 export function HomePage() {
+    const navigate = useNavigate()
+
+    const [cardToShow, setCardToShow] = useState(1)
+
     return (
         <div className="home">
             <header className="home-header">
@@ -31,9 +38,60 @@ export function HomePage() {
                     </div>
                     </div>
                 </section>
-                
 
+                <section className="padded-home-section homepage-titles">
+                    <h5>TRELLO 101</h5>
+                    <h1>A productivity powerhouse</h1>
+                    <p>Simple, flexible, and powerful. All it takes are boards, lists, and cards to get a clear view of who’s doing what and what needs to get done. Learn more in our <a onClick={() => navigate('/getting_started')}> guide for getting started.</a> </p>
+                </section>
+                
+                <section className="section-3 padded-home-section cards-and-img">
+                    <div className="cards-and-img-cards">
+                        
+                        <article className={`home-card ${(cardToShow === 1)? 'active': ''}`} onClick = {() => {setCardToShow(1)}}>
+                            <div>
+                                <h4>Boards</h4>
+                                Trello boards keep tasks organized and work moving forward. In a glance, see everything from “things to do” to “aww yeah, we did it!”
+                            </div>
+                        </article>
+                        
+                        <article className={`home-card ${(cardToShow === 2)? 'active': ''}`} onClick = {() => {setCardToShow(2)}}>
+                            <div>
+                                <h4>Lists</h4>
+                                The different stages of a task. Start as simple as To Do, Doing or Done—or build a workflow custom fit to your team’s needs. There’s no wrong way to Trello.
+                            </div>
+                        </article>
+
+                        
+                        <article className={`home-card ${(cardToShow === 3)? 'active': ''}`} onClick = {() => {setCardToShow(3)}}>
+                            <div>
+                                <h4>Cards</h4>
+                                Cards represent tasks and ideas and hold all the information to get the job done. As you make progress, move cards across lists to show their status.
+                            </div>
+                        </article>
+
+                    </div>
+                    <div className="cards-and-img-img">
+                        <div className="img-container">
+                            {(cardToShow === 1) && <img src="img/home_c1.webp"/>}
+                            {(cardToShow === 2) && <img src="img/home_c2.webp"/>}
+                            {(cardToShow === 3) && <img src="img/home_c3.webp"/>}
+                        </div>
+                    </div>
+                </section>
+
+                <section className="padded-home-section">
+                    <h5>Trello in action</h5>
+                    <h1>Workflows for any project, big or small</h1>                    
+                </section>
+                
             </main>
+
+
+
+
+
+
         </div>
     )
 }

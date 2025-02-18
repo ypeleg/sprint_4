@@ -1,6 +1,6 @@
 
 
-import { QuickEdit } from "./QuickEdit"
+
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router"
 import { AddTaskForm } from "./AddTaskForm"
@@ -274,6 +274,8 @@ export function TaskList({
 
                     <div
                         key={task.id}
+                        data-task-id={task.id}
+                        data-group-id={group.id}
                         className="task"
                         onClick={() => onLoadTask(task, currentGroup, group, boardToShow)}
                         ref={getCardRef(task.id)}
