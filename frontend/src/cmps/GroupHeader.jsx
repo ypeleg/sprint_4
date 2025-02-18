@@ -66,7 +66,10 @@ export function GroupHeader({group}) {
     return (
         <div ref={elHeader} className="list-header just-flex">
             {!showTitleEdit && <span style={{color: group.style?.color || '#172b4d'}} onClick={onSetTitlEdit}>{groupTitle}</span>}
-            {showTitleEdit && <textarea style={{height}} onChange={onChangeGroupTitle} onBlur={saveGroupTitle} className="change-header" value={groupTitle}/>}
+            {showTitleEdit && <textarea className="header-textarea change-header" rows={1}   onChange={onChangeGroupTitle} 
+            // style={{height: height}}
+            // onBlur={saveGroupTitle} 
+            value={groupTitle}/>}
             <div className="group-list-headr-btns" style={{color: group.style?.color || '#172b4d'}}>
 
                 {group.watched && <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

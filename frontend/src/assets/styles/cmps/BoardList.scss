@@ -31,7 +31,7 @@
 
         h3 {
             font-size: 1.2em;
-            font-weight: bold;
+            font-weight: 500;
             // overflow: hidden;
             word-break: keep-all;
         }
@@ -40,7 +40,7 @@
             display: flex;
             align-items: center;
             gap: 0.5em;
-            font-weight: bold;
+            font-weight: 500;
         }
 
         button>svg {
@@ -53,7 +53,7 @@
             color: white;
             padding: 7px 12px;
             border-radius: 5px;
-            font-weight: bold;
+            font-weight: 500;
         }
 
 
@@ -79,7 +79,7 @@
         .filter-btns-header {
             display: flex;
             .filters-btn {
-                font-weight: bold;
+                font-weight: 500;
 
                 &.active {
                     background-color: rgba(0, 0, 0, 0.5);
