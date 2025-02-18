@@ -62,15 +62,15 @@ export function Login() {
 
   return (
     <div className="signup-login-modal">
-      <div className="signup-logo">
+      <div className="signup-login-logo">
         <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Trello-logo-blue.svg" alt="Trello" />
       </div>
 
       {/* Title */}
       <div className='sub-title'>Log in to continue</div>
 
-      {/* Signup Form */}
-      <form className="signup-form" >
+      {/* Login Form */}
+      <form className="login-form" >
         <input
           type="email"
           className="input-field"
@@ -113,7 +113,7 @@ export function Login() {
       <button
         // type="submit"
         onClick={onLogin}
-        className="signup-button"
+        className="signup-login-button"
       >Log in</button>
 
       <span className="continue-text" >Or continue with:</span>

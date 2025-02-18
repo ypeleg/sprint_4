@@ -124,7 +124,6 @@ h3 {
 
 
 .star-boards {
-    // max-width: 811px;
     margin-block: 24px;
 
     h3 {
@@ -140,7 +139,6 @@ h3 {
 
 
 .my-boards {
-    // max-width: 811px;
     margin-block: 24px;
 
     h4 {
@@ -188,6 +186,31 @@ h3 {
     gap: 2px;
 }
 
+.worksapce-sub-title {
+    display: flex;
+    align-items: center;
+    min-height: 20px;
+    margin: 0;
+    padding: 18px 8px;
+    overflow: hidden;
+    border: 0;
+    border-radius: 8px;
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--ds-text, #172b4d);
+    font-weight: 500;
+    text-decoration: none;
+    gap: 8px;
+    transition-property: background-color, border-color, box-shadow;
+    transition-duration: 85ms;
+    transition-timing-function: ease;
+    justify-content: space-between;
+
+    &:hover {
+        background-color: #DCDFE4;
+    }
+}
+
 .workspace-side-btn {
     display: flex;
     align-items: center;
@@ -201,7 +224,6 @@ h3 {
         background-color: #DCDFE4;
     }
 }
-
 
 .home-left-side-bar-container {
     display: flex;
@@ -226,7 +248,6 @@ h3 {
 }
 
 .num-badge {
-
     height: 17px;
     width: 12px;
     background-color: #6e5dc5;
@@ -236,8 +257,5 @@ h3 {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 45px;
-    // float: right;
-
-
+    margin-left: 39px;
 }

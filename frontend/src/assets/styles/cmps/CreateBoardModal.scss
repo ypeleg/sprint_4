@@ -78,9 +78,6 @@
     scale: 1.2;
   }
 
-  // width: 16px;
-  // height: 16px
-  // height: 20px;
   filter: brightness(0) saturate(100%) invert(30%) sepia(53%) saturate(323%) hue-rotate(179deg) brightness(91%) contrast(88%);
 }
 
@@ -89,22 +86,12 @@
   gap: 10px;
 }
 
-.select-background-images {
-  display: flex;
-  gap: 10px;
-}
-
-
 .bg-image-option {
   position: relative;
   width: 64px;
   height: 40px;
   border-radius: 5px;
   cursor: pointer;
-
-  &:hover {
-    // background-color: rgba(0, 0, 0, 0.4);
-  }
 }
 
 .larger {
@@ -225,7 +212,6 @@
 }
 
 .checkmark {
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -279,8 +265,11 @@
 }
 
 .white {
-  background-color: inherit;
+  background-color: white;
 }
+
+
+// More backgronds colors
 
 .mini-modal-content {
   position: fixed;
@@ -294,4 +283,8 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   max-height: 98vh;
   overflow-y: scroll;
+}
+
+.wrap {
+  flex-wrap: wrap;
 }

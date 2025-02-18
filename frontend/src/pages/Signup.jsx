@@ -71,7 +71,7 @@ export function Signup() {
 
   return (
     <div className="signup-login-modal">
-      <div className="signup-logo">
+      <div className="signup-login-logo">
         <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Trello-logo-blue.svg" alt="Trello" />
       </div>
 
@@ -125,7 +125,7 @@ export function Signup() {
       <button
         type="submit"
         onClick={onSignup}
-        className="signup-button">
+        className="signup-login-button">
         Sign up
       </button>
 

@@ -20,9 +20,9 @@ export function NavBarPageIndex() {
       </div>
 
       <div>Workspace</div>
-      <div className="sidebar-header flex-space-between">
+      <div className="worksapce-sub-title">
 
-        <div className="flex-space-between logo-insider">
+        <div style={{ display: 'flex' }}>
 
           <div className="board-logo">T</div>
           <div className="near-logo">
@@ -31,7 +31,7 @@ export function NavBarPageIndex() {
 
         </div>
         <div>
-          <button className=""><i className="near-logo-btn fa-regular fa-less-than"></i></button>
+          <button className=""><i className=" fa-regular fa-less-than"></i></button>
         </div>
       </div>
 

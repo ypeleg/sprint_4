@@ -1,5 +1,4 @@
 .login-page {
-
   height: 100vh;
   background-color: #FAFBFC;
   padding: 50px;
@@ -16,16 +15,15 @@
   border-radius: 3px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
   box-sizing: border-box;
-  // margin-top: 50px;
   color: var(--ds-text-subtle, #42526E);
-
 
   input {
     background-color: inherit;
   }
+
 }
 
-.signup-logo {
+.signup-login-logo {
   margin: auto;
   width: 120px;
 
@@ -54,10 +52,10 @@
   border-radius: 4px;
   margin-bottom: 10px;
   border: 1px solid #8590A1;
-}
 
-.input-field:focus {
-  border-color: #0052cc;
+  &:focus {
+    border-color: #0052cc;
+  }
 }
 
 .terms-text {
@@ -65,7 +63,7 @@
   color: #6b778c;
 }
 
-.signup-button {
+.signup-login-button {
   -webkit-box-align: baseline;
   align-items: baseline;
   border-width: 0px;
@@ -94,26 +92,8 @@
   line-height: 40px !important;
 }
 
-.signup-button:hover {
+.signup-login-button:hover {
   background-color: #0065ff;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-}
-
-.divider hr {
-  flex: 1;
-  border: none;
-  border-top: 1px solid #dfe1e6;
-}
-
-.divider span {
-  margin: 0 10px;
-  color: #6b778c;
-  font-size: 12px;
 }
 
 .social-logins {
@@ -140,45 +120,10 @@
     margin-right: 10px;
   }
 
-}
-
-
-
-.social-button:hover {
-  background-color: #f4f5f7;
-}
-
-.login-text {
-  margin-top: 20px;
-  font-size: 14px;
-}
-
-.footer-text {
-  margin-top: 20px;
-  font-size: 12px;
-  color: #6b778c;
-  text-align: center;
-}
-
-.footer-text a {
-  color: #0052cc;
-  text-decoration: none;
-}
-
-.footer-text a:hover {
-  text-decoration: underline;
-}
-
-.remember-me {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-
-  label {
-    font-size: 14px;
-    margin: 0 0;
-    color: #172b4d;
+  &:hover {
+    ackground-color: #f4f5f7;
   }
+
 }
 
 footer {
@@ -208,11 +153,22 @@ footer {
 
 .continue-text {
   display: block;
-  /* Makes it behave like a separate row */
   margin: 19px auto 0;
-  /* Same margin as your inline style */
   color: rgb(94, 108, 132);
   font-weight: 600;
   text-align: center;
-  /* Ensures it's centered */
+}
+
+//*Just login page 
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  label {
+    font-size: 14px;
+    margin: 0 0;
+    color: #172b4d;
+  }
 }
