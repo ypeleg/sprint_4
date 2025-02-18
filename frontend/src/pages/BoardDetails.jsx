@@ -5129,6 +5129,7 @@ export function BoardDetails() {
     }
 
 
+    const [useDarkTextColors, setUseDarkTextColors] = useState(true)
     const [colorsSetted, setColorsSetted] = useState(false)
     const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(4, 44.3%, 76.1%, 0.9)')
     const [sidebarBorderColor, setSidebarBorderColor] = useState('#c2a5a7')
@@ -5180,6 +5181,7 @@ export function BoardDetails() {
                 setSidebarBorderColor(`rgba(${Math.round(r * 0.8)}, ${Math.round(g * 0.8)}, ${Math.round(b * 0.8)}, 0.2)`)
                 setHeaderBackgroundColor(`rgba(${Math.round(r * 0.9)}, ${Math.round(g * 0.9)}, ${Math.round(b * 0.9)}, 0.9)`)
                 setHeaderBorderColor(`rgba(${Math.round(r * 0.7)}, ${Math.round(g * 0.7)}, ${Math.round(b * 0.7)}, 0.25)`)
+                setUseDarkTextColors(luminance < 50)
                 setColorsSetted(true)
             } catch (error) {
                 applyFallbackColors()
@@ -5220,7 +5222,8 @@ export function BoardDetails() {
     return (
         <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}
         style={{
-            backgroundImage: `url(${boardToShow.style?.backgroundImage})`
+            backgroundImage: `url(${boardToShow.style?.backgroundImage})`,
+            color: (useDarkTextColors) ? '#172B4D' : 'white',
         }}
         >
             {/*onMouseMove={handleMouseMove}>*/}
