@@ -17,6 +17,7 @@ import React, {useRef, useEffect, useState} from "react"
 import {random, makeId} from "../services/util.service.js"
 import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge"
 import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store} from "../store/store.js"
+import { ShareModal } from "../cmps/ShareModal.jsx"
 
 
 
@@ -4861,10 +4862,12 @@ export function BoardDetails() {
     function onSetTable(){
         setTable(!showTable)
     }
-
+    const [showShare,setShowShare] = useState(false)
 
     const [placeholderHeight, setPlaceholderHeight] = useState(8)
-
+    function onSetShowShare(){
+        setShowShare(!showShare)
+    }
     function onSetPlaceholderHeight(height) {
         setPlaceholderHeight(height)
     }
@@ -5132,7 +5135,7 @@ export function BoardDetails() {
     return (
         <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
             {/*onMouseMove={handleMouseMove}>*/}
-
+            {showShare&&<ShareModal onSetShowShare={onSetShowShare}/>}
             {/*<div id="drag-preview-container"*/}
             {/*style={{*/}
             {/*    top: coord.y + 'px',*/}
@@ -5152,8 +5155,8 @@ export function BoardDetails() {
             </>
             }
 
-
             <AppHeader/>
+  
 
             <main className="main-layout">
 
@@ -5162,7 +5165,7 @@ export function BoardDetails() {
                 <section className="board-display">
                     {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit} task={taskToShow}
                                                  togglePopup={togglePopup} onDeleteTask={onDeleteTask}/>}
-                    <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable}/>
+                    <BoardHeader onSetShowShare={onSetShowShare} onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable}/>
 
                     {showTable && <GroupTable></GroupTable>}
                     {!showTable &&
