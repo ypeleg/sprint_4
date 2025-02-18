@@ -3866,3 +3866,32 @@ textarea.change-header.header-textarea {
 .main-logo-white {
         height: 16px;
 }
+
+.white-search,
+.white-search::after {
+    color: white;
+    border-color:  rgba(204, 204, 204, 0.5);
+    background-color:  rgba(112, 112, 112, 0.5);
+}
+
+.white-search::placeholder {
+    color: white;
+}
+
+.search-container:has(.white-search)::after {
+    left: .6em;
+    top: .4em;
+    font-size: 1em;
+    color: transparent;
+    pointer-events: none;
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    color: white;
+    z-index: 1;
+    font-family: "Font Awesome 5 Pro";
+    font-weight: 400;
+    font-display: block;
+    font-style: normal;
+    content: ""
+}
