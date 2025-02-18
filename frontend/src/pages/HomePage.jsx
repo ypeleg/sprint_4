@@ -27,15 +27,15 @@ export function HomePage() {
             <main className="home-main">
                 <section className="hero">
                     <div className="hero-content">
-                    <div className="right">
-                        <h1 className="hero-title" >Roillo brings all your tasks, teammates, and tools together</h1>
-                        <p className="subtitle">Keep everything in the same place—even if your team isn’t.</p>
-                        <button className="second-signin">Sign in as guest</button>
-                    </div>
-                    <div className="img-container">
+                        <div className="right">
+                            <h1 className="hero-title" >Roillo brings all your tasks, teammates, and tools together</h1>
+                            <p className="subtitle">Keep everything in the same place—even if your team isn’t.</p>
+                            <button className="second-signin">Sign in as guest</button>
+                        </div>
+                        <div className="img-container">
 
-                    <img src="https://images.ctfassets.net/rz1oowkt5gyp/75rDABL8fyMtNLlUAtBxrg/c5e145977a86c41c47e17c69410c64f7/TrelloUICollage_4x.png?w=960&fm=webp" alt="" />
-                    </div>
+                            <img src="https://images.ctfassets.net/rz1oowkt5gyp/75rDABL8fyMtNLlUAtBxrg/c5e145977a86c41c47e17c69410c64f7/TrelloUICollage_4x.png?w=960&fm=webp" alt="" />
+                        </div>
                     </div>
                 </section>
 
@@ -44,26 +44,26 @@ export function HomePage() {
                     <h1>A productivity powerhouse</h1>
                     <p>Simple, flexible, and powerful. All it takes are boards, lists, and cards to get a clear view of who’s doing what and what needs to get done. Learn more in our <a onClick={() => navigate('/getting_started')}> guide for getting started.</a> </p>
                 </section>
-                
+
                 <section className="section-3 padded-home-section cards-and-img">
                     <div className="cards-and-img-cards">
-                        
-                        <article className={`home-card ${(cardToShow === 1)? 'active': ''}`} onClick = {() => {setCardToShow(1)}}>
+
+                        <article className={`home-card ${(cardToShow === 1) ? 'active' : ''}`} onClick={() => { setCardToShow(1) }}>
                             <div>
                                 <h4>Boards</h4>
                                 Trello boards keep tasks organized and work moving forward. In a glance, see everything from “things to do” to “aww yeah, we did it!”
                             </div>
                         </article>
-                        
-                        <article className={`home-card ${(cardToShow === 2)? 'active': ''}`} onClick = {() => {setCardToShow(2)}}>
+
+                        <article className={`home-card ${(cardToShow === 2) ? 'active' : ''}`} onClick={() => { setCardToShow(2) }}>
                             <div>
                                 <h4>Lists</h4>
                                 The different stages of a task. Start as simple as To Do, Doing or Done—or build a workflow custom fit to your team’s needs. There’s no wrong way to Trello.
                             </div>
                         </article>
 
-                        
-                        <article className={`home-card ${(cardToShow === 3)? 'active': ''}`} onClick = {() => {setCardToShow(3)}}>
+
+                        <article className={`home-card ${(cardToShow === 3) ? 'active' : ''}`} onClick={() => { setCardToShow(3) }}>
                             <div>
                                 <h4>Cards</h4>
                                 Cards represent tasks and ideas and hold all the information to get the job done. As you make progress, move cards across lists to show their status.
@@ -73,18 +73,45 @@ export function HomePage() {
                     </div>
                     <div className="cards-and-img-img">
                         <div className="img-container">
-                            {(cardToShow === 1) && <img src="img/home_c1.webp"/>}
-                            {(cardToShow === 2) && <img src="img/home_c2.webp"/>}
-                            {(cardToShow === 3) && <img src="img/home_c3.webp"/>}
+                            {(cardToShow === 1) && <img src="img/home_c1.webp" />}
+                            {(cardToShow === 2) && <img src="img/home_c2.webp" />}
+                            {(cardToShow === 3) && <img src="img/home_c3.webp" />}
                         </div>
                     </div>
                 </section>
 
-                <section className="padded-home-section">
-                    <h5>Trello in action</h5>
-                    <h1>Workflows for any project, big or small</h1>                    
+                <section className="seework">
+                    <div className='seework-content'>
+                        <div className='head'>
+
+                            <h1>See work in a whole new way</h1>
+                            <h5>View your team’s projects from every angle and bring a fresh perspective to the task at hand.</h5>
+                            <button className='discover'>Discover all roillo views</button>
+                        </div>
+                        <article className='card'>
+                            <img src="https://images.ctfassets.net/rz1oowkt5gyp/5Hb09iiMrK6mSpThW5HS89/f5683a167ad3f74bed4dc7592ae5a002/TrelloBoard_Timeline_2x.png?w=960&fm=webp" alt="" />
+                            <div className='text'>
+                                <div className='card-header'>
+                                    <svg fill="currentColor" height="32" width="32" aria-hidden="true" viewBox="0 0 32 32"><path d="M6 5.333h9.333a3.333 3.333 0 0 1 0 6.667H6a3.333 3.333 0 0 1 0-6.667Zm9.333 4a.667.667 0 0 0 0-1.333H6a.667.667 0 0 0 0 1.333h9.333Zm-6.666 4H18A3.333 3.333 0 1 1 18 20H8.667a3.333 3.333 0 0 1 0-6.667Zm9.333 4A.667.667 0 0 0 18 16H8.667a.667.667 0 0 0 0 1.333H18Zm6.667 4h-9.334a3.333 3.333 0 1 0 0 6.667h9.334a3.333 3.333 0 0 0 0-6.667Zm-9.334 4a.667.667 0 0 1 0-1.333h9.334a.667.667 0 1 1 0 1.333h-9.334Zm8-20H26A3.333 3.333 0 1 1 26 12h-2.667a3.333 3.333 0 1 1 0-6.667Zm2.667 4A.667.667 0 1 0 26 8h-2.667a.667.667 0 1 0 0 1.333H26Z"></path></svg>
+                                    <h4>Hit deadlines every time</h4>
+                                </div>
+                                <p>From weekly sprints to annual planning, Timeline view keeps all tasks on track. Quickly get a glimpse of what’s coming down the pipeline and identify any gaps that might impede your team’s progress.</p>
+                            </div>
+                        </article>
+                        <article className='card last'>
+                            
+                            <div className='text'>
+                                <div className='card-header'>
+                                    <svg fill="currentColor" height="32" width="32" aria-hidden="true" viewBox="0 0 32 32"><path d="M6 5.333h9.333a3.333 3.333 0 0 1 0 6.667H6a3.333 3.333 0 0 1 0-6.667Zm9.333 4a.667.667 0 0 0 0-1.333H6a.667.667 0 0 0 0 1.333h9.333Zm-6.666 4H18A3.333 3.333 0 1 1 18 20H8.667a3.333 3.333 0 0 1 0-6.667Zm9.333 4A.667.667 0 0 0 18 16H8.667a.667.667 0 0 0 0 1.333H18Zm6.667 4h-9.334a3.333 3.333 0 1 0 0 6.667h9.334a3.333 3.333 0 0 0 0-6.667Zm-9.334 4a.667.667 0 0 1 0-1.333h9.334a.667.667 0 1 1 0 1.333h-9.334Zm8-20H26A3.333 3.333 0 1 1 26 12h-2.667a3.333 3.333 0 1 1 0-6.667Zm2.667 4A.667.667 0 1 0 26 8h-2.667a.667.667 0 1 0 0 1.333H26Z"></path></svg>
+                                    <h4>Stay on top of tasks</h4>
+                                </div>
+                                <p>Start each day without any surprises. Whether scheduling an editorial calendar or staying on top of to-dos, Calendar view is like a crystal ball giving you a clear vision of what work lies ahead.</p>
+                            </div>
+                            <img src="https://images.ctfassets.net/rz1oowkt5gyp/7sxChS4x6XAcUgDpp4VAZk/25377d162e964f4243e329c447bfd7dc/TrelloBoard_Calendar_2x.png?w=960&fm=webp" alt="" />
+                        </article>
+                    </div>
                 </section>
-                
+
             </main>
 
 

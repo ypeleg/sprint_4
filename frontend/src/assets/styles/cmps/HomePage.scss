@@ -20,6 +20,7 @@
                     font-size: 16px;
                     color: rgb(23, 43, 77);
                     font-weight: 600;
+
                     &:hover {
                         color: rgb(0, 101, 255);
                     }
@@ -93,6 +94,7 @@
                     flex-direction: column;
                     justify-content: start;
                     height: 100%;
+
                     .hero-title {
                         text-align: left;
                         font-size: 3rem;
@@ -111,7 +113,8 @@
                         line-height: 1.5;
                         font-family: 'Charlie Text', sans-serif;
                     }
-                    .second-signin{
+
+                    .second-signin {
                         background-color: rgb(0, 101, 255);
                         padding: 0.7rem 1rem 0.8rem;
                         border-radius: 0.3rem;
@@ -143,7 +146,98 @@
 
         }
 
+        .seework {
 
+            background: url(https://images.ctfassets.net/rz1oowkt5gyp/7KgS3XVFhGu3TiclJKloEp/c10aad15fb171a6c245db9cb7910247d/ViewsBackground_Left_Narrow.svg) left center / contain no-repeat scroll padding-box border-box, url(https://images.ctfassets.net/rz1oowkt5gyp/2HisRmboWIdXSYaaUSDzon/dadecff4be8a39bf2cf3cc537bd4d9c1/ViewsBackground_Right_Narrow.svg) right center / contain no-repeat scroll padding-box border-box, linear-gradient(240deg, rgb(0, 184, 217), rgb(0, 101, 255)) 0% 0% / auto repeat scroll padding-box border-box rgb(0, 101, 255);
+            color: rgb(255, 255, 255);
+            margin-bottom: 20em;
+            .seework-content {
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                margin-left: auto;
+                margin-right: auto;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                width: 100%;
+               
+                .head {
+                    text-align: center;
+
+                    h1 {
+                        font-size: 36px;
+                        font-weight: 600;
+                    }
+
+                    h5 {
+                        font-size: 20px;
+                    }
+
+                    .discover {
+                        background-color: white;
+                        font-size: 16px;
+                        padding: 0.7rem 1rem 0.8rem;
+                        color: rgb(23, 43, 77) !important;
+                        font-weight: 600;
+
+
+                    }
+                }
+
+                .card {
+                    background-color: white;
+                    box-shadow: rgba(9, 30, 66, 0.15) 0px 0.5rem 1rem 0px;
+                    margin-top: 40px;
+                    padding: 2rem;
+                    display: flex;
+                    flex-direction: row;
+                    color: rgb(9, 30, 66);
+                    column-gap: 3em;
+                    margin-inline:12em;
+                    border-radius: 12px;
+                    &.last{
+                        margin-bottom: -8rem;
+                        z-index: 1;
+                    }
+                    .card-header{
+                        display: flex;
+                        margin-bottom: 20px;
+                        column-gap: 16px;
+                    }
+                    svg{
+                        color:  rgb(135, 119, 217);
+                    }
+                    .text{
+                        padding: 0px 2rem;
+                        h4 {
+                            font-weight: 500;
+                            font-size: 1rem;
+                            line-height: 1.25;
+                            text-transform: uppercase;
+                            margin: 0px;
+                            text-align: center;
+                          
+                            align-self: center;
+                        }
+                        p{
+                            font-size: 20px;
+                            font-weight: 500;
+                            text-align: center;
+                            text-align: left;
+                            color :rgb(9, 30, 66);
+                        }
+                    }
+                    
+
+                    img {
+                        width: 50%;
+                        height: 300px;
+                        aspect-ratio: 16/9;
+                        
+                    }
+                }
+            }
+        }
     }
 
 }
