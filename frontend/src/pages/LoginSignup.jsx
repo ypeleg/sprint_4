@@ -7,11 +7,9 @@ import { Login } from './Login.jsx'
 export function LoginSignup() {
   return (
     <div className="login-page">
-      {/* <img src="bg-login-page.png" className='img-background-1' /> */}
-      {/* <nav>
-        <NavLink to="/login">Login</NavLink>
-        <NavLink to="signup">Signup</NavLink>
-      </nav> */}
+      <img src="login-signup2-img.svg" className='img-background-1' />
+      <img src="login-signup1-img.svg" className='img-background-2' />
+
       <Outlet />
     </div>
 

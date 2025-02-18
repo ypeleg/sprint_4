@@ -9,7 +9,7 @@ export function NavBarPageIndex() {
       <div className='menu'>
 
         <div>
-          <button className=" fa-solid fa-table side-btn boards">Boards</button>
+          <button className=" fa-solid fa-table side-btn boards active">Boards</button>
         </div>
         <div>
           <button className="fa-solid fa-calendar side-btn templates">Templates</button>
@@ -42,7 +42,7 @@ export function NavBarPageIndex() {
             <div className="num-badge">5</div>
           </button>
         </div>
-        <div className="menu-item active">
+        <div className="menu-item">
           <button className="workspace-side-btn">
             <i className="fa-solid fa-table"></i> Boards
           </button>

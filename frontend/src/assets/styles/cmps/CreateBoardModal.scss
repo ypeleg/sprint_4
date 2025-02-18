@@ -81,6 +81,11 @@
   filter: brightness(0) saturate(100%) invert(30%) sepia(53%) saturate(323%) hue-rotate(179deg) brightness(91%) contrast(88%);
 }
 
+.select-background-images {
+  display: flex;
+  gap: 10px;
+}
+
 .select-background-color {
   display: flex;
   gap: 10px;
@@ -177,6 +182,11 @@
   background-color: #091e420f;
   color: #091e424f;
   cursor: not-allowed;
+
+  &:hover {
+    background-color: #091e420f;
+
+  }
 }
 
 .error-input {
