@@ -91,18 +91,19 @@ export function QuickEdit({
     function movePickerTo(ev) {
         ev.stopPropagation()
         ev.preventDefault()
-        const parentRect = ev.currentTarget
+        const parentRect = ev.target
             .closest(".quick-edit-content")
             ?.getBoundingClientRect()
-        const targetRect = ev.currentTarget.getBoundingClientRect()
+        const targetRect = ev.target.getBoundingClientRect()
         if (!parentRect) {
             setPickerTop(targetRect.bottom + 5 + "px")
+            console.log('inside')
             setPickerLeft(targetRect.left + "px")
             setShowPicker(true)
             return
         }
         const topOffset = targetRect.bottom - parentRect.top
-        const leftOffset = targetRect.left - parentRect.left - 200
+        const leftOffset = targetRect.left - parentRect.left //- 200
         setPickerTop(`${topOffset}px`)
         setPickerLeft(`${leftOffset}px`)
         setShowPicker(true)
@@ -1332,7 +1333,7 @@ export function QuickEdit({
             {showPickerMoveCard && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ top: pickerTop, left: pickerLeft, width: "304px", translate: "71%" }}
                 >
                     <div className="picker-header">
                         <h3>Move card</h3>
@@ -1588,7 +1589,7 @@ export function QuickEdit({
             {showPickerMirrorCard && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ top: pickerTop, left: pickerLeft, width: "304px", translate: "71%" }}
                 >
                     <div className="picker-header">
                         <h3>Mirror card</h3>
