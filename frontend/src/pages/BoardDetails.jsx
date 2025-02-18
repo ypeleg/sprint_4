@@ -1792,7 +1792,7 @@ export function QuickEdit({
 // bring the task "the current list"
 // bring the task "the current group"
 
-export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
+export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11,name}) {
     const [center, setCenter] = useState({lat: lat, lng: lng})
     const zoom = zm
 
@@ -1823,7 +1823,7 @@ export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11}) {
                 </GoogleMapReact>
             </div>
             <div className="maps-in-2" style={{height: '52px', width: '512px'}}>
-                <h3>Tel Aviv-Yafo</h3>
+                <h3>{name||'Tel Aviv'}</h3>
                 <h5>Tel Aviv-Yafo, Israel</h5>
             </div>
         </div>
@@ -1910,8 +1910,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         const newLocation ={lat: address[0].geometry.location.lat(),lng: address[0].geometry.location.lng(),name:address[0].name,zoom:12}
         taskToShow.location = newLocation
         setLocation(newLocation)
-        updateBoard(getSelectedBoard())
         hidePicker(ev)
+        updateBoard(getSelectedBoard())
     }
     function onCoverFileSelected(ev) {
         const file = ev.target.files?.[0]
@@ -2823,7 +2823,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                         </div>
                                     </div>
                                     <div className="inner-component-left-padding">
-                                        <GoogleMap lat={location.lat} lng={location.lng} zm={location.zoom}/>
+                                        <GoogleMap name={location.name} lat={location.lat} lng={location.lng} zm={location.zoom}/>
 
                                     </div>
                                 </div>
