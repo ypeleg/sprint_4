@@ -17,6 +17,7 @@ import React, {useRef, useEffect, useState} from "react"
 import {random, makeId} from "../services/util.service.js"
 import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge"
 import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store} from "../store/store.js"
+import { ShareModal } from "../cmps/ShareModal.jsx"
 
 
 
@@ -88,25 +89,27 @@ export function QuickEdit({
         setShowPickerUnderConstruction(false)
     }
 
-    function movePickerTo(ev) {
+    function movePickerTo(
+        ev,
+        popupWidth = 322,
+        popupHeight = 385
+    ) {
         ev.stopPropagation()
         ev.preventDefault()
-        const parentRect = ev.currentTarget
-            .closest(".quick-edit-content")
-            ?.getBoundingClientRect()
-        const targetRect = ev.currentTarget.getBoundingClientRect()
-        if (!parentRect) {
-            setPickerTop(targetRect.bottom + 5 + "px")
-            setPickerLeft(targetRect.left + "px")
-            setShowPicker(true)
-            return
-        }
-        const topOffset = targetRect.bottom - parentRect.top
-        const leftOffset = targetRect.left - parentRect.left - 200
-        setPickerTop(`${topOffset}px`)
-        setPickerLeft(`${leftOffset}px`)
+
+        const windowWidth = window.innerWidth
+        const windowHeight = window.innerHeight
+        let desiredLeft = x + w * 1.05
+        let desiredTop  = y
+        if (desiredLeft + popupWidth > windowWidth) { desiredLeft = windowWidth - popupWidth - 8 }
+        if (desiredLeft < 0) desiredLeft = 0
+        if (desiredTop + popupHeight > windowHeight) { desiredTop = windowHeight - popupHeight - 8 }
+        if (desiredTop < 0) desiredTop = 0
+        setPickerLeft(desiredLeft)
+        setPickerTop(desiredTop)
         setShowPicker(true)
     }
+
 
     const boardMembers = task.board.members || []
     const [members, setMembers] = useState(task.members || [])
@@ -494,7 +497,13 @@ export function QuickEdit({
                         >
                             Save
                         </button>
-                        <aside style={{ marginLeft: w * 1.05 }}>
+                        {/*<div style={{marginLeft: w * 1.05}} className="side-menu-container">*/}
+
+
+
+                        {/*</div>*/}
+
+                        <aside style={{marginLeft: w * 1.05}}>
                             <div
                                 className="option"
                                 onClick={(ev) => {
@@ -597,18 +606,11 @@ export function QuickEdit({
                         </aside>
                     </div>
                 </div>
-            </div>
-
-            <div
-                className="popup-backdrop-plus-plus"
-                onClick={closePopupOnlyIfClickedOutOfIt}
-            ></div>
-
-            {/* MEMBERS PICKER */}
+                            {/* MEMBERS PICKER */}
             {showPickerMembers && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Members</h3>
@@ -772,7 +774,8 @@ export function QuickEdit({
             {showPickerLabels && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft }}
+
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     {!showPickerChangeALabel && (
                         <>
@@ -1044,7 +1047,7 @@ export function QuickEdit({
             {showPickerCover && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Cover</h3>
@@ -1178,7 +1181,7 @@ export function QuickEdit({
             {showPickerDate && (
                 <div
                     className="picker-popup date-picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Dates</h3>
@@ -1218,7 +1221,7 @@ export function QuickEdit({
                     <div className="date-picker-content">
                         <div className="calendar-header">
                             <button className="nav-btn" onClick={prevMonth}>
-                                &lt;
+                                &lt
                             </button>
                             <span className="month-year">
                                 {calendarMonth.toLocaleString("default", {
@@ -1227,7 +1230,7 @@ export function QuickEdit({
                                 })}
                             </span>
                             <button className="nav-btn" onClick={nextMonth}>
-                                &gt;
+                                &gt
                             </button>
                         </div>
                         <div className="calendar-grid">
@@ -1332,7 +1335,7 @@ export function QuickEdit({
             {showPickerMoveCard && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Move card</h3>
@@ -1441,7 +1444,7 @@ export function QuickEdit({
             {showPickerCopyCard && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Copy card</h3>
@@ -1588,7 +1591,7 @@ export function QuickEdit({
             {showPickerMirrorCard && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ top: y, left: x, }}
                 >
                     <div className="picker-header">
                         <h3>Mirror card</h3>
@@ -1669,7 +1672,7 @@ export function QuickEdit({
             {showPickerShareCard && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Share and more...</h3>
@@ -1763,7 +1766,7 @@ export function QuickEdit({
             {showPickerUnderConstruction && (
                 <div
                     className="picker-popup"
-                    style={{ top: pickerTop, left: pickerLeft, width: "304px" }}
+                    style={{ left: pickerLeft, top: pickerTop }}
                 >
                     <div className="picker-header">
                         <h3>Under Construction</h3>
@@ -1771,6 +1774,14 @@ export function QuickEdit({
                     </div>
                 </div>
             )}
+            </div>
+
+            <div
+                className="popup-backdrop-plus-plus"
+                onClick={closePopupOnlyIfClickedOutOfIt}
+            ></div>
+
+
         </>
     )
 }
@@ -2054,7 +2065,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         if (!targetBoard || !targetGroup) return
 
         if (targetBoard._id === currentBoard._id) {
-            const boardCopy = JSON.parse(JSON.stringify(currentBoard))
+            const boardCopy = cleanBoard(currentBoard)
             const oldGroupIdx = boardCopy.groups.findIndex(g => g.id === currentGroup.id)
             if (oldGroupIdx >= 0) {
                 const taskIdx = boardCopy.groups[oldGroupIdx].tasks.findIndex(
@@ -2075,7 +2086,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
             hidePicker(ev)
             return
         }
-        const boardCopyOld = JSON.parse(JSON.stringify(currentBoard))
+        const boardCopyOld = cleanBoard(currentBoard)
         const oldGroupIdx = boardCopyOld.groups.findIndex(g => g.id === currentGroup.id)
         if (oldGroupIdx >= 0) {
             const taskIdx = boardCopyOld.groups[oldGroupIdx].tasks.findIndex(
@@ -2085,7 +2096,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 boardCopyOld.groups[oldGroupIdx].tasks.splice(taskIdx, 1)
             }
         }
-        const boardCopyNew = JSON.parse(JSON.stringify(targetBoard))
+        const boardCopyNew = cleanBoard(targetBoard)
         const newGroupIdx = boardCopyNew.groups.findIndex(g => g.id === targetGroup.id)
         if (newGroupIdx < 0) return
         const { board, group, taskList, ...cleanTask } = taskToShow
@@ -2516,7 +2527,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         const targetGroup = getSelectedGroup()
         if (!targetBoard || !targetGroup) return
 
-        const boardCopy = JSON.parse(JSON.stringify(targetBoard))
+        const boardCopy = cleanBoard(targetBoard)
         const groupIdx = boardCopy.groups.findIndex(g => g.id === targetGroup.id)
         if (groupIdx < 0) return
 
@@ -4863,10 +4874,12 @@ export function BoardDetails() {
     function onSetTable(){
         setTable(!showTable)
     }
-
+    const [showShare,setShowShare] = useState(false)
 
     const [placeholderHeight, setPlaceholderHeight] = useState(8)
-
+    function onSetShowShare(){
+        setShowShare(!showShare)
+    }
     function onSetPlaceholderHeight(height) {
         setPlaceholderHeight(height)
     }
@@ -4966,7 +4979,7 @@ export function BoardDetails() {
             // console.log('modal close')
             const updatedTask = taskToEdit
             console.log('modal close ', updatedTask.title)
-            const boardCopy = JSON.parse(JSON.stringify(boardToShow))
+            const boardCopy = cleanBoard(boardToShow)
             const groupIdx = boardCopy.groups.findIndex(
                 (g) => g.id === updatedTask.group.id
             )
@@ -4989,7 +5002,7 @@ export function BoardDetails() {
 
 
     function onMoveCard(card, fromGroupId, toGroupId, targetTask, edge) {
-        const boardCopy = JSON.parse(JSON.stringify(boardToShow))
+        const boardCopy = cleanBoard(boardToShow)
         const fromGroupIdx = boardCopy.groups.findIndex(g => g.id === fromGroupId)
         if (fromGroupIdx >= 0) {
             const taskIdx = boardCopy.groups[fromGroupIdx].tasks.findIndex(t => t.id === card.id)
@@ -5016,7 +5029,7 @@ export function BoardDetails() {
     }
 
     function onReorderCard(dragged, targetTask, edge, groupId) {
-        const boardCopy = JSON.parse(JSON.stringify(boardToShow))
+        const boardCopy = cleanBoard(boardToShow)
         const groupIdx = boardCopy.groups.findIndex((g) => g.id === groupId)
         if (groupIdx === -1) return
         const tasks = boardCopy.groups[groupIdx].tasks
@@ -5118,23 +5131,106 @@ export function BoardDetails() {
         updateBoard(boardCopy)
     }
 
-    // const [coord, setCoord] = useState({ x: 0, y: 0 })
-    // const handleMouseMove = (e) => {
-    //     setCoord({ x: e.clientX, y: e.clientY  })
-    // }
 
-    if (!boardToShow)
+    const [useDarkTextColors, setUseDarkTextColors] = useState(true)
+    const [colorsSetted, setColorsSetted] = useState(false)
+    const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(4, 44.3%, 76.1%, 0.9)')
+    const [sidebarBorderColor, setSidebarBorderColor] = useState('#c2a5a7')
+    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#e4bcb9')
+    const [headerBorderColor, setHeaderBorderColor] = useState('#c2a5a7')
+
+    useEffect(() => {
+        if (!boardToShow) return
+        let rawUrl = boardToShow.style?.backgroundImage || ''
+        const match = rawUrl.match(/url\(["']?(.*?)["']?\)/)
+        if (match && match[1]) {rawUrl = match[1]}
+        if (!rawUrl) {rawUrl = 'https://picsum.photos/600/300?random=877'}
+        let isCancelled = false
+        const img = new Image()
+        img.crossOrigin = 'Anonymous'
+        img.referrerPolicy = 'no-referrer'
+        img.onload = () => {
+            if (isCancelled) return
+            try {
+                const canvas = document.createElement('canvas')
+                const ctx = canvas.getContext('2d')
+                canvas.width = 50
+                canvas.height = 50
+                ctx.drawImage(img, 0, 0, 50, 50)
+                const { data } = ctx.getImageData(0, 0, 50, 50)
+                let rSum = 0, gSum = 0, bSum = 0
+                const numPixels = 50 * 50
+                for (let i = 0; i < numPixels; i++) {
+                    const idx = i * 4
+                    rSum += data[idx]
+                    gSum += data[idx + 1]
+                    bSum += data[idx + 2]
+                }
+                let r = Math.round(rSum / numPixels)
+                let g = Math.round(gSum / numPixels)
+                let b = Math.round(bSum / numPixels)
+                const luminance = 0.299 * r + 0.587 * g + 0.114 * b
+                if (luminance < 50) {
+                    r = Math.min(r + 40, 255)
+                    g = Math.min(g + 40, 255)
+                    b = Math.min(b + 40, 255)
+                }
+                else if (luminance > 205) {
+                    r = Math.max(r - 50, 0)
+                    g = Math.max(g - 50, 0)
+                    b = Math.max(b - 50, 0)
+                }
+                setSidebarBackgroundColor(`rgba(${r}, ${g}, ${b}, 0.95)`)
+                setSidebarBorderColor(`rgba(${Math.round(r * 0.8)}, ${Math.round(g * 0.8)}, ${Math.round(b * 0.8)}, 0.2)`)
+                setHeaderBackgroundColor(`rgba(${Math.round(r * 0.9)}, ${Math.round(g * 0.9)}, ${Math.round(b * 0.9)}, 0.9)`)
+                setHeaderBorderColor(`rgba(${Math.round(r * 0.7)}, ${Math.round(g * 0.7)}, ${Math.round(b * 0.7)}, 0.25)`)
+                setUseDarkTextColors(luminance < 50)
+                setColorsSetted(true)
+            } catch (error) {
+                applyFallbackColors()
+            }
+        }
+        img.onerror = () => {
+            if (!isCancelled) applyFallbackColors()
+        }
+        function applyFallbackColors() {
+            setSidebarBackgroundColor('#0079bf')
+            setSidebarBorderColor('#026aa7')
+            setHeaderBackgroundColor('#026aa7')
+            setHeaderBorderColor('#026aa7')
+        }
+        img.src = rawUrl
+        return () => {
+            isCancelled = true
+        }
+    }, [boardToShow])
+
+
+    if (!(boardToShow && colorsSetted))
         return (
             <div className="trello-loader">
                 <img src="trello-loader.svg" alt="" />
             </div>
         )
     // if (!boardToShow) return (<>Loading..</>)
+    // const imageToUse = boardToShow.style?.backgroundImage
+
+    // Default colors
+    // let sidebarBackgroundColor = '#0079bf'
+    // let sidebarBorderColor = '#026aa7'
+    // let headerBackgroundColor = '#026aa7'
+    // let headerBorderColor = '#026aa7'
+
 
     return (
-        <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
+        <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}
+        style={{
+            backgroundImage: `url(${boardToShow.style?.backgroundImage})`,
+            color: (useDarkTextColors) ? '#172B4D' : 'white',
+        }}
+        >
             {/*onMouseMove={handleMouseMove}>*/}
-
+            {showShare&&<ShareModal onSetShowShare={onSetShowShare}/>}
             {/*<div id="drag-preview-container"*/}
             {/*style={{*/}
             {/*    top: coord.y + 'px',*/}
@@ -5154,17 +5250,25 @@ export function BoardDetails() {
             </>
             }
 
-
-            <AppHeader/>
+            <AppHeader
+                backgrounColor={headerBackgroundColor}
+                borderColor={headerBorderColor}
+                useDarkTextColors={useDarkTextColors}
+            />
 
             <main className="main-layout">
 
-                <SideBar/>
+                <SideBar
+                    backgrounColor={sidebarBackgroundColor}
+                    borderColor={sidebarBorderColor}
+                />
 
                 <section className="board-display">
                     {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit} task={taskToShow}
                                                  togglePopup={togglePopup} onDeleteTask={onDeleteTask}/>}
-                    <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable}/>
+                    <BoardHeader backgrounColor={headerBackgroundColor}
+                                borderColor={headerBorderColor} onSetShowShare={onSetShowShare}   onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable}
+                                    useDarkTextColors={useDarkTextColors} />
 
                     {showTable && <GroupTable></GroupTable>}
                     {!showTable &&

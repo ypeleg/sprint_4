@@ -16,7 +16,7 @@ export const userService = {
     saveLoggedinUser,
 }
 
-async function getUsers() {
+export async function getUsers() {
     const users = await storageService.query('user')
     return users.map(user => {
         delete user.password

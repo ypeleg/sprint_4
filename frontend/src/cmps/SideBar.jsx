@@ -5,7 +5,7 @@ import { loadBoard, loadBoards } from "../store/store"
 import { useNavigate } from "react-router"
 
 
-export function SideBar() {
+export function SideBar({backgrounColor, borderColor}) {
     const navgite = useNavigate()
     const boards = useSelector(state => state.boardModule.boards)
     const selectedBoard = useSelector(state => state.boardModule.board)
@@ -13,9 +13,24 @@ export function SideBar() {
         loadBoards()
     }
 
+    console.log(backgrounColor)
     return (
-        <aside className="side-bar">
-            <div className="sidebar-header flex-space-between">
+        <aside className="side-bar"
+               style={{
+                   // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
+                   backgroundColor: backgrounColor,
+                   borderColor: borderColor,
+
+               }}
+               // style = {{backgroundColor: backgrounColor}}
+        >
+            <div className="sidebar-header flex-space-between"
+                 style={{
+                     // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
+                     backgroundColor: backgrounColor,
+                     borderColor: borderColor,
+
+                 }}>
                 <div className="flex-space-between logo-insider">
                     <div className="board-logo">T</div>
                     <div className="near-logo">

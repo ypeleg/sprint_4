@@ -1,7 +1,7 @@
 .minigroup {
     
     height: fit-content;
-    
+    cursor: pointer;
     border-radius: 12px;
     .content{
         display: flex;
@@ -26,7 +26,7 @@
     .mini-tilte {
         writing-mode: vertical-lr;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 500;
         font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
         margin: 0;
     }

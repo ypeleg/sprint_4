@@ -20,7 +20,8 @@ export function GroupList({onLoadTask, onMoveCard, onReorderCard, Placeholder, o
     return (
         <section className="group-lists">
             {boardToShow.groups.map(group => {
-               return  ((group.isMinimaized)? <MinimaizedGRoup style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}} group={group}/>:
+
+                return  ((group.isMinimaized)? <MinimaizedGRoup style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}} group={group}/>:
                 // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>
                  <div className="list base-components-list" style={{backgroundColor: (group.style?.backgroundColor || ''), color: (group.style?.color || '#172b4d')}}>
                     <GroupHeader group={group}/>
