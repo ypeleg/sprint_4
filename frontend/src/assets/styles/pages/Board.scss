@@ -37,7 +37,8 @@ body {
 
 
 .board-display {
-    width: 83%;
+    //width: 83%;
+    width: calc(100vw - 263px);
     //height: calc(100vh - 57px); //60px
     height: calc(100vh - 40px); //60px
     //margin-bottom: 40px;
