@@ -5,7 +5,7 @@ import { FilterCards } from "./FilterCards"
 import { useSelector } from "react-redux"
 import { loadBoard, setFilterBy, updateBoard } from "../store/actions/board.actions"
 
-export function BoardHeader({ onSetTable, onStarBoard, isStarred }) {
+export function BoardHeader({ onSetTable, onStarBoard, isStarred, backgrounColor, borderColor }) {
     const elFilter = useRef()
     const [ShowFilter, setShowFilter] = useState(false)
     const boardToShow = useSelector(state => state.boardModule.board)
@@ -20,7 +20,14 @@ export function BoardHeader({ onSetTable, onStarBoard, isStarred }) {
         updateBoard(boardToShow)
     }
     return (
-        <header className="board-header">
+        <header className="board-header"
+                style={{
+                    // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
+                    // backgroundColor: backgrounColor,
+                    // borderColor: borderColor,
+
+                }}>
+
             <div className="header-group">
                 <div className="board-header-title">
                     <div className="board-name">{boardToShow.title}</div>

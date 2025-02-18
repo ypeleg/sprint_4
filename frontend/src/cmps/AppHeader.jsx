@@ -5,7 +5,7 @@ import { useNavigate } from "react-router"
 import { UserMsg } from './UserMsg.jsx'
 
 import { CreateBoardModal } from '../pages/CreateBoardModal.jsx'
-export function AppHeader() {
+export function AppHeader({backgrounColor, borderColor}) {
     
     const [isModalOpen, setIsModalopen] = useState(false)
   const navgite = useNavigate()
@@ -14,7 +14,13 @@ export function AppHeader() {
     setIsModalopen(false)
   }
     return (
-        <header className="board-index-header">
+        <header className="board-index-header"
+                style={{
+                    // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
+                    backgroundColor: backgrounColor,
+                    borderColor: borderColor,
+
+                }}>
 
             <nav className="flex-space-between center-vertical">
 

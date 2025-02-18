@@ -5141,8 +5141,14 @@ export function BoardDetails() {
         )
     // if (!boardToShow) return (<>Loading..</>)
 
+    const sidebackBackgroundColor = '#0079bf' // boardToShow.style?.backgroundColor || '#0079bf'
+
     return (
-        <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}>
+        <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}
+        style={{
+            backgroundImage: `url(${boardToShow.style?.backgroundImage})`
+        }}
+        >
             {/*onMouseMove={handleMouseMove}>*/}
 
             {/*<div id="drag-preview-container"*/}
@@ -5165,16 +5171,25 @@ export function BoardDetails() {
             }
 
 
-            <AppHeader/>
+            <AppHeader
+                backgrounColor={sidebackBackgroundColor}
+                borderColor={sidebackBackgroundColor}
+            />
 
             <main className="main-layout">
 
-                <SideBar/>
+                <SideBar
+                    backgrounColor={sidebackBackgroundColor}
+                    borderColor={sidebackBackgroundColor}
+                />
 
                 <section className="board-display">
                     {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit} task={taskToShow}
                                                  togglePopup={togglePopup} onDeleteTask={onDeleteTask}/>}
-                    <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable}/>
+                    <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable}
+                                 backgrounColor={sidebackBackgroundColor}
+                                 borderColor={sidebackBackgroundColor}
+                    />
 
                     {showTable && <GroupTable></GroupTable>}
                     {!showTable &&
