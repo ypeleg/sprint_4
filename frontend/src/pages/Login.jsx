@@ -1,6 +1,6 @@
 
 import { NavLink } from "react-router-dom";
-import { useState, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { getEmptyUser, login } from "../store/store.js"
 import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
@@ -8,10 +8,10 @@ import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
 
 export function Login() {
 
-  //todos: 
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [credentials, setCredentials] = useState(getEmptyUser())
+  const passwordInputRef = useRef(null); // 🔹 Reference to the password input
 
   const navigate = useNavigate()
 
@@ -34,6 +34,13 @@ export function Login() {
       setShowPassword(true); // Show password field if email is entered
     } else {
       setShowPassword(false);
+    }
+  }
+
+  function handleEmailKeyPress(ev) {
+    if (ev.key === "Enter" && showPassword) {
+      ev.preventDefault(); // ✅ Prevents form submission
+      passwordInputRef.current.focus() // ✅ Moves focus to password input
     }
   }
 
@@ -69,11 +76,14 @@ export function Login() {
           name="username"
           value={credentials.username}
           onChange={handleEmailChange}
+          onKeyDown={handleEmailKeyPress} // ✅ Detect Enter key
+
           required
         />
 
         {showPassword && (
           <input
+            ref={passwordInputRef} // 🔹 Attach reference
             className="input-field"
             type="password"
             placeholder="Enter your password"
