@@ -3765,6 +3765,10 @@ body:has(.home) {
     font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
 }
 
+.just-flex-quick-edit * {
+    /* cursor: default; */
+}
+
 .just-flex-quick-edit .right-btns {
     display: none;
 }
@@ -3783,4 +3787,8 @@ body:has(.home) {
 
 .just-flex-quick-edit button:hover {
     background-color: #2777e7;    
+}
+
+.just-flex-quick-edit *::after {
+    /* content: ''; */
 }
