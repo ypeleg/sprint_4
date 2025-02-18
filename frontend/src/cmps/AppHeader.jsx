@@ -5,7 +5,7 @@ import { useNavigate } from "react-router"
 import { UserMsg } from './UserMsg.jsx'
 
 import { CreateBoardModal } from '../pages/CreateBoardModal.jsx'
-export function AppHeader({backgrounColor, borderColor}) {
+export function AppHeader({backgrounColor, borderColor, useDarkTextColors}) {
     
     const [isModalOpen, setIsModalopen] = useState(false)
   const navgite = useNavigate()
@@ -35,7 +35,9 @@ export function AppHeader({backgrounColor, borderColor}) {
                         </svg>
                     </div>
                     <div className="logo nav-highlight-hint" onClick={() => navgite('/')}>
-                        <img className="main-logo" src="logo-not-moving.gif"/>
+                        {useDarkTextColors && <img className="main-logo" src="logo-not-moving.gif"/>}
+                        {!useDarkTextColors && <img className="main-logo-white" src="trello_white.gif"/>}
+
                     </div>
 
                     <div className="dropdown-menu nav-highlight-hint">
@@ -59,7 +61,8 @@ export function AppHeader({backgrounColor, borderColor}) {
                     </div>
 
 
-                    <div onClick={() => setIsModalopen(true)} className="highlighted-btn nav-highlight-hint">
+                    <div onClick={() => setIsModalopen(true)} 
+                    className={`highlighted-btn nav-highlight-hint ${useDarkTextColors? ' ': ' white-colors-btn'}`}>
                         <span>Create</span>
                     </div>
 
@@ -85,7 +88,10 @@ export function AppHeader({backgrounColor, borderColor}) {
                             fill="currentColor"></path>
                     </svg>
 
-                    <img className="user" src="user_spec.png"></img>
+                    {/* <img className="user" src="user_spec.png"></img> */}
+                    <div class="user-profile member-circle task-user-icon" title="LH">OZ</div>
+
+
                 </div>
             </nav>
             {isModalOpen &&

@@ -5253,6 +5253,7 @@ export function BoardDetails() {
             <AppHeader
                 backgrounColor={headerBackgroundColor}
                 borderColor={headerBorderColor}
+                useDarkTextColors={useDarkTextColors}
             />
 
             <main className="main-layout">
@@ -5266,7 +5267,8 @@ export function BoardDetails() {
                     {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit} task={taskToShow}
                                                  togglePopup={togglePopup} onDeleteTask={onDeleteTask}/>}
                     <BoardHeader backgrounColor={headerBackgroundColor}
-                                borderColor={headerBorderColor} onSetShowShare={onSetShowShare}   onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable}/>
+                                borderColor={headerBorderColor} onSetShowShare={onSetShowShare}   onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable}
+                                    useDarkTextColors={useDarkTextColors} />
 
                     {showTable && <GroupTable></GroupTable>}
                     {!showTable &&

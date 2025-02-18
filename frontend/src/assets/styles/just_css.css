@@ -2620,10 +2620,11 @@ div.task-subtitle>strong:hover {
 }
 
 .divider {
-    height: 1px;
+    height: 16px;
     background-color: #dfe1e6;
     margin: 8px 0;
 }
+
 
 .link-section,
 .embed-section,
@@ -3823,4 +3824,45 @@ body:has(.home) {
 textarea.change-header.header-textarea {
 
     border-radius: 0.5rem;
+}
+
+
+.user-profile {
+    border-radius: 50%;
+    background-color: #00a2be;
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+    border: 1px solid #006a7c;
+}
+
+.white-colors-btn {
+    /* background-color: #73706b; */
+    background-color: rgba(55, 52, 48, 0.5);
+}
+
+#share-white-ver {
+    /* display: none; */
+    background-color: #dbdee3;
+    color: #172b4d;
+    
+    
+    border-radius: 4px;
+    span {
+        font-weight: 600;
+    }
+}
+
+.divider-white {
+    color: white;
+    height: 16px;
+    width: 1px;
+    height: 16px;
+    background-color: rgba(55, 52, 48, 0.5);
+    margin: 8px 0;
+}
+
+
+.main-logo-white {
+        height: 16px;
 }

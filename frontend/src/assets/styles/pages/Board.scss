@@ -52,7 +52,8 @@ header {
 
 .board-header {
     padding: 12px;
-    background: #ffffff3d;
+    background: rgba(55, 52, 48, 0.5); // #ffffff3d;
+    
     backdrop-filter: blur(8px);
 }
 
