@@ -93,11 +93,11 @@ export function QuickEdit({
         popupWidth = 322,
         popupHeight = 385
     ) {
-        ev.stopPropagation();
-        ev.preventDefault();
+        ev.stopPropagation()
+        ev.preventDefault()
 
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
+        const windowWidth = window.innerWidth
+        const windowHeight = window.innerHeight
         let desiredLeft = x + w * 1.05
         let desiredTop  = y
         if (desiredLeft + popupWidth > windowWidth) { desiredLeft = windowWidth - popupWidth - 8 }
@@ -1220,7 +1220,7 @@ export function QuickEdit({
                     <div className="date-picker-content">
                         <div className="calendar-header">
                             <button className="nav-btn" onClick={prevMonth}>
-                                &lt;
+                                &lt
                             </button>
                             <span className="month-year">
                                 {calendarMonth.toLocaleString("default", {
@@ -1229,7 +1229,7 @@ export function QuickEdit({
                                 })}
                             </span>
                             <button className="nav-btn" onClick={nextMonth}>
-                                &gt;
+                                &gt
                             </button>
                         </div>
                         <div className="calendar-grid">
@@ -5128,20 +5128,94 @@ export function BoardDetails() {
         updateBoard(boardCopy)
     }
 
-    // const [coord, setCoord] = useState({ x: 0, y: 0 })
-    // const handleMouseMove = (e) => {
-    //     setCoord({ x: e.clientX, y: e.clientY  })
-    // }
 
-    if (!boardToShow)
+    const [colorsSetted, setColorsSetted] = useState(false)
+    const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(4, 44.3%, 76.1%, 0.9)')
+    const [sidebarBorderColor, setSidebarBorderColor] = useState('#c2a5a7')
+    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#e4bcb9')
+    const [headerBorderColor, setHeaderBorderColor] = useState('#c2a5a7')
+
+    useEffect(() => {
+        if (!boardToShow) return
+        let rawUrl = boardToShow.style?.backgroundImage || ''
+        const match = rawUrl.match(/url\(["']?(.*?)["']?\)/)
+        if (match && match[1]) {rawUrl = match[1]}
+        if (!rawUrl) {rawUrl = 'https://picsum.photos/600/300?random=877'}
+        let isCancelled = false
+        const img = new Image()
+        img.crossOrigin = 'Anonymous'
+        img.referrerPolicy = 'no-referrer'
+        img.onload = () => {
+            if (isCancelled) return
+            try {
+                const canvas = document.createElement('canvas')
+                const ctx = canvas.getContext('2d')
+                canvas.width = 50
+                canvas.height = 50
+                ctx.drawImage(img, 0, 0, 50, 50)
+                const { data } = ctx.getImageData(0, 0, 50, 50)
+                let rSum = 0, gSum = 0, bSum = 0
+                const numPixels = 50 * 50
+                for (let i = 0; i < numPixels; i++) {
+                    const idx = i * 4
+                    rSum += data[idx]
+                    gSum += data[idx + 1]
+                    bSum += data[idx + 2]
+                }
+                let r = Math.round(rSum / numPixels)
+                let g = Math.round(gSum / numPixels)
+                let b = Math.round(bSum / numPixels)
+                const luminance = 0.299 * r + 0.587 * g + 0.114 * b
+                if (luminance < 50) {
+                    r = Math.min(r + 40, 255)
+                    g = Math.min(g + 40, 255)
+                    b = Math.min(b + 40, 255)
+                }
+                else if (luminance > 205) {
+                    r = Math.max(r - 50, 0)
+                    g = Math.max(g - 50, 0)
+                    b = Math.max(b - 50, 0)
+                }
+                setSidebarBackgroundColor(`rgba(${r}, ${g}, ${b}, 0.95)`)
+                setSidebarBorderColor(`rgba(${Math.round(r * 0.8)}, ${Math.round(g * 0.8)}, ${Math.round(b * 0.8)}, 0.2)`)
+                setHeaderBackgroundColor(`rgba(${Math.round(r * 0.9)}, ${Math.round(g * 0.9)}, ${Math.round(b * 0.9)}, 0.9)`)
+                setHeaderBorderColor(`rgba(${Math.round(r * 0.7)}, ${Math.round(g * 0.7)}, ${Math.round(b * 0.7)}, 0.25)`)
+                setColorsSetted(true)
+            } catch (error) {
+                applyFallbackColors()
+            }
+        }
+        img.onerror = () => {
+            if (!isCancelled) applyFallbackColors()
+        }
+        function applyFallbackColors() {
+            setSidebarBackgroundColor('#0079bf')
+            setSidebarBorderColor('#026aa7')
+            setHeaderBackgroundColor('#026aa7')
+            setHeaderBorderColor('#026aa7')
+        }
+        img.src = rawUrl
+        return () => {
+            isCancelled = true
+        }
+    }, [boardToShow])
+
+
+    if (!(boardToShow && colorsSetted))
         return (
             <div className="trello-loader">
                 <img src="trello-loader.svg" alt="" />
             </div>
         )
     // if (!boardToShow) return (<>Loading..</>)
+    // const imageToUse = boardToShow.style?.backgroundImage
 
-    const sidebackBackgroundColor = '#0079bf' // boardToShow.style?.backgroundColor || '#0079bf'
+    // Default colors
+    // let sidebarBackgroundColor = '#0079bf'
+    // let sidebarBorderColor = '#026aa7'
+    // let headerBackgroundColor = '#026aa7'
+    // let headerBorderColor = '#026aa7'
+
 
     return (
         <div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`}
@@ -5172,23 +5246,23 @@ export function BoardDetails() {
 
 
             <AppHeader
-                backgrounColor={sidebackBackgroundColor}
-                borderColor={sidebackBackgroundColor}
+                backgrounColor={headerBackgroundColor}
+                borderColor={headerBorderColor}
             />
 
             <main className="main-layout">
 
                 <SideBar
-                    backgrounColor={sidebackBackgroundColor}
-                    borderColor={sidebackBackgroundColor}
+                    backgrounColor={sidebarBackgroundColor}
+                    borderColor={sidebarBorderColor}
                 />
 
                 <section className="board-display">
                     {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit} task={taskToShow}
                                                  togglePopup={togglePopup} onDeleteTask={onDeleteTask}/>}
                     <BoardHeader onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable}
-                                 backgrounColor={sidebackBackgroundColor}
-                                 borderColor={sidebackBackgroundColor}
+                                 backgrounColor={headerBackgroundColor}
+                                 borderColor={headerBorderColor}
                     />
 
                     {showTable && <GroupTable></GroupTable>}
