@@ -15,7 +15,7 @@ export function NavBarPageIndex() {
           <button className="fa-solid fa-calendar side-btn templates">Templates</button>
         </div>
         <div>
-          <button className="fa-solid fa-house side-btn home">Home</button>
+          <button className="fa-solid fa-house side-btn ">Home</button>
         </div>
       </div>
 
@@ -26,12 +26,12 @@ export function NavBarPageIndex() {
 
           <div className="board-logo">T</div>
           <div className="near-logo">
-            <div className="bold-text">Trello Workspace</div>
+            <div style={{ fontWeight: 500 }}>Trello Workspace</div>
           </div>
 
         </div>
         <div>
-          <button className=""><i className=" fa-regular fa-less-than"></i></button>
+          <div className="arrow fa-regular fa-angle-up"></div>
         </div>
       </div>
 

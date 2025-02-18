@@ -14,8 +14,10 @@
         margin: 40px 0 0;
         max-height: 90vh;
         padding: 0 16px;
-        position: sticky;
+        position: fixed;
         width: 280px;
+        top: 45px;
+        left: 34px;
 
         .menu {
             display: grid;
@@ -29,10 +31,12 @@
     .all-boards {
         max-width: 830px;
         margin-block-start: 36px;
+        margin-inline-start: 19px;
+
 
         .category-container {
             display: flex;
-            padding: 32px;
+            padding: 42px;
             align-items: center;
             gap: 10px;
             border-bottom: 1px solid #091E4224;
@@ -83,10 +87,11 @@
 .side-btn {
     display: flex;
     width: 100%;
-    padding: 6px 8px;
+    padding: 9px 8px;
     gap: 10px;
     font-weight: 500;
     font-size: 14px;
+    border-radius: 8px;
 }
 
 h2 {
@@ -208,6 +213,12 @@ h3 {
 
     &:hover {
         background-color: #DCDFE4;
+    }
+
+    .arrow {
+        margin-inline-end: 10px;
+        font-size: 18px;
+        font-weight: 200;
     }
 }
 

@@ -16,14 +16,14 @@ export function RootCmp() {
         <div className="main-container">
             <main>
                 <Routes>
-                <Route path='/home' element={<HomePage/>}/>
+                    <Route path='/home' element={<HomePage />} />
                     <Route path="/" element={<BoardIndex />} />
                     <Route path="/:boardId" element={<BoardDetails />}>
-                   
+
                     </Route>
                     <Route path="/login" element={<LoginSignup />}>
-                        <Route index element={<Login />} />  {/* Default is Login */}
-                        <Route path="signup" element={<Signup />} />  {/* Relative path, no `/` */}
+                        <Route index element={<Login />} />
+                        <Route path="signup" element={<Signup />} />
                     </Route>
                     <Route path="/debug" element={<DebugPage />} />
                 </Routes>
