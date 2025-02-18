@@ -1,0 +1,144 @@
+.sharemodal-container {
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    pointer-events: auto;
+    overflow-y: scroll;
+    height: 100vh;
+    width: 100vw;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    margin-bottom: 10px;
+
+    .sharemodal {
+        position: absolute;
+        background-color: white;
+        box-shadow: var(--ds-shadow-overlay, 0px 8px 12px rgba(9, 30, 66, 0.15), 0px 0px 1px rgba(9, 30, 66, 0.31));
+        color: black;
+        height: fit-content;
+  
+        margin-top: 50px;
+        max-width: calc(100vw - 24px);
+        min-height: 200px;
+        padding: 20px 0px 0px 24px;
+        border-radius: 12px;
+        header{
+            display: flex;
+            justify-content: space-between;
+            margin: 0px 0px 6px 12px;
+            .title {
+                font-size: 20px;
+            }
+        }
+        .content{
+            .mid{
+                display: flex;
+                input{
+                    background-color: white;
+                    padding: 6px 4px 6px 12px;
+                    width: 340px;
+                    margin-right: 4px;
+                }
+                .member{
+                    font-size: 14px;
+                    padding: 8px 10px;
+                    background-color: rgba(9, 30, 66, 0.06);
+                    line-height: 20px;
+                    display: flex;
+                    align-items: center;
+                    margin-right: 8px;
+                }
+                .share{
+                    color: white;
+                    font-size: 16px;
+                    background-color: rgb(12, 102, 228);
+                    margin-right: 30px;
+                  
+                }   
+            }
+            .low{
+                display: flex;
+                justify-content: flex-start;
+                box-shadow: 0;
+                border-bottom: 1px solid rgba(9, 30, 66, 0.14);
+                margin-right: 30px;
+                span{
+                    padding: 6px 8px;
+                    font-size: 14px;
+                    &.active{
+                        color: rgb(12, 102, 228);
+                        border-bottom:1px solid #0c66e4 ;
+                    }
+                }
+            }
+            .footer,.userpicker{
+             
+                margin-right: 30px;
+                padding-top: 16px;
+                margin-bottom: 20px;
+                .admin{
+                    display: flex;
+                    align-items: center;
+                    padding: 6px 8px 6px 12px;
+                    font-size: 14px;
+                    padding: 8px 10px;
+                    background-color: rgba(9, 30, 66, 0.06);
+                    line-height: 20px;
+                    display: flex;
+                    align-items: center;
+                }
+                .user-item{
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 6px;
+                    .user{
+                        display: flex;
+                        align-items: start;
+                        img{
+                            border-radius: 50%;
+                            margin-right: 6px;
+                        }
+                }
+                }
+            }
+        }
+    }
+    .userpicker{
+        z-index: 1;
+        margin: 4px;
+        max-height: 300px;
+        box-shadow:  0 8px 12px #091e4226, 0 0 1px #091e424f;
+        border-radius: 3px;
+        z-index: 2;
+        background-color: white;
+        position: absolute;
+        height: fit-content;
+        width: 50%;
+        top:30%;
+        padding: 12px;
+      
+        img{
+            border-radius: 50%;
+        }
+    }
+}
+.user-item{
+    display: flex;
+    padding: 6px;
+    &:hover{
+        background-color: #091e4224;
+    }
+    .user{
+        display: flex;
+        column-gap: 6px;
+        img{
+            width: 32px;
+            height: 32px;
+        }
+    }
+}
