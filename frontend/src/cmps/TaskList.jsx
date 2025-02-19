@@ -170,8 +170,8 @@ export function TaskList({ grp,
                             // clone.style.left = location.current.input.clientX - 20 + "px"
                             // clone.style.opacity = ""
                             // Append the cloned element into the wrapper
-                            const fixedContainer = document.getElementById('drag-preview-container')
-                            fixedContainer.innerHTML = ''
+                            // const fixedContainer = document.getElementById('drag-preview-container')
+                            // fixedContainer.innerHTML = ''
 
 
 
@@ -179,7 +179,7 @@ export function TaskList({ grp,
 
                             wrapper.appendChild(clone)
                             container.appendChild(wrapper)
-                            fixedContainer.appendChild(wrapper)
+                            // fixedContainer.appendChild(wrapper)
 
                         },
                     })
@@ -279,7 +279,12 @@ export function TaskList({ grp,
                             data-task-id={task.id}
                             data-group-id={group.id}
                             className="task"
-                            onClick={() => onLoadTask(task, currentGroup, group, boardToShow)}
+                            onClick={(ev) => {
+                                if (!showQuickEdit) {
+                                    return onLoadTask(ev, task, currentGroup, group, boardToShow)}
+                                }
+
+                            }
                             ref={getCardRef(task.id)}
                             draggable="false"
                         >
