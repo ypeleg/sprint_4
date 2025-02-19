@@ -30,22 +30,21 @@ export function MoreBackgroundsBtn({ onClose, onChangeBg, selectedBg, setSelecte
   // }, [selectedBg])
 
   function changeBg(bg) {
-    // debugger
-    const updatedBackgroundsimages = backgroundImagesImages.map(bg =>
-      bg.name === selectedBg1.name ? { ...bg, isSelected: true } : { ...bg, isSelected: false }
-    )
+    setBackgroundImages((prevImages) =>
+      prevImages.map((item) => ({
+        ...item,
+        isSelected: item.name === bg.name, // Set selected only on the clicked one
+      }))
+    );
 
-    const updatedBackgroundsColors = backgroundImagesColors.map(bg =>
-      bg.name === selectedBg1.name ? { ...bg, isSelected: true } : { ...bg, isSelected: false }
+    setBackgroundColors((prevColors) =>
+      prevColors.map((item) => ({
+        ...item,
+        isSelected: item.name === bg.name, // Set selected only on the clicked one
+      }))
     )
-    bg.isSelected = true
-    console.log(bg, 'dddd');
-    setSelectedBg(bg)
-    setSelectedBg1(bg)
-
-    setBackgroundImages(updatedBackgroundsimages)
-    setBackgroundColors(updatedBackgroundsColors)
-    onChangeBg(bg)
+    setSelectedBg(bg);
+    onChangeBg(bg); // Ensure parent component gets the update
   }
 
   return (
@@ -85,7 +84,7 @@ export function MoreBackgroundsBtn({ onClose, onChangeBg, selectedBg, setSelecte
               backgroundImage: `url(${bg.url})`,
               backgroundSize: "cover",
             }}
-            onClick={() => onChangeBg(bg)}
+            onClick={() => { changeBg(bg) }}
           >
             {bg.isSelected && <div className="checkmark"><img src="check-mark.svg" alt="" /></div>}
           </div>
