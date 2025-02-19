@@ -1,16 +1,20 @@
 
 
 import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getEmptyBoard, addBoard } from "../store/store.js"
 import { useNavigate } from 'react-router'
 import { MoreBackgroundsBtn } from "../cmps/MoreBackgroundsBtn.jsx";
+// import { getRandomBoard } from "../store/store.js";
+import { getRandomBoard } from '../services/data.js'
 
 
 export function CreateBoardModal({ onClose, createModal }) {
 
   const loc = createModal.getBoundingClientRect()
-  const inset = `auto ${loc.left}px auto ${loc.top}px`
+  const inset = `auto ${loc.left}px auto ${loc.top - 30}px`
+  const elMoreBg = useRef()
+
 
   const initialBackgroundColor = [
     { name: "gray", isSelected: false, url: "https://trello.com/assets/13425f9db06517de0f7f.svg" },
@@ -36,6 +40,8 @@ export function CreateBoardModal({ onClose, createModal }) {
 
   const [hasError, setHasError] = useState(true);
   const navgite = useNavigate()
+
+
 
   useEffect(() => {
     if (boardToAdd.title === "") {
@@ -86,6 +92,15 @@ export function CreateBoardModal({ onClose, createModal }) {
     setIsModalopen(false)
   }
 
+  function onTemplate() {
+    debugger
+    const board = getRandomBoard()
+    console.log(board);
+
+    navgite(`/${board.id}`)
+    onClose()
+  }
+
   return (
     <div className="modal-overlay">
       <section className="modal-content" style={{ inset }} onClick={(e) => e.stopPropagation()}>
@@ -99,8 +114,7 @@ export function CreateBoardModal({ onClose, createModal }) {
           style={{
             backgroundImage: `url(${boardToAdd.style.backgroundImage})`
           }}>
-          {/* <div className="chart-background" style={{img}}>
-            </div> */}
+
           <img src="chart-background.svg" />
         </div>
 
@@ -141,6 +155,7 @@ export function CreateBoardModal({ onClose, createModal }) {
                 style={{
                   backgroundColor: "#f1f2f4"
                 }}
+                ref={elMoreBg}
               ><img src="3dots.svg" alt="" />
               </button>
               {isModalOpen &&
@@ -149,6 +164,7 @@ export function CreateBoardModal({ onClose, createModal }) {
                   onChangeBg={onChangeBackgroundColor}
                   selectedBg={selectedBg}
                   setSelectedBg={setSelectedBg}
+                  elMoreBg={elMoreBg.current}
                 />
               }
             </section>
@@ -192,7 +208,9 @@ export function CreateBoardModal({ onClose, createModal }) {
             Create
           </button>
 
-          <button className="template-btn">
+          <button className="template-btn"
+            onClick={onTemplate}
+          >
             Start with a template
           </button>
 

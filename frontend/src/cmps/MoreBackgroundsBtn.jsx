@@ -1,7 +1,11 @@
 
 import { useState, useEffect } from "react";
 
-export function MoreBackgroundsBtn({ onClose, onChangeBg, selectedBg, setSelectedBg }) {
+export function MoreBackgroundsBtn({ onClose, onChangeBg, setSelectedBg, elMoreBg }) {
+
+  const loc = elMoreBg.getBoundingClientRect()
+  const inset = `auto ${loc.left}px auto ${loc.top}px`
+
 
   const initialBackgroundColor = [
     { name: "orenge", isSelected: false, url: "https://trello.com/assets/aec98becb6d15a5fc95e.svg" },
@@ -47,7 +51,7 @@ export function MoreBackgroundsBtn({ onClose, onChangeBg, selectedBg, setSelecte
   }
 
   return (
-    <div className="mini-modal-content">
+    <div className="mini-modal-content" style={{ inset }}>
       <div className="modal-header ">
         <div className="title">Board background</div>
         <button className="close-btn" onClick={onClose}>
@@ -55,7 +59,7 @@ export function MoreBackgroundsBtn({ onClose, onChangeBg, selectedBg, setSelecte
         </button>
       </div>
 
-      <h4>Photos</h4>
+      <h4 style={{ marginRight: 22, fontSize: 14, marginTop: 12 }}>Photos</h4>
       <section className="select-background-images wrap">
         {backgroundImagesImages.map((bg, index) => (
           <div
@@ -72,7 +76,7 @@ export function MoreBackgroundsBtn({ onClose, onChangeBg, selectedBg, setSelecte
         ))}
       </section>
 
-      <h4>Colors</h4>
+      <h4 style={{ marginRight: 22, fontSize: 14, marginTop: 12 }}>Colors</h4>
       <section className="select-background-color wrap">
         {backgroundImagesColors.map((bg, index) => (
           <div

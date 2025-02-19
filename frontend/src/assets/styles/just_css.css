@@ -3166,7 +3166,7 @@ div.join>*,
     width: 350px;
     background-color: #fefefe;
     box-shadow: rgba(9, 30, 66, .15)0 .5rem 1rem 0;
-    border-radius: 10px
+    border-radius: 10px;
     color: #172b4d;
 }
 
@@ -3230,8 +3230,8 @@ div.join>*,
 *>* {
     font-weight: 400;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif
-    /*font-family: "Charlie Text", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif*/
-    /*font-family: "Charlie Display", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif*/
+        /*font-family: "Charlie Text", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif*/
+        /*font-family: "Charlie Display", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif*/
 
 }
 
@@ -3403,6 +3403,7 @@ textarea.change-header.header-textarea {
     font-weight: 500;
     width: 100%;
     z-index: 1;
+
     a {
         color: #0052cc;
         text-decoration: underline;
