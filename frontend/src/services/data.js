@@ -273,6 +273,7 @@ export function getRandomBoard() {
 
     const board = {
         id: boardId,
+        generator: 'getRandomBoard',
         title: random.lorem(random.randint(2,5)),
         isStarred: random.choice([true,false]),
         archivedAt: random.choice([
