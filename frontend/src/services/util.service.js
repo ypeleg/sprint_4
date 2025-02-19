@@ -1,5 +1,17 @@
 
 
+import Axios from 'axios'
+
+
+const BASE_URL = process.env.NODE_ENV === 'production'
+    ? '/api/'
+    //    http://172.31.163.87:5173
+    : 'http://172.31.163.87:3030/api/' // 'http://localhost:3030/api/' // '//localhost:3030/api/'
+    // : 'http://localhost:3030/api/'
+    // : '//localhost:3030/api/'
+
+
+
 export const utilService = {
     makeId,
     debounce,
@@ -45,8 +57,6 @@ export const storageService = {
     query,
     remove,
 }
-
-
 
 export function makeId(length = 6) {
     var txt = ''
@@ -101,22 +111,13 @@ export function loadFromStorage(key) {
 
 export const random = {
     id: (length = 6) => [...'x'.repeat(length)].map(() => 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 62)]).join(''),
-    randint: (min, max) => {
-        return Math.floor(Math.random() * (max - min + 1)) + min
-    },
-    choice: (arr) => {
-        return arr[Math.floor(Math.random() * arr.length)]
-    },
-    date: (start, end) => {
-        return new Date(Math.floor(Math.random() * (Date.parse(end) - Date.parse(start) + 1) + Date.parse(start)))
-    },
-    lorem: (length = 6) => {
-        return [...'x'.repeat(length)].map(() => ['The sky', 'above', 'the port', 'was', 'the color of television', 'tuned', 'to', 'a dead channel', '.', 'All', 'this happened', 'more or less', '.', 'I', 'had', 'the story', 'bit by bit', 'from various people', 'and', 'as generally', 'happens', 'in such cases', 'each time', 'it', 'was', 'a different story', '.', 'It', 'was', 'a pleasure', 'to', 'burn'][Math.floor(Math.random() * 32)]).join(' ')
-    },
+    randint: (min, max) => {return Math.floor(Math.random() * (max - min + 1)) + min},
+    choice: (arr) => {return arr[Math.floor(Math.random() * arr.length)]},
+    date: (start, end) => {        return new Date(Math.floor(Math.random() * (Date.parse(end) - Date.parse(start) + 1) + Date.parse(start)))},
+    lorem: (length = 6) => {return [...'x'.repeat(length)].map(() => ['The sky', 'above', 'the port', 'was', 'the color of television', 'tuned', 'to', 'a dead channel', '.', 'All', 'this happened', 'more or less', '.', 'I', 'had', 'the story', 'bit by bit', 'from various people', 'and', 'as generally', 'happens', 'in such cases', 'each time', 'it', 'was', 'a different story', '.', 'It', 'was', 'a pleasure', 'to', 'burn'][Math.floor(Math.random() * 32)]).join(' ')},
     color: () => '#' + [...'x'.repeat(6)].map(() => '0123456789ABCDEF'[Math.floor(Math.random() * 16)]).join(''),
     sample: (arr, n) => [...arr].sort(() => .5 - Math.random()).slice(0, n)
 }
-
 
 function animateCSS(el, animation) {
     const prefix = 'animate__'
@@ -137,19 +138,7 @@ function sleep(sleepDuration){
     while(new Date().getTime() < now + sleepDuration){  }
 }
 
-import Axios from 'axios'
-
-
-const BASE_URL = process.env.NODE_ENV === 'production'
-    ? '/api/'
-    //    http://172.31.163.87:5173
-    // : 'http://172.31.163.87:3030/api/' // 'http://localhost:3030/api/' // '//localhost:3030/api/'
-    // : 'http://localhost:3030/api/'
-    : '//localhost:3030/api/'
-
-var axios = Axios.create({
-    withCredentials: true
-})
+var axios = Axios.create({ withCredentials: true })
 
 async function ajax(endpoint, method = 'GET', data = null) {
     console.log(('\n\n' + '---------' + '\n') + `AJAX CALL: ${BASE_URL}${endpoint}` + ('\n' + '---------' + '\n\n'))
@@ -191,15 +180,9 @@ function createEventEmitter() {
     }
 }
 
-export function showUserMsg(msg) {
-    eventBusService.emit('show-user-msg', msg)
-}
-export function showSuccessMsg(txt) {
-    showUserMsg({txt, type: 'success'})
-}
-export function showErrorMsg(txt) {
-    showUserMsg({txt, type: 'error'})
-}
+export function showUserMsg(msg) { eventBusService.emit('show-user-msg', msg) }
+export function showSuccessMsg(txt) { showUserMsg({txt, type: 'success'}) }
+export function showErrorMsg(txt) { showUserMsg({txt, type: 'error'}) }
 
 function query(entityType, delay = 500) {
     var entities = JSON.parse(localStorage.getItem(entityType)) || []

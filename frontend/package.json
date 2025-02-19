@@ -10,6 +10,7 @@
         "dev:remote": "npm run dev --host",
         "dev:remote:mac": "npm run dev --host",
         "dev:local": "set VITE_LOCAL=true&&vite --host",
+        "dev:local:linux": "export VITE_LOCAL=true&&vite --host",
         "dev:local:mac": "export VITE_LOCAL=true && vite --host",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
     },

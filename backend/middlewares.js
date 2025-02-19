@@ -9,6 +9,12 @@ export async function log(req, res, next) {
     next()
 }
 
+export async function print(req, res, next) {
+    if (req.route.func !== undefined) console.log('Req was made', req.route.path, req.method, req.route.func)
+    else console.log('Req was made', req.route.path, req.method)
+    next()
+}
+
 export async function requireAuth(req, res, next) {
     if (!req?.cookies?.loginToken) {
         return res.status(401).send('Not Authenticated')

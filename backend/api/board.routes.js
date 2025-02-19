@@ -2,7 +2,7 @@
 
 import express from 'express'
 import { ObjectId } from 'mongodb'
-import { log } from '../middlewares.js'
+import { log, print } from '../middlewares.js'
 import { requireAuth, requireAdmin } from '../middlewares.js'
 import { logger, dbService, utilService } from '../util.service.js'
 
@@ -10,6 +10,7 @@ import { logger, dbService, utilService } from '../util.service.js'
 
 import fs from 'fs'
 
+const SECURED = false
 let boards = []
 
 export const boardService = {
@@ -18,7 +19,10 @@ export const boardService = {
         try {
             console.log('filterBy:', filterBy)
 
-            // const criteria = {}
+            const criteria = {}
+            if (filterBy._id) {
+                criteria._id = ObjectId.createFromHexString(filterBy._id)
+            }
             // if (filterBy.txt) {
             //     criteria.name = { $regex: filterBy.txt, $options: 'i' }
             // }
@@ -37,8 +41,8 @@ export const boardService = {
             // }
 
             const collection = await dbService.getCollection('board')
-            // var boards = await collection.find(criteria).toArray()
-            var boards = await collection.find().toArray()
+            var boards = await collection.find(criteria).toArray()
+            // var boards = await collection.find().toArray()
             return boards
         } catch (err) {
             logger.error('cannot find boards', err)
@@ -75,40 +79,23 @@ export const boardService = {
 
             if (board._id) {
                 const boardId = board._id
-                const existingboard = await collection.findOne({ _id: new ObjectId(boardId) })
+                const existingboard = await collection.findOne({ _id: new ObjectId.createFromHexString(boardId) })
                 if (!existingboard) throw new Error('No such board')
 
                 // if (!loggedinUser?.isAdmin && existingboard.owner?._id !== loggedinUser?._id) {
                 //     throw new Error('Not your board')
                 // }
 
-                const boardToUpdate = {
-                    name: board.name,
-                    price: board.price,
-                    labels: board.labels,
-                    inStock: board.inStock,
-                    msgs: board.msgs
-                }
+                const boardToUpdate = structuredClone(board)
 
                 await collection.updateOne(
-                    { _id: new ObjectId(boardId) },
+                    { _id: new ObjectId.createFromHexString(boardId) },
                     { $set: boardToUpdate }
                 )
                 return { ...existingboard, ...boardToUpdate }
 
             } else {
-                const newboard = {
-                    name: board.name,
-                    price: board.price,
-                    labels: board.labels,
-                    inStock: board.inStock,
-                    createdAt: Date.now(),
-                    owner: {
-                        _id: loggedinUser?._id,
-                        fullname: loggedinUser?.fullname,
-                    },
-                    msgs: board.msgs || []
-                }
+                const newboard = structuredClone(board)
                 const { insertedId } = await collection.insertOne(newboard)
                 newboard._id = insertedId
                 return newboard
@@ -119,29 +106,7 @@ export const boardService = {
         }
     },
 
-    addboardMsg: async function (boardId, msg) {
-        try {
-            msg.id = utilService.makeId()
 
-            const collection = await dbService.getCollection('board')
-            await collection.updateOne({_id: ObjectId.createFromHexString(boardId)}, {$push: {msgs: msg}})
-            return msg
-        } catch (err) {
-            logger.error(`cannot add board msg ${boardId}`, err)
-            throw err
-        }
-    },
-
-    removeboardMsg: async function (boardId, msgId) {
-        try {
-            const collection = await dbService.getCollection('board')
-            await collection.updateOne({_id: ObjectId.createFromHexString(boardId)}, {$pull: {msgs: {id: msgId}}})
-            return msgId
-        } catch (err) {
-            logger.error(`cannot add board msg ${boardId}`, err)
-            throw err
-        }
-    }
 }
 
 // const boardService = boardServiceMongo
@@ -150,16 +115,8 @@ export const boardService = {
 // controller
 export async function onGetboards(req, res) {
     try {
-        const filterBy = {
-            txt: req.query.txt || '',
-            labels: req.query.labels || [],
-            inStock: req.query.inStock === 'true',
-            outOfStock: req.query.outOfStock === 'true',
-            maxPrice: +req.query.maxPrice || Infinity,
-            sortby: req.query.sortby || { key: 'name', direction: 1 },
-            pageIdx: +req.query.pageIdx || 0
-        }
-
+        console.log('onGetboards', req.query)
+        const filterBy = req.query
         const boards = await boardService.query(filterBy)
         res.json(boards)
     } catch (err) {
@@ -180,11 +137,12 @@ export async function onGetboardById(req, res) {
 }
 
 export async function onAddboard(req, res) {
-    const { loggedinUser } = req
-
+    if (SECURED) {
+        const {loggedinUser} = req
+    }
     try {
         const board = req.body
-        board.owner = loggedinUser
+        if (SECURED) board.owner = loggedinUser
         const addedboard = await boardService.save(board)
         res.json(addedboard)
     } catch (err) {
@@ -217,37 +175,6 @@ export async function onRemoveboard(req, res) {
     }
 }
 
-export async function onAddboardMsg(req, res) {
-    const { loggedinUser } = req
-    try {
-        const boardId = req.params.id
-        const msg = {
-            txt: req.body.txt,
-            by: loggedinUser,
-            createdAt: Date.now(),
-        }
-        const savedMsg = await boardService.addboardMsg(boardId, msg)
-        res.json(savedMsg)
-    } catch (err) {
-        logger.error('Failed to update board', err)
-        res.status(500).send({ err: 'Failed to update board' })
-    }
-}
-
-export async function onRemoveboardMsg(req, res) {
-    const { loggedinUser } = req
-    try {
-        // const boardId = req.params.id
-        const { id: boardId, msgId } = req.params
-
-        const removedId = await boardService.removeboardMsg(boardId, msgId)
-        res.send(removedId)
-    } catch (err) {
-        logger.error('Failed to remove board msg', err)
-        res.status(500).send({ err: 'Failed to remove board msg' })
-    }
-}
-
 export const boardRoutes = express.Router()
 
 
@@ -256,14 +183,10 @@ async function routOnGetboardById(req, res, next) { req.route.func = 'getboardBy
 async function routOnAddboard(req, res, next) { req.route.func = 'addboard'; next() }
 async function routOnUpdateboard(req, res, next) { req.route.func = 'updateboard'; next() }
 async function routOnRemoveboard(req, res, next) { req.route.func = 'removeboard'; next() }
-async function routOnAddboardMsg(req, res, next) { req.route.func = 'addboardMsg'; next() }
-async function routOnRemoveboardMsg(req, res, next) { req.route.func = 'removeboardMsg'; next() }
 
 
-boardRoutes.get('/', routOnGetboards, log, onGetboards)
-boardRoutes.get('/:id', routOnGetboardById, log, onGetboardById)
-boardRoutes.post('/', routOnAddboard, log, requireAuth, onAddboard)
-boardRoutes.put('/:id', routOnUpdateboard, log, requireAuth, onUpdateboard)
-boardRoutes.delete('/:id', routOnRemoveboard, log, requireAuth, onRemoveboard)
-boardRoutes.post('/:id/msg', routOnAddboardMsg, log, requireAuth, onAddboardMsg)
-boardRoutes.delete('/:id/msg/:msgId', routOnRemoveboardMsg, log, requireAuth, onRemoveboardMsg)
+boardRoutes.get('/', routOnGetboards, print, onGetboards)
+boardRoutes.get('/:id', routOnGetboardById, print, onGetboardById)
+boardRoutes.post('/', routOnAddboard, print, onAddboard) // requireAuth
+boardRoutes.put('/:id', routOnUpdateboard, print, onUpdateboard) // requireAuth
+boardRoutes.delete('/:id', routOnRemoveboard, print, onRemoveboard) // requireAuth
