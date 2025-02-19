@@ -455,7 +455,7 @@ export function QuickEdit({
                         <aside style={{marginLeft: w * 1.05}}>
                             <div className="option" onClick={(ev) => {
                                 closePopupOnlyIfClickedOutOfIt(ev)
-                                togglePopup(ev)
+                                // togglePopup(ev)
                             }}>
                                 <i className="fa-sharp-duotone fa-regular fa-address-card"></i> Open card
                             </div>
@@ -3500,7 +3500,7 @@ export function BoardDetails() {
     async function onModalClose() {
         try {
             // console.log('modal close')
-            const updatedTask = structuredClone(taskToShow)
+            const updatedTask = structuredClone({...taskToShow})
             // const updatedTask = taskToShow
             console.log('modal close ', updatedTask.title)
             const boardCopy = cleanBoard(boardToShow)
@@ -3514,7 +3514,7 @@ export function BoardDetails() {
             boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask
             await updateBoard(boardCopy)
             setTaskToShow(null)
-            togglePopup()
+            // togglePopup()
         } catch (err) {
             console.error("Failed to save task:", err)
         }
@@ -3747,7 +3747,8 @@ export function BoardDetails() {
                 <TaskModal taskToShow={taskToShow} onClose={closePopup2} popupRef={popupRef} onSaveTaskOuter={onSaveTaskOuter}/>
 
             </div>
-            <div className="popup-backdrop" onClick={closePopupOnlyIfClickedOutOfIt}></div>
+            <div className="popup-backdrop"></div>
+        {/*onClick={closePopupOnlyIfClickedOutOfIt}>*/}
         </>}
 
             <AppHeader backgrounColor={headerBackgroundColor} borderColor={headerBorderColor} useDarkTextColors={useDarkTextColors}/>
