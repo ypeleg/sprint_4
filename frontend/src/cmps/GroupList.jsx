@@ -121,9 +121,10 @@ export function GroupList({
                             clone.style.setProperty("opacity", "1", "important");
                             clone.style.pointerEvents = "none";
                             clone.style.borderRadius = computedStyles.borderRadius;
-                            clone.style.boxShadow = "0 6px 16px rgba(0,0,0,0.3)";
-                            clone.style.transform = "translateY(-2px) scale(1.02)";
+                            // clone.style.boxShadow = "0 6px 16px rgba(0,0,0,0.3)";
+                            // clone.style.transform = "translateY(-2px) scale(1.02)";
                             clone.style.zIndex = "1000";
+                            wrapper.style.overflow = "hidden";
                             clone.querySelectorAll("*").forEach(child => {
                                 child.style.removeProperty("opacity");
                             });
@@ -169,7 +170,8 @@ export function GroupList({
                     setShadowGroup({
                         groupId: group.id,
                         edge,
-                        width: 272, // draggedRect.width,
+                        // width: 272, // draggedRect.width,
+                        width: draggedRect.width,
                         height: draggedRect.height,
                     })
                 },
@@ -182,7 +184,8 @@ export function GroupList({
                     setShadowGroup({
                         groupId: group.id,
                         edge,
-                        width: 272, // draggedRect.width,
+                        // width: 272, // draggedRect.width,
+                        width: draggedRect.width,
                         height: draggedRect.height,
                     })
                 },
@@ -234,11 +237,11 @@ export function GroupList({
                                 className="group-placeholder list"
                                 style={{
                                     // display: "block",
-                                    width: 200 + "px",
-                                    height: 300 + "px",
+                                    width: shadowGroup.width + "px",
+                                    height: shadowGroup.height + "px",
                                     marginRight: "12px",
                                     borderRadius: "6px",
-                                    backgroundColor: "rgba(0,0,0,0.03)",
+                                    backgroundColor: "rgba(0,0,0,0.2)",
                                     // border: "2px dashed rgba(0, 0, 0, 0.3)",
                                     // transition: "all 0.15s ease",
                                 }}
@@ -259,11 +262,11 @@ export function GroupList({
                                 className="group-placeholder list"
                                 style={{
                                     // display: "block",
-                                    width: 200 + "px",
-                                    height: 300 + "px",
+                                    width: shadowGroup.width + "px",
+                                    height: shadowGroup.height + "px",
                                     marginRight: "12px",
                                     borderRadius: "6px",
-                                    backgroundColor: "rgba(0,0,0,0.03)",
+                                    backgroundColor: "rgba(0,0,0,0.2)",
                                     // border: "2px dashed rgba(0, 0, 0, 0.3)",
                                     // transition: "all 0.15s ease",
                                 }}
@@ -280,11 +283,11 @@ export function GroupList({
                                 className="group-placeholder list"
                                 style={{
                                     // display: "block",
-                                    width: 200 + "px",
-                                    height: 300 + "px",
+                                    width: shadowGroup.width + "px",
+                                    height: shadowGroup.height + "px",
                                     marginRight: "12px",
                                     borderRadius: "6px",
-                                    backgroundColor: "rgba(0,0,0,0.03)",
+                                    backgroundColor: "rgba(0,0,0,0.2)",
                                     // border: "2px dashed rgba(0, 0, 0, 0.3)",
                                     // transition: "all 0.15s ease",
                                 }}
@@ -324,11 +327,11 @@ export function GroupList({
                                 className="group-placeholder list" // list base-components-list
                                 style={{
                                     // display: "block",
-                                    width: 200 + "px",
-                                    height: 300 + "px",
+                                    width: shadowGroup.width + "px",
+                                    height: shadowGroup.height + "px",
                                     marginRight: "12px",
                                     borderRadius: "6px",
-                                    backgroundColor: "rgba(0,0,0,0.03)",
+                                    backgroundColor: "rgba(0,0,0,0.2)",
                                     // border: "2px dashed rgba(0, 0, 0, 0.3)",
                                     // transition: "all 0.15s ease",
                                 }}
