@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { getEmptyUser, login } from "../store/store.js"
-import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
+import { showSuccessMsg, showErrorMsg } from "../services/util.service.js"
 
 
 export function Login() {

@@ -13,7 +13,13 @@ export function BoardIndex() {
 
     const boards = useSelector(state => state.boardModule.boards)
     const loggedUser = useSelector(state => state.userModule.user)
-    const userFirstName = getFirstName(loggedUser.fullname)
+    let userFirstName = 'guest'
+    try {
+        userFirstName = getFirstName(loggedUser.fullname)
+    } catch {
+
+    }
+
     // console.log(boards);
 
     useEffect(() => {

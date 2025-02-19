@@ -1,4 +1,4 @@
-import { random } from '../util.service.js'
+import { random } from './util.service.js'
 
 const USER_POOL = [
     {_id: 'u101', fullname: 'Abi Abambi', imgUrl: 'roi.png'},

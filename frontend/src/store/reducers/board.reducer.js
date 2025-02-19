@@ -1,6 +1,6 @@
 
 
-import { boardService } from "../../services/board"
+import { boardService } from "../../services/board.service.js"
 
 
 export const SET_BOARD = 'SET_BOARD'

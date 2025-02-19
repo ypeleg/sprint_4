@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from "react"
+
+
 import { useSelector } from "react-redux"
-import { userService } from "../services/user"
 import { updateBoard } from "../store/store"
+import { useEffect, useRef, useState } from "react"
+import { userService } from "../services/user.service.js"
 
 
 

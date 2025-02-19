@@ -4,7 +4,7 @@
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router"
 import { AddTaskForm } from "./AddTaskForm"
-import { eventBus } from "../services/event-bus.service"
+import { eventBus } from "../services/util.service.js"
 import React, { useEffect, useRef, useState } from "react"
 
 import { draggable, dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"

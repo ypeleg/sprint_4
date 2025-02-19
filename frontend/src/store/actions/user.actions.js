@@ -1,7 +1,7 @@
 
 
 import { store } from '../store'
-import { userService } from '../../services/user'
+import { userService } from '../../services/user.service.js'
 // import { socketService } from '../../services/socket.service'
 import { REMOVE_USER, SET_USER, SET_USERS, SET_WATCHED_USER } from '../reducers/user.reducer'
 

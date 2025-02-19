@@ -1,10 +1,11 @@
 
 
-import { useEffect, useRef, useState } from "react"
+
+
 import { useSelector } from "react-redux"
 import { loadBoard } from "../store/store"
+import { useEffect, useRef, useState } from "react"
 import { setFilterBy } from "../store/actions/board.actions"
-import { boardService } from "../services/board"
 
 
 export function FilterCards({ el, setShowFilter }) {
@@ -15,7 +16,7 @@ export function FilterCards({ el, setShowFilter }) {
         loadBoard(boardToShow._id, filterBy)
     }, [filterBy])
     useEffect(() => {
-        console.log(boardService.getDefaultFilter())
+
       
     }, [])
     function onSetCompltedSelected(value) {

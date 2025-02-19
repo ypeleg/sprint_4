@@ -30,7 +30,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/pipus/Desktop/sprint_4/frontend/src/pages",
+    "last_opened_file_path": "C:/Users/pipus/Desktop/bootcamp_workspace/day_51",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -52,6 +52,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\pipus\Desktop\sprint_4\frontend\src\pages" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pipus\Desktop\sprint_4\frontend\src\services" />
     </key>
   </component>
   <component name="SharedIndexes">
