@@ -67,3 +67,16 @@
         }
     }
 }
+.hdpi.pac-logo:after{
+    display: none;
+}
+.pac-item{
+    padding: 8px;
+    &:hover{
+        background-color: #091e420f;
+    }
+}
+
+.hdpi .pac-icon{
+    display: none;
+}
