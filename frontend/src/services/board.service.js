@@ -167,7 +167,16 @@ export const localBoardService = {
 
 export const remoteBoardService = {
     query: async (filterBy = { title: '' }) => {
+
+
         try {
+            let boards = await httpService.get(BASE_URL, filterBy)
+
+            if (!boards.length) {
+                await remoteBoardService._createBoards()
+                boards = await httpService.get(BASE_URL, filterBy)
+            }
+
             return await httpService.get(BASE_URL, filterBy)
         } catch (error) {
             console.error('Failed to query boards:', error)
@@ -210,20 +219,6 @@ export const remoteBoardService = {
         }
     },
 
-    addBoardMsg: async (boardId, title) => {
-        try {
-            const msg = {
-                id: makeId(),
-                by: SECURE ? userService.getLoggedinUser() : null,
-                title
-            }
-            return await httpService.post(BASE_URL + boardId + '/msg', msg)
-        } catch (error) {
-            console.error(`Failed to add message to board ${boardId}:`, error)
-            throw error
-        }
-    },
-
     getEmptyBoard: () => {
         return {
             title: '',
@@ -243,6 +238,19 @@ export const remoteBoardService = {
             status: null,
             dueDate: [],
             sortBy: { key: 'createdAt', direction: -1 }
+        }
+    },
+
+    _createBoards: async () => {
+        try {
+            const boardPromises = Array(5).fill().map(() => {
+                const board = getRandomBoard()
+                return remoteBoardService.save(board)
+            })
+            await Promise.all(boardPromises)
+        } catch (error) {
+            console.error('Failed to create initial boards:', error)
+            throw error
         }
     }
 }
