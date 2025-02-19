@@ -22,7 +22,6 @@ import { ShareModal } from "../cmps/ShareModal.jsx"
 
 import {  StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api'
 import { ActivityMenu } from "../cmps/ActivityMenu.jsx"
-import { render } from "react-dom"
 
 
 
@@ -1795,18 +1794,15 @@ export function QuickEdit({
 // bring the task "the current group"
 
 export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11,name}) {
-    // const [center, setCenter] = useState({lat: lat, lng: lng})
-    const  center = {lat,lng}
+    const [center, setCenter] = useState({lat: lat, lng: lng})
     const zoom = zm
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',center)
-    useEffect(()=>{
-    },[center])
+
     function onHandleClick({lat, lng}) {
         // console.log('Click', ev)
         // console.log('lat,lng:', lat, lng)
         setCenter({lat, lng})
     }
-    
+
 
     return (
         <div className="maps-container maps-container-outer">
@@ -1814,7 +1810,7 @@ export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11,name}) {
                 <GoogleMapReact
                     bootstrapURLKeys={{key: "AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc"}}
                     // defaultCenter={center}
-                    key={`${center.lat}${center.lng}`}
+
                     center={center}
                     defaultZoom={zoom}
                     onClick={onHandleClick}
@@ -2808,8 +2804,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                 <div className="inner-component-left-padding">
                                     <p contentEditable
                                        className="task-description"
-                                       onChange={setDescription} onFocusOut={saveTask}>{description}
-                                        </p>
+                                       onChange={setDescription}>{description}
+                                        onFocusOut={saveTask}</p>
                                 </div>
                             </div>
 

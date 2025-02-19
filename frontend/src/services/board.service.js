@@ -6,6 +6,10 @@ import { userService } from './user.service.js'
 import { makeId, httpService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
+
+// localStorage.clear()
+
+
 const SECURE = false
 
 const BASE_URL = 'board/'
@@ -153,11 +157,10 @@ export const localBoardService = {
 
     _createBoards: async () => {
         try {
-            const boardPromises = Array(5).fill().map(() => {
+            for (let i = 0; i < 5; i++) {
                 const board = getRandomBoard()
-                return localBoardService.save(board)
-            })
-            await Promise.all(boardPromises)
+                await localBoardService.save(board)
+            }
         } catch (error) {
             console.error('Failed to create initial boards:', error)
             throw error
@@ -254,8 +257,6 @@ export const remoteBoardService = {
         }
     }
 }
-
-// localStorage.clear()
 
 function getEmptyBoard() {
     return getRandomBoard()
