@@ -25,7 +25,8 @@ async function generateText(prompt) {
     console.log('prompt', prompt)
     try {
         const response = await openai.chat.completions.create({
-            model: 'gpt-4-mini',
+            model: 'gpt-4o-mini',
+            temperature: 1.0,
             messages: [{ role: 'user', content: prompt }],
         });
         let ret = response.choices[0].message.content.trim();

@@ -15,8 +15,6 @@ const SECURE = false
 const BASE_URL = 'board/'
 const STORAGE_KEY = 'board'
 
-
-
 // localStorage.clear()
 
 export const localBoardService = {
