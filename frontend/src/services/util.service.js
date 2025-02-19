@@ -78,3 +78,17 @@ export const random = {
     sample: (arr, n) => [...arr].sort(() => .5 - Math.random()).slice(0, n)
 }
 
+export function getForamtedDate(timestamp ){
+    const date = new Date(timestamp);
+
+    const formattedDate = new Intl.DateTimeFormat('en-US', {
+        weekday: 'short',
+        year: 'numeric', 
+        month: 'short',   
+        day: 'numeric',   
+        hour: 'numeric', 
+        minute: 'numeric', 
+        hour12: true     
+    }).format(date);
+    return formattedDate
+}

@@ -10,7 +10,7 @@ export function AddGroup() {
     const [group, setGroup] = useState(getEmptyGroup())
     const elTextArea  = useRef()
     const board = useSelector(state => state.boardModule.board)
-
+    const user  =  useSelector(state => state.userModule.user)
     function handleChange({target}) {
 
         const {value, name: field} = target
@@ -45,7 +45,8 @@ export function AddGroup() {
         console.log(group.title)
        
         const copyBoard = {...board,groups:[...board.groups,group]}
-       
+        const newActivity = {createdAt:Date.now(),byMember:{...user},group:{id:group.id,title:group.title}}
+        copyBoard.activities = [newActivity,...copyBoard.activities]
         await updateBoard(copyBoard)
         setGroup(getEmptyGroup())
     }
