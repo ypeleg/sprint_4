@@ -27,7 +27,8 @@ export function getEmptyBoard() {
         },
         labels: [],
         members: [],
-        groups: []
+        groups: [],
+        activities:[]
     }
 }
 

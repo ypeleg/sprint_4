@@ -41,14 +41,14 @@ export function AddGroup({useDarkTextColors}) {
 
 
     async function onSubmit(ev) {
-        
+        debugger
         console.log(group.title)
        
         const copyBoard = {...board,groups:[...board.groups,group]}
         const newActivity = {createdAt:Date.now(),byMember:{...user},group:{id:group.id,title:group.title}}
         copyBoard.activities = [newActivity,...copyBoard.activities]
-        await updateBoard(copyBoard)
         setGroup(getEmptyGroup())
+        await updateBoard(copyBoard)
     }
     console.log(group)
     return (
