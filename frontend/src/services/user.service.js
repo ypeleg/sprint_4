@@ -1,7 +1,7 @@
 
 
 const { DEV, VITE_LOCAL } = import.meta.env
-import { httpService } from './http.service.js'
+import { httpService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
 const BASE_URL = 'auth/'
