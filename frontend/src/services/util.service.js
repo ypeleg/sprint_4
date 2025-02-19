@@ -117,6 +117,7 @@ export const random = {
     sample: (arr, n) => [...arr].sort(() => .5 - Math.random()).slice(0, n)
 }
 
+
 function animateCSS(el, animation) {
     const prefix = 'animate__'
     return new Promise((resolve, reject) => {
@@ -256,3 +257,19 @@ function _makeId(length = 5) {
 }
 
 window.showUserMsg = showUserMsg
+
+export function getForamtedDate(timestamp ){
+    const date = new Date(timestamp);
+
+    const formattedDate = new Intl.DateTimeFormat('en-US', {
+        weekday: 'short',
+        year: 'numeric', 
+        month: 'short',   
+        day: 'numeric',   
+        hour: 'numeric', 
+        minute: 'numeric', 
+        hour12: true     
+    }).format(date);
+    return formattedDate
+}
+

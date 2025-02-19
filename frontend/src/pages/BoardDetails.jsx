@@ -21,6 +21,7 @@ import { ShareModal } from "../cmps/ShareModal.jsx"
 
 
 import {  StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api'
+import { ActivityMenu } from "../cmps/ActivityMenu.jsx"
 
 
 
@@ -4886,6 +4887,10 @@ function Placeholder({placeholderHeight}) {
 export function BoardDetails() {
 
     const [showTable,setTable] = useState(false)
+    const [showActivityMenu,setActivityMenu] = useState(false)
+    function onSetActivityMenu(){
+        setActivityMenu(!showActivityMenu)
+    }
     function onSetTable(){
         setTable(!showTable)
     }
@@ -5279,9 +5284,10 @@ export function BoardDetails() {
                 />
 
                 <section className="board-display">
+                    {showActivityMenu&&<ActivityMenu onSetActivityMenu={onSetActivityMenu}/>}
                     {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit} task={taskToShow}
                                                  togglePopup={togglePopup} onDeleteTask={onDeleteTask}/>}
-                    <BoardHeader backgrounColor={headerBackgroundColor}
+                    <BoardHeader onSetActivityMenu={onSetActivityMenu} backgrounColor={headerBackgroundColor}
                                 borderColor={headerBorderColor} onSetShowShare={onSetShowShare}   onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable}
                                     useDarkTextColors={useDarkTextColors} />
 
