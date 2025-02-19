@@ -32,11 +32,11 @@ export const authService = {
         if (!username || !password || !fullname) throw new Error('Missing details')
 
         const hash = await bcrypt.hash(password, saltRounds)
-        return userService.add({username, password: hash, fullname})
+        return userService.add({ username, password: hash, fullname })
     },
 
     getLoginToken: function (user) {
-        const userInfo = {_id: user._id, fullname: user.fullname, isAdmin: user.isAdmin}
+        const userInfo = { _id: user._id, fullname: user.fullname, isAdmin: user.isAdmin }
         return cryptr.encrypt(JSON.stringify(userInfo))
     },
 
@@ -78,7 +78,7 @@ export async function onSignup(req, res) {
         // IMPORTANT!!!
         // Never write passwords to log file!!!
         // logger.debug(fullname + ', ' + username + ', ' + password)
-
+        debugger
         const account = await authService.signup(username, password, fullname)
         logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
 
@@ -93,7 +93,7 @@ export async function onSignup(req, res) {
     }
 }
 
-export async function onLogout(req, res){
+export async function onLogout(req, res) {
     try {
         res.clearCookie('loginToken')
         res.send({ msg: 'Logged out successfully' })

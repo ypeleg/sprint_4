@@ -36,8 +36,7 @@ export function Signup() {
       await signup(credentials)
       navigate('/')
     } catch (err) {
-      console.error("Signup failed:", err)
-      showErrorMsg("Oops, try again")
+      // console.error("Signup failed:", err)
     }
   }
 
