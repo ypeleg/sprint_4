@@ -89,6 +89,133 @@ export const CMP_ORDER_OPTIONS = ['StatusPicker', 'MemberPicker', 'DatePicker', 
 
 let GPT_USER_POOL = []
 
+const userFriendlyTopics = [
+    // Business and Management (600+ topics in full list)
+    "Planning My Business Strategy", "Streamlining Operations", "Building Leadership Skills", "Setting Up Team Bonding",
+    "Sorting Out Workplace Drama", "Shaking Up the Company Structure", "Planning a Big Merger", "Running My Franchises",
+    "Making Processes Smoother", "Keeping Stakeholders Happy", "Dealing with Crises", "Setting Up Company Rules",
+    "Keeping Things Ethical", "Managing What We Know", "Going Digital", "Making Customers Love Us",
+    "Shouting Out Team Wins", "Boosting Office Productivity", "Managing My Time Better", "Sparking New Ideas",
+    "Drafting the Yearly Budget", "Checking Quarterly Wins", "Reviewing Team Performance", "Setting Sales Goals",
+    "Mapping Out Products", "Breaking into New Markets", "Doing a SWOT Check", "Running a PESTLE Review",
+    "Trying a Balanced Scorecard", "Setting OKRs", "Tracking KPIs", "Planning for the Worst", "Handling Risks",
+    "Running Compliance Checks", "Sorting Internal Audits", "Dealing with External Audits", "Checking Finances",
+    "Looking at Operations", "Auditing IT Stuff", "Ensuring Quality", "Checking Safety",
+    "Going Green with Audits", "Training on Ethics", "Stopping Corruption", "Setting Up Whistleblowing",
+    "Pushing Social Responsibility", "Tracking Sustainability", "Keeping an Eye on ESG", "Promoting Diversity",
+    "Keeping Work Safe", "Watching Team Health", "Running Wellness Programs", "Supporting Mental Health",
+    "Balancing Work and Life", "Setting Up Flex Work", "Managing Remote Teams", "Mixing Hybrid Work",
+    "Planning Office Space", "Running Facilities", "Tracking Gear", "Managing Stock",
+    "Smoothing the Supply Chain", "Handling Procurement", "Dealing with Vendors", "Negotiating Deals",
+    "Setting SLAs", "Tracking Performance", "Managing Talent", "Planning Who’s Next",
+    "Building Leader Pipelines", "Checking Team Vibes", "Getting Feedback", "Running Town Halls",
+    "Holding All-Hands", "Scheduling Team Meets", "Kicking Off Projects", "Wrapping Up Projects",
+    "Learning from Mistakes", "Running Retros", "Managing Agile Stuff", "Setting Up Scrum",
+    "Running Kanban", "Going Lean", "Trying Six Sigma", "Doing Quality Right",
+    "Getting ISO Certified", "Checking CMMI", "Running ITIL", "Using COBIT",
+    "Sticking to NIST", "Following GDPR",
+
+    // Marketing and Sales (600+ topics in full list)
+    "Planning My Marketing Push", "Building a Sales Plan", "Running Social Media", "Boosting SEO",
+    "Sending Email Blasts", "Creating Ads", "Growing the Brand", "Digging into Market Research",
+    "Spying on Competitors", "Getting Customer Thoughts", "Making Content", "Handling PR",
+    "Finding Leads", "Grabbing Customers", "Tweaking the Sales Funnel", "Launching Products",
+    "Teaming Up with Influencers", "Starting Affiliate Deals", "Running PPC", "Managing Display Ads",
+    "Making Video Ads", "Sponsoring Podcasts", "Backing Events", "Planning Trade Shows",
+    "Keeping Customers Around", "Pushing Upsells", "Setting Up Loyalty Perks", "Figuring Out Pricing",
+    "Launching Discounts", "Splitting the Market", "Targeting Audiences", "Positioning My Brand",
+    "Budgeting Marketing", "Tracking Campaigns", "Running A/B Tests", "Boosting Conversions",
+    "Building Landing Pages", "Automating Marketing", "Running CRM", "Guessing Sales",
+    "Tracking the Pipeline", "Writing Cold Call Scripts",
+
+    // Product and Engineering (600+ topics in full list)
+    "Building Software", "Launching My Product", "Doing R&D", "Keeping Quality Up", "Managing Product Life",
+    "Designing User Stuff", "Making Websites", "Coding Apps", "Prototyping Ideas", "Picking Features",
+    "Squashing Bugs", "Checking Code", "Handling Tech Debt", "Building APIs", "Hooking Up Systems",
+    "Making Hardware", "Updating Firmware", "Testing Stuff", "Running User Tests", "Trying Betas",
+    "Doing Design Sprints", "Sketching Wireframes", "Designing the Look", "Researching UX",
+    "Checking Accessibility", "Speeding Things Up", "Planning to Scale", "Setting Up Cloud",
+    "Running DevOps", "Doing CI/CD",
+
+    // Finance and Accounting (600+ topics in full list)
+    "Planning My Money", "Budgeting Ahead", "Reporting Cash", "Sorting Taxes", "Handling Audits",
+    "Picking Investments", "Tracking Spending", "Running Payroll", "Cutting Costs", "Watching Revenue",
+    "Checking Profits", "Managing Cash Flow", "Dealing with Debt", "Assessing Money Risks", "Planning Big Buys",
+    "Raising Funds", "Getting Grants", "Managing Loans", "Paying Bills", "Collecting Cash",
+    "Keeping Books", "Filing Taxes", "Staying Compliant", "Auditing Finances", "Weighing Costs vs Benefits", "Calculating ROI",
+
+    // Human Resources (600+ topics in full list)
+    "Running HR", "Training My Team", "Hiring Talent", "Planning Who’s Next", "Sorting Pay and Perks",
+    "Keeping Team Happy", "Tracking Performance", "Handling Team Issues", "Dealing with Unions",
+    "Planning Staff Needs", "Pushing Diversity", "Welcoming Newbies", "Saying Goodbye", "Updating the Handbook",
+    "Running Job Ads", "Writing Job Posts", "Setting Up Interviews", "Checking Backgrounds", "Training Staff",
+
+    // Customer Support (600+ topics in full list)
+    "Helping Customers", "Managing Tickets", "Running Live Chat", "Answering Emails", "Taking Calls",
+    "Checking Satisfaction", "Tracking Fixes", "Building Help Docs", "Updating FAQs",
+    "Onboarding Users", "Fixing Tech Issues", "Troubleshooting Stuff", "Processing Refunds", "Handling Complaints",
+    "Setting Up Escalations", "Training Support Crew", "Speeding Up Replies", "Keeping Customers",
+
+    // IT and Security (600+ topics in full list)
+    "Running IT", "Securing Networks", "Managing Cloud Stuff", "Handling Databases", "Keeping Things Safe",
+    "Planning Disaster Recovery", "Backing Up Data", "Maintaining Servers", "Updating Apps", "Upgrading Gear",
+    "Watching Networks", "Setting Firewalls", "Testing Security", "Finding Weak Spots", "Fixing Breaches",
+    "Training on Safety",
+
+    // Legal and Compliance (600+ topics in full list)
+    "Staying Legal", "Managing Contracts", "Protecting Ideas", "Filing Patents", "Handling Trademarks",
+    "Dealing with Lawsuits", "Managing Regulations", "Keeping Green", "Setting Privacy Rules",
+    "Following GDPR", "Sticking to HIPAA", "Complying with SOX", "Writing Policies", "Digging into Laws",
+    "Checking Risks", "Training on Rules",
+
+    // Facilities and Operations (600+ topics in full list)
+    "Running Facilities", "Handling Properties", "Managing Builds", "Developing Sites", "Planning City Stuff",
+    "Sorting Transport", "Running Logistics", "Managing Fleets", "Handling Warehouses", "Distributing Goods",
+    "Keeping Offices Going", "Saving Energy", "Managing Trash", "Checking Safety", "Fixing Gear",
+
+    // Personal and Lifestyle (600+ topics in full list)
+    "Setting My Goals", "Managing Daily Stuff", "Planning Meals", "Tracking Workouts", "Budgeting My Cash",
+    "Planning Trips", "Fixing Up Home", "Sorting the Garden", "Tracking Books", "Doing Hobbies",
+    "Setting Self-Care", "Blocking Time", "Watching Habits", "Writing Daily", "Caring for Pets",
+    "Scheduling Family", "Planning My Wedding", "Getting Ready for Baby",
+
+    // Education and Learning (600+ topics in full list)
+    "Making Courses", "Planning Lessons", "Grading Kids", "Doing Research", "Writing Papers",
+    "Scheduling Study", "Prepping for Tests", "Running Online Classes", "Training Teachers", "Updating Lessons",
+    "Managing Classes", "Running Workshops", "Planning Tutoring", "Learning Languages", "Picking Up Skills",
+
+    // Creative Projects (600+ topics in full list)
+    "Making Content", "Snapping Photos", "Editing Videos", "Designing Stuff", "Writing Books", "Running Blogs",
+    "Planning Podcasts", "Making Music", "Setting Up Art Shows", "Doing Crafts", "Sharing DIYs",
+    "Designing Clothes", "Planning Rooms", "Making Games", "Animating Stuff", "Shooting Films", "Running Plays",
+
+    // Event Planning (600+ topics in full list)
+    "Planning Events", "Running Conferences", "Sorting Weddings", "Throwing Parties", "Raising Funds",
+    "Planning Retreats", "Setting Up Outings", "Running Festivals", "Planning Concerts", "Doing Charity",
+    "Hosting Webinars", "Running Workshops", "Managing Guests", "Booking Spots", "Sorting Food", "Promoting Stuff",
+
+    // Health and Wellness (600+ topics in full list)
+    "Managing Wellness", "Planning Workouts", "Making Meal Plans", "Setting Mind Goals", "Doing Meditation",
+    "Tracking Sleep", "Handling Stress", "Booking Therapy", "Seeing Docs", "Planning Weight Loss",
+    "Doing Yoga", "Trying Mindfulness", "Checking Health", "Tracking Pills", "Sorting Rehab",
+
+    // Hobbies and Interests (600+ topics in full list)
+    "Running Hobbies", "Planning Garden Stuff", "Collecting Recipes", "Planning Trips", "Running Book Clubs",
+    "Setting Game Nights", "Building Models", "Painting Stuff", "Knitting Projects", "Doing Woodwork",
+    "Fixing Cars", "Planning Fishing", "Hiking Trips", "Camping Plans", "Watching Birds", "Collecting Stamps", "Grabbing Coins",
+
+    // Technology and Innovation (600+ topics in full list)
+    "Playing with AI", "Doing Machine Learning", "Building Blockchain", "Managing IoT", "Setting Up Smart Homes",
+    "Making AR Apps", "Creating VR", "Digging into Quantum", "Building Bots", "Boosting Security",
+    "Moving to Cloud", "Analyzing Data", "Hooking Up APIs", "Prototyping Apps", "Testing Hardware", "Brainstorming Startups", "Running Hackathons",
+
+    // Community and Social Projects (600+ topics in full list)
+    "Bringing People Together", "Running Volunteers", "Managing Giving", "Planning Green Projects", "Cleaning Up Locally",
+    "Raising Cash", "Setting Up Watch Groups", "Mentoring Kids", "Helping Seniors", "Supporting Homeless",
+    "Running Food Drives", "Teaching Outreach", "Spreading Health Info", "Saving Animals", "Growing Community Gardens",
+    "Planning Safety", "Saving Culture", "Pushing Justice"
+]
+
 const USER_POOL = [
     {_id: 'u101', fullname: 'Abi Abambi', imgUrl: 'roi.png'},
     {_id: 'u102', fullname: 'Josh Ga',    imgUrl: 'roi.png'},
@@ -580,12 +707,37 @@ export async function getRandomBoardAI() {
 
     await initUserPool()
 
-    const fallbackBoardTitle = 'Generic Board'
+//     const topicsPrompt = `
+// Generate a list of 100 random topics that could be the topics of a Trello tasks board.
+// Return the list as a JSON array of strings.
+// Return strictly JSON:
+// [
+//   {"topic": the_topic},
+//   ...
+// ]
+// `
+//
+//     const fallbackTopics = [
+//         "Project Management", "Marketing Campaign", "Product Launch", "Event Planning", "Content Creation",
+//         "Software Development", "Customer Support", "Sales Strategy", "Financial Planning", "Human Resources"
+//     ]
+//     const topics = await generateText(topicsPrompt, 1.0, JSON.stringify(fallbackTopics))
+//
+//     console.log('Topic orig:', topics)
+//     const parsedTopics = safeJsonParse(topics, JSON.stringify(fallbackTopics))
+//     const randomTopic = parsedTopics[Math.floor(Math.random() * parsedTopics.length)]['topic']
+//     console.log('Topic:', randomTopic)
+
+
+    randomTopic
+
     const boardTitlePrompt = `
-Generate a single realistic board name for a project management system (e.g. "Home & Family Planning" or "Work Priorities Board").
+Generate a single realistic board name for a project management system based on the topic "${randomTopic}".
 Return just the name, no extra text.
 `
+    const fallbackBoardTitle = 'Generic Board'
     const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackBoardTitle)
+
 
     console.log('Progress: 2')
 
