@@ -1,184 +1,186 @@
 .login-page {
-  height: 100vh;
-  background-color: #FAFBFC;
-  padding: 50px;
-  overflow: scroll;
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #FAFBFC;
+    padding: 50px;
+    //overflow: scroll;
 }
 
 .signup-login-modal {
-  display: flex;
-  flex-direction: column;
-  margin: 0px auto;
-  width: 400px;
-  padding: 32px 40px;
-  background: rgb(255, 255, 255);
-  border-radius: 3px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
-  box-sizing: border-box;
-  color: var(--ds-text-subtle, #42526E);
+    display: flex;
+    flex-direction: column;
+    margin: 0px auto;
+    width: 400px;
+    padding: 32px 40px;
+    background: rgb(255, 255, 255);
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
+    box-sizing: border-box;
+    color: var(--ds-text-subtle, #42526E);
 
-  input {
-    background-color: inherit;
-  }
+    input {
+        background-color: inherit;
+    }
 
 }
 
 .signup-login-logo {
-  margin: auto;
-  width: 120px;
+    margin: auto;
+    width: 120px;
 
-  img {
-    height: 40px;
-  }
+    img {
+        height: 40px;
+    }
 }
 
 .sub-title {
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 20px;
-  color: rgb(23, 43, 77);
-  margin: 10px auto 0;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: rgb(23, 43, 77);
+    margin: 10px auto 0;
 }
 
 .signup-form {
-  margin-top: 10px;
+    margin-top: 10px;
 
 }
 
 .input-field {
-  width: 100%;
-  padding: 20px;
-  border: 1px solid #dfe1e6;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  border: 1px solid #8590A1;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #dfe1e6;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    border: 1px solid #8590A1;
 
-  &:focus {
-    border-color: #0052cc;
-  }
+    &:focus {
+        border-color: #0052cc;
+    }
 }
 
 .terms-text {
-  font-size: 12px;
-  color: #6b778c;
+    font-size: 12px;
+    color: #6b778c;
 }
 
 .signup-login-button {
-  -webkit-box-align: baseline;
-  align-items: baseline;
-  border-width: 0px;
-  border-radius: var(--ds-border-radius, 3px);
-  box-sizing: border-box;
-  display: inline-flex;
-  font-size: inherit;
-  font-style: normal;
-  font-family: inherit;
-  font-weight: 500;
-  max-width: 100%;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  background: var(--ds-background-brand-bold, #0052CC);
-  transition: background 0.1s ease-out, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38);
-  white-space: nowrap;
-  cursor: pointer;
-  padding: 0px 10px;
-  vertical-align: middle;
-  width: 100%;
-  -webkit-box-pack: center;
-  justify-content: center;
-  color: var(--ds-text-inverse, #FFFFFF) !important;
-  height: 40px !important;
-  line-height: 40px !important;
+    -webkit-box-align: baseline;
+    align-items: baseline;
+    border-width: 0px;
+    border-radius: var(--ds-border-radius, 3px);
+    box-sizing: border-box;
+    display: inline-flex;
+    font-size: inherit;
+    font-style: normal;
+    font-family: inherit;
+    font-weight: 500;
+    max-width: 100%;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    background: var(--ds-background-brand-bold, #0052CC);
+    transition: background 0.1s ease-out, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38);
+    white-space: nowrap;
+    cursor: pointer;
+    padding: 0px 10px;
+    vertical-align: middle;
+    width: 100%;
+    -webkit-box-pack: center;
+    justify-content: center;
+    color: var(--ds-text-inverse, #FFFFFF) !important;
+    height: 40px !important;
+    line-height: 40px !important;
 }
 
 .signup-login-button:hover {
-  background-color: #0065ff;
+    background-color: #0065ff;
 }
 
 .social-logins {
-  display: grid;
-  grid-gap: 10px;
-  margin-top: 10px;
+    display: grid;
+    grid-gap: 10px;
+    margin-top: 10px;
 }
 
 .social-button {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #dfe1e6;
-  border-radius: 4px;
-  background-color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dfe1e6;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
 
-  img {
-    height: 24px;
-    width: 24px;
-    margin-right: 10px;
-  }
+    img {
+        height: 24px;
+        width: 24px;
+        margin-right: 10px;
+    }
 
-  &:hover {
-    ackground-color: #f4f5f7;
-  }
+    &:hover {
+        ackground-color: #f4f5f7;
+    }
 
 }
 
 footer {
-  display: flex;
-  justify-content: center;
-  padding-top: 15px;
+    display: flex;
+    justify-content: center;
+    padding-top: 15px;
 }
 
 .img-background-1 {
-  position: absolute;
-  right: auto;
-  left: 10px;
-  bottom: 0;
-  width: 400px;
-  height: 400px;
+    position: fixed;
+    right: auto;
+    left: 10px;
+    bottom: 0;
+    width: 400px;
+    height: 400px;
 }
 
 .img-background-2 {
-  position: absolute;
-  right: 10px;
-  left: auto;
-  bottom: 0;
-  width: 400px;
-  height: 400px;
+    position: fixed;
+    right: 10px;
+    left: auto;
+    bottom: 0;
+    width: 400px;
+    height: 400px;
 }
 
 .error-input {
-  border: 1px solid #d9534f;
-  /* Red border for invalid input */
+    border: 1px solid #d9534f;
+    /* Red border for invalid input */
 }
 
 .error-text {
-  color: #d9534f;
-  font-size: 14px;
-  margin-top: 5px;
+    color: #d9534f;
+    font-size: 14px;
+    margin-top: 5px;
 }
 
 .continue-text {
-  display: block;
-  margin: 19px auto 0;
-  color: rgb(94, 108, 132);
-  font-weight: 600;
-  text-align: center;
+    display: block;
+    margin: 19px auto 0;
+    color: rgb(94, 108, 132);
+    font-weight: 600;
+    text-align: center;
 }
 
 //*Just login page 
 
 .remember-me {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 
-  label {
-    font-size: 14px;
-    margin: 0 0;
-    color: #172b4d;
-  }
+    label {
+        font-size: 14px;
+        margin: 0 0;
+        color: #172b4d;
+    }
 }

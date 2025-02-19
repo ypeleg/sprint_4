@@ -100,17 +100,27 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors }) {
                         title="LH"
                         onClick={() => setOpenAccountPopup(!openAccountPopup)}
                     >
-                        {loggedUser}
+                        {loggedUser?.fullName}
                     </div>
                     {openAccountPopup && (
                         <div className="account-popup">
                             <div className="account-header">ACCOUNT</div>
                             <div className="account-info">
-                                {/* <div className="profile-icon large">{loggedUser.imgUrl}</div> */}
+                                {loggedUser && <>
+                                <div className="profile-icon large">{loggedUser?.imgUrl}</div>
                                 <div className="user-details">
-                                    {/* <p className="user-name">{loggedUser.fullname}</p> */}
-                                    <p className="user-email">sssss</p>
-                                </div>
+                                     <p className="user-name">{loggedUser?.fullname}</p>
+                                    <p className="user-email">{loggedUser?.email}</p>
+                                </div></>}
+                                {(!loggedUser) && <>
+                                    <div className="profile-icon large"></div>
+                                    <div className="user-details">
+                                        <p className="user-name">Guest</p>
+                                        <button className="login-btn"
+                                            onClick={() => navgite('/login')}>Login</button>
+                                        {/*<p className="user-email">{loggedUser?.email}</p>*/}
+                                    </div></>}
+
                             </div>
                             <hr />
                             <button className="logout-btn">Logout</button>
