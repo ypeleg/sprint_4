@@ -6,7 +6,7 @@
     min-height: 400px;
     z-index: 10;
     border-radius: 10px;
-
+  
     .group-eddit-header {
         padding: 0;
         border-radius: 10px;
@@ -20,7 +20,9 @@
             align-items: center;
             width: 32px;
             height: 32px;
-
+            svg{
+                scale: 1.4;
+            }
         }
 
         p {
@@ -45,7 +47,7 @@
             button {
                 text-align: start;
                 font-size: 14px;
-                font-weight: 300;
+                font-weight: 400;
                 line-height: 20px;
                 color: #172B4D;
             }
@@ -149,7 +151,7 @@
             width: 100%;
             text-align: center;
             background-color: #091e420f;
-            color: #172B4D;
+            color: #091e424f;
             padding: 8px 12px;
             font-size: 13px;
             font-weight: 600;
@@ -161,7 +163,7 @@
         .archive{
             text-align: start;
             font-size: 14px;
-            font-weight: 300;
+            font-weight: 400;
             line-height: 20px;
             color: #172B4D;
             width: 100%;

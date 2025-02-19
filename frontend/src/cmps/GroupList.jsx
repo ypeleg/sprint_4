@@ -13,6 +13,11 @@ import { attachClosestEdge, extractClosestEdge } from "@atlaskit/pragmatic-drag-
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview"
 
 import { updateBoard } from "../store/store.js"
+import { GroupEdit } from "./GroupEdit.jsx"
+import { CopyListForm } from "./CopyListForm.jsx"
+import { MoveListForm } from "./MoveListForm.jsx"
+import { MoveAll } from "./MoveAll.jsx"
+import { GroupSort } from "./GroupSort.jsx"
 
 const GROUP_SYMBOL = Symbol("group")
 
@@ -40,7 +45,33 @@ export function GroupList({
                           }) {
     const boardToShow = useSelector((state) => state.boardModule.board)
     const [largeLabels, setLargeLabels] = useState(false)
+    const [showGroupEdit, SetGroupEdit] = useState(false)
+    const [showCopyList, setCopyList] = useState(false)
+    const [showMoveList, setMoveList] = useState(false)
+    const [showMoveAll, setMoveAll] = useState(false)
+    const [showSort, setSort] = useState(false)
+    const [header,setHeader] = useState(null)
+    const [grp,setGroup] = useState(null)
+    function onSetSort() {
+        setSort(!showSort)
+    }
 
+    function onSetGroupEdit() {
+        SetGroupEdit(!showGroupEdit)
+    }
+
+    function onSetCopyList() {
+        setCopyList(!showCopyList)
+    }
+
+    function onSetMoveList() {
+        setMoveList(!showMoveList)
+    }
+
+    function onSetMoveAll() {
+
+        setMoveAll(!showMoveAll)
+    }
     function toggleLargeLabels(ev) {
         ev.stopPropagation()
         setLargeLabels(!largeLabels)
@@ -251,8 +282,8 @@ export function GroupList({
                                 marginRight: "12px",
                             }}
                         >
-                            <GroupHeader group={group} />
-                            <TaskList
+                            <GroupHeader setGroup={setGroup} setHeader={setHeader} onSetGroupEdit={onSetGroupEdit} group={group} />
+                            <TaskList grp={grp}
                                 onsetQuickEdit={onsetQuickEdit}
                                 showQuickEdit={showQuickEdit}
                                 onSetPlaceholderHeight={onSetPlaceholderHeight}
@@ -287,7 +318,11 @@ export function GroupList({
                     </React.Fragment>
                 )
             })}
-
+             {showGroupEdit &&grp&& <GroupEdit onSetSort={onSetSort} onSetMoveAll={onSetMoveAll} onSetMoveList={onSetMoveList} onSetCopyList={onSetCopyList} group={grp} onSetGroupEdit={onSetGroupEdit} header={header}/>}
+            {showCopyList && <CopyListForm group={grp} onSetCopyList={onSetCopyList} onSetGroupEdit={onSetGroupEdit} header={header}/>}
+            {showMoveList && <MoveListForm onSetMoveList={onSetMoveList} onSetGroupEdit={onSetGroupEdit} group={grp} header={header}/>}
+            {showMoveAll && <MoveAll onSetMoveAll={onSetMoveAll} group={grp} header={header} onSetGroupEdit={onSetGroupEdit}/>}
+            {showSort && <GroupSort header={header} onSetGroupEdit={onSetGroupEdit} onSetSort={onSetSort} group={grp}/>}
             <AddGroup />
         </section>
     )

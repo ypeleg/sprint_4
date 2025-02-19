@@ -5,8 +5,7 @@ import { updateBoard } from "../store/store";
 
 export function MoveAll({header,onSetMoveAll,onSetGroupEdit,group}){
     const board = useSelector(state => state.boardModule.board)
-    const loc = header.getBoundingClientRect()
-    const inset = `${loc.top}px auto auto ${loc.right}px`
+       const inset = `auto ${header.left }px auto ${header.top}px`
 
     function Movetasks({target}){
         const idx = board.groups.findIndex(grp => grp.id === target.value)

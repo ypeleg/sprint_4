@@ -32,7 +32,7 @@ function isCardData(obj) {
 // drag and drop
 
 
-export function TaskList({
+export function TaskList({ grp,
     group,
     currentBoard,
     currentGroup,
@@ -262,7 +262,7 @@ export function TaskList({
 
 
             <div className="task-list" ref={listRef}>
-                {showFirstForm && <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
+                {showFirstForm &&(grp.id === group.id)&& <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
 
                 {tasks.map((task, idx) => (
 
