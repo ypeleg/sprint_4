@@ -5,7 +5,7 @@ import {useSelector} from "react-redux"
 import {getEmptyGroup, updateBoard} from "../store/store"
 
 
-export function AddGroup() {
+export function AddGroup({useDarkTextColors}) {
     const [showForm, setForm] = useState(false)
     const [group, setGroup] = useState(getEmptyGroup())
     const elTextArea  = useRef()
@@ -53,7 +53,9 @@ export function AddGroup() {
     console.log(group)
     return (
         <div className="add-group">
-            {(!showForm) ? <button onClick={() => setForm(true)} className="add-group-btn">
+            {(!showForm) ? <button onClick={() => setForm(true)} className="add-group-btn" style={{
+                                            color: (useDarkTextColors? '#172b4d': 'white')
+                                            }}>
                     <span className="plus"><i class="fa-regular fa-plus"></i></span>
                     Add another list
                 </button> :
