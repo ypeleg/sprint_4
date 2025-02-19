@@ -47,6 +47,7 @@
         flex-wrap: wrap;
         .photo{
             padding-inline: 5px;
+           
             &.border{
                 border-bottom: 1px solid #DCDFE4;
             }
@@ -217,5 +218,10 @@
         height: 96px;
         border-radius: 8px;
         object-fit: cover;
+    }
+}
+.photo{
+    &:hover{
+       opacity: 0.7;
     }
 }
