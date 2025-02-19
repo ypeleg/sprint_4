@@ -279,7 +279,12 @@ export function TaskList({ grp,
                             data-task-id={task.id}
                             data-group-id={group.id}
                             className="task"
-                            onClick={() => onLoadTask(task, currentGroup, group, boardToShow)}
+                            onClick={(ev) => {
+                                if (!showQuickEdit) {
+                                    return onLoadTask(ev, task, currentGroup, group, boardToShow)}
+                                }
+
+                            }
                             ref={getCardRef(task.id)}
                             draggable="false"
                         >

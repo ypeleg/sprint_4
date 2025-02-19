@@ -159,7 +159,7 @@ export function QuickEdit({
     function onDeleteLabel() {
         const newBoardLabels = boardLabels.filter((l) => l.color !== previousLabelColor)
         const newCardLabels = cardLabels.filter((l) => l.color !== previousLabelColor)
-        const boardCopy = structuredClone(task.board)
+        const boardCopy = cleanBoard(task.board)
         boardCopy.labels = newBoardLabels
         updateBoard(boardCopy)
 
@@ -182,7 +182,7 @@ export function QuickEdit({
             newBoardLabels = [...boardLabels, newLabel]
             newCardLabels = [...cardLabels, newLabel]
         }
-        const boardCopy = structuredClone(task.board)
+        const boardCopy = cleanBoard(task.board)
         boardCopy.labels = newBoardLabels
         updateBoard(boardCopy)
         setCardLabels(newCardLabels)
@@ -274,7 +274,7 @@ export function QuickEdit({
         const targetGroup = getSelectedGroup()
         if (!targetBoard || !targetGroup) return
 
-        const boardCopyOld = structuredClone(task.board)
+        const boardCopyOld = cleanBoard(task.board)
         const oldGroupIdx = boardCopyOld.groups.findIndex((g) => g.id === task.group.id)
         if (oldGroupIdx >= 0) {
             const taskIdx = boardCopyOld.groups[oldGroupIdx].tasks.findIndex((t) => t.id === task.id)
@@ -283,7 +283,7 @@ export function QuickEdit({
             }
         }
 
-        const boardCopyNew = structuredClone(targetBoard)
+        const boardCopyNew = cleanBoard(targetBoard)
         const newGroupIdx = boardCopyNew.groups.findIndex((g) => g.id === targetGroup.id)
         if (newGroupIdx < 0) return
 
@@ -306,7 +306,7 @@ export function QuickEdit({
         const targetGroup = getSelectedGroup()
         if (!targetBoard || !targetGroup) return
 
-        const boardCopy = structuredClone(targetBoard)
+        const boardCopy = cleanBoard(targetBoard)
         const groupIdx = boardCopy.groups.findIndex((g) => g.id === targetGroup.id)
         if (groupIdx < 0) return
 
@@ -1076,9 +1076,7 @@ export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11, name}) {
 
     return (<div className="maps-container maps-container-outer">
             <div className="maps-in-1" style={{height: '160px', width: '100%'}}>
-                <GoogleMapReact bootstrapURLKeys={{key: "AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc"}}// defaultCenter={center}
-
-                    center={center} defaultZoom={zoom} onClick={onHandleClick}> <AnyReactComponent {...center} text="📍"/> </GoogleMapReact>
+                <GoogleMapReact bootstrapURLKeys={{key: "AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc"}} defaultCenter={center} center={center} defaultZoom={zoom} onClick={onHandleClick}> <AnyReactComponent {...center} text="📍"/> </GoogleMapReact>
             </div>
             <div className="maps-in-2" style={{height: '52px', width: '512px'}}>
                 <h3>{name || 'Tel Aviv'}</h3>
@@ -1092,9 +1090,9 @@ const AnyReactComponent = ({text}) => <div style={{fontSize: '22px'}}>{text}</di
 
 export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     // const { board, group, taskList, ...cleanTask } = taskToShow
-    const {isLoaded} = useJsApiLoader({
-        id: 'google-map-script', googleMapsApiKey: 'AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc', libraries: ["places"]
-    })
+    // const {isLoaded} = useJsApiLoader({
+    //     id: 'google-map-script', googleMapsApiKey: 'AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc', libraries: ["places"]
+    // })
     console.log('task', taskToShow)
     // const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
 
@@ -1451,6 +1449,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
 
         setDate(finalDue)
         setShowPickerDate(false)
+        // todo
+
 
     }
 
@@ -1464,7 +1464,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         const updatedTask = {
             ...taskToShow, startDate: null, dueDate: null, dueDateReminder: null,
         }
-        // updateBoard(...)
+        setDate(null)
+        // todo
     }
 
     function formatMMDDYYYY(dateObj) {
@@ -1928,7 +1929,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                 </div>
                             </div>
                             <div className="inner-component-left-padding">
-                                <GoogleMap name={location.name} lat={location.lat} lng={location.lng} zm={location.zoom}/>
+                                {/*<GoogleMap name={location.name} lat={location.lat} lng={location.lng} zm={location.zoom}/>*/}
 
                             </div>
                         </div>}
@@ -2687,11 +2688,11 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 </div>
 
                 <div className="location-content">
-                    <div className="search-container">
-                        {isLoaded && <StandaloneSearchBox libraries={["places"]} onPlacesChanged={handlePlaceChange} onLoad={(ref) => elGoogleSearch.current = ref}>
+                    {/*<div className="search-container">*/}
+                    {/*    {isLoaded && <StandaloneSearchBox libraries={["places"]} onPlacesChanged={handlePlaceChange} onLoad={(ref) => elGoogleSearch.current = ref}>*/}
 
-                            <input type="text" placeholder="Search Google Maps" className="location-input"/> </StandaloneSearchBox>}
-                    </div>
+                    {/*        <input type="text" placeholder="Search Google Maps" className="location-input"/> </StandaloneSearchBox>}*/}
+                    {/*</div>*/}
                 </div>
             </div>
 
@@ -3442,18 +3443,25 @@ export function BoardDetails() {
     }
 
 
-    async function onLoadTask(task, taskList, group, currentBoard) {
-        console.log('task', task)
-        console.log('taskList', taskList)
-        console.log('group', group)
+    async function onLoadTask(ev, task, taskList, group, currentBoard) {
+        console.log('ev.target', ev.target)
+        console.log('ev.currentTarget', ev.currentTarget)
+        // if (ev.target === ev.currentTarget) {
+            console.log('task', task)
+            console.log('taskList', taskList)
+            console.log('group', group)
 
-        task.group = group
-        task.taskList = taskList
-        task.board = currentBoard
+            task.group = group
+            task.taskList = taskList
+            task.board = currentBoard
 
-        setTaskToShow(task)
-        setTaskToEdit(task)
-        togglePopup()
+            setTaskToShow(task)
+            setTaskToEdit(task)
+            if (!showQuickEdit) {
+                togglePopup()
+            }
+        // }
+
     }
 
     function closePopupOnlyIfClickedOutOfIt(e) {
@@ -3492,7 +3500,8 @@ export function BoardDetails() {
     async function onModalClose() {
         try {
             // console.log('modal close')
-            const updatedTask = taskToEdit
+            const updatedTask = structuredClone(taskToShow)
+            // const updatedTask = taskToShow
             console.log('modal close ', updatedTask.title)
             const boardCopy = cleanBoard(boardToShow)
             const groupIdx = boardCopy.groups.findIndex((g) => g.id === updatedTask.group.id)
