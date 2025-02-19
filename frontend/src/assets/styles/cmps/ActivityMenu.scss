@@ -1,17 +1,28 @@
 .activitymenu{
     height: 100%;
     background-color: white;
-    max-width:320px;
+    width:320px;
     right: 0;
     color: #172b4d;
-    position: absolute;
+    position: fixed;
     z-index: 1;
     box-shadow:  0 8px 12px #091e4226, 0 0 1px #091e424f;
-    padding-inline: 12px;
+    padding-left: 12px;
     .header{
         display: flex;
         justify-content: space-between;
         padding: 12px 0px;
+        padding-right: 12px;
+        &.main{
+            display: grid;
+            grid-template-columns: 40px 1fr 40px;
+            align-items: center;
+            .title{
+                grid-column: 2;
+                text-align: center;
+                padding-bottom: 4px;
+            }
+        }
         .title{
             font-size: 16px;
             font-weight: 500;
@@ -30,6 +41,42 @@
         border-top: 1px solid #DCDFE4;
         padding-top: 16px;
         display: grid;
+        overflow-y: auto;
+        max-height: 100%;
+        &.mainmenu{
+            justify-items: start;
+            font-size: 14px;
+            font-weight: 400;
+            .hr{
+                height: 1px;
+                width: 100%;
+               background-color:  #DCDFE4;
+               margin-block: 8px;
+            }
+            button{
+                .settings{
+
+                }
+               .subabout{
+                font-size: 12px;
+               }
+                width: 100%;
+                text-align: start;
+                display: flex;
+                align-items: center;
+                padding: 6px 12px;
+                .about{
+                    display: block;
+                }
+                span{
+                    margin-left: 6px;
+                }
+                svg{
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
         .activity{
             display: flex;
             gap: 8px;
