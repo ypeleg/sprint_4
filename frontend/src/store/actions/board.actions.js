@@ -126,9 +126,23 @@ export async function addBoard(board) {
     }
 }
 
+function cleanBoard(board) {
+    const boardCopy = {...board}
+    boardCopy.groups = board.groups.map(group => {
+        const groupCopy = {...group}
+        groupCopy.tasks = group.tasks.map(task => {
+            const {board, group, taskList, ...cleanTask} = task
+            return cleanTask
+        })
+        return groupCopy
+    })
+    return boardCopy
+}
+
+
 export async function updateBoard(board) {
     try {
-        board = structuredClone(board)
+        board = cleanBoard(board)
         store.dispatch(getCmdUpdateBoard(board))
         const savedBoard = await boardService.save(board)
         return savedBoard

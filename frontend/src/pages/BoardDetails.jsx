@@ -22,7 +22,7 @@ import {ActivityMenu} from "../cmps/ActivityMenu.jsx"
 
 
 export function QuickEdit({
-    task, pos, closePopupOnlyIfClickedOutOfIt, togglePopup, onDeleteTask,
+    task, pos, closePopupOnlyIfClickedOutOfIt, togglePopup, onDeleteTask, updateQuickEditPreview,
 }) {
     const {rect, card, coords} = pos
     const {y, x, w, h} = coords
@@ -118,7 +118,6 @@ export function QuickEdit({
     function onAddMember(member) {
         setMembers((prev) => [...prev, member])
         setBoardMembersToShow((prev) => prev.filter((m) => m._id !== member._id))
-        // Also update the actual task data
         updateTaskState({members: [...members, member]})
     }
 
@@ -129,7 +128,8 @@ export function QuickEdit({
         updateTaskState({members: updated})
     }
 
-    const boardLabels = task.board.labels || []
+
+    const [boardLabels, setBoardLabels] = useState((task.board.labels).filter((label, index, self) => self.findIndex((l) => l.color === label.color) === index) || [])
     const [cardLabels, setCardLabels] = useState(task.labels || [])
 
     function onToggleLabel(label) {
@@ -183,9 +183,22 @@ export function QuickEdit({
             newCardLabels = [...cardLabels, newLabel]
         }
         const boardCopy = cleanBoard(task.board)
-        boardCopy.labels = newBoardLabels
-        updateBoard(boardCopy)
+        let taskBoardLabels = task.boardLabels
+        let taskDotBoardLabels = task.board.labels
+        let oldBoardLabels = boardCopy.labels
+        let newestBoardLabels = newBoardLabels
+        let everySingleLabelFromEverySingleSource = []
+        taskBoardLabels.forEach((label) => { everySingleLabelFromEverySingleSource.push(label) })
+        taskDotBoardLabels.forEach((label) => { everySingleLabelFromEverySingleSource.push(label) })
+        oldBoardLabels.forEach((label) => { everySingleLabelFromEverySingleSource.push(label) })
+        newestBoardLabels.forEach((label) => { everySingleLabelFromEverySingleSource.push(label) })
+        everySingleLabelFromEverySingleSource = everySingleLabelFromEverySingleSource.filter((label, index, self) => self.findIndex((l) => l.color === label.color) === index)
+        boardCopy.labels = structuredClone(everySingleLabelFromEverySingleSource)
+        task.board.labels = structuredClone(everySingleLabelFromEverySingleSource)
+        task.boardLabels = structuredClone(everySingleLabelFromEverySingleSource)
+        updateBoard(cleanBoard(boardCopy))
         setCardLabels(newCardLabels)
+        setBoardLabels(everySingleLabelFromEverySingleSource)
         updateTaskState({labels: newCardLabels})
         setCurrentLabelText("")
         setCurrentLabelColor("")
@@ -416,7 +429,7 @@ export function QuickEdit({
         boardCopy.groups = board.groups.map(group => {
             const groupCopy = {...group}
             groupCopy.tasks = group.tasks.map(task => {
-                const {board, group, ...cleanTask} = task
+                const {board, group, taskList, ...cleanTask} = task
                 return cleanTask
             })
             return groupCopy
@@ -425,7 +438,7 @@ export function QuickEdit({
     }
 
     function updateTaskState(changes) {
-        const boardCopy = cleanBoard(task.board)
+        const boardCopy = task.board
         const groupIdx = boardCopy.groups.findIndex((g) => g.id === task.group.id)
         if (groupIdx === -1) return
         const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex((t) => t.id === task.id)
@@ -433,8 +446,17 @@ export function QuickEdit({
 
         const oldTask = boardCopy.groups[groupIdx].tasks[taskIdx]
         const newTask = {...oldTask, ...changes}
-        boardCopy.groups[groupIdx].tasks[taskIdx] = newTask
-        updateBoard(boardCopy)
+
+        // HERE
+
+        const {board, group, taskList, ...cleanTask} = newTask
+
+        boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask
+
+        console.log(boardCopy)
+        console.log(newTask)
+
+        updateBoard(cleanBoard(boardCopy))
     }
 
     return (<>
@@ -606,22 +628,7 @@ export function QuickEdit({
                                                     setShowPickerChangeALabel(true)
                                                 }}>
                                                     <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M7.82034 14.4893L9.94134
-                                                  16.6103L18.4303
-                                                  8.12131L16.3093
-                                                  6.00031H16.3073L7.82034
-                                                  14.4893ZM17.7233 4.58531L19.8443
-                                                  6.70731C20.6253 7.48831
-                                                  20.6253 8.7543 19.8443
-                                                  9.53531L10.0873
-                                                  19.2933L5.13734 14.3433L14.8943
-                                                  4.58531C15.2853 4.19531
-                                                  15.7973 4.00031 16.3093 4.00031C16.8203
-                                                  4.00031 17.3323 4.19531 17.7233
-                                                  4.58531ZM5.20094 20.4097C4.49794
-                                                  20.5537 3.87694 19.9327 4.02094
-                                                  19.2297L4.80094 15.4207L9.00994
-                                                  19.6297L5.20094 20.4097Z" fill="currentColor"/>
+                                                        <path fillRule="evenodd" clipRule="evenodd" d="M7.82034 14.4893L9.94134 16.6103L18.4303                                                   8.12131L16.3093                                                   6.00031H16.3073L7.82034                                                   14.4893ZM17.7233 4.58531L19.8443                                                   6.70731C20.6253 7.48831                                                   20.6253 8.7543 19.8443                                                   9.53531L10.0873                                                   19.2933L5.13734 14.3433L14.8943                                                   4.58531C15.2853 4.19531                                                   15.7973 4.00031 16.3093 4.00031C16.8203                                                   4.00031 17.3323 4.19531 17.7233                                                   4.58531ZM5.20094 20.4097C4.49794                                                   20.5537 3.87694 19.9327 4.02094                                                   19.2297L4.80094 15.4207L9.00994                                                   19.6297L5.20094 20.4097Z" fill="currentColor"/>
                                                     </svg>
                                                 </button>
                                             </label>)
@@ -644,17 +651,7 @@ export function QuickEdit({
                         <div className="picker-header">
                             <button className="back-btn" onClick={() => setShowPickerChangeALabel(false)}>
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15.7071 4.29289C16.0976
-                       4.68342 16.0976 5.31658 15.7071
-                       5.70711L9.41421 12L15.7071
-                       18.2929C16.0976 18.6834 16.0976
-                       19.3166 15.7071 19.7071C15.3166
-                       20.0976 14.6834 20.0976 14.2929
-                       19.7071L7.29289 12.7071C6.90237
-                       12.3166 6.90237 11.6834 7.29289
-                       11.2929L14.2929 4.29289C14.6834
-                       3.90237 15.3166 3.90237 15.7071
-                       4.29289Z" fill="currentColor"/>
+                                    <path d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071                       5.70711L9.41421 12L15.7071                       18.2929C16.0976 18.6834 16.0976                       19.3166 15.7071 19.7071C15.3166                       20.0976 14.6834 20.0976 14.2929                       19.7071L7.29289 12.7071C6.90237                       12.3166 6.90237 11.6834 7.29289                       11.2929L14.2929 4.29289C14.6834                       3.90237 15.3166 3.90237 15.7071                       4.29289Z" fill="currentColor"/>
                                 </svg>
                             </button>
                             <h3>Edit label</h3>
@@ -678,10 +675,7 @@ export function QuickEdit({
                                 </div>
                                 <button className="remove-color-btn" onClick={onDeleteLabel}>
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5
-                                   6.41L10.59 12L5 17.59L6.41 19L12
-                                   13.41L17.59 19L19 17.59L13.41
-                                   12L19 6.41Z" fill="currentColor"/>
+                                        <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5                                    6.41L10.59 12L5 17.59L6.41 19L12                                   13.41L17.59 19L19 17.59L13.41                                    12L19 6.41Z" fill="currentColor"/>
                                     </svg>
                                     Remove color
                                 </button>
@@ -1315,7 +1309,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         boardCopy.groups = board.groups.map(group => {
             const groupCopy = {...group}
             groupCopy.tasks = group.tasks.map(task => {
-                const {board, group, ...cleanTask} = task
+                const {board, group, taskList, ...cleanTask} = task
                 return cleanTask
             })
             return groupCopy
@@ -1487,6 +1481,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         setCurrentLabelColor('')
         setPreviousLabelColor('')
     }
+
 
     function hidePicker(ev) {
         ev.stopPropagation()
@@ -3451,6 +3446,19 @@ export function BoardDetails() {
             console.log('taskList', taskList)
             console.log('group', group)
 
+            let boardLabels = []
+            currentBoard.groups.forEach(group => {
+                group.tasks.forEach(task => {
+                    boardLabels = boardLabels.concat(task.labels)
+                })
+            })
+            boardLabels = boardLabels.filter((label, index, self) =>
+                index === self.findIndex((t) => (
+                    t.id === label.id
+                )))
+            currentBoard.labels = boardLabels
+            task.boardLabels = boardLabels
+
             task.group = group
             task.taskList = taskList
             task.board = currentBoard
@@ -3495,18 +3503,26 @@ export function BoardDetails() {
     function onSaveTaskOuter(updatedTask) {
         // console.log(updatedTask.labels)
         setTaskToEdit(updatedTask)
+
     }
 
     async function onModalClose() {
         try {
-            // console.log('modal close')
-            const updatedTask = structuredClone({...taskToShow})
-            // const updatedTask = taskToShow
+
+            console.log('modal close called')
+
+            // const updatedTask = structuredClone({...taskToShow})
+
+            // I HAVE ABSOLUTLY NO IDEA WHY IT WORKS WITH TASK TO EDIT AND NOT WITH TASK TO SHOW
+            const updatedTask = structuredClone({...taskToEdit})
             console.log('modal close ', updatedTask.title)
             const boardCopy = cleanBoard(boardToShow)
+            console.log('here3')
             const groupIdx = boardCopy.groups.findIndex((g) => g.id === updatedTask.group.id)
             console.log('groupIdx', groupIdx)
             if (groupIdx === -1) return
+
+            console.log('here2')
             const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex((t) => t.id === updatedTask.id)
             console.log('taskIdx', taskIdx)
             if (taskIdx === -1) return
@@ -3564,8 +3580,23 @@ export function BoardDetails() {
 
 
     const editpos = useRef(null)
+    // const targetedCardRef = useRef(null)
 
     const [showQuickEdit, setShowQuickEdit] = useState(false)
+
+
+    function updateQuickEditPreview() {
+        // const card = targetedCardRef.current
+        const card = document.querySelector('.task')
+        const copy = card.cloneNode(true)
+        const currentCardWidth = card.offsetWidth
+        const currentCardHeight = card.offsetHeight
+        const currentCardTop = card.getBoundingClientRect().top
+        const currentCardLeft = card.getBoundingClientRect().left
+        editpos.current = {
+            card: copy, ...editpos.current.coords, w: currentCardWidth, h: currentCardHeight, y: currentCardTop, x: currentCardLeft
+        }
+    }
 
     function onsetQuickEdit(ev) {
         ev.stopPropagation()
@@ -3574,6 +3605,12 @@ export function BoardDetails() {
 
         // TODO: [17.02.2025 | 16:20] learn how to use this interface. (yam's personal todo)
         const card = ev.target.closest('.task')
+
+        // place a new ref on the card targeted so it could be used to update the preview
+        // targetedCardRef.current = card
+
+
+
         const taskId = ev.target.closest('.task').dataset.taskId
         const groupId = ev.target.closest('.task').dataset.groupId
 
@@ -3621,7 +3658,7 @@ export function BoardDetails() {
         boardCopy.groups = board.groups.map(group => {
             const groupCopy = {...group}
             groupCopy.tasks = group.tasks.map(task => {
-                const {board, group, ...cleanTask} = task
+                const {board, group, taskList, ...cleanTask} = task
                 return cleanTask
             })
             return groupCopy
@@ -3758,7 +3795,11 @@ export function BoardDetails() {
                 <SideBar backgrounColor={sidebarBackgroundColor} borderColor={sidebarBorderColor}/>
 
                 <section className="board-display">
-                    {showActivityMenu && <ActivityMenu onSetActivityMenu={onSetActivityMenu}/>} {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit} task={taskToShow} togglePopup={togglePopup} onDeleteTask={onDeleteTask}/>} <BoardHeader onSetActivityMenu={onSetActivityMenu} backgrounColor={headerBackgroundColor} borderColor={headerBorderColor} onSetShowShare={onSetShowShare} onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable} useDarkTextColors={useDarkTextColors}/>
+                    {showActivityMenu && <ActivityMenu onSetActivityMenu={onSetActivityMenu}/>}
+
+                    {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit} task={taskToShow} togglePopup={togglePopup} onDeleteTask={onDeleteTask} updateQuickEditPreview={updateQuickEditPreview}/>}
+
+                    <BoardHeader onSetActivityMenu={onSetActivityMenu} backgrounColor={headerBackgroundColor} borderColor={headerBorderColor} onSetShowShare={onSetShowShare} onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable} useDarkTextColors={useDarkTextColors} />
 
                     {showTable && <GroupTable></GroupTable>} {!showTable && <GroupList onSetPlaceholderHeight={onSetPlaceholderHeight} Placeholder={Placeholder} placeholderHeight={placeholderHeight} onsetQuickEdit={onsetQuickEdit} showQuickEdit={showQuickEdit} onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>} {/* <section className="group-lists">
                         {boardToShow.groups.map(group => {
