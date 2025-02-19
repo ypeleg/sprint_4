@@ -41,7 +41,7 @@ export function AddGroup({useDarkTextColors}) {
 
 
     async function onSubmit(ev) {
-        debugger
+    
         console.log(group.title)
        
         const copyBoard = {...board,groups:[...board.groups,group]}
