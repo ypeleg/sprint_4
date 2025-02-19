@@ -3332,3 +3332,11 @@ textarea.change-header.header-textarea {
     padding-top: 16px;
     padding-left: 12px;
 }
+
+.user-circle,
+.user-icon,
+.user-icon img,
+.task-user-icon {
+    background-size: contain;
+    filter: brightness(0.95);
+}

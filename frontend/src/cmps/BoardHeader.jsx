@@ -139,22 +139,32 @@ color: (useDarkTextColors? '#172b4d': 'white')
                 </div>
                 <div className={`${useDarkTextColors? 'divider': 'divider-white'}`}></div>
                 <div className="users">
-                    <div className="user-icon">
-                        <img src="roi.png" />
-                        <img className="admin-rank" src="admin.png" />
-                    </div>
-                    <div className="user-icon">
-                        <img src="roi.png" />
-                        <img className="admin-rank" src="admin.png" />
-                    </div>
-                    <div className="user-icon">
-                        <img src="roi.png" />
-                        <img className="admin-rank" src="admin.png" />
-                    </div>
-                    <div className="user-icon">
-                        <img src="roi.png" />
-                        <img className="admin-rank" src="admin.png" />
-                    </div>
+                    {/*<div className="user-icon">*/}
+                    {/*    <img src="roi.png" />*/}
+                    {/*    <img className="admin-rank" src="admin.png" />*/}
+                    {/*</div>*/}
+                    {/*<div className="user-icon">*/}
+                    {/*    <img src="roi.png" />*/}
+                    {/*    <img className="admin-rank" src="admin.png" />*/}
+                    {/*</div>*/}
+                    {/*<div className="user-icon">*/}
+                    {/*    <img src="roi.png" />*/}
+                    {/*    <img className="admin-rank" src="admin.png" />*/}
+                    {/*</div>*/}
+                    {/*<div className="user-icon">*/}
+                    {/*    <img src="roi.png" />*/}
+                    {/*    <img className="admin-rank" src="admin.png" />*/}
+                    {/*</div>*/}
+                    {boardToShow.members.map((member, index) => {
+                        return ((index < 4)?
+                            <div key={index} className="user-icon">
+                                <img src={member.imgUrl
+                                    ? member.imgUrl
+                                    : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'} />
+                                <img className="admin-rank" src={member.isAdmin ? 'https://cdn-icons-png.flaticon.com/512/149/149071.png' : ''} />
+                            </div>: <></>
+                        )
+                    })}
                 </div>
                 <button id={`${useDarkTextColors? '': 'share-white-ver'}`} onClick={onSetShowShare} className={` ${useDarkTextColors? 'share-btn': 'share-white-ver'}`} >
                     <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
