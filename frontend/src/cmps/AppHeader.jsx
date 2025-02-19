@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { useNavigate } from "react-router"
-import { UserMsg } from './UserMsg.jsx'
 import { useSelector } from "react-redux"
 
 
@@ -12,7 +11,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors }) {
     const [isModalOpen, setIsModalopen] = useState(false)
     const [openAccountPopup, setOpenAccountPopup] = useState(false)
     const loggedUser = useSelector(state => state.userModule.user)
-    console.log(loggedUser)
+    console.log('loggedUser', loggedUser)
 
 
     const navgite = useNavigate()
@@ -100,40 +99,72 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors }) {
                         title="LH"
                         onClick={() => setOpenAccountPopup(!openAccountPopup)}
                     >
-                        {loggedUser?.fullName}
+                        {(loggedUser?.fullname?.split(' ')[0][0]?.toUpperCase() || '') + '' + (loggedUser?.fullname?.split(' ')[1][0]?.toUpperCase() || '')}
                     </div>
-                    {openAccountPopup && (
-                        <div className="account-popup">
-                            <div className="account-header">ACCOUNT</div>
-                            <div className="account-info">
-                                {loggedUser && <>
-                                <div className="profile-icon large">{loggedUser?.imgUrl}</div>
-                                <div className="user-details">
-                                     <p className="user-name">{loggedUser?.fullname}</p>
-                                    <p className="user-email">{loggedUser?.email}</p>
-                                </div></>}
-                                {(!loggedUser) && <>
-                                    <div className="profile-icon large"></div>
-                                    <div className="user-details">
-                                        <p className="user-name">Guest</p>
-                                        <button className="login-btn"
-                                            onClick={() => navgite('/login')}>Login</button>
-                                        {/*<p className="user-email">{loggedUser?.email}</p>*/}
-                                    </div></>}
+                    {openAccountPopup && (<div className="account-popup">
+                            <section className="account-section">
+                                <div className="section-header">ACCOUNT</div>
+                                <div className="account-info">
+                                    <div className="profile-icon large">
+                                        {(loggedUser?.imgUrl) ?
 
-                            </div>
-                            <hr />
-                            <button className="logout-btn">Logout</button>
-                        </div>
-                    )
-                    }
+                                            (loggedUser?.imgUrl) :
+
+                                            (loggedUser?.fullname?.split(' ')[0][0]?.toUpperCase() || '') + '' + (loggedUser?.fullname?.split(' ')[1][0]?.toUpperCase() || '')
+
+                                        }
+                                    </div>
+                                    <div className="user-details">
+                                        <p className="user-name">{loggedUser?.fullname || 'Welcome Guest!'}</p>{(!!loggedUser?.username) && <p className="user-email">{loggedUser?.username || 'cell@theirer.com'}</p>}
+                                    </div>
+                                </div>
+
+                                <div className="menu-items">
+                                    <button className="menu-item">Switch accounts</button>
+                                    <button className="menu-item with-icon">
+                                        <span>Manage account</span> <span className="external-icon">↗</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <section className="trello-section">
+                                <div className="section-header">TRELLO</div>
+                                <div className="menu-items">
+                                    <button className="menu-item">Profile and visibility</button>
+                                    <button className="menu-item">Activity</button>
+                                    <button className="menu-item">Cards</button>
+                                    <button className="menu-item">Settings</button>
+                                    <button className="menu-item with-icon">
+                                        <span>Theme</span> <span className="arrow-icon">›</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <section className="workspace-section">
+                                <button className="create-workspace">
+                                    <span className="workspace-icon">+</span> Create Workspace
+                                </button>
+                            </section>
+
+                            <section className="help-section">
+                                <div className="menu-items">
+                                    <button className="menu-item">Help</button>
+                                    <button className="menu-item">Shortcuts</button>
+                                </div>
+                            </section>
+
+                            <section className="logout-section">
+                                <div className="menu-items">
+                                    <button className="logout-item">Logout</button>
+                                </div>
+                            </section>
+
+                        </div>)}
 
 
                 </div>
             </nav>
-            {isModalOpen &&
-                <CreateBoardModal onClose={onClose} />
-            }
+            {isModalOpen && <CreateBoardModal onClose={onClose}/>}
         </header>
 
     )

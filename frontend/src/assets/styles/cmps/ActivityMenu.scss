@@ -113,6 +113,15 @@
             }
 
             button {
+                width: 100%;
+                text-align: start;
+                display: flex;
+                align-items: center;
+                padding: 6px 12px;
+                border-radius: 8px;
+                &:hover{
+                    background-color: #091e420f;
+                }
                 img {
                     width: 20px;
                     height: 20px;
@@ -127,12 +136,7 @@
                     font-size: 12px;
                 }
 
-                width: 100%;
-                text-align: start;
-                display: flex;
-                align-items: center;
-                padding: 6px 12px;
-
+          
                 .about {
                     display: block;
                 }
@@ -144,6 +148,7 @@
                 svg {
                     width: 20px;
                     height: 20px;
+                    margin-right: 8px;
                 }
             }
         }

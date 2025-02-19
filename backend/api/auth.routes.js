@@ -67,7 +67,7 @@ export async function onLogin(req, res) {
         res.json(user)
     } catch (err) {
         logger.error('Failed to Login ' + err)
-        res.status(401).send({ err: 'Failed to Login' })
+        res.status(401).send({ err: err })
     }
 }
 
@@ -89,7 +89,7 @@ export async function onSignup(req, res) {
         res.json(user)
     } catch (err) {
         logger.error('Failed to signup ' + err)
-        res.status(500).send({ err: 'Failed to signup' })
+        res.status(500).send({ err: err })
     }
 }
 
@@ -98,7 +98,7 @@ export async function onLogout(req, res) {
         res.clearCookie('loginToken')
         res.send({ msg: 'Logged out successfully' })
     } catch (err) {
-        res.status(500).send({ err: 'Failed to logout' })
+        res.status(500).send({ err: err })
     }
 }
 

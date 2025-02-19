@@ -216,7 +216,7 @@ export const remoteBoardService = {
 
     getById: async (boardId, filterBy = { title: '' }) => {
         try {
-            const boards = await remoteBoardService.query({ ...filterBy, _id: boardId })
+            const boards = await httpService.get(BASE_URL +boardId, filterBy)
             return boards[0]
         } catch (error) {
             console.error(`Failed to get board ${boardId}:`, error)

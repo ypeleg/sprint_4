@@ -18,7 +18,7 @@ export const boardService = {
     query: async function (filterBy = {txt: ''}) {
         try {
             console.log('filterBy:', filterBy)
-
+            
             const criteria = {}
             if (filterBy._id) {
                 criteria._id = ObjectId.createFromHexString(filterBy._id)
@@ -50,11 +50,13 @@ export const boardService = {
         }
     },
 
-    getById: async function (boardId) {
+    getById: async function (boardId,filterBy = {}) {
         try {
+           
+            const pipeline = getPipeLine(filterBy,boardId)
             const collection = await dbService.getCollection('board')
-            const board = await collection.findOne({_id: ObjectId.createFromHexString(boardId)})
-            board.createdAt = board._id.getTimestamp()
+            const board = await collection.aggregate(pipeline).toArray()
+            
             return board
         } catch (err) {
             logger.error(`while finding board ${boardId}`, err)
@@ -122,18 +124,19 @@ export async function onGetboards(req, res) {
         res.json(boards)
     } catch (err) {
         logger.error('Failed to get boards', err)
-        res.status(500).send({ err: 'Failed to get boards' })
+        res.status(500).send({ err: err })
     }
 }
 
 export async function onGetboardById(req, res) {
     try {
         const boardId = req.params.id
-        const board = await boardService.getById(boardId)
+        const filterBy = req.query
+        const board = await boardService.getById(boardId,filterBy)
         res.json(board)
     } catch (err) {
         logger.error('Failed to get board', err)
-        res.status(500).send({ err: 'Failed to get board' })
+        res.status(500).send({ err: err })
     }
 }
 
@@ -148,7 +151,7 @@ export async function onAddboard(req, res) {
         res.json(addedboard)
     } catch (err) {
         logger.error('Failed to add board', err)
-        res.status(500).send({ err: 'Failed to add board' })
+        res.status(500).send({ err: err })
     }
 }
 
@@ -161,7 +164,7 @@ export async function onUpdateboard(req, res) {
         res.json(updatedboard)
     } catch (err) {
         logger.error('Failed to update board', err)
-        res.status(500).send({ err: 'Failed to update board' })
+        res.status(500).send({ err: err })
     }
 }
 
@@ -172,10 +175,192 @@ export async function onRemoveboard(req, res) {
         res.send(`${deletedCount} boards removed`)
     } catch (err) {
         logger.error('Failed to remove board', err)
-        res.status(500).send({ err: 'Failed to remove board' })
+        res.status(500).send({ err: err })
     }
 }
+function getPipeLine(filteryBy,boardId){
+        const {title,members,dueDate,status} = filteryBy
+    return [ { $match: { _id: new ObjectId(boardId) } }, 
 
+    
+    ...(title ? [
+      {
+        $set: {
+          "groups": {
+            $map: {
+              input: "$groups",
+              as: "group",
+              in: {
+                $mergeObjects: [
+                  "$$group",
+                  {
+                    tasks: {
+                      $filter: {
+                        input: "$$group.tasks",
+                        as: "task",
+                        cond: {
+                          $regexMatch: {
+                            input: "$$task.title",
+                            regex: new RegExp(title, 'i'),
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    ] : []),
+  
+    ...(members?.length ? [
+      {
+        $set: {
+          "groups": {
+            $map: {
+              input: "$groups",
+              as: "group",
+              in: {
+                $mergeObjects: [
+                  "$$group",
+                  {
+                    tasks: {
+                      $filter: {
+                        input: "$$group.tasks",
+                        as: "task",
+                        cond: {
+                          $or: [
+                            {
+                              $and: [
+                                { $eq: [{ $size: "$$task.members" }, 0] },
+                                { $in: ["1", members] }
+                              ]
+                            },
+                            {
+                              $in: [
+                                { $arrayElemAt: ["$$task.members._id", 0] },
+                                members
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    ] : []),
+  
+   
+    ...(dueDate?.length ? [
+        {
+          $set: {
+            "groups": {
+              $map: {
+                input: "$groups",
+                as: "group",
+                in: {
+                  $mergeObjects: [
+                    "$$group",
+                    {
+                      tasks: {
+                        $filter: {
+                          input: "$$group.tasks",
+                          as: "task",
+                          cond: {
+                            $or: [
+                       
+                              {
+                                $and: [
+                                  { $eq: [{ $ifNull: ["$$task.dueDate", null] }, null] },  
+                                  { $in: ["no", dueDate] } 
+                                ]
+                              },
+                           
+                              {
+                                $and: [
+                                    { $in: ["week", dueDate] },
+                                    {
+                                      $gt: [
+                                        { $dateFromString: { dateString: "$$task.dueDate" } }, 
+                                        new Date() 
+                                      ]
+                                    },
+                                    {
+                                      $lt: [
+                                        { $dateFromString: { dateString: "$$task.dueDate" } },
+                                        new Date(new Date().setDate(new Date().getDate() + 7))
+                                      ]
+                                    }
+                                  
+                                ]
+                              },
+                         
+                              {
+                                $and: [
+                                  { $in: ["over", dueDate] },
+                                  {  $lt: [
+                                    { $dateFromString: { dateString: "$$task.dueDate" } }, 
+                                    new Date()
+                                  ] }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ] : []),
+    
+      ...(status ? [
+        {
+          $set: {
+            "groups": {
+              $map: {
+                input: "$groups",
+                as: "group",
+                in: {
+                  $mergeObjects: [
+                    "$$group",
+                    {
+                      tasks: {
+                        $filter: {
+                          input: "$$group.tasks",
+                          as: "task",
+                          cond: {
+                            $cond: {
+                              if: { $eq: [status, "done"] }, 
+                              then: { $eq: ["$$task.status", "done"] }, 
+                              else: { $ne: ["$$task.status", "done"] }  
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ] : []),
+  
+    
+  ]
+        
+}
 export const boardRoutes = express.Router()
 
 
