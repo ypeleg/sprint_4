@@ -1,10 +1,11 @@
 
 
 import { store } from '../store'
-import { boardService } from '../../services/board.service.js'
+import { boardService, USE_AI, aiGenerator } from '../../services/board.service.js'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_FILTER_BY } from '../reducers/board.reducer.js'
 import { makeId } from '../../services/util.service.js'
 
+// import { getRandomBoardAI } from "../../services/data_ai.js"
 
 export function getRandomBoard() {
     return boardService.getEmptyBoard()
@@ -14,6 +15,7 @@ export function getEmptyBoard() {
     // return boardService.getEmptyBoard()
     return {
         // _id: random.id(random.randint(4, 10)),
+        generator: 'getEmptyBoard',
         title: "",
         isStarred: false,
         archivedAt: null,
@@ -73,6 +75,20 @@ export async function loadBoards(filterBy) {
     try {
         const boards = await boardService.query(filterBy)
         store.dispatch(getCmdSetBoards(boards))
+        // if (USE_AI) {
+        //     for (let i = 0; i < boards.length; i++) {
+        //         if (boards[i].generator === 'getRandomBoard') {
+        //             aiGenerator().then(
+        //                 board => {
+        //                     board._id = boards[i]._id
+        //                     board.id = boards[i].id
+        //                     store.dispatch(getCmdUpdateBoard(board))
+        //                     boardService.save(board)
+        //                 }
+        //             )
+        //         }
+        //     }
+        // }
     } catch (err) {
         console.log('Cannot load boards', err)
         throw err
@@ -83,6 +99,18 @@ export async function loadBoard(boardId, filterBy = { title: '' }) {
     try {
         const board = await boardService.getById(boardId, filterBy)
         store.dispatch(getCmdSetBoard(board))
+        if (USE_AI) {
+            if (board.generator === 'getRandomBoard') {
+                aiGenerator().then(
+                    aiBoard => {
+                        aiBoard._id = board._id
+                        aiBoard.id = board.id
+                        store.dispatch(getCmdUpdateBoard(aiBoard))
+                        boardService.save(aiBoard)
+                    }
+                )
+            }
+        }
     } catch (err) {
         console.log('Cannot load board', err)
         throw err
