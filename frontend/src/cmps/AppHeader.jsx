@@ -3,24 +3,31 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { UserMsg } from './UserMsg.jsx'
+import { useSelector } from "react-redux"
+
 
 import { CreateBoardModal } from '../pages/CreateBoardModal.jsx'
-export function AppHeader({backgrounColor, borderColor, useDarkTextColors}) {
-    
-    const [isModalOpen, setIsModalopen] = useState(false)
-  const navgite = useNavigate()
+export function AppHeader({ backgrounColor, borderColor, useDarkTextColors }) {
 
-  function onClose() {
-    setIsModalopen(false)
-  }
+    const [isModalOpen, setIsModalopen] = useState(false)
+    const [openAccountPopup, setOpenAccountPopup] = useState(false)
+    const loggedUser = useSelector(state => state.userModule.user)
+    console.log(loggedUser)
+
+
+    const navgite = useNavigate()
+
+    function onClose() {
+        setIsModalopen(false)
+    }
     return (
         <header className="board-index-header"
-                style={{
-                    // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
-                    backgroundColor: backgrounColor,
-                    borderColor: borderColor,
+            style={{
+                // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
+                backgroundColor: backgrounColor,
+                borderColor: borderColor,
 
-                }}>
+            }}>
 
             <nav className="flex-space-between center-vertical">
 
@@ -30,13 +37,13 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors}) {
                         {/*<img className="dots" src="dots.svg"/>*/}
                         <svg width="20" height="20" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" clipRule="evenodd"
-                                  d="M4 5C4 4.44772 4.44772 4 5 4H7C7.55228 4 8 4.44772 8 5V7C8 7.55228 7.55228 8 7 8H5C4.44772 8 4 7.55228 4 7V5ZM4 11C4 10.4477 4.44772 10 5 10H7C7.55228 10 8 10.4477 8 11V13C8 13.5523 7.55228 14 7 14H5C4.44772 14 4 13.5523 4 13V11ZM11 4C10.4477 4 10 4.44772 10 5V7C10 7.55228 10.4477 8 11 8H13C13.5523 8 14 7.55228 14 7V5C14 4.44772 13.5523 4 13 4H11ZM10 11C10 10.4477 10.4477 10 11 10H13C13.5523 10 14 10.4477 14 11V13C14 13.5523 13.5523 14 13 14H11C10.4477 14 10 13.5523 10 13V11ZM17 4C16.4477 4 16 4.44772 16 5V7C16 7.55228 16.4477 8 17 8H19C19.5523 8 20 7.55228 20 7V5C20 4.44772 19.5523 4 19 4H17ZM16 11C16 10.4477 16.4477 10 17 10H19C19.5523 10 20 10.4477 20 11V13C20 13.5523 19.5523 14 19 14H17C16.4477 14 16 13.5523 16 13V11ZM5 16C4.44772 16 4 16.4477 4 17V19C4 19.5523 4.44772 20 5 20H7C7.55228 20 8 19.5523 8 19V17C8 16.4477 7.55228 16 7 16H5ZM10 17C10 16.4477 10.4477 16 11 16H13C13.5523 16 14 16.4477 14 17V19C14 19.5523 13.5523 20 13 20H11C10.4477 20 10 19.5523 10 19V17ZM17 16C16.4477 16 16 16.4477 16 17V19C16 19.5523 16.4477 20 17 20H19C19.5523 20 20 19.5523 20 19V17C20 16.4477 19.5523 16 19 16H17Z"
-                                  fill="currentColor"></path>
+                                d="M4 5C4 4.44772 4.44772 4 5 4H7C7.55228 4 8 4.44772 8 5V7C8 7.55228 7.55228 8 7 8H5C4.44772 8 4 7.55228 4 7V5ZM4 11C4 10.4477 4.44772 10 5 10H7C7.55228 10 8 10.4477 8 11V13C8 13.5523 7.55228 14 7 14H5C4.44772 14 4 13.5523 4 13V11ZM11 4C10.4477 4 10 4.44772 10 5V7C10 7.55228 10.4477 8 11 8H13C13.5523 8 14 7.55228 14 7V5C14 4.44772 13.5523 4 13 4H11ZM10 11C10 10.4477 10.4477 10 11 10H13C13.5523 10 14 10.4477 14 11V13C14 13.5523 13.5523 14 13 14H11C10.4477 14 10 13.5523 10 13V11ZM17 4C16.4477 4 16 4.44772 16 5V7C16 7.55228 16.4477 8 17 8H19C19.5523 8 20 7.55228 20 7V5C20 4.44772 19.5523 4 19 4H17ZM16 11C16 10.4477 16.4477 10 17 10H19C19.5523 10 20 10.4477 20 11V13C20 13.5523 19.5523 14 19 14H17C16.4477 14 16 13.5523 16 13V11ZM5 16C4.44772 16 4 16.4477 4 17V19C4 19.5523 4.44772 20 5 20H7C7.55228 20 8 19.5523 8 19V17C8 16.4477 7.55228 16 7 16H5ZM10 17C10 16.4477 10.4477 16 11 16H13C13.5523 16 14 16.4477 14 17V19C14 19.5523 13.5523 20 13 20H11C10.4477 20 10 19.5523 10 19V17ZM17 16C16.4477 16 16 16.4477 16 17V19C16 19.5523 16.4477 20 17 20H19C19.5523 20 20 19.5523 20 19V17C20 16.4477 19.5523 16 19 16H17Z"
+                                fill="currentColor"></path>
                         </svg>
                     </div>
                     <div className="logo nav-highlight-hint" onClick={() => navgite('/')}>
-                        {useDarkTextColors && <img className="main-logo" src="logo-not-moving.gif"/>}
-                        {!useDarkTextColors && <img className="main-logo-white" src="trello_white.gif"/>}
+                        {useDarkTextColors && <img className="main-logo" src="logo-not-moving.gif" />}
+                        {!useDarkTextColors && <img className="main-logo-white" src="trello_white.gif" />}
 
                     </div>
 
@@ -61,14 +68,14 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors}) {
                     </div>
 
 
-                    <div onClick={() => setIsModalopen(true)} 
-                    className={`highlighted-btn nav-highlight-hint ${useDarkTextColors? ' ': ' white-colors-btn'}`}>
+                    <div onClick={() => setIsModalopen(true)}
+                        className={`highlighted-btn nav-highlight-hint ${useDarkTextColors ? ' ' : ' white-colors-btn'}`}>
                         <span>Create</span>
                     </div>
 
                 </div>
                 <div className="just-flex and-center">
-                <button className="days-left just-flex">
+                    <button className="days-left just-flex">
                         <svg width="16" height="16" viewBox="0 0 24 24" role="presentation">
                             <path fill="currentcolor" fillRule="evenodd" d="M9.276 4.382 7.357 9.247l-4.863 1.917a.78.78 0 0 0 0 1.45l4.863 1.918 1.919 4.863a.78.78 0 0 0 1.45 0h-.001l1.918-4.863 4.864-1.919a.781.781 0 0 0 0-1.45l-4.864-1.916-1.918-4.865a.78.78 0 0 0-.44-.438.78.78 0 0 0-1.01.438m8.297-2.03-.743 1.886-1.884.743a.56.56 0 0 0 0 1.038l1.884.743.743 1.886a.558.558 0 0 0 1.038 0l.745-1.886 1.883-.743a.557.557 0 0 0 0-1.038l-1.883-.743-.745-1.885a.55.55 0 0 0-.314-.314.56.56 0 0 0-.724.314m-.704 13.003-.744 1.883-1.883.744a.55.55 0 0 0-.316.314.56.56 0 0 0 .316.724l1.883.743.744 1.884c.057.144.17.258.314.315a.56.56 0 0 0 .724-.315l.744-1.884 1.883-.743a.557.557 0 0 0 0-1.038l-1.883-.744-.744-1.883a.55.55 0 0 0-.315-.316.56.56 0 0 0-.723.316"></path>
                         </svg>
@@ -76,7 +83,7 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors}) {
                     </button>
 
                     <div className="search-container">
-                        <input className={`white ${useDarkTextColors? ' ': ' white-search'}`} placeholder="     Search" />
+                        <input className={`white ${useDarkTextColors ? ' ' : ' white-search'}`} placeholder="     Search" />
 
                     </div>
                     <svg width="24" height="24" viewBox="0 0 24 24" role="presentation">
@@ -89,13 +96,33 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors}) {
                     </svg>
 
                     {/* <img className="user" src="user_spec.png"></img> */}
-                    <div class="user-profile member-circle task-user-icon" title="LH">OZ</div>
+                    <div class="user-profile member-circle task-user-icon"
+                        title="LH"
+                        onClick={() => setOpenAccountPopup(!openAccountPopup)}
+                    >
+                        {loggedUser}
+                    </div>
+                    {openAccountPopup && (
+                        <div className="account-popup">
+                            <div className="account-header">ACCOUNT</div>
+                            <div className="account-info">
+                                {/* <div className="profile-icon large">{loggedUser.imgUrl}</div> */}
+                                <div className="user-details">
+                                    {/* <p className="user-name">{loggedUser.fullname}</p> */}
+                                    <p className="user-email">sssss</p>
+                                </div>
+                            </div>
+                            <hr />
+                            <button className="logout-btn">Logout</button>
+                        </div>
+                    )
+                    }
 
 
                 </div>
             </nav>
             {isModalOpen &&
-              <CreateBoardModal onClose={onClose} />
+                <CreateBoardModal onClose={onClose} />
             }
         </header>
 

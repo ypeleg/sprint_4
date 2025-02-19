@@ -6,12 +6,12 @@
     flex-direction: row;
     justify-content: center;
     padding-bottom: 40px;
-    gap: 20px;
+    // gap: 20px;
 
     .home-left-side-bar-container {
         display: flex;
         flex-direction: column;
-        margin: 40px 0 0;
+        margin: 40px 0 20px 0;
         max-height: 90vh;
         padding: 0 16px;
         position: sticky;
@@ -29,7 +29,7 @@
 
 
     .all-boards {
-        max-width: 830px;
+        width: 830px;
         margin-block-start: 36px;
         margin-inline-start: 19px;
 
