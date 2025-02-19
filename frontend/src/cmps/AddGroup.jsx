@@ -59,7 +59,7 @@ export function AddGroup() {
                 <div className="add-task-form add-group-form">
                     <textarea ref={elTextArea} autoFocus onChange={handleChange} value={group.title} placeholder="Enter a title or paste a link" className="task-title" name="title" id="title"></textarea>
                     <div>
-                        <button onClick={(ev) =>{onSubmit(ev); setForm(false)}} className="add-card-btn" >Add list</button>
+                        <button onClick={(ev) =>{onSubmit(ev); setForm(false)}} className="add-card-btn extra" >Add list</button>
                         <button onClick={() => setForm(false)} className="cancel-btn" type="button">X</button>
                     </div>
                 </div>}
