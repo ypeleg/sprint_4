@@ -1,6 +1,6 @@
 
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { BoardPreview } from '../cmps/BoardPreview.jsx'
 import { CreateBoardModal } from './CreateBoardModal.jsx'
@@ -10,6 +10,7 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, addBoard = fal
 
   const [isModalOpen, setIsModalopen] = useState(false)
   const navgite = useNavigate()
+  const elCreatePreview = useRef()
 
   function onClose() {
     setIsModalopen(false)
@@ -30,9 +31,9 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, addBoard = fal
           <article className="board-preview create-board-preview"
             onClick={() => setIsModalopen(!isModalOpen)}
           >
-            <div className="create-board-title">Create new board</div>
+            <div className="create-board-title" ref={elCreatePreview}>Create new board</div>
             {isModalOpen &&
-              <CreateBoardModal onClose={onClose} />
+              <CreateBoardModal onClose={onClose} createModal={elCreatePreview.current} />
             }
           </article>
         }

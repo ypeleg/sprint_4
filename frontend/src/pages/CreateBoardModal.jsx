@@ -7,7 +7,10 @@ import { useNavigate } from 'react-router'
 import { MoreBackgroundsBtn } from "../cmps/MoreBackgroundsBtn.jsx";
 
 
-export function CreateBoardModal({ onClose }) {
+export function CreateBoardModal({ onClose, createModal }) {
+
+  const loc = createModal.getBoundingClientRect()
+  const inset = `auto ${loc.left}px auto ${loc.top}px`
 
   const initialBackgroundColor = [
     { name: "gray", isSelected: false, url: "https://trello.com/assets/13425f9db06517de0f7f.svg" },
@@ -85,7 +88,7 @@ export function CreateBoardModal({ onClose }) {
 
   return (
     <div className="modal-overlay">
-      <section className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <section className="modal-content" style={{ inset }} onClick={(e) => e.stopPropagation()}>
         <div className="modal-header ">
           <div className="title">Create board</div>
           <button className="close-btn" onClick={() => onClose()}>
