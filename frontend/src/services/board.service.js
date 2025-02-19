@@ -1,19 +1,21 @@
 
-
 import { getRandomBoard } from './data.js'
 const { DEV, VITE_LOCAL } = import.meta.env
 import { userService } from './user.service.js'
+
 import { makeId, httpService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
-
-// localStorage.clear()
+const USE_AI = false
+// import { getRandomBoardAI } from './data_ai.js'
 
 
 const SECURE = false
 
 const BASE_URL = 'board/'
 const STORAGE_KEY = 'board'
+
+// localStorage.clear()
 
 export const localBoardService = {
     query: async (filterBy = { title: '' }) => {
@@ -157,21 +159,46 @@ export const localBoardService = {
 
     _createBoards: async () => {
         try {
+            const boardIds = []
             for (let i = 0; i < 5; i++) {
                 const board = getRandomBoard()
-                await localBoardService.save(board)
+                const savedBoard = await localBoardService.save(board)
+                boardIds.push(savedBoard._id)
+                console.log(`Created board with ID: ${savedBoard._id}`)
             }
+            if (USE_AI) {
+                for (const boardId of boardIds) {
+                    try {
+                        // Call AI generation one at a time
+                        const aiBoard = await getRandomBoardAI()
+                        console.log(`AI data generated for board ID: ${boardId}`)
+
+                        // Fetch the existing board
+                        const existingBoard = await localBoardService.getById(boardId)
+
+                        // Merge AI data with existing board, preserving the ID
+                        const updatedBoard = { ...aiBoard, _id: boardId }
+
+                        // Save the updated board immediately
+                        await localBoardService.save(updatedBoard)
+                        console.log(`Updated board with ID: ${boardId} with AI data`)
+                    } catch (err) {
+                        console.error(`Failed to update board ${boardId} with AI data:`, err)
+                    }
+                }
+            }
+
+            console.log('Board creation and updates completed successfully')
         } catch (error) {
             console.error('Failed to create initial boards:', error)
             throw error
         }
-    }
+    },
+
 }
 
 export const remoteBoardService = {
     query: async (filterBy = { title: '' }) => {
-
-
         try {
             let boards = await httpService.get(BASE_URL, filterBy)
 
@@ -180,7 +207,7 @@ export const remoteBoardService = {
                 boards = await httpService.get(BASE_URL, filterBy)
             }
 
-            return await httpService.get(BASE_URL, filterBy)
+            return boards
         } catch (error) {
             console.error('Failed to query boards:', error)
             throw error
@@ -246,16 +273,34 @@ export const remoteBoardService = {
 
     _createBoards: async () => {
         try {
-            const boardPromises = Array(5).fill().map(() => {
+            const boardIds = []
+            for (let i = 0; i < 5; i++) {
                 const board = getRandomBoard()
-                return remoteBoardService.save(board)
-            })
-            await Promise.all(boardPromises)
+                const savedBoard = await remoteBoardService.save(board)
+                boardIds.push(savedBoard._id)
+                console.log(`Created board with ID: ${savedBoard._id}`)
+            }
+            if (USE_AI) {
+                for (const boardId of boardIds) {
+                    try {
+                        const aiBoard = await getRandomBoardAI()
+                        console.log(`AI data generated for board ID: ${boardId}`)
+                        const existingBoard = await remoteBoardService.getById(boardId)
+                        const updatedBoard = { ...aiBoard, _id: boardId }
+                        await remoteBoardService.save(updatedBoard)
+                        console.log(`Updated board with ID: ${boardId} with AI data`)
+                    } catch (err) {
+                        console.error(`Failed to update board ${boardId} with AI data:`, err)
+                    }
+                }
+            }
+
+            console.log('Board creation and updates completed successfully')
         } catch (error) {
             console.error('Failed to create initial boards:', error)
             throw error
         }
-    }
+    },
 }
 
 function getEmptyBoard() {
