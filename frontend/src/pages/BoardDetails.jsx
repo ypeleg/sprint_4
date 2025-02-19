@@ -616,221 +616,72 @@ export function QuickEdit({
                     <div className="picker-header">
                         <h3>Members</h3>
                         <button className="task-modal-close" onClick={hidePicker}>
-                            <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M10.5858 12L5.29289 6.70711C4.90237
-                       6.31658 4.90237 5.68342 5.29289
-                       5.29289C5.68342 4.90237 6.31658
-                       4.90237 6.70711 5.29289L12
-                       10.5858L17.2929 5.29289C17.6834
-                       4.90237 18.3166 4.90237 18.7071
-                       5.29289C19.0976 5.68342 19.0976
-                       6.31658 18.7071 6.70711L13.4142
-                       12L18.7071 17.2929C19.0976 17.6834
-                       19.0976 18.3166 18.7071 18.7071C18.3166
-                       19.0976 17.6834 19.0976 17.2929
-                       18.7071L12 13.4142L6.70711
-                       18.7071C6.31658 19.0976 5.68342
-                       19.0976 5.29289 18.7071C4.90237
-                       18.3166 4.90237 17.6834 5.29289
-                       17.2929L10.5858 12Z"
-                                    fill="currentColor"
-                                />
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                             </svg>
                         </button>
                     </div>
                     <div className="search-container">
-                        <input type="text" placeholder="Search members" />
+                        <input type="text" placeholder="Search members"/>
                     </div>
                     <div>
                         <h4>Card members</h4>
                         <div className="members-list">
-                            {members.map((m) => (
-                                <div
-                                    key={m._id}
-                                    className="member-item just-flex"
-                                    onClick={() => onRemoveMember(m)}
-                                >
+                            {members.map((m) => (<div key={m._id} className="member-item just-flex" onClick={() => onRemoveMember(m)}>
                                     <div className="just-flex">
-                                        {m.imgUrl ? (
-                                            <div
-                                                className="user-circle"
-                                                style={{ backgroundImage: `url(${m.imgUrl})` }}
-                                            ></div>
-                                        ) : (
-                                            <div className="user-circle">
-                                                {m.fullname?.split(" ")[0][0]?.toUpperCase() || ""}
-                                                {m.fullname?.split(" ")[1]?.[0]?.toUpperCase() || ""}
-                                            </div>
-                                        )}
-                                        <span>{m.fullname}</span>
+                                        {m.imgUrl ? (<div className="user-circle" style={{backgroundImage: `url(${m.imgUrl})`}}></div>) : (<div className="user-circle">
+                                                {m.fullname?.split(" ")[0][0]?.toUpperCase() || ""} {m.fullname?.split(" ")[1]?.[0]?.toUpperCase() || ""}
+                                            </div>)} <span>{m.fullname}</span>
                                     </div>
-                                    <button className="task-modal-close">
-                                        <svg
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                clipRule="evenodd"
-                                                d="M10.5858 12L5.29289
-                           6.70711C4.90237 6.31658 4.90237
-                           5.68342 5.29289 5.29289C5.68342
-                           4.90237 6.31658 4.90237 6.70711
-                           5.29289L12 10.5858L17.2929
-                           5.29289C17.6834 4.90237 18.3166
-                           4.90237 18.7071 5.29289C19.0976
-                           5.68342 19.0976 6.31658 18.7071
-                           6.70711L13.4142 12L18.7071
-                           17.2929C19.0976 17.6834 19.0976
-                           18.3166 18.7071 18.7071C18.3166
-                           19.0976 17.6834 19.0976 17.2929
-                           18.7071L12 13.4142L6.70711
-                           18.7071C6.31658 19.0976 5.68342
-                           19.0976 5.29289 18.7071C4.90237
-                           18.3166 4.90237 17.6834 5.29289
-                           17.2929L10.5858 12Z"
-                                                fill="currentColor"
-                                            />
+                                    <button className="task-modal-close" onClick={hidePicker}>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                                         </svg>
                                     </button>
-                                </div>
-                            ))}
+                                </div>))}
                         </div>
                     </div>
                     <div>
                         <h4>Board members</h4>
                         <div className="members-list">
-                            {boardMembersToShow.map((m) => (
-                                <div
-                                    key={m._id}
-                                    className="member-item just-flex"
-                                    onClick={() => onAddMember(m)}
-                                >
+                            {boardMembersToShow.map((m) => (<div key={m._id} className="member-item just-flex" onClick={() => onAddMember(m)}>
                                     <div className="just-flex">
-                                        {m.imgUrl ? (
-                                            <div
-                                                className="user-circle"
-                                                style={{ backgroundImage: `url(${m.imgUrl})` }}
-                                            ></div>
-                                        ) : (
-                                            <div className="user-circle">
-                                                {m.fullname?.split(" ")[0][0]?.toUpperCase() || ""}
-                                                {m.fullname?.split(" ")[1]?.[0]?.toUpperCase() || ""}
-                                            </div>
-                                        )}
-                                        <span>{m.fullname}</span>
+                                        {m.imgUrl ? (<div className="user-circle" style={{backgroundImage: `url(${m.imgUrl})`}}></div>) : (<div className="user-circle">
+                                                {m.fullname?.split(" ")[0][0]?.toUpperCase() || ""} {m.fullname?.split(" ")[1]?.[0]?.toUpperCase() || ""}
+                                            </div>)} <span>{m.fullname}</span>
                                     </div>
-                                    <button className="task-modal-close">
-                                        <svg
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                clipRule="evenodd"
-                                                d="M10.5858 12L5.29289
-                                 6.70711C4.90237 6.31658 4.90237
-                                 5.68342 5.29289 5.29289C5.68342
-                                 4.90237 6.31658 4.90237 6.70711
-                                 5.29289L12 10.5858L17.2929
-                                 5.29289C17.6834 4.90237 18.3166
-                                 4.90237 18.7071 5.29289C19.0976
-                                 5.68342 19.0976 6.31658 18.7071
-                                 6.70711L13.4142 12L18.7071
-                                 17.2929C19.0976 17.6834 19.0976
-                                 18.3166 18.7071 18.7071C18.3166
-                                 19.0976 17.6834 19.0976 17.2929
-                                 18.7071L12 13.4142L6.70711
-                                 18.7071C6.31658 19.0976 5.68342
-                                 19.0976 5.29289 18.7071C4.90237
-                                 18.3166 4.90237 17.6834 5.29289
-                                 17.2929L10.5858 12Z"
-                                                fill="currentColor"
-                                            />
+                                    <button className="task-modal-close" onClick={hidePicker}>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                                         </svg>
                                     </button>
-                                </div>
-                            ))}
+                                </div>))}
                         </div>
                     </div>
-                </div>
-            )}
+                </div>)}
 
-            {/* LABELS PICKER */}
-            {showPickerLabels && (
-                <div
-                    className="picker-popup"
+                {/* LABELS PICKER */} {showPickerLabels && (<div className="picker-popup"
 
-                    style={{ left: pickerLeft, top: pickerTop }}
-                >
-                    {!showPickerChangeALabel && (
-                        <>
+                    style={{left: pickerLeft, top: pickerTop}}>
+                    {!showPickerChangeALabel && (<>
                             <div className="picker-header">
                                 <h3>Labels</h3>
                                 <button className="task-modal-close" onClick={hidePicker}>
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fillRule="evenodd"
-                                            clipRule="evenodd"
-                                            d="M10.5858 12L5.29289
-                               6.70711C4.90237 6.31658 4.90237
-                               5.68342 5.29289 5.29289C5.68342
-                               4.90237 6.31658 4.90237 6.70711
-                               5.29289L12 10.5858L17.2929
-                               5.29289C17.6834 4.90237 18.3166
-                               4.90237 18.7071 5.29289C19.0976
-                               5.68342 19.0976 6.31658 18.7071
-                               6.70711L13.4142 12L18.7071
-                               17.2929C19.0976 17.6834 19.0976
-                               18.3166 18.7071 18.7071C18.3166
-                               19.0976 17.6834 19.0976 17.2929
-                               18.7071L12 13.4142L6.70711
-                               18.7071C6.31658 19.0976 5.68342
-                               19.0976 5.29289 18.7071C4.90237
-                               18.3166 4.90237 17.6834 5.29289
-                               17.2929L10.5858 12Z"
-                                            fill="currentColor"
-                                        />
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                                     </svg>
                                 </button>
                             </div>
                             <div className="search-container">
-                                <input type="text" placeholder="Search labels..." />
+                                <input type="text" placeholder="Search labels..."/>
                             </div>
                             <div>
                                 <h4>Labels</h4>
                                 <div className="labels-list">
                                     {boardLabels.map((label) => {
-                                        const isChecked = cardLabels.some(
-                                            (l) => l.color === label.color
-                                        )
-                                        return (
-                                            <label
-                                                className="label-item"
-                                                key={label.color}
-                                            >
-                                                <div className="label-checkbox">
+                                        const isChecked = cardLabels.some((l) => l.color === label.color)
+                                        return (<label className="label-item" key={label.color}>
+                                            <div className="label-checkbox">
                                                     <input
                                                         type="checkbox"
                                                         checked={isChecked}
@@ -911,19 +762,9 @@ export function QuickEdit({
                     {showPickerChangeALabel && (
                         <>
                             <div className="picker-header">
-                                <button
-                                    className="back-btn"
-                                    onClick={() => setShowPickerChangeALabel(false)}
-                                >
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M15.7071 4.29289C16.0976
+                                <button className="back-btn" onClick={() => setShowPickerChangeALabel(false)}>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M15.7071 4.29289C16.0976
                        4.68342 16.0976 5.31658 15.7071
                        5.70711L9.41421 12L15.7071
                        18.2929C16.0976 18.6834 16.0976
@@ -933,61 +774,23 @@ export function QuickEdit({
                        12.3166 6.90237 11.6834 7.29289
                        11.2929L14.2929 4.29289C14.6834
                        3.90237 15.3166 3.90237 15.7071
-                       4.29289Z"
-                                            fill="currentColor"
-                                        />
+                       4.29289Z" fill="currentColor"/>
                                     </svg>
                                 </button>
                                 <h3>Edit label</h3>
                                 <button className="task-modal-close" onClick={hidePicker}>
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fillRule="evenodd"
-                                            clipRule="evenodd"
-                                            d="M10.5858 12L5.29289
-                           6.70711C4.90237 6.31658 4.90237
-                           5.68342 5.29289 5.29289C5.68342
-                           4.90237 6.31658 4.90237 6.70711
-                           5.29289L12 10.5858L17.2929
-                           5.29289C17.6834 4.90237 18.3166
-                           4.90237 18.7071 5.29289C19.0976
-                           5.68342 19.0976 6.31658 18.7071
-                           6.70711L13.4142 12L18.7071
-                           17.2929C19.0976 17.6834 19.0976
-                           18.3166 18.7071 18.7071C18.3166
-                           19.0976 17.6834 19.0976 17.2929
-                           18.7071L12 13.4142L6.70711
-                           18.7071C6.31658 19.0976 5.68342
-                           19.0976 5.29289 18.7071C4.90237
-                           18.3166 4.90237 17.6834 5.29289
-                           17.2929L10.5858 12Z"
-                                            fill="currentColor"
-                                        />
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                                     </svg>
                                 </button>
                             </div>
                             <div className="edit-label-content">
-                                <div
-                                    className="label-preview"
-                                    style={{ backgroundColor: currentLabelColor }}
-                                ></div>
+                                <div className="label-preview" style={{backgroundColor: currentLabelColor}}></div>
                                 <div className="title-section">
-                                    <label>Title</label>
-                                    <input
-                                        type="text"
-                                        className="title-input"
-                                        value={currentLabelText}
-                                        onChange={onChangeCurrentLabelText}
-                                    />
+                                    <label>Title</label> <input type="text" className="title-input" value={currentLabelText} onChange={onChangeCurrentLabelText}/>
                                 </div>
                                 <div className="colors-section">
-                                    <label>Select a color</label>
+                                <label>Select a color</label>
                                     <div className="color-grid">
                                         <button
                                             className={`color-btn ${
@@ -1053,35 +856,8 @@ export function QuickEdit({
                     <div className="picker-header">
                         <h3>Cover</h3>
                         <button className="task-modal-close" onClick={hidePicker}>
-                            <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M10.5858 12L5.29289
-                     6.70711C4.90237 6.31658 4.90237
-                     5.68342 5.29289 5.29289C5.68342
-                     4.90237 6.31658 4.90237 6.70711
-                     5.29289L12 10.5858L17.2929
-                     5.29289C17.6834 4.90237 18.3166
-                     4.90237 18.7071 5.29289C19.0976
-                     5.68342 19.0976 6.31658 18.7071
-                     6.70711L13.4142 12L18.7071
-                     17.2929C19.0976 17.6834 19.0976
-                     18.3166 18.7071 18.7071C18.3166
-                     19.0976 17.6834 19.0976 17.2929
-                     18.7071L12 13.4142L6.70711
-                     18.7071C6.31658 19.0976 5.68342
-                     19.0976 5.29289 18.7071C4.90237
-                     18.3166 4.90237 17.6834 5.29289
-                     17.2929L10.5858 12Z"
-                                    fill="currentColor"
-                                />
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                             </svg>
                         </button>
                     </div>
@@ -1089,18 +865,8 @@ export function QuickEdit({
                         <div className="size-section">
                             <label>Size</label>
                             <div className="size-options">
-                                <button
-                                    className={`size-preview small ${
-                                        coverSize === "small" ? "selected" : ""
-                                    }`}
-                                    onClick={() => onPickSize("small")}
-                                ></button>
-                                <button
-                                    className={`size-preview large ${
-                                        coverSize === "large" ? "selected" : ""
-                                    }`}
-                                    onClick={() => onPickSize("large")}
-                                ></button>
+                                <button className={`size-preview small ${coverSize === "small" ? "selected" : ""}`} onClick={() => onPickSize("small")}></button>
+                                <button className={`size-preview large ${coverSize === "large" ? "selected" : ""}`} onClick={() => onPickSize("large")}></button>
                             </div>
                             <button className="remove-cover-btn" onClick={onRemoveCover}>
                                 Remove cover
@@ -1187,35 +953,8 @@ export function QuickEdit({
                     <div className="picker-header">
                         <h3>Dates</h3>
                         <button className="task-modal-close" onClick={hidePicker}>
-                            <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M10.5858 12L5.29289
-                 6.70711C4.90237 6.31658 4.90237
-                 5.68342 5.29289 5.29289C5.68342
-                 4.90237 6.31658 4.90237 6.70711
-                 5.29289L12 10.5858L17.2929
-                 5.29289C17.6834 4.90237 18.3166
-                 4.90237 18.7071 5.29289C19.0976
-                 5.68342 19.0976 6.31658 18.7071
-                 6.70711L13.4142 12L18.7071
-                 17.2929C19.0976 17.6834 19.0976
-                 18.3166 18.7071 18.7071C18.3166
-                 19.0976 17.6834 19.0976 17.2929
-                 18.7071L12 13.4142L6.70711
-                 18.7071C6.31658 19.0976 5.68342
-                 19.0976 5.29289 18.7071C4.90237
-                 18.3166 4.90237 17.6834 5.29289
-                 17.2929L10.5858 12Z"
-                                    fill="currentColor"
-                                />
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                             </svg>
                         </button>
                     </div>
@@ -1226,8 +965,7 @@ export function QuickEdit({
                             </button>
                             <span className="month-year">
                                 {calendarMonth.toLocaleString("default", {
-                                    month: "long",
-                                    year: "numeric",
+                                    month: "long", year: "numeric",
                                 })}
                             </span>
                             <button className="nav-btn" onClick={nextMonth}>
@@ -1341,35 +1079,8 @@ export function QuickEdit({
                     <div className="picker-header">
                         <h3>Move card</h3>
                         <button className="task-modal-close" onClick={hidePicker}>
-                            <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M10.5858 12L5.29289
-             6.70711C4.90237 6.31658 4.90237
-             5.68342 5.29289 5.29289C5.68342
-             4.90237 6.31658 4.90237 6.70711
-             5.29289L12 10.5858L17.2929
-             5.29289C17.6834 4.90237 18.3166
-             4.90237 18.7071 5.29289C19.0976
-             5.68342 19.0976 6.31658 18.7071
-             6.70711L13.4142 12L18.7071
-             17.2929C19.0976 17.6834 19.0976
-             18.3166 18.7071 18.7071C18.3166
-             19.0976 17.6834 19.0976 17.2929
-             18.7071L12 13.4142L6.70711
-             18.7071C6.31658 19.0976 5.68342
-             19.0976 5.29289 18.7071C4.90237
-             18.3166 4.90237 17.6834 5.29289
-             17.2929L10.5858 12Z"
-                                    fill="currentColor"
-                                />
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                             </svg>
                         </button>
                     </div>
@@ -1377,18 +1088,12 @@ export function QuickEdit({
                         <div className="select-section">
                             <h4>Select destination</h4>
                             <div className="select-group">
-                                <label>Board</label>
-                                <select
-                                    className="board-select"
-                                    value={selectedBoardId}
-                                    onChange={(e) => {
-                                        setSelectedBoardId(e.target.value)
-                                        setSelectedGroupId("")
-                                        setSelectedPosition(1)
-                                    }}
-                                >
-                                    {boards.map((b) => (
-                                        <option key={b._id} value={b._id}>
+                                <label>Board</label> <select className="board-select" value={selectedBoardId} onChange={(e) => {
+                                setSelectedBoardId(e.target.value)
+                                setSelectedGroupId("")
+                                setSelectedPosition(1)
+                            }}>
+                                {boards.map((b) => (<option key={b._id} value={b._id}>
                                             {b.title}
                                         </option>
                                     ))}
@@ -1450,56 +1155,19 @@ export function QuickEdit({
                     <div className="picker-header">
                         <h3>Copy card</h3>
                         <button className="task-modal-close" onClick={hidePicker}>
-                            <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M10.5858 12L5.29289
-                 6.70711C4.90237 6.31658 4.90237
-                 5.68342 5.29289 5.29289C5.68342
-                 4.90237 6.31658 4.90237 6.70711
-                 5.29289L12 10.5858L17.2929
-                 5.29289C17.6834 4.90237 18.3166
-                 4.90237 18.7071 5.29289C19.0976
-                 5.68342 19.0976 6.31658 18.7071
-                 6.70711L13.4142 12L18.7071
-                 17.2929C19.0976 17.6834 19.0976
-                 18.3166 18.7071 18.7071C18.3166
-                 19.0976 17.6834 19.0976 17.2929
-                 18.7071L12 13.4142L6.70711
-                 18.7071C6.31658 19.0976 5.68342
-                 19.0976 5.29289 18.7071C4.90237
-                 18.3166 4.90237 17.6834 5.29289
-                 17.2929L10.5858 12Z"
-                                    fill="currentColor"
-                                />
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                             </svg>
                         </button>
                     </div>
                     <div className="copy-card-content">
                         <div className="title-section">
-                            <label>Name</label>
-                            <input
-                                type="text"
-                                className="title-input"
-                                value={copyTitle}
-                                onChange={(e) => setCopyTitle(e.target.value)}
-                            />
+                            <label>Name</label> <input type="text" className="title-input" value={copyTitle} onChange={(e) => setCopyTitle(e.target.value)}/>
                         </div>
                         <div className="keep-section">
                             <label>Keep...</label>
                             <div className="keep-options">
-                                <label className="keep-option">
-                                    <input
-                                        type="checkbox"
-                                        checked={keepChecklists}
-                                        onChange={(e) => setKeepChecklists(e.target.checked)}
+                                <label className="keep-option"> <input type="checkbox" checked={keepChecklists} onChange={(e) => setKeepChecklists(e.target.checked)}
                                     />
                                     <span>Checklists ({task.checklists?.length || 0})</span>
                                 </label>
@@ -1597,56 +1265,24 @@ export function QuickEdit({
                     <div className="picker-header">
                         <h3>Mirror card</h3>
                         <button className="task-modal-close" onClick={hidePicker}>
-                            <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M10.5858 12L5.29289
-                 6.70711C4.90237 6.31658 4.90237
-                 5.68342 5.29289 5.29289C5.68342
-                 4.90237 6.31658 4.90237 6.70711
-                 5.29289L12 10.5858L17.2929
-                 5.29289C17.6834 4.90237 18.3166
-                 4.90237 18.7071 5.29289C19.0976
-                 5.68342 19.0976 6.31658 18.7071
-                 6.70711L13.4142 12L18.7071
-                 17.2929C19.0976 17.6834 19.0976
-                 18.3166 18.7071 18.7071C18.3166
-                 19.0976 17.6834 19.0976 17.2929
-                 18.7071L12 13.4142L6.70711
-                 18.7071C6.31658 19.0976 5.68342
-                 19.0976 5.29289 18.7071C4.90237
-                 18.3166 4.90237 17.6834 5.29289
-                 17.2929L10.5858 12Z"
-                                    fill="currentColor"
-                                />
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                             </svg>
                         </button>
                     </div>
                     <div className="mirror-card-content">
                         <p className="mirror-description">
-                            Mirror this card to view or edit it from another board
-                        </p>
+                            Mirror this card to view or edit it from another board </p>
                         <div className="select-group">
-                            <label>Board</label>
-                            <select className="board-select">
-                                <option value="">Select...</option>
-                            </select>
+                            <label>Board</label> <select className="board-select">
+                            <option value="">Select...</option>
+                        </select>
                         </div>
                         <button className="mirror-btn" onClick={onMirrorCard}>
                             Mirror
                         </button>
                         <div className="mirror-info">
-                            <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
+                            <svg width="16" height="16" viewBox="0 0 24 24"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
@@ -1678,35 +1314,8 @@ export function QuickEdit({
                     <div className="picker-header">
                         <h3>Share and more...</h3>
                         <button className="task-modal-close" onClick={hidePicker}>
-                            <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M10.5858 12L5.29289
-               6.70711C4.90237 6.31658 4.90237
-               5.68342 5.29289 5.29289C5.68342
-               4.90237 6.31658 4.90237 6.70711
-               5.29289L12 10.5858L17.2929
-               5.29289C17.6834 4.90237 18.3166
-               4.90237 18.7071 5.29289C19.0976
-               5.68342 19.0976 6.31658 18.7071
-               6.70711L13.4142 12L18.7071
-               17.2929C19.0976 17.6834 19.0976
-               18.3166 18.7071 18.7071C18.3166
-               19.0976 17.6834 19.0976 17.2929
-               18.7071L12 13.4142L6.70711
-               18.7071C6.31658 19.0976 5.68342
-               19.0976 5.29289 18.7071C4.90237
-               18.3166 4.90237 17.6834 5.29289
-               17.2929L10.5858 12Z"
-                                    fill="currentColor"
-                                />
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                             </svg>
                         </button>
                     </div>
@@ -2661,7 +2270,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                         movePickerTo(event)
                                         setShowPickerMoveCard(true)
                                     }}
-                                >{listName} <i className="fa-regular fa-chevron-down"></i> </strong> {isWatching && <i className="fa-regular fa-eye"></i>}
+                                >{listName} <i className="fa-regular fa-chevron-down"></i> </strong> {isWatching &&
+                                    <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0006 18C7.46367 18 4.00142 13.74 4.00142 12C4.00142 9.999 7.45967 6 12.0006 6C16.3775 6 19.9988 9.973 19.9988 12C19.9988 13.74 16.5366 18 12.0006 18ZM12.0006 4C6.48003 4 2.00012 8.841 2.00012 12C2.00012 15.086 6.5771 20 12.0006 20C17.4241 20 22.0001 15.086 22.0001 12C22.0001 8.841 17.5212 4 12.0006 4ZM11.9775 13.9844C10.8745 13.9844 9.97752 13.0874 9.97752 11.9844C9.97752 10.8814 10.8745 9.9844 11.9775 9.9844C13.0805 9.9844 13.9775 10.8814 13.9775 11.9844C13.9775 13.0874 13.0805 13.9844 11.9775 13.9844ZM11.9775 7.9844C9.77152 7.9844 7.97752 9.7784 7.97752 11.9844C7.97752 14.1904 9.77152 15.9844 11.9775 15.9844C14.1835 15.9844 15.9775 14.1904 15.9775 11.9844C15.9775 9.7784 14.1835 7.9844 11.9775 7.9844Z" fill="currentColor"></path></svg>}
                                 </div>
                             </div>
                         </div>
@@ -2674,13 +2284,11 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
 
                                 {/* Upper bar - members, notifications, due date */}
 
-                                {/* Members */}
-                                {showMembers &&
-                                    <div className="task-members">
-                                        <div className="section-inner">
-                                            <div className="section-label">Members</div>
-                                            <div className="just-flex-without-anything">
-                                                {members.map(member => {
+                                {/* Members */} {showMembers && <div className="task-members">
+                                <div className="section-inner">
+                                    <div className="section-label">Members</div>
+                                    <div className="just-flex-without-anything">
+                                    {members.map(member => {
                                                     if (member?.imgUrl) {
                                                         return (<div className="user-circle" key={member.id}
                                                                      style={{
@@ -2739,29 +2347,23 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                         <div className="section-inner">
                                             <div className="section-label">Notifications</div>
                                             <div className="just-flex-without-anything">
-                                                <button
-                                                    className={`task-watch ${isWatching ? "" : ""}`}
-                                                    onClick={() => setIsWatching(!isWatching)}
-                                                >
-                                                    <i className="fa-regular fa-eye"></i>
-                                                    {isWatching ? "Watching" : "Watch"}
-                                                    {isWatching && <i className="fa-regular fa-check"></i>}
+                                                <button className={`task-watch ${isWatching ? "" : ""}`} onClick={() => setIsWatching(!isWatching)}>
+                                                    <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0006 18C7.46367 18 4.00142 13.74 4.00142 12C4.00142 9.999 7.45967 6 12.0006 6C16.3775 6 19.9988 9.973 19.9988 12C19.9988 13.74 16.5366 18 12.0006 18ZM12.0006 4C6.48003 4 2.00012 8.841 2.00012 12C2.00012 15.086 6.5771 20 12.0006 20C17.4241 20 22.0001 15.086 22.0001 12C22.0001 8.841 17.5212 4 12.0006 4ZM11.9775 13.9844C10.8745 13.9844 9.97752 13.0874 9.97752 11.9844C9.97752 10.8814 10.8745 9.9844 11.9775 9.9844C13.0805 9.9844 13.9775 10.8814 13.9775 11.9844C13.9775 13.0874 13.0805 13.9844 11.9775 13.9844ZM11.9775 7.9844C9.77152 7.9844 7.97752 9.7784 7.97752 11.9844C7.97752 14.1904 9.77152 15.9844 11.9775 15.9844C14.1835 15.9844 15.9775 14.1904 15.9775 11.9844C15.9775 9.7784 14.1835 7.9844 11.9775 7.9844Z" fill="currentColor"></path></svg>
+                                                    {isWatching ? "Watching" : "Watch"} {isWatching && <i className="fa-regular fa-check"></i>}
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* Due Date */}
-                                {showDate &&
-                                    <div className="task-notifications">
-                                        <div className="task-members">
-                                            <div className="section-inner">
-                                                <div className="section-label">Due Date</div>
-                                                <div className="just-flex-without-anything">
+                                {/* Due Date */} {showDate && <div className="task-notifications">
+                                <div className="task-members">
+                                    <div className="section-inner">
+                                        <div className="section-label">Due Date</div>
+                                        <div className="just-flex-without-anything">
 
-                                                    <div className="date-picker" onClick={onDateClick}>
-                                                        <span className="pointer-cursor">{new Date(date).toLocaleDateString()} </span>
+                                            <div className="date-picker" onClick={onDateClick}>
+                                                <span className="pointer-cursor">{new Date(date).toLocaleDateString()} </span>
                                                         {(new Date(date) < Date.now()) ?
                                                             ((taskToShow.status === 'done') ?
                                                                     (<span className="complete-label">Complete</span>) :
@@ -2887,8 +2489,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                             {/*<i className="fa-regular fa-paperclip"></i>*/}
                                             <i>
                                                 <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                                          d="M11.6426 17.9647C10.1123 19.46 7.62736 19.4606 6.10092 17.9691C4.57505 16.478 4.57769 14.0467 6.10253 12.5566L13.2505 5.57184C14.1476 4.6952 15.5861 4.69251 16.4832 5.56921C17.3763 6.44184 17.3778 7.85135 16.4869 8.72199L9.78361 15.2722C9.53288 15.5172 9.12807 15.5163 8.86954 15.2636C8.61073 15.0107 8.60963 14.6158 8.86954 14.3618L15.0989 8.27463C15.4812 7.90109 15.4812 7.29546 15.0989 6.92192C14.7167 6.54838 14.0969 6.54838 13.7146 6.92192L7.48523 13.0091C6.45911 14.0118 6.46356 15.618 7.48523 16.6163C8.50674 17.6145 10.1511 17.6186 11.1679 16.6249L17.8712 10.0747C19.5274 8.45632 19.5244 5.83555 17.8676 4.2165C16.2047 2.59156 13.5266 2.59657 11.8662 4.21913L4.71822 11.2039C2.42951 13.4404 2.42555 17.083 4.71661 19.3218C7.00774 21.5606 10.7323 21.5597 13.0269 19.3174L19.7133 12.7837C20.0956 12.4101 20.0956 11.8045 19.7133 11.431C19.331 11.0574 18.7113 11.0574 18.329 11.431L11.6426 17.9647Z" fill="currentColor"></path>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.6426 17.9647C10.1123 19.46 7.62736 19.4606 6.10092 17.9691C4.57505 16.478 4.57769 14.0467 6.10253 12.5566L13.2505 5.57184C14.1476 4.6952 15.5861 4.69251 16.4832 5.56921C17.3763 6.44184 17.3778 7.85135 16.4869 8.72199L9.78361 15.2722C9.53288 15.5172 9.12807 15.5163 8.86954 15.2636C8.61073 15.0107 8.60963 14.6158 8.86954 14.3618L15.0989 8.27463C15.4812 7.90109 15.4812 7.29546 15.0989 6.92192C14.7167 6.54838 14.0969 6.54838 13.7146 6.92192L7.48523 13.0091C6.45911 14.0118 6.46356 15.618 7.48523 16.6163C8.50674 17.6145 10.1511 17.6186 11.1679 16.6249L17.8712 10.0747C19.5274 8.45632 19.5244 5.83555 17.8676 4.2165C16.2047 2.59156 13.5266 2.59657 11.8662 4.21913L4.71822 11.2039C2.42951 13.4404 2.42555 17.083 4.71661 19.3218C7.00774 21.5606 10.7323 21.5597 13.0269 19.3174L19.7133 12.7837C20.0956 12.4101 20.0956 11.8045 19.7133 11.431C19.331 11.0574 18.7113 11.0574 18.329 11.431L11.6426 17.9647Z" fill="currentColor"></path>
                                                 </svg>
                                             </i>
                                             <h3>Attachments</h3>
@@ -3548,30 +3149,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                     <div className="picker-header">
                         <h3>Labels</h3>
                         <button className="task-modal-close" onClick={hidePicker}>
-                            <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M10.5858 12L5.29289 6.70711C4.90237
-                                  6.31658 4.90237 5.68342 5.29289 5.29289C5.68342
-                                  4.90237 6.31658 4.90237 6.70711 5.29289L12
-                                  10.5858L17.2929 5.29289C17.6834 4.90237
-                                  18.3166 4.90237 18.7071 5.29289C19.0976
-                                  5.68342 19.0976 6.31658 18.7071 6.70711L13.4142
-                                  12L18.7071 17.2929C19.0976 17.6834 19.0976
-                                  18.3166 18.7071 18.7071C18.3166 19.0976
-                                  17.6834 19.0976 17.2929 18.7071L12
-                                  13.4142L6.70711 18.7071C6.31658 19.0976
-                                  5.68342 19.0976 5.29289 18.7071C4.90237
-                                  18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z"
-                                    fill="currentColor"
-                                />
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                             </svg>
                         </button>
                     </div>
@@ -3585,13 +3164,9 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                         <div className="labels-list">
                             {groupLabels.map((label) => {
                                 const isChecked = cardLabels.some((l) => l.color === label.color)
-                                return (
-                                    <label className="label-item" key={label.color}>
+                                return (<label className="label-item" key={label.color}>
                                         <div className="label-checkbox">
-                                            <input
-                                                type="checkbox"
-                                                checked={isChecked}
-                                                onChange={() => onToggleLabel(label)}
+                                            <input type="checkbox" checked={isChecked} onChange={() => onToggleLabel(label)}
                                             />
                                         </div>
                                         <div className={`label-color`}
@@ -3605,32 +3180,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                                     setShowPickerChangeALabel(true)
                                                 }}
                                         >
-                                            <svg
-                                                width="16"
-                                                height="16"
-                                                role="presentation"
-                                                focusable="false"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    clipRule="evenodd"
-                                                    d="M7.82034 14.4893L9.94134 16.6103L18.4303
-                                                  8.12131L16.3093 6.00031H16.3073L7.82034
-                                                  14.4893ZM17.7233 4.58531L19.8443
-                                                  6.70731C20.6253 7.48831 20.6253 8.7543
-                                                  19.8443 9.53531L10.0873
-                                                  19.2933L5.13734 14.3433L14.8943
-                                                  4.58531C15.2853 4.19531 15.7973
-                                                  4.00031 16.3093 4.00031C16.8203
-                                                  4.00031 17.3323 4.19531 17.7233
-                                                  4.58531ZM5.20094 20.4097C4.49794
-                                                  20.5537 3.87694 19.9327 4.02094
-                                                  19.2297L4.80094 15.4207L9.00994
-                                                  19.6297L5.20094 20.4097Z"
-                                                    fill="currentColor"
-                                                />
+                                            <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path fillRule="evenodd" clipRule="evenodd" d="M7.82034 14.4893L9.94134 16.6103L18.4303                                                   8.12131L16.3093 6.00031H16.3073L7.82034                                                   14.4893ZM17.7233 4.58531L19.8443                                                   6.70731C20.6253 7.48831 20.6253 8.7543                                                   19.8443 9.53531L10.0873                                                   19.2933L5.13734 14.3433L14.8943                                                   4.58531C15.2853 4.19531 15.7973                                                   4.00031 16.3093 4.00031C16.8203                                                   4.00031 17.3323 4.19531 17.7233                                                   4.58531ZM5.20094 20.4097C4.49794                                                   20.5537 3.87694 19.9327 4.02094                                                   19.2297L4.80094 15.4207L9.00994                                                   19.6297L5.20094 20.4097Z" fill="currentColor"/>
                                             </svg>
                                         </button>
                                     </label>
@@ -4007,27 +3558,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                     <h3>Dates</h3>
                     <button className="task-modal-close" onClick={hidePicker}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                fillRule="evenodd"
-                                clipRule="evenodd"
-                                d="M10.5858 12L5.29289 6.70711C4.90237
-             6.31658 4.90237 5.68342 5.29289
-             5.29289C5.68342 4.90237 6.31658
-             4.90237 6.70711 5.29289L12
-             10.5858L17.2929 5.29289C17.6834
-             4.90237 18.3166 4.90237 18.7071
-             5.29289C19.0976 5.68342 19.0976
-             6.31658 18.7071 6.70711L13.4142
-             12L18.7071 17.2929C19.0976 17.6834
-             19.0976 18.3166 18.7071 18.7071C18.3166
-             19.0976 17.6834 19.0976 17.2929
-             18.7071L12 13.4142L6.70711
-             18.7071C6.31658 19.0976 5.68342
-             19.0976 5.29289 18.7071C4.90237
-             18.3166 4.90237 17.6834 5.29289
-             17.2929L10.5858 12Z"
-                                fill="currentColor"
-                            />
+                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                         </svg>
                     </button>
                 </div>
@@ -4035,21 +3566,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 <div className="date-picker-content">
                     <div className="calendar-header">
                         <button className="nav-btn" onClick={prevMonth}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M15.7071 4.29289C16.0976
-               4.68342 16.0976 5.31658 15.7071
-               5.70711L9.41421 12L15.7071
-               18.2929C16.0976 18.6834 16.0976
-               19.3166 15.7071 19.7071C15.3166
-               20.0976 14.6834 20.0976 14.2929
-               19.7071L7.29289 12.7071C6.90237
-               12.3166 6.90237 11.6834 7.29289
-               11.2929L14.2929 4.29289C14.6834
-               3.90237 15.3166 3.90237 15.7071
-               4.29289Z"
-                                    fill="currentColor"
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.7071 4.29289C16.0976                4.68342 16.0976 5.31658 15.7071                5.70711L9.41421 12L15.7071                18.2929C16.0976 18.6834 16.0976                19.3166 15.7071 19.7071C15.3166                20.0976 14.6834 20.0976 14.2929                19.7071L7.29289 12.7071C6.90237                12.3166 6.90237 11.6834 7.29289                11.2929L14.2929 4.29289C14.6834                3.90237 15.3166 3.90237 15.7071                4.29289Z"                                     fill="currentColor"
                                 />
                             </svg>
                         </button>
@@ -4060,18 +3578,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path
-                                    d="M8.29289 4.29289C7.90237
-               4.68342 7.90237 5.31658 8.29289
-               5.70711L14.5858 12L8.29289
-               18.2929C7.90237 18.6834 7.90237
-               19.3166 8.29289 19.7071C8.68342
-               20.0976 9.31658 20.0976 9.70711
-               19.7071L16.7071 12.7071C17.0976
-               12.3166 17.0976 11.6834 16.7071
-               11.2929L9.70711 4.29289C9.31658
-               3.90237 8.68342 3.90237 8.29289
-               4.29289Z"
-                                    fill="currentColor"
+                                    d="M8.29289 4.29289C7.90237                4.68342 7.90237 5.31658 8.29289                5.70711L14.5858 12L8.29289                18.2929C7.90237 18.6834 7.90237                19.3166 8.29289 19.7071C8.68342                20.0976 9.31658 20.0976 9.70711                19.7071L16.7071 12.7071C17.0976                12.3166 17.0976 11.6834 16.7071                11.2929L9.70711 4.29289C9.31658                3.90237 8.68342 3.90237 8.29289                4.29289Z"                                     fill="currentColor"
                                 />
                             </svg>
                         </button>
@@ -4192,35 +3699,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 <div className="picker-header">
                     <h3>Move card</h3>
                     <button className="task-modal-close" onClick={hidePicker}>
-                        <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                clipRule="evenodd"
-                                d="M10.5858 12L5.29289
-             6.70711C4.90237 6.31658 4.90237
-             5.68342 5.29289 5.29289C5.68342
-             4.90237 6.31658 4.90237 6.70711
-             5.29289L12 10.5858L17.2929
-             5.29289C17.6834 4.90237 18.3166
-             4.90237 18.7071 5.29289C19.0976
-             5.68342 19.0976 6.31658 18.7071
-             6.70711L13.4142 12L18.7071
-             17.2929C19.0976 17.6834 19.0976
-             18.3166 18.7071 18.7071C18.3166
-             19.0976 17.6834 19.0976 17.2929
-             18.7071L12 13.4142L6.70711
-             18.7071C6.31658 19.0976 5.68342
-             19.0976 5.29289 18.7071C4.90237
-             18.3166 4.90237 17.6834 5.29289
-             17.2929L10.5858 12Z"
-                                fill="currentColor"
-                            />
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                         </svg>
                     </button>
                 </div>
@@ -4230,19 +3710,13 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                         <h4>Select destination</h4>
 
                         <div className="select-group">
-                            <label>Board</label>
-                            <select
-                                className="board-select"
-                                value={selectedBoardId}
-                                onChange={(e) => {
-                                    setSelectedBoardId(e.target.value)
-                                    setSelectedGroupId('')
-                                    setSelectedPosition(1)
-                                }}
-                            >
-                                {boards.map((b) => (
-                                    <option key={b._id} value={b._id}>
-                                        {b.title}
+                            <label>Board</label> <select className="board-select" value={selectedBoardId} onChange={(e) => {
+                            setSelectedBoardId(e.target.value)
+                            setSelectedGroupId('')
+                            setSelectedPosition(1)
+                        }}>
+                            {boards.map((b) => (<option key={b._id} value={b._id}>
+                                    {b.title}
                                     </option>
                                 ))}
                             </select>
@@ -4312,57 +3786,20 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 <div className="picker-header">
                     <h3>Copy card</h3>
                     <button className="task-modal-close" onClick={hidePicker}>
-                        <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                clipRule="evenodd"
-                                d="M10.5858 12L5.29289
-             6.70711C4.90237 6.31658 4.90237
-             5.68342 5.29289 5.29289C5.68342
-             4.90237 6.31658 4.90237 6.70711
-             5.29289L12 10.5858L17.2929
-             5.29289C17.6834 4.90237 18.3166
-             4.90237 18.7071 5.29289C19.0976
-             5.68342 19.0976 6.31658 18.7071
-             6.70711L13.4142 12L18.7071
-             17.2929C19.0976 17.6834 19.0976
-             18.3166 18.7071 18.7071C18.3166
-             19.0976 17.6834 19.0976 17.2929
-             18.7071L12 13.4142L6.70711
-             18.7071C6.31658 19.0976 5.68342
-             19.0976 5.29289 18.7071C4.90237
-             18.3166 4.90237 17.6834 5.29289
-             17.2929L10.5858 12Z"
-                                fill="currentColor"
-                            />
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                         </svg>
                     </button>
                 </div>
 
                 <div className="copy-card-content">
                     <div className="title-section">
-                        <label>Name</label>
-                        <input
-                            type="text"
-                            className="title-input"
-                            value={copyTitle}
-                            onChange={(e) => setCopyTitle(e.target.value)}
-                        />
+                        <label>Name</label> <input type="text" className="title-input" value={copyTitle} onChange={(e) => setCopyTitle(e.target.value)}/>
                     </div>
                     <div className="keep-section">
                         <label>Keep...</label>
                         <div className="keep-options">
-                            <label className="keep-option">
-                                <input
-                                    type="checkbox"
-                                    checked={keepChecklists}
-                                    onChange={(e) => setKeepChecklists(e.target.checked)}
+                            <label className="keep-option"> <input type="checkbox" checked={keepChecklists} onChange={(e) => setKeepChecklists(e.target.checked)}
                                 />
                                 <span>Checklists ({taskToShow.checklists?.length || 0})</span>
                             </label>
@@ -4581,35 +4018,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 <div className="picker-header">
                     <h3>Cover</h3>
                     <button className="task-modal-close" onClick={hidePicker}>
-                        <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                clipRule="evenodd"
-                                d="M10.5858 12L5.29289
-             6.70711C4.90237 6.31658 4.90237
-             5.68342 5.29289 5.29289C5.68342
-             4.90237 6.31658 4.90237 6.70711
-             5.29289L12 10.5858L17.2929
-             5.29289C17.6834 4.90237 18.3166
-             4.90237 18.7071 5.29289C19.0976
-             5.68342 19.0976 6.31658 18.7071
-             6.70711L13.4142 12L18.7071
-             17.2929C19.0976 17.6834 19.0976
-             18.3166 18.7071 18.7071C18.3166
-             19.0976 17.6834 19.0976 17.2929
-             18.7071L12 13.4142L6.70711
-             18.7071C6.31658 19.0976 5.68342
-             19.0976 5.29289 18.7071C4.90237
-             18.3166 4.90237 17.6834 5.29289
-             17.2929L10.5858 12Z"
-                                fill="currentColor"
-                            />
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                         </svg>
                     </button>
                 </div>
@@ -4619,17 +4029,11 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                     <div className="size-section">
                         <label>Size</label>
                         <div className="size-options">
-                            <button
-                                className={`size-preview small ${coverSize === 'small' ? 'selected' : ''}`}
-                                onClick={() => onPickSize('small')}
-                            ></button>
-                            <button
-                                className={`size-preview large ${coverSize === 'large' ? 'selected' : ''}`}
-                                onClick={() => onPickSize('large')}
-                            ></button>
+                            <button className={`size-preview small ${coverSize === 'small' ? 'selected' : ''}`} onClick={() => onPickSize('small')}></button>
+                            <button className={`size-preview large ${coverSize === 'large' ? 'selected' : ''}`} onClick={() => onPickSize('large')}></button>
                         </div>
                         <button className="remove-cover-btn" onClick={onRemoveCover}>
-                            Remove cover
+                        Remove cover
                         </button>
                     </div>
 
