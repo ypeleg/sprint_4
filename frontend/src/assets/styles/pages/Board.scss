@@ -31,7 +31,9 @@ body {
 }
 
 .main-layout {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    // display: flex;
     // height: 100vh;
 }
 
@@ -39,8 +41,10 @@ body {
 .board-display {
     //width: 83%;
     width: calc(100vw - 263px);
-    //height: calc(100vh - 57px); //60px
     height: calc(100vh - 40px); //60px
+
+    
+    //height: calc(100vh - 57px); //60px
     //margin-bottom: 40px;
     //padding-bottom: 40px;
 }
@@ -63,6 +67,10 @@ header {
     background-size: cover;
     background-position: center;
     background-image: url('back.png');
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+
 }
 
 .bold-text {
