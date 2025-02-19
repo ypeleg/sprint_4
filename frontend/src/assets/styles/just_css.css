@@ -3323,3 +3323,12 @@ textarea.change-header.header-textarea {
     margin-top: 4px;
     cursor: pointer
 }
+
+.inner-component-left-padding:first-of-type {
+    padding-left: 48px;
+}
+
+.task-activity-list {
+    padding-top: 16px;
+    padding-left: 12px;
+}
