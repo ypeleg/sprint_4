@@ -1,6 +1,6 @@
 
 
-import {userService} from '../../services/user'
+import {userService} from '../../services/user.service.js'
 
 export const SET_USER = 'SET_USER'
 export const SET_USERS = 'SET_USERS'
