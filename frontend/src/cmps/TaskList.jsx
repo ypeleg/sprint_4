@@ -402,23 +402,24 @@ export function TaskList({ grp,
                             <div className="task-users">
                                 {task.members?.length > 0 && (
                                     <div key={task.id} className="task-user-icons task-user-icon">
-                                        {task.members.map((member) => {
+                                        {task.members.map((member, idx) => {
+                                            // (idx <  5)
                                             if (member?.imgUrl) {
-                                                return (
+                                                return (idx <  5)?(
                                                     <div
                                                         className="user-circle task-user-icon"
                                                         key={member.id}
                                                         style={{ backgroundImage: `url(${member.imgUrl})` }}
                                                     ></div>
-                                                )
+                                                ):(<></>)
                                             } else {
                                                 const initials = member?.fullname?.split(" ")
-                                                return (
+                                                return (idx <  5)?(
                                                     <div key={member.id} className="member-circle task-user-icon" title="LH">
                                                         {initials?.[0]?.[0].toUpperCase() || ""}
                                                         {initials?.[1]?.[0].toUpperCase() || ""}
                                                     </div>
-                                                )
+                                                ):(<></>)
                                             }
                                         })}
                                     </div>
