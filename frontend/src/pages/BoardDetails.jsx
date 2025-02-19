@@ -1083,10 +1083,10 @@ const AnyReactComponent = ({text}) => <div style={{fontSize: '22px'}}>{text}</di
 
 
 export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
-    // const { board, group, taskList, ...cleanTask } = taskToShow
-    // const {isLoaded} = useJsApiLoader({
-    //     id: 'google-map-script', googleMapsApiKey: 'AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc', libraries: ["places"]
-    // })
+    const { board, group, taskList, ...cleanTask } = taskToShow
+    const {isLoaded} = useJsApiLoader({
+        id: 'google-map-script', googleMapsApiKey: 'AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc', libraries: ["places"]
+    })
     console.log('task', taskToShow)
     // const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
 
@@ -2683,11 +2683,12 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 </div>
 
                 <div className="location-content">
-                    {/*<div className="search-container">*/}
-                    {/*    {isLoaded && <StandaloneSearchBox libraries={["places"]} onPlacesChanged={handlePlaceChange} onLoad={(ref) => elGoogleSearch.current = ref}>*/}
+                       {isLoaded && <StandaloneSearchBox libraries={["places"]} onPlacesChanged={handlePlaceChange} onLoad={(ref) => elGoogleSearch.current = ref}>
+                    <div className="search-container">
 
-                    {/*        <input type="text" placeholder="Search Google Maps" className="location-input"/> </StandaloneSearchBox>}*/}
-                    {/*</div>*/}
+                           <input type="text" placeholder="Search Google Maps" className="location-input"/> 
+                    </div>
+                           </StandaloneSearchBox>}
                 </div>
             </div>
 
