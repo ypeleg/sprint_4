@@ -1,7 +1,7 @@
 * {
     font-weight: 400;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-    user-select: none;
+    /*user-select: none;*/
     -webkit-user-drag: none
 }
 
@@ -2849,8 +2849,8 @@ div.task-user-icon {
     transition: transform .2s ease;
     will-change: transform;
     cursor: grab;
-    user-select: none;
-    -webkit-user-drag: element
+    /*user-select: none;*/
+    -webkit-user-drag: element;
 }
 
 .task-list .task:active {

@@ -52,6 +52,9 @@ export function GroupList({
     const [showSort, setSort] = useState(false)
     const [header,setHeader] = useState(null)
     const [grp,setGroup] = useState(null)
+
+    const containerRef = useRef(null)
+
     function onSetSort() {
         setSort(!showSort)
     }
@@ -101,20 +104,33 @@ export function GroupList({
                         rect: element.getBoundingClientRect(),
                     })
                 },
-                onGenerateDragPreview({ location, nativeSetDragImage }) {
+                onGenerateDragPreview({ location, nativeSetDragImage, source }) {
                     setCustomNativeDragPreview({
                         nativeSetDragImage,
                         getOffset: preserveOffsetOnSource({ element: el, input: location.current.input }),
                         render({ container }) {
-                            const { width, height } = el.getBoundingClientRect()
-                            const clone = el.cloneNode(true)
-                            clone.style.width = width + "px"
-                            clone.style.height = height + "px"
-                            clone.style.opacity = "0.8"
-                            clone.style.boxShadow = "0 6px 16px rgba(0,0,0,0.3)"
-                            container.appendChild(clone)
+                            const { width, height } = el.getBoundingClientRect();
+                            const computedStyles = window.getComputedStyle(el);
+                            const wrapper = document.createElement("div");
+                            wrapper.className = "group-lists";
+                            const clone = el.cloneNode(true);
+                            clone.style.width = width + "px";
+                            clone.style.height = height + "px";
+                            clone.style.backgroundColor = computedStyles.backgroundColor || "#fff";
+                            clone.style.opacity = "1";
+                            clone.style.setProperty("opacity", "1", "important");
+                            clone.style.pointerEvents = "none";
+                            clone.style.borderRadius = computedStyles.borderRadius;
+                            clone.style.boxShadow = "0 6px 16px rgba(0,0,0,0.3)";
+                            clone.style.transform = "translateY(-2px) scale(1.02)";
+                            clone.style.zIndex = "1000";
+                            clone.querySelectorAll("*").forEach(child => {
+                                child.style.removeProperty("opacity");
+                            });
+                            wrapper.appendChild(clone);
+                            container.appendChild(wrapper);
                         },
-                    })
+                    });
                 },
             })
         })
@@ -133,13 +149,14 @@ export function GroupList({
                 canDrop({ source }) {
                     return isGroupData(source.data)
                 },
+                getIsSticky: () => true, // Add this line
                 getData({ element, input }) {
                     return attachClosestEdge(
                         { groupId: group.id },
                         {
                             element,
                             input,
-                            allowedEdges: ["right", 'left'],
+                            allowedEdges: ["right", "left"],
                         }
                     )
                 },
@@ -203,28 +220,30 @@ export function GroupList({
         updateBoard(boardCopy)
     }
 
+
     return (
-        <section className="group-lists" style={{ display: "flex", flexDirection: "row" }}>
+        <section className="group-lists" style={{ display: "flex", flexDirection: "row" }}
+            ref={containerRef}>
             {boardToShow?.groups?.map((group) => {
                 if (group.isMinimaized) {
 
                     return (
                         <React.Fragment key={group.id}>
-                        {/*{shadowGroup?.groupId === group.id && shadowGroup.edge === "left" && (*/}
-                        {/*    <div*/}
-                        {/*        className="group-placeholder"*/}
-                        {/*        style={{*/}
-                        {/*            // display: "block",*/}
-                        {/*            width: 200 + "px",*/}
-                        {/*            height: 300 + "px",*/}
-                        {/*            marginRight: "12px",*/}
-                        {/*            borderRadius: "6px",*/}
-                        {/*            backgroundColor: "rgba(0,0,0,0.03)",*/}
-                        {/*            // border: "2px dashed rgba(0, 0, 0, 0.3)",*/}
-                        {/*            // transition: "all 0.15s ease",*/}
-                        {/*        }}*/}
-                        {/*    />*/}
-                        {/*)}*/}
+                        {shadowGroup?.groupId === group.id && shadowGroup.edge === "left" && (
+                            <div
+                                className="group-placeholder list"
+                                style={{
+                                    // display: "block",
+                                    width: 200 + "px",
+                                    height: 300 + "px",
+                                    marginRight: "12px",
+                                    borderRadius: "6px",
+                                    backgroundColor: "rgba(0,0,0,0.03)",
+                                    // border: "2px dashed rgba(0, 0, 0, 0.3)",
+                                    // transition: "all 0.15s ease",
+                                }}
+                            />
+                        )}
                         <MinimaizedGRoup
                             ref={getGroupRef(group.id)}
                             getGroupRef={getGroupRef}
@@ -256,21 +275,21 @@ export function GroupList({
 
                 return (
                     <React.Fragment key={group.id}>
-                        {/*{shadowGroup?.groupId === group.id && shadowGroup.edge === "left" && (*/}
-                        {/*    <div*/}
-                        {/*        className="group-placeholder list base-components-list"*/}
-                        {/*        style={{*/}
-                        {/*            // display: "block",*/}
-                        {/*            width: 200 + "px",*/}
-                        {/*            height: 300 + "px",*/}
-                        {/*            marginRight: "12px",*/}
-                        {/*            borderRadius: "6px",*/}
-                        {/*            backgroundColor: "rgba(0,0,0,0.03)",*/}
-                        {/*            // border: "2px dashed rgba(0, 0, 0, 0.3)",*/}
-                        {/*            // transition: "all 0.15s ease",*/}
-                        {/*        }}*/}
-                        {/*    />*/}
-                        {/*)}*/}
+                        {shadowGroup?.groupId === group.id && shadowGroup.edge === "left" && (
+                            <div
+                                className="group-placeholder list"
+                                style={{
+                                    // display: "block",
+                                    width: 200 + "px",
+                                    height: 300 + "px",
+                                    marginRight: "12px",
+                                    borderRadius: "6px",
+                                    backgroundColor: "rgba(0,0,0,0.03)",
+                                    // border: "2px dashed rgba(0, 0, 0, 0.3)",
+                                    // transition: "all 0.15s ease",
+                                }}
+                            />
+                        )}
 
                         <div
                             ref={getGroupRef(group.id)}
@@ -279,7 +298,7 @@ export function GroupList({
                                 // display: "block",
                                 backgroundColor: group.style?.backgroundColor || "",
                                 color: group.style?.color || "#172b4d",
-                                marginRight: "12px",
+                                // marginRight: "12px",
                             }}
                         >
                             <GroupHeader setGroup={setGroup} setHeader={setHeader} onSetGroupEdit={onSetGroupEdit} group={group} />

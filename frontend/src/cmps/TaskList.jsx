@@ -11,6 +11,8 @@ import { draggable, dropTargetForElements } from "@atlaskit/pragmatic-drag-and-d
 import { preserveOffsetOnSource } from "@atlaskit/pragmatic-drag-and-drop/element/preserve-offset-on-source"
 import { attachClosestEdge, extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge"
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview"
+import { scrollJustEnoughIntoView } from '@atlaskit/pragmatic-drag-and-drop/element/scroll-just-enough-into-view';
+
 
 import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store } from "../store/store.js"
 
@@ -279,7 +281,7 @@ export function TaskList({ grp,
                             className="task"
                             onClick={() => onLoadTask(task, currentGroup, group, boardToShow)}
                             ref={getCardRef(task.id)}
-                        //draggable="false"
+                            draggable="false"
                         >
 
                             {task.style.backgroundImage && (
