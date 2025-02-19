@@ -3,12 +3,12 @@
 import Axios from 'axios'
 
 
+
 const BASE_URL = process.env.NODE_ENV === 'production'
     ? '/api/'
-    //    http://172.31.163.87:5173
-    // : 'http://172.31.163.87:3030/api/' // 'http://localhost:3030/api/' // '//localhost:3030/api/'
-    // : 'http://localhost:3030/api/'
-    : '//localhost:3030/api/'
+    : (window.location.hostname.toLowerCase().includes('172') ? 'http://172.31.163.87:3030/api/' : '//localhost:3030/api/')
+
+
 
 
 
