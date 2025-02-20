@@ -10,7 +10,7 @@ export let USE_AI = false
 export let aiGenerator = null
 
 
-USE_AI = true
+USE_AI = false
 import { getRandomBoardAI } from './data_ai.js'
 aiGenerator = getRandomBoardAI
 // localStorage.clear()
@@ -216,7 +216,7 @@ export const remoteBoardService = {
 
     getById: async (boardId, filterBy = { title: '' }) => {
         try {
-            const boards = await httpService.get(BASE_URL +boardId, filterBy)
+            const boards = await httpService.get(BASE_URL + boardId, filterBy)
             return boards[0]
         } catch (error) {
             console.error(`Failed to get board ${boardId}:`, error)

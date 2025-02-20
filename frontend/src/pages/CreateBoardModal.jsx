@@ -11,8 +11,8 @@ import { getRandomBoard } from '../services/data.js'
 
 export function CreateBoardModal({ onClose, createModal }) {
 
-  const loc = createModal.getBoundingClientRect()
-  const inset = `auto ${loc.left}px auto ${loc.top - 30}px`
+  // const loc = createModal.getBoundingClientRect()
+  // const inset = `auto ${loc.left}px auto ${loc.top - 30}px`
   const elMoreBg = useRef()
 
 
@@ -102,8 +102,9 @@ export function CreateBoardModal({ onClose, createModal }) {
   }
 
   return (
-    <div className="modal-overlay">
-      <section className="modal-content" style={{ inset }} onClick={(e) => e.stopPropagation()}>
+    // <div className="modal-overlay">
+      <section className="modal-content"  onClick={(e) => e.stopPropagation()}>
+          {/*style={{ inset }}    */}
         <div className="modal-header ">
           <div className="title">Create board</div>
           <button className="close-btn" onClick={() => onClose()}>
@@ -228,7 +229,7 @@ export function CreateBoardModal({ onClose, createModal }) {
 
         </section>
       </section>
-    </div>
+    // </div>
 
   )
 

@@ -30,6 +30,8 @@
   z-index: 1000 !important;
 }
 
+
+
 .account-header {
   font-size: 12px;
   font-weight: bold;
@@ -78,4 +80,17 @@ hr {
 
 .logout-btn:hover {
   background-color: #f1f5f9;
+}
+
+.btn-popup {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 240px;
+    color: #172b4d;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1000 !important;
 }
