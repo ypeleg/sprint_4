@@ -26,7 +26,7 @@ export function AddGroup({useDarkTextColors}) {
         }
          async function handleKey(ev){
             
-            if(ev.key === "Enter"){
+            if(ev.key === "Enter"&&showForm){
                 ev.preventDefault()
                 
                
