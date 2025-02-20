@@ -27,11 +27,22 @@ const imageUrls = [
     "https://images.unsplash.com/photo-1735527919007-3ba8d909049e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDY2fDB8MXxjb2xsZWN0aW9ufDI4fDMxNzA5OXx8fHx8Mnx8MTczOTk4NzkwNXw&ixlib=rb-4.0.3&q=80&w=1000"
 ];
 const colors = [
-    "https://trello.com/assets/13425f9db06517de0f7f.svg",
-    "https://trello.com/assets/707f35bc691220846678.svg",
-    "https://trello.com/assets/d106776cb297f000b1f4.svg",
-    "https://trello.com/assets/8ab3b35f3a786bb6cdac.svg",
-    "https://trello.com/assets/a7c521b94eb153008f2d.svg"
+    "color_1.svg",
+    "color_2.svg",
+    "color_3.svg",
+    "color_4.svg",
+    "color_5.svg",
+    "color_7.svg",
+    "color_8.svg",
+    "color_9.svg",
+    "color_10.svg",
+    "color_11.svg",
+    
+    // "https://trello.com/assets/13425f9db06517de0f7f.svg",
+    // "https://trello.com/assets/707f35bc691220846678.svg",
+    // "https://trello.com/assets/d106776cb297f000b1f4.svg",
+    // "https://trello.com/assets/8ab3b35f3a786bb6cdac.svg",
+    // "https://trello.com/assets/a7c521b94eb153008f2d.svg"
   ]
 
 export function ActivityMenu({ onSetActivityMenu }) {

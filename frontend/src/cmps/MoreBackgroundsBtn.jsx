@@ -23,7 +23,6 @@ export function MoreBackgroundsBtn({ onClose, onChangeBg, selectedBg, setSelecte
 
   const [backgroundImagesImages, setBackgroundImages] = useState(initialBackgroundImages)
   const [backgroundImagesColors, setBackgroundColors] = useState(initialBackgroundColor)
-  const [selectedBg1, setSelectedBg1] = useState(selectedBg)
 
   // useEffect(() => {
   //   console.log(selectedBg)
@@ -33,22 +32,21 @@ export function MoreBackgroundsBtn({ onClose, onChangeBg, selectedBg, setSelecte
     setBackgroundImages((prevImages) =>
       prevImages.map((item) => ({
         ...item,
-        isSelected: item.name === bg.name, // Set selected only on the clicked one
+        isSelected: item.name === bg.name,
       }))
     );
 
     setBackgroundColors((prevColors) =>
       prevColors.map((item) => ({
         ...item,
-        isSelected: item.name === bg.name, // Set selected only on the clicked one
+        isSelected: item.name === bg.name,
       }))
     )
-    setSelectedBg(bg);
-    onChangeBg(bg); // Ensure parent component gets the update
+    setSelectedBg(bg)
+    onChangeBg(bg)
   }
 
   return (
-    // <div className="modal-overlay">
     <div className="mini-modal-content">
       <div className="modal-header ">
         <div className="title">Board background</div>
@@ -91,7 +89,6 @@ export function MoreBackgroundsBtn({ onClose, onChangeBg, selectedBg, setSelecte
         ))}
       </section>
     </div>
-    // </div>
   );
 }
 
