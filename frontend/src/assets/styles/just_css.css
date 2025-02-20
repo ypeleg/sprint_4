@@ -3461,10 +3461,17 @@ textarea.change-header.header-textarea {
     z-index: 1000;
     aspect-ratio: 1;
     border-radius: 10px;
-    box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25);
+    box-shadow: 0px 8px 12px #091e4226, 0px 0px 1px #091e424f;
+    /*overflow-y: visible;*/
+    /*overflow-x: hidden;*/
+    /*0 8px 16px -4px rgba(9, 30, 66, 0.25);*/
+    /*var(--ds-shadow-overlay, 0px 8px 12px #091e4226, 0px 0px 1px #091e424f)*/
     /*box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25);*/
 }
 
+.aboard-header {
+    overflow: hidden;
+}
 .section-header {
     padding: 12px 12px 8px;
     color: #5E6C84;
@@ -4036,6 +4043,10 @@ section:last-child {
     font-weight: 500;
 }
 
+.recent-popup {
+    height: fit-content;
+}
+
 .header-popup:has(.workspace-name) {
     height: fit-content;
     aspect-ratio: unset;
@@ -4043,7 +4054,7 @@ section:last-child {
 }
 
 .popup-opens-right {
-    translate: 100%;
+    translate: 70%;
 }
 
 .category-container .board-logo-large {

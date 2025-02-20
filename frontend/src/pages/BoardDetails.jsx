@@ -3698,10 +3698,12 @@ export function BoardDetails() {
         if (!rawUrl) {
             rawUrl = 'https://picsum.photos/600/300?random=877'
         }
+
         let isCancelled = false
         const img = new Image()
         img.crossOrigin = 'Anonymous'
         img.referrerPolicy = 'no-referrer'
+
         img.onload = () => {
             if (isCancelled) return
             try {
@@ -3711,6 +3713,7 @@ export function BoardDetails() {
                 canvas.height = 50
                 ctx.drawImage(img, 0, 0, 50, 50)
                 const {data} = ctx.getImageData(0, 0, 50, 50)
+
                 let rSum = 0, gSum = 0, bSum = 0
                 const numPixels = 50 * 50
                 for (let i = 0; i < numPixels; i++) {
@@ -3719,38 +3722,59 @@ export function BoardDetails() {
                     gSum += data[idx + 1]
                     bSum += data[idx + 2]
                 }
+
                 let r = Math.round(rSum / numPixels)
                 let g = Math.round(gSum / numPixels)
                 let b = Math.round(bSum / numPixels)
-                const luminance = 0.299 * r + 0.587 * g + 0.114 * b
-                if (luminance < 50) {
-                    r = Math.min(r + 40, 255)
-                    g = Math.min(g + 40, 255)
-                    b = Math.min(b + 40, 255)
-                } else if (luminance > 205) {
-                    r = Math.max(r - 50, 0)
-                    g = Math.max(g - 50, 0)
-                    b = Math.max(b - 50, 0)
+
+                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+
+                const adjustColor = (c, l) => {
+                    if (l > 0.4 && l < 0.6) {
+                        return Math.min(255, c * 1.2)
+                    }
+                    return c * (l > 0.5 ? 0.9 : 1.1)
                 }
-                setSidebarBackgroundColor(`rgba(${r}, ${g}, ${b}, 0.95)`)
-                setSidebarBorderColor(`rgba(${Math.round(r * 0.8)}, ${Math.round(g * 0.8)}, ${Math.round(b * 0.8)}, 0.2)`)
-                setHeaderBackgroundColor(`rgba(${Math.round(r * 0.9)}, ${Math.round(g * 0.9)}, ${Math.round(b * 0.9)}, 0.9)`)
-                setHeaderBorderColor(`rgba(${Math.round(r * 0.7)}, ${Math.round(g * 0.7)}, ${Math.round(b * 0.7)}, 0.25)`)
-                setUseDarkTextColors(luminance < 50)
+
+                r = adjustColor(r, luminance)
+                g = adjustColor(g, luminance)
+                b = adjustColor(b, luminance)
+
+                const alpha = 0.95
+                const darken = 0.85
+                const lighten = 1.1
+
+                setSidebarBackgroundColor(`rgba(${r}, ${g}, ${b}, ${alpha})`)
+                setSidebarBorderColor(`rgba(${Math.round(r * darken)}, ${Math.round(g * darken)}, ${Math.round(b * darken)}, 0.3)`)
+                setHeaderBackgroundColor(`rgba(${Math.round(r * lighten)}, ${Math.round(g * lighten)}, ${Math.round(b * lighten)}, ${alpha})`)
+                setHeaderBorderColor(`rgba(${Math.round(r * darken)}, ${Math.round(g * darken)}, ${Math.round(b * darken)}, 0.25)`)
+
+                const contrastRatio = (luminance + 0.05) / 0.05
+                const isDark = luminance < 0.5 || contrastRatio > 4.5
+                setUseDarkTextColors(!isDark)
                 setColorsSetted(true)
             } catch (error) {
                 applyFallbackColors()
             }
         }
+
         img.onerror = () => {
             if (!isCancelled) applyFallbackColors()
         }
 
         function applyFallbackColors() {
-            setSidebarBackgroundColor('#0079bf')
-            setSidebarBorderColor('#026aa7')
-            setHeaderBackgroundColor('#026aa7')
-            setHeaderBorderColor('#026aa7')
+            // More pleasant fallback colors
+            const fallbackColor = {
+                r: 41,
+                g: 128,
+                b: 185,
+                a: 0.95
+            }
+            setSidebarBackgroundColor(`rgba(${fallbackColor.r}, ${fallbackColor.g}, ${fallbackColor.b}, ${fallbackColor.a})`)
+            setSidebarBorderColor(`rgba(${fallbackColor.r * 0.8}, ${fallbackColor.g * 0.8}, ${fallbackColor.b * 0.8}, 0.3)`)
+            setHeaderBackgroundColor(`rgba(${fallbackColor.r * 0.9}, ${fallbackColor.g * 0.9}, ${fallbackColor.b * 0.9}, ${fallbackColor.a})`)
+            setHeaderBorderColor(`rgba(${fallbackColor.r * 0.7}, ${fallbackColor.g * 0.7}, ${fallbackColor.b * 0.7}, 0.25)`)
+            setUseDarkTextColors(false)
         }
 
         img.src = rawUrl
