@@ -3145,6 +3145,21 @@ body:has(.home) {
     align-items: center
 }
 
+.home-card>* {
+    font-weight: 500;
+    font-family: "Charlie Text", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.home-card h4 {
+    font-weight: bold;
+    font-family: "Charlie Display", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+div.join>*,
+.second-signin {
+    font-family: "Charlie Text", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+}
+
 .home-card.active {
     position: relative;
     font-size: 1rem;
@@ -3152,12 +3167,18 @@ body:has(.home) {
     background-color: #fefefe;
     box-shadow: rgba(9, 30, 66, .15)0 .5rem 1rem 0;
     border-radius: 10px
+    color: #172b4d;
+}
+
+.home-card.active>* {
+    color: #172b4d
 }
 
 .home-card.active::after {
     position: absolute;
     content: " ";
     background-color: #00c6e4;
+
     height: 100%;
     width: 7px;
     left: 0;
@@ -3208,8 +3229,9 @@ body:has(.home) {
 
 *>* {
     font-weight: 400;
-    /*font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif*/
-    font-family: "Charlie Text", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif
+    /*font-family: "Charlie Text", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif*/
+    /*font-family: "Charlie Display", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif*/
 
 }
 
@@ -3349,4 +3371,42 @@ textarea.change-header.header-textarea {
     align-items: center;
     justify-content: center;
     margin-inline: auto;
+}
+
+.homepage-titles h1 {
+    font-weight: 500;
+}
+
+.homepage-titles h5 {
+    font-weight: 500;
+    font-family: "Charlie Display", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+
+.another-header {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #deebff;
+    box-shadow: rgba(9, 30, 66, 0.15) 0px 0.5rem 1rem 0px;
+    /*margin: 0px auto;*/
+    display: flex;
+    font-family: "Charlie Display", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+    /*justify-content: space-between;*/
+    font-size: 16px;
+    padding: 0;
+    height: 60px;
+    /*background-color: white;*/
+    /*position: fixed;*/
+    font-weight: 500;
+    width: 100%;
+    z-index: 1;
+    a {
+        color: #0052cc;
+        text-decoration: underline;
+        font-weight: 500;
+        margin-left: 4px;
+    }
 }

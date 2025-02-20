@@ -72,6 +72,11 @@
     src: url(../fonts/fonts_trello/Charlie_Text-Regular.woff2);
 }
 
+@font-face {
+    font-family: "Charlie Display";
+    src: url(../fonts/fonts_trello/Charlie_Display-Semibold.woff2);
+}
+
 
 .fa-solid-fr{ font-family:'Font Awesome 5 Pro' }
 .fa-solid-fr::before {
