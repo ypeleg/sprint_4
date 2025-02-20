@@ -1721,8 +1721,8 @@ const userFriendlyTopics = [
 
 
 
-import OpenAI from 'openai'
-import { API_KEY } from './secrets.js'
+// import OpenAI from 'openai'
+// import { API_KEY } from './secrets.js'
 import { random, showUserMsg } from './util.service.js'
 
 

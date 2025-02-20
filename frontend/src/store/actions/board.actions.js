@@ -99,6 +99,7 @@ export async function loadBoard(boardId, filterBy = { title: '' }) {
     try {
         const board = await boardService.getById(boardId, filterBy)
         store.dispatch(getCmdSetBoard(board))
+       
         if (USE_AI) {
             if (board.generator === 'getRandomBoard') {
                 aiGenerator().then(

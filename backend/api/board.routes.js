@@ -36,11 +36,10 @@ export const boardService = {
 
   getById: async function (boardId,filterBy) {
     try {
-      const pipeline =  getPipeLine(filterBy,boardId)
+      const pipeline = getPipeLine(filterBy,boardId)
       const collection = await dbService.getCollection('board')
-      const board = await collection.findOne({ _id: ObjectId.createFromHexString(boardId) })
-      board.createdAt = board._id.getTimestamp()
-      return board
+      const board = await collection.aggregate(pipeline).toArray()
+      return board[0]
     } catch (err) {
       logger.error(`while finding board ${boardId}`, err)
       throw err
@@ -106,6 +105,7 @@ export async function onGetboardById(req, res) {
     const boardId = req.params.id
     const filterBy = req.query
     const board = await boardService.getById(boardId, filterBy)
+   
     res.json(board)
   } catch (err) {
     logger.error('Failed to get board', err)
