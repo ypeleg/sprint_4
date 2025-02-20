@@ -167,7 +167,7 @@ function getRandomTask() {
                 },
                 {
                     backgroundImage: random.choice([
-                        null, null, null, 'https://picsum.photos/600/300?random=' + random.randint(1, 1000),
+                        null, null, null, `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
                         'cover-img.png', 'cover-img-1.png', 'cover-img-2.png', 'cover-img-3.png'
                     ]),
                     coverSize: random.choice(['small', 'large'])
@@ -331,7 +331,7 @@ export function getRandomBoard() {
             imgUrl: createdBy.imgUrl
         },
         style: {
-            backgroundImage: 'https://picsum.photos/600/300?random=' + random.randint(1,1000)
+            backgroundImage: `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
         },
         labels: getRandomLabels(),
         members: gUsersPool,
