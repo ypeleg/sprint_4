@@ -3410,3 +3410,10 @@ textarea.change-header.header-textarea {
         margin-left: 4px;
     }
 }
+
+.scrollable-container {
+    /*display: block;*/
+    /*overflow-y: scroll;*/
+    /*height: fit-content;*/
+    /*padding: 0 12px;*/
+}
