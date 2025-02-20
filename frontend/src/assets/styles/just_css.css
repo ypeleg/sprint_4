@@ -3295,7 +3295,8 @@ textarea.change-header.header-textarea {
 }
 
 .main-logo-white {
-    height: 16px
+    max-height: 16px;
+    height: 100%;
 }
 
 .white-search,

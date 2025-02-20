@@ -3374,9 +3374,14 @@ function Placeholder({placeholderHeight}) {
 export function BoardDetails() {
 
     const [sideBarOpen, setSideBarOpen] = useState(true)
+    const [upperBarOpen, setUpperBarOpen] = useState(false)
 
     function onToggleSideBar() {
         setSideBarOpen(!sideBarOpen)
+    }
+
+    function onToggleUpperBar() {
+        setUpperBarOpen(!upperBarOpen)
     }
 
     const [showTable, setTable] = useState(false)
@@ -3819,7 +3824,7 @@ export function BoardDetails() {
         </>}
 
             <AppHeader backgrounColor={headerBackgroundColor} borderColor={headerBorderColor} useDarkTextColors={useDarkTextColors}
-                onToggleSideBar={onToggleSideBar} sideBarOpen={sideBarOpen}/>
+                onToggleSideBar={onToggleSideBar} sideBarOpen={sideBarOpen} onToggleUpperBar={onToggleUpperBar} upperBarOpen={upperBarOpen}/>
 
             <main className="main-layout">
 
