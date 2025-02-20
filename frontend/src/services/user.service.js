@@ -172,6 +172,7 @@ export const remoteUserService = {
                 imgUrl: imgUrl || 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png',
                 score: 10000
             }
+            debugger
             const user = await httpService.post(BASE_URL + 'signup', userToSave)
             return _setLoggedinUser(user)
         } catch (error) {

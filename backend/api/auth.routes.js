@@ -25,14 +25,14 @@ export const authService = {
         return user
     },
 
-    signup: async function (username, password, fullname) {
+    signup: async function (username, password, fullname,imgUrl) {
         const saltRounds = 10
 
         logger.debug(`auth.service - signup with username: ${username}, fullname: ${fullname}`)
         if (!username || !password || !fullname) throw new Error('Missing details')
 
         const hash = await bcrypt.hash(password, saltRounds)
-        return userService.add({ username, password: hash, fullname })
+        return userService.add({ username, password: hash, fullname,imgUrl })
     },
 
     getLoginToken: function (user) {
@@ -73,13 +73,14 @@ export async function onLogin(req, res) {
 
 export async function onSignup(req, res) {
     try {
-        const { username, password, fullname } = req.body
-
+       
+        const { username, password, fullname,imgUrl } = req.body
+    
         // IMPORTANT!!!
         // Never write passwords to log file!!!
         // logger.debug(fullname + ', ' + username + ', ' + password)
         debugger
-        const account = await authService.signup(username, password, fullname)
+        const account = await authService.signup(username, password, fullname,imgUrl)
         logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
 
         const user = await authService.login(username, password)

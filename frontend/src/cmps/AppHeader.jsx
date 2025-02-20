@@ -331,7 +331,7 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
 
                 {/* <img className="user" src="user_spec.png"></img> */}
                 <div class="user-profile member-circle task-user-icon" title="LH" onClick={() => setOpenAccountPopup(!openAccountPopup)}>
-                    {(loggedUser?.fullname?.split(' ')[0][0]?.toUpperCase() || '') + '' + (loggedUser?.fullname?.split(' ')[1][0]?.toUpperCase() || '')}
+                    {(loggedUser?.fullname.includes(' '))? (loggedUser?.fullname?.split(' ')[0][0]?.toUpperCase() || '') + '' + (loggedUser?.fullname?.split(' ')[1][0]?.toUpperCase() || ''):loggedUser?.fullname[0].toUpperCase()}
                 </div>
                 {openAccountPopup && (<div className="account-popup">
                     <section className="account-section">
@@ -342,7 +342,7 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
 
                                     (loggedUser?.imgUrl) :
 
-                                    (loggedUser?.fullname?.split(' ')[0][0]?.toUpperCase() || '') + '' + (loggedUser?.fullname?.split(' ')[1][0]?.toUpperCase() || '')
+                                    (loggedUser?.fullname.includes(' '))? (loggedUser?.fullname?.split(' ')[0][0]?.toUpperCase() || '') + '' + (loggedUser?.fullname?.split(' ')[1][0]?.toUpperCase() || ''):loggedUser?.fullname[0].toUpperCase()
 
                                 }
                             </div>
