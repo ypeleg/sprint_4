@@ -99,18 +99,18 @@ export async function loadBoard(boardId, filterBy = { title: '' }) {
     try {
         const board = await boardService.getById(boardId, filterBy)
         store.dispatch(getCmdSetBoard(board))
-        if (USE_AI) {
-            if (board.generator === 'getRandomBoard') {
-                aiGenerator().then(
-                    aiBoard => {
-                        aiBoard._id = board._id
-                        aiBoard.id = board.id
-                        store.dispatch(getCmdUpdateBoard(aiBoard))
-                        boardService.save(aiBoard)
-                    }
-                )
-            }
-        }
+        // if (USE_AI) {
+        //     if (board.generator === 'getRandomBoard') {
+        //         aiGenerator().then(
+        //             aiBoard => {
+        //                 aiBoard._id = board._id
+        //                 aiBoard.id = board.id
+        //                 store.dispatch(getCmdUpdateBoard(aiBoard))
+        //                 boardService.save(aiBoard)
+        //             }
+        //         )
+        //     }
+        // }
     } catch (err) {
         console.log('Cannot load board', err)
         throw err

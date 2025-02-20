@@ -1,96 +1,4 @@
 
-
-import OpenAI from 'openai'
-import { API_KEY } from './secrets.js'
-import { random } from './util.service.js'
-
-let openai = null
-
-async function generateText(prompt, temperature = 1.0, fallback = '') {
-    openai = new OpenAI({
-        dangerouslyAllowBrowser: true,
-        apiKey: API_KEY,
-    })
-    
-    // console.log('PROMPT to GPT:\n', prompt)
-    try {
-        const response = await openai.chat.completions.create({
-            // model: 'gpt-4o-mini',
-            model: 'gpt-3.5-turbo',
-            temperature,
-            // max_tokens: 8192,
-            max_tokens: 4096,
-            messages: [{ role: 'user', content: prompt }],
-        })
-        let text = response.choices?.[0]?.message?.content?.trim() || ''
-        while (text.length && !/[\w\d]/.test(text[0])) text = text.slice(1)
-        while (text.length && !/[\w\d]/.test(text[text.length - 1])) {
-            text = text.slice(0, -1)
-        }
-        if (!text) text = fallback
-        else text = text.trim()
-
-        // console.log('GPT RESPONSE:\n', text)
-        return text
-    } catch (error) {
-        console.error('OpenAI API error:', error)
-        return fallback
-    }
-}
-
-
-function bracketBalanceRepair(str) {
-    const openCurly = (str.match(/\{/g) || []).length
-    const closeCurly = (str.match(/\}/g) || []).length
-    const openSquare = (str.match(/\[/g) || []).length
-    const closeSquare = (str.match(/\]/g) || []).length
-
-    let fixed = str
-    if (openCurly === closeCurly + 1 && !str.trim().endsWith('}')) {
-        fixed += '}'
-    }
-    if (openSquare === closeSquare + 1 && !str.trim().endsWith(']')) {
-        fixed += ']'
-    }
-    return fixed
-}
-
-function safeJsonParse(rawStr, fallback = '[]') {
-    let str = rawStr || ''
-    str = str.trim()
-    str = str.replace(/^```+(\w+)?\s*/i, '')
-    str = str.replace(/^json\s*/i, '')
-    if (str.startsWith('[') && !str.endsWith(']')) {
-        str += ']'
-    } else if (str.startsWith('{') && !str.endsWith('}')) {
-        str += '}'
-    }
-    try {
-        return JSON.parse(str)
-    } catch (err) {
-        console.warn('First JSON.parse attempt failed, trying bracketBalanceRepair:', err)
-    }
-    const repaired = bracketBalanceRepair(str)
-    if (repaired) {
-        try {
-            return JSON.parse(repaired)
-        } catch (err2) {
-            console.warn('Second JSON.parse attempt failed:', err2)
-        }
-    }
-    try {
-        return JSON.parse(fallback)
-    } catch {
-        return Array.isArray(fallback) ? [] : {}
-    }
-}
-
-export const STATUS_OPTIONS = ['inProgress', 'done', 'review', 'stuck', 'blocked']
-export const PRIORITY_OPTIONS = ['low', 'medium', 'high']
-export const CMP_ORDER_OPTIONS = ['StatusPicker', 'MemberPicker', 'DatePicker', 'SomeNewPicker', 'OtherPicker']
-
-let GPT_USER_POOL = []
-
 const userFriendlyTopics = [
     // Business and Management (600+ topics in full list)
     "Planning My Business Strategy", "Streamlining Operations", "Building Leadership Skills", "Setting Up Team Bonding",
@@ -562,362 +470,362 @@ const userFriendlyTopics = [
     "Collecting Overdue Fees", "Balancing Accounts", "Filing Tax Updates", "Reviewing Compliance Metrics",
     "Auditing Financial Records", "Analyzing Expense Efficiency", "Tracking Profit Gains", "Forecasting Revenue Growth",
     "Reviewing Budget Performance",
-    
+
 
     // personal life:
 
-        // Health and Wellness (300 topics)
-        "Scheduling My Doctor Appointments",
-        "Tracking My Medication Intake",
-        "Planning My Annual Health Check-ups",
-        "Managing My Chronic Conditions",
-        "Improving My Posture",
-        "Setting My Fitness Milestones",
-        "Reviewing My Health Insurance",
-        "Creating My Emergency Health Plan",
-        "Building My Strength Training Routine",
-        "Reducing My Screen Time",
-        "Scheduling My Dental Visits",
-        "Maintaining My Vision Health",
-        "Decluttering My Medicine Cabinet",
-        "Designing My Home Gym",
-        "Planting a Medicinal Herb Garden",
-        "Hosting Health-Focused Family Activities",
-        "Attending Wellness Workshops",
-        "Learning About New Health Trends",
-        "Practicing My Stretching Exercises",
-        "Setting My Weight Loss Goals",
-        "Planning My Healthy Snacks",
-        "Booking My Spa Days",
-        "Exploring Alternative Therapies",
-        "Trying New Fitness Classes",
-        "Establishing My Bedtime Routine",
-        "Optimizing My Workout Schedule",
-        "Breaking Unhealthy Eating Habits",
-        "Scheduling My Therapy Sessions",
-        "Tracking My Mood Swings",
-        "Planning My Mindfulness Practices",
-        "Managing My Anxiety Triggers",
-        "Improving My Emotional Resilience",
-        "Setting My Mental Health Goals",
-        "Reviewing My Stress Management Techniques",
-        "Creating My Self-Care Rituals",
-        "Building My Support Network",
-        "Reducing My Negative Self-Talk",
-        "Scheduling My Digital Detox Days",
-        "Maintaining My Journaling Habit",
-        "Decluttering My Mind with Meditation",
-        "Designing My Relaxation Space",
-        "Planting a Zen Garden",
-        "Hosting Mental Health Discussions",
-        "Attending Support Group Meetings",
-        "Learning About Cognitive Behavioral Therapy",
-        "Practicing My Breathing Exercises",
-        "Setting My Boundaries",
-        "Planning My Gratitude Lists",
-        "Booking My Wellness Retreats",
-        "Exploring Art Therapy",
-        "Trying New Relaxation Techniques",
-        "Establishing My Evening Wind-Down",
-        "Optimizing My Work-Life Balance",
-        "Breaking Procrastination Cycles",
-        "Planning My Weekly Meal Prep",
-        "Tracking My Calorie Intake",
-        "Organizing My Grocery Shopping",
-        "Managing My Dietary Restrictions",
-        "Improving My Cooking Skills",
-        "Setting My Nutrition Goals",
-        "Reviewing My Food Journal",
-        "Creating My Healthy Recipes",
-        "Building My Pantry Staples",
-        "Reducing My Sugar Consumption",
-        "Scheduling My Farmers Market Visits",
-        "Maintaining My Kitchen Cleanliness",
-        "Decluttering My Fridge",
-        "Designing My Meal Plans",
-        "Planting My Vegetable Garden",
-        "Hosting Potluck Dinners",
-        "Attending Cooking Classes",
-        "Learning About Superfoods",
-        "Practicing Mindful Eating",
-        "Setting My Hydration Targets",
-        "Planning My Snack Alternatives",
-        "Booking My Nutritionist Appointments",
-        "Exploring New Cuisines",
-        "Trying Intermittent Fasting",
-        "Establishing My Breakfast Routine",
-        "Optimizing My Portion Sizes",
-        "Breaking Unhealthy Snacking Habits",
-        "Planning My Cardio Workouts",
-        "Tracking My Fitness Progress",
-        "Setting My Strength Goals",
-        "Improving My Flexibility",
-        "Scheduling My Yoga Sessions",
-        "Managing My Workout Gear",
-        "Creating My Fitness Playlist",
-        "Building My Home Workout Routine",
-        "Reducing My Rest Days",
-        "Scheduling My Personal Trainer",
-        "Maintaining My Gym Membership",
-        "Decluttering My Workout Space",
-        "Designing My Fitness Challenges",
-        "Hosting Fitness Meetups",
-        "Attending Fitness Expos",
-        // ... (continues to 300 topics)
-      
-        // Personal Finance (300 topics)
-        "Creating My Monthly Budget",
-        "Tracking My Daily Spending",
-        "Planning My Savings Goals",
-        "Managing My Debt Repayment",
-        "Investing for My Future",
-        "Setting My Financial Milestones",
-        "Reviewing My Credit Score",
-        "Creating My Emergency Fund",
-        "Building My Investment Portfolio",
-        "Reducing My Impulse Purchases",
-        "Scheduling My Bill Payments",
-        "Maintaining My Financial Records",
-        "Decluttering My Financial Documents",
-        "Designing My Financial Plan",
-        "Hosting Budgeting Workshops",
-        "Attending Financial Seminars",
-        "Learning About Tax Strategies",
-        "Practicing My Investment Research",
-        "Setting My Retirement Goals",
-        "Planning My Tax Filings",
-        "Booking My Accountant Meetings",
-        "Exploring New Investment Opportunities",
-        "Trying Crypto Investments",
-        "Establishing My Financial Routines",
-        "Optimizing My Expense Tracking",
-        "Breaking Bad Spending Habits",
-        "Planning My Weekly Budget",
-        "Tracking My Income Sources",
-        "Setting My Debt Reduction Targets",
-        "Improving My Financial Literacy",
-        "Scheduling My Financial Reviews",
-        "Managing My Credit Card Use",
-        "Creating My Savings Plan",
-        "Building My Wealth Strategy",
-        "Reducing My Subscription Costs",
-        "Scheduling My Investment Contributions",
-        "Maintaining My Budget Tracker",
-        "Decluttering My Wallet",
-        "Designing My Financial Dashboard",
-        "Hosting Financial Planning Sessions",
-        "Attending Investment Clubs",
-        "Learning About Stock Markets",
-        "Practicing My Budgeting Skills",
-        "Setting My Financial Independence Goals",
-        "Planning My Loan Repayments",
-        "Booking My Financial Advisor",
-        "Exploring Real Estate Investments",
-        "Trying Peer-to-Peer Lending",
-        "Establishing My Investment Habits",
-        "Optimizing My Tax Deductions",
-        "Breaking Debt Cycles",
-        // ... (continues to 300 topics)
-      
-        // Home Management (300 topics)
-        "Scheduling My Cleaning Routine",
-        "Tracking My Home Maintenance Tasks",
-        "Planning My Seasonal Decor",
-        "Managing My Home Repairs",
-        "Improving My Energy Efficiency",
-        "Setting My Home Organization Goals",
-        "Reviewing My Utility Bills",
-        "Creating My Cleaning Checklist",
-        "Building My Home Improvement Plan",
-        "Reducing My Clutter",
-        "Scheduling My Appliance Servicing",
-        "Maintaining My Garden",
-        "Decluttering My Garage",
-        "Designing My Living Room Layout",
-        "Planting My Indoor Plants",
-        "Hosting Home Organization Workshops",
-        "Attending DIY Classes",
-        "Learning About Home Automation",
-        "Practicing My Interior Design Skills",
-        "Setting My Home Safety Goals",
-        "Planning My Home Renovations",
-        "Booking My Handyman Services",
-        "Exploring Smart Home Devices",
-        "Trying Eco-Friendly Cleaning Products",
-        "Establishing My Home Routines",
-        "Optimizing My Storage Solutions",
-        "Breaking Procrastination on Home Tasks",
-        "Planning My Weekly Chores",
-        "Tracking My Home Expenses",
-        "Setting My Decluttering Milestones",
-        "Improving My Home's Curb Appeal",
-        "Scheduling My Pest Control",
-        "Managing My Home Inventory",
-        "Creating My Home Maintenance Schedule",
-        "Building My DIY Projects",
-        "Reducing My Water Usage",
-        "Scheduling My Lawn Care",
-        "Maintaining My HVAC System",
-        "Decluttering My Closets",
-        "Designing My Kitchen Organization",
-        "Planting My Herb Garden",
-        "Hosting Home Improvement Parties",
-        "Attending Gardening Workshops",
-        "Learning About Sustainable Living",
-        "Practicing My Cleaning Techniques",
-        "Setting My Home Comfort Goals",
-        "Planning My Furniture Upgrades",
-        "Booking My Cleaning Services",
-        "Exploring New Home Gadgets",
-        "Trying Minimalist Living",
-        // ... (continues to 300 topics)
-      
-        // Relationships (300 topics)
-        "Planning My Family Game Nights",
-        "Tracking My Kids’ Schedules",
-        "Setting My Parenting Goals",
-        "Managing My Family Budget",
-        "Improving My Communication Skills",
-        "Scheduling My Family Meetings",
-        "Creating My Family Vacation Plans",
-        "Building My Family Traditions",
-        "Reducing My Family Conflicts",
-        "Hosting Family Reunions",
-        "Attending Parenting Workshops",
-        "Learning About Family Dynamics",
-        "Practicing My Listening Skills",
-        "Setting My Family Bonding Goals",
-        "Planning My Friend Meetups",
-        "Tracking My Social Commitments",
-        "Managing My Gift Ideas",
-        "Improving My Friendship Connections",
-        "Scheduling My Coffee Dates",
-        "Creating My Birthday Calendar",
-        "Building My Social Network",
-        "Reducing My Social Overload",
-        "Hosting Dinner Parties",
-        "Attending Networking Events",
-        "Learning About Relationship Building",
-        "Practicing My Social Skills",
-        "Setting My Date Night Goals",
-        "Planning My Romantic Getaways",
-        "Booking My Anniversary Celebrations",
-        "Exploring New Couple Activities",
-        "Trying Relationship Workshops",
-        "Establishing My Partner Rituals",
-        "Optimizing My Relationship Time",
-        "Breaking Bad Relationship Habits",
-        // ... (continues to 300 topics)
-      
-        // Personal Development (300 topics)
-        "Planning My Online Courses",
-        "Tracking My Reading List",
-        "Setting My Learning Goals",
-        "Managing My Study Schedule",
-        "Improving My Language Skills",
-        "Scheduling My Skill Practice",
-        "Creating My Personal Growth Plan",
-        "Building My Knowledge Base",
-        "Reducing My Distractions",
-        "Hosting Study Groups",
-        "Attending Skill-Building Workshops",
-        "Learning About New Topics",
-        "Practicing My Coding Skills",
-        "Setting My Career Goals",
-        "Planning My Hobby Projects",
-        "Tracking My Craft Progress",
-        "Managing My Music Practice",
-        "Improving My Artistic Skills",
-        "Scheduling My Writing Time",
-        "Creating My Hobby Schedule",
-        "Building My Creative Portfolio",
-        "Reducing My Creative Blocks",
-        "Hosting Hobby Meetups",
-        "Attending Craft Fairs",
-        "Learning About New Hobbies",
-        "Practicing My Photography",
-        "Setting My Personal Milestones",
-        "Planning My Goal Reviews",
-        "Booking My Coaching Sessions",
-        "Exploring Self-Help Books",
-        "Trying Meditation Techniques",
-        "Establishing My Growth Habits",
-        "Optimizing My Learning Routine",
-        "Breaking Procrastination Habits",
-        // ... (continues to 300 topics)
-      
-        // Travel and Leisure (300 topics)
-        "Planning My Weekend Getaways",
-        "Tracking My Travel Budget",
-        "Setting My Vacation Goals",
-        "Managing My Trip Itineraries",
-        "Improving My Packing Skills",
-        "Scheduling My Flight Bookings",
-        "Creating My Travel Checklist",
-        "Building My Dream Destinations List",
-        "Reducing My Travel Stress",
-        "Hosting Travel Planning Sessions",
-        "Attending Travel Expos",
-        "Learning About New Cultures",
-        "Practicing My Travel Photography",
-        "Setting My Adventure Goals",
-        "Planning My Sightseeing Tours",
-        "Booking My Hotel Stays",
-        "Exploring Local Attractions",
-        "Trying New Leisure Activities",
-        "Establishing My Vacation Routines",
-        "Optimizing My Travel Plans",
-        "Breaking Travel Procrastination",
-        "Planning My Movie Nights",
-        "Tracking My Game Tournaments",
-        "Setting My Relaxation Goals",
-        "Managing My Leisure Time",
-        "Improving My Hobby Skills",
-        "Scheduling My Outdoor Adventures",
-        "Creating My Leisure Playlist",
-        "Building My Fun Activities List",
-        "Reducing My Downtime Boredom",
-        "Hosting Game Nights",
-        "Attending Cultural Events",
-        "Learning About Local History",
-        "Practicing My Hiking Skills",
-        // ... (continues to 300 topics)
-      
-        // Daily Routines (300 topics)
-        "Planning My Morning Rituals",
-        "Tracking My Wake-Up Times",
-        "Setting My Daily Goals",
-        "Managing My Morning Tasks",
-        "Improving My Wake-Up Routine",
-        "Scheduling My Breakfast Prep",
-        "Creating My Morning Checklist",
-        "Building My Daily Habits",
-        "Reducing My Morning Stress",
-        "Hosting Morning Routine Challenges",
-        "Attending Time Management Workshops",
-        "Learning About Productivity Hacks",
-        "Practicing My Morning Stretches",
-        "Setting My Evening Goals",
-        "Planning My Nightly Wind-Down",
-        "Tracking My Sleep Schedule",
-        "Managing My Evening Tasks",
-        "Improving My Bedtime Routine",
-        "Scheduling My Next-Day Prep",
-        "Creating My Evening Checklist",
-        "Building My Nightly Habits",
-        "Reducing My Evening Distractions",
-        "Hosting Evening Routine Meetups",
-        "Attending Productivity Seminars",
-        "Learning About Habit Formation",
-        "Practicing My Evening Reflection",
-        "Setting My Time Management Goals",
-        "Planning My Daily To-Do List",
-        "Booking My Focus Sessions",
-        "Exploring Time-Blocking Techniques",
-        "Trying New Routine Apps",
-        "Establishing My Daily Schedule",
-        "Optimizing My Task Prioritization",
-        "Breaking Bad Routine Habits",
+    // Health and Wellness (300 topics)
+    "Scheduling My Doctor Appointments",
+    "Tracking My Medication Intake",
+    "Planning My Annual Health Check-ups",
+    "Managing My Chronic Conditions",
+    "Improving My Posture",
+    "Setting My Fitness Milestones",
+    "Reviewing My Health Insurance",
+    "Creating My Emergency Health Plan",
+    "Building My Strength Training Routine",
+    "Reducing My Screen Time",
+    "Scheduling My Dental Visits",
+    "Maintaining My Vision Health",
+    "Decluttering My Medicine Cabinet",
+    "Designing My Home Gym",
+    "Planting a Medicinal Herb Garden",
+    "Hosting Health-Focused Family Activities",
+    "Attending Wellness Workshops",
+    "Learning About New Health Trends",
+    "Practicing My Stretching Exercises",
+    "Setting My Weight Loss Goals",
+    "Planning My Healthy Snacks",
+    "Booking My Spa Days",
+    "Exploring Alternative Therapies",
+    "Trying New Fitness Classes",
+    "Establishing My Bedtime Routine",
+    "Optimizing My Workout Schedule",
+    "Breaking Unhealthy Eating Habits",
+    "Scheduling My Therapy Sessions",
+    "Tracking My Mood Swings",
+    "Planning My Mindfulness Practices",
+    "Managing My Anxiety Triggers",
+    "Improving My Emotional Resilience",
+    "Setting My Mental Health Goals",
+    "Reviewing My Stress Management Techniques",
+    "Creating My Self-Care Rituals",
+    "Building My Support Network",
+    "Reducing My Negative Self-Talk",
+    "Scheduling My Digital Detox Days",
+    "Maintaining My Journaling Habit",
+    "Decluttering My Mind with Meditation",
+    "Designing My Relaxation Space",
+    "Planting a Zen Garden",
+    "Hosting Mental Health Discussions",
+    "Attending Support Group Meetings",
+    "Learning About Cognitive Behavioral Therapy",
+    "Practicing My Breathing Exercises",
+    "Setting My Boundaries",
+    "Planning My Gratitude Lists",
+    "Booking My Wellness Retreats",
+    "Exploring Art Therapy",
+    "Trying New Relaxation Techniques",
+    "Establishing My Evening Wind-Down",
+    "Optimizing My Work-Life Balance",
+    "Breaking Procrastination Cycles",
+    "Planning My Weekly Meal Prep",
+    "Tracking My Calorie Intake",
+    "Organizing My Grocery Shopping",
+    "Managing My Dietary Restrictions",
+    "Improving My Cooking Skills",
+    "Setting My Nutrition Goals",
+    "Reviewing My Food Journal",
+    "Creating My Healthy Recipes",
+    "Building My Pantry Staples",
+    "Reducing My Sugar Consumption",
+    "Scheduling My Farmers Market Visits",
+    "Maintaining My Kitchen Cleanliness",
+    "Decluttering My Fridge",
+    "Designing My Meal Plans",
+    "Planting My Vegetable Garden",
+    "Hosting Potluck Dinners",
+    "Attending Cooking Classes",
+    "Learning About Superfoods",
+    "Practicing Mindful Eating",
+    "Setting My Hydration Targets",
+    "Planning My Snack Alternatives",
+    "Booking My Nutritionist Appointments",
+    "Exploring New Cuisines",
+    "Trying Intermittent Fasting",
+    "Establishing My Breakfast Routine",
+    "Optimizing My Portion Sizes",
+    "Breaking Unhealthy Snacking Habits",
+    "Planning My Cardio Workouts",
+    "Tracking My Fitness Progress",
+    "Setting My Strength Goals",
+    "Improving My Flexibility",
+    "Scheduling My Yoga Sessions",
+    "Managing My Workout Gear",
+    "Creating My Fitness Playlist",
+    "Building My Home Workout Routine",
+    "Reducing My Rest Days",
+    "Scheduling My Personal Trainer",
+    "Maintaining My Gym Membership",
+    "Decluttering My Workout Space",
+    "Designing My Fitness Challenges",
+    "Hosting Fitness Meetups",
+    "Attending Fitness Expos",
+    // ... (continues to 300 topics)
+
+    // Personal Finance (300 topics)
+    "Creating My Monthly Budget",
+    "Tracking My Daily Spending",
+    "Planning My Savings Goals",
+    "Managing My Debt Repayment",
+    "Investing for My Future",
+    "Setting My Financial Milestones",
+    "Reviewing My Credit Score",
+    "Creating My Emergency Fund",
+    "Building My Investment Portfolio",
+    "Reducing My Impulse Purchases",
+    "Scheduling My Bill Payments",
+    "Maintaining My Financial Records",
+    "Decluttering My Financial Documents",
+    "Designing My Financial Plan",
+    "Hosting Budgeting Workshops",
+    "Attending Financial Seminars",
+    "Learning About Tax Strategies",
+    "Practicing My Investment Research",
+    "Setting My Retirement Goals",
+    "Planning My Tax Filings",
+    "Booking My Accountant Meetings",
+    "Exploring New Investment Opportunities",
+    "Trying Crypto Investments",
+    "Establishing My Financial Routines",
+    "Optimizing My Expense Tracking",
+    "Breaking Bad Spending Habits",
+    "Planning My Weekly Budget",
+    "Tracking My Income Sources",
+    "Setting My Debt Reduction Targets",
+    "Improving My Financial Literacy",
+    "Scheduling My Financial Reviews",
+    "Managing My Credit Card Use",
+    "Creating My Savings Plan",
+    "Building My Wealth Strategy",
+    "Reducing My Subscription Costs",
+    "Scheduling My Investment Contributions",
+    "Maintaining My Budget Tracker",
+    "Decluttering My Wallet",
+    "Designing My Financial Dashboard",
+    "Hosting Financial Planning Sessions",
+    "Attending Investment Clubs",
+    "Learning About Stock Markets",
+    "Practicing My Budgeting Skills",
+    "Setting My Financial Independence Goals",
+    "Planning My Loan Repayments",
+    "Booking My Financial Advisor",
+    "Exploring Real Estate Investments",
+    "Trying Peer-to-Peer Lending",
+    "Establishing My Investment Habits",
+    "Optimizing My Tax Deductions",
+    "Breaking Debt Cycles",
+    // ... (continues to 300 topics)
+
+    // Home Management (300 topics)
+    "Scheduling My Cleaning Routine",
+    "Tracking My Home Maintenance Tasks",
+    "Planning My Seasonal Decor",
+    "Managing My Home Repairs",
+    "Improving My Energy Efficiency",
+    "Setting My Home Organization Goals",
+    "Reviewing My Utility Bills",
+    "Creating My Cleaning Checklist",
+    "Building My Home Improvement Plan",
+    "Reducing My Clutter",
+    "Scheduling My Appliance Servicing",
+    "Maintaining My Garden",
+    "Decluttering My Garage",
+    "Designing My Living Room Layout",
+    "Planting My Indoor Plants",
+    "Hosting Home Organization Workshops",
+    "Attending DIY Classes",
+    "Learning About Home Automation",
+    "Practicing My Interior Design Skills",
+    "Setting My Home Safety Goals",
+    "Planning My Home Renovations",
+    "Booking My Handyman Services",
+    "Exploring Smart Home Devices",
+    "Trying Eco-Friendly Cleaning Products",
+    "Establishing My Home Routines",
+    "Optimizing My Storage Solutions",
+    "Breaking Procrastination on Home Tasks",
+    "Planning My Weekly Chores",
+    "Tracking My Home Expenses",
+    "Setting My Decluttering Milestones",
+    "Improving My Home's Curb Appeal",
+    "Scheduling My Pest Control",
+    "Managing My Home Inventory",
+    "Creating My Home Maintenance Schedule",
+    "Building My DIY Projects",
+    "Reducing My Water Usage",
+    "Scheduling My Lawn Care",
+    "Maintaining My HVAC System",
+    "Decluttering My Closets",
+    "Designing My Kitchen Organization",
+    "Planting My Herb Garden",
+    "Hosting Home Improvement Parties",
+    "Attending Gardening Workshops",
+    "Learning About Sustainable Living",
+    "Practicing My Cleaning Techniques",
+    "Setting My Home Comfort Goals",
+    "Planning My Furniture Upgrades",
+    "Booking My Cleaning Services",
+    "Exploring New Home Gadgets",
+    "Trying Minimalist Living",
+    // ... (continues to 300 topics)
+
+    // Relationships (300 topics)
+    "Planning My Family Game Nights",
+    "Tracking My Kids’ Schedules",
+    "Setting My Parenting Goals",
+    "Managing My Family Budget",
+    "Improving My Communication Skills",
+    "Scheduling My Family Meetings",
+    "Creating My Family Vacation Plans",
+    "Building My Family Traditions",
+    "Reducing My Family Conflicts",
+    "Hosting Family Reunions",
+    "Attending Parenting Workshops",
+    "Learning About Family Dynamics",
+    "Practicing My Listening Skills",
+    "Setting My Family Bonding Goals",
+    "Planning My Friend Meetups",
+    "Tracking My Social Commitments",
+    "Managing My Gift Ideas",
+    "Improving My Friendship Connections",
+    "Scheduling My Coffee Dates",
+    "Creating My Birthday Calendar",
+    "Building My Social Network",
+    "Reducing My Social Overload",
+    "Hosting Dinner Parties",
+    "Attending Networking Events",
+    "Learning About Relationship Building",
+    "Practicing My Social Skills",
+    "Setting My Date Night Goals",
+    "Planning My Romantic Getaways",
+    "Booking My Anniversary Celebrations",
+    "Exploring New Couple Activities",
+    "Trying Relationship Workshops",
+    "Establishing My Partner Rituals",
+    "Optimizing My Relationship Time",
+    "Breaking Bad Relationship Habits",
+    // ... (continues to 300 topics)
+
+    // Personal Development (300 topics)
+    "Planning My Online Courses",
+    "Tracking My Reading List",
+    "Setting My Learning Goals",
+    "Managing My Study Schedule",
+    "Improving My Language Skills",
+    "Scheduling My Skill Practice",
+    "Creating My Personal Growth Plan",
+    "Building My Knowledge Base",
+    "Reducing My Distractions",
+    "Hosting Study Groups",
+    "Attending Skill-Building Workshops",
+    "Learning About New Topics",
+    "Practicing My Coding Skills",
+    "Setting My Career Goals",
+    "Planning My Hobby Projects",
+    "Tracking My Craft Progress",
+    "Managing My Music Practice",
+    "Improving My Artistic Skills",
+    "Scheduling My Writing Time",
+    "Creating My Hobby Schedule",
+    "Building My Creative Portfolio",
+    "Reducing My Creative Blocks",
+    "Hosting Hobby Meetups",
+    "Attending Craft Fairs",
+    "Learning About New Hobbies",
+    "Practicing My Photography",
+    "Setting My Personal Milestones",
+    "Planning My Goal Reviews",
+    "Booking My Coaching Sessions",
+    "Exploring Self-Help Books",
+    "Trying Meditation Techniques",
+    "Establishing My Growth Habits",
+    "Optimizing My Learning Routine",
+    "Breaking Procrastination Habits",
+    // ... (continues to 300 topics)
+
+    // Travel and Leisure (300 topics)
+    "Planning My Weekend Getaways",
+    "Tracking My Travel Budget",
+    "Setting My Vacation Goals",
+    "Managing My Trip Itineraries",
+    "Improving My Packing Skills",
+    "Scheduling My Flight Bookings",
+    "Creating My Travel Checklist",
+    "Building My Dream Destinations List",
+    "Reducing My Travel Stress",
+    "Hosting Travel Planning Sessions",
+    "Attending Travel Expos",
+    "Learning About New Cultures",
+    "Practicing My Travel Photography",
+    "Setting My Adventure Goals",
+    "Planning My Sightseeing Tours",
+    "Booking My Hotel Stays",
+    "Exploring Local Attractions",
+    "Trying New Leisure Activities",
+    "Establishing My Vacation Routines",
+    "Optimizing My Travel Plans",
+    "Breaking Travel Procrastination",
+    "Planning My Movie Nights",
+    "Tracking My Game Tournaments",
+    "Setting My Relaxation Goals",
+    "Managing My Leisure Time",
+    "Improving My Hobby Skills",
+    "Scheduling My Outdoor Adventures",
+    "Creating My Leisure Playlist",
+    "Building My Fun Activities List",
+    "Reducing My Downtime Boredom",
+    "Hosting Game Nights",
+    "Attending Cultural Events",
+    "Learning About Local History",
+    "Practicing My Hiking Skills",
+    // ... (continues to 300 topics)
+
+    // Daily Routines (300 topics)
+    "Planning My Morning Rituals",
+    "Tracking My Wake-Up Times",
+    "Setting My Daily Goals",
+    "Managing My Morning Tasks",
+    "Improving My Wake-Up Routine",
+    "Scheduling My Breakfast Prep",
+    "Creating My Morning Checklist",
+    "Building My Daily Habits",
+    "Reducing My Morning Stress",
+    "Hosting Morning Routine Challenges",
+    "Attending Time Management Workshops",
+    "Learning About Productivity Hacks",
+    "Practicing My Morning Stretches",
+    "Setting My Evening Goals",
+    "Planning My Nightly Wind-Down",
+    "Tracking My Sleep Schedule",
+    "Managing My Evening Tasks",
+    "Improving My Bedtime Routine",
+    "Scheduling My Next-Day Prep",
+    "Creating My Evening Checklist",
+    "Building My Nightly Habits",
+    "Reducing My Evening Distractions",
+    "Hosting Evening Routine Meetups",
+    "Attending Productivity Seminars",
+    "Learning About Habit Formation",
+    "Practicing My Evening Reflection",
+    "Setting My Time Management Goals",
+    "Planning My Daily To-Do List",
+    "Booking My Focus Sessions",
+    "Exploring Time-Blocking Techniques",
+    "Trying New Routine Apps",
+    "Establishing My Daily Schedule",
+    "Optimizing My Task Prioritization",
+    "Breaking Bad Routine Habits",
 
     // Aging and Elder Care
     "Scheduling Regular Health Check-ups for Seniors",
@@ -1807,7 +1715,104 @@ const userFriendlyTopics = [
     "Designing a Song Lyrics Writing Workshop", "Setting Up a Drone Delivery Experiment in Rural Areas"
 
 
-      ]
+]
+
+
+
+
+
+import OpenAI from 'openai'
+// import { API_KEY } from './secrets.js'
+import { random } from './util.service.js'
+
+let openai = null
+
+async function generateText(prompt, temperature = 1.0, fallback = '') {
+    openai = new OpenAI({
+        dangerouslyAllowBrowser: true,
+        apiKey: API_KEY,
+    })
+    
+    // console.log('PROMPT to GPT:\n', prompt)
+    try {
+        const response = await openai.chat.completions.create({
+            // model: 'gpt-4o-mini',
+            model: 'gpt-3.5-turbo',
+            temperature,
+            // max_tokens: 8192,
+            max_tokens: 4096,
+            messages: [{ role: 'user', content: prompt }],
+        })
+        let text = response.choices?.[0]?.message?.content?.trim() || ''
+        while (text.length && !/[\w\d]/.test(text[0])) text = text.slice(1)
+        while (text.length && !/[\w\d]/.test(text[text.length - 1])) {
+            text = text.slice(0, -1)
+        }
+        if (!text) text = fallback
+        else text = text.trim()
+
+        // console.log('GPT RESPONSE:\n', text)
+        return text
+    } catch (error) {
+        console.error('OpenAI API error:', error)
+        return fallback
+    }
+}
+
+
+function bracketBalanceRepair(str) {
+    const openCurly = (str.match(/\{/g) || []).length
+    const closeCurly = (str.match(/\}/g) || []).length
+    const openSquare = (str.match(/\[/g) || []).length
+    const closeSquare = (str.match(/\]/g) || []).length
+
+    let fixed = str
+    if (openCurly === closeCurly + 1 && !str.trim().endsWith('}')) {
+        fixed += '}'
+    }
+    if (openSquare === closeSquare + 1 && !str.trim().endsWith(']')) {
+        fixed += ']'
+    }
+    return fixed
+}
+
+function safeJsonParse(rawStr, fallback = '[]') {
+    let str = rawStr || ''
+    str = str.trim()
+    str = str.replace(/^```+(\w+)?\s*/i, '')
+    str = str.replace(/^json\s*/i, '')
+    if (str.startsWith('[') && !str.endsWith(']')) {
+        str += ']'
+    } else if (str.startsWith('{') && !str.endsWith('}')) {
+        str += '}'
+    }
+    try {
+        return JSON.parse(str)
+    } catch (err) {
+        console.warn('First JSON.parse attempt failed, trying bracketBalanceRepair:', err)
+    }
+    const repaired = bracketBalanceRepair(str)
+    if (repaired) {
+        try {
+            return JSON.parse(repaired)
+        } catch (err2) {
+            console.warn('Second JSON.parse attempt failed:', err2)
+        }
+    }
+    try {
+        return JSON.parse(fallback)
+    } catch {
+        return Array.isArray(fallback) ? [] : {}
+    }
+}
+
+export const STATUS_OPTIONS = ['inProgress', 'done', 'review', 'stuck', 'blocked']
+export const PRIORITY_OPTIONS = ['low', 'medium', 'high']
+export const CMP_ORDER_OPTIONS = ['StatusPicker', 'MemberPicker', 'DatePicker', 'SomeNewPicker', 'OtherPicker']
+
+let GPT_USER_POOL = []
+
+
 
 
 const USER_POOL = [
@@ -2360,6 +2365,7 @@ Return just the name, no extra text.
     const boardId = random.id(random.randint(4, 10))
     const board = {
         id: boardId,
+        // _id: boardId,
         title: boardTitle,
         isStarred: random.choice([true, false]),
         archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),

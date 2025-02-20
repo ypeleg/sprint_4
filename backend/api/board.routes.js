@@ -8,7 +8,9 @@ import { requireAuth, requireAdmin } from '../middlewares.js'
 import { logger, dbService, utilService } from '../util.service.js'
 
 
-import { socketService } from './socket.service.js'
+import {socketService} from './socket.service.js'
+
+
 
 const SECURED = false
 
@@ -36,7 +38,7 @@ export const boardService = {
         try {
             const collection = await dbService.getCollection('board')
             const board = await collection.findOne({_id: ObjectId.createFromHexString(boardId)})
-            // board.createdAt = board._id.getTimestamp()
+            board.createdAt = board._id.getTimestamp()
             return board
         } catch (err) {
             logger.error(`while finding board ${boardId}`, err)
@@ -61,28 +63,29 @@ export const boardService = {
             if (board._id) {
                 // UPDATE
                 const boardId = board._id
-                const existingBoard = await collection.findOne({ _id: new ObjectId(boardId) })
+                const existingBoard = await collection.findOne({ _id: new ObjectId.createFromHexString(boardId) })
                 if (!existingBoard) throw new Error('No such board')
-                // if security needed, enforce it here
+
                 const boardToUpdate = structuredClone(board)
                 delete boardToUpdate._id
+
                 await collection.updateOne(
                     { _id: new ObjectId(boardId) },
                     { $set: boardToUpdate }
                 )
-                return { ...existingBoard, ...boardToUpdate }
+                return { ...existingBoard, ...boardToUpdate, _id: boardId }
             } else {
                 // CREATE
                 const newBoard = structuredClone(board)
                 const { insertedId } = await collection.insertOne(newBoard)
-                newBoard._id = insertedId
+                newBoard._id = insertedId.toString()
                 return newBoard
             }
         } catch (err) {
             logger.error('cannot save board', err)
             throw err
         }
-    },
+    }
 }
 
 // Controller

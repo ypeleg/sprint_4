@@ -1,11 +1,13 @@
 
 
+import http from 'http'
 import cors  from 'cors'
 import express  from 'express'
 import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
 import cookieParser from 'cookie-parser'
 import { logger } from './util.service.js'
+import { setupSocketAPI } from './api/socket.service.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -52,6 +54,8 @@ app.use('/api/board', boardRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 
+const server = http.createServer(app)
+setupSocketAPI(server)
 
 import bcrypt from 'bcrypt'
 import { userService } from './api/user.routes.js'
