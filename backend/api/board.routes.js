@@ -63,7 +63,7 @@ export const boardService = {
       if (board._id) {
         // UPDATE
         const boardId = board._id
-        const existingBoard = await collection.findOne({ _id: new ObjectId.createFromHexString(boardId) })
+        const existingBoard = await collection.findOne({ _id: new ObjectId(boardId) })
         if (!existingBoard) throw new Error('No such board')
 
         const boardToUpdate = structuredClone(board)
