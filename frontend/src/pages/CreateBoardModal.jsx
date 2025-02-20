@@ -17,11 +17,11 @@ export function CreateBoardModal({ onClose, createModal }) {
 
 
   const initialBackgroundColor = [
-    { name: "gray", isSelected: false, url: "https://trello.com/assets/13425f9db06517de0f7f.svg" },
-    { name: "lightBlue", isSelected: false, url: "https://trello.com/assets/707f35bc691220846678.svg" },
-    { name: "blue", isSelected: false, url: "https://trello.com/assets/d106776cb297f000b1f4.svg" },
-    { name: "lightPurple", isSelected: false, url: "https://trello.com/assets/8ab3b35f3a786bb6cdac.svg" },
-    { name: "purple", isSelected: false, url: "https://trello.com/assets/a7c521b94eb153008f2d.svg" },
+    { name: "gray", isSelected: false, url: "color_2.svg" },
+    { name: "lightBlue", isSelected: false, url: "color_3.svg" },
+    { name: "blue", isSelected: false, url: "color_4.svg" },
+    { name: "lightPurple", isSelected: false, url: "color_5.svg" },
+    { name: "purple", isSelected: false, url: "color_1.svg" },
   ]
 
   const initialBackgroundImages = [
