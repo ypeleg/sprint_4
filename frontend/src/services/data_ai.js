@@ -1722,8 +1722,9 @@ const userFriendlyTopics = [
 
 
 import OpenAI from 'openai'
-// import { API_KEY } from './secrets.js'
-import { random } from './util.service.js'
+import { API_KEY } from './secrets.js'
+import { random, showUserMsg } from './util.service.js'
+
 
 let openai = null
 
@@ -2338,7 +2339,7 @@ Return just the name, no extra text.
     const fallbackBoardTitle = 'Generic Board'
     const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackBoardTitle)
 
-
+    // showUserMsg('progress')
     console.log('Progress: 2')
 
     const groups = await generateGroups(boardTitle)

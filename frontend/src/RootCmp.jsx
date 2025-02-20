@@ -50,6 +50,7 @@ export function UserMsg() {
 export function RootCmp() {
     return (
         <div className="main-container">
+            {/*<UserMsg />*/}
             <main>
                 <Routes>
                     <Route path='/home' element={<HomePage />} />
@@ -60,7 +61,7 @@ export function RootCmp() {
                     <Route path="/debug" element={<DebugPage />} />
                 </Routes>
             </main>
-            <UserMsg />
+
         </div>
     )
 }
