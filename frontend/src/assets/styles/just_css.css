@@ -3417,3 +3417,144 @@ textarea.change-header.header-textarea {
     /*height: fit-content;*/
     /*padding: 0 12px;*/
 }
+
+
+.account-menu-container {
+    position: relative;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.user-profile {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #026AA7;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.account-popup {
+    position: absolute;
+    top: 44px;
+    right: 0;
+    width: 304px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
+    z-index: 1000;
+}
+
+.section-header {
+    padding: 12px 12px 8px;
+    color: #5E6C84;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.account-info {
+    padding: 0 12px 12px;
+    display: flex;
+    align-items: center;
+}
+
+.profile-icon.large {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #026AA7;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+.user-details {
+    flex: 1;
+}
+
+.user-name {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #172B4D;
+}
+
+.user-email {
+    margin: 0;
+    font-size: 14px;
+    color: #5E6C84;
+}
+
+.menu-items {
+    padding: 4px 0;
+}
+
+.menu-item {
+    width: 100%;
+    padding: 6px 12px;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #172B4D;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-item:hover {
+    background: rgba(9, 30, 66, 0.04);
+}
+
+.external-icon {
+    font-size: 12px;
+    color: #5E6C84;
+}
+
+.arrow-icon {
+    font-size: 16px;
+    color: #5E6C84;
+}
+
+.create-workspace {
+    width: 100%;
+    padding: 6px 12px;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #172B4D;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.create-workspace:hover {
+    background: rgba(9, 30, 66, 0.04);
+}
+
+.workspace-icon {
+    font-size: 16px;
+    color: #5E6C84;
+}
+
+section {
+    border-bottom: 1px solid rgba(9, 30, 66, 0.13);
+}
+
+section:last-child {
+    border-bottom: none;
+}
+
+
+.board-index-header {
+    z-index: 1000;
+}
