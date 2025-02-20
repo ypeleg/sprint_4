@@ -17,7 +17,7 @@ export function AddTaskForm({selectedGroup, onSetShowForm}) {
        useEffect(()=>{
             if( elTextArea.current){
                 elTextArea?.current?.focus()
-                elTextArea?.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                // elTextArea?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
             }
              async function handleKey(ev){
                 
