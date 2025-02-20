@@ -281,3 +281,58 @@ export function getForamtedDate(timestamp ){
     return formattedDate
 }
 
+
+
+
+
+
+
+import io from 'socket.io-client'
+
+const baseUrl = process.env.NODE_ENV === 'production'
+    ? ''
+    : (window.location.hostname.toLowerCase().includes('172') ?
+        'http://172.31.163.87:3030' : '//localhost:3030')
+
+
+// const baseUrl = (import.meta.env.MODE === 'production')
+//     ? ''
+//     : 'http://localhost:3030'
+
+const SOCKET_EMIT_LOGIN = 'set-user-socket'
+const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
+
+export const socketService = createSocketService()
+
+function createSocketService() {
+    let socket = null
+
+    const socketService = {
+        setup() {
+            socket = io(baseUrl, { reconnection: true })
+        },
+        on(eventName, callback) {
+            if (!socket) return
+            socket.on(eventName, callback)
+        },
+        off(eventName, callback = null) {
+            if (!socket) return
+            if (!callback) socket.removeAllListeners(eventName)
+            else socket.off(eventName, callback)
+        },
+        emit(eventName, data) {
+            if (!socket) return
+            socket.emit(eventName, data)
+        },
+        login(userId) {
+            if (!socket) return
+            socket.emit(SOCKET_EMIT_LOGIN, userId)
+        },
+        logout() {
+            if (!socket) return
+            socket.emit(SOCKET_EMIT_LOGOUT)
+        },
+    }
+    socketService.setup()
+    return socketService
+}

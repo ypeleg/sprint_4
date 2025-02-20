@@ -31,3 +31,20 @@ const rootReducer = combineReducers({
 
 const middleware = (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() : undefined
 export const store = createStore(rootReducer, middleware)
+
+
+
+import { socketService } from '../services/util.service.js'
+import { ADD_BOARD, UPDATE_BOARD, REMOVE_BOARD } from './reducers/board.reducer.js'
+
+socketService.on('board-added', (newBoard) => {
+    store.dispatch({ type: ADD_BOARD, board: newBoard })
+})
+
+socketService.on('board-updated', (updatedBoard) => {
+    store.dispatch({ type: UPDATE_BOARD, board: updatedBoard })
+})
+
+socketService.on('board-removed', (removedBoardId) => {
+    store.dispatch({ type: REMOVE_BOARD, boardId: removedBoardId })
+})
