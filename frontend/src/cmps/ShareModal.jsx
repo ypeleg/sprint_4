@@ -79,7 +79,7 @@ export function ShareModal({onSetShowShare}) {
                 <section className="userlist">
                     {users.map(user => {
                         return (
-                            <div onClick={() => { onSetPickedUser(user); setShowUserPicker(false) }} className="user-item">
+                            <div onClick={() => { setPickedUser(user); setShowUserPicker(false) }} className="user-item">
                                 <div className="user">
 
                                     <img src={user.imgUrl || 'roi.png'} alt="" />
