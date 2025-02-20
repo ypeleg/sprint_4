@@ -311,11 +311,12 @@ function getRandomBoardActivities() {
 }
 
 export function getRandomBoard() {
-    const boardId = random.id(random.randint(4,10))
+    const boardId = random.id() // random.id(random.randint(4,10))
     const createdBy = random.choice(gUsersPool)
 
     const board = {
         id: boardId,
+        _id: boardId,
         generator: 'getRandomBoard',
         title: random.lorem(random.randint(2,5)),
         isStarred: random.choice([true,false]),
