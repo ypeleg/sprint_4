@@ -17,7 +17,7 @@ export function AddTaskForm({ elFooter, selectedGroup, onSetShowForm }) {
     useEffect(() => {
         if (elTextArea.current) {
             elTextArea?.current?.focus()
-            elTextArea?.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+            elCont?.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
         }
         async function handleKey(ev) {
 
