@@ -28,7 +28,7 @@ export function BoardIndex() {
 
     return (
         <>
-            <AppHeader />
+            <AppHeader useDarkTextColors={true} />
             <div className="home-container">
                 <NavBarPageIndex />
 

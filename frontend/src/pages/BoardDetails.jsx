@@ -3763,7 +3763,6 @@ export function BoardDetails() {
         }
 
         function applyFallbackColors() {
-            // More pleasant fallback colors
             const fallbackColor = {
                 r: 41,
                 g: 128,
