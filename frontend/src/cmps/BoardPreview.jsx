@@ -16,6 +16,7 @@ export function BoardPreview({ board }) {
         <div className="title">{board.title}</div>
         {!board.isStarred ? (<div className="fa-solid fa-star star-btn" onClick={setIsStarred}></div>)
             : (<div className="fill-star" onClick={setIsStarred}>
+                {/* <div className="fa-solid fa-star star-btn-solid" onClick={setIsStarred}></div> */}
                 <img src="star-solid.svg" alt="" />
             </div>)}
     </article>
