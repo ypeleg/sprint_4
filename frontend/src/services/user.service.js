@@ -122,9 +122,9 @@ export const remoteUserService = {
         }
     },
 
-    getUsers: async () => {
+    getUsers: async (txt = '') => {
         try {
-            return await httpService.get(`user`)
+            return await httpService.get(`user`,{txt})
         } catch (error) {
             console.error('Failed to get users:', error)
             throw error

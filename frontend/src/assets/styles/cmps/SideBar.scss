@@ -12,7 +12,7 @@
     padding-inline: calc(3px + 12px);
     border-right: 1px solid #c2a5a7;
     // margin-top: -12px;
-
+    transition: all 0.5s ease;
 
     .sidebar-header {
         padding-block: 11px;
@@ -46,7 +46,9 @@
         }
 
         .near-logo-btn {
-            color: #6b778c;
+            //color: #6b778c;
+            // negate the color of what ever is in the background
+            //color: white;
             font-weight: bold;
         }
 

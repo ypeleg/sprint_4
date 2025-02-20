@@ -21,34 +21,43 @@
         box-shadow: var(--ds-shadow-overlay, 0px 8px 12px rgba(9, 30, 66, 0.15), 0px 0px 1px rgba(9, 30, 66, 0.31));
         color: black;
         height: fit-content;
-  
+
         margin-top: 50px;
         max-width: calc(100vw - 24px);
         min-height: 200px;
         padding: 20px 0px 0px 24px;
         border-radius: 12px;
-        header{
+
+        header {
             display: flex;
             justify-content: space-between;
             margin: 0px 24px 16px 0px;
+
             .title {
                 font-size: 20px;
             }
         }
-        .content{
-            .mid{
+
+        .content {
+            .mid {
                 display: flex;
-                input{
+                    margin-bottom: 12px;
+                input {
                     background-color: white;
-                    padding: 6px 4px 6px 12px;
+                    padding: 8px 4px 8px 12px;
                     width: 340px;
                     margin-right: 4px;
-                    &:focus{
-                        box-shadow: inset  0 0 0 2px #388bff;
+                    align-self: center;
+                    border-radius: 3px;
+                    height: 40px;
+                    &:focus {
+                        border: 0;
+                        box-shadow: inset 0 0 0 2px #388bff;
                         outline: 0;
                     }
                 }
-                .member{
+
+                .member {
                     font-size: 14px;
                     padding: 8px 10px;
                     background-color: rgba(9, 30, 66, 0.06);
@@ -57,35 +66,43 @@
                     align-items: center;
                     margin-right: 8px;
                 }
-                .share{
+
+                .share {
                     color: white;
                     font-size: 16px;
                     background-color: rgb(12, 102, 228);
                     margin-right: 30px;
-                  
-                }   
+
+                }
             }
-            .low{
+
+            .low {
                 display: flex;
                 justify-content: flex-start;
                 box-shadow: 0;
                 border-bottom: 1px solid rgba(9, 30, 66, 0.14);
                 margin-right: 30px;
-                span{
+
+                span {
                     padding: 6px 8px;
                     font-size: 14px;
-                    &.active{
+                    border-radius: 0;
+                    &.active {
                         color: rgb(12, 102, 228);
-                        border-bottom:1px solid #0c66e4 ;
+                        border-bottom: 1px solid #0c66e4;
+                        background-color: white;
                     }
                 }
             }
-            .footer,.userpicker{
-             
+
+            .footer,
+            .userpicker {
+
                 margin-right: 30px;
                 padding-top: 16px;
                 margin-bottom: 20px;
-                .admin{
+
+                .admin {
                     display: flex;
                     align-items: center;
                     padding: 6px 8px 6px 12px;
@@ -96,52 +113,60 @@
                     display: flex;
                     align-items: center;
                 }
-                .user-item{
+
+                .user-item {
                     display: flex;
                     justify-content: space-between;
                     margin-bottom: 6px;
-                    .user{
+
+                    .user {
                         display: flex;
                         align-items: start;
-                        img{
+
+                        img {
                             border-radius: 50%;
                             margin-right: 6px;
                         }
-                }
+                    }
                 }
             }
         }
     }
-    .userpicker{
+
+    .userpicker {
         z-index: 1;
         margin: 4px;
         max-height: 300px;
-        box-shadow:  0 8px 12px #091e4226, 0 0 1px #091e424f;
+        box-shadow: 0 8px 12px #091e4226, 0 0 1px #091e424f;
         border-radius: 3px;
         z-index: 2;
         background-color: white;
         position: absolute;
         height: fit-content;
         width: 50%;
-        top:30%;
+        top: 30%;
         padding: 12px;
-      
-        img{
+
+        img {
             border-radius: 50%;
         }
     }
 }
-.user-item{
+
+.user-item {
     display: flex;
     padding: 6px;
-    &:hover{
+
+    &:hover {
         background-color: #091e4224;
     }
-    .user{
+
+    .user {
         display: flex;
         column-gap: 6px;
         color: rgb(23, 43, 77);
-        img{
+
+        img {
             width: 32px;
             height: 32px;
         }

@@ -42,7 +42,10 @@ export function AddGroup({useDarkTextColors}) {
 
     async function onSubmit(ev) {
     
-        console.log(group.title)
+       if(!group.title){
+        setForm(false)
+        return
+       }
        
         const copyBoard = {...board,groups:[...board.groups,group]}
         const newActivity = {createdAt:Date.now(),byMember:{...user},group:{id:group.id,title:group.title}}
@@ -54,7 +57,8 @@ export function AddGroup({useDarkTextColors}) {
     return (
         <div className="add-group">
             {(!showForm) ? <button onClick={() => setForm(true)} className="add-group-btn" style={{
-                                            color: (useDarkTextColors? '#172b4d': 'white')
+                                            background: (!useDarkTextColors? 'rgba(0, 0, 0, 0.5)': 'rgba(255, 255, 255, 0.5)'),
+                                            color: (!useDarkTextColors? 'white':'#172b4d')
                                             }}>
                     <span className="plus"><i class="fa-regular fa-plus"></i></span>
                     Add another list
