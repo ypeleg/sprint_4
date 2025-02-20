@@ -5,7 +5,7 @@ import Cryptr from 'cryptr'
 import bcrypt from 'bcrypt'
 import express from 'express'
 import { userService } from './user.routes.js'
-import { logger, dbService, utilService } from '../util.service.js'
+import { logger, validateGoogleToken } from '../util.service.js'
 
 const cryptr = new Cryptr(process.env.SECRET1 || 'Secret-Puk-1234')
 
@@ -25,14 +25,38 @@ export const authService = {
         return user
     },
 
-    signup: async function (username, password, fullname) {
+    signup: async function (username, password, fullname, loginType) {
         const saltRounds = 10
 
         logger.debug(`auth.service - signup with username: ${username}, fullname: ${fullname}`)
         if (!username || !password || !fullname) throw new Error('Missing details')
 
         const hash = await bcrypt.hash(password, saltRounds)
-        return userService.add({ username, password: hash, fullname })
+        return userService.add({ username, password: hash, fullname, loginType: loginType })
+    },
+
+    loginWithGoogle: async function (googleToken) {
+        const { email } = await validateGoogleToken(googleToken);
+        const user = await userService.getByUsername(email)
+        if (!user) {
+            logger.info("Google user doesn't exist but now signed up")
+            return this.signupWithGoogle(googleToken, 'google')
+        }
+
+        return user;
+
+    },
+
+    signupWithGoogle: async function (googleToken, loginType) {
+        const { email, name, picture } = await validateGoogleToken(googleToken)
+
+        const user = await userService.getByUsername(email)
+        if (user) {
+            logger.info("Google user exists but now signed in")
+            return this.loginWithGoogle(googleToken, 'google')
+        }
+
+        return userService.add({ username: email, fullname: name, profilePicture: picture, loginType: loginType })
     },
 
     getLoginToken: function (user) {
@@ -56,9 +80,23 @@ export const authService = {
 
 // controller
 export async function onLogin(req, res) {
-    const { username, password } = req.body
     try {
-        const user = await authService.login(username, password)
+        console.log('onLogin body:')
+        console.log(req.body)
+
+        const { loginType } = req.body
+        logger.info("Logging with login type: " + loginType);
+
+        let user;
+
+        if (loginType === 'google') {
+            const { oAuthCredentials } = req.body
+            user = await authService.loginWithGoogle(oAuthCredentials)
+        } else {
+            const { username, password } = req.body
+            user = await authService.login(username, password)
+        }
+
         const loginToken = authService.getLoginToken(user)
 
         logger.info('User login: ', user)
@@ -72,25 +110,36 @@ export async function onLogin(req, res) {
 }
 
 export async function onSignup(req, res) {
-    try {
+    // try {
+    console.log('onSignup body:')
+    console.log(req.body)
+
+    const { loginType } = req.body
+    logger.info("Logging with login type: " + loginType);
+
+    let user;
+
+    if (loginType === 'google') {
+        const { oAuthCredentials } = req.body
+        const account = await authService.signupWithGoogle(oAuthCredentials, loginType)
+        logger.debug(`auth.route - new google account created: ` + JSON.stringify(account))
+
+        user = await authService.loginWithGoogle(oAuthCredentials)
+    } else {
         const { username, password, fullname } = req.body
+        const account = await authService.signup(username, password, fullname, loginType)
+        logger.debug(`auth.route - new password account created: ` + JSON.stringify(account))
+        user = await authService.login(username, password)
 
-        // IMPORTANT!!!
-        // Never write passwords to log file!!!
-        // logger.debug(fullname + ', ' + username + ', ' + password)
-        debugger
-        const account = await authService.signup(username, password, fullname)
-        logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
-
-        const user = await authService.login(username, password)
-        const loginToken = authService.getLoginToken(user)
-
-        res.cookie('loginToken', loginToken)
-        res.json(user)
-    } catch (err) {
-        logger.error('Failed to signup ' + err)
-        res.status(500).send({ err: err })
     }
+
+    const loginToken = authService.getLoginToken(user)
+    res.cookie('loginToken', loginToken)
+    res.json(user)
+    // } catch (err) {
+    //     logger.error('Failed to signup ' + err)
+    //     res.status(401).send({ err: err })
+    // }
 }
 
 export async function onLogout(req, res) {

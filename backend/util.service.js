@@ -1,8 +1,10 @@
 
 
-import fs  from 'fs'
+import fs from 'fs'
 import { config } from './config.js'
 import { MongoClient } from 'mongodb'
+import { OAuth2Client } from 'google-auth-library'
+const GOOGLE_CLIENT_ID = "742335397862-9a6i4r97803l0k4at1o6i6i6m3ojcmvp.apps.googleusercontent.com"
 
 
 const logsDir = './logs'
@@ -54,7 +56,7 @@ function _isError(e) {
 function _doLog(level, ...args) {
 
     const strs = args.map(arg => {
-        if (typeof arg ===  'string') {
+        if (typeof arg === 'string') {
         } else if (_isError(arg)) {
         } else if (arg instanceof Promise) {
             arg = 'Promise'
@@ -68,7 +70,7 @@ function _doLog(level, ...args) {
     var line = strs.join(' | ')
     line = `${_getTime()} - ${level} - ${line} \n`
     console.log(line)
-    fs.appendFile('./logs/backend.log', line, (err) =>{
+    fs.appendFile('./logs/backend.log', line, (err) => {
         if (err) console.log('FATAL: cannot write to log file')
     })
 }
@@ -153,4 +155,25 @@ function makeIda(length = 5) {
         text += possible.charAt(Math.floor(Math.random() * possible.length))
     }
     return text
+}
+
+
+export async function validateGoogleToken(token) {
+    const client = new OAuth2Client(GOOGLE_CLIENT_ID);
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    if (!payload) {
+        logger.warn("Google token valdiation failed");
+        throw Error('Google token valdiation failed');
+    }
+
+    logger.info("Google login payload: ", payload)
+    return payload;
+
+
 }
