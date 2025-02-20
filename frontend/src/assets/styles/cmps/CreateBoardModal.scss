@@ -11,7 +11,7 @@
 }
 
 .modal-content {
-  position: relative;
+  position: absolute;
   align-content: center;
   background: #fff;
   padding: 20px;
@@ -20,6 +20,7 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   max-height: 98vh;
   overflow-y: scroll;
+  inset: 52px 250.5px auto auto;
 
 
   input,
@@ -293,6 +294,7 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   max-height: 98vh;
   overflow-y: scroll;
+  z-index: 1;
 }
 
 .wrap {
