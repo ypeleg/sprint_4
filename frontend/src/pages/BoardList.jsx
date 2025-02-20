@@ -6,7 +6,7 @@ import { BoardPreview } from '../cmps/BoardPreview.jsx'
 import { CreateBoardModal } from './CreateBoardModal.jsx'
 
 
-export function BoardList({ boards, onRemoveBoard, onUpdateBoard, addBoard = false }) {
+export function BoardList({ boards, addBoard = false }) {
 
   const [isModalOpen, setIsModalopen] = useState(false)
   const navgite = useNavigate()

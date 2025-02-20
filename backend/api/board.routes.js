@@ -78,8 +78,9 @@ export const boardService = {
             const collection = await dbService.getCollection('board')
 
             if (board._id) {
+                
                 const boardId = board._id
-                const existingboard = await collection.findOne({ _id: new ObjectId.createFromHexString(boardId) })
+                const existingboard = await collection.findOne({ _id: new ObjectId(boardId) })
                 if (!existingboard) throw new Error('No such board')
 
                 // if (!loggedinUser?.isAdmin && existingboard.owner?._id !== loggedinUser?._id) {
@@ -87,9 +88,9 @@ export const boardService = {
                 // }
 
                 const boardToUpdate = structuredClone(board)
-
+                delete boardToUpdate._id;
                 await collection.updateOne(
-                    { _id: new ObjectId.createFromHexString(boardId) },
+                    { _id: new ObjectId(boardId) },
                     { $set: boardToUpdate }
                 )
                 return { ...existingboard, ...boardToUpdate }
