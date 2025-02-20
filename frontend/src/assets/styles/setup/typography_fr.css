@@ -67,6 +67,12 @@
     src: url(../fonts/FontAwesome/fa-regular-400.ttf);
 }
 
+@font-face {
+    font-family: "Charlie Text";
+    src: url(../fonts/fonts_trello/Charlie_Text-Regular.woff2);
+}
+
+
 .fa-solid-fr{ font-family:'Font Awesome 5 Pro' }
 .fa-solid-fr::before {
     /*font-family: fa;*/
