@@ -3373,6 +3373,12 @@ function Placeholder({placeholderHeight}) {
 
 export function BoardDetails() {
 
+    const [sideBarOpen, setSideBarOpen] = useState(true)
+
+    function onToggleSideBar() {
+        setSideBarOpen(!sideBarOpen)
+    }
+
     const [showTable, setTable] = useState(false)
     const [showActivityMenu, setActivityMenu] = useState(false)
 
@@ -3812,18 +3818,21 @@ export function BoardDetails() {
         {/*onClick={closePopupOnlyIfClickedOutOfIt}>*/}
         </>}
 
-            <AppHeader backgrounColor={headerBackgroundColor} borderColor={headerBorderColor} useDarkTextColors={useDarkTextColors}/>
+            <AppHeader backgrounColor={headerBackgroundColor} borderColor={headerBorderColor} useDarkTextColors={useDarkTextColors}
+                onToggleSideBar={onToggleSideBar} sideBarOpen={sideBarOpen}/>
 
             <main className="main-layout">
 
-                <SideBar backgrounColor={sidebarBackgroundColor} borderColor={sidebarBorderColor}/>
+                <SideBar backgrounColor={sidebarBackgroundColor} borderColor={sidebarBorderColor}
+                    onToggleSideBar={onToggleSideBar} sideBarOpen={sideBarOpen}/>
 
-                <section className="board-display">
+                <section className={`board-display ${(sideBarOpen? 'side-bar-open' : 'board-display-side-bar-close')}`}>
                     {showActivityMenu && <ActivityMenu onSetActivityMenu={onSetActivityMenu}/>}
 
                     {showQuickEdit && <QuickEdit pos={editpos.current} closePopupOnlyIfClickedOutOfIt={closeQuickEdit} task={taskToShow} togglePopup={togglePopup} onDeleteTask={onDeleteTask} updateQuickEditPreview={updateQuickEditPreview}/>}
 
-                    <BoardHeader onSetActivityMenu={onSetActivityMenu} backgrounColor={headerBackgroundColor} borderColor={headerBorderColor} onSetShowShare={onSetShowShare} onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable} useDarkTextColors={useDarkTextColors} />
+                    <BoardHeader onSetActivityMenu={onSetActivityMenu} backgrounColor={headerBackgroundColor} borderColor={headerBorderColor} onSetShowShare={onSetShowShare} onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable} useDarkTextColors={useDarkTextColors}
+                        onToggleSideBar={onToggleSideBar} sideBarOpen={sideBarOpen}/>
 
                     {showTable && <GroupTable></GroupTable>} {!showTable && <GroupList onSetPlaceholderHeight={onSetPlaceholderHeight} Placeholder={Placeholder} placeholderHeight={placeholderHeight} onsetQuickEdit={onsetQuickEdit} showQuickEdit={showQuickEdit} onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>} {/* <section className="group-lists">
                         {boardToShow.groups.map(group => {

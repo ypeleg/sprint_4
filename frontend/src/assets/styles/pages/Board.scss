@@ -43,7 +43,8 @@ body {
     //width: 83%;
     width: calc(100vw - 263px);
     height: calc(100vh - 40px); //60px
-
+    transition: all 0.5s ease;
+    //width: 100vw;
     
     //height: calc(100vh - 57px); //60px
     //margin-bottom: 40px;

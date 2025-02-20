@@ -4070,3 +4070,35 @@ section:last-child {
 .edit-workspace h2 {
     text-transform: capitalize;
 }
+
+
+
+.side-bar-close {
+    /*background-color: #ffffff;*/
+    /*padding-inline: 20px;*/
+    /*!*width: 25%;*!*/
+    /*min-width: 200px;*/
+    /*border-left: 2px solid rgba(0,0,0,.2);*/
+    /*display: grid;*/
+    /*grid-template-rows: 1fr;*/
+    /*grid-template-columns: 1fr;*/
+    /*align-items: stretch;*/
+    /*z-index: 1;*/
+
+    transition: all 0.7s ease;
+
+    /*translate:  calc(-200% -100px);*/
+    translate: -200%;
+    /*margin-left: -200%;*/
+    width: 0px;
+    padding-inline: 0px;
+    margin-inline: 0px;
+    /*min-width: 0;*/
+    /*display: none;*/
+    opacity: 0;
+}
+
+.board-display-side-bar-close {
+    transition: all 0.5s ease;
+    width: 100vw;
+}

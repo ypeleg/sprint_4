@@ -5,7 +5,7 @@ import { loadBoard, loadBoards } from "../store/store"
 import { useNavigate } from "react-router"
 
 
-export function SideBar({backgrounColor, borderColor}) {
+export function SideBar({backgrounColor, borderColor, onToggleSideBar, sideBarOpen}) {
     const navgite = useNavigate()
     const boards = useSelector(state => state.boardModule.boards)
     const selectedBoard = useSelector(state => state.boardModule.board)
@@ -15,7 +15,7 @@ export function SideBar({backgrounColor, borderColor}) {
 
     console.log(backgrounColor)
     return (
-        <aside className="side-bar"
+        <aside className={`side-bar ${(sideBarOpen? '': 'side-bar-close')}`}
                style={{
                    // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
                    backgroundColor: backgrounColor,
@@ -39,9 +39,13 @@ export function SideBar({backgrounColor, borderColor}) {
                     </div>
 
                 </div>
+
                 <div>
-                    <button className=""> <i className="near-logo-btn fa-regular fa-less-than"></i> </button>
+                    <button className=""
+                        onClick={() => onToggleSideBar()}
+                    > <i className="near-logo-btn fa-regular fa-less-than"></i> </button>
                 </div>
+
             </div>
 
             <section>
