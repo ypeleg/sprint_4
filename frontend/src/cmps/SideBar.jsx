@@ -5,7 +5,7 @@ import { loadBoard, loadBoards } from "../store/store"
 import { useNavigate } from "react-router"
 
 
-export function SideBar({backgrounColor, borderColor, onToggleSideBar, sideBarOpen}) {
+export function SideBar({backgrounColor, borderColor, onToggleSideBar, sideBarOpen, useDarkTextColors}) {
     const navgite = useNavigate()
     const boards = useSelector(state => state.boardModule.boards)
     const selectedBoard = useSelector(state => state.boardModule.board)
@@ -43,6 +43,9 @@ export function SideBar({backgrounColor, borderColor, onToggleSideBar, sideBarOp
                 <div>
                     <button className=""
                         onClick={() => onToggleSideBar()}
+                        style={{
+                            color: (useDarkTextColors) ? '' : 'white'
+                            }}
                     > <i className="near-logo-btn fa-regular fa-less-than"></i> </button>
                 </div>
 

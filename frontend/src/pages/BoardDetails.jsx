@@ -3851,7 +3851,7 @@ export function BoardDetails() {
                 setHeaderBorderColor(`rgba(${border.r}, ${border.g}, ${border.b}, ${border.a})`);
 
                 const luminance = (0.299 * pastelR + 0.587 * pastelG + 0.114 * pastelB) / 255;
-                setUseDarkTextColors(luminance > 0.70);
+                setUseDarkTextColors(luminance > 0.7);
                 setColorsSetted(true);
 
             } catch (error) {
@@ -4013,7 +4013,7 @@ export function BoardDetails() {
 
             <main className="main-layout">
 
-                <SideBar backgrounColor={sidebarBackgroundColor} borderColor={sidebarBorderColor}
+                <SideBar backgrounColor={sidebarBackgroundColor} borderColor={sidebarBorderColor} useDarkTextColors={useDarkTextColors}
                     onToggleSideBar={onToggleSideBar} sideBarOpen={sideBarOpen}/>
 
                 <section className={`board-display ${(sideBarOpen? 'side-bar-open' : 'board-display-side-bar-close')}`}>
@@ -4024,7 +4024,7 @@ export function BoardDetails() {
                     <BoardHeader onSetActivityMenu={onSetActivityMenu} backgrounColor={headerBackgroundColor} borderColor={headerBorderColor} onSetShowShare={onSetShowShare} onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable} useDarkTextColors={useDarkTextColors}
                         onToggleSideBar={onToggleSideBar} sideBarOpen={sideBarOpen}/>
 
-                    {showTable && <GroupTable></GroupTable>} {!showTable && <GroupList onSetPlaceholderHeight={onSetPlaceholderHeight} Placeholder={Placeholder} placeholderHeight={placeholderHeight} onsetQuickEdit={onsetQuickEdit} showQuickEdit={showQuickEdit} onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>} {/* <section className="group-lists">
+                    {showTable && <GroupTable></GroupTable>} {!showTable && <GroupList useDarkTextColors={useDarkTextColors} onSetPlaceholderHeight={onSetPlaceholderHeight} Placeholder={Placeholder} placeholderHeight={placeholderHeight} onsetQuickEdit={onsetQuickEdit} showQuickEdit={showQuickEdit} onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>} {/* <section className="group-lists">
                         {boardToShow.groups.map(group => {
 
                             // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>

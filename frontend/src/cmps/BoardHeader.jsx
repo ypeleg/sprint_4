@@ -26,7 +26,9 @@ export function BoardHeader({ onSetActivityMenu, onSetTable, onStarBoard, isStar
         <header className="board-header"
                 style={{
                     // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
-                    // backgroundColor: backgrounColor,
+
+
+                    backgroundColor: (!useDarkTextColors? "rgba(55, 52, 48, 0.5)" : "rgba(255, 255, 255,0.5)"),
                     // borderColor: borderColor,
                     color: (useDarkTextColors? '#172b4d': 'white')
                 }}>
@@ -79,7 +81,7 @@ color: (useDarkTextColors? '#172b4d': 'white')
                     Table
                 </button>
                 <button style={{
-
+                    background: (!useDarkTextColors? '#172b4d': 'transparent'),
 color: (useDarkTextColors? '#172b4d': 'white')
 }}>
                     <svg style={{
