@@ -3,7 +3,7 @@
 import {MoveAll} from "./MoveAll"
 import {GroupSort} from "./GroupSort"
 import {GroupEdit} from "./GroupEdit"
-import {useRef, useState} from "react"
+import {useEffect, useRef, useState} from "react"
 import {useSelector} from "react-redux"
 import {updateBoard} from "../store/store"
 import {CopyListForm} from "./CopyListForm"
@@ -20,6 +20,23 @@ export function GroupHeader({setGroup,group,onSetGroupEdit,setHeader}) {
     // const [showSort, setSort] = useState(false)
     const [groupTitle, setGroupTitle] = useState(group.title)
     const [showTitleEdit, setTitleEdit] = useState(false)
+    const elInput  = useRef()
+    // useEffect(()=>{
+
+    //     function handleClick(ev){
+    //       if(elInput){
+
+    //           if((elInput.current.contains(ev.target))&&showTitleEdit&&(groupTitle !== group.title)){
+    //               debugger
+    //               saveGroupTitle()
+    //           }
+    //       }
+    //     }
+    //     document.addEventListener("mousedown",handleClick)
+    //     return ()=>{
+    //         document.removeEventListener("mousedown",handleClick)
+    //     }
+    // },[elInput])
 
     function onSetHeader(ev){
         
@@ -56,9 +73,9 @@ export function GroupHeader({setGroup,group,onSetGroupEdit,setHeader}) {
     return (
         <div className="list-header just-flex">
             {!showTitleEdit && <span style={{color: group.style?.color || '#172b4d'}} onClick={onSetTitlEdit}>{groupTitle}</span>}
-            {showTitleEdit && <textarea className="header-textarea change-header" rows={1}   onChange={onChangeGroupTitle} 
+            {showTitleEdit && <textarea ref={elInput} className="header-textarea change-header"   onChange={onChangeGroupTitle} 
             // style={{height: height}}
-            // onBlur={saveGroupTitle} 
+            onBlur={saveGroupTitle} 
             value={groupTitle}/>}
             <div className="group-list-headr-btns" style={{color: group.style?.color || '#172b4d'}}>
 
