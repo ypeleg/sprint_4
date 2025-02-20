@@ -65,7 +65,7 @@ export function TaskList({ grp,
     const boardToShow = useSelector((state) => state.boardModule.board)
     const eventbus = eventBus
     const navigate = useNavigate()
-
+    
     const [showForm, setShowForm] = useState(false)
     const [showFirstForm, setShowFirstForm] = useState(false)
     const [tasks, setTasks] = useState(group.tasks)
@@ -431,12 +431,12 @@ export function TaskList({ grp,
                         {shadow?.taskId === task.id && shadow.edge === "bottom" && <Placeholder placeholderHeight={placeholderHeight} />}
                     </React.Fragment>
                 ))}
-                {showForm && <AddTaskForm onSetShowForm={onSetShowForm} selectedGroup={group} />}
+                {showForm && <AddTaskForm  onSetShowForm={onSetShowForm} selectedGroup={group} />}
             </div>
 
             {!showForm && (
                 <div className="group-list-footer" style={{ color: group.style?.color || "#172b4d" }}>
-                    <button className="add-card-btn" onClick={onSetShowForm} style={{ color: group.style?.color || "#172b4d" }}>
+                    <button  className="add-card-btn" onClick={onSetShowForm} style={{ color: group.style?.color || "#172b4d" }}>
                         <i className="fa-regular fa-plus"></i> Add a card
                     </button>
                     <button

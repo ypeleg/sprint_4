@@ -24,7 +24,7 @@ export function ShareModal({onSetShowShare}) {
             setShowUserPicker(false)
             
         } else {
-            const newUsers = await userService.getUsers()
+            const newUsers = await userService.getUsers(userFilter)
             SetUsers(newUsers)
             setShowUserPicker(true)
         }

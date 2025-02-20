@@ -42,7 +42,10 @@ export function AddGroup({useDarkTextColors}) {
 
     async function onSubmit(ev) {
     
-        console.log(group.title)
+       if(!group.title){
+        setForm(false)
+        return
+       }
        
         const copyBoard = {...board,groups:[...board.groups,group]}
         const newActivity = {createdAt:Date.now(),byMember:{...user},group:{id:group.id,title:group.title}}

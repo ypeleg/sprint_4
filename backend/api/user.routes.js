@@ -14,12 +14,13 @@ export const userService = {
         const criteria = userService._buildCriteria(filterBy)
         try {
             const collection = await dbService.getCollection('user')
-            var users = await collection.find(criteria).sort({nickname: -1}).toArray()
+            var users = await collection.find(criteria).limit(5).toArray()
             users = users.map(user => {
                 delete user.password
                 user.createdAt = user._id.getTimestamp()
                 return user
             })
+            
             return users
         } catch (err) {
             logger.error('cannot find users', err)
@@ -42,7 +43,7 @@ export const userService = {
     getByUsername: async function (username) {
         try {
             const collection = await dbService.getCollection('user')
-            const user = await collection.findOne({username})
+            const user = await collection.findOne({username}).limit(5).toArray()
             return user
         } catch (err) {
             logger.error(`while finding user ${username}`, err)
@@ -102,9 +103,7 @@ export const userService = {
         if (filterBy.txt) {
             const txtCriteria = {$regex: filterBy.txt, $options: 'i'}
             criteria.$or = [
-                {
-                    username: txtCriteria,
-                },
+             
                 {
                     fullname: txtCriteria,
                 },
@@ -141,10 +140,12 @@ export async function onGetUser(req, res) {
 
 export async function onGetUsers(req, res) {
     try {
+       
         const filterBy = {
             txt: req.query?.txt || '',
-            minBalance: +req.query?.minBalance || 0
+            isAdmin: false
         }
+       
         const users = await userService.query(filterBy)
         res.send(users)
     } catch (err) {
