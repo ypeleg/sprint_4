@@ -122,7 +122,7 @@ export async function onGetboards(req, res) {
         res.json(boards)
     } catch (err) {
         logger.error('Failed to get boards', err)
-        res.status(500).send({ err: 'Failed to get boards' })
+        res.status(500).send({ err: err })
     }
 }
 
@@ -133,7 +133,7 @@ export async function onGetboardById(req, res) {
         res.json(board)
     } catch (err) {
         logger.error('Failed to get board', err)
-        res.status(500).send({ err: 'Failed to get board' })
+        res.status(500).send({ err: err })
     }
 }
 
@@ -148,7 +148,7 @@ export async function onAddboard(req, res) {
         res.json(addedboard)
     } catch (err) {
         logger.error('Failed to add board', err)
-        res.status(500).send({ err: 'Failed to add board' })
+        res.status(500).send({ err: err })
     }
 }
 
@@ -161,7 +161,7 @@ export async function onUpdateboard(req, res) {
         res.json(updatedboard)
     } catch (err) {
         logger.error('Failed to update board', err)
-        res.status(500).send({ err: 'Failed to update board' })
+        res.status(500).send({ err: err })
     }
 }
 
@@ -172,7 +172,7 @@ export async function onRemoveboard(req, res) {
         res.send(`${deletedCount} boards removed`)
     } catch (err) {
         logger.error('Failed to remove board', err)
-        res.status(500).send({ err: 'Failed to remove board' })
+        res.status(500).send({ err: err })
     }
 }
 

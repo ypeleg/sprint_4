@@ -135,7 +135,7 @@ export async function onGetUser(req, res) {
         res.send(user)
     } catch (err) {
         logger.error('Failed to get user', err)
-        res.status(500).send({ err: 'Failed to get user' })
+        res.status(500).send({ err: err })
     }
 }
 
@@ -149,7 +149,7 @@ export async function onGetUsers(req, res) {
         res.send(users)
     } catch (err) {
         logger.error('Failed to get users', err)
-        res.status(500).send({ err: 'Failed to get users' })
+        res.status(500).send({ err: err })
     }
 }
 
@@ -159,7 +159,7 @@ export async function onDeleteUser(req, res) {
         res.send({ msg: 'Deleted successfully' })
     } catch (err) {
         logger.error('Failed to delete user', err)
-        res.status(500).send({ err: 'Failed to delete user' })
+        res.status(500).send({ err: err })
     }
 }
 
@@ -170,7 +170,7 @@ export async function onUpdateUser(req, res) {
         res.send(savedUser)
     } catch (err) {
         logger.error('Failed to update user', err)
-        res.status(500).send({ err: 'Failed to update user' })
+        res.status(500).send({ err: err })
     }
 }
 

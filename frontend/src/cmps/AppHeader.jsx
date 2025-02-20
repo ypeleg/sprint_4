@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { useNavigate } from "react-router"
-import { UserMsg } from './UserMsg.jsx'
 import { useSelector } from "react-redux"
 
 
@@ -12,7 +11,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors }) {
     const [isModalOpen, setIsModalopen] = useState(false)
     const [openAccountPopup, setOpenAccountPopup] = useState(false)
     const loggedUser = useSelector(state => state.userModule.user)
-    console.log(loggedUser)
+    console.log('loggedUser', loggedUser)
 
 
     const navgite = useNavigate()
@@ -100,7 +99,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors }) {
                         title="LH"
                         onClick={() => setOpenAccountPopup(!openAccountPopup)}
                     >
-                        {loggedUser?.fullName}
+                        {(loggedUser?.fullname?.split(' ')[0][0]?.toUpperCase() || '') + '' + (loggedUser?.fullname?.split(' ')[1][0]?.toUpperCase() || '')}
                     </div>
                     {openAccountPopup && (<div className="account-popup">
                             <section className="account-section">
@@ -116,7 +115,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors }) {
                                         }
                                     </div>
                                     <div className="user-details">
-                                        <p className="user-name">{loggedUser?.fullName || 'Welcome Guest!'}</p>{(!!loggedUser?.email) && <p className="user-email">{loggedUser?.email || 'cell@theirer.com'}</p>}
+                                        <p className="user-name">{loggedUser?.fullname || 'Welcome Guest!'}</p>{(!!loggedUser?.username) && <p className="user-email">{loggedUser?.username || 'cell@theirer.com'}</p>}
                                     </div>
                                 </div>
 

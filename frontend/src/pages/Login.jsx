@@ -12,6 +12,7 @@ export function Signup({setLoginOrSignup}) {
     const navigate = useNavigate()
     const passwordInputRef = useRef(null)
     const fullNameInputRef = useRef(null)
+    const emailInputRef = useRef(null)
     const [emailError, setEmailError] = useState(null)
     const [credentials, setCredentials] = useState(getEmptyUser())
 
@@ -58,7 +59,7 @@ export function Signup({setLoginOrSignup}) {
             await signup(credentials)
             navigate('/')
         } catch (err) {
-            setEmailError('⚠ Something is wrong, please try again')
+            setEmailError(`⚠ ${err}, please try again`)
         }
     }
 
@@ -68,7 +69,9 @@ export function Signup({setLoginOrSignup}) {
             </div>
             <div className='sub-title'>Sign up to continue</div>
             <form className="signup-form" onSubmit={onSignup}>
-                <input type="email" className={`input-field ${emailError ? "error-input" : ""}`} placeholder="Enter your email" name="username" value={credentials.username} onChange={handleChange} onKeyDown={handleEmailKeyDown} required/> {emailError && <p className="error-text">{emailError}</p>} <input ref={fullNameInputRef} className="input-field" type="text" placeholder="Enter full name" name="fullname" value={credentials.fullname} onChange={handleChange} onKeyDown={handleFullNameKeyDown} required/> <input ref={passwordInputRef} className="input-field" type="password" placeholder="Enter your password" name="password" value={credentials.password} onChange={handleChange} required/>
+                <input type="email" className={`input-field ${emailError ? "error-input" : ""}`} ref={emailInputRef} placeholder="Enter your email" name="username" value={credentials.username} onChange={handleChange} onKeyDown={handleEmailKeyDown} required/>
+                {emailError && <p className="error-text">{emailError}</p>} <input ref={fullNameInputRef} className="input-field" type="text" placeholder="Enter full name" name="fullname" value={credentials.fullname} onChange={handleChange} onKeyDown={handleFullNameKeyDown} required/>
+                <input ref={passwordInputRef} className="input-field" type="password" placeholder="Enter your password" name="password" value={credentials.password} onChange={handleChange} required/>
                 <p className="terms-text">
                     By signing up, I accept the Atlassian <a href="#">Cloud Terms of Service</a> and acknowledge the <a href="#">Privacy Policy</a>
                 </p>
@@ -134,7 +137,7 @@ export function Login() {
             navigate('/')
             showSuccessMsg('Logged in successfully')
         } catch (err) {
-            setLoginError('⚠ Something went wrong, please try again')
+            setLoginError(`⚠ ${err}, please try again`)
             showErrorMsg('Oops, try again')
         }
     }
@@ -152,7 +155,9 @@ export function Login() {
                         </div>
                         <div className='sub-title'>Log in to continue</div>
                         <form className="login-form" onSubmit={onLogin}>
-                            <input type="email" className="input-field" placeholder="Enter your email" name="username" value={credentials.username} onChange={handleEmailChange} onKeyDown={handleEmailKeyPress} required/> {showPassword && (<input ref={passwordInputRef} className="input-field" type="password" placeholder="Enter your password" name="password" value={credentials.password} onChange={handleChange} required/>)} {loginError && <p className="error-text">{loginError}</p>}
+                            <input type="email" className="input-field" placeholder="Enter your email" name="username" value={credentials.username} onChange={handleEmailChange} onKeyDown={handleEmailKeyPress} required/>
+                            {showPassword && (<input ref={passwordInputRef} className="input-field" type="password" placeholder="Enter your password" name="password" value={credentials.password} onChange={handleChange} required/>)}
+                            {loginError && <p className="error-text">{loginError}</p>}
                             <div className="remember-me">
                                 <input type="checkbox" id="remember"/> <label htmlFor="remember">Remember me</label>
                             </div>
