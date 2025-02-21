@@ -59,7 +59,10 @@ export function GroupList({
     const containerRef = useRef(null)
                             useEffect(()=>{
                                   socketService.on(SOCKET_UPDATE_BOARD,(board)=>{
-                                           store.dispatch({type: UPDATE_BOARD,board})
+                                    if(board._id === boardToShow._id){
+
+                                        store.dispatch({type: UPDATE_BOARD,board})
+                                    }
                                         })
                             },[])
     function onSetSort() {
