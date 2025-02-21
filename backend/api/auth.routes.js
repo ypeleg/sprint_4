@@ -34,6 +34,30 @@ export const authService = {
         const hash = await bcrypt.hash(password, saltRounds)
         return userService.add({ username, password: hash, fullname,imgUrl,loginType: loginType })
     },
+    loginWithGoogle: async function (googleToken) {
+        const { email } = await validateGoogleToken(googleToken);
+        const user = await userService.getByUsername(email)
+        if (!user) {
+            logger.info("Google user doesn't exist but now signed up")
+            return this.signupWithGoogle(googleToken, 'google')
+        }
+
+        return user;
+
+    },
+
+    signupWithGoogle: async function (googleToken, loginType) {
+        const { email, name, picture } = await validateGoogleToken(googleToken)
+
+        const user = await userService.getByUsername(email)
+        if (user) {
+            logger.info("Google user exists but now signed in")
+            return this.loginWithGoogle(googleToken, 'google')
+        }
+
+        return userService.add({ username: email, fullname: name, profilePicture: picture, loginType: loginType })
+    },
+
 
     getLoginToken: function (user) {
         const userInfo = { _id: user._id, fullname: user.fullname, isAdmin: user.isAdmin }
@@ -87,13 +111,13 @@ export async function onLogin(req, res) {
 
 export async function onSignup(req, res) {
     try {
-        const { username, password, fullname } = req.body
+        const { username, password, fullname,loginType,imgUrl } = req.body
 
         // IMPORTANT!!!
         // Never write passwords to log file!!!
         // logger.debug(fullname + ', ' + username + ', ' + password)
         debugger
-        const account = await authService.signup(username, password, fullname)
+        const account = await authService.signup(username, password, fullname,loginType,imgUrl)
         logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
 
         const user = await authService.login(username, password)
