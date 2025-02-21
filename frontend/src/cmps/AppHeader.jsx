@@ -1,11 +1,12 @@
 
-import {useState, useRef} from "react"
-import {useSelector} from "react-redux"
-import {useNavigate} from "react-router"
-import {CreateBoardModal} from '../pages/CreateBoardModal.jsx'
+import { useState, useRef } from "react"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router"
+import { CreateBoardModal } from '../pages/CreateBoardModal.jsx'
+import { logout } from "../store/store.js"
 
-export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
-    onToggleSideBar, sideBarOpen, onToggleUpperBar, upperBarOpen}) {
+export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
+    onToggleSideBar, sideBarOpen, onToggleUpperBar, upperBarOpen }) {
 
     const boards = useSelector(state => state.boardModule.boards)
 
@@ -38,11 +39,11 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
     }
 
     return (<><header className={`board-index-header ${upperBarOpen ? 'upper-bar-open' : 'board-index-header-closed'}`}
-            style={{
-        // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
-        backgroundColor: backgrounColor, borderColor: borderColor,
+        style={{
+            // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
+            backgroundColor: backgrounColor, borderColor: borderColor,
 
-    }}>
+        }}>
 
         <nav className="flex-space-between center-vertical">
 
@@ -55,7 +56,7 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
                     </svg>
                 </div>
                 <div className="logo nav-highlight-hint" onClick={() => navgite('/')}>
-                    {useDarkTextColors && <img className="main-logo" src="logo-not-moving.gif"/>} {!useDarkTextColors && <img className="main-logo-white" src="trello_white.gif"/>}
+                    {useDarkTextColors && <img className="main-logo" src="logo-not-moving.gif" />} {!useDarkTextColors && <img className="main-logo-white" src="trello_white.gif" />}
 
                 </div>
 
@@ -114,7 +115,7 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
                                         <div className="board-thumbnail" style={{
                                             // background: board.style.imgUrl.startsWith('#') ? board.style.imgUrl : 'transparent',
                                             backgroundImage: board?.style?.backgroundImage ? `url(${board.style.backgroundImage})` : 'none', backgroundSize: 'cover'
-                                        }}/>
+                                        }} />
                                         <div className="board-info">
                                             <div className="aboard-header">
                                                 <span className="board-title">{board.title}</span> {board.isStarred && (<i className="fa-solid fa-star star-icon"></i>)}
@@ -144,21 +145,21 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
                                 <ul className="board-list-popup">
                                     {boards.map(board =>
 
-                                        (board.isStarred &&
+                                    (board.isStarred &&
 
-                                            (<li key={board.id} className="board-item">
-                                                <div className="board-thumbnail" style={{
-                                                    // background: board.style.imgUrl.startsWith('#') ? board.style.imgUrl : 'transparent',
-                                                    backgroundImage: board?.style?.backgroundImage ? `url(${board.style.backgroundImage})` : 'none', backgroundSize: 'cover'
-                                                }}/>
-                                                <div className="board-info">
-                                                    <div className="aboard-header">
-                                                        <span className="board-title">{board.title}</span> {board.isStarred && (<i className="fa-solid fa-star star-icon"></i>)}
-                                                    </div>
-                                                    <span className="board-source">{board.source}</span>
+                                        (<li key={board.id} className="board-item">
+                                            <div className="board-thumbnail" style={{
+                                                // background: board.style.imgUrl.startsWith('#') ? board.style.imgUrl : 'transparent',
+                                                backgroundImage: board?.style?.backgroundImage ? `url(${board.style.backgroundImage})` : 'none', backgroundSize: 'cover'
+                                            }} />
+                                            <div className="board-info">
+                                                <div className="aboard-header">
+                                                    <span className="board-title">{board.title}</span> {board.isStarred && (<i className="fa-solid fa-star star-icon"></i>)}
                                                 </div>
-                                                {board.style.imgUrl && (<span className="template-badge">Template</span>)}
-                                            </li>)))}
+                                                <span className="board-source">{board.source}</span>
+                                            </div>
+                                            {board.style.imgUrl && (<span className="template-badge">Template</span>)}
+                                        </li>)))}
                                 </ul>
                             </div>
                         </div>
@@ -174,7 +175,7 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
                     <div onClick={() => setIsModalopen(!isModalOpen)} className={`highlighted-btn nav-highlight-hint ${useDarkTextColors ? ' ' : ' white-colors-btn'}`} ref={getCreateBoardRef}>
                         <span>Create</span>
                     </div>
-                    {isModalOpen && <CreateBoardModal onClose={onClose} createModal={getCreateBoardRef.current}/>}
+                    {isModalOpen && <CreateBoardModal onClose={onClose} createModal={getCreateBoardRef.current} />}
                 </div>
 
             </div>
@@ -201,50 +202,50 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
 
                                 <ul className="features-list">
                                     <li className="feature-item">
-                                            <span className="feature-icon">
-                                                <i className="fa-regular fa-chart-bar"></i>
-                                            </span> <span className="feature-text">See your work in new ways with views</span>
+                                        <span className="feature-icon">
+                                            <i className="fa-regular fa-chart-bar"></i>
+                                        </span> <span className="feature-text">See your work in new ways with views</span>
                                     </li>
 
                                     <li className="feature-item">
-                                            <span className="feature-icon">
-                                                <i className="fa-regular fa-square-check"></i>
-                                            </span> <span className="feature-text">Add due dates and assignees to checklist items</span>
+                                        <span className="feature-icon">
+                                            <i className="fa-regular fa-square-check"></i>
+                                        </span> <span className="feature-text">Add due dates and assignees to checklist items</span>
                                     </li>
 
                                     <li className="feature-item">
-                                            <span className="feature-icon">
-                                                <i className="fa-regular fa-palette"></i>
-                                            </span> <span className="feature-text">Change list colors and collapse lists</span>
+                                        <span className="feature-icon">
+                                            <i className="fa-regular fa-palette"></i>
+                                        </span> <span className="feature-text">Change list colors and collapse lists</span>
                                     </li>
 
                                     <li className="feature-item">
-                                            <span className="feature-icon">
-                                                <i className="fa-regular fa-clipboard"></i>
-                                            </span> <span className="feature-text">Create unlimited boards</span> <span className="info-icon">
-                                                <i className="fa-regular fa-circle-info"></i>
-                                            </span>
+                                        <span className="feature-icon">
+                                            <i className="fa-regular fa-clipboard"></i>
+                                        </span> <span className="feature-text">Create unlimited boards</span> <span className="info-icon">
+                                            <i className="fa-regular fa-circle-info"></i>
+                                        </span>
                                     </li>
 
                                     <li className="feature-item">
-                                            <span className="feature-icon">
-                                                <i className="fa-regular fa-users"></i>
-                                            </span> <span className="feature-text">Collaborate with as many people as you want</span> <span className="info-icon">
-                                                <i className="fa-regular fa-circle-info"></i>
-                                            </span>
+                                        <span className="feature-icon">
+                                            <i className="fa-regular fa-users"></i>
+                                        </span> <span className="feature-text">Collaborate with as many people as you want</span> <span className="info-icon">
+                                            <i className="fa-regular fa-circle-info"></i>
+                                        </span>
                                     </li>
                                 </ul>
 
                                 <button className="trial-extension">
                                     <span>Extend free trial to 30 days by adding payment details</span> <span className="arrow-icon">
-                                            <i className="fa-solid fa-chevron-right"></i>
-                                        </span>
+                                        <i className="fa-solid fa-chevron-right"></i>
+                                    </span>
                                 </button>
 
                                 <button className="see-plans">
                                     <span>See all plans</span> <span className="arrow-icon">
-                                            <i className="fa-solid fa-chevron-right"></i>
-                                        </span>
+                                        <i className="fa-solid fa-chevron-right"></i>
+                                    </span>
                                 </button>
 
                                 <p className="trial-footer">
@@ -257,7 +258,7 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
                 </div>
 
                 <div className="search-container">
-                    <input className={`white ${useDarkTextColors ? ' ' : ' white-search'}`} placeholder="     Search"/>
+                    <input className={`white ${useDarkTextColors ? ' ' : ' white-search'}`} placeholder="     Search" />
 
                 </div>
 
@@ -291,7 +292,7 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
 
                                 <div className="empty-state">
                                     <div className="illustration">
-                                        <img src="trello_notification_popup.svg"/>
+                                        <img src="trello_notification_popup.svg" />
                                     </div>
                                     <h3 className="empty-title">No unread notifications</h3>
                                 </div>
@@ -310,7 +311,7 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
                     </svg>
                     {showQuestionMarkPopup && (<>
                         <div className="account-popup">
-                            <img src="trello_question_menu.png" alt="Team collaboration illustration" className="tips-image"/>
+                            <img src="trello_question_menu.png" alt="Team collaboration illustration" className="tips-image" />
 
                             <h2 className="tips-title">
                                 It's easy to get your team up and running with Trello playbooks </h2>
@@ -387,7 +388,13 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
 
                     <section className="logout-section">
                         <div className="menu-items">
-                            <button className="logout-item">Logout</button>
+                            <button
+                                className="logout-item"
+                                onClick={() => {
+                                    logout()
+                                    navgite('\login')
+                                }}
+                            >Logout</button>
                         </div>
                     </section>
 
@@ -398,34 +405,34 @@ export function AppHeader({backgrounColor, borderColor, useDarkTextColors,
         </nav>
 
     </header>
-    <header className="board-index-header-slim" style={{
-        // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
-        backgroundColor: backgrounColor, borderColor: borderColor,
+        <header className="board-index-header-slim" style={{
+            // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
+            backgroundColor: backgrounColor, borderColor: borderColor,
 
-    }}>
+        }}>
 
-        <nav className="flex-space-between center-vertical">
+            <nav className="flex-space-between center-vertical">
 
-            <div className="just-flex just-flex-more center-vertical">
+                <div className="just-flex just-flex-more center-vertical">
 
-                <div className="logo nav-highlight-hint" onClick={() => onToggleSideBar()}>
+                    <div className="logo nav-highlight-hint" onClick={() => onToggleSideBar()}>
+                        {/*<img className="dots" src="dots.svg"/>*/}
+                        <svg width="20" height="20" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path fillRule="evenodd" clipRule="evenodd" d="M4 5C4 4.44772 4.44772 4 5 4H7C7.55228 4 8 4.44772 8 5V7C8 7.55228 7.55228 8 7 8H5C4.44772 8 4 7.55228 4 7V5ZM4 11C4 10.4477 4.44772 10 5 10H7C7.55228 10 8 10.4477 8 11V13C8 13.5523 7.55228 14 7 14H5C4.44772 14 4 13.5523 4 13V11ZM11 4C10.4477 4 10 4.44772 10 5V7C10 7.55228 10.4477 8 11 8H13C13.5523 8 14 7.55228 14 7V5C14 4.44772 13.5523 4 13 4H11ZM10 11C10 10.4477 10.4477 10 11 10H13C13.5523 10 14 10.4477 14 11V13C14 13.5523 13.5523 14 13 14H11C10.4477 14 10 13.5523 10 13V11ZM17 4C16.4477 4 16 4.44772 16 5V7C16 7.55228 16.4477 8 17 8H19C19.5523 8 20 7.55228 20 7V5C20 4.44772 19.5523 4 19 4H17ZM16 11C16 10.4477 16.4477 10 17 10H19C19.5523 10 20 10.4477 20 11V13C20 13.5523 19.5523 14 19 14H17C16.4477 14 16 13.5523 16 13V11ZM5 16C4.44772 16 4 16.4477 4 17V19C4 19.5523 4.44772 20 5 20H7C7.55228 20 8 19.5523 8 19V17C8 16.4477 7.55228 16 7 16H5ZM10 17C10 16.4477 10.4477 16 11 16H13C13.5523 16 14 16.4477 14 17V19C14 19.5523 13.5523 20 13 20H11C10.4477 20 10 19.5523 10 19V17ZM17 16C16.4477 16 16 16.4477 16 17V19C16 19.5523 16.4477 20 17 20H19C19.5523 20 20 19.5523 20 19V17C20 16.4477 19.5523 16 19 16H17Z" fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <div className="logo nav-highlight-hint" onClick={() => navgite('/')}>
+                        {useDarkTextColors && <img className="main-logo" src="logo-not-moving.gif" />} {!useDarkTextColors && <img className="main-logo-white" src="trello_white.gif" />}
+
+                    </div>
+                </div>
+                <div className="logo nav-highlight-hint top-hamburger" onClick={() => onToggleUpperBar()}>
                     {/*<img className="dots" src="dots.svg"/>*/}
-                    <svg width="20" height="20" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M4 5C4 4.44772 4.44772 4 5 4H7C7.55228 4 8 4.44772 8 5V7C8 7.55228 7.55228 8 7 8H5C4.44772 8 4 7.55228 4 7V5ZM4 11C4 10.4477 4.44772 10 5 10H7C7.55228 10 8 10.4477 8 11V13C8 13.5523 7.55228 14 7 14H5C4.44772 14 4 13.5523 4 13V11ZM11 4C10.4477 4 10 4.44772 10 5V7C10 7.55228 10.4477 8 11 8H13C13.5523 8 14 7.55228 14 7V5C14 4.44772 13.5523 4 13 4H11ZM10 11C10 10.4477 10.4477 10 11 10H13C13.5523 10 14 10.4477 14 11V13C14 13.5523 13.5523 14 13 14H11C10.4477 14 10 13.5523 10 13V11ZM17 4C16.4477 4 16 4.44772 16 5V7C16 7.55228 16.4477 8 17 8H19C19.5523 8 20 7.55228 20 7V5C20 4.44772 19.5523 4 19 4H17ZM16 11C16 10.4477 16.4477 10 17 10H19C19.5523 10 20 10.4477 20 11V13C20 13.5523 19.5523 14 19 14H17C16.4477 14 16 13.5523 16 13V11ZM5 16C4.44772 16 4 16.4477 4 17V19C4 19.5523 4.44772 20 5 20H7C7.55228 20 8 19.5523 8 19V17C8 16.4477 7.55228 16 7 16H5ZM10 17C10 16.4477 10.4477 16 11 16H13C13.5523 16 14 16.4477 14 17V19C14 19.5523 13.5523 20 13 20H11C10.4477 20 10 19.5523 10 19V17ZM17 16C16.4477 16 16 16.4477 16 17V19C16 19.5523 16.4477 20 17 20H19C19.5523 20 20 19.5523 20 19V17C20 16.4477 19.5523 16 19 16H17Z" fill="currentColor"></path>
-                    </svg>
+                    <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M2 7V15C2 16.1046 2.89543 17 4 17H6C7.10457 17 8 16.1046 8 15V7C8 5.89543 7.10457 5 6 5H4C2.89543 5 2 5.89543 2 7ZM4 7V15H6V7L4 7Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M9 7V13C9 14.1046 9.89543 15 11 15H13C14.1046 15 15 14.1046 15 13V7C15 5.89543 14.1046 5 13 5H11C9.89543 5 9 5.89543 9 7ZM11 7V13H13V7L11 7Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M16 17V7C16 5.89543 16.8954 5 18 5H20C21.1046 5 22 5.89543 22 7V17C22 18.1046 21.1046 19 20 19H18C16.8954 19 16 18.1046 16 17ZM18 17V7L20 7V17H18Z" fill="currentColor"></path></svg>
                 </div>
-                <div className="logo nav-highlight-hint" onClick={() => navgite('/')}>
-                    {useDarkTextColors && <img className="main-logo" src="logo-not-moving.gif"/>} {!useDarkTextColors && <img className="main-logo-white" src="trello_white.gif"/>}
-
-                </div>
-            </div>
-            <div className="logo nav-highlight-hint top-hamburger" onClick={() => onToggleUpperBar()}>
-                {/*<img className="dots" src="dots.svg"/>*/}
-                <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M2 7V15C2 16.1046 2.89543 17 4 17H6C7.10457 17 8 16.1046 8 15V7C8 5.89543 7.10457 5 6 5H4C2.89543 5 2 5.89543 2 7ZM4 7V15H6V7L4 7Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M9 7V13C9 14.1046 9.89543 15 11 15H13C14.1046 15 15 14.1046 15 13V7C15 5.89543 14.1046 5 13 5H11C9.89543 5 9 5.89543 9 7ZM11 7V13H13V7L11 7Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M16 17V7C16 5.89543 16.8954 5 18 5H20C21.1046 5 22 5.89543 22 7V17C22 18.1046 21.1046 19 20 19H18C16.8954 19 16 18.1046 16 17ZM18 17V7L20 7V17H18Z" fill="currentColor"></path></svg>
-            </div>
-        </nav>
-    </header>
-        </>
+            </nav>
+        </header>
+    </>
 
     )
 }
