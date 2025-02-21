@@ -60,8 +60,8 @@ export function RootCmp() {
                     </Route>
                     <Route path="/login" element={<Login />}/>
                     <Route path="/debug" element={<DebugPage />} />
-                    <Route path='/vedio' element={<VedioCall/>}/>
-                        <Route path='/vedio/:roomId' element={<VedioCall/>}/>
+                    <Route path='/vdieo' element={<VedioCall/>}/>
+                        <Route path='/vdieo/:roomId' element={<VedioCall/>}/>
                 </Routes>
             </main>
 
