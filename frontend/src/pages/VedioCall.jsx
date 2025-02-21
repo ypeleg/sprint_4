@@ -200,18 +200,20 @@ export function VedioCall() {
 
                 </div>
                 <div className="buttons">
+                    <div className=" start">
 
                     <button id="webcamButton">Start webcam</button>
-                    <button id="callButton" disabled>Create Call</button>
-
-
-                    <input placeholder="Enter call link and then click answer" id="callInput" />
-
-                    <div>
-
-                        <button className="answer" id="answerButton" disabled>Answer</button>
-                        <button className="hangup" id="hangupButton" disabled>Hangup</button>
+                    <button className="callButton" id="callButton" disabled>Create Call</button>
                     </div>
+
+                    <div className="call">
+
+                        <input placeholder="Enter call link " id="callInput" />
+
+                        <button className="answer" id="answerButton" disabled>Join</button>
+
+                    </div>
+                    <button className="hangup" id="hangupButton" disabled>Hangup</button>
                 </div>
             </div>
         </div>

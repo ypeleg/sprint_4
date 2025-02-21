@@ -11,7 +11,7 @@ import {GroupList} from "../cmps/GroupList.jsx"
 import {BoardHeader} from "../cmps/BoardHeader.jsx"
 import {GroupHeader} from "../cmps/GroupHeader.jsx"
 import React, {useRef, useEffect, useState} from "react"
-import {random, makeId} from "../services/util.service.js"
+import {random, makeId, socketService, SOCKET_UPDATE_BOARD} from "../services/util.service.js"
 import {reorderWithEdge} from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge"
 import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store} from "../store/store.js"
 import {ShareModal} from "../cmps/ShareModal.jsx"
@@ -19,6 +19,7 @@ import {ShareModal} from "../cmps/ShareModal.jsx"
 
 import {StandaloneSearchBox, useJsApiLoader} from '@react-google-maps/api'
 import {ActivityMenu} from "../cmps/ActivityMenu.jsx"
+import { UPDATE_BOARD } from "../store/reducers/board.reducer.js"
 
 
 export function QuickEdit({
@@ -3428,6 +3429,7 @@ export function BoardDetails() {
 
     useEffect(() => {
         onLoadBoard()
+      
     }, [])
 
     function onLoadBoard() {

@@ -20,7 +20,10 @@ export function setupSocketAPI(http) {
         socket.on('disconnect', socket => {
             console.log(`Socket disconnected [id: ${socket.id}]`)
         })
-
+        socket.on("boardUpdated", (updatedBoard) => {
+            
+            socket.broadcast.emit("boardUpdated", updatedBoard);
+        });
         socket.on('chat-set-topic', topic => {
             if (socket.myTopic === topic) return
             if (socket.myTopic) {

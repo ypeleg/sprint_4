@@ -17,7 +17,7 @@ export function GroupHeader({setGroup,group,onSetGroupEdit,setHeader}) {
     // const [showCopyList, setCopyList] = useState(false)
     // const [showMoveList, setMoveList] = useState(false)
     // const [showMoveAll, setMoveAll] = useState(false)
-    // const [showSort, setSort] = useState(false)
+    console.log
     const [groupTitle, setGroupTitle] = useState(group.title)
     const [showTitleEdit, setTitleEdit] = useState(false)
     const elInput  = useRef()
@@ -60,10 +60,15 @@ export function GroupHeader({setGroup,group,onSetGroupEdit,setHeader}) {
         setGroupTitle(target.value)
     }
 
-    function saveGroupTitle() {
-        group.title = groupTitle
+    async function saveGroupTitle() {
+        const updatedBoard = { ...boardToShow };
+
+    // Find the specific group and update its title
+    updatedBoard.groups = updatedBoard.groups.map(g => 
+        g.id === group.id ? { ...g, title: groupTitle } : g
+    );
+        await updateBoard(updatedBoard)
         onSetTitlEdit()
-        updateBoard(boardToShow)
     }
 
   

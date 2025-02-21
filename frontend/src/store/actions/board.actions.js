@@ -3,7 +3,7 @@
 import { store } from '../store'
 import { boardService, USE_AI, aiGenerator } from '../../services/board.service.js'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_FILTER_BY } from '../reducers/board.reducer.js'
-import { makeId } from '../../services/util.service.js'
+import { makeId, SOCKET_UPDATE_BOARD, socketService } from '../../services/util.service.js'
 
 // import { getRandomBoardAI } from "../../services/data_ai.js"
 
@@ -175,12 +175,14 @@ export async function updateBoard(board) {
         board = cleanBoard(board)
         store.dispatch(getCmdUpdateBoard(board))
         const savedBoard = await boardService.save(board)
+        socketService.emit(SOCKET_UPDATE_BOARD,board)
         return savedBoard
     } catch (err) {
         // if any error: just do it non optimistically
         try {
             const savedBoard = await boardService.save(board)
             store.dispatch(getCmdUpdateBoard(savedBoard))
+            socketService.emit(SOCKET_UPDATE_BOARD,board)
             return savedBoard
         } catch (err) {
             console.log('Cannot save board', err)

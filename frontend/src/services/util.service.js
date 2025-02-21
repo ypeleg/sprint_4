@@ -300,6 +300,7 @@ const baseUrl = process.env.NODE_ENV === 'production'
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 export const SOCKET_JOIN_VEDIO  = 'join-vedio'
+export const SOCKET_UPDATE_BOARD = 'upadteBoard'
 export const socketService = createSocketService()
 
 function createSocketService() {

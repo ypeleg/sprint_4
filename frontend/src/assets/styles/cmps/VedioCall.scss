@@ -5,7 +5,7 @@
         border: 0;
     }
     .content{
-
+        font-size: 16px;
         background: linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180));
         height: 100%;
     }
@@ -30,8 +30,20 @@
             justify-items: center;
         }
         >*{
-            padding: 12px;
+         
             margin-block: 6px;
+        }
+        .start{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        .call{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
         }
         button{
             background-color: rgb(0, 101, 255);
@@ -39,18 +51,28 @@
             width: fit-content;
             padding: 12px;
             margin-block: 6px;
+            &.callButton{
+                margin-left: 5px;
+            }
             &.answer{
                 background-color: rgb(92, 211, 92);
+                padding: 12px 32px;
+                margin-left: 10px ;
+                
             }
             &.hangup{
                 background-color: rgb(209, 39, 39);
-                margin-left: 10px;
+       
+               
+                border-radius: 6px;
+                width: 300px;
             }
         }
         input{
             background-color: white;
             padding: 12px;
-            width: 300px;
+            width: 200px;
+            height: 40px;
            
         }
        
