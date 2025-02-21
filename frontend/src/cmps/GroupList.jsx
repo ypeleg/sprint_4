@@ -42,6 +42,7 @@ export function GroupList({
                               placeholderHeight,
                               onsetQuickEdit,
                               showQuickEdit,
+                              useDarkTextColors,
                           }) {
     const boardToShow = useSelector((state) => state.boardModule.board)
     const [largeLabels, setLargeLabels] = useState(false)
@@ -345,7 +346,7 @@ export function GroupList({
             {showMoveList && <MoveListForm onSetMoveList={onSetMoveList} onSetGroupEdit={onSetGroupEdit} group={grp} header={header}/>}
             {showMoveAll && <MoveAll onSetMoveAll={onSetMoveAll} group={grp} header={header} onSetGroupEdit={onSetGroupEdit}/>}
             {showSort && <GroupSort header={header} onSetGroupEdit={onSetGroupEdit} onSetSort={onSetSort} group={grp}/>}
-            <AddGroup />
+            <AddGroup useDarkTextColors={useDarkTextColors} />
         </section>
     )
 }

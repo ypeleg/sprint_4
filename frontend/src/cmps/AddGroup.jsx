@@ -57,7 +57,8 @@ export function AddGroup({useDarkTextColors}) {
     return (
         <div className="add-group">
             {(!showForm) ? <button onClick={() => setForm(true)} className="add-group-btn" style={{
-                                            color: (useDarkTextColors? '#172b4d': 'white')
+                                            background: (!useDarkTextColors? 'rgba(0, 0, 0, 0.5)': 'rgba(255, 255, 255, 0.5)'),
+                                            color: (!useDarkTextColors? 'white':'#172b4d')
                                             }}>
                     <span className="plus"><i class="fa-regular fa-plus"></i></span>
                     Add another list

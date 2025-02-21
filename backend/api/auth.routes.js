@@ -5,7 +5,7 @@ import Cryptr from 'cryptr'
 import bcrypt from 'bcrypt'
 import express from 'express'
 import { userService } from './user.routes.js'
-import { logger, dbService, utilService } from '../util.service.js'
+import { logger, validateGoogleToken } from '../util.service.js'
 
 const cryptr = new Cryptr(process.env.SECRET1 || 'Secret-Puk-1234')
 
@@ -25,14 +25,14 @@ export const authService = {
         return user
     },
 
-    signup: async function (username, password, fullname,imgUrl) {
+    signup: async function (username, password, fullname,loginType,imgUrl) {
         const saltRounds = 10
 
         logger.debug(`auth.service - signup with username: ${username}, fullname: ${fullname}`)
         if (!username || !password || !fullname) throw new Error('Missing details')
 
         const hash = await bcrypt.hash(password, saltRounds)
-        return userService.add({ username, password: hash, fullname,imgUrl })
+        return userService.add({ username, password: hash, fullname,imgUrl,loginType: loginType })
     },
 
     getLoginToken: function (user) {
@@ -56,9 +56,23 @@ export const authService = {
 
 // controller
 export async function onLogin(req, res) {
-    const { username, password } = req.body
     try {
-        const user = await authService.login(username, password)
+        console.log('onLogin body:')
+        console.log(req.body)
+
+        const { loginType } = req.body
+        logger.info("Logging with login type: " + loginType);
+
+        let user;
+
+        if (loginType === 'google') {
+            const { oAuthCredentials } = req.body
+            user = await authService.loginWithGoogle(oAuthCredentials)
+        } else {
+            const { username, password } = req.body
+            user = await authService.login(username, password)
+        }
+
         const loginToken = authService.getLoginToken(user)
 
         logger.info('User login: ', user)
@@ -73,14 +87,13 @@ export async function onLogin(req, res) {
 
 export async function onSignup(req, res) {
     try {
-       
-        const { username, password, fullname,imgUrl } = req.body
-    
+        const { username, password, fullname } = req.body
+
         // IMPORTANT!!!
         // Never write passwords to log file!!!
         // logger.debug(fullname + ', ' + username + ', ' + password)
         debugger
-        const account = await authService.signup(username, password, fullname,imgUrl)
+        const account = await authService.signup(username, password, fullname)
         logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
 
         const user = await authService.login(username, password)

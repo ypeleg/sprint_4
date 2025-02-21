@@ -152,9 +152,9 @@ export const remoteUserService = {
         }
     },
 
-    login: async ({ username, password }) => {
+    login: async ({ username, password, loginType, oAuthCredentials }) => {
         try {
-            const user = await httpService.post(BASE_URL + 'login', { username, password })
+            const user = await httpService.post(BASE_URL + 'login', { username, password, loginType, oAuthCredentials })
             if (!user) return Promise.reject('Invalid login')
             return _setLoggedinUser(user)
         } catch (error) {
@@ -163,14 +163,16 @@ export const remoteUserService = {
         }
     },
 
-    signup: async ({ username, password, fullname, imgUrl }) => {
+    signup: async ({ username, password, fullname, imgUrl, oAuthCredentials, loginType }) => {
         try {
             const userToSave = {
                 username,
                 password,
                 fullname,
                 imgUrl: imgUrl || 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png',
-                score: 10000
+                score: 10000,
+                oAuthCredentials: oAuthCredentials,
+                loginType: loginType,
             }
             debugger
             const user = await httpService.post(BASE_URL + 'signup', userToSave)

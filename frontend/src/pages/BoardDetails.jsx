@@ -3691,7 +3691,7 @@ export function BoardDetails() {
         updateBoard(boardCopy)
     }
 
-
+    // new code
     const [useDarkTextColors, setUseDarkTextColors] = useState(true)
     const [colorsSetted, setColorsSetted] = useState(false)
     const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(4, 44.3%, 76.1%, 0.9)')
@@ -3700,98 +3700,283 @@ export function BoardDetails() {
     const [headerBorderColor, setHeaderBorderColor] = useState('#c2a5a7')
 
     useEffect(() => {
-        if (!boardToShow) return
-        let rawUrl = boardToShow.style?.backgroundImage || ''
+        if (!boardToShow) return;
+
+        // Extract image URL
+        let rawUrl = boardToShow.style?.backgroundImage || '';
         const match = rawUrl.match(/url\(["']?(.*?)["']?\)/)
         if (match && match[1]) {
-            rawUrl = match[1]
+            rawUrl = match[1];
         }
         if (!rawUrl) {
-            rawUrl = 'https://picsum.photos/600/300?random=877'
+            rawUrl = 'https://picsum.photos/600/300?random=877';
         }
 
-        let isCancelled = false
-        const img = new Image()
-        img.crossOrigin = 'Anonymous'
-        img.referrerPolicy = 'no-referrer'
+        let isCancelled = false;
+
+        const createPastelVariant = (r, g, b) => {
+            // Convert RGB to HSL
+            const toHSL = (r, g, b) => {
+                r /= 255;
+                g /= 255;
+                b /= 255;
+                const max = Math.max(r, g, b);
+                const min = Math.min(r, g, b);
+                let h, s, l = (max + min) / 2;
+
+                if (max === min) {
+                    h = s = 0;
+                } else {
+                    const d = max - min;
+                    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                    switch (max) {
+                        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                        case g: h = (b - r) / d + 2; break;
+                        case b: h = (r - g) / d + 4; break;
+                    }
+                    h /= 6;
+                }
+                return [h * 360, s * 100, l * 100];
+            };
+
+            // Convert HSL back to RGB
+            const toRGB = (h, s, l) => {
+                h /= 360;
+                s /= 100;
+                l /= 100;
+                let r, g, b;
+
+                if (s === 0) {
+                    r = g = b = l;
+                } else {
+                    const hue2rgb = (p, q, t) => {
+                        if (t < 0) t += 1;
+                        if (t > 1) t -= 1;
+                        if (t < 1/6) return p + (q - p) * 6 * t;
+                        if (t < 1/2) return q;
+                        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                        return p;
+                    };
+
+                    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                    const p = 2 * l - q;
+                    r = hue2rgb(p, q, h + 1/3);
+                    g = hue2rgb(p, q, h);
+                    b = hue2rgb(p, q, h - 1/3);
+                }
+
+                return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+            };
+
+            // Convert to HSL, adjust for pastel, convert back
+            let [h, s, l] = toHSL(r, g, b);
+            l = Math.min(Math.max(l, 75), 90);  // High lightness
+            s = Math.min(Math.max(s, 15), 35);  // Low saturation
+            return toRGB(h, s, l);
+        };
+
+        const applyFallbackColors = () => {
+            const fallback = {
+                r: 230,
+                g: 240,
+                b: 250,
+                a: 0.95
+            };
+
+            setSidebarBackgroundColor(`rgba(${fallback.r}, ${fallback.g}, ${fallback.b}, ${fallback.a})`);
+            setHeaderBackgroundColor(`rgba(${fallback.r * 0.97}, ${fallback.g * 0.97}, ${fallback.b * 0.97}, ${fallback.a})`);
+            setSidebarBorderColor(`rgba(${fallback.r * 0.8}, ${fallback.g * 0.8}, ${fallback.b * 0.8}, 0.15)`);
+            setHeaderBorderColor(`rgba(${fallback.r * 0.8}, ${fallback.g * 0.8}, ${fallback.b * 0.8}, 0.15)`);
+            setUseDarkTextColors(true);
+            setColorsSetted(true);
+        };
+
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.referrerPolicy = 'no-referrer';
 
         img.onload = () => {
-            if (isCancelled) return
+            if (isCancelled) return;
+
             try {
-                const canvas = document.createElement('canvas')
-                const ctx = canvas.getContext('2d')
-                canvas.width = 50
-                canvas.height = 50
-                ctx.drawImage(img, 0, 0, 50, 50)
-                const {data} = ctx.getImageData(0, 0, 50, 50)
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 50;
+                canvas.height = 50;
+                ctx.drawImage(img, 0, 0, 50, 50);
 
-                let rSum = 0, gSum = 0, bSum = 0
-                const numPixels = 50 * 50
+                const { data } = ctx.getImageData(0, 0, 50, 50);
+                let rSum = 0, gSum = 0, bSum = 0;
+                const numPixels = 50 * 50;
+
                 for (let i = 0; i < numPixels; i++) {
-                    const idx = i * 4
-                    rSum += data[idx]
-                    gSum += data[idx + 1]
-                    bSum += data[idx + 2]
+                    const idx = i * 4;
+                    rSum += data[idx];
+                    gSum += data[idx + 1];
+                    bSum += data[idx + 2];
                 }
 
-                let r = Math.round(rSum / numPixels)
-                let g = Math.round(gSum / numPixels)
-                let b = Math.round(bSum / numPixels)
+                const [r, g, b] = [
+                    Math.round(rSum / numPixels),
+                    Math.round(gSum / numPixels),
+                    Math.round(bSum / numPixels)
+                ];
 
-                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+                const [pastelR, pastelG, pastelB] = createPastelVariant(r, g, b);
 
-                const adjustColor = (c, l) => {
-                    if (l > 0.4 && l < 0.6) {
-                        return Math.min(255, c * 1.2)
-                    }
-                    return c * (l > 0.5 ? 0.9 : 1.1)
-                }
+                const header = {
+                    r: pastelR,
+                    g: pastelG,
+                    b: pastelB,
+                    a: 0.95
+                };
 
-                r = adjustColor(r, luminance)
-                g = adjustColor(g, luminance)
-                b = adjustColor(b, luminance)
+                const sidebar = {
+                    r: Math.round(pastelR * 0.95),
+                    g: Math.round(pastelG * 0.95),
+                    b: Math.round(pastelB * 0.95),
+                    a: 0.9
+                };
 
-                const alpha = 0.95
-                const darken = 0.85
-                const lighten = 1.1
+                const border = {
+                    r: Math.round(pastelR * 0.85),
+                    g: Math.round(pastelG * 0.85),
+                    b: Math.round(pastelB * 0.85),
+                    a: 0.15
+                };
 
-                setSidebarBackgroundColor(`rgba(${r}, ${g}, ${b}, ${alpha})`)
-                setSidebarBorderColor(`rgba(${Math.round(r * darken)}, ${Math.round(g * darken)}, ${Math.round(b * darken)}, 0.3)`)
-                setHeaderBackgroundColor(`rgba(${Math.round(r * lighten)}, ${Math.round(g * lighten)}, ${Math.round(b * lighten)}, ${alpha})`)
-                setHeaderBorderColor(`rgba(${Math.round(r * darken)}, ${Math.round(g * darken)}, ${Math.round(b * darken)}, 0.25)`)
+                setSidebarBackgroundColor(`rgba(${sidebar.r}, ${sidebar.g}, ${sidebar.b}, ${sidebar.a})`);
+                setHeaderBackgroundColor(`rgba(${header.r}, ${header.g}, ${header.b}, ${header.a})`);
+                setSidebarBorderColor(`rgba(${border.r}, ${border.g}, ${border.b}, ${border.a})`);
+                setHeaderBorderColor(`rgba(${border.r}, ${border.g}, ${border.b}, ${border.a})`);
 
-                const contrastRatio = (luminance + 0.05) / 0.05
-                const isDark = luminance < 0.5 || contrastRatio > 4.5
-                setUseDarkTextColors(!isDark)
-                setColorsSetted(true)
+                const luminance = (0.299 * pastelR + 0.587 * pastelG + 0.114 * pastelB) / 255;
+                setUseDarkTextColors(luminance > 0.7);
+                setColorsSetted(true);
+
             } catch (error) {
-                applyFallbackColors()
+                console.error('Error processing image colors:', error);
+                applyFallbackColors();
             }
-        }
+        };
 
         img.onerror = () => {
-            if (!isCancelled) applyFallbackColors()
-        }
-
-        function applyFallbackColors() {
-            const fallbackColor = {
-                r: 41,
-                g: 128,
-                b: 185,
-                a: 0.95
+            if (!isCancelled) {
+                console.error('Error loading image');
+                applyFallbackColors();
             }
-            setSidebarBackgroundColor(`rgba(${fallbackColor.r}, ${fallbackColor.g}, ${fallbackColor.b}, ${fallbackColor.a})`)
-            setSidebarBorderColor(`rgba(${fallbackColor.r * 0.8}, ${fallbackColor.g * 0.8}, ${fallbackColor.b * 0.8}, 0.3)`)
-            setHeaderBackgroundColor(`rgba(${fallbackColor.r * 0.9}, ${fallbackColor.g * 0.9}, ${fallbackColor.b * 0.9}, ${fallbackColor.a})`)
-            setHeaderBorderColor(`rgba(${fallbackColor.r * 0.7}, ${fallbackColor.g * 0.7}, ${fallbackColor.b * 0.7}, 0.25)`)
-            setUseDarkTextColors(false)
-        }
+        };
 
-        img.src = rawUrl
+        img.src = rawUrl;
+
         return () => {
-            isCancelled = true
-        }
-    }, [boardToShow])
+            isCancelled = true;
+        };
+    }, [boardToShow]);
+
+
+
+
+    // old
+    // const [useDarkTextColors, setUseDarkTextColors] = useState(true)
+    // const [colorsSetted, setColorsSetted] = useState(false)
+    // const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(4, 44.3%, 76.1%, 0.9)')
+    // const [sidebarBorderColor, setSidebarBorderColor] = useState('#c2a5a7')
+    // const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#e4bcb9')
+    // const [headerBorderColor, setHeaderBorderColor] = useState('#c2a5a7')
+    //
+    // useEffect(() => {
+    //     if (!boardToShow) return
+    //     let rawUrl = boardToShow.style?.backgroundImage || ''
+    //     const match = rawUrl.match(/url\(["']?(.*?)["']?\)/)
+    //     if (match && match[1]) {
+    //         rawUrl = match[1]
+    //     }
+    //     if (!rawUrl) {
+    //         rawUrl = 'https://picsum.photos/600/300?random=877'
+    //     }
+    //
+    //     let isCancelled = false
+    //     const img = new Image()
+    //     img.crossOrigin = 'Anonymous'
+    //     img.referrerPolicy = 'no-referrer'
+    //
+    //     img.onload = () => {
+    //         if (isCancelled) return
+    //         try {
+    //             const canvas = document.createElement('canvas')
+    //             const ctx = canvas.getContext('2d')
+    //             canvas.width = 50
+    //             canvas.height = 50
+    //             ctx.drawImage(img, 0, 0, 50, 50)
+    //             const {data} = ctx.getImageData(0, 0, 50, 50)
+    //
+    //             let rSum = 0, gSum = 0, bSum = 0
+    //             const numPixels = 50 * 50
+    //             for (let i = 0; i < numPixels; i++) {
+    //                 const idx = i * 4
+    //                 rSum += data[idx]
+    //                 gSum += data[idx + 1]
+    //                 bSum += data[idx + 2]
+    //             }
+    //
+    //             let r = Math.round(rSum / numPixels)
+    //             let g = Math.round(gSum / numPixels)
+    //             let b = Math.round(bSum / numPixels)
+    //
+    //             const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+    //
+    //             const adjustColor = (c, l) => {
+    //                 if (l > 0.4 && l < 0.6) {
+    //                     return Math.min(255, c * 1.2)
+    //                 }
+    //                 return c * (l > 0.5 ? 0.9 : 1.1)
+    //             }
+    //
+    //             r = adjustColor(r, luminance)
+    //             g = adjustColor(g, luminance)
+    //             b = adjustColor(b, luminance)
+    //
+    //             const alpha = 0.95
+    //             const darken = 0.85
+    //             const lighten = 1.1
+    //
+    //             setSidebarBackgroundColor(`rgba(${r}, ${g}, ${b}, ${alpha})`)
+    //             setSidebarBorderColor(`rgba(${Math.round(r * darken)}, ${Math.round(g * darken)}, ${Math.round(b * darken)}, 0.3)`)
+    //             setHeaderBackgroundColor(`rgba(${Math.round(r * lighten)}, ${Math.round(g * lighten)}, ${Math.round(b * lighten)}, ${alpha})`)
+    //             setHeaderBorderColor(`rgba(${Math.round(r * darken)}, ${Math.round(g * darken)}, ${Math.round(b * darken)}, 0.25)`)
+    //
+    //             const contrastRatio = (luminance + 0.05) / 0.05
+    //             const isDark = luminance < 0.5 || contrastRatio > 4.5
+    //             setUseDarkTextColors(!isDark)
+    //             setColorsSetted(true)
+    //         } catch (error) {
+    //             applyFallbackColors()
+    //         }
+    //     }
+    //
+    //     img.onerror = () => {
+    //         if (!isCancelled) applyFallbackColors()
+    //     }
+    //
+    //     function applyFallbackColors() {
+    //         const fallbackColor = {
+    //             r: 41, g: 128, b: 185, a: 0.95
+    //         }
+    //         setSidebarBackgroundColor(`rgba(${fallbackColor.r}, ${fallbackColor.g}, ${fallbackColor.b}, ${fallbackColor.a})`)
+    //         setSidebarBorderColor(`rgba(${fallbackColor.r * 0.8}, ${fallbackColor.g * 0.8}, ${fallbackColor.b * 0.8}, 0.3)`)
+    //         setHeaderBackgroundColor(`rgba(${fallbackColor.r * 0.9}, ${fallbackColor.g * 0.9}, ${fallbackColor.b * 0.9}, ${fallbackColor.a})`)
+    //         setHeaderBorderColor(`rgba(${fallbackColor.r * 0.7}, ${fallbackColor.g * 0.7}, ${fallbackColor.b * 0.7}, 0.25)`)
+    //         setUseDarkTextColors(false)
+    //     }
+    //
+    //     img.src = rawUrl
+    //     return () => {
+    //         isCancelled = true
+    //     }
+    // }, [boardToShow])
+
+
 
 
     if (!(boardToShow && colorsSetted)) return (<div className="trello-loader">
@@ -3828,7 +4013,7 @@ export function BoardDetails() {
 
             <main className="main-layout">
 
-                <SideBar backgrounColor={sidebarBackgroundColor} borderColor={sidebarBorderColor}
+                <SideBar backgrounColor={sidebarBackgroundColor} borderColor={sidebarBorderColor} useDarkTextColors={useDarkTextColors}
                     onToggleSideBar={onToggleSideBar} sideBarOpen={sideBarOpen}/>
 
                 <section className={`board-display ${(sideBarOpen? 'side-bar-open' : 'board-display-side-bar-close')}`}>
@@ -3839,7 +4024,7 @@ export function BoardDetails() {
                     <BoardHeader onSetActivityMenu={onSetActivityMenu} backgrounColor={headerBackgroundColor} borderColor={headerBorderColor} onSetShowShare={onSetShowShare} onStarBoard={onStarBoard} isStarred={boardToShow.isStarred} onSetTable={onSetTable} useDarkTextColors={useDarkTextColors}
                         onToggleSideBar={onToggleSideBar} sideBarOpen={sideBarOpen}/>
 
-                    {showTable && <GroupTable></GroupTable>} {!showTable && <GroupList onSetPlaceholderHeight={onSetPlaceholderHeight} Placeholder={Placeholder} placeholderHeight={placeholderHeight} onsetQuickEdit={onsetQuickEdit} showQuickEdit={showQuickEdit} onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>} {/* <section className="group-lists">
+                    {showTable && <GroupTable></GroupTable>} {!showTable && <GroupList useDarkTextColors={useDarkTextColors} onSetPlaceholderHeight={onSetPlaceholderHeight} Placeholder={Placeholder} placeholderHeight={placeholderHeight} onsetQuickEdit={onsetQuickEdit} showQuickEdit={showQuickEdit} onMoveCard={onMoveCard} onLoadTask={onLoadTask} onReorderCard={onReorderCard}/>} {/* <section className="group-lists">
                         {boardToShow.groups.map(group => {
 
                             // return <GroupPreview currentBoard={boardToShow} onLoadTask={onLoadTask} group={group}/>

@@ -2178,10 +2178,10 @@ async function generateTaskStyle() {
             coverSize: random.choice(['small', 'large']),
         }
     } else if (styleType === 1) {
-        const images = [
+            const images = [
             null,
             null,
-            `https://picsum.photos/600/300?random=${random.randint(1, 1000)}`,
+            `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
             'cover-img.png',
             'cover-img-1.png',
             'cover-img-2.png',
