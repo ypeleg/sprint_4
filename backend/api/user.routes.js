@@ -43,7 +43,7 @@ export const userService = {
     getByUsername: async function (username) {
         try {
             const collection = await dbService.getCollection('user')
-            const user = await collection.findOne({username}).limit(5).toArray()
+            const user = await collection.findOne({username})
             return user
         } catch (err) {
             logger.error(`while finding user ${username}`, err)
@@ -88,6 +88,7 @@ export const userService = {
                 password: user.password,
                 fullname: user.fullname,
                 isAdmin: user.isAdmin || false,
+                imgUrl: user.imgUrl
             }
             const collection = await dbService.getCollection('user')
             await collection.insertOne(userToAdd)
