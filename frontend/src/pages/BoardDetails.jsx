@@ -3692,187 +3692,381 @@ export function BoardDetails() {
     }
 
     // new code
-    const [useDarkTextColors, setUseDarkTextColors] = useState(true)
-    const [colorsSetted, setColorsSetted] = useState(false)
-    const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(4, 44.3%, 76.1%, 0.9)')
-    const [sidebarBorderColor, setSidebarBorderColor] = useState('#c2a5a7')
-    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#e4bcb9')
-    const [headerBorderColor, setHeaderBorderColor] = useState('#c2a5a7')
+    // const [useDarkTextColors, setUseDarkTextColors] = useState(true)
+    // const [colorsSetted, setColorsSetted] = useState(false)
+    // const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(4, 44.3%, 76.1%, 0.9)')
+    // const [sidebarBorderColor, setSidebarBorderColor] = useState('#c2a5a7')
+    // const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#e4bcb9')
+    // const [headerBorderColor, setHeaderBorderColor] = useState('#c2a5a7')
+
+
+
+    // const [useDarkTextColors, setUseDarkTextColors] = useState(true);
+    // const [colorsSetted, setColorsSetted] = useState(false);
+    // const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(208, 93%, 85%, 0.9)');
+    // const [sidebarBorderColor, setSidebarBorderColor] = useState('hsla(208, 93%, 75%, 0.15)');
+    // const [headerBackgroundColor, setHeaderBackgroundColor] = useState('hsla(208, 93%, 88%, 0.95)');
+    // const [headerBorderColor, setHeaderBorderColor] = useState('hsla(208, 93%, 75%, 0.15)');
+
+    const [useDarkTextColors, setUseDarkTextColors] = useState(true);
+    const [colorsSetted, setColorsSetted] = useState(false);
+    const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(208, 93%, 85%, 0.9)');
+    const [sidebarBorderColor, setSidebarBorderColor] = useState('hsla(208, 93%, 75%, 0.15)');
+    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('hsla(208, 93%, 88%, 0.95)');
+    const [headerBorderColor, setHeaderBorderColor] = useState('hsla(208, 93%, 75%, 0.15)');
 
     useEffect(() => {
-        if (!boardToShow) return;
+        if (!boardToShow) return
 
-        // Extract image URL
-        let rawUrl = boardToShow.style?.backgroundImage || '';
+        let rawUrl = boardToShow.style?.backgroundImage || ""
         const match = rawUrl.match(/url\(["']?(.*?)["']?\)/)
-        if (match && match[1]) {
-            rawUrl = match[1];
-        }
+        if (match && match[1]) rawUrl = match[1]
         if (!rawUrl) {
-            rawUrl = 'https://picsum.photos/600/300?random=877';
+            // default random if no BG
+            rawUrl = "https://picsum.photos/600/300?random=877"
         }
 
-        let isCancelled = false;
+        let isCancelled = false
 
-        const createPastelVariant = (r, g, b) => {
-            // Convert RGB to HSL
-            const toHSL = (r, g, b) => {
-                r /= 255;
-                g /= 255;
-                b /= 255;
-                const max = Math.max(r, g, b);
-                const min = Math.min(r, g, b);
-                let h, s, l = (max + min) / 2;
-
-                if (max === min) {
-                    h = s = 0;
-                } else {
-                    const d = max - min;
-                    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-                    switch (max) {
-                        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-                        case g: h = (b - r) / d + 2; break;
-                        case b: h = (r - g) / d + 4; break;
-                    }
-                    h /= 6;
+        // Convert RGB -> HSL
+        function rgbToHsl(r, g, b) {
+            r /= 255
+            g /= 255
+            b /= 255
+            const max = Math.max(r, g, b)
+            const min = Math.min(r, g, b)
+            let h, s
+            let l = (max + min) / 2
+            if (max === min) {
+                h = s = 0
+            } else {
+                const d = max - min
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+                switch (max) {
+                    case r:
+                        h = (g - b) / d + (g < b ? 6 : 0)
+                        break
+                    case g:
+                        h = (b - r) / d + 2
+                        break
+                    case b:
+                        h = (r - g) / d + 4
+                        break
+                    default:
+                        h = 0
                 }
-                return [h * 360, s * 100, l * 100];
-            };
+                h /= 6
+            }
+            return [h * 360, s, l]
+        }
 
-            // Convert HSL back to RGB
-            const toRGB = (h, s, l) => {
-                h /= 360;
-                s /= 100;
-                l /= 100;
-                let r, g, b;
+        // The “Trello-ish” approach
+        function getTrelloColors(r, g, b) {
+            let [h, s, l] = rgbToHsl(r, g, b)
 
-                if (s === 0) {
-                    r = g = b = l;
-                } else {
-                    const hue2rgb = (p, q, t) => {
-                        if (t < 0) t += 1;
-                        if (t > 1) t -= 1;
-                        if (t < 1/6) return p + (q - p) * 6 * t;
-                        if (t < 1/2) return q;
-                        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-                        return p;
-                    };
-
-                    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-                    const p = 2 * l - q;
-                    r = hue2rgb(p, q, h + 1/3);
-                    g = hue2rgb(p, q, h);
-                    b = hue2rgb(p, q, h - 1/3);
+            // 1) special handling for greens
+            if (h >= 60 && h <= 150) {
+                if (s < 0.4 && l < 0.6) {
+                    h = Math.min(h + 15, 180)
+                    s *= 0.8
+                    l = Math.min(l * 1.25, 0.9)
                 }
+            }
 
-                return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
-            };
+            // 2) special handling for browns/earth
+            if ((h >= 20 && h <= 50) || (l < 0.3 && s < 0.3)) {
+                h = h + 15
+                l = Math.min(l * 1.4, 0.85)
+                s *= 0.7
+                if (s < 0.2) {
+                    h = Math.min(h + 30, 280)
+                    s *= 1.2
+                }
+            }
 
-            // Convert to HSL, adjust for pastel, convert back
-            let [h, s, l] = toHSL(r, g, b);
-            l = Math.min(Math.max(l, 75), 90);  // High lightness
-            s = Math.min(Math.max(s, 15), 35);  // Low saturation
-            return toRGB(h, s, l);
-        };
+            // 3) general pastel
+            if (s < 0.2) s *= 1.6
+            if (s > 0.6) s *= 0.6
+            s = Math.min(s, 0.7)
 
-        const applyFallbackColors = () => {
+            if (l < 0.5) l *= 1.35
+            if (l > 0.8) l *= 0.85
+
+            const whiteOverlay = l < 0.5 ? 0.3 : 0.2
+            l = l + (1 - l) * whiteOverlay
+            l = Math.min(l, 0.9)
+
+            const base = {
+                h: h,
+                s: s * 100,
+                l: l * 100,
+            }
+
+            // Slightly lighten header
+            const headerLight = Math.min(base.l * 1.1, 92)
+
+            return {
+                sidebar: `hsla(${base.h}, ${base.s}%, ${base.l}%, 0.9)`,
+                header: `hsla(${base.h}, ${base.s * 0.95}%, ${headerLight}%, 0.95)`,
+                border: `hsla(${base.h}, ${base.s * 0.85}%, ${base.l * 0.9}%, 0.15)`,
+                isDark: base.l <= 65, // text color threshold
+            }
+        }
+
+        function applyFallbackColors() {
+            // Soft pastel fallback
             const fallback = {
-                r: 230,
-                g: 240,
-                b: 250,
-                a: 0.95
-            };
+                h: 208,
+                s: 93,
+                l: 85,
+            }
+            setSidebarBackgroundColor(
+                `hsla(${fallback.h}, ${fallback.s}%, ${fallback.l}%, 0.9)`
+            )
+            setHeaderBackgroundColor(
+                `hsla(${fallback.h}, ${fallback.s}%, ${fallback.l * 1.05}%, 0.95)`
+            )
+            setSidebarBorderColor(
+                `hsla(${fallback.h}, ${fallback.s * 0.9}%, ${fallback.l * 0.9}%, 0.15)`
+            )
+            setHeaderBorderColor(
+                `hsla(${fallback.h}, ${fallback.s * 0.9}%, ${fallback.l * 0.9}%, 0.15)`
+            )
+            setUseDarkTextColors(true)
+            setColorsSetted(true)
+        }
 
-            setSidebarBackgroundColor(`rgba(${fallback.r}, ${fallback.g}, ${fallback.b}, ${fallback.a})`);
-            setHeaderBackgroundColor(`rgba(${fallback.r * 0.97}, ${fallback.g * 0.97}, ${fallback.b * 0.97}, ${fallback.a})`);
-            setSidebarBorderColor(`rgba(${fallback.r * 0.8}, ${fallback.g * 0.8}, ${fallback.b * 0.8}, 0.15)`);
-            setHeaderBorderColor(`rgba(${fallback.r * 0.8}, ${fallback.g * 0.8}, ${fallback.b * 0.8}, 0.15)`);
-            setUseDarkTextColors(true);
-            setColorsSetted(true);
-        };
-
-        const img = new Image();
-        img.crossOrigin = 'Anonymous';
-        img.referrerPolicy = 'no-referrer';
+        const img = new Image()
+        img.crossOrigin = "Anonymous"
+        img.referrerPolicy = "no-referrer"
 
         img.onload = () => {
-            if (isCancelled) return;
-
+            if (isCancelled) return
             try {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = 50;
-                canvas.height = 50;
-                ctx.drawImage(img, 0, 0, 50, 50);
+                const canvas = document.createElement("canvas")
+                const ctx = canvas.getContext("2d")
+                canvas.width = 50
+                canvas.height = 50
+                ctx.drawImage(img, 0, 0, 50, 50)
 
-                const { data } = ctx.getImageData(0, 0, 50, 50);
-                let rSum = 0, gSum = 0, bSum = 0;
-                const numPixels = 50 * 50;
+                const { data } = ctx.getImageData(0, 0, 50, 50)
+                let rSum = 0,
+                    gSum = 0,
+                    bSum = 0
+                const numPixels = 50 * 50
 
                 for (let i = 0; i < numPixels; i++) {
-                    const idx = i * 4;
-                    rSum += data[idx];
-                    gSum += data[idx + 1];
-                    bSum += data[idx + 2];
+                    const idx = i * 4
+                    rSum += data[idx]
+                    gSum += data[idx + 1]
+                    bSum += data[idx + 2]
                 }
 
-                const [r, g, b] = [
-                    Math.round(rSum / numPixels),
-                    Math.round(gSum / numPixels),
-                    Math.round(bSum / numPixels)
-                ];
+                const r = Math.round(rSum / numPixels)
+                const g = Math.round(gSum / numPixels)
+                const b = Math.round(bSum / numPixels)
 
-                const [pastelR, pastelG, pastelB] = createPastelVariant(r, g, b);
-
-                const header = {
-                    r: pastelR,
-                    g: pastelG,
-                    b: pastelB,
-                    a: 0.95
-                };
-
-                const sidebar = {
-                    r: Math.round(pastelR * 0.95),
-                    g: Math.round(pastelG * 0.95),
-                    b: Math.round(pastelB * 0.95),
-                    a: 0.9
-                };
-
-                const border = {
-                    r: Math.round(pastelR * 0.85),
-                    g: Math.round(pastelG * 0.85),
-                    b: Math.round(pastelB * 0.85),
-                    a: 0.15
-                };
-
-                setSidebarBackgroundColor(`rgba(${sidebar.r}, ${sidebar.g}, ${sidebar.b}, ${sidebar.a})`);
-                setHeaderBackgroundColor(`rgba(${header.r}, ${header.g}, ${header.b}, ${header.a})`);
-                setSidebarBorderColor(`rgba(${border.r}, ${border.g}, ${border.b}, ${border.a})`);
-                setHeaderBorderColor(`rgba(${border.r}, ${border.g}, ${border.b}, ${border.a})`);
-
-                const luminance = (0.299 * pastelR + 0.587 * pastelG + 0.114 * pastelB) / 255;
-                setUseDarkTextColors(luminance > 0.7);
-                setColorsSetted(true);
-
+                const colors = getTrelloColors(r, g, b)
+                setSidebarBackgroundColor(colors.sidebar)
+                setHeaderBackgroundColor(colors.header)
+                setSidebarBorderColor(colors.border)
+                setHeaderBorderColor(colors.border)
+                setUseDarkTextColors(!colors.isDark)
+                setColorsSetted(true)
             } catch (error) {
-                console.error('Error processing image colors:', error);
-                applyFallbackColors();
+                console.error("Error processing image colors:", error)
+                applyFallbackColors()
             }
-        };
+        }
 
         img.onerror = () => {
             if (!isCancelled) {
-                console.error('Error loading image');
-                applyFallbackColors();
+                console.error("Error loading image")
+                applyFallbackColors()
             }
-        };
+        }
 
-        img.src = rawUrl;
-
+        img.src = rawUrl
         return () => {
-            isCancelled = true;
-        };
-    }, [boardToShow]);
+            isCancelled = true
+        }
+    }, [boardToShow])
+
+
+    // useEffect(() => {
+    //     if (!boardToShow) return;
+    //
+    //     // Extract image URL
+    //     let rawUrl = boardToShow.style?.backgroundImage || '';
+    //     const match = rawUrl.match(/url\(["']?(.*?)["']?\)/)
+    //     if (match && match[1]) {
+    //         rawUrl = match[1];
+    //     }
+    //     if (!rawUrl) {
+    //         rawUrl = 'https://picsum.photos/600/300?random=877';
+    //     }
+    //
+    //     let isCancelled = false;
+    //
+    //     const createPastelVariant = (r, g, b) => {
+    //         // Convert RGB to HSL
+    //         const toHSL = (r, g, b) => {
+    //             r /= 255;
+    //             g /= 255;
+    //             b /= 255;
+    //             const max = Math.max(r, g, b);
+    //             const min = Math.min(r, g, b);
+    //             let h, s, l = (max + min) / 2;
+    //
+    //             if (max === min) {
+    //                 h = s = 0;
+    //             } else {
+    //                 const d = max - min;
+    //                 s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    //                 switch (max) {
+    //                     case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+    //                     case g: h = (b - r) / d + 2; break;
+    //                     case b: h = (r - g) / d + 4; break;
+    //                 }
+    //                 h /= 6;
+    //             }
+    //             return [h * 360, s * 100, l * 100];
+    //         };
+    //
+    //         // Convert HSL back to RGB
+    //         const toRGB = (h, s, l) => {
+    //             h /= 360;
+    //             s /= 100;
+    //             l /= 100;
+    //             let r, g, b;
+    //
+    //             if (s === 0) {
+    //                 r = g = b = l;
+    //             } else {
+    //                 const hue2rgb = (p, q, t) => {
+    //                     if (t < 0) t += 1;
+    //                     if (t > 1) t -= 1;
+    //                     if (t < 1/6) return p + (q - p) * 6 * t;
+    //                     if (t < 1/2) return q;
+    //                     if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+    //                     return p;
+    //                 };
+    //
+    //                 const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    //                 const p = 2 * l - q;
+    //                 r = hue2rgb(p, q, h + 1/3);
+    //                 g = hue2rgb(p, q, h);
+    //                 b = hue2rgb(p, q, h - 1/3);
+    //             }
+    //
+    //             return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+    //         };
+    //
+    //         // Convert to HSL, adjust for pastel, convert back
+    //         let [h, s, l] = toHSL(r, g, b);
+    //         l = Math.min(Math.max(l, 75), 90);  // High lightness
+    //         s = Math.min(Math.max(s, 15), 35);  // Low saturation
+    //         return toRGB(h, s, l);
+    //     };
+    //
+    //     const applyFallbackColors = () => {
+    //         const fallback = {
+    //             r: 230,
+    //             g: 240,
+    //             b: 250,
+    //             a: 0.95
+    //         };
+    //
+    //         setSidebarBackgroundColor(`rgba(${fallback.r}, ${fallback.g}, ${fallback.b}, ${fallback.a})`);
+    //         setHeaderBackgroundColor(`rgba(${fallback.r * 0.97}, ${fallback.g * 0.97}, ${fallback.b * 0.97}, ${fallback.a})`);
+    //         setSidebarBorderColor(`rgba(${fallback.r * 0.8}, ${fallback.g * 0.8}, ${fallback.b * 0.8}, 0.15)`);
+    //         setHeaderBorderColor(`rgba(${fallback.r * 0.8}, ${fallback.g * 0.8}, ${fallback.b * 0.8}, 0.15)`);
+    //         setUseDarkTextColors(true);
+    //         setColorsSetted(true);
+    //     };
+    //
+    //     const img = new Image();
+    //     img.crossOrigin = 'Anonymous';
+    //     img.referrerPolicy = 'no-referrer';
+    //
+    //     img.onload = () => {
+    //         if (isCancelled) return;
+    //
+    //         try {
+    //             const canvas = document.createElement('canvas');
+    //             const ctx = canvas.getContext('2d');
+    //             canvas.width = 50;
+    //             canvas.height = 50;
+    //             ctx.drawImage(img, 0, 0, 50, 50);
+    //
+    //             const { data } = ctx.getImageData(0, 0, 50, 50);
+    //             let rSum = 0, gSum = 0, bSum = 0;
+    //             const numPixels = 50 * 50;
+    //
+    //             for (let i = 0; i < numPixels; i++) {
+    //                 const idx = i * 4;
+    //                 rSum += data[idx];
+    //                 gSum += data[idx + 1];
+    //                 bSum += data[idx + 2];
+    //             }
+    //
+    //             const [r, g, b] = [
+    //                 Math.round(rSum / numPixels),
+    //                 Math.round(gSum / numPixels),
+    //                 Math.round(bSum / numPixels)
+    //             ];
+    //
+    //             const [pastelR, pastelG, pastelB] = createPastelVariant(r, g, b);
+    //
+    //             const header = {
+    //                 r: pastelR,
+    //                 g: pastelG,
+    //                 b: pastelB,
+    //                 a: 0.95
+    //             };
+    //
+    //             const sidebar = {
+    //                 r: Math.round(pastelR * 0.95),
+    //                 g: Math.round(pastelG * 0.95),
+    //                 b: Math.round(pastelB * 0.95),
+    //                 a: 0.9
+    //             };
+    //
+    //             const border = {
+    //                 r: Math.round(pastelR * 0.85),
+    //                 g: Math.round(pastelG * 0.85),
+    //                 b: Math.round(pastelB * 0.85),
+    //                 a: 0.15
+    //             };
+    //
+    //             setSidebarBackgroundColor(`rgba(${sidebar.r}, ${sidebar.g}, ${sidebar.b}, ${sidebar.a})`);
+    //             setHeaderBackgroundColor(`rgba(${header.r}, ${header.g}, ${header.b}, ${header.a})`);
+    //             setSidebarBorderColor(`rgba(${border.r}, ${border.g}, ${border.b}, ${border.a})`);
+    //             setHeaderBorderColor(`rgba(${border.r}, ${border.g}, ${border.b}, ${border.a})`);
+    //
+    //             const luminance = (0.299 * pastelR + 0.587 * pastelG + 0.114 * pastelB) / 255;
+    //             setUseDarkTextColors(luminance > 0.7);
+    //             setColorsSetted(true);
+    //
+    //         } catch (error) {
+    //             console.error('Error processing image colors:', error);
+    //             applyFallbackColors();
+    //         }
+    //     };
+    //
+    //     img.onerror = () => {
+    //         if (!isCancelled) {
+    //             console.error('Error loading image');
+    //             applyFallbackColors();
+    //         }
+    //     };
+    //
+    //     img.src = rawUrl;
+    //
+    //     return () => {
+    //         isCancelled = true;
+    //     };
+    // }, [boardToShow]);
 
 
 

@@ -10,9 +10,9 @@ export let USE_AI = false
 export let aiGenerator = null
 
 
-USE_AI = true
-import { getRandomBoardAI } from './data_ai.js'
-aiGenerator = getRandomBoardAI
+// USE_AI = true
+// import { getRandomBoardAI } from './data_ai.js'
+// aiGenerator = getRandomBoardAI
 // localStorage.clear()
 
 

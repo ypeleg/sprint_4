@@ -15,8 +15,9 @@
 
     scrollbar-color: #091E4224 #091E420F;
     scrollbar-width: thin;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding-inline: 2px;
+    //margin: 0px 2px 0px 0px;
 
 
     .task {

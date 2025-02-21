@@ -379,6 +379,13 @@ input {
     position: relative;
     border-radius: 7px;
     //border: 2px solid transparent;
+
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px, rgba(0, 0, 0, 0.19) 0px 1px 1px;
+    //border-radius: 0.5em;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(241, 242, 244);
+    //border-image: initial;
 }
 
 .task:hover,

@@ -167,8 +167,8 @@ function getRandomTask() {
                 },
                 {
                     backgroundImage: random.choice([
-                        null, null, null, `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-                        'cover-img.png', 'cover-img-1.png', 'cover-img-2.png', 'cover-img-3.png'
+                        null, null, null, `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                        'cover-img.png', 'cover-img-1.png', 'cover-img-2.png', 'cover-img-3.png', 'amination_gif.gif',
                     ]),
                     coverSize: random.choice(['small', 'large'])
                 },
