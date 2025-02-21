@@ -3716,181 +3716,133 @@ export function BoardDetails() {
     const [headerBorderColor, setHeaderBorderColor] = useState('hsla(208, 93%, 75%, 0.15)');
 
     useEffect(() => {
-        if (!boardToShow) return
+    if (!boardToShow) return;
 
-        let rawUrl = boardToShow.style?.backgroundImage || ""
-        const match = rawUrl.match(/url\(["']?(.*?)["']?\)/)
-        if (match && match[1]) rawUrl = match[1]
-        if (!rawUrl) {
-            // default random if no BG
-            rawUrl = "https://picsum.photos/600/300?random=877"
+    let rawUrl = boardToShow.style?.backgroundImage || "";
+    const match = rawUrl.match(/url\(["']?(.*?)["']?\)/);
+    if (match && match[1]) rawUrl = match[1];
+    if (!rawUrl) {
+        rawUrl = "https://picsum.photos/600/300?random=877";
+    }
+
+    let isCancelled = false;
+
+    function rgbToHsl(r, g, b) {
+        r /= 255;
+        g /= 255;
+        b /= 255;
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+        let h, s;
+        let l = (max + min) / 2;
+        if (max === min) {
+            h = s = 0;
+        } else {
+            const d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+                case r:
+                    h = (g - b) / d + (g < b ? 6 : 0);
+                    break;
+                case g:
+                    h = (b - r) / d + 2;
+                    break;
+                case b:
+                    h = (r - g) / d + 4;
+                    break;
+                default:
+                    h = 0;
+            }
+            h /= 6;
         }
+        return [h * 360, s, l];
+    }
 
-        let isCancelled = false
-
-        // Convert RGB -> HSL
-        function rgbToHsl(r, g, b) {
-            r /= 255
-            g /= 255
-            b /= 255
-            const max = Math.max(r, g, b)
-            const min = Math.min(r, g, b)
-            let h, s
-            let l = (max + min) / 2
-            if (max === min) {
-                h = s = 0
-            } else {
-                const d = max - min
-                s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-                switch (max) {
-                    case r:
-                        h = (g - b) / d + (g < b ? 6 : 0)
-                        break
-                    case g:
-                        h = (b - r) / d + 2
-                        break
-                    case b:
-                        h = (r - g) / d + 4
-                        break
-                    default:
-                        h = 0
-                }
-                h /= 6
-            }
-            return [h * 360, s, l]
+    function getTrelloColors(r, g, b) {
+        let [h, s, l] = rgbToHsl(r, g, b);
+        if (s < 0.1) {
+            h = 208;
         }
+        const base = {
+            h: h,
+            s: 50,
+            l: 85,
+        };
+        return {
+            sidebar: `hsla(${base.h}, ${base.s}%, ${base.l}%, 0.9)`,
+            header: `hsla(${base.h}, ${base.s}%, 90%, 0.95)`,
+            border: `hsla(${base.h}, 40%, 75%, 0.15)`,
+            isDark: false,
+        };
+    }
 
-        // The “Trello-ish” approach
-        function getTrelloColors(r, g, b) {
-            let [h, s, l] = rgbToHsl(r, g, b)
+    function applyFallbackColors() {
+        const fallback = {
+            h: 208,
+            s: 50,
+            l: 85,
+        };
+        setSidebarBackgroundColor(`hsla(${fallback.h}, ${fallback.s}%, ${fallback.l}%, 0.9)`);
+        setHeaderBackgroundColor(`hsla(${fallback.h}, ${fallback.s}%, 90%, 0.95)`);
+        setSidebarBorderColor(`hsla(${fallback.h}, 40%, 75%, 0.15)`);
+        setHeaderBorderColor(`hsla(${fallback.h}, 40%, 75%, 0.15)`);
+        setUseDarkTextColors(true);
+        setColorsSetted(true);
+    }
 
-            // 1) special handling for greens
-            if (h >= 60 && h <= 150) {
-                if (s < 0.4 && l < 0.6) {
-                    h = Math.min(h + 15, 180)
-                    s *= 0.8
-                    l = Math.min(l * 1.25, 0.9)
-                }
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.referrerPolicy = "no-referrer";
+
+    img.onload = () => {
+        if (isCancelled) return;
+        try {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = 50;
+            canvas.height = 50;
+            ctx.drawImage(img, 0, 0, 50, 50);
+
+            const { data } = ctx.getImageData(0, 0, 50, 50);
+            let rSum = 0, gSum = 0, bSum = 0;
+            const numPixels = 50 * 50;
+
+            for (let i = 0; i < numPixels; i++) {
+                const idx = i * 4;
+                rSum += data[idx];
+                gSum += data[idx + 1];
+                bSum += data[idx + 2];
             }
 
-            // 2) special handling for browns/earth
-            if ((h >= 20 && h <= 50) || (l < 0.3 && s < 0.3)) {
-                h = h + 15
-                l = Math.min(l * 1.4, 0.85)
-                s *= 0.7
-                if (s < 0.2) {
-                    h = Math.min(h + 30, 280)
-                    s *= 1.2
-                }
-            }
+            const r = Math.round(rSum / numPixels);
+            const g = Math.round(gSum / numPixels);
+            const b = Math.round(bSum / numPixels);
 
-            // 3) general pastel
-            if (s < 0.2) s *= 1.6
-            if (s > 0.6) s *= 0.6
-            s = Math.min(s, 0.7)
-
-            if (l < 0.5) l *= 1.35
-            if (l > 0.8) l *= 0.85
-
-            const whiteOverlay = l < 0.5 ? 0.3 : 0.2
-            l = l + (1 - l) * whiteOverlay
-            l = Math.min(l, 0.9)
-
-            const base = {
-                h: h,
-                s: s * 100,
-                l: l * 100,
-            }
-
-            // Slightly lighten header
-            const headerLight = Math.min(base.l * 1.1, 92)
-
-            return {
-                sidebar: `hsla(${base.h}, ${base.s}%, ${base.l}%, 0.9)`,
-                header: `hsla(${base.h}, ${base.s * 0.95}%, ${headerLight}%, 0.95)`,
-                border: `hsla(${base.h}, ${base.s * 0.85}%, ${base.l * 0.9}%, 0.15)`,
-                isDark: base.l <= 65, // text color threshold
-            }
+            const colors = getTrelloColors(r, g, b);
+            setSidebarBackgroundColor(colors.sidebar);
+            setHeaderBackgroundColor(colors.header);
+            setSidebarBorderColor(colors.border);
+            setHeaderBorderColor(colors.border);
+            setUseDarkTextColors(true); // Always dark text
+            setColorsSetted(true);
+        } catch (error) {
+            console.error("Error processing image colors:", error);
+            applyFallbackColors();
         }
+    };
 
-        function applyFallbackColors() {
-            // Soft pastel fallback
-            const fallback = {
-                h: 208,
-                s: 93,
-                l: 85,
-            }
-            setSidebarBackgroundColor(
-                `hsla(${fallback.h}, ${fallback.s}%, ${fallback.l}%, 0.9)`
-            )
-            setHeaderBackgroundColor(
-                `hsla(${fallback.h}, ${fallback.s}%, ${fallback.l * 1.05}%, 0.95)`
-            )
-            setSidebarBorderColor(
-                `hsla(${fallback.h}, ${fallback.s * 0.9}%, ${fallback.l * 0.9}%, 0.15)`
-            )
-            setHeaderBorderColor(
-                `hsla(${fallback.h}, ${fallback.s * 0.9}%, ${fallback.l * 0.9}%, 0.15)`
-            )
-            setUseDarkTextColors(true)
-            setColorsSetted(true)
+    img.onerror = () => {
+        if (!isCancelled) {
+            console.error("Error loading image");
+            applyFallbackColors();
         }
+    };
 
-        const img = new Image()
-        img.crossOrigin = "Anonymous"
-        img.referrerPolicy = "no-referrer"
-
-        img.onload = () => {
-            if (isCancelled) return
-            try {
-                const canvas = document.createElement("canvas")
-                const ctx = canvas.getContext("2d")
-                canvas.width = 50
-                canvas.height = 50
-                ctx.drawImage(img, 0, 0, 50, 50)
-
-                const { data } = ctx.getImageData(0, 0, 50, 50)
-                let rSum = 0,
-                    gSum = 0,
-                    bSum = 0
-                const numPixels = 50 * 50
-
-                for (let i = 0; i < numPixels; i++) {
-                    const idx = i * 4
-                    rSum += data[idx]
-                    gSum += data[idx + 1]
-                    bSum += data[idx + 2]
-                }
-
-                const r = Math.round(rSum / numPixels)
-                const g = Math.round(gSum / numPixels)
-                const b = Math.round(bSum / numPixels)
-
-                const colors = getTrelloColors(r, g, b)
-                setSidebarBackgroundColor(colors.sidebar)
-                setHeaderBackgroundColor(colors.header)
-                setSidebarBorderColor(colors.border)
-                setHeaderBorderColor(colors.border)
-                setUseDarkTextColors(!colors.isDark)
-                setColorsSetted(true)
-            } catch (error) {
-                console.error("Error processing image colors:", error)
-                applyFallbackColors()
-            }
-        }
-
-        img.onerror = () => {
-            if (!isCancelled) {
-                console.error("Error loading image")
-                applyFallbackColors()
-            }
-        }
-
-        img.src = rawUrl
-        return () => {
-            isCancelled = true
-        }
-    }, [boardToShow])
+    img.src = rawUrl;
+    return () => {
+        isCancelled = true;
+    };
+}, [boardToShow]);
 
 
     // useEffect(() => {

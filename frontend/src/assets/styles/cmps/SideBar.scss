@@ -4,21 +4,27 @@
     // z-index: 0;
     width: 263px;
     padding: 0px 12px 12px 12px;
-    backdrop-filter: blur(4px);
+    //backdrop-filter: blur(4px);
     // background-color: hsl(4,44.3%,81.1%);
 
     background-color: hsla(4, 44.3%, 76.1%, 0.9);
 
     padding-inline: calc(3px + 12px);
-    border-right: 1px solid #c2a5a7;
+    //border-right: 1px solid #c2a5a7;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    //border-right: 1px solid rgba(9, 30, 66, 0.13);
     // margin-top: -12px;
     transition: all 0.5s ease;
+
+    //box-shadow: 1px 0px 0px 0px hsla(218,54%,19.6%,0.16);
 
     .sidebar-header {
         padding-block: 11px;
         padding-inline: 12px;
         margin-inline: -16px;
-        border-bottom: 1px solid #be9494;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
+
 
         .logo-insider {
             justify-content: center;
@@ -49,6 +55,7 @@
             //color: #6b778c;
             // negate the color of what ever is in the background
             //color: white;
+            padding: 2px;
             font-weight: bold;
         }
 

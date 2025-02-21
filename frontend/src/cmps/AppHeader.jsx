@@ -41,7 +41,8 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
     return (<><header className={`board-index-header ${upperBarOpen ? 'upper-bar-open' : 'board-index-header-closed'}`}
         style={{
             // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
-            backgroundColor: backgrounColor, borderColor: borderColor,
+            backgroundColor: backgrounColor,
+            // borderColor: borderColor,
 
         }}>
 

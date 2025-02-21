@@ -1,6 +1,8 @@
 .everything>header {
     background-color: #e4bcb9;
-    border-bottom: 1px solid #c2a5a7;
+    //border-bottom: 1px solid #c2a5a7;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
     z-index: 1;
 }
 
@@ -54,7 +56,7 @@ body {
 header {
     padding: 4px;
     background: #ffffff3d;
-    backdrop-filter: blur(8px);
+    //backdrop-filter: blur(8px);
 }
 
 .board-header {

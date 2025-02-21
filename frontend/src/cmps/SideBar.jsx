@@ -19,7 +19,7 @@ export function SideBar({backgrounColor, borderColor, onToggleSideBar, sideBarOp
                style={{
                    // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
                    backgroundColor: backgrounColor,
-                   borderColor: borderColor,
+                   // borderColor: borderColor,
 
                }}
                // style = {{backgroundColor: backgrounColor}}
@@ -28,7 +28,7 @@ export function SideBar({backgrounColor, borderColor, onToggleSideBar, sideBarOp
                  style={{
                      // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
                      backgroundColor: backgrounColor,
-                     borderColor: borderColor,
+                     // borderColor: borderColor,
 
                  }}>
                 <div className="flex-space-between logo-insider">
@@ -41,12 +41,24 @@ export function SideBar({backgrounColor, borderColor, onToggleSideBar, sideBarOp
                 </div>
 
                 <div>
-                    <button className=""
+                    <button className="near-logo-btn"
                         onClick={() => onToggleSideBar()}
                         style={{
-                            color: (useDarkTextColors) ? '' : 'white'
+                            color: (useDarkTextColors) ? '#172b4d' : 'white'
                             }}
-                    > <i className="near-logo-btn fa-regular fa-less-than"></i> </button>
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none"
+                            style={{
+                                color: (useDarkTextColors) ? '#172b4d' : 'white'
+                            }}>
+                            <rect width="0" height="28"
+                                fill={useDarkTextColors ? '#172b4d' : 'white'}
+                                />
+                            <path fillRule="evenodd" clipRule="evenodd" d="M15.1573 16.6865C15.2661 16.7938 15.3524 16.9215 15.4113 17.0624C15.4703 17.2033 15.5006 17.3545 15.5006 17.5073C15.5006 17.66 15.4703 17.8112 15.4113 17.9521C15.3524 18.093 15.2661 18.2208 15.1573 18.328C14.9368 18.5457 14.6394 18.6677 14.3296 18.6677C14.0197 18.6677 13.7223 18.5457 13.5018 18.328L10.0426 14.898C9.92341 14.7798 9.82877 14.6391 9.76419 14.4842C9.69961 14.3292 9.66636 14.1629 9.66636 13.995C9.66636 13.8271 9.69961 13.6609 9.76419 13.5059C9.82877 13.3509 9.92341 13.2102 10.0426 13.092L13.4901 9.67369C13.7107 9.45568 14.0083 9.33341 14.3185 9.33341C14.6286 9.33341 14.9262 9.45568 15.1468 9.67369C15.2556 9.78093 15.3419 9.90871 15.4008 10.0496C15.4598 10.1905 15.4901 10.3417 15.4901 10.4944C15.4901 10.6472 15.4598 10.7984 15.4008 10.9393C15.3419 11.0802 15.2556 11.208 15.1468 11.3152L12.4425 13.995L15.1573 16.6865V16.6865Z"
+                                fill={useDarkTextColors ? "#6B778C" : 'white'}/>
+                        </svg>
+                        {/*<i className="near-logo-btn fa-regular fa-less-than"></i>*/}
+                    </button>
                 </div>
 
             </div>
@@ -58,8 +70,7 @@ export function SideBar({backgrounColor, borderColor, onToggleSideBar, sideBarOp
                         <span>
                             <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M3 5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5ZM5 6C5 5.44772 5.44772 5 6 5H10C10.5523 5 11 5.44772 11 6V16C11 16.5523 10.5523 17 10 17H6C5.44772 17 5 16.5523 5 16V6ZM14 5C13.4477 5 13 5.44772 13 6V12C13 12.5523 13.4477 13 14 13H18C18.5523 13 19 12.5523 19 12V6C19 5.44772 18.5523 5 18 5H14Z" fill="currentColor"></path></svg>
                              Board
-                        </span>
-                        <span></span>
+                        </span> <span></span>
                     </div>
 
                     <div className="side-bar-item flex-space-between nav-highlight-hint">
