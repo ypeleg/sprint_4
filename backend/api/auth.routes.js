@@ -111,16 +111,26 @@ export async function onLogin(req, res) {
 
 export async function onSignup(req, res) {
     try {
-        const { username, password, fullname,loginType,imgUrl } = req.body
+        const { username, password, fullname,imgUrl } = req.body
 
-        // IMPORTANT!!!
-        // Never write passwords to log file!!!
-        // logger.debug(fullname + ', ' + username + ', ' + password)
-        debugger
+        const { loginType } = req.body
+    logger.info("Logging with login type: " + loginType);
+
+    let user;
+
+    if (loginType === 'google') {
+        const { oAuthCredentials } = req.body
+        const account = await authService.signupWithGoogle(oAuthCredentials, loginType)
+        logger.debug(`auth.route - new google account created: ` + JSON.stringify(account))
+
+        user = await authService.loginWithGoogle(oAuthCredentials)
+    }else{
+
         const account = await authService.signup(username, password, fullname,loginType,imgUrl)
         logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
 
-        const user = await authService.login(username, password)
+         user = await authService.login(username, password)
+    }
         const loginToken = authService.getLoginToken(user)
 
         res.cookie('loginToken', loginToken)
