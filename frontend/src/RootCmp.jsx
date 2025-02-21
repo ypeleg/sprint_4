@@ -13,6 +13,7 @@ import { BoardDetails } from './pages/BoardDetails.jsx'
 
 import { useEffect, useRef, useState } from "react"
 import { eventBusService } from "./services/util.service.js"
+import { VedioCall } from './pages/VedioCall.jsx'
 
 
 export function UserMsg() {
@@ -59,6 +60,8 @@ export function RootCmp() {
                     </Route>
                     <Route path="/login" element={<Login />}/>
                     <Route path="/debug" element={<DebugPage />} />
+                    <Route path='/vedio' element={<VedioCall/>}/>
+                        <Route path='/vedio/:roomId' element={<VedioCall/>}/>
                 </Routes>
             </main>
 

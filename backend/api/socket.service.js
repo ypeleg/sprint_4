@@ -14,6 +14,7 @@ export function setupSocketAPI(http) {
         }
     })
     gIo.on('connection', socket => {
+        console.log('test')
         console.log(`New connected socket [id: ${socket.id}]`)
 
         socket.on('disconnect', socket => {
@@ -46,6 +47,10 @@ export function setupSocketAPI(http) {
         socket.on('set-user-socket', userId => {
             console.log(`Setting socket.userId = ${userId} for socket [id: ${socket.id}]`)
             socket.userId = userId
+        })
+        socket.on('join-vedio',(roomId,userId)=>{
+            console.log
+            console.log(roomId)
         })
 
         socket.on('unset-user-socket', () => {
