@@ -898,7 +898,7 @@ blockquote {
 .group-preview .group-header .group-title {
     width: 200px;
     white-space: nowrap;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 .group-preview .group-header:hover .group-menu .icon {
     display: block;
@@ -1013,7 +1013,7 @@ blockquote {
 }
 .statistic .first {
     border-bottom-left-radius: 10px;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 .statistic .title.status-picker, .statistic .title.priority-picker {
     border-top: 0;
@@ -1396,7 +1396,7 @@ blockquote {
     flex-direction: column;
     border: 1px solid #ccc;
     background: #ffffff;
-    overflow: hidden;
+    /*overflow: hidden;*/
     border-radius: 8px;
     outline: none;
     height: 550px;
@@ -1454,7 +1454,7 @@ blockquote {
     left: auto;
     font-size: calc($remSize * 1rem);
     font-weight: 400;
-    overflow: hidden;
+    /*overflow: hidden;*/
     max-width: 800px;
     border: 1px solid transparent;
     white-space: pre-wrap;
@@ -1514,7 +1514,7 @@ blockquote {
     border-radius: 50%;
 }
 .board-description-modal .board-info .board-details {
-    overflow: hidden;
+    /*overflow: hidden;*/
     align-items: flex-start;
 }
 @media (min-width: calc($mobile-breakpoint + 40px)) {
@@ -1845,7 +1845,7 @@ blockquote {
     cursor: pointer;
 }
 .filter-member-modal h2 {
-    overflow: hidden;
+    /*overflow: hidden;*/
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: 500;
@@ -2792,7 +2792,7 @@ blockquote {
     .activity-preview .time-title .title {
         width: 50px;
         gap: unset;
-        overflow: hidden;
+        /*overflow: hidden;*/
     }
 }
 .activity-preview .time-title .title img {
@@ -3211,7 +3211,7 @@ blockquote {
     padding-right: 40px;
     border-radius: 5px;
     width: 200px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     white-space: nowrap;
     margin-left: 36px;
     cursor: text;
