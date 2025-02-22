@@ -91,6 +91,11 @@
 
     .home-main {
         .hero {
+            display: grid;
+            grid-template-columns: 1fr minmax(0, 1600px) 1fr;
+
+            border-bottom: 0px solid transparent;
+
             height: 600px;
             width: 100vw;
             background: url(https://images.ctfassets.net/rz1oowkt5gyp/7lTGeXbBRNRLaVk2MdBjtJ/99c266ed4cb8cc63bd0c388071f01ff6/white-wave-bg.svg) center bottom -0.5px / 100% 14% no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
@@ -98,6 +103,7 @@
             width: 100%;
 
             .hero-content {
+                grid-column: 2/3;
                 display: flex;
                 margin-left: 10em;
                 margin-right: 12em;
@@ -167,18 +173,20 @@
         }
 
         .seework {
-
+            display: grid;
+            grid-template-columns: 1fr minmax(0, 1300px) 1fr;
             background: url(https://images.ctfassets.net/rz1oowkt5gyp/7KgS3XVFhGu3TiclJKloEp/c10aad15fb171a6c245db9cb7910247d/ViewsBackground_Left_Narrow.svg) left center / contain no-repeat scroll padding-box border-box, url(https://images.ctfassets.net/rz1oowkt5gyp/2HisRmboWIdXSYaaUSDzon/dadecff4be8a39bf2cf3cc537bd4d9c1/ViewsBackground_Right_Narrow.svg) right center / contain no-repeat scroll padding-box border-box, linear-gradient(240deg, rgb(0, 184, 217), rgb(0, 101, 255)) 0% 0% / auto repeat scroll padding-box border-box rgb(0, 101, 255);
             color: rgb(255, 255, 255);
             margin-bottom: 20em;
             .seework-content {
+                grid-column: 2/3;
                 display: flex;
                 flex-direction: column;
                 align-content: center;
-                margin-left: auto;
-                margin-right: auto;
-                padding-left: 1rem;
-                padding-right: 1rem;
+                //margin-left: auto;
+                //margin-right: auto;
+                //padding-left: 1rem;
+                //padding-right: 1rem;
                 width: 100%;
                
                 .head {
@@ -214,7 +222,7 @@
                     flex-direction: row;
                     color: rgb(9, 30, 66);
                     column-gap: 3em;
-                    margin-inline:12em;
+                    //margin-inline:12em;
                     border-radius: 12px;
                     &.last{
                         margin-bottom: -8rem;

@@ -4116,3 +4116,7 @@ main {
 .home .home-header .join {
     align-items: center;
 }
+
+.homepage-titles {
+    border-bottom: 0px solid transparent;
+}
