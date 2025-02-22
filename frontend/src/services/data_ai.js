@@ -1947,6 +1947,7 @@ export function getColorFromBackgroundColor(bg) {
     }
 }
 
+
 function getRandomColor() {
     const trelloColors = [
         '#baf3db',

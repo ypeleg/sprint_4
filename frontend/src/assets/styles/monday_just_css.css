@@ -604,6 +604,8 @@ main {
 
 /* Status Labels */
 .status-priority-badge {
+    margin-left: 4px;
+    margin-bottom: 4px;
     padding: 2px 8px;
     border-radius: 4px;
     font-size: 12px;
@@ -766,6 +768,8 @@ main {
     font-weight: 500;
     display: flex;
     align-items: center;
+    /*// title the text*/
+    text-transform: capitalize;
 
 }
 
@@ -775,7 +779,7 @@ main {
     position: relative;
     padding: 4px 8px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 14px;
     /*color: white;*/
     background-color: #f0f0f1;
     color: #323338;
@@ -870,11 +874,16 @@ div.kanban-col>header.kanban-col-header>h2.kanban-col-title{
     font-weight: 600;
 }
 
+.small-circle img {
+    border-radius: 50%;
+}
+
 .small-circle {
     height: 24px;
     width: 24px;
     font-size: 12px;
     display: flex;
+    border-radius: 50%;
     align-items: center;
     justify-content: center;
 

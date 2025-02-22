@@ -3,11 +3,107 @@
 import { useSelector, useDispatch } from 'react-redux'
 import React, { useState, useEffect, useRef } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { updateBoard } from '../store/store.js'
+import {loadBoard, updateBoard} from '../store/store.js'
 import { eventBus } from '../services/util.service.js'
 import { AddTaskForm } from '../cmps/AddTaskForm'
 import { NavLink } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip'
+import {useParams} from "react-router"
+
+
+
+
+
+
+
+function mapTrelloToMonday(hex) {
+    let r = parseInt(hex.substring(1, 3), 16) / 255
+    let g = parseInt(hex.substring(3, 5), 16) / 255
+    let b = parseInt(hex.substring(5, 7), 16) / 255
+    let max = Math.max(r, g, b)
+    let min = Math.min(r, g, b)
+    let s = max === 0 ? 0 : (max - min) / max
+    let h = 0
+    if (max === min) {
+        h = 0;
+    } else if (max === r) {
+        h = 60 * ((g - b) / (max - min));
+        if (h < 0) h += 360;
+    } else if (max === g) {
+        h = 60 * ((b - r) / (max - min)) + 120;
+    } else {
+        h = 60 * ((r - g) / (max - min)) + 240;
+    }
+    if (s < 0.1) {
+        return '#fdbc64';
+    }
+    const mondayColorHexes = [
+        '#00c875', // strong green
+        '#66ccff', // light blue
+        '#782bff', // deep purple
+        '#a358df', // purple
+        '#5559df', // indigo
+        '#00a9cf', // teal
+        '#0086c0', // darker teal/blue
+        '#bb3354', // burgundy
+        '#e2445c', // bright red
+        '#003f69', // navy
+        '#323338', // dark grey
+        '#fdab3d', // orange
+        '#ffcb00', // yellow
+        '#784bd1', // purple
+        '#579bfc', // slightly lighter blue
+        '#faa1f2', // pink
+        '#ff7575', // salmon
+        '#225091', // medium blue
+        '#9aadbd', // light grey-blue
+        '#c4c4c4', // mid grey
+        '#bda8f9', // lavender
+        '#6c6cff', // pastel violet/blue
+        '#3dd1f0', // light teal
+        '#68d391', // minty green
+        '#fdbc64', // your existing fallback
+        '#e8697d'  // pinkish-red
+    ]
+    const mondayColors = mondayColorHexes.map((mHex) => {
+        const { hue } = hexToHue(mHex);
+        return { hex: mHex, hue };
+    })
+    let closestColor = mondayColors[0].hex;
+    let minDistance = Infinity;
+    for (const { hex: mHex, hue: mHue } of mondayColors) {
+        const distance = Math.min(Math.abs(h - mHue), 360 - Math.abs(h - mHue));
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestColor = mHex;
+        }
+    }
+    return closestColor;
+}
+
+function hexToHue(hex) {
+    let r = parseInt(hex.substring(1, 3), 16) / 255;
+    let g = parseInt(hex.substring(3, 5), 16) / 255;
+    let b = parseInt(hex.substring(5, 7), 16) / 255;
+
+    let cMax = Math.max(r, g, b);
+    let cMin = Math.min(r, g, b);
+    let delta = cMax - cMin;
+
+    let h = 0;
+    if (delta !== 0) {
+        if (cMax === r) {
+            h = ((g - b) / delta) % 6;
+        } else if (cMax === g) {
+            h = (b - r) / delta + 2;
+        } else {
+            h = (r - g) / delta + 4;
+        }
+        h = Math.round(h * 60);
+        if (h < 0) h += 360;
+    }
+    return { hue: h };
+}
 
 
 const initialBoardData = {
@@ -1135,7 +1231,7 @@ export function MondayTask({
     return (
         <div className="kanban-col" ref={listRef}>
             <header className="kanban-col-header"
-                            style={{ backgroundColor: group.style?.backgroundColor || "",
+                            style={{ backgroundColor: mapTrelloToMonday(group.style?.backgroundColor) || "",
                                      color: group.style?.color || "" }}>
                 <h2 className="kanban-col-title">{group.title} ({group.tasks.length})</h2>
             </header>
@@ -1160,26 +1256,42 @@ export function MondayTask({
                                                 {/* Task Cover */}
                                                 {task.style?.backgroundImage && (
                                                     <div className="cover-img">
-                                                        <img src={task.style.backgroundImage} alt="Task Cover" />
+                                                        <img src={`/${task.style.backgroundImage}`} alt="Task Cover" />
                                                     </div>
                                                 )}
 
                                                 <div className="labels">
-                                                    {task.labels?.map((label) => (
+                                                    {task.badges?.map((label) => (
                                                         <div
                                                                 key={label.id}
                                                                 className={`status-priority-badge badge`}
                                                                 // style={{ backgroundColor: label.color || "#61bd4f" }}
                                                                 onClick={toggleLargeLabels}
-                                                                data-tooltip-id={`label-${label.id}`}
-                                                                data-tooltip-content={label.title}
+                                                                // data-tooltip-id={`label-${label.id}`}
+                                                                // data-tooltip-content={label.title}
                                                                 data-after-color={label.color}
                                                         >
-                                                            <div className="label-text">{task.status}</div>
-                                                            <div className="status-priority-badge-after" style={{ backgroundColor: label.color || "#61bd4f" }}></div>
+                                                            <div className="label-text">{label.categ} {label.chosenOption}</div>
+                                                            <div className="status-priority-badge-after" style={{ backgroundColor: mapTrelloToMonday(label.color) || "#61bd4f" }}></div>
                                                         </div>
-
                                                     ))}
+
+                                                    {task.labels?.map((label) => (
+                                                        <div
+                                                            key={label.id}
+                                                            className={`status-priority-badge badge`}
+                                                            // style={{ backgroundColor: label.color || "#61bd4f" }}
+                                                            onClick={toggleLargeLabels}
+                                                            // data-tooltip-id={`label-${label.id}`}
+                                                            // data-tooltip-content={label.title}
+                                                            data-after-color={label.color}
+                                                        >
+                                                            <div className="label-text">{label.title.split(' ')[0]}..</div>
+                                                            <div className="status-priority-badge-after" style={{ backgroundColor: mapTrelloToMonday(label.color) || "#61bd4f" }}></div>
+                                                        </div>
+                                                    ))}
+
+
                                                 </div>
 
                                                 <div className="task-upper-btns">
@@ -1244,9 +1356,12 @@ export function MondayTask({
 
 
 
-                                                    {task.badges?.map((badge) => (<div key={badge.id} className="badge tooltip" style={{backgroundColor: badge.color, color: badge.textColor}} data-tooltip-id={`badge-${badge.id}`} data-tooltip-content={`${badge.categ}: ${badge.chosenOption}`}>
-                                                    {badge.chosenOption} <Tooltip id={`badge-${badge.id}`}/>
-                                                </div>))}
+                                                {/*    {task.badges?.map((badge) => (*/}
+                                                {/*        <div key={badge.id} className="badge tooltip" */}
+                                                {/*            style={{backgroundColor: badge.color, color: badge.textColor}}*/}
+                                                {/*            data-tooltip-id={`badge-${badge.id}`} data-tooltip-content={`${badge.categ}: ${badge.chosenOption}`}>*/}
+                                                {/*    {badge.chosenOption} <Tooltip id={`badge-${badge.id}`}/>*/}
+                                                {/*</div>))}*/}
                                                 </div>
 
 
@@ -1255,7 +1370,7 @@ export function MondayTask({
                                                             {task.members.slice(0, 5).map((member) => (
 
                                                                 <>{member.imgUrl ? (<div key={member.id} className="small-circle flex align-center justify-center tooltip" data-tooltip-id={`member-${member.id}`} data-tooltip-content={member.fullname}>
-                                                                        <img src={member.imgUrl} alt={member.fullname} className="member-img"/>
+                                                                        <img src={`/${member.imgUrl}`} alt={member.fullname} className="member-img"/>
                                                                     </div>) : (<span className="monday-user-circle small-circle">
                                                                           {member.fullname.split(" ").map((n) => n[0]).join("").toUpperCase()}
                                                                         </span>)} <Tooltip id={`member-${member.id}`}/>
@@ -1288,10 +1403,29 @@ export function MondayTaskList({board}) {
 }
 
 export function MondayBoardDetails() {
-    const [board] = useState(initialBoardData);
+
+    // const [board] = useState(initialBoardData);
+    const {boardId} = useParams()
+    useEffect(() => {
+        onLoadBoard()
+
+    }, [])
+
+    function onLoadBoard() {
+        loadBoard(boardId).then(() => {
+
+        })
+    }
+
+    const board = useSelector(state => state.boardModule.board)
+
     const [searchQuery, setSearchQuery] = useState('');
     const [filterText, setFilterText] = useState('');
     const [sortBy, setSortBy] = useState('');
+
+    if (!(board)) return (<div className="trello-loader">
+        <img src="trello-loader.svg" alt=""/>
+    </div>)
 
     return (<div>
             <TopHeader/>
