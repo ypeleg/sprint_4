@@ -12,6 +12,9 @@ import './assets/styles/just_css.css'
 import './assets/styles/font-awesome.css'
 import './assets/styles/setup/typography_fr.css'
 
+import './assets/styles/monday_css.css'
+import './assets/styles/monday_just_css.css'
+
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <Provider store={store}>

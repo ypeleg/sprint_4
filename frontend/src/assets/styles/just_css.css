@@ -2833,7 +2833,10 @@ div.task-user-icon {
     cursor: pointer;
     position: relative;
     height: 40px;
-    z-index: -1
+    z-index: -1;
+    box-shadow: 0 .4px .4px #0003, 0 .4px .4px #00000030;
+    /*margin-top: -3px;*/
+    padding-top: -3px;
 }
 
 .task-cover-color {
