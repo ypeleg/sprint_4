@@ -4108,3 +4108,11 @@ section:last-child {
     transition: all 0.5s ease;
     width: 100vw;
 }
+
+main {
+    /*overflow: auto;*/
+}
+
+.home .home-header .join {
+    align-items: center;
+}
