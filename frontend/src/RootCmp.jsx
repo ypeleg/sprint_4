@@ -8,7 +8,7 @@ import { HomePage } from './pages/HomePage.jsx'
 import { DebugPage } from './pages/DebugPage.jsx'
 import { BoardIndex } from './pages/BoardIndex.jsx'
 import { BoardDetails } from './pages/BoardDetails.jsx'
-import { MondayBoardDetails} from './pages/MondayBoardDetailsActual.jsx'
+import { MondayBoardDetails } from './pages/MondayBoardDetailsActual.jsx'
 
 
 
