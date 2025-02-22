@@ -14,6 +14,7 @@ import { BoardDetails } from './pages/MondayBoardDetailsActual.jsx'
 
 import { useEffect, useRef, useState } from "react"
 import { eventBusService } from "./services/util.service.js"
+import { VedioCall } from './pages/VedioCall.jsx'
 
 
 export function UserMsg() {
@@ -61,6 +62,8 @@ export function RootCmp() {
                     </Route>
                     <Route path="/login" element={<Login />}/>
                     <Route path="/debug" element={<DebugPage />} />
+                    <Route path='/video' element={<VedioCall/>}/>
+                        <Route path='/video/:roomId' element={<VedioCall/>}/>
                 </Routes>
             </main>
 

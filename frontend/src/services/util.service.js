@@ -285,14 +285,12 @@ export function getForamtedDate(timestamp ){
 
 
 
-
-
 import io from 'socket.io-client'
 
 const baseUrl = process.env.NODE_ENV === 'production'
     ? ''
     : (window.location.hostname.toLowerCase().includes('172') ?
-        'http://172.31.163.87:3030' : '//localhost:3030')
+        'http://172.31.163.87:3030' : 'http://127.0.0.1:3030')
 
 
 // const baseUrl = (import.meta.env.MODE === 'production')
@@ -301,15 +299,21 @@ const baseUrl = process.env.NODE_ENV === 'production'
 
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
-
+export const SOCKET_JOIN_VEDIO  = 'join-vedio'
+export const SOCKET_UPDATE_BOARD = 'upadteBoard'
 export const socketService = createSocketService()
 
 function createSocketService() {
     let socket = null
-
+   
     const socketService = {
         setup() {
+            console.log('url',  baseUrl)
             socket = io(baseUrl, { reconnection: true })
+            console.log(socket)
+            socket.on('connection', () => {
+                console.log('Connected to server');
+            })
         },
         on(eventName, callback) {
             if (!socket) return
@@ -321,6 +325,7 @@ function createSocketService() {
             else socket.off(eventName, callback)
         },
         emit(eventName, data) {
+            console.log('emit')
             if (!socket) return
             socket.emit(eventName, data)
         },

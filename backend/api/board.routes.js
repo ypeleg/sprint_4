@@ -27,7 +27,7 @@ export const boardService = {
       }
       const collection = await dbService.getCollection('board')
       const boards = await collection.find(criteria).toArray()
-    
+     
       return boards
     } catch (err) {
       logger.error('cannot find boards', err)

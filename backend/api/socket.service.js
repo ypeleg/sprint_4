@@ -14,12 +14,16 @@ export function setupSocketAPI(http) {
         }
     })
     gIo.on('connection', socket => {
+        console.log('test')
         console.log(`New connected socket [id: ${socket.id}]`)
 
         socket.on('disconnect', socket => {
             console.log(`Socket disconnected [id: ${socket.id}]`)
         })
-
+        socket.on("boardUpdated", (updatedBoard) => {
+            
+            socket.broadcast.emit("boardUpdated", updatedBoard);
+        });
         socket.on('chat-set-topic', topic => {
             if (socket.myTopic === topic) return
             if (socket.myTopic) {
@@ -46,6 +50,10 @@ export function setupSocketAPI(http) {
         socket.on('set-user-socket', userId => {
             console.log(`Setting socket.userId = ${userId} for socket [id: ${socket.id}]`)
             socket.userId = userId
+        })
+        socket.on('join-vedio',(roomId,userId)=>{
+            console.log
+            console.log(roomId)
         })
 
         socket.on('unset-user-socket', () => {

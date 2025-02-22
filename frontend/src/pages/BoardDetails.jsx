@@ -4,21 +4,22 @@ import {SideBar} from "../cmps/SideBar"
 import {useNavigate} from "react-router"
 import {AddGroup} from "../cmps/AddGroup"
 import {GroupTable} from "../cmps/GroupTable"
-import GoogleMapReact from 'google-map-react'
 import {TaskList} from "../cmps/TaskList.jsx"
 import {AppHeader} from "../cmps/AppHeader.jsx"
 import {GroupList} from "../cmps/GroupList.jsx"
 import {BoardHeader} from "../cmps/BoardHeader.jsx"
 import {GroupHeader} from "../cmps/GroupHeader.jsx"
 import React, {useRef, useEffect, useState} from "react"
-import {random, makeId} from "../services/util.service.js"
+import {random, makeId, socketService, SOCKET_UPDATE_BOARD} from "../services/util.service.js"
 import {reorderWithEdge} from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge"
 import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store} from "../store/store.js"
 import {ShareModal} from "../cmps/ShareModal.jsx"
 
 
-import {StandaloneSearchBox, useJsApiLoader} from '@react-google-maps/api'
+// import GoogleMapReact from 'google-map-react'
+import {StandaloneSearchBox, useJsApiLoader,GoogleMap  } from '@react-google-maps/api'
 import {ActivityMenu} from "../cmps/ActivityMenu.jsx"
+import { UPDATE_BOARD } from "../store/reducers/board.reducer.js"
 
 
 export function QuickEdit({
@@ -1057,20 +1058,23 @@ export function QuickEdit({
 // bring the task "the current list"
 // bring the task "the current group"
 
-export function GoogleMap({lat = 32.109333, lng = 34.855499, zm = 11, name}) {
-    const [center, setCenter] = useState({lat: lat, lng: lng})
-    const zoom = zm
-
-    function onHandleClick({lat, lng}) {
-        // console.log('Click', ev)
-        // console.log('lat,lng:', lat, lng)
-        setCenter({lat, lng})
-    }
-
-
+export function Map({ name, lat= 32.109333, lng= 34.855499, zm }) {
+    //{lat = 32.109333, lng = 34.855499, zm = 11, name}
+    const [center, setCenter] = useState({ lat, lng })
+    const zoom = 11
+       // function onHandleClick({lat, lng}) {
+    //     // console.log('Click', ev)
+    //     // console.log('lat,lng:', lat, lng)
+    //     setCenter({lat, lng})
+    // }
+    useEffect(()=>{
+        setCenter(lat,lng)
+    },[lat,lng])
+    
+      
     return (<div className="maps-container maps-container-outer">
             <div className="maps-in-1" style={{height: '160px', width: '100%'}}>
-                <GoogleMapReact bootstrapURLKeys={{key: "AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc"}} defaultCenter={center} center={center} defaultZoom={zoom} onClick={onHandleClick}> <AnyReactComponent {...center} text="📍"/> </GoogleMapReact>
+                <GoogleMap mapContainerStyle={{ width: '100%', height: '100%' }}  center={{lat,lng}} zoom={10} > <AnyReactComponent text={'📍'}></AnyReactComponent> </GoogleMap>
             </div>
             <div className="maps-in-2" style={{height: '52px', width: '512px'}}>
                 <h3>{name || 'Tel Aviv'}</h3>
@@ -1085,8 +1089,9 @@ const AnyReactComponent = ({text}) => <div style={{fontSize: '22px'}}>{text}</di
 export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     const { board, group, taskList, ...cleanTask } = taskToShow
     const {isLoaded} = useJsApiLoader({
-        id: 'google-map-script', googleMapsApiKey: 'AIzaSyA0IdqL0Yt-9iRrJsQ_kmA9e4hQTgXXJkc', libraries: ["places"]
+        id: 'google-map-script', googleMapsApiKey: 'AIzaSyDxZo6xL5uDfEutSxJsA7sjMfIsQiVENg8', libraries: ["places"]
     })
+
     console.log('task', taskToShow)
     // const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
 
@@ -1152,13 +1157,14 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
 
     const coverFileInputRef = useRef(null)
 
-    function handlePlaceChange(ev) {
+   async function handlePlaceChange(ev) {
         let address = elGoogleSearch.current.getPlaces()
         const newLocation = {lat: address[0].geometry.location.lat(), lng: address[0].geometry.location.lng(), name: address[0].name, zoom: 12}
-        taskToShow.location = newLocation
-        setLocation(newLocation)
+        
+        setLocation({...newLocation})
+        taskToShow.location = {...newLocation}
         hidePicker(ev)
-        updateBoard(getSelectedBoard())
+        await updateBoard(getSelectedBoard())
     }
 
     function onCoverFileSelected(ev) {
@@ -1924,8 +1930,8 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                 </div>
                             </div>
                             <div className="inner-component-left-padding">
-                                {/*<GoogleMap name={location.name} lat={location.lat} lng={location.lng} zm={location.zoom}/>*/}
-
+                                {isLoaded&&<Map name={location.name} lat={location.lat} lng={location.lng} zm={location.zoom}/>}
+                               
                             </div>
                         </div>}
 
@@ -3428,6 +3434,7 @@ export function BoardDetails() {
 
     useEffect(() => {
         onLoadBoard()
+      
     }, [])
 
     function onLoadBoard() {

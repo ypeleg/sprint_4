@@ -12,12 +12,14 @@ import { preserveOffsetOnSource } from "@atlaskit/pragmatic-drag-and-drop/elemen
 import { attachClosestEdge, extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge"
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview"
 
-import { updateBoard } from "../store/store.js"
+import { store, updateBoard } from "../store/store.js"
 import { GroupEdit } from "./GroupEdit.jsx"
 import { CopyListForm } from "./CopyListForm.jsx"
 import { MoveListForm } from "./MoveListForm.jsx"
 import { MoveAll } from "./MoveAll.jsx"
 import { GroupSort } from "./GroupSort.jsx"
+import { SOCKET_UPDATE_BOARD, socketService } from "../services/util.service.js"
+import { UPDATE_BOARD } from "../store/reducers/board.reducer.js"
 
 const GROUP_SYMBOL = Symbol("group")
 
@@ -55,7 +57,14 @@ export function GroupList({
     const [grp,setGroup] = useState(null)
 
     const containerRef = useRef(null)
+                            useEffect(()=>{
+                                  socketService.on(SOCKET_UPDATE_BOARD,(board)=>{
+                                    if(board._id === boardToShow._id){
 
+                                        store.dispatch({type: UPDATE_BOARD,board})
+                                    }
+                                        })
+                            },[])
     function onSetSort() {
         setSort(!showSort)
     }
