@@ -57,7 +57,7 @@ export function RootCmp() {
                 <Routes>
                     <Route path='/home' element={<HomePage />} />
                     <Route path="/" element={<BoardIndex />} />
-                    <Route path="/monday/:boardId" element={<MondayBoardDetails />}>
+                    <Route path="/monday/:boardId" element={<MondayBoardDetails />}/>
                     <Route path="/:boardId" element={<BoardDetails />}>
                     </Route>
                     <Route path="/login" element={<Login />}/>
