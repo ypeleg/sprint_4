@@ -1062,16 +1062,19 @@ export function Map({ name, lat= 32.109333, lng= 34.855499, zm }) {
     //{lat = 32.109333, lng = 34.855499, zm = 11, name}
     const [center, setCenter] = useState({ lat, lng })
     const zoom = 11
-    
-    // function onHandleClick({lat, lng}) {
+       // function onHandleClick({lat, lng}) {
     //     // console.log('Click', ev)
     //     // console.log('lat,lng:', lat, lng)
     //     setCenter({lat, lng})
     // }
+    useEffect(()=>{
+        setCenter(lat,lng)
+    },[lat,lng])
+    
       
     return (<div className="maps-container maps-container-outer">
             <div className="maps-in-1" style={{height: '160px', width: '100%'}}>
-                <GoogleMap mapContainerStyle={{ width: '100%', height: '100%' }}  center={center} zoom={10} > <AnyReactComponent text={'📍'}></AnyReactComponent> </GoogleMap>
+                <GoogleMap mapContainerStyle={{ width: '100%', height: '100%' }}  center={{lat,lng}} zoom={10} > <AnyReactComponent text={'📍'}></AnyReactComponent> </GoogleMap>
             </div>
             <div className="maps-in-2" style={{height: '52px', width: '512px'}}>
                 <h3>{name || 'Tel Aviv'}</h3>
@@ -1154,13 +1157,14 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
 
     const coverFileInputRef = useRef(null)
 
-    function handlePlaceChange(ev) {
+   async function handlePlaceChange(ev) {
         let address = elGoogleSearch.current.getPlaces()
         const newLocation = {lat: address[0].geometry.location.lat(), lng: address[0].geometry.location.lng(), name: address[0].name, zoom: 12}
-        taskToShow.location = newLocation
-        setLocation(newLocation)
+        
+        setLocation({...newLocation})
+        taskToShow.location = {...newLocation}
         hidePicker(ev)
-        updateBoard(getSelectedBoard())
+        await updateBoard(getSelectedBoard())
     }
 
     function onCoverFileSelected(ev) {
