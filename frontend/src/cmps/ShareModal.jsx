@@ -17,7 +17,10 @@ export function ShareModal({onSetShowShare}) {
     function checkClick(ev){
         if (ev.target === ev.currentTarget) onSetShowShare()
     }
-
+    function onSetPickuser(user){
+        setPickedUser(user)
+        setUserFilter(user.fullname)
+    }
     async function onUserFilter({ target }) {
         setUserFilter(target.value)
         if (!target.value) {
@@ -29,11 +32,12 @@ export function ShareModal({onSetShowShare}) {
             setShowUserPicker(true)
         }
     }
-    function addMember() {
+   async function addMember() {
         if (!pickedUser) return
 
         board.members.push(pickedUser)
-        updateBoard(board)
+       await updateBoard(board)
+       setUserFilter('')
     }
 
     return (
@@ -79,7 +83,7 @@ export function ShareModal({onSetShowShare}) {
                 <section className="userlist">
                     {users.map(user => {
                         return (
-                            <div onClick={() => { setPickedUser(user); setShowUserPicker(false) }} className="user-item">
+                            <div onClick={() => { onSetPickuser(user); setShowUserPicker(false) }} className="user-item">
                                 <div className="user">
 
                                     <img src={user.imgUrl || 'roi.png'} alt="" />

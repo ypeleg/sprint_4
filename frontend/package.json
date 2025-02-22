@@ -34,7 +34,6 @@
         "jwt-decode": "^4.0.0",
         "lucide-react": "^0.454.0",
         "next": "15.0.1",
-
         "openai": "^4.85.2",
         "peerjs": "^1.5.4",
         "prettier": "^3.3.3",
