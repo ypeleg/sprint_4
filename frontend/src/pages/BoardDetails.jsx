@@ -3381,7 +3381,15 @@ export function BoardDetails() {
 
     const [sideBarOpen, setSideBarOpen] = useState(true)
     const [upperBarOpen, setUpperBarOpen] = useState(false)
-
+    const boardToShow = useSelector(state => state.boardModule.board)
+      useEffect(() => {
+            socketService.on(SOCKET_UPDATE_BOARD, (board) => {
+                
+                if (board._id === boardToShow._id) {
+                    store.dispatch({ type: UPDATE_BOARD, board })
+                }
+            })
+        }, [])
     function onToggleSideBar() {
         setSideBarOpen(!sideBarOpen)
     }
@@ -3416,7 +3424,7 @@ export function BoardDetails() {
 
     // taskService.query().then(res => console.log(res))
 
-    const boardToShow = useSelector(state => state.boardModule.board)
+   
     console.log('bordDetails')
     console.log(boardToShow)
     // const allBoards = useSelector(state => state.boardModule.boards)

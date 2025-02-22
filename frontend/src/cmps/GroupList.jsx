@@ -36,16 +36,16 @@ function isGroupData(obj) {
 }
 
 export function GroupList({
-                              onLoadTask,
-                              onMoveCard,
-                              onReorderCard,
-                              Placeholder,
-                              onSetPlaceholderHeight,
-                              placeholderHeight,
-                              onsetQuickEdit,
-                              showQuickEdit,
-                              useDarkTextColors,
-                          }) {
+    onLoadTask,
+    onMoveCard,
+    onReorderCard,
+    Placeholder,
+    onSetPlaceholderHeight,
+    placeholderHeight,
+    onsetQuickEdit,
+    showQuickEdit,
+    useDarkTextColors,
+}) {
     const boardToShow = useSelector((state) => state.boardModule.board)
     const [largeLabels, setLargeLabels] = useState(false)
     const [showGroupEdit, SetGroupEdit] = useState(false)
@@ -53,18 +53,11 @@ export function GroupList({
     const [showMoveList, setMoveList] = useState(false)
     const [showMoveAll, setMoveAll] = useState(false)
     const [showSort, setSort] = useState(false)
-    const [header,setHeader] = useState(null)
-    const [grp,setGroup] = useState(null)
+    const [header, setHeader] = useState(null)
+    const [grp, setGroup] = useState(null)
 
     const containerRef = useRef(null)
-                            useEffect(()=>{
-                                  socketService.on(SOCKET_UPDATE_BOARD,(board)=>{
-                                    if(board._id === boardToShow._id){
-
-                                        store.dispatch({type: UPDATE_BOARD,board})
-                                    }
-                                        })
-                            },[])
+  
     function onSetSort() {
         setSort(!showSort)
     }
@@ -242,46 +235,46 @@ export function GroupList({
 
                     return (
                         <React.Fragment key={group.id}>
-                        {shadowGroup?.groupId === group.id && shadowGroup.edge === "left" && (
-                            <div
-                                className="group-placeholder list"
+                            {shadowGroup?.groupId === group.id && shadowGroup.edge === "left" && (
+                                <div
+                                    className="group-placeholder list"
+                                    style={{
+                                        // display: "block",
+                                        width: shadowGroup.width + "px",
+                                        height: shadowGroup.height + "px",
+                                        marginRight: "12px",
+                                        borderRadius: "6px",
+                                        backgroundColor: "rgba(0,0,0,0.2)",
+                                        // border: "2px dashed rgba(0, 0, 0, 0.3)",
+                                        // transition: "all 0.15s ease",
+                                    }}
+                                />
+                            )}
+                            <MinimaizedGRoup
+                                ref={getGroupRef(group.id)}
+                                getGroupRef={getGroupRef}
+                                key={group.id}
                                 style={{
-                                    // display: "block",
-                                    width: shadowGroup.width + "px",
-                                    height: shadowGroup.height + "px",
-                                    marginRight: "12px",
-                                    borderRadius: "6px",
-                                    backgroundColor: "rgba(0,0,0,0.2)",
-                                    // border: "2px dashed rgba(0, 0, 0, 0.3)",
-                                    // transition: "all 0.15s ease",
+                                    backgroundColor: group.style?.backgroundColor || "",
+                                    color: group.style?.color || "#172b4d",
                                 }}
+                                group={group}
                             />
-                        )}
-                        <MinimaizedGRoup
-                            ref={getGroupRef(group.id)}
-                            getGroupRef={getGroupRef}
-                            key={group.id}
-                            style={{
-                                backgroundColor: group.style?.backgroundColor || "",
-                                color: group.style?.color || "#172b4d",
-                            }}
-                            group={group}
-                        />
-                        {shadowGroup?.groupId === group.id && shadowGroup.edge === "right" && (
-                            <div
-                                className="group-placeholder list"
-                                style={{
-                                    // display: "block",
-                                    width: shadowGroup.width + "px",
-                                    height: shadowGroup.height + "px",
-                                    marginRight: "12px",
-                                    borderRadius: "6px",
-                                    backgroundColor: "rgba(0,0,0,0.2)",
-                                    // border: "2px dashed rgba(0, 0, 0, 0.3)",
-                                    // transition: "all 0.15s ease",
-                                }}
-                            />
-                        )}
+                            {shadowGroup?.groupId === group.id && shadowGroup.edge === "right" && (
+                                <div
+                                    className="group-placeholder list"
+                                    style={{
+                                        // display: "block",
+                                        width: shadowGroup.width + "px",
+                                        height: shadowGroup.height + "px",
+                                        marginRight: "12px",
+                                        borderRadius: "6px",
+                                        backgroundColor: "rgba(0,0,0,0.2)",
+                                        // border: "2px dashed rgba(0, 0, 0, 0.3)",
+                                        // transition: "all 0.15s ease",
+                                    }}
+                                />
+                            )}
                         </React.Fragment>)
 
                 }
@@ -350,11 +343,11 @@ export function GroupList({
                     </React.Fragment>
                 )
             })}
-             {showGroupEdit &&grp&& <GroupEdit onSetSort={onSetSort} onSetMoveAll={onSetMoveAll} onSetMoveList={onSetMoveList} onSetCopyList={onSetCopyList} group={grp} onSetGroupEdit={onSetGroupEdit} header={header}/>}
-            {showCopyList && <CopyListForm group={grp} onSetCopyList={onSetCopyList} onSetGroupEdit={onSetGroupEdit} header={header}/>}
-            {showMoveList && <MoveListForm onSetMoveList={onSetMoveList} onSetGroupEdit={onSetGroupEdit} group={grp} header={header}/>}
-            {showMoveAll && <MoveAll onSetMoveAll={onSetMoveAll} group={grp} header={header} onSetGroupEdit={onSetGroupEdit}/>}
-            {showSort && <GroupSort header={header} onSetGroupEdit={onSetGroupEdit} onSetSort={onSetSort} group={grp}/>}
+            {showGroupEdit && grp && <GroupEdit onSetSort={onSetSort} onSetMoveAll={onSetMoveAll} onSetMoveList={onSetMoveList} onSetCopyList={onSetCopyList} group={grp} onSetGroupEdit={onSetGroupEdit} header={header} />}
+            {showCopyList && <CopyListForm group={grp} onSetCopyList={onSetCopyList} onSetGroupEdit={onSetGroupEdit} header={header} />}
+            {showMoveList && <MoveListForm onSetMoveList={onSetMoveList} onSetGroupEdit={onSetGroupEdit} group={grp} header={header} />}
+            {showMoveAll && <MoveAll onSetMoveAll={onSetMoveAll} group={grp} header={header} onSetGroupEdit={onSetGroupEdit} />}
+            {showSort && <GroupSort header={header} onSetGroupEdit={onSetGroupEdit} onSetSort={onSetSort} group={grp} />}
             <AddGroup useDarkTextColors={useDarkTextColors} />
         </section>
     )
