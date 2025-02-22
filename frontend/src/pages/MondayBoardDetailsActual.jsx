@@ -729,7 +729,7 @@ export function TopHeader({  }) {
     )
 }
 
-export function Sidebar() {
+export function MondaySidebar() {
     const boards = useSelector((state) => state.boardModule.boards);
 
     const favorites = boards.filter(board => board.isStarred);
@@ -858,7 +858,7 @@ export function Sidebar() {
     );
 }
 
-export function BoardHeader({ board, searchQuery, setSearchQuery, filterText, setFilterText, sortBy, setSortBy }) {
+export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterText, setFilterText, sortBy, setSortBy }) {
     const dispatch = useDispatch();
 
     const handleTitleChange = (e) => {
@@ -1287,7 +1287,7 @@ export function MondayTaskList({board}) {
         </section>)
 }
 
-export function BoardDetails() {
+export function MondayBoardDetails() {
     const [board] = useState(initialBoardData);
     const [searchQuery, setSearchQuery] = useState('');
     const [filterText, setFilterText] = useState('');
@@ -1296,9 +1296,9 @@ export function BoardDetails() {
     return (<div>
             <TopHeader/>
             <section className="board-details flex">
-                <Sidebar/>
+                <MondaySidebar/>
                 <main className="board-main">
-                    <BoardHeader
+                    <MondayBoardHeader
                         board={board}
                         searchQuery={searchQuery}
                         setSearchQuery={setSearchQuery}

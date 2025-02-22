@@ -8,7 +8,7 @@ import { HomePage } from './pages/HomePage.jsx'
 import { DebugPage } from './pages/DebugPage.jsx'
 import { BoardIndex } from './pages/BoardIndex.jsx'
 // import { BoardDetails } from './pages/BoardDetails.jsx'
-import { BoardDetails } from './pages/MondayBoardDetailsActual.jsx'
+import {BoardDetails, MondayBoardDetails} from './pages/MondayBoardDetailsActual.jsx'
 
 
 
@@ -57,7 +57,7 @@ export function RootCmp() {
                 <Routes>
                     <Route path='/home' element={<HomePage />} />
                     <Route path="/" element={<BoardIndex />} />
-                    {/*<Route path="/:boardId" element={<BoardDetails />}>*/}
+                    <Route path="/monday/:boardId" element={<MondayBoardDetails />}>
                     <Route path="/:boardId" element={<BoardDetails />}>
                     </Route>
                     <Route path="/login" element={<Login />}/>
