@@ -121,9 +121,12 @@
 
 .task-description {
     width: 100%;
-    font-family: sans-serif
+    font-family: sans-serif;
+    
 }
-
+textarea.task-description{
+    resize: none;
+}
 .task-custom-fields>div {
     display: flex;
     flex-direction: column;
