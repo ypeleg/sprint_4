@@ -4675,3 +4675,16 @@ main {
 
 
 
+
+
+.remote-video {
+    width: 100% !important;
+    height: auto !important;
+    background-color: black !important; /* Black background to confirm it’s rendering */
+}
+
+.remote-video {
+    width: 100%;
+    height: auto;
+    background-color: black; /* Helps confirm the element is rendering */
+}

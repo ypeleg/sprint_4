@@ -13,7 +13,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
     const [isModalOpen, setIsModalopen] = useState(false)
     const [openAccountPopup, setOpenAccountPopup] = useState(false)
     const loggedUser = useSelector(state => state.userModule.user)
-    console.log('loggedUser', loggedUser)
+    // console.log('loggedUser', loggedUser)
     const [showPremiumTrial, setShowPremiumTrial] = useState(false)
     const [showQuestionMarkPopup, setShowQuestionMarkPopup] = useState(false)
     const [showBellPopup, setShowBellPopup] = useState(false)
