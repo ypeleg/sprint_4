@@ -34,10 +34,11 @@ header {
 }
 
 .board-main {
-    border-radius: 8px;
+    border-radius: 8px 0px 0px 8px;
     /*margin-top: 16px;*/
     background-color: #ffffff;
     /*overflow: hidden;*/
+
 }
 
 .board-details {
@@ -543,7 +544,7 @@ main {
     padding: 16px;
     /*background: #f5f6f8;*/
     /*min-height: 100vh;*/
-    width: calc(100vw - 263px);
+    width: calc(100vw - 266px);
     /*height: calc(100vh - 40px);*/
     height: 10vh;
 
@@ -1084,7 +1085,7 @@ section.board-filter {
     /*overflow: hidden;*/
     overflow: scroll;
     /*height: 100vh;*/
-    height: fit-content;
+    height: 100%;
 }
 
 .kanban-col {
