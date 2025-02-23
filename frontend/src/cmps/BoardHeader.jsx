@@ -24,7 +24,7 @@ export function BoardHeader({ onSetActivityMenu, onSetTable, onStarBoard, isStar
         updateBoard(boardToShow)
     }
     return (
-        <header className="board-header"
+        <header id="board-header" className="board-header"
                 style={{
                     // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
 

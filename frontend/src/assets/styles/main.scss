@@ -1,6 +1,5 @@
 // Setup
 @import "setup/typography";
-
 // Basics
 @import "basics/base";
 
@@ -34,4 +33,6 @@
 @import "cmps/ShareModal";
 @import "cmps/ActivityMenu";
 @import "cmps/UserAccountPopup";
-@import "cmps/VedioCall.scss"
+@import "cmps/VedioCall.scss";
+
+@import "setup/mq.scss";
