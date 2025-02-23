@@ -3477,6 +3477,7 @@ textarea.change-header.header-textarea {
 .aboard-header {
     overflow: hidden;
 }
+
 .section-header {
     padding: 12px 12px 8px;
     color: #5E6C84;
@@ -3526,7 +3527,7 @@ textarea.change-header.header-textarea {
 
 .menu-item {
     width: 100%;
-    padding: 6px 12px;
+    /* padding: 6px 12px; */
     text-align: left;
     background: none;
     border: none;
@@ -3539,7 +3540,7 @@ textarea.change-header.header-textarea {
 }
 
 .menu-item:hover {
-    background: rgba(9, 30, 66, 0.04);
+    /* background: rgba(9, 30, 66, 0.04); */
 }
 
 .external-icon {
@@ -3646,7 +3647,8 @@ section:last-child {
     cursor: help;
 }
 
-.trial-extension, .see-plans {
+.trial-extension,
+.see-plans {
     width: 100%;
     text-align: left;
     padding: 6px 12px;
@@ -3662,7 +3664,8 @@ section:last-child {
     border-radius: 3px;
 }
 
-.trial-extension:hover, .see-plans:hover {
+.trial-extension:hover,
+.see-plans:hover {
     background: rgba(9, 30, 66, 0.04);
 }
 
@@ -3918,6 +3921,7 @@ section:last-child {
     cursor: pointer;
     position: relative;
     border-radius: 8px;
+
     /*font-weight: bold;*/
     .board-title {
         font-weight: 500;
@@ -4069,7 +4073,7 @@ section:last-child {
     align-items: center;
     justify-content: center;
     inset: 0;
-    padding:0;
+    padding: 0;
     margin: 0;
     text-transform: uppercase;
 }
@@ -4141,6 +4145,3 @@ main {
     right: 0;
     top: 0;
 }
-
-
-

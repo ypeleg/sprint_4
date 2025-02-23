@@ -24,6 +24,11 @@
             gap: 10px;
             border-bottom: 1px solid #091E4224;
         }
+
+        @media (max-width: 420px) {
+            display: none;
+
+        }
     }
 
 
@@ -40,6 +45,10 @@
             align-items: center;
             gap: 10px;
             border-bottom: 1px solid #091E4224;
+
+            @media (max-width: 420px) {
+                justify-content: center;
+            }
 
 
             .description-container {
@@ -73,8 +82,18 @@
                 }
             }
 
-            @media screen {}
         }
+
+        @media (max-width: 420px) {
+            width: 100%;
+            padding: 0 10px;
+            margin: 0 0;
+        }
+    }
+
+    @media (max-width: 420px) {
+        display: block;
+
     }
 }
 
@@ -83,6 +102,11 @@
     display: flex;
     flex-wrap: wrap;
     gap: 18px;
+
+    @media (max-width: 420px) {
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+    }
 
 }
 
@@ -228,7 +252,7 @@ h3 {
 .submenu {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 5px;
 }
 
 .worksapce-sub-title {
@@ -297,6 +321,24 @@ h3 {
     font-weight: bold;
     border-radius: 5px;
 }
+
+.board-logo-small {
+    background: linear-gradient(#1F845A, #4BCE97);
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+
 
 .num-badge {
     height: 17px;

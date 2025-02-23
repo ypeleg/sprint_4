@@ -28,9 +28,9 @@ export function BoardIndex() {
 
     return (
         <>
-            <AppHeader useDarkTextColors={true}  />
+            <AppHeader useDarkTextColors={true} />
             <div className="home-container">
-                <NavBarPageIndex />
+                <NavBarPageIndex loggedUser={userFirstName} />
 
                 <div className="all-boards">
                     <div className="category-container">
