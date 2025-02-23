@@ -246,7 +246,8 @@ button {
 }
 .board-main {
     width: 100%;
-    overflow: auto;
+    height: 100%;
+    /*overflow: auto;*/
 }
 @media (max-width: calc($mobile-breakpoint + 40px)) {
     .board-main {

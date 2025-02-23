@@ -17,6 +17,119 @@ import {useParams} from "react-router"
 
 
 function mapTrelloToMonday(hex) {
+    // Pre-cached HSL values for Monday colors
+    const mondayColors = [
+        {hex: '#33d391', h: 151.2, s: 1.0, l: 0.39},    // strong green
+        {hex: '#66ccff', h: 200.0, s: 1.0, l: 0.70},    // light blue
+        {hex: '#782bff', h: 258.3, s: 1.0, l: 0.58},    // deep purple
+        {hex: '#a358df', h: 275.4, s: 0.68, l: 0.61},   // purple
+        {hex: '#5559df', h: 238.7, s: 0.68, l: 0.61},   // indigo
+        {hex: '#00a9cf', h: 190.7, s: 1.0, l: 0.41},    // teal
+        {hex: '#0086c0', h: 199.3, s: 1.0, l: 0.38},    // darker teal/blue
+        {hex: '#bb3354', h: 346.2, s: 0.57, l: 0.47},   // burgundy
+        {hex: '#e8697d', h: 350.6, s: 0.71, l: 0.66},   // bright red
+        {hex: '#003f69', h: 208.7, s: 1.0, l: 0.21},    // navy
+        {hex: '#323338', h: 240.0, s: 0.04, l: 0.20},   // dark grey
+        {hex: '#fdab3d', h: 35.4, s: 0.98, l: 0.62},    // orange
+        {hex: '#fdbc64', h: 48.0, s: 1.0, l: 0.50},     // yellow
+        {hex: '#784bd1', h: 258.0, s: 0.59, l: 0.56},   // purple
+        {hex: '#579bfc', h: 215.6, s: 0.96, l: 0.66},   // lighter blue
+        {hex: '#faa1f2', h: 305.3, s: 0.89, l: 0.79},   // pink
+        {hex: '#e8697d', h: 0.0, s: 1.0, l: 0.73},      // salmon
+        {hex: '#225091', h: 213.7, s: 0.62, l: 0.35},   // medium blue
+        {hex: '#9aadbd', h: 207.3, s: 0.20, l: 0.68},   // light grey-blue
+        {hex: '#c4c4c4', h: 0.0, s: 0.0, l: 0.77},      // mid grey
+        {hex: '#bda8f9', h: 253.2, s: 0.88, l: 0.82},   // lavender
+        {hex: '#6c6cff', h: 240.0, s: 1.0, l: 0.71},    // pastel violet/blue
+        {hex: '#3dd1f0', h: 190.9, s: 0.85, l: 0.59},   // light teal
+        {hex: '#68d391', h: 142.5, s: 0.60, l: 0.62},   // minty green
+        {hex: '#fdbc64', h: 34.5, s: 0.97, l: 0.69},    // orange/yellow
+        {hex: '#e8697d', h: 350.6, s: 0.71, l: 0.66}    // pinkish-red
+    ];
+
+    // Convert input to HSL
+    const [h, s, l] = hexToHSL(hex);
+
+    // Special handling for grays
+    if (s < 0.1) {
+        return findClosestGray(h, l);
+    }
+
+    // Find closest color considering hue family
+    let closestColor = mondayColors[0].hex;
+    let minDistance = Infinity;
+
+    for (const color of mondayColors) {
+        const distance = calculateColorDistance(h, s, l, color.h, color.s, color.l);
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestColor = color.hex;
+        }
+    }
+
+    return closestColor;
+
+    function findClosestGray(targetH, targetL) {
+        const grays = ['#323338', '#9aadbd', '#c4c4c4'];
+        return grays.reduce((closest, gray) => {
+            const grayL = hexToHSL(gray)[2];
+            return Math.abs(grayL - targetL) < Math.abs(hexToHSL(closest)[2] - targetL)
+                ? gray
+                : closest;
+        }, grays[0]);
+    }
+}
+
+function hexToHSL(hex) {
+    const r = parseInt(hex.substring(1, 3), 16) / 255;
+    const g = parseInt(hex.substring(3, 5), 16) / 255;
+    const b = parseInt(hex.substring(5, 7), 16) / 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+        h = s = 0;
+    } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch(max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h *= 60;
+    }
+    return [h, s, l];
+}
+
+function calculateColorDistance(h1, s1, l1, h2, s2, l2) {
+    // Weights for perceptual importance
+    const hueWeight = 0.6;
+    const satWeight = 0.3;
+    const lumWeight = 0.1;
+
+    // Normalized differences
+    const hueDiff = Math.min(Math.abs(h1 - h2), 360 - Math.abs(h1 - h2)) / 360;
+    const satDiff = Math.abs(s1 - s2);
+    const lumDiff = Math.abs(l1 - l2);
+
+    return Math.sqrt(
+        hueWeight * Math.pow(hueDiff, 2) +
+        satWeight * Math.pow(satDiff, 2) +
+        lumWeight * Math.pow(lumDiff, 2)
+    );
+}
+
+// Example usage:
+// console.log(mapTrelloToMonday('#baf3db')); // Returns '#68d391'
+// console.log(mapTrelloToMonday('#fedec8')); // Returns '#fdbc64'
+// console.log(mapTrelloToMonday('#dfd8fd')); // Returns '#bda8f9'
+// console.log(mapTrelloToMonday('#f1f2f4')); // Returns '#c4c4c4'
+
+
+function mapTrelloToMoanday(hex) {
     let r = parseInt(hex.substring(1, 3), 16) / 255
     let g = parseInt(hex.substring(3, 5), 16) / 255
     let b = parseInt(hex.substring(5, 7), 16) / 255
@@ -46,7 +159,7 @@ function mapTrelloToMonday(hex) {
         '#00a9cf', // teal
         '#0086c0', // darker teal/blue
         '#bb3354', // burgundy
-        '#e2445c', // bright red
+        '#e8697d', // bright red
         '#003f69', // navy
         '#323338', // dark grey
         '#fdab3d', // orange
@@ -1255,7 +1368,7 @@ export function MondayTask({
                                             <div className="task-card" ref={getCardRef(task.id)}>
                                                 {/* Task Cover */}
                                                 {task.style?.backgroundImage && (
-                                                    <div className="cover-img">
+                                                    <div className="cover-img monday-cover-img">
                                                         <img src={`/${task.style.backgroundImage}`} alt="Task Cover" />
                                                     </div>
                                                 )}
