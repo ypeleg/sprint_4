@@ -1119,6 +1119,13 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     // console.log('taskToShow.memberIds', taskToShow.memberIds)
     // console.log('taskToShow.board.members', taskToShow.board.members)
     // console.log('---------')
+
+
+    function onSetDescrption({target}){
+        const txt = target.value        
+        setDescription(txt)
+        
+    }
     //////////////////////
     const elGoogleSearch = useRef()
     const [badges, setBadges] = useState(taskToShow.badges || [])
@@ -1541,6 +1548,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     }
 
     async function saveTask() {
+        
         const boardCopy = {
             ...taskToShow.board, groups: taskToShow.board.groups.map(g => ({
                 ...g, tasks: g.tasks.map(t => {
@@ -1918,7 +1926,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                                     {/*<button className="delete-btn">Edit</button>*/}
                                 </div>
                                 <div className="inner-component-left-padding">
-                                    <p contentEditable className="task-description" onChange={setDescription}>{description} onFocusOut={saveTask}</p>
+                                    <textarea contentEditable className="task-description"  value={description}onBlur={saveTask} onInput={(ev) =>onSetDescrption(ev)}> </textarea>
                                 </div>
                             </div>
 

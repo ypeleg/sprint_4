@@ -3,7 +3,9 @@
 import React from 'react';
 
 
-export function NavBarPageIndex() {
+export function NavBarPageIndex(loggedUser) {
+
+
   return (
     <nav className="home-left-side-bar-container">
       <div className='menu'>
@@ -24,7 +26,7 @@ export function NavBarPageIndex() {
 
         <div style={{ display: 'flex' }}>
 
-          <div className="board-logo">T</div>
+          <div className="board-logo-small">{loggedUser.loggedUser.charAt(0).toUpperCase()}</div>
           <div className="near-logo">
             <div style={{ fontWeight: 500 }}>Roillo Workspace</div>
           </div>
