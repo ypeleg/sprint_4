@@ -114,6 +114,26 @@ aside>section:not(:first-of-type) {
     align-items: center;
     padding: 0.25em 0.5em;
 }
+.roi {
+    font-size: 20px;
+    position: relative;
+    font-weight: 600;
+    //display: block;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    //height: fit-content;
+    //margin-bottom: 10px;
+    margin-left: 1rem;
+    
+    //top: -6px;
+    svg {
+        color: #075BD6;
+        width: 20px;
+        height: 20px;
+        
+    }
+}
 
 @media (min-width: 1000px) {
     .logo {

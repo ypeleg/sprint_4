@@ -26,7 +26,7 @@ export function NavBarPageIndex() {
 
           <div className="board-logo">T</div>
           <div className="near-logo">
-            <div style={{ fontWeight: 500 }}>Trello Workspace</div>
+            <div style={{ fontWeight: 500 }}>Roillo Workspace</div>
           </div>
 
         </div>
