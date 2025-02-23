@@ -1,19 +1,30 @@
-import { useEffect, useState } from "react"
-import { httpService, SOCKET_JOIN_VEDIO, socketService } from "../services/util.service"
-import { useNavigate } from "react-router"
 
+import { useEffect, useState, useRef } from "react";
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot } from 'firebase/firestore';
 import { AppHeader } from "../cmps/AppHeader";
-
+import { userService } from "../services/user.service";
+import { useSelector } from "react-redux";
+import { SOCKET_CALL, socketService } from "../services/util.service";
 
 export function VedioCall() {
+    const webcamVideoRef = useRef(null);
+    const remoteVideoRef = useRef(null);
+    const callInputRef = useRef(null);
+    const logedUser = useSelector(state => state.userModule.user)
+    const [localStream, setLocalStream] = useState(null);
+    const [remoteStream, setRemoteStream] = useState(null);
+    const [pc, setPc] = useState(null);
+    const [callId, setCallId] = useState(null);
+    const [isCalling, setIsCalling] = useState(false);
+    const [isAnswering, setIsAnswering] = useState(false);
+    const [userFilter, setUserFilter] = useState('')
+    const [showUserPicker, setShowUserPicker] = useState(null)
+    const [users, SetUsers] = useState([])
+    const [pickedUser, setPickedUser] = useState(null)
     useEffect(() => {
-        // Import necessary functions from Firebase SDK
-
-        // Firebase configuration object
         const firebaseConfig = {
-            apiKey: "AIzaSyBwFLT5aCDRvi9RAzrUkjqG1skOi65Bz0k",
+            apiKey: 'AIzaSyBwFLT5aCDRvi9RAzrUkjqG1skOi65Bz0k',
             authDomain: "trello-39738.firebaseapp.com",
             projectId: "trello-39738",
             storageBucket: "trello-39738.firebasestorage.app",
@@ -22,14 +33,8 @@ export function VedioCall() {
             measurementId: "G-56J468LM5P"
         };
         const app = initializeApp(firebaseConfig);
-
-        // ✅ Initialize Firestore
         const firestore = getFirestore(app);
 
-        // Initialize Firebase
-
-
-        // Define ICE servers
         const servers = {
             iceServers: [
                 { urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'] }
@@ -37,113 +42,94 @@ export function VedioCall() {
             iceCandidatePoolSize: 10,
         };
 
-        // Create RTC connection
-        const pc = new RTCPeerConnection(servers);
-        let localStream = null;
-        let remoteStream = null;
+        const peerConnection = new RTCPeerConnection(servers);
+        setPc(peerConnection);
 
-        // DOM elements
-        const webcamButton = document.getElementById('webcamButton');
-        const webcamVideo = document.getElementById('webcamVideo');
-        const callButton = document.getElementById('callButton');
-        const callInput = document.getElementById('callInput');
-        const answerButton = document.getElementById('answerButton');
-        const remoteVideo = document.getElementById('remoteVideo');
-        const hangupButton = document.getElementById('hangupButton');
-
-
-
-        hangupButton.onclick = () => {
-            pc.close();
-
-            // Remove event listeners
-            pc.onicecandidate = null;
-            pc.ontrack = null;
-            pc.onconnectionstatechange = null;
-
-            // Stop all local media tracks
-            localStream?.getTracks().forEach(track => track.stop());
-            // Reset video elements
-            if (webcamVideo) webcamVideo.srcObject = null;
-            const remoteVideo = document.getElementById('remoteVideo');
-            if (remoteVideo) remoteVideo.srcObject = null;
-        }
-        // 1. Setup media sources
-        webcamButton.onclick = async () => {
-            localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-            remoteStream = new MediaStream();
-
-            // Push tracks from local stream to peer connection
-            localStream.getTracks().forEach((track) => {
-                pc.addTrack(track, localStream);
-            });
-
-            // Pull tracks from remote stream, add to video stream
-            pc.ontrack = (event) => {
+        const handleTrackEvent = (event) => {
+            if (!remoteStream) {
+                const newRemoteStream = new MediaStream();
+                setRemoteStream(newRemoteStream);
+                remoteVideoRef.current.srcObject = newRemoteStream;
+                event.streams[0].getTracks().forEach((track) => {
+                    newRemoteStream.addTrack(track);
+                });
+            }else{
                 event.streams[0].getTracks().forEach((track) => {
                     remoteStream.addTrack(track);
                 });
-            };
-
-            webcamVideo.srcObject = localStream;
-            remoteVideo.srcObject = remoteStream;
-
-            callButton.disabled = false;
-            answerButton.disabled = false;
-            webcamButton.disabled = true;
+            }
         };
+        // function handleClick(ev){
+            
+        //  if (ev.target !== ev.currentTarget&&showUserPicker) setShowUserPicker()
 
-        // 2. Create an offer
-        callButton.onclick = async () => {
-            const callDocRef = doc(collection(firestore, 'calls')); // Get document reference for new call
+        // }
+        peerConnection.ontrack = handleTrackEvent;
+        // window.addEventListener('mousedown',handleClick)
+        return () => {
+            peerConnection.close();
+            localStream?.getTracks().forEach(track => track.stop());
+            setLocalStream(null);
+            setRemoteStream(null);
+        };
+    }, []);
+
+    const startWebcam = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            setLocalStream(stream);
+            webcamVideoRef.current.srcObject = stream;
+            stream.getTracks().forEach((track) => pc.addTrack(track, stream));
+            setIsCalling(true);
+            setIsAnswering(true);
+        } catch (error) {
+            console.error("Error accessing webcam:", error);
+        }
+    };
+
+    const createCall = async () => {
+        try {
+            const callDocRef = doc(collection(getFirestore(), 'calls'));
             const offerCandidates = collection(callDocRef, 'offerCandidates');
             const answerCandidates = collection(callDocRef, 'answerCandidates');
 
-            callInput.value = callDocRef.id;
+            setCallId(callDocRef.id);
+            callInputRef.current.value = callDocRef.id;
 
             pc.onicecandidate = (event) => {
                 if (event.candidate) {
                     addDoc(offerCandidates, event.candidate.toJSON());
                 }
             };
-
-            // Create offer
+           
+            socketService.emit(SOCKET_CALL,({callId:callDocRef.id,callerName:logedUser.fullname,callReceiver:pickedUser._id}))
             const offerDescription = await pc.createOffer();
             await pc.setLocalDescription(offerDescription);
+            await setDoc(callDocRef, { offer: offerDescription });
 
-            const offer = {
-                sdp: offerDescription.sdp,
-                type: offerDescription.type,
-            };
-
-            await setDoc(callDocRef, { offer });
-
-            // Listen for remote answer
             onSnapshot(callDocRef, (snapshot) => {
                 const data = snapshot.data();
                 if (!pc.currentRemoteDescription && data?.answer) {
-                    const answerDescription = new RTCSessionDescription(data.answer);
-                    pc.setRemoteDescription(answerDescription);
+                    pc.setRemoteDescription(new RTCSessionDescription(data.answer));
                 }
             });
 
-            // When answered, add candidate to peer connection
             onSnapshot(answerCandidates, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === 'added') {
-                        const candidate = new RTCIceCandidate(change.doc.data());
-                        pc.addIceCandidate(candidate);
+                        pc.addIceCandidate(new RTCIceCandidate(change.doc.data()));
                     }
                 });
             });
+        } catch (error) {
+            console.error("Error creating call:", error);
+        }
+    };
 
-            hangupButton.disabled = false;
-        };
-
-        // 3. Answer the call
-        answerButton.onclick = async () => {
-            const callId = callInput.value;
-            const callDocRef = doc(firestore, 'calls', callId);
+    const answerCall = async () => {
+        try {
+            const callId = callInputRef.current.value;
+            const callDocRef = doc(getFirestore(), 'calls', callId);
             const answerCandidates = collection(callDocRef, 'answerCandidates');
             const offerCandidates = collection(callDocRef, 'offerCandidates');
 
@@ -154,69 +140,92 @@ export function VedioCall() {
             };
 
             const callData = (await getDoc(callDocRef)).data();
-
-            const offerDescription = callData.offer;
-            await pc.setRemoteDescription(new RTCSessionDescription(offerDescription));
+            await pc.setRemoteDescription(new RTCSessionDescription(callData.offer));
 
             const answerDescription = await pc.createAnswer();
             await pc.setLocalDescription(answerDescription);
-
-            const answer = {
-                type: answerDescription.type,
-                sdp: answerDescription.sdp,
-            };
-
-            await setDoc(callDocRef, { answer }, { merge: true });
+            await setDoc(callDocRef, { answer: answerDescription }, { merge: true });
 
             onSnapshot(offerCandidates, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === 'added') {
-                        const data = change.doc.data();
-                        pc.addIceCandidate(new RTCIceCandidate(data));
+                        pc.addIceCandidate(new RTCIceCandidate(change.doc.data()));
                     }
                 });
             });
-        };
+        } catch (error) {
+            console.error("Error answering call:", error);
+        }
+    };
 
-
-    }, [])
+    const hangUp = () => {
+        pc.close();
+        localStream?.getTracks().forEach(track => track.stop());
+        setLocalStream(null);
+        setRemoteStream(null);
+    };
+    async function onUserFilter({ target }) {
+            setUserFilter(target.value)
+            if (!target.value) {
+                setShowUserPicker(false)
+                
+            } else {
+                const newUsers = await userService.getUsers(userFilter)
+                SetUsers(newUsers)
+                setShowUserPicker(true)
+            }
+        }
+        function onSetPickuser(user){
+            setPickedUser(user)
+            setUserFilter(user.fullname)
+        }
 
     return (
-
         <div className="vediogrid">
             <AppHeader />
             <div className="content">
-        
                 <div className="videos">
                     <span>
-
-                        <video id="webcamVideo" autoPlay playsInline></video>
+                        <video ref={webcamVideoRef} autoPlay playsInline />
                     </span>
                     <span>
-
-                        <video id="remoteVideo" autoPlay playsInline></video>
+                        <video ref={remoteVideoRef} autoPlay playsInline />
                     </span>
-
-
                 </div>
                 <div className="buttons">
-                    <div className=" start">
-
-                    <button id="webcamButton">Start webcam</button>
-                    <button className="callButton" id="callButton" disabled>Create Call</button>
+                    <div className="start">
+                        <button onClick={startWebcam}>Start webcam</button>
+                        
                     </div>
-
+                    <div>
+                    <input value={userFilter} onChange={onUserFilter} type="text" />
+                    <button className="callButton" onClick={createCall} disabled={!isCalling}>Create Call</button>
+                    </div>
                     <div className="call">
-
-                        <input placeholder="Enter call link " id="callInput" />
-
-                        <button className="answer" id="answerButton" disabled>Join</button>
-
+                        <input placeholder="Enter call link " ref={callInputRef} />
+                        <button className="answer" onClick={answerCall} disabled={!isAnswering}>Join</button>
                     </div>
-                    <button className="hangup" id="hangupButton" disabled>Hangup</button>
+                    <button className="hangup" onClick={hangUp}>Hangup</button>
                 </div>
+                {showUserPicker && <div className="userpicker">
+                <section className="userlist">
+                    {users.map(user => {
+                        return (
+                            <div onClick={() => { onSetPickuser(user); setShowUserPicker(false) }} className="user-item">
+                                <div className="user">
+
+                                    <img src={user.imgUrl || 'roi.png'} alt="" />
+                                    <span>{user.fullname}</span>
+                                </div>
+
+                            </div>
+
+                        )
+                    })}
+                </section>
+
+            </div>}
             </div>
         </div>
-
-    )
+    );
 }

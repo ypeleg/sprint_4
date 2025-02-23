@@ -10,7 +10,7 @@ import {GroupList} from "../cmps/GroupList.jsx"
 import {BoardHeader} from "../cmps/BoardHeader.jsx"
 import {GroupHeader} from "../cmps/GroupHeader.jsx"
 import React, {useRef, useEffect, useState} from "react"
-import {random, makeId, socketService, SOCKET_UPDATE_BOARD} from "../services/util.service.js"
+import {random, makeId, socketService, SOCKET_UPDATE_BOARD, SOCKET_CALL} from "../services/util.service.js"
 import {reorderWithEdge} from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge"
 import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store} from "../store/store.js"
 import {ShareModal} from "../cmps/ShareModal.jsx"
@@ -3382,9 +3382,22 @@ export function BoardDetails() {
     const [sideBarOpen, setSideBarOpen] = useState(true)
     const [upperBarOpen, setUpperBarOpen] = useState(false)
     const boardToShow = useSelector(state => state.boardModule.board)
+    const logedUser = useSelector(state => state.userModule.user)
+    const [showCall,setShowcall] = useState(false)
+    const [callerName,setCallerName] = useState('')
       useEffect(() => {
+        socketService.on(SOCKET_CALL,(ddd) =>{
+            console.log('calllllll')
+            if(callReceiver === logedUser._id){
+                setShowcall(true)
+                setCallerName(callerName)
+            }
+        })
+        socketService.on('aaa',(aa)=>{
+            console.log(aa)
+        })
             socketService.on(SOCKET_UPDATE_BOARD, (board) => {
-                
+            
                 if (board._id === boardToShow._id) {
                     store.dispatch({ type: UPDATE_BOARD, board })
                 }
@@ -3397,11 +3410,12 @@ export function BoardDetails() {
     function onToggleUpperBar() {
         setUpperBarOpen(!upperBarOpen)
     }
-
+``
     const [showTable, setTable] = useState(false)
     const [showActivityMenu, setActivityMenu] = useState(false)
 
     function onSetActivityMenu() {
+        socketService.emit('aaa',{a:'aaaa'})
         setActivityMenu(!showActivityMenu)
     }
 
@@ -3955,7 +3969,11 @@ export function BoardDetails() {
                     </section> */}
 
                 </section>
-
+                {showCall&&<div>
+                    
+                            <h1>{callerName}</h1>
+                        <button>join</button>
+                    </div>}
             </main>
         </div>)
 }

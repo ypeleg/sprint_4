@@ -20,7 +20,16 @@ export function setupSocketAPI(http) {
         socket.on('disconnect', socket => {
             logger.info(`Socket disconnected [id: ${socket.id}]`)
         })
+        socket.on('aaa', socket => {
+            logger.info(`aaaaaaaaa [id: ${socket.id}]`)
+        })
+        socket.on('call-video',socket =>{
 
+           
+
+                console.log('aaaaaaaaaaaa',socket)
+         
+        })
         socket.on('chat-set-topic', topic => {
             if (socket.myTopic === topic) return
             if (socket.myTopic) {
