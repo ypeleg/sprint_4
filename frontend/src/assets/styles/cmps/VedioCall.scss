@@ -1,82 +1,172 @@
-.vediogrid{
-    
+.vediogrid {
+
     height: 100vh;
-    .board-index-header{
+
+    .board-index-header {
         border: 0;
     }
-    .content{
+
+    .content {
         font-size: 16px;
         background: linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180));
         height: 100%;
     }
+
     video {
         width: 300px;
         height: 225px;
 
         margin: 2rem;
         background-color: rgb(51, 48, 48);
-      }
-      
-      .videos {
+    }
+
+    .videos {
         display: flex;
         align-items: center;
         justify-content: center;
-      }
-      .buttons{
+    }
+
+    .buttons {
         display: grid;
         justify-items: center;
         width: 100%;
-        .sub{
+
+        .sub {
             display: grid;
             justify-items: center;
         }
-        >*{
-         
+
+        >* {
+
             margin-block: 6px;
         }
-        .start{
+
+        .start {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
         }
-        .call{
+
+        .call {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
         }
-        button{
+
+        button {
             background-color: rgb(0, 101, 255);
             color: white;
             width: fit-content;
             padding: 12px;
             margin-block: 6px;
-            &.callButton{
+
+            &.callButton {
                 margin-left: 5px;
             }
-            &.answer{
+
+            &.answer {
                 background-color: rgb(92, 211, 92);
                 padding: 12px 32px;
-                margin-left: 10px ;
-                
+                margin-left: 10px;
+
             }
-            &.hangup{
+
+            &.hangup {
                 background-color: rgb(209, 39, 39);
-       
-               
+
+
                 border-radius: 6px;
                 width: 300px;
             }
         }
-        input{
+
+        input {
             background-color: white;
             padding: 12px;
             width: 200px;
             height: 40px;
-           
-        }
-       
 
-      }
+        }
+
+
+    }
+    .userpicker {
+    
+        margin-right: 30px;
+        padding-top: 16px;
+        margin-bottom: 20px;
+    
+        .admin {
+            display: flex;
+            align-items: center;
+            padding: 6px 8px 6px 12px;
+            font-size: 14px;
+            padding: 8px 10px;
+            background-color: rgba(9, 30, 66, 0.06);
+            line-height: 20px;
+            display: flex;
+            align-items: center;
+        }
+    
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+    
+            .user {
+                display: flex;
+                align-items: start;
+    
+                img {
+                    border-radius: 50%;
+                    margin-right: 6px;
+                }
+            }
+        }
+    }
+    
+    
+    
+    .userpicker {
+        z-index: 1;
+        margin: 4px;
+        max-height: 300px;
+        box-shadow: 0 8px 12px #091e4226, 0 0 1px #091e424f;
+        border-radius: 3px;
+        z-index: 2;
+        background-color: white;
+        position: absolute;
+        height: fit-content;
+        width: 40%;
+        top: 40%;
+        left: 30%;
+        padding: 12px;
+    
+        img {
+            border-radius: 50%;
+        }
+    
+    
+        .user-item {
+            display: flex;
+            padding: 6px;
+    
+            &:hover {
+                background-color: #091e4224;
+            }
+    
+            .user {
+                display: flex;
+                column-gap: 6px;
+                color: rgb(23, 43, 77);
+    
+                img {
+                    width: 32px;
+                    height: 32px;
+                }
+            }
+        }
+    }
 }

@@ -3,19 +3,25 @@ import { useEffect, useState, useRef } from "react";
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot } from 'firebase/firestore';
 import { AppHeader } from "../cmps/AppHeader";
+import { userService } from "../services/user.service";
+import { useSelector } from "react-redux";
+import { SOCKET_CALL, socketService } from "../services/util.service";
 
 export function VedioCall() {
     const webcamVideoRef = useRef(null);
     const remoteVideoRef = useRef(null);
     const callInputRef = useRef(null);
-
+    const logedUser = useSelector(state => state.userModule.user)
     const [localStream, setLocalStream] = useState(null);
     const [remoteStream, setRemoteStream] = useState(null);
     const [pc, setPc] = useState(null);
     const [callId, setCallId] = useState(null);
     const [isCalling, setIsCalling] = useState(false);
     const [isAnswering, setIsAnswering] = useState(false);
-
+    const [userFilter, setUserFilter] = useState('')
+    const [showUserPicker, setShowUserPicker] = useState(null)
+    const [users, SetUsers] = useState([])
+    const [pickedUser, setPickedUser] = useState(null)
     useEffect(() => {
         const firebaseConfig = {
             apiKey: 'AIzaSyBwFLT5aCDRvi9RAzrUkjqG1skOi65Bz0k',
@@ -53,9 +59,13 @@ export function VedioCall() {
                 });
             }
         };
+        // function handleClick(ev){
+            
+        //  if (ev.target !== ev.currentTarget&&showUserPicker) setShowUserPicker()
 
+        // }
         peerConnection.ontrack = handleTrackEvent;
-
+        // window.addEventListener('mousedown',handleClick)
         return () => {
             peerConnection.close();
             localStream?.getTracks().forEach(track => track.stop());
@@ -91,7 +101,8 @@ export function VedioCall() {
                     addDoc(offerCandidates, event.candidate.toJSON());
                 }
             };
-
+           
+            socketService.emit(SOCKET_CALL,({callId:callDocRef.id,callerName:logedUser.fullname,callReceiver:pickedUser._id}))
             const offerDescription = await pc.createOffer();
             await pc.setLocalDescription(offerDescription);
             await setDoc(callDocRef, { offer: offerDescription });
@@ -153,6 +164,21 @@ export function VedioCall() {
         setLocalStream(null);
         setRemoteStream(null);
     };
+    async function onUserFilter({ target }) {
+            setUserFilter(target.value)
+            if (!target.value) {
+                setShowUserPicker(false)
+                
+            } else {
+                const newUsers = await userService.getUsers(userFilter)
+                SetUsers(newUsers)
+                setShowUserPicker(true)
+            }
+        }
+        function onSetPickuser(user){
+            setPickedUser(user)
+            setUserFilter(user.fullname)
+        }
 
     return (
         <div className="vediogrid">
@@ -169,7 +195,11 @@ export function VedioCall() {
                 <div className="buttons">
                     <div className="start">
                         <button onClick={startWebcam}>Start webcam</button>
-                        <button className="callButton" onClick={createCall} disabled={!isCalling}>Create Call</button>
+                        
+                    </div>
+                    <div>
+                    <input value={userFilter} onChange={onUserFilter} type="text" />
+                    <button className="callButton" onClick={createCall} disabled={!isCalling}>Create Call</button>
                     </div>
                     <div className="call">
                         <input placeholder="Enter call link " ref={callInputRef} />
@@ -177,6 +207,24 @@ export function VedioCall() {
                     </div>
                     <button className="hangup" onClick={hangUp}>Hangup</button>
                 </div>
+                {showUserPicker && <div className="userpicker">
+                <section className="userlist">
+                    {users.map(user => {
+                        return (
+                            <div onClick={() => { onSetPickuser(user); setShowUserPicker(false) }} className="user-item">
+                                <div className="user">
+
+                                    <img src={user.imgUrl || 'roi.png'} alt="" />
+                                    <span>{user.fullname}</span>
+                                </div>
+
+                            </div>
+
+                        )
+                    })}
+                </section>
+
+            </div>}
             </div>
         </div>
     );
