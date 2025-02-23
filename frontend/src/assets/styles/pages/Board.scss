@@ -112,7 +112,8 @@ aside>section:not(:first-of-type) {
 .logo {
     display: flex;
     align-items: center;
-    padding: 0.25em 0.5em;
+    //padding: 0.25em 0.5em;
+    //padding: 0.15em 0.4em;
 }
 .roi {
     font-size: 20px;
@@ -138,7 +139,7 @@ aside>section:not(:first-of-type) {
 @media (min-width: 1000px) {
     .logo {
         display: flex;
-        padding: 0.25em 0.5em;
+        padding: 0.15em 0.4em;
         align-items: center;
     }
 }
