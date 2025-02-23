@@ -4,7 +4,7 @@ header {
     /*flex-direction: column;*/
 }
 
-.workspace-sidebar {
+.monday-page .workspace-sidebar {
     height: 100%;
     /*background-color: #fafbfe;*/
     border-radius: 8px;
@@ -1108,4 +1108,4218 @@ button.monday-add-card-btn {
 
 .monday-board-header {
     border-radius: 8px;
+}
+
+#monday-task-modal,
+#monday-task-modal>*,
+#monday-task-modal>*>*,
+#monday-task-modal>*>*>*,
+#monday-task-modal>*>*>*>*,
+#monday-task-modal>*>*>*>*>*
+{
+    color: #323338;
+    font-family: Figtree, Roboto, "Noto Sans Hebrew", "Noto Kufi Arabic", "Noto Sans JP", sans-serif !important;
+}
+
+#monday-task-modal {
+
+    background-color: #ffffff;
+    .task-cover {
+        display: none;
+    }
+    width: 85%;
+    color: #323338;
+    font-family: Figtree, Roboto, "Noto Sans Hebrew", "Noto Kufi Arabic", "Noto Sans JP", sans-serif;
+}
+
+#monday-task-modal .sidebar-btn:hover {
+    background-color: #e6e9ef;
+}
+#monday-task-modal .sidebar-btn {
+    color: #323338;
+    background-color: #f5f6f8;
+}
+
+
+.monday-task-modal-content {
+    height: 100%;
+}
+.monday-task-layout {
+    display: flex;
+    height: 100%;
+}
+.monday-task-details {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+.monday-task-pickers {
+    flex: 1;
+    border-left: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+}
+.monday-tab-bar {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.monday-tab-btn {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.monday-tab-btn.active {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+.monday-tab-btn svg {
+    margin-right: 8px;
+}
+.monday-picker-panel {
+    flex: 1;
+    padding-inline: 16px;
+    overflow-y: auto;
+}
+
+.monday-picker-panel input {
+    border: 1px solid #0073ea;
+}
+
+
+
+
+
+/*.monday-task-modal {*/
+/*    position: fixed;*/
+/*    !*top: 50%;*!*/
+/*    !*left: 50%;*!*/
+/*    !*transform: translate(-50%, -50%);*!*/
+/*    width: 90vw;*/
+/*    max-width: 1200px;*/
+/*    height: 85vh;*/
+/*    background: #fff;*/
+/*    border-radius: 8px;*/
+/*    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*.task-cover {*/
+/*    position: relative;*/
+/*    height: 160px;*/
+/*    background-size: cover;*/
+/*    background-position: center;*/
+/*}*/
+
+/*.task-no-cover {*/
+/*    height: 48px;*/
+/*    border-bottom: 1px solid #e0e0e0;*/
+/*    position: relative;*/
+/*}*/
+
+/*.task-modal-close {*/
+/*    position: absolute;*/
+/*    top: 8px;*/
+/*    right: 8px;*/
+/*    background: rgba(255, 255, 255, 0.8);*/
+/*    border: none;*/
+/*    border-radius: 50%;*/
+/*    width: 32px;*/
+/*    height: 32px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    cursor: pointer;*/
+/*    transition: background-color 0.2s;*/
+/*}*/
+
+/*.task-modal-close:hover {*/
+/*    background: rgba(255, 255, 255, 0.9);*/
+/*}*/
+
+/*.change-cover-btn {*/
+/*    position: absolute;*/
+/*    bottom: 8px;*/
+/*    right: 8px;*/
+/*    background: rgba(255, 255, 255, 0.8);*/
+/*    border: none;*/
+/*    border-radius: 4px;*/
+/*    padding: 6px 12px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 8px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.task-modal-header {*/
+/*    padding: 16px 0;*/
+/*}*/
+
+/*.task-left {*/
+/*    display: flex;*/
+/*    align-items: flex-start;*/
+/*    gap: 12px;*/
+/*}*/
+
+/*.status-icon {*/
+/*    width: 24px;*/
+/*    height: 24px;*/
+/*    border-radius: 4px;*/
+/*    background: #00c875;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    color: white;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.status-icon-incomplete {*/
+/*    width: 24px;*/
+/*    height: 24px;*/
+/*    border-radius: 4px;*/
+/*    border: 2px solid #c4c4c4;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.task-title {*/
+/*    font-size: 24px;*/
+/*    font-weight: 500;*/
+/*    border: none;*/
+/*    background: none;*/
+/*    width: 100%;*/
+/*    padding: 4px 0;*/
+/*}*/
+
+/*.task-title:focus {*/
+/*    outline: none;*/
+/*    border-bottom: 2px solid #0073ea;*/
+/*}*/
+
+/*.task-subtitle {*/
+/*    color: #676879;*/
+/*    font-size: 14px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 8px;*/
+/*}*/
+
+/*.task-subtitle strong {*/
+/*    color: #323338;*/
+/*    cursor: pointer;*/
+/*    padding: 2px 8px;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+/*.task-subtitle strong:hover {*/
+/*    background: #f5f6f8;*/
+/*}*/
+
+/*!* Members Section *!*/
+/*.task-members {*/
+/*    margin-bottom: 16px;*/
+/*}*/
+
+/*.section-inner {*/
+/*    margin-bottom: 12px;*/
+/*}*/
+
+/*.section-label {*/
+/*    color: #676879;*/
+/*    font-size: 14px;*/
+/*    margin-bottom: 8px;*/
+/*}*/
+
+/*.just-flex-without-anything {*/
+/*    display: flex;*/
+/*    gap: 8px;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.user-circle {*/
+/*    width: 32px;*/
+/*    height: 32px;*/
+/*    border-radius: 50%;*/
+/*    background-size: cover;*/
+/*    background-position: center;*/
+/*}*/
+
+/*.member-circle {*/
+/*    width: 32px;*/
+/*    height: 32px;*/
+/*    border-radius: 50%;*/
+/*    background: #e6e9ef;*/
+/*    color: #676879;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    font-size: 12px;*/
+/*    font-weight: 500;*/
+/*}*/
+
+/*.add-member-btn {*/
+/*    width: 32px;*/
+/*    height: 32px;*/
+/*    border-radius: 50%;*/
+/*    border: 1px dashed #c4c4c4;*/
+/*    background: none;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    cursor: pointer;*/
+/*    color: #676879;*/
+/*}*/
+
+/*!* Labels Section *!*/
+/*.task-labels {*/
+/*    margin-bottom: 16px;*/
+/*}*/
+
+/*.member-label {*/
+/*    height: 8px;*/
+/*    width: 40px;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+/*.add-label-btn {*/
+/*    height: 8px;*/
+/*    width: 40px;*/
+/*    border-radius: 4px;*/
+/*    border: 1px dashed #c4c4c4;*/
+/*    background: none;*/
+/*    cursor: pointer;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    color: #676879;*/
+/*}*/
+
+/*!* Notifications Section *!*/
+/*.task-watch {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 8px;*/
+/*    padding: 6px 12px;*/
+/*    border: 1px solid #c4c4c4;*/
+/*    border-radius: 4px;*/
+/*    background: none;*/
+/*    cursor: pointer;*/
+/*    color: #323338;*/
+/*}*/
+
+/*.task-watch:hover {*/
+/*    background: #f5f6f8;*/
+/*}*/
+
+/*!* Description Section *!*/
+/*.section-icon-title {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 8px;*/
+/*    margin-bottom: 16px;*/
+/*}*/
+
+/*.task-description {*/
+/*    color: #676879;*/
+/*    font-size: 14px;*/
+/*    line-height: 1.5;*/
+/*    min-height: 100px;*/
+/*    padding: 8px;*/
+/*    border: 1px solid transparent;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+/*.task-description:focus {*/
+/*    outline: none;*/
+/*    border-color: #0073ea;*/
+/*}*/
+
+/*!* Custom Fields Section *!*/
+/*.task-custom-fields {*/
+/*    display: grid;*/
+/*    gap: 16px;*/
+/*}*/
+
+/*.custom-dropdown {*/
+/*    width: 100%;*/
+/*    padding: 8px;*/
+/*    border: 1px solid #e0e0e0;*/
+/*    border-radius: 4px;*/
+/*    background: #fff;*/
+/*    color: #323338;*/
+/*}*/
+
+/*!* Activity Section *!*/
+/*.task-activity-list {*/
+/*    list-style: none;*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*}*/
+
+/*.task-activity-list li {*/
+/*    margin-bottom: 16px;*/
+/*}*/
+
+/*.activity-input {*/
+/*    width: 100%;*/
+/*    padding: 8px;*/
+/*    border: 1px solid #e0e0e0;*/
+/*    border-radius: 4px;*/
+/*    margin-bottom: 8px;*/
+/*}*/
+
+/*.activity-btn {*/
+/*    padding: 6px 12px;*/
+/*    background: #0073ea;*/
+/*    color: white;*/
+/*    border: none;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*!* Picker Panel Styles *!*/
+/*.picker-content {*/
+/*    padding: 16px;*/
+/*}*/
+
+/*.picker-header {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    margin-bottom: 16px;*/
+/*}*/
+
+/*.search-container input {*/
+/*    width: 100%;*/
+/*    padding: 8px;*/
+/*    border: 1px solid #e0e0e0;*/
+/*    border-radius: 4px;*/
+/*    margin-bottom: 16px;*/
+/*}*/
+
+/*.members-list, .labels-list {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 8px;*/
+/*}*/
+
+/*.member-item {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    padding: 8px;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.member-item:hover {*/
+/*    background: #f5f6f8;*/
+/*}*/
+
+/*.color-grid {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(5, 1fr);*/
+/*    gap: 8px;*/
+/*    margin-bottom: 16px;*/
+/*}*/
+
+/*.color-btn {*/
+/*    width: 100%;*/
+/*    aspect-ratio: 1;*/
+/*    border: none;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.color-btn.selected {*/
+/*    box-shadow: 0 0 0 2px white, 0 0 0 4px #0073ea;*/
+/*}*/
+
+/*!* Date Picker Styles *!*/
+/*.calendar-header {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    margin-bottom: 16px;*/
+/*}*/
+
+/*.calendar-grid {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(7, 1fr);*/
+/*    gap: 4px;*/
+/*    margin-bottom: 16px;*/
+/*}*/
+
+/*.weekday {*/
+/*    text-align: center;*/
+/*    font-size: 12px;*/
+/*    color: #676879;*/
+/*    padding: 4px;*/
+/*}*/
+
+/*.day {*/
+/*    aspect-ratio: 1;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    cursor: pointer;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+/*.day:hover {*/
+/*    background: #f5f6f8;*/
+/*}*/
+
+/*.day.current {*/
+/*    background: #0073ea;*/
+/*    color: white;*/
+/*}*/
+
+/*.day.other-month {*/
+/*    color: #c4c4c4;*/
+/*}*/
+
+/*!* Move and Copy Panel Styles *!*/
+/*.select-section {*/
+/*    margin-bottom: 24px;*/
+/*}*/
+
+/*.select-group {*/
+/*    margin-bottom: 16px;*/
+/*}*/
+
+/*.select-group label {*/
+/*    display: block;*/
+/*    margin-bottom: 8px;*/
+/*    color: #676879;*/
+/*}*/
+
+/*.board-select, .list-select, .position-select {*/
+/*    width: 100%;*/
+/*    padding: 8px;*/
+/*    border: 1px solid #e0e0e0;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+/*!* Additional Utility Classes *!*/
+/*.inner-component-left-padding {*/
+/*    padding-left: 32px;*/
+/*}*/
+
+/*.just-flex {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 8px;*/
+/*}*/
+
+/*.flex-space-between {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.flex-col {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+
+/*!* Status Colors *!*/
+/*.complete-label {*/
+/*    color: #00c875;*/
+/*    font-weight: 500;*/
+/*}*/
+
+/*.incomplete-label {*/
+/*    color: #e2445c;*/
+/*    font-weight: 500;*/
+/*}*/
+
+/*!* Attachment Styles *!*/
+/*.attachment-extention {*/
+/*    padding: 4px 8px;*/
+/*    background: #f5f6f8;*/
+/*    border: none;*/
+/*    border-radius: 4px;*/
+/*    color: #676879;*/
+/*    font-size: 12px;*/
+/*}*/
+
+/*.file-info {*/
+/*    margin-left: 8px;*/
+/*}*/
+
+/*.file-info h5 {*/
+/*    margin: 0;*/
+/*    color: #323338;*/
+/*}*/
+
+/*.file-info label {*/
+/*    color: #676879;*/
+/*    font-size: 12px;*/
+/*}*/
+
+/*!* Date Picker Input Styles *!*/
+/*.date-picker-input {*/
+/*    opacity: 0;*/
+/*    position: absolute;*/
+/*    pointer-events: none;*/
+/*}*/
+
+/*.date-picker {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 8px;*/
+/*    padding: 6px 12px;*/
+/*    border: 1px solid #e0e0e0;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*!* Checklist Styles *!*/
+/*.checklist-container {*/
+/*    margin-bottom: 24px;*/
+/*}*/
+
+/*.progress-container {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 8px;*/
+/*    margin-bottom: 16px;*/
+/*}*/
+
+/*.progress-bar {*/
+/*    flex: 1;*/
+/*    height: 8px;*/
+/*    background: #f5f6f8;*/
+/*    border-radius: 4px;*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*.progress-bar-internal {*/
+/*    height: 100%;*/
+/*    background: #00c875;*/
+/*    transition: width 0.3s;*/
+/*}*/
+
+/*.checklist-todos {*/
+/*    margin-bottom: 8px;*/
+/*}*/
+
+/*.checklist-input {*/
+/*    width: 100%;*/
+/*    padding: 8px;*/
+/*    border: 1px solid #e0e0e0;*/
+/*    border-radius: 4px;*/
+/*    margin-bottom: 8px;*/
+/*}*/
+
+/*!* Button Styles *!*/
+/*.btn-add {*/
+/*    padding: 6px 12px;*/
+/*    background: #0073ea;*/
+/*    color: white;*/
+/*    border: none;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.btn-cancel {*/
+/*    padding: 6px 12px;*/
+/*    background: none;*/
+/*    border: 1px solid #e0e0e0;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*    margin-left: 8px;*/
+/*}*/
+
+/*.delete-btn {*/
+/*    padding: 6px 12px;*/
+/*    color: #676879;*/
+/*    background: none;*/
+/*    border: 1px solid #e0e0e0;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.delete-btn:hover {*/
+/*    background: #f5f6f8;*/
+/*}*/
+
+/*!* Modal Backdrop *!*/
+/*.modal-backdrop {*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    background: rgba(0, 0, 0, 0.5);*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
+
+
+/*.monday-task-modal {*/
+/*    position: fixed;*/
+/*    !*top: 50%;*!*/
+/*    !*left: 50%;*!*/
+/*    !*transform: translate(-50%, -50%);*!*/
+/*    width: 90vw;*/
+/*    max-width: 1200px;*/
+/*    height: 85vh;*/
+/*    background: linear-gradient(145deg, #ffffff, #f9fafc);*/
+/*    border-radius: 12px;*/
+/*    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1);*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    overflow: hidden;*/
+/*    animation: slideIn 0.3s ease-out;*/
+/*}*/
+
+/*.monday-task-modal-content {*/
+/*    height: 100%;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+
+/*@keyframes slideIn {*/
+/*    from {*/
+/*        opacity: 0;*/
+/*        transform: translate(-50%, -55%);*/
+/*    }*/
+/*    to {*/
+/*        opacity: 1;*/
+/*        transform: translate(-50%, -50%);*/
+/*    }*/
+/*}*/
+
+/*.modal-backdrop {*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    background: rgba(0, 0, 0, 0.6);*/
+/*    backdrop-filter: blur(2px);*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    z-index: 999;*/
+/*}*/
+
+/*.monday-task-layout {*/
+/*    display: flex;*/
+/*    height: 100%;*/
+/*    flex: 1;*/
+/*}*/
+
+/*.monday-task-details {*/
+/*    flex: 1;*/
+/*    padding: 24px;*/
+/*    overflow-y: auto;*/
+/*    background: #fff;*/
+/*    scroll-behavior: smooth;*/
+/*}*/
+
+/*.monday-task-pickers {*/
+/*    flex: 1;*/
+/*    border-left: 1px solid #e6e9ef;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    background: #f9fafc;*/
+/*}*/
+
+/*.task-cover {*/
+/*    position: relative;*/
+/*    height: 180px;*/
+/*    background-size: cover;*/
+/*    background-position: center;*/
+/*    transition: height 0.3s ease;*/
+/*}*/
+
+/*.task-no-cover {*/
+/*    height: 56px;*/
+/*    border-bottom: 1px solid #e6e9ef;*/
+/*    position: relative;*/
+/*    background: #f5f6f8;*/
+/*}*/
+
+/*.task-modal-close {*/
+/*    position: absolute;*/
+/*    top: 12px;*/
+/*    right: 12px;*/
+/*    background: rgba(255, 255, 255, 0.9);*/
+/*    border: none;*/
+/*    border-radius: 50%;*/
+/*    width: 36px;*/
+/*    height: 36px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    cursor: pointer;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.task-modal-close:hover {*/
+/*    background: #fff;*/
+/*    transform: scale(1.1);*/
+/*    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);*/
+/*}*/
+
+/*.change-cover-btn {*/
+/*    position: absolute;*/
+/*    bottom: 12px;*/
+/*    right: 12px;*/
+/*    background: rgba(255, 255, 255, 0.9);*/
+/*    border: none;*/
+/*    border-radius: 6px;*/
+/*    padding: 8px 16px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 8px;*/
+/*    cursor: pointer;*/
+/*    font-size: 14px;*/
+/*    color: #323338;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.change-cover-btn:hover {*/
+/*    background: #fff;*/
+/*    transform: translateY(-2px);*/
+/*    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);*/
+/*}*/
+
+/*.task-modal-header {*/
+/*    padding: 20px 0;*/
+/*    border-bottom: 1px solid #e6e9ef;*/
+/*}*/
+
+/*.task-left {*/
+/*    display: flex;*/
+/*    align-items: flex-start;*/
+/*    gap: 16px;*/
+/*}*/
+
+/*.status-icon {*/
+/*    width: 28px;*/
+/*    height: 28px;*/
+/*    border-radius: 6px;*/
+/*    background: #00c875;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    color: white;*/
+/*    cursor: pointer;*/
+/*    transition: transform 0.2s ease;*/
+/*}*/
+
+/*.status-icon:hover {*/
+/*    transform: scale(1.05);*/
+/*}*/
+
+/*.status-icon-incomplete {*/
+/*    width: 28px;*/
+/*    height: 28px;*/
+/*    border-radius: 6px;*/
+/*    border: 2px solid #d0d4e4;*/
+/*    cursor: pointer;*/
+/*    transition: border-color 0.2s ease;*/
+/*}*/
+
+/*.status-icon-incomplete:hover {*/
+/*    border-color: #0073ea;*/
+/*}*/
+
+/*.task-title {*/
+/*    font-size: 26px;*/
+/*    font-weight: 600;*/
+/*    border: none;*/
+/*    background: none;*/
+/*    width: 100%;*/
+/*    padding: 6px 0;*/
+/*    color: #323338;*/
+/*    transition: border-bottom 0.2s ease;*/
+/*}*/
+
+/*.task-title:focus {*/
+/*    outline: none;*/
+/*    border-bottom: 2px solid #0073ea;*/
+/*}*/
+
+/*.task-subtitle {*/
+/*    color: #676879;*/
+/*    font-size: 14px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 10px;*/
+/*    margin-top: 8px;*/
+/*}*/
+
+/*.task-subtitle strong {*/
+/*    color: #323338;*/
+/*    cursor: pointer;*/
+/*    padding: 4px 10px;*/
+/*    border-radius: 6px;*/
+/*    transition: background 0.2s ease;*/
+/*}*/
+
+/*.task-subtitle strong:hover {*/
+/*    background: #f0f2f5;*/
+/*}*/
+
+/*.task-members {*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.section-inner {*/
+/*    margin-bottom: 16px;*/
+/*}*/
+
+/*.section-label {*/
+/*    color: #676879;*/
+/*    font-size: 14px;*/
+/*    font-weight: 500;*/
+/*    margin-bottom: 10px;*/
+/*    text-transform: uppercase;*/
+/*}*/
+
+/*.just-flex-without-anything {*/
+/*    display: flex;*/
+/*    gap: 10px;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.user-circle {*/
+/*    width: 36px;*/
+/*    height: 36px;*/
+/*    border-radius: 50%;*/
+/*    background-size: cover;*/
+/*    background-position: center;*/
+/*    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+/*}*/
+
+/*.member-circle {*/
+/*    width: 36px;*/
+/*    height: 36px;*/
+/*    border-radius: 50%;*/
+/*    background: #e6e9ef;*/
+/*    color: #676879;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    font-size: 14px;*/
+/*    font-weight: 600;*/
+/*    transition: transform 0.2s ease;*/
+/*}*/
+
+/*.member-circle:hover {*/
+/*    transform: scale(1.05);*/
+/*}*/
+
+/*.add-member-btn {*/
+/*    width: 36px;*/
+/*    height: 36px;*/
+/*    border-radius: 50%;*/
+/*    border: 2px dashed #d0d4e4;*/
+/*    background: #fff;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    cursor: pointer;*/
+/*    color: #676879;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.add-member-btn:hover {*/
+/*    border-color: #0073ea;*/
+/*    transform: scale(1.05);*/
+/*}*/
+
+/*.task-labels {*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.member-label {*/
+/*    height: 10px;*/
+/*    width: 48px;*/
+/*    border-radius: 6px;*/
+/*    transition: transform 0.2s ease;*/
+/*}*/
+
+/*.member-label:hover {*/
+/*    transform: scale(1.1);*/
+/*}*/
+
+/*.add-label-btn {*/
+/*    height: 10px;*/
+/*    width: 48px;*/
+/*    border-radius: 6px;*/
+/*    border: 2px dashed #d0d4e4;*/
+/*    background: none;*/
+/*    cursor: pointer;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.add-label-btn:hover {*/
+/*    border-color: #0073ea;*/
+/*    transform: scale(1.1);*/
+/*}*/
+
+/*.task-watch {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 10px;*/
+/*    padding: 8px 16px;*/
+/*    border: 1px solid #d0d4e4;*/
+/*    border-radius: 6px;*/
+/*    background: #fff;*/
+/*    cursor: pointer;*/
+/*    color: #323338;*/
+/*    font-weight: 500;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.task-watch:hover {*/
+/*    background: #f0f2f5;*/
+/*    transform: translateY(-2px);*/
+/*    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);*/
+/*}*/
+
+/*.section-icon-title {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 10px;*/
+/*    margin-bottom: 20px;*/
+/*    font-size: 16px;*/
+/*    font-weight: 600;*/
+/*    color: #323338;*/
+/*}*/
+
+/*.task-description {*/
+/*    color: #676879;*/
+/*    font-size: 15px;*/
+/*    line-height: 1.6;*/
+/*    min-height: 120px;*/
+/*    padding: 12px;*/
+/*    border: 1px solid #e6e9ef;*/
+/*    border-radius: 6px;*/
+/*    background: #fff;*/
+/*    transition: border-color 0.2s ease;*/
+/*}*/
+
+/*.task-description:focus {*/
+/*    outline: none;*/
+/*    border-color: #0073ea;*/
+/*    box-shadow: 0 0 0 3px rgba(0, 115, 234, 0.2);*/
+/*}*/
+
+/*.task-custom-fields {*/
+/*    display: grid;*/
+/*    gap: 20px;*/
+/*}*/
+
+/*.custom-dropdown {*/
+/*    width: 100%;*/
+/*    padding: 10px;*/
+/*    border: 1px solid #e6e9ef;*/
+/*    border-radius: 6px;*/
+/*    background: #fff;*/
+/*    color: #323338;*/
+/*    font-size: 14px;*/
+/*    transition: border-color 0.2s ease;*/
+/*}*/
+
+/*.custom-dropdown:focus {*/
+/*    border-color: #0073ea;*/
+/*    box-shadow: 0 0 0 3px rgba(0, 115, 234, 0.2);*/
+/*}*/
+
+/*.task-activity-list {*/
+/*    list-style: none;*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*}*/
+
+/*.task-activity-list li {*/
+/*    margin-bottom: 20px;*/
+/*    padding: 12px;*/
+/*    background: #f9fafc;*/
+/*    border-radius: 6px;*/
+/*    transition: background 0.2s ease;*/
+/*}*/
+
+/*.task-activity-list li:hover {*/
+/*    background: #f0f2f5;*/
+/*}*/
+
+/*.activity-input {*/
+/*    width: 100%;*/
+/*    padding: 12px;*/
+/*    border: 1px solid #e6e9ef;*/
+/*    border-radius: 6px;*/
+/*    font-size: 14px;*/
+/*    color: #323338;*/
+/*    background: #fff;*/
+/*    transition: border-color 0.2s ease;*/
+/*}*/
+
+/*.activity-input:focus {*/
+/*    border-color: #0073ea;*/
+/*    box-shadow: 0 0 0 3px rgba(0, 115, 234, 0.2);*/
+/*}*/
+
+/*.activity-btn {*/
+/*    padding: 8px 16px;*/
+/*    background: linear-gradient(90deg, #0073ea, #005bb5);*/
+/*    color: white;*/
+/*    border: none;*/
+/*    border-radius: 6px;*/
+/*    cursor: pointer;*/
+/*    font-weight: 500;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.activity-btn:hover {*/
+/*    background: linear-gradient(90deg, #005bb5, #004a9f);*/
+/*    transform: translateY(-2px);*/
+/*    box-shadow: 0 2px 8px rgba(0, 91, 181, 0.3);*/
+/*}*/
+
+/*.monday-tab-bar {*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*    padding: 10px;*/
+/*    border-bottom: 1px solid #e6e9ef;*/
+/*    background: #f9fafc;*/
+/*}*/
+
+/*.monday-tab-btn {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    padding: 10px 20px;*/
+/*    background: none;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*    color: #676879;*/
+/*    font-size: 15px;*/
+/*    font-weight: 500;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.monday-tab-btn:hover {*/
+/*    background: #e6e9ef;*/
+/*    color: #323338;*/
+/*}*/
+
+/*.monday-tab-btn.active {*/
+/*    background: #0073ea;*/
+/*    color: white;*/
+/*    font-weight: 600;*/
+/*    border-radius: 6px;*/
+/*    box-shadow: 0 2px 8px rgba(0, 115, 234, 0.2);*/
+/*}*/
+
+/*.monday-tab-btn svg {*/
+/*    margin-right: 10px;*/
+/*    fill: currentColor;*/
+/*    transition: transform 0.2s ease;*/
+/*}*/
+
+/*.monday-tab-btn:hover svg {*/
+/*    transform: scale(1.1);*/
+/*}*/
+
+/*.monday-picker-panel {*/
+/*    flex: 1;*/
+/*    padding: 24px;*/
+/*    overflow-y: auto;*/
+/*    background: #f9fafc;*/
+/*    scroll-behavior: smooth;*/
+/*}*/
+
+/*.monday-picker-panel input {*/
+/*    width: 100%;*/
+/*    padding: 12px;*/
+/*    border: 1px solid #e6e9ef;*/
+/*    border-radius: 6px;*/
+/*    font-size: 14px;*/
+/*    color: #323338;*/
+/*    background: #fff;*/
+/*    transition: border-color 0.2s ease;*/
+/*}*/
+
+/*.monday-picker-panel input:focus {*/
+/*    border-color: #0073ea;*/
+/*    box-shadow: 0 0 0 3px rgba(0, 115, 234, 0.2);*/
+/*}*/
+
+/*.picker-content {*/
+/*    padding: 20px;*/
+/*}*/
+
+/*.picker-header {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    margin-bottom: 20px;*/
+/*    font-size: 16px;*/
+/*    font-weight: 600;*/
+/*    color: #323338;*/
+/*}*/
+
+/*.search-container input {*/
+/*    width: 100%;*/
+/*    padding: 12px;*/
+/*    border: 1px solid #e6e9ef;*/
+/*    border-radius: 6px;*/
+/*    font-size: 14px;*/
+/*    color: #323338;*/
+/*    background: #fff;*/
+/*    transition: border-color 0.2s ease;*/
+/*}*/
+
+/*.search-container input:focus {*/
+/*    border-color: #0073ea;*/
+/*    box-shadow: 0 0 0 3px rgba(0, 115, 234, 0.2);*/
+/*}*/
+
+/*.members-list, .labels-list {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 12px;*/
+/*}*/
+
+/*.member-item {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    padding: 12px;*/
+/*    border-radius: 6px;*/
+/*    cursor: pointer;*/
+/*    background: #fff;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.member-item:hover {*/
+/*    background: #f0f2f5;*/
+/*    transform: translateX(4px);*/
+/*    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);*/
+/*}*/
+
+/*.color-grid {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(5, 1fr);*/
+/*    gap: 10px;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.color-btn {*/
+/*    width: 100%;*/
+/*    aspect-ratio: 1;*/
+/*    border: none;*/
+/*    border-radius: 6px;*/
+/*    cursor: pointer;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.color-btn:hover {*/
+/*    transform: scale(1.1);*/
+/*    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);*/
+/*}*/
+
+/*.color-btn.selected {*/
+/*    box-shadow: 0 0 0 2px white, 0 0 0 4px #0073ea;*/
+/*    transform: scale(1.05);*/
+/*}*/
+
+/*.calendar-header {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    margin-bottom: 20px;*/
+/*    font-size: 16px;*/
+/*    font-weight: 600;*/
+/*    color: #323338;*/
+/*}*/
+
+/*.calendar-grid {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(7, 1fr);*/
+/*    gap: 6px;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.weekday {*/
+/*    text-align: center;*/
+/*    font-size: 13px;*/
+/*    color: #676879;*/
+/*    padding: 6px;*/
+/*    font-weight: 500;*/
+/*}*/
+
+/*.day {*/
+/*    aspect-ratio: 1;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    cursor: pointer;*/
+/*    border-radius: 6px;*/
+/*    font-size: 14px;*/
+/*    color: #323338;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.day:hover {*/
+/*    background: #f0f2f5;*/
+/*    transform: scale(1.05);*/
+/*}*/
+
+/*.day.current {*/
+/*    background: #0073ea;*/
+/*    color: white;*/
+/*    font-weight: 600;*/
+/*}*/
+
+/*.day.other-month {*/
+/*    color: #d0d4e4;*/
+/*}*/
+
+/*.select-section {*/
+/*    margin-bottom: 28px;*/
+/*}*/
+
+/*.select-group {*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.select-group label {*/
+/*    display: block;*/
+/*    margin-bottom: 10px;*/
+/*    color: #676879;*/
+/*    font-size: 14px;*/
+/*    font-weight: 500;*/
+/*}*/
+
+/*.board-select, .list-select, .position-select {*/
+/*    width: 100%;*/
+/*    padding: 12px;*/
+/*    border: 1px solid #e6e9ef;*/
+/*    border-radius: 6px;*/
+/*    background: #fff;*/
+/*    color: #323338;*/
+/*    font-size: 14px;*/
+/*    transition: border-color 0.2s ease;*/
+/*}*/
+
+/*.board-select:focus, .list-select:focus, .position-select:focus {*/
+/*    border-color: #0073ea;*/
+/*    box-shadow: 0 0 0 3px rgba(0, 115, 234, 0.2);*/
+/*}*/
+
+/*.inner-component-left-padding {*/
+/*    padding-left: 40px;*/
+/*}*/
+
+/*.just-flex {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 12px;*/
+/*}*/
+
+/*.flex-space-between {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.flex-col {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+
+/*.complete-label {*/
+/*    color: #00c875;*/
+/*    font-weight: 600;*/
+/*    background: rgba(0, 200, 117, 0.1);*/
+/*    padding: 4px 8px;*/
+/*    border-radius: 6px;*/
+/*}*/
+
+/*.incomplete-label {*/
+/*    color: #e2445c;*/
+/*    font-weight: 600;*/
+/*    background: rgba(226, 68, 92, 0.1);*/
+/*    padding: 4px 8px;*/
+/*    border-radius: 6px;*/
+/*}*/
+
+/*.attachment-extention {*/
+/*    padding: 6px 12px;*/
+/*    background: #f0f2f5;*/
+/*    border: none;*/
+/*    border-radius: 6px;*/
+/*    color: #676879;*/
+/*    font-size: 13px;*/
+/*    font-weight: 500;*/
+/*}*/
+
+/*.file-info {*/
+/*    margin-left: 12px;*/
+/*}*/
+
+/*.file-info h5 {*/
+/*    margin: 0;*/
+/*    color: #323338;*/
+/*    font-size: 15px;*/
+/*    font-weight: 600;*/
+/*}*/
+
+/*.file-info label {*/
+/*    color: #676879;*/
+/*    font-size: 13px;*/
+/*}*/
+
+/*.date-picker-input {*/
+/*    opacity: 0;*/
+/*    position: absolute;*/
+/*    pointer-events: none;*/
+/*}*/
+
+/*.date-picker {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 10px;*/
+/*    padding: 8px 16px;*/
+/*    border: 1px solid #e6e9ef;*/
+/*    border-radius: 6px;*/
+/*    cursor: pointer;*/
+/*    background: #fff;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.date-picker:hover {*/
+/*    border-color: #0073ea;*/
+/*    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);*/
+/*}*/
+
+/*.checklist-container {*/
+/*    margin-bottom: 28px;*/
+/*}*/
+
+/*.progress-container {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 12px;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.progress-bar {*/
+/*    flex: 1;*/
+/*    height: 10px;*/
+/*    background: #e6e9ef;*/
+/*    border-radius: 6px;*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*.progress-bar-internal {*/
+/*    height: 100%;*/
+/*    background: linear-gradient(90deg, #00c875, #00a85a);*/
+/*    transition: width 0.3s ease-in-out;*/
+/*}*/
+
+/*.checklist-todos {*/
+/*    margin-bottom: 12px;*/
+/*}*/
+
+/*.checklist-input {*/
+/*    width: 100%;*/
+/*    padding: 12px;*/
+/*    border: 1px solid #e6e9ef;*/
+/*    border-radius: 6px;*/
+/*    font-size: 14px;*/
+/*    color: #323338;*/
+/*    background: #fff;*/
+/*    transition: border-color 0.2s ease;*/
+/*}*/
+
+/*.checklist-input:focus {*/
+/*    border-color: #0073ea;*/
+/*    box-shadow: 0 0 0 3px rgba(0, 115, 234, 0.2);*/
+/*}*/
+
+/*.btn-add {*/
+/*    padding: 8px 16px;*/
+/*    background: linear-gradient(90deg, #0073ea, #005bb5);*/
+/*    color: white;*/
+/*    border: none;*/
+/*    border-radius: 6px;*/
+/*    cursor: pointer;*/
+/*    font-weight: 500;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.btn-add:hover {*/
+/*    background: linear-gradient(90deg, #005bb5, #004a9f);*/
+/*    transform: translateY(-2px);*/
+/*    box-shadow: 0 2px 8px rgba(0, 91, 181, 0.3);*/
+/*}*/
+
+/*.btn-cancel {*/
+/*    padding: 8px 16px;*/
+/*    background: none;*/
+/*    border: 1px solid #e6e9ef;*/
+/*    border-radius: 6px;*/
+/*    cursor: pointer;*/
+/*    color: #676879;*/
+/*    font-weight: 500;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.btn-cancel:hover {*/
+/*    background: #f0f2f5;*/
+/*    border-color: #d0d4e4;*/
+/*}*/
+
+/*.delete-btn {*/
+/*    padding: 8px 16px;*/
+/*    color: #676879;*/
+/*    background: none;*/
+/*    border: 1px solid #e6e9ef;*/
+/*    border-radius: 6px;*/
+/*    cursor: pointer;*/
+/*    font-weight: 500;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*.delete-btn:hover {*/
+/*    background: #f0f2f5;*/
+/*    color: #e2445c;*/
+/*    border-color: #e2445c;*/
+/*}*/
+
+
+/* Root Variables for Consistency */
+:root {
+    --primary-color: #0073ea; /* Monday.com's signature blue */
+    --success-color: #00c875; /* Green for success/completion */
+    --danger-color: #e2445c; /* Red for errors or overdue */
+    --text-primary: #323338; /* Dark gray for primary text */
+    --text-secondary: #676879; /* Lighter gray for secondary text */
+    --background-light: #ffffff; /* White background */
+    --background-subtle: #f9fafc; /* Very light gray for panels */
+    --border-color: #e6e9ef; /* Subtle gray for borders */
+    --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    --transition-speed: 0.2s;
+    --border-radius: 6px;
+    --spacing-unit: 16px;
+}
+
+/* Modal Backdrop */
+.monday-task-modal .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Container */
+.monday-task-modal {
+    position: fixed;
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*transform: translate(-50%, -50%);*/
+    width: 90vw;
+    max-width: 1200px;
+    height: 85vh;
+    background: var(--background-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideIn 0.3s ease-out;
+    font-family: var(--font-family);
+    color: var(--text-primary);
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translate(-50%, -55%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* Two-Pane Layout */
+.monday-task-modal .monday-task-layout {
+    display: flex;
+    flex: 1;
+    height: 100%;
+}
+
+/* Left Panel - Task Details */
+.monday-task-modal .monday-task-details {
+    flex: 1;
+    padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5);
+    overflow-y: auto;
+    background: var(--background-light);
+    scroll-behavior: smooth;
+}
+
+/* Right Panel - Tabbed Content */
+.monday-task-modal .monday-task-pickers {
+    flex: 1;
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    background: var(--background-subtle);
+}
+
+/* Cover Section */
+.monday-task-modal .task-cover {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    transition: height var(--transition-speed) ease;
+}
+
+.monday-task-modal .task-no-cover {
+    height: 56px;
+    background: #f5f6f8;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Close Button */
+.monday-task-modal .task-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .task-modal-close:hover {
+    background: var(--background-light);
+    transform: scale(1.1);
+    box-shadow: var(--shadow-light);
+}
+
+/* Change Cover Button */
+.monday-task-modal .change-cover-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 13px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .change-cover-btn:hover {
+    background: var(--background-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+}
+
+/* Task Header */
+.monday-task-modal .task-modal-header {
+    padding: calc(var(--spacing-unit) * 1.25) 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.monday-task-modal .task-left {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-unit);
+}
+
+/* Status Icon */
+.monday-task-modal .status-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--border-radius);
+    background: var(--success-color);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform var(--transition-speed) ease;
+}
+
+.monday-task-modal .status-icon:hover {
+    transform: scale(1.05);
+}
+
+.monday-task-modal .status-icon-incomplete {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--border-color);
+    cursor: pointer;
+    transition: border-color var(--transition-speed) ease;
+}
+
+.monday-task-modal .status-icon-incomplete:hover {
+    border-color: var(--primary-color);
+}
+
+/* Task Title */
+.monday-task-modal .task-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    border: none;
+    background: none;
+    width: 100%;
+    padding: 4px 0;
+    transition: border-bottom var(--transition-speed) ease;
+}
+
+.monday-task-modal .task-title:focus {
+    outline: none;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+/* Task Subtitle */
+.monday-task-modal .task-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.monday-task-modal .task-subtitle strong {
+    color: var(--text-primary);
+    padding: 4px 8px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background var(--transition-speed) ease;
+}
+
+.monday-task-modal .task-subtitle strong:hover {
+    background: #f0f2f5;
+}
+
+/* Members Section */
+.monday-task-modal .task-members {
+    margin: calc(var(--spacing-unit) * 1.25) 0;
+}
+
+.monday-task-modal .section-inner {
+    margin-bottom: var(--spacing-unit);
+}
+
+.monday-task-modal .section-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.monday-task-modal .just-flex-without-anything {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.monday-task-modal .user-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-size: cover;
+    box-shadow: var(--shadow-light);
+}
+
+.monday-task-modal .member-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--border-color);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-speed) ease;
+}
+
+.monday-task-modal .member-circle:hover {
+    transform: scale(1.05);
+}
+
+.monday-task-modal .add-member-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px dashed var(--border-color);
+    background: var(--background-light);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .add-member-btn:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* Labels Section */
+.monday-task-modal .task-labels {
+    margin: calc(var(--spacing-unit) * 1.25) 0;
+}
+
+.monday-task-modal .member-label {
+    height: 8px;
+    width: 40px;
+    border-radius: var(--border-radius);
+    transition: transform var(--transition-speed) ease;
+}
+
+.monday-task-modal .member-label:hover {
+    transform: scale(1.1);
+}
+
+.monday-task-modal .add-label-btn {
+    height: 8px;
+    width: 40px;
+    border-radius: var(--border-radius);
+    border: 2px dashed var(--border-color);
+    background: none;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .add-label-btn:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* Watch/Notification Button */
+.monday-task-modal .task-watch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--background-light);
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .task-watch:hover {
+    background: #f0f2f5;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+}
+
+/* Description Section */
+.monday-task-modal .section-icon-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: calc(var(--spacing-unit) * 1.25);
+}
+
+.monday-task-modal .task-description {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--background-light);
+    transition: border-color var(--transition-speed) ease;
+}
+
+.monday-task-modal .task-description:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 115, 234, 0.2);
+}
+
+/* Custom Fields */
+.monday-task-modal .task-custom-fields {
+    display: grid;
+    gap: var(--spacing-unit);
+}
+
+.monday-task-modal .custom-dropdown {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--background-light);
+    color: var(--text-primary);
+    font-size: 13px;
+    transition: border-color var(--transition-speed) ease;
+}
+
+.monday-task-modal .custom-dropdown:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 115, 234, 0.2);
+}
+
+/* Activity List */
+.monday-task-modal .task-activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.monday-task-modal .task-activity-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background: var(--background-subtle);
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    transition: background var(--transition-speed) ease;
+}
+
+.monday-task-modal .task-activity-list li:hover {
+    background: #f0f2f5;
+}
+
+.monday-task-modal .activity-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 13px;
+    color: var(--text-primary);
+    background: var(--background-light);
+    transition: border-color var(--transition-speed) ease;
+}
+
+.monday-task-modal .activity-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 115, 234, 0.2);
+}
+
+.monday-task-modal .activity-btn {
+    padding: 6px 12px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .activity-btn:hover {
+    background: #005bb5;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+}
+
+/* Tab Bar */
+.monday-task-modal .monday-tab-bar {
+    display: flex;
+    padding: 8px var(--spacing-unit);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--background-subtle);
+}
+
+.monday-task-modal .monday-tab-btn {
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .monday-tab-btn:hover {
+    background: #e6e9ef;
+    color: var(--text-primary);
+}
+
+.monday-task-modal .monday-tab-btn.active {
+    background: var(--primary-color);
+    color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+}
+
+.monday-task-modal .monday-tab-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    transition: transform var(--transition-speed) ease;
+}
+
+.monday-task-modal .monday-tab-btn:hover svg {
+    transform: scale(1.1);
+}
+
+/* Picker Panel */
+.monday-task-modal .monday-picker-panel {
+    flex: 1;
+    /*padding: calc(var(--spacing-unit) * 1.5);*/
+    overflow-y: auto;
+    background: var(--background-subtle);
+}
+
+.monday-task-modal .picker-header {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-unit);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.monday-task-modal .picker-content {
+    padding: var(--spacing-unit);
+}
+
+.monday-task-modal .monday-picker-panel input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 13px;
+    color: var(--text-primary);
+    background: var(--background-light);
+    transition: border-color var(--transition-speed) ease;
+}
+
+.monday-task-modal .monday-picker-panel input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 115, 234, 0.2);
+}
+
+/* Search Container */
+.monday-task-modal .search-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 13px;
+    color: var(--text-primary);
+    background: var(--background-light);
+    transition: border-color var(--transition-speed) ease;
+}
+
+.monday-task-modal .search-container input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 115, 234, 0.2);
+}
+
+/* Members and Labels Lists */
+.monday-task-modal .members-list, .labels-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.monday-task-modal .member-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: var(--background-light);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .member-item:hover {
+    background: #f0f2f5;
+    transform: translateX(2px);
+    box-shadow: var(--shadow-light);
+}
+
+/* Color Grid */
+.monday-task-modal .color-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: var(--spacing-unit);
+}
+
+.monday-task-modal .color-btn {
+    width: 100%;
+    aspect-ratio: 1;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .color-btn:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-light);
+}
+
+.monday-task-modal .color-btn.selected {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--primary-color);
+}
+
+/* Date Picker */
+.monday-task-modal .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-unit);
+}
+
+.monday-task-modal .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.monday-task-modal .weekday {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.monday-task-modal .day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--text-primary);
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .day:hover {
+    background: #f0f2f5;
+    transform: scale(1.05);
+}
+
+.monday-task-modal .day.current {
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+}
+
+.monday-task-modal .day.other-month {
+    color: var(--border-color);
+}
+
+/* Move and Copy Panels */
+.monday-task-modal .select-section {
+    margin-bottom: calc(var(--spacing-unit) * 1.75);
+}
+
+.monday-task-modal .select-group {
+    margin-bottom: var(--spacing-unit);
+}
+
+.monday-task-modal .select-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.monday-task-modal .board-select, .list-select, .position-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--background-light);
+    color: var(--text-primary);
+    font-size: 13px;
+    transition: border-color var(--transition-speed) ease;
+}
+
+.monday-task-modal .board-select:focus, .list-select:focus, .position-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 115, 234, 0.2);
+}
+
+/* Status Labels */
+.monday-task-modal .complete-label {
+    background: rgba(0, 200, 117, 0.1);
+    color: var(--success-color);
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: var(--border-radius);
+}
+
+.monday-task-modal .incomplete-label {
+    background: rgba(226, 68, 92, 0.1);
+    color: var(--danger-color);
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: var(--border-radius);
+}
+
+/* Attachment Styles */
+.monday-task-modal .attachment-extention {
+    padding: 4px 8px;
+    background: #f0f2f5;
+    border-radius: var(--border-radius);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.monday-task-modal .file-info {
+    margin-left: 10px;
+}
+
+.monday-task-modal .file-info h5 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.monday-task-modal .file-info label {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* Date Picker Input */
+.monday-task-modal .date-picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--background-light);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .date-picker:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-light);
+}
+
+/* Checklist Styles */
+.monday-task-modal .checklist-container {
+    margin-bottom: calc(var(--spacing-unit) * 1.75);
+}
+
+.monday-task-modal .progress-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: var(--spacing-unit);
+}
+
+.monday-task-modal .progress-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.monday-task-modal .progress-bar-internal {
+    height: 100%;
+    background: var(--success-color);
+    transition: width 0.3s ease;
+}
+
+.monday-task-modal .checklist-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 13px;
+    color: var(--text-primary);
+    background: var(--background-light);
+    transition: border-color var(--transition-speed) ease;
+}
+
+.monday-task-modal .checklist-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 115, 234, 0.2);
+}
+
+/* Buttons */
+.monday-task-modal .btn-add {
+    padding: 6px 12px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .btn-add:hover {
+    background: #005bb5;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+}
+
+.monday-task-modal .btn-cancel {
+    padding: 6px 12px;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .btn-cancel:hover {
+    background: #f0f2f5;
+    border-color: #d0d4e4;
+}
+
+.monday-task-modal .delete-btn {
+    padding: 6px 12px;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.monday-task-modal .delete-btn:hover {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+    background: rgba(226, 68, 92, 0.1);
+}
+
+/* Utility Classes */
+.monday-task-modal .inner-component-left-padding {
+    padding-left: calc(var(--spacing-unit) * 2.5);
+}
+
+.monday-task-modal .just-flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.monday-task-modal .flex-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.monday-task-modal .flex-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+/* Modern CSS Reset and Variables */
+:root {
+    /* Color System */
+    --primary-100: #e6f0ff;
+    --primary-200: #b3d1ff;
+    --primary-300: #80b3ff;
+    --primary-400: #4d94ff;
+    --primary-500: #0073ea;
+    --primary-600: #005bb5;
+    --primary-700: #004282;
+
+    /* Semantic Colors */
+    --success-100: #e6f9f1;
+    --success-500: #00c875;
+    --danger-100: #ffe6eb;
+    --danger-500: #e2445c;
+
+    /* Neutral Colors */
+    --neutral-50: #f9fafc;
+    --neutral-100: #f5f6f8;
+    --neutral-200: #e6e9ef;
+    --neutral-300: #d0d4e4;
+    --neutral-400: #676879;
+    --neutral-500: #323338;
+
+    /* Elevations */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+    --shadow-focus: 0 0 0 3px var(--primary-100);
+
+    /* Typography */
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+
+    /* Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+
+    /* Borders */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced Modal Container */
+.monday-task-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: var(--space-xl);
+    width: min(90vw, 1200px);
+    height: min(85vh, 900px);
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideIn var(--transition-smooth);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Modern Two-Column Layout */
+.monday-task-modal .monday-task-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Refined Task Details Panel */
+.monday-task-modal .monday-task-details {
+    padding: var(--space-xl);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--neutral-300) transparent;
+}
+
+.monday-task-modal .monday-task-details::-webkit-scrollbar {
+    width: 4px;
+}
+
+.monday-task-modal .monday-task-details::-webkit-scrollbar-thumb {
+    background: var(--neutral-300);
+    border-radius: var(--radius-full);
+}
+
+/* Enhanced Header Components */
+.monday-task-modal .task-title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--neutral-500);
+    width: 100%;
+    border: none;
+    background: none;
+    padding: var(--space-sm) 0;
+    transition: border-color var(--transition-base);
+}
+
+.monday-task-modal .task-title:focus {
+    outline: none;
+    border-bottom: 2px solid var(--primary-500);
+}
+
+/* Modern Status Indicators */
+.monday-task-modal .status-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    background: var(--success-500);
+    color: white;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.monday-task-modal .status-icon:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Refined Member Components */
+.monday-task-modal .user-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background-size: cover;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-base);
+}
+
+.monday-task-modal .user-circle:hover {
+    transform: scale(1.05);
+}
+
+/* Enhanced Button Styles */
+.monday-task-modal .btn-primary {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--primary-500);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.monday-task-modal .btn-primary:hover {
+    background: var(--primary-600);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Modern Input Styles */
+.monday-task-modal .input-base {
+    width: 100%;
+    padding: var(--space-md);
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-md);
+    background: white;
+    color: var(--neutral-500);
+    transition: all var(--transition-base);
+}
+
+.monday-task-modal .input-base:focus {
+    outline: none;
+    border-color: var(--primary-500);
+    box-shadow: var(--shadow-focus);
+}
+
+/* Enhanced Tab Navigation */
+.monday-task-modal .monday-tab-bar {
+    display: flex;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--neutral-50);
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.monday-task-modal .monday-tab-btn {
+    padding: var(--space-sm) var(--space-md);
+    color: var(--neutral-400);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.monday-task-modal .monday-tab-btn:hover {
+    color: var(--neutral-500);
+    background: var(--neutral-100);
+}
+
+.monday-task-modal .monday-tab-btn.active {
+    color: var(--primary-500);
+    background: var(--primary-100);
+}
+
+/* Modern Card Styles */
+.monday-task-modal .card {
+    background: white;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--neutral-200);
+    padding: var(--space-lg);
+    transition: all var(--transition-base);
+}
+
+.monday-task-modal .card:hover {
+    border-color: var(--neutral-300);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Activity Feed Refinements */
+.monday-task-modal .activity-item {
+    display: flex;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--neutral-50);
+    margin-bottom: var(--space-sm);
+    transition: background var(--transition-base);
+}
+
+.monday-task-modal .activity-item:hover {
+    background: var(--neutral-100);
+}
+
+/* Progress Bar Enhancements */
+.monday-task-modal .progress-bar {
+    height: 6px;
+    background: var(--neutral-100);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.monday-task-modal .progress-bar-fill {
+    height: 100%;
+    background: var(--success-500);
+    transition: width var(--transition-smooth);
+}
+
+/* Label and Tag Styles */
+.monday-task-modal .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    background: var(--neutral-100);
+    color: var(--neutral-500);
+    transition: all var(--transition-base);
+}
+
+.monday-task-modal .tag:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-xs);
+}
+
+/* Date Picker Refinements */
+.monday-task-modal .date-picker {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.monday-task-modal .date-picker:hover {
+    border-color: var(--primary-500);
+    background: var(--primary-100);
+}
+
+/* Checklist Enhancements */
+.monday-task-modal .checklist-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm);
+    border-radius: var(--radius-md);
+    transition: background var(--transition-base);
+}
+
+.monday-task-modal .checklist-item:hover {
+    background: var(--neutral-50);
+}
+
+/* Custom Checkbox Styling */
+.monday-task-modal .checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--neutral-300);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.monday-task-modal .checkbox:checked {
+    background: var(--primary-500);
+    border-color: var(--primary-500);
+}
+
+/* Utility Classes */
+.monday-task-modal .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.monday-task-modal .gap-sm { gap: var(--space-sm); }
+.monday-task-modal .gap-md { gap: var(--space-md); }
+.monday-task-modal .gap-lg { gap: var(--space-lg); }
+
+.monday-task-modal .text-sm { font-size: var(--font-size-sm); }
+.monday-task-modal .text-md { font-size: var(--font-size-md); }
+.monday-task-modal .text-lg { font-size: var(--font-size-lg); }
+
+.monday-task-modal .font-medium { font-weight: 500; }
+.monday-task-modal .font-semibold { font-weight: 600; }
+.monday-task-modal .font-bold { font-weight: 700; }
+
+
+/* Root Variables for Monday.com's Design */
+:root {
+    --monday-primary: #0073ea; /* Monday's signature blue */
+    --monday-success: #00c875; /* Green for success */
+    --monday-danger: #e2445c; /* Red for errors */
+    --monday-text-primary: #323338; /* Dark gray for text */
+    --monday-text-secondary: #676879; /* Lighter gray for secondary text */
+    --monday-background: #ffffff; /* White background */
+    --monday-background-subtle: #f9f9fc; /* Subtle background for panels */
+    --monday-border: #e6e9ef; /* Border color */
+    --monday-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    --monday-font: 'Inter', Arial, sans-serif; /* Monday's font */
+    --transition-speed: 0.2s; /* Smooth transitions */
+    --border-radius: 4px; /* Consistent border radius */
+    --spacing-unit: 16px; /* Base spacing unit */
+}
+
+/* Modal Backdrop */
+.monday-task-modal .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Container */
+.monday-task-modal {
+    position: fixed;
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*transform: translate(-50%, -50%);*/
+    height: 95%;
+    width: 90vw;
+    max-width: 1200px;
+    /*height: 85vh;*/
+    background: var(--monday-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--monday-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: var(--monday-font);
+    color: var(--monday-text-primary);
+}
+
+/* Two-Pane Layout */
+.monday-task-modal .monday-task-layout {
+    display: flex;
+    flex: 1;
+    height: 100%;
+}
+
+/* Left Panel - Task Details */
+.monday-task-modal .monday-task-details {
+    flex: 1;
+    padding: var(--spacing-unit);
+    overflow-y: auto;
+    background: var(--monday-background);
+}
+
+/* Right Panel - Tabbed Content */
+.monday-task-modal .monday-task-pickers {
+    flex: 1;
+    border-left: 1px solid var(--monday-border);
+    display: flex;
+    flex-direction: column;
+    background: var(--monday-background-subtle);
+}
+
+/* Cover Section */
+.monday-task-modal .task-cover {
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.monday-task-modal .task-no-cover {
+    height: 48px;
+    background: #f5f6f8;
+    border-bottom: 1px solid var(--monday-border);
+}
+
+/* Close Button */
+.monday-task-modal .task-modal-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-speed);
+}
+
+.monday-task-modal .task-modal-close:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Change Cover Button */
+.monday-task-modal .change-cover-btn {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    color: var(--monday-text-primary);
+    cursor: pointer;
+    transition: background var(--transition-speed);
+}
+
+.monday-task-modal .change-cover-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Task Header */
+.monday-task-modal .task-modal-header {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--monday-border);
+}
+
+.monday-task-modal .task-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+/* Status Icon */
+.monday-task-modal .status-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--border-radius);
+    background: var(--monday-success);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.monday-task-modal .status-icon-incomplete {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--monday-border);
+    cursor: pointer;
+}
+
+/* Task Title */
+.monday-task-modal .task-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--monday-text-primary);
+    border: none;
+    background: none;
+    width: 100%;
+    padding: 4px 0;
+}
+
+.monday-task-modal .task-title:focus {
+    outline: none;
+    border-bottom: 2px solid var(--monday-primary);
+}
+
+/* Task Subtitle */
+.monday-task-modal .task-subtitle {
+    font-size: 14px;
+    color: var(--monday-text-secondary);
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.monday-task-modal .task-subtitle strong {
+    color: var(--monday-text-primary);
+    padding: 2px 8px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    background: #f5f6f8;
+}
+
+.monday-task-modal .task-subtitle strong:hover {
+    background: #e6e9ef;
+}
+
+/* Members Section */
+.monday-task-modal .task-members {
+    margin: 16px 0;
+}
+
+.monday-task-modal .section-inner {
+    margin-bottom: 12px;
+}
+
+.monday-task-modal .section-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--monday-text-secondary);
+    margin-bottom: 8px;
+}
+
+.monday-task-modal .just-flex-without-anything {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.monday-task-modal .user-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+.monday-task-modal .member-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e6e9ef;
+    color: var(--monday-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.monday-task-modal .add-member-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px dashed var(--monday-border);
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--monday-text-secondary);
+}
+
+/* Labels Section */
+.monday-task-modal .task-labels {
+    margin: 16px 0;
+}
+
+.monday-task-modal .member-label {
+    height: 8px;
+    width: 40px;
+    border-radius: var(--border-radius);
+}
+
+.monday-task-modal .add-label-btn {
+    height: 8px;
+    width: 40px;
+    border-radius: var(--border-radius);
+    border: 1px dashed var(--monday-border);
+    background: none;
+    cursor: pointer;
+}
+
+/* Watch/Notification Button */
+.monday-task-modal .task-watch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    background: none;
+    cursor: pointer;
+    color: var(--monday-text-primary);
+}
+
+.monday-task-modal .task-watch:hover {
+    background: #f5f6f8;
+}
+
+/* Description Section */
+.monday-task-modal .section-icon-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .task-description {
+    font-size: 14px;
+    color: var(--monday-text-primary);
+    line-height: 1.5;
+    min-height: 100px;
+    padding: 8px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    background: #fff;
+}
+
+.monday-task-modal .task-description:focus {
+    outline: none;
+    border-color: var(--monday-primary);
+}
+
+/* Custom Fields */
+.monday-task-modal .task-custom-fields {
+    display: grid;
+    gap: 16px;
+}
+
+.monday-task-modal .custom-dropdown {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    background: #fff;
+    color: var(--monday-text-primary);
+}
+
+/* Activity List */
+.monday-task-modal .task-activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.monday-task-modal .task-activity-list li {
+    padding: 8px;
+    background: #f5f6f8;
+    border-radius: var(--border-radius);
+    margin-bottom: 8px;
+}
+
+.monday-task-modal .activity-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    color: var(--monday-text-primary);
+    background: #fff;
+}
+
+.monday-task-modal .activity-btn {
+    padding: 6px 12px;
+    background: var(--monday-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+/* Tab Bar */
+.monday-task-modal .monday-tab-bar {
+    display: flex;
+    padding: 8px;
+    border-bottom: 1px solid var(--monday-border);
+}
+
+.monday-task-modal .monday-tab-btn {
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--monday-text-secondary);
+}
+
+.monday-task-modal .monday-tab-btn.active {
+    font-weight: bold;
+    color: var(--monday-text-primary);
+    border-bottom: 2px solid var(--monday-primary);
+}
+
+.monday-task-modal .monday-tab-btn svg {
+    margin-right: 8px;
+}
+
+/* Picker Panel */
+.monday-task-modal .monday-picker-panel {
+    flex: 1;
+    /*padding: 16px;*/
+    overflow-y: auto;
+}
+
+.monday-task-modal .picker-header {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--monday-text-primary);
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .picker-content {
+    padding: 16px;
+}
+
+.monday-task-modal .monday-picker-panel input {
+    width: 100%;
+    /*padding: 8px;*/
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    color: var(--monday-text-primary);
+    background: #fff;
+}
+
+/* Search Container */
+.monday-task-modal .search-container input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    color: var(--monday-text-primary);
+    background: #fff;
+}
+
+/* Members and Labels Lists */
+.monday-task-modal .members-list, .labels-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.monday-task-modal .member-item {
+    padding: 8px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.monday-task-modal .member-item:hover {
+    background: #f5f6f8;
+}
+
+/* Color Grid */
+.monday-task-modal .color-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .color-btn {
+    width: 100%;
+    aspect-ratio: 1;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.monday-task-modal .color-btn.selected {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--monday-primary);
+}
+
+/* Date Picker */
+.monday-task-modal .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .weekday {
+    text-align: center;
+    font-size: 12px;
+    color: var(--monday-text-secondary);
+    padding: 4px;
+}
+
+.monday-task-modal .day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+}
+
+.monday-task-modal .day:hover {
+    background: #f5f6f8;
+}
+
+.monday-task-modal .day.current {
+    background: var(--monday-primary);
+    color: #fff;
+}
+
+.monday-task-modal .day.other-month {
+    color: #c4c4c4;
+}
+
+/* Move and Copy Panels */
+.monday-task-modal .select-section {
+    margin-bottom: 24px;
+}
+
+.monday-task-modal .select-group {
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .select-group label {
+    display: block;
+    font-size: 14px;
+    color: var(--monday-text-secondary);
+    margin-bottom: 8px;
+}
+
+.monday-task-modal .board-select, .list-select, .position-select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    background: #fff;
+    color: var(--monday-text-primary);
+}
+
+/* Status Labels */
+.monday-task-modal .complete-label {
+    background: var(--monday-success);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: var(--border-radius);
+}
+
+.monday-task-modal .incomplete-label {
+    background: var(--monday-danger);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: var(--border-radius);
+}
+
+/* Attachment Styles */
+.monday-task-modal .attachment-extention {
+    padding: 4px 8px;
+    background: #f5f6f8;
+    border-radius: var(--border-radius);
+    color: var(--monday-text-secondary);
+    font-size: 12px;
+}
+
+.monday-task-modal .file-info {
+    margin-left: 8px;
+}
+
+.monday-task-modal .file-info h5 {
+    margin: 0;
+    color: var(--monday-text-primary);
+}
+
+.monday-task-modal .file-info label {
+    color: var(--monday-text-secondary);
+    font-size: 12px;
+}
+
+/* Date Picker Input */
+.monday-task-modal .date-picker-input {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.monday-task-modal .date-picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+/* Checklist Styles */
+.monday-task-modal .checklist-container {
+    margin-bottom: 24px;
+}
+
+.monday-task-modal .progress-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #f5f6f8;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.monday-task-modal .progress-bar-internal {
+    height: 100%;
+    background: var(--monday-success);
+    transition: width 0.3s;
+}
+
+.monday-task-modal .checklist-todos {
+    margin-bottom: 8px;
+}
+
+.monday-task-modal .checklist-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    color: var(--monday-text-primary);
+    background: #fff;
+}
+
+/* Button Styles */
+.monday-task-modal .btn-add {
+    padding: 6px 12px;
+    background: var(--monday-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.monday-task-modal .btn-cancel {
+    padding: 6px 12px;
+    background: none;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    color: var(--monday-text-secondary);
+}
+
+.monday-task-modal .delete-btn {
+    padding: 6px 12px;
+    color: var(--monday-text-secondary);
+    background: none;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.monday-task-modal .delete-btn:hover {
+    background: #f5f6f8;
+}
+
+/* Utility Classes */
+.monday-task-modal .inner-component-left-padding {
+    padding-left: 32px;
+}
+
+.monday-task-modal .just-flex {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.monday-task-modal .flex-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.monday-task-modal .monday-tab-bar {
+    --tab-height: 50px;
+    position: relative;
+    padding: 8px;
+    background: #f5f6f8;
+    border-bottom: 1px solid #e6e9ef;
+    max-height: var(--tab-height);
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+/* Show full height on hover */
+.monday-task-modal .monday-tab-bar:hover {
+    max-height: 300px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Container for the tabs */
+.monday-task-modal .monday-tab-bar .tab-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    max-width: 100%;
+}
+
+/* Individual tab styling */
+.monday-task-modal .monday-tab-btn {
+    /*height: var(--tab-height);*/
+    padding: 4px 4px;
+    margin: 4px;
+    display: flex;
+    align-items: center;
+    /*gap: 8px;*/
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: #676879;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+/* Active and hover states */
+.monday-task-modal .monday-tab-btn:hover {
+    background: #e6e9ef;
+    color: #323338;
+}
+
+.monday-task-modal .monday-tab-btn.active {
+    /*background: #0073ea;*/
+    color: white;
+}
+
+/* Fade effect for overflow */
+.monday-task-modal .monday-tab-bar::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /*height: 40px;*/
+    /*background: linear-gradient(transparent, #f5f6f8);*/
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.monday-task-modal .monday-tab-bar:hover::after {
+    opacity: 0;
+}
+
+/* Show a subtle indicator that there's more content */
+.monday-task-modal .monday-tab-bar::before {
+    content: "▼";
+    position: absolute;
+    bottom: 4px;
+    right: 8px;
+    color: #323338;
+    font-size: 12px;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.monday-task-modal .monday-tab-bar:hover::before {
+    opacity: 0;
+}
+
+/* Ensure tab icons stay aligned */
+.monday-task-modal .monday-tab-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* Optimize for mobile */
+@media (max-width: 768px) {
+    .monday-tab-bar {
+        position: relative;
+    }
+
+    .monday-tab-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    /* Allow horizontal scrolling on mobile */
+    .monday-tab-bar .tab-container {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 12px;
+    }
+
+    .monday-tab-btn {
+        scroll-snap-align: start;
+    }
+
+    /* Hide gradient on mobile */
+    .monday-tab-bar::after {
+        display: none;
+    }
+
+    /* Show scroll indicators on mobile */
+    .monday-tab-bar .tab-container::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .monday-tab-bar .tab-container::-webkit-scrollbar-thumb {
+        background: #d0d4e4;
+        border-radius: 4px;
+    }
+}
+
+/* Root Variables for Monday.com's Design */
+:root {
+    --monday-primary: #0073ea; /* Monday's signature blue */
+    --monday-success: #00c875; /* Green for success */
+    --monday-danger: #e2445c; /* Red for errors */
+    --monday-text-primary: #323338; /* Dark gray for text */
+    --monday-text-secondary: #676879; /* Lighter gray for secondary text */
+    --monday-background: #ffffff; /* White background */
+    --monday-background-subtle: #f9f9fc; /* Subtle background for panels */
+    --monday-border: #e6e9ef; /* Border color */
+    --monday-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    --monday-font: 'Inter', Arial, sans-serif; /* Monday's font */
+    --transition-speed: 0.2s; /* Smooth transitions */
+    --border-radius: 4px; /* Consistent border radius */
+    --spacing-unit: 16px; /* Base spacing unit */
+}
+
+/* Modal Backdrop */
+.monday-task-modal .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Container */
+.monday-task-modal {
+    position: fixed;
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*transform: translate(-50%, -50%);*/
+    width: 90vw;
+    max-width: 1200px;
+    height: 95%;
+    background: var(--monday-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--monday-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: var(--monday-font);
+    color: var(--monday-text-primary);
+}
+
+/* Two-Pane Layout */
+.monday-task-modal .monday-task-layout {
+    display: flex;
+    flex: 1;
+    height: 100%;
+}
+
+/* Left Panel - Task Details */
+.monday-task-modal .monday-task-details {
+    flex: 1;
+    padding: var(--spacing-unit);
+    overflow-y: auto;
+    background: var(--monday-background);
+}
+
+/* Right Panel - Tabbed Content */
+.monday-task-modal .monday-task-pickers {
+    flex: 1;
+    border-left: 1px solid var(--monday-border);
+    display: flex;
+    flex-direction: column;
+    background: var(--monday-background-subtle);
+}
+
+/* Cover Section */
+.monday-task-modal .task-cover {
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.monday-task-modal .task-no-cover {
+    height: 48px;
+    background: #f5f6f8;
+    border-bottom: 1px solid var(--monday-border);
+}
+
+/* Close Button */
+.monday-task-modal .task-modal-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-speed);
+}
+
+.monday-task-modal .task-modal-close:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Change Cover Button */
+.monday-task-modal .change-cover-btn {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    color: var(--monday-text-primary);
+    cursor: pointer;
+    transition: background var(--transition-speed);
+}
+
+.monday-task-modal .change-cover-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Task Header */
+.monday-task-modal .task-modal-header {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--monday-border);
+}
+
+.monday-task-modal .task-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+/* Status Icon */
+.monday-task-modal .status-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--border-radius);
+    background: var(--monday-success);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.monday-task-modal .status-icon-incomplete {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--monday-border);
+    cursor: pointer;
+}
+
+/* Task Title */
+.monday-task-modal .task-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--monday-text-primary);
+    border: none;
+    background: none;
+    width: 100%;
+    padding: 4px 0;
+}
+
+.monday-task-modal .task-title:focus {
+    outline: none;
+    border-bottom: 2px solid var(--monday-primary);
+}
+
+/* Task Subtitle */
+.monday-task-modal .task-subtitle {
+    font-size: 14px;
+    color: var(--monday-text-secondary);
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.monday-task-modal .task-subtitle strong {
+    color: var(--monday-text-primary);
+    padding: 2px 8px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    background: #f5f6f8;
+}
+
+.monday-task-modal .task-subtitle strong:hover {
+    background: #e6e9ef;
+}
+
+/* Members Section */
+.monday-task-modal .task-members {
+    margin: 16px 0;
+}
+
+.monday-task-modal .section-inner {
+    margin-bottom: 12px;
+}
+
+.monday-task-modal .section-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--monday-text-secondary);
+    margin-bottom: 8px;
+}
+
+.monday-task-modal .just-flex-without-anything {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.monday-task-modal .user-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-size: cover;
+}
+
+.monday-task-modal .member-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e6e9ef;
+    color: var(--monday-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.monday-task-modal .add-member-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px dashed var(--monday-border);
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--monday-text-secondary);
+}
+
+/* Labels Section */
+.monday-task-modal .task-labels {
+    margin: 16px 0;
+}
+
+.monday-task-modal .member-label {
+    height: 8px;
+    width: 40px;
+    border-radius: var(--border-radius);
+}
+
+.monday-task-modal .add-label-btn {
+    height: 8px;
+    width: 40px;
+    border-radius: var(--border-radius);
+    border: 1px dashed var(--monday-border);
+    background: none;
+    cursor: pointer;
+}
+
+/* Watch/Notification Button */
+.monday-task-modal .task-watch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    background: none;
+    cursor: pointer;
+    color: var(--monday-text-primary);
+}
+
+.monday-task-modal .task-watch:hover {
+    background: #f5f6f8;
+}
+
+/* Description Section */
+.monday-task-modal .section-icon-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .task-description {
+    font-size: 14px;
+    color: var(--monday-text-primary);
+    line-height: 1.5;
+    min-height: 100px;
+    padding: 8px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    background: #fff;
+}
+
+.monday-task-modal .task-description:focus {
+    outline: none;
+    border-color: var(--monday-primary);
+}
+
+/* Custom Fields */
+.monday-task-modal .task-custom-fields {
+    display: grid;
+    gap: 16px;
+}
+
+.monday-task-modal .custom-dropdown {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    background: #fff;
+    color: var(--monday-text-primary);
+}
+
+/* Activity List */
+.monday-task-modal .task-activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.monday-task-modal .task-activity-list li {
+    padding: 8px;
+    background: #f5f6f8;
+    border-radius: var(--border-radius);
+    margin-bottom: 8px;
+}
+
+.monday-task-modal .activity-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    color: var(--monday-text-primary);
+    background: #fff;
+}
+
+.monday-task-modal .activity-btn {
+    padding: 6px 12px;
+    background: var(--monday-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+/* Tab Bar */
+.monday-task-modal .monday-tab-bar {
+    display: flex;
+    padding: 8px;
+    border-bottom: 1px solid var(--monday-border);
+}
+
+.monday-task-modal .monday-tab-btn {
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--monday-text-secondary);
+}
+
+.monday-task-modal .monday-tab-btn.active {
+    font-weight: bold;
+    color: var(--monday-text-primary);
+    border-bottom: 2px solid var(--monday-primary);
+}
+
+.monday-task-modal .monday-tab-btn svg {
+    margin-right: 8px;
+}
+
+/* Picker Panel */
+.monday-task-modal .monday-picker-panel {
+    flex: 1;
+    /*padding: 16px;*/
+    overflow-y: auto;
+}
+
+.monday-task-modal .picker-header {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--monday-text-primary);
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .picker-content {
+    padding: 16px;
+}
+
+.monday-task-modal .monday-picker-panel input {
+    width: 100%;
+    /*padding: 8px;*/
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    color: var(--monday-text-primary);
+    background: #fff;
+}
+
+/* Search Container */
+.monday-task-modal .search-container input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    color: var(--monday-text-primary);
+    background: #fff;
+}
+
+/* Members and Labels Lists */
+.monday-task-modal .members-list, .labels-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.monday-task-modal .member-item {
+    padding: 8px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.monday-task-modal .member-item:hover {
+    background: #f5f6f8;
+}
+
+/* Color Grid */
+.monday-task-modal .color-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .color-btn {
+    width: 100%;
+    aspect-ratio: 1;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.monday-task-modal .color-btn.selected {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--monday-primary);
+}
+
+/* Date Picker */
+.monday-task-modal .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .weekday {
+    text-align: center;
+    font-size: 12px;
+    color: var(--monday-text-secondary);
+    padding: 4px;
+}
+
+.monday-task-modal .day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+}
+
+.monday-task-modal .day:hover {
+    background: #f5f6f8;
+}
+
+.monday-task-modal .day.current {
+    background: var(--monday-primary);
+    color: #fff;
+}
+
+.monday-task-modal .day.other-month {
+    color: #c4c4c4;
+}
+
+/* Move and Copy Panels */
+.monday-task-modal .select-section {
+    margin-bottom: 24px;
+}
+
+.monday-task-modal .select-group {
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .select-group label {
+    display: block;
+    font-size: 14px;
+    color: var(--monday-text-secondary);
+    margin-bottom: 8px;
+}
+
+.monday-task-modal .board-select, .list-select, .position-select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    background: #fff;
+    color: var(--monday-text-primary);
+}
+
+/* Status Labels */
+.monday-task-modal .complete-label {
+    background: var(--monday-success);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: var(--border-radius);
+}
+
+.monday-task-modal .incomplete-label {
+    background: var(--monday-danger);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: var(--border-radius);
+}
+
+/* Attachment Styles */
+.monday-task-modal .attachment-extention {
+    padding: 4px 8px;
+    background: #f5f6f8;
+    border-radius: var(--border-radius);
+    color: var(--monday-text-secondary);
+    font-size: 12px;
+}
+
+.monday-task-modal .file-info {
+    margin-left: 8px;
+}
+
+.monday-task-modal .file-info h5 {
+    margin: 0;
+    color: var(--monday-text-primary);
+}
+
+.monday-task-modal .file-info label {
+    color: var(--monday-text-secondary);
+    font-size: 12px;
+}
+
+/* Date Picker Input */
+.monday-task-modal .date-picker-input {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.monday-task-modal .date-picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+/* Checklist Styles */
+.monday-task-modal .checklist-container {
+    margin-bottom: 24px;
+}
+
+.monday-task-modal .progress-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.monday-task-modal .progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #f5f6f8;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.monday-task-modal .progress-bar-internal {
+    height: 100%;
+    background: var(--monday-success);
+    transition: width 0.3s;
+}
+
+.monday-task-modal .checklist-todos {
+    margin-bottom: 8px;
+}
+
+.monday-task-modal .checklist-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    color: var(--monday-text-primary);
+    background: #fff;
+}
+
+/* Button Styles */
+.monday-task-modal .btn-add {
+    padding: 6px 12px;
+    background: var(--monday-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.monday-task-modal .btn-cancel {
+    padding: 6px 12px;
+    background: none;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    color: var(--monday-text-secondary);
+}
+
+.monday-task-modal .delete-btn {
+    padding: 6px 12px;
+    color: var(--monday-text-secondary);
+    background: none;
+    border: 1px solid var(--monday-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.monday-task-modal .delete-btn:hover {
+    background: #f5f6f8;
+}
+
+/* Utility Classes */
+.monday-task-modal .inner-component-left-padding {
+    padding-left: 32px;
+}
+
+.monday-task-modal .just-flex {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.monday-task-modal .flex-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+
+#monday-popup {
+    overflow: hidden;
 }
