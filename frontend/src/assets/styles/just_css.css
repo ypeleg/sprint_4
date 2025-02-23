@@ -121,7 +121,12 @@
 
 .task-description {
     width: 100%;
-    font-family: sans-serif
+    font-family: sans-serif;
+
+}
+
+textarea.task-description {
+    resize: none;
 }
 
 .task-custom-fields>div {
@@ -4144,4 +4149,18 @@ main {
     width: 10px;
     right: 0;
     top: 0;
+}
+
+.roi {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    padding-block: 0;
+    margin-block: 0;
+
+}
+
+.roi svg {
+    color: white;
 }
