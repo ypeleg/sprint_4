@@ -168,6 +168,7 @@ color: (useDarkTextColors? '#172b4d': 'white')
                             </div>: <></>
                         )
                     })}
+                    {(boardToShow?.members?.length > 4)&&<div style={{marginTop: '3px'}} className="user-icon">+{boardToShow?.members.length-4}</div>}
                 </div>
                 <button id={`${useDarkTextColors? '': 'share-white-ver'}`} onClick={onSetShowShare} className={` ${useDarkTextColors? 'share-btn': 'share-white-ver'}`} >
                     <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
