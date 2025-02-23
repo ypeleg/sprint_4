@@ -20,10 +20,16 @@ export function setupSocketAPI(http) {
         socket.on('disconnect', socket => {
             console.log(`Socket disconnected [id: ${socket.id}]`)
         })
-        socket.on("boardUpdated", (updatedBoard) => {
+        socket.on("updated-board", (updatedBoard) => {
             
-            socket.broadcast.emit("boardUpdated", updatedBoard);
+            socket.broadcast.emit("board-updated", updatedBoard);
         });
+
+        socket.on('outgoing-call' , (data) => {
+            console.log('outgoing call to', data)
+            socket.broadcast.emit('incoming-call', data)
+        });
+
         socket.on('chat-set-topic', topic => {
             if (socket.myTopic === topic) return
             if (socket.myTopic) {

@@ -1,5 +1,7 @@
 
 
+import {BOARD_ADDED, BOARD_UPDATED, BOARD_REMOVED} from '../services/util.service.js'
+
 import {userReducer} from './reducers/user.reducer'
 import {boardReducer} from './reducers/board.reducer'
 
@@ -34,17 +36,18 @@ export const store = createStore(rootReducer, middleware)
 
 
 
+
 import { socketService } from '../services/util.service.js'
 import { ADD_BOARD, UPDATE_BOARD, REMOVE_BOARD } from './reducers/board.reducer.js'
 
-socketService.on('board-added', (newBoard) => {
+socketService.on(BOARD_ADDED, (newBoard) => {
     store.dispatch({ type: ADD_BOARD, board: newBoard })
 })
 
-socketService.on('board-updated', (updatedBoard) => {
+socketService.on(BOARD_UPDATED, (updatedBoard) => {
     store.dispatch({ type: UPDATE_BOARD, board: updatedBoard })
 })
 
-socketService.on('board-removed', (removedBoardId) => {
+socketService.on(BOARD_REMOVED, (removedBoardId) => {
     store.dispatch({ type: REMOVE_BOARD, boardId: removedBoardId })
 })

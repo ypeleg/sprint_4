@@ -297,10 +297,19 @@ const baseUrl = process.env.NODE_ENV === 'production'
 //     ? ''
 //     : 'http://localhost:3030'
 
+
+// client: emit
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
-export const SOCKET_CALL = 'call-video'
-export const SOCKET_UPDATE_BOARD = 'upadteBoard'
+export const SOCKET_UPDATE_BOARD = 'updated-board'
+export const OUTGOING_VIDEO_CALL = 'outgoing-call'
+
+// client: listeners
+export const BOARD_ADDED = 'board-added'
+export const BOARD_UPDATED = 'board-updated'
+export const BOARD_REMOVED = 'board-removed'
+export const INCOMING_SOCKET_CALL = 'incoming-call'
+
 
 export const socketService = createSocketService()
 

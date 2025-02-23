@@ -3268,3 +3268,174 @@ blockquote {
 }
 
 
+
+
+
+.notification-container {
+     position: fixed;
+     bottom: 24px;
+     right: 24px;
+     z-index: 9999;
+     animation: slideIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+ }
+
+     .notification-container.exit {
+         animation: slideOut 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+     }
+
+     .notification-content {
+         width: 320px;
+         background: #fff;
+         border-radius: 16px;
+         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+         /*border: 2px solid rgba(0, 0, 0, 0.1);*/
+         overflow: hidden;
+         transform: translateZ(0);
+     }
+
+     .caller-section {
+         background: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+         padding: 24px;
+         text-align: center;
+         position: relative;
+     }
+
+     .ripple-container {
+         position: relative;
+         width: 80px;
+         height: 80px;
+         margin: 0 auto;
+     }
+
+     .ripple {
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         border-radius: 50%;
+         border: 2px solid rgba(255, 255, 255, 0.3);
+         animation: rippleEffect 2s infinite cubic-bezier(0.165, 0.84, 0.44, 1);
+     }
+
+     .ripple-1 { animation-delay: 0s; }
+     .ripple-2 { animation-delay: 0.5s; }
+     .ripple-3 { animation-delay: 1s; }
+
+     .avatar {
+         width: 80px;
+         height: 80px;
+         margin-bottom: 8px;
+         background: #fff;
+         border-radius: 50%;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-size: 32px;
+         font-weight: 600;
+         color: #1a73e8;
+         position: relative;
+         z-index: 2;
+         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+     }
+
+     .caller-name {
+         color: #fff;
+         font-size: 20px;
+         font-weight: 600;
+         margin: 16px 0px 12px;
+     }
+
+     .call-type {
+         color: rgba(255, 255, 255, 0.9);
+         font-size: 14px;
+         margin: 0;
+     }
+
+     .call-controls {
+         display: flex;
+         justify-content: center;
+         gap: 24px;
+         padding: 24px;
+         background: #f8f9fa;
+     }
+
+     .decline-btn, .accept-btn {
+         width: 56px;
+         height: 56px;
+         border-radius: 50%;
+         border: none;
+         cursor: pointer;
+         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+     }
+
+     .decline-btn {
+         background: #dc3545;
+         box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+     }
+
+     .accept-btn {
+         background: #28a745;
+         box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+     }
+
+     .decline-btn:hover, .accept-btn:hover {
+         transform: translateY(-2px);
+     }
+
+     .decline-btn:active, .accept-btn:active {
+         transform: translateY(1px);
+     }
+
+     .decline-icon, .accept-icon {
+         width: 24px;
+         height: 24px;
+         fill: #fff;
+     }
+
+     @keyframes slideIn {
+         0% {
+             transform: translateX(100%);
+             opacity: 0;
+         }
+         100% {
+             transform: translateX(0);
+             opacity: 1;
+         }
+     }
+
+     @keyframes slideOut {
+         0% {
+             transform: translateX(0);
+             opacity: 1;
+         }
+         100% {
+             transform: translateX(100%);
+             opacity: 0;
+         }
+     }
+
+     @keyframes rippleEffect {
+         0% {
+             transform: scale(0.8);
+             opacity: 0.5;
+         }
+         100% {
+             transform: scale(1.5);
+             opacity: 0;
+         }
+     }
+
+     @media (max-width: 480px) {
+         .notification-container {
+             top: 16px;
+             right: 16px;
+             left: 16px;
+         }
+
+         .notification-content {
+             width: 100%;
+         }
+     }
