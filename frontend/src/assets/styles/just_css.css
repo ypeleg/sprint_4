@@ -2998,7 +2998,8 @@ td:hover {
 }
 
 .first-row {
-    position: relative
+    width: 100%;
+    position: relative;
 }
 
 .first-row::after {
@@ -4140,3 +4141,6 @@ main {
     right: 0;
     top: 0;
 }
+
+
+

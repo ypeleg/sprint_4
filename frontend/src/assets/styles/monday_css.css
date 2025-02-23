@@ -655,16 +655,16 @@ blockquote {
         line-height: 42px;
     }
 }
-.board-preview:hover .menu-icon-container {
+.monday-board-preview:hover .menu-icon-container {
     opacity: 1;
 }
-.board-preview div {
+.monday-board-preview div {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
 }
-.board-preview .menu-icon-container {
+.monday-board-preview .menu-icon-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -674,10 +674,10 @@ blockquote {
     border-radius: 4px;
     opacity: 0;
 }
-.board-preview .menu-icon-container .icon {
+.monday-board-preview .menu-icon-container .icon {
     font-size: calc($remSize * 1rem);
 }
-.board-preview .menu-icon-container.active {
+.monday-board-preview .menu-icon-container.active {
     background-color: #cce5ff;
 }
 .board-menu-modal {
