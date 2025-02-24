@@ -4126,6 +4126,7 @@ function Placeholder({placeholderHeight}) {
 
 
 function mapTrelloToMonday(hex) {
+    if (!hex) return undefined;
     // Pre-cached HSL values for Monday colors
     const mondayColors = [
         {hex: '#33d391', h: 151.2, s: 1.0, l: 0.39},    // strong green
@@ -4144,7 +4145,7 @@ function mapTrelloToMonday(hex) {
         {hex: '#784bd1', h: 258.0, s: 0.59, l: 0.56},   // purple
         {hex: '#579bfc', h: 215.6, s: 0.96, l: 0.66},   // lighter blue
         {hex: '#faa1f2', h: 305.3, s: 0.89, l: 0.79},   // pink
-        {hex: '#e8697d', h: 0.0, s: 1.0, l: 0.73},      // salmon
+        {hex: '#e2445c', h: 0.0, s: 1.0, l: 0.73},      // salmon
         {hex: '#225091', h: 213.7, s: 0.62, l: 0.35},   // medium blue
         {hex: '#9aadbd', h: 207.3, s: 0.20, l: 0.68},   // light grey-blue
         {hex: '#c4c4c4', h: 0.0, s: 0.0, l: 0.77},      // mid grey
@@ -4253,6 +4254,350 @@ function hexToHue(hex) {
         if (h < 0) h += 360;
     }
     return { hue: h };
+}
+
+
+function formatDateNicely(stringVar) {
+    const date = new Date(stringVar);
+    const options = { month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+
+function MondayTableTask({ idx, task, group, board, onLoadTask }) {
+  const dispatch = useDispatch();
+
+  // e.g. toggle done:
+  function onToggleDone(ev) {
+    ev.stopPropagation();
+    // or just do the same logic from your Kanban (update store, etc.)
+  }
+
+  // on open details:
+  function handleOpenTask(ev) {
+    ev.stopPropagation();
+    // same logic: onLoadTask(ev, task, group, ...)
+    onLoadTask(ev, task, null, group, board);
+  }
+
+  // get the mapped color for status
+  const statusColor = mapTrelloToMonday(group.style.backgroundColor)
+  // or if your tasks have .labels or .badges
+
+  // owners are in: task.members
+  // chat count might be: task.activity?.length
+
+  function statusToColor(status, dueDate) {
+    const isDone = status === 'done';
+    const isDateDue = dueDate && new Date(dueDate) < new Date();
+    if (isDone) return '#18c881';
+    if (isDateDue && !isDone) return '#df2f4a';
+    return '#fdab3d';
+  }
+
+  function statusToText(status, dueDate) {
+      if (status.toLowerCase().includes('done')) return 'Done';
+      if (dueDate && new Date(dueDate) < new Date()) return 'Stuck';
+      if (status.toLowerCase().includes('progress')) return 'Working on it';
+      return 'Stuck';
+  }
+
+  function isStuck(status, dueDate) {
+    return status.toLowerCase().includes('done') || (dueDate && new Date(dueDate) < new Date());
+  }
+
+  function isDone(status) {
+    return status.toLowerCase().includes('done');
+  }
+
+  return (
+    <section className="task-preview flex">
+      <div
+        className="sticky-div"
+        style={{
+          borderColor: mapTrelloToMonday(group.style?.backgroundColor),
+        }}
+      >
+        <div className="task-menu">
+          <svg viewBox="0 0 24 24" className="icon">{/* ... */}</svg>
+        </div>
+        <div className={`check-box monday-check-box check-box-${idx}`}>
+          <input type="checkbox" /* checked={task.status === 'done'} */ onChange={onToggleDone} />
+        </div>
+        <div className="monday-task-title picker flex align-center space-between">
+          <blockquote>
+            <span>{task.title}</span>
+          </blockquote>
+
+          {/* "Open" button or clickable area */}
+          <div className="open-task-details" onClick={handleOpenTask}>
+            {/* arrow icon */}
+            <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              {/* path */}
+            </svg>
+            <span className="open-btn">Open</span>
+          </div>
+
+          {/* Chat/Comments icon + count */}
+          <div className="chat-icon">
+            {!!task.activity?.length && (
+              <div>
+
+
+                    <svg className="comment-chat" strokeWidth="1.5" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true"  data-testid="icon">
+                        <path d="M10.4339 1.95001C11.5975 1.94802 12.7457 2.2162 13.7881 2.73345C14.8309 3.25087 15.7392 4.0034 16.4416 4.93172C17.1439 5.86004 17.6211 6.93879 17.8354 8.08295C18.0498 9.22712 17.9955 10.4054 17.6769 11.525C17.3582 12.6447 16.7839 13.675 15.9992 14.5348C15.2144 15.3946 14.2408 16.0604 13.1549 16.4798C12.0689 16.8991 10.9005 17.0606 9.74154 16.9514C8.72148 16.8553 7.73334 16.5518 6.83716 16.0612L4.29488 17.2723C3.23215 17.7786 2.12265 16.6693 2.6287 15.6064L3.83941 13.0637C3.26482 12.0144 2.94827 10.8411 2.91892 9.64118C2.88616 8.30174 3.21245 6.97794 3.86393 5.80714C4.51541 4.63635 5.46834 3.66124 6.62383 2.98299C7.77896 2.30495 9.09445 1.9483 10.4339 1.95001ZM10.4339 1.95001C10.4343 1.95001 10.4347 1.95001 10.4351 1.95001L10.434 2.70001L10.4326 1.95001C10.433 1.95001 10.4334 1.95001 10.4339 1.95001ZM13.1214 4.07712C12.2867 3.66294 11.3672 3.44826 10.4354 3.45001L10.4329 3.45001C9.3608 3.44846 8.30778 3.73387 7.38315 4.2766C6.45852 4.81934 5.69598 5.59963 5.17467 6.5365C4.65335 7.47337 4.39226 8.53268 4.41847 9.6045C4.44469 10.6763 4.75726 11.7216 5.32376 12.6319C5.45882 12.8489 5.47405 13.1198 5.36416 13.3506L4.28595 15.6151L6.54996 14.5366C6.78072 14.4266 7.05158 14.4418 7.26863 14.5768C8.05985 15.0689 8.95456 15.3706 9.88225 15.458C10.8099 15.5454 11.7452 15.4162 12.6145 15.0805C13.4837 14.7448 14.2631 14.2119 14.8912 13.5236C15.5194 12.8354 15.9791 12.0106 16.2341 11.1144C16.4892 10.2182 16.5327 9.27504 16.3611 8.35918C16.1895 7.44332 15.8075 6.57983 15.2453 5.83674C14.6831 5.09366 13.9561 4.49129 13.1214 4.07712Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
+                    </svg>
+
+                <div className="count-comment">{task.activity.length}</div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Owner column */}
+      <section className="task-person">
+        <div className="members-imgs monday-members-imgs">
+          {task.members?.slice(0,2).map((member, idx) => (
+            member.imgUrl ? (
+              <img key={member.id} className={`smaller-imgs member-img${idx+1} small-circle`} src={'/' + member.imgUrl} alt="member" />
+            ) : (
+              <div key={member.id} className={`monday-user-circle small-circle smaller-imgs member-img${idx+1} small-circle`} >
+                {member.fullname[0]}
+              </div>
+            )
+          ))}
+          {task.members && task.members.length > 2 && (
+            <div className="show-more-members">
+              <span className="show-more-count">+{task.members.length - 2}</span>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Status column */}
+      <section
+        className="status-priority-picker picker"
+        style={{ backgroundColor: statusToColor(task.status, task.dueDate) }}
+      >
+        <div className="label-text status-text">{statusToText(task.status, task.dueDate)}</div>
+        <span className="fold"></span>
+      </section>
+
+      {/* Due Date */}
+      <section className="picker date-picker-btn">
+        <div className="react-datepicker-wrapper">
+            <div className="no-inner-input_styles">
+
+                {(!isDone(task.status) && isStuck(task.status, task.dueDate)) && (
+                <svg style = {{ color: statusToColor(task.status, task.dueDate) }}
+                    viewBox="0 0 20 20" fill="currentColor" width="18" height="18" aria-hidden="true" class="icon_f74f57d4ab deadline-icon overdue" data-testid="icon"><path d="M10 10.977c-.414 0-.75-.355-.75-.793V6.369c0-.438.336-.792.75-.792s.75.354.75.792v3.815c0 .438-.336.793-.75.793Zm0 3.1a1 1 0 1 0 0-2.002 1 1 0 0 0 0 2.002Z"></path><path d="M15.638 15.636A7.97 7.97 0 1 1 4.366 4.364a7.97 7.97 0 0 1 11.272 11.272Zm-5.636.835a6.471 6.471 0 1 0 0-12.942 6.471 6.471 0 0 0 0 12.942Z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    )}
+
+
+                {isDone(task.status) && (
+                    <svg style = {{ color: statusToColor(task.status, task.dueDate) }}
+                    viewBox="0 0 20 20" fill="currentColor" width="18" height="18" aria-hidden="true" class="icon_f74f57d4ab deadline-icon" data-testid="icon"><path d="M8.53033 14.2478L8 13.7175L7.46967 14.2478C7.76256 14.5407 8.23744 14.5407 8.53033 14.2478ZM8 12.6569L4.53033 9.18718C4.23744 8.89429 3.76256 8.89429 3.46967 9.18718C3.17678 9.48008 3.17678 9.95495 3.46967 10.2478L7.46967 14.2478L8 13.7175L8.53033 14.2478L16.2478 6.53033C16.5407 6.23743 16.5407 5.76256 16.2478 5.46967C15.955 5.17677 15.4801 5.17677 15.1872 5.46967L8 12.6569Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                )}
+
+            <input
+                className = {`${isDone(task.status) ? 'date-done' : ''}`}
+              type="text"
+              value={formatDateNicely(task.dueDate)}
+              readOnly
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Priority Example */}
+
+
+      {/* Last Updated */}
+
+
+      {/* Filler to align columns */}
+      <div className="empty-div"></div>
+    </section>
+  );
+}
+
+
+function MondayTableGroup({ group, board, onLoadTask, ...props }) {
+  // Possibly track local expand/collapse state for the group
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const handleToggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  // For the group color, you might do:
+  // const groupColor = mapTrelloToMonday(group.style?.backgroundColor) || '#333';
+
+  return (
+    <ul className="group-preview flex column">
+      <div
+        className="group-header flex align-center"
+        style={{ color: mapTrelloToMonday(group.style?.backgroundColor) }}
+      >
+        <div className="group-header-title flex align-center">
+          {/* Arrow icon toggling */}
+          <svg
+            onClick={handleToggleCollapse}
+            viewBox="0 0 24 24"
+            className="arrow-icon"
+            // etc.
+          >
+            {/* Arrow path */}
+          </svg>
+
+          {/* Group menu */}
+          <div className="group-menu">
+            <svg viewBox="0 0 24 24" className="icon">{/* ... */}</svg>
+          </div>
+
+          {/* Group title & item count */}
+            <div className="group-title-info flex align-center">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="24" height="24"><path d="M10.5303 12.5303L10 12L9.46967 12.5303C9.76256 12.8232 10.2374 12.8232 10.5303 12.5303ZM10 10.9393L6.53033 7.46967C6.23744 7.17678 5.76256 7.17678 5.46967 7.46967C5.17678 7.76256 5.17678 8.23744 5.46967 8.53033L9.46967 12.5303L10 12L10.5303 12.5303L14.5303 8.53033C14.8232 8.23744 14.8232 7.76256 14.5303 7.46967C14.2374 7.17678 13.7626 7.17678 13.4697 7.46967L10 10.9393Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                <blockquote className="group-title monday-group-title">
+                    <h4>{group.title}</h4>
+                </blockquote>
+                <span className="task-count flex align-center">
+              {group.tasks.length} items
+            </span>
+            </div>
+        </div>
+      </div>
+
+        {/* The main table "header" row with column titles */}
+        <div className="group-preview-content">
+            <div className="title-container flex">
+                <div className="sticky-div titles flex" style={{borderColor: mapTrelloToMonday(group.style?.backgroundColor)}}>
+                    <div className="hidden"></div>
+                    <div className="check-box">
+              <input type="checkbox" />
+            </div>
+            <div className="monday-task title">Task</div>
+          </div>
+
+          {/* Next columns: Owner, Status, Date, Priority, Updated, etc. */}
+          <li className="member-picker cmp-order-title title">
+            Owner
+            <span className="open-modal-icon">{/* Three-dots icon */}</span>
+          </li>
+
+          <li className="status-picker cmp-order-title title">
+            Status
+            <span className="open-modal-icon">{/* Three-dots icon */}</span>
+          </li>
+
+          <li className="date-picker-btn cmp-order-title title">
+            Due Date
+            <span className="open-modal-icon">{/* Three-dots icon */}</span>
+          </li>
+
+          {/* etc. Could add Priority, Last Updated, etc. */}
+          <div className="add-picker-task flex align-items">
+            <span className="monday-add-btn">
+
+                <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18" aria-hidden="true" class="icon_f74f57d4ab add-column-menu-button__icon" data-testid="icon"><g id="Icon / Basic / Add"><path id="Union" d="M10 2.25C10.4142 2.25 10.75 2.58579 10.75 3V9.25H17C17.4142 9.25 17.75 9.58579 17.75 10C17.75 10.4142 17.4142 10.75 17 10.75H10.75V17C10.75 17.4142 10.4142 17.75 10 17.75C9.58579 17.75 9.25 17.4142 9.25 17V10.75H3C2.58579 10.75 2.25 10.4142 2.25 10C2.25 9.58579 2.58579 9.25 3 9.25H9.25V3C9.25 2.58579 9.58579 2.25 10 2.25Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></g></svg>
+
+            </span>
+          </div>
+        </div>
+
+        {/* 1) Task rows */}
+        {!isCollapsed && (
+          <>
+            {group.tasks.map((task, idx) => (
+              <li key={task.id}>
+                <MondayTableTask
+                  idx={idx}
+                  task={task}
+                  group={group}
+                  board={board}
+                  onLoadTask={onLoadTask}
+                  // other props
+                />
+              </li>
+            ))}
+
+            {/* 2) Add Task row */}
+            <div className="add-task flex">
+              <div
+                className="sticky-div"
+                style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor) }}
+              >
+                <div className="check-box add-task">
+                  <input type="checkbox" disabled />
+                </div>
+
+                {/* same <AddTaskForm> or your custom inline form */}
+                <form className="no-inner-input_styles add-task-form flex align-center" /* onSubmit=... */>
+                  <input type="text" name="title" placeholder="+ Add Task" />
+                </form>
+              </div>
+              <div className="empty-div"></div>
+            </div>
+          </>
+        )}
+
+        {/* 3) Group statistic row */}
+        {!isCollapsed && (
+          <div className="statistic flex">
+            <div className="sticky-container">
+              <div className="hidden"></div>
+            </div>
+            <div className="statistic-container flex">
+              {/* For Owner column, we might not need stats */}
+              <div className="title first member-picker"></div>
+
+              {/* For Status, show color distribution, e.g. done/stuck/progress */}
+              <div className="title status-picker">
+                {/* Example: We can compute the distribution.
+                    Suppose we figure out that 50% are done, 50% are stuck. */}
+                <span style={{ background: '#E2445C', width: '50%' }}></span>
+                <span style={{ background: '#00C875', width: '50%' }}></span>
+              </div>
+
+              {/* For date or priority columns, likewise. */}
+              <div id="monday-date-pill-above" className="title date-picker-btn monday-date-pill-above">
+                  <div className="monday-date-pill">
+                  Feb 2 - 4
+                  </div>
+              </div>
+              <div className="title priority-picker"></div>
+              <div className="title updated-picker"></div>
+            </div>
+          </div>
+        )}
+      </div>
+    </ul>
+  );
+}
+
+export function MondayBoardTableView({ board, onLoadTask, ...props }) {
+  // board will have: board.groups -> each group has group.tasks
+  // reused logic from Redux: e.g. updateBoard, dispatch, etc.
+  //   min-width: 32px;
+  return (
+    <div >
+      <section className="group-list">
+        <ul>
+          {board.groups.map((group) => (
+            <li key={group.id}>
+              <MondayTableGroup
+                group={group}
+                board={board}
+                onLoadTask={onLoadTask}
+                // pass more props for updating tasks, etc.
+              />
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  );
 }
 
 export function TopHeader({  }) {
@@ -5099,7 +5444,8 @@ export function MondayBoardDetails() {
                         setSortBy={setSortBy}
                     />
 
-                    <MondayTaskList board={board} onLoadTask={onLoadTask} />
+                    {/*<MondayTaskList board={board} onLoadTask={onLoadTask} />*/}
+                    <MondayBoardTableView board={board} onLoadTask={onLoadTask} />
                 </main>
             </section>
         </div>)

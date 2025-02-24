@@ -4997,3 +4997,8 @@ main {
 .status-indicator:hover svg {
     opacity: 0.7;
 }
+
+.monday-task {
+    width: 336px;
+
+}

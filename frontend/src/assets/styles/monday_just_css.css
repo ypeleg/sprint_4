@@ -1656,7 +1656,7 @@ button.monday-add-card-btn {
 /*    font-size: 12px;*/
 /*}*/
 
-/*.file-info {*/
+/*.fi`le-info {*/
 /*    margin-left: 8px;*/
 /*}*/
 
@@ -5635,4 +5635,63 @@ button.monday-add-card-btn {
     width: 16px;
     height: 16px;
     color: white;
+}
+
+.monday-add-btn {
+
+    background: white;
+    color: #323338;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    padding-left: 8px;
+}
+
+.monday-task-title {
+    font-size: 14px;
+}
+
+.no-inner-input_styles.add-task-form input {
+    text-align: left;
+    margin-left: 36px;
+    font-size: 14px;
+}
+
+img.smaller-imgs.small-circle {
+    height: 24px;
+    width: 24px;
+}
+
+.show-more-count {
+    aspect-ratio: 1;
+    height: 24px;
+    width: 24px;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#monday-date-pill-above {
+    border-top: 0px solid transparent;
+}
+
+.group-preview .title.updated-picker  {
+    border-top: 0px solid transparent;
+}
+
+.sticky-div>.check-box {
+    max-width: 32px;
+    /*max-width: 33px;*/
+}
+
+.date-done {
+    text-decoration: line-through;
+}
+
+.btn-plans svg {
+    color: #0073ea;
 }

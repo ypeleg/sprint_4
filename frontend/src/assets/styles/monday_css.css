@@ -826,6 +826,7 @@ blockquote {
     min-width: 140px;
     height: 36px;
     border: 1px solid rgba(143, 153, 191, 0.4);
+    border-left: 0px solid transparent;
     font-size: calc($remSize * 1rem);
 }
 .group-preview .title.task {
@@ -963,7 +964,7 @@ blockquote {
     outline: none;
     height: 36px;
     border-bottom: 1px solid rgba(143, 153, 191, 0.4);
-    border-top: 1px solid rgba(143, 153, 191, 0.4);
+    /*border-top: 1px solid rgba(143, 153, 191, 0.4);*/
     border-left: 1px solid rgba(143, 153, 191, 0.4);
     border-right: none;
 }
@@ -1014,6 +1015,8 @@ blockquote {
     height: 36px;
 }
 .statistic .first {
+    border-top: 0px solid transparent;
+    border-left: 1px solid rgba(143, 153, 191, 0.4);
     border-bottom-left-radius: 10px;
     /*overflow: hidden;*/
 }
@@ -1231,11 +1234,11 @@ blockquote {
     padding: 8px;
     gap: 8px;
 }
-.task-list-content-kanban .task-content, .task-list-content-kanban .task-title {
+.task-list-content-kanban .task-content, .task-list-content-kanban .monday-task-title {
     width: 100%;
     display: flex;
 }
-.task-list-content-kanban .task-title {
+.task-list-content-kanban .monday-task-title {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1245,7 +1248,7 @@ blockquote {
     position: relative;
     gap: 4px;
 }
-.task-list-content-kanban .task-title .chat-icon {
+.task-list-content-kanban .monday-task-title .chat-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1256,15 +1259,15 @@ blockquote {
     color: #c5c7d0;
     position: relative;
 }
-.task-list-content-kanban .task-title .chat-icon:hover {
+.task-list-content-kanban .monday-task-title .chat-icon:hover {
     color: #0073ea;
     cursor: pointer;
 }
-.task-list-content-kanban .task-title .chat-icon div {
+.task-list-content-kanban .monday-task-title .chat-icon div {
     display: flex;
     align-items: center;
 }
-.task-list-content-kanban .task-title .chat-icon .count-comment {
+.task-list-content-kanban .monday-task-title .chat-icon .count-comment {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1280,24 +1283,24 @@ blockquote {
     margin: 0;
     cursor: pointer;
 }
-.task-list-content-kanban .task-title .chat-icon .comment-chat {
+.task-list-content-kanban .monday-task-title .chat-icon .comment-chat {
     color: #0073ea;
 }
-.task-list-content-kanban .task-title .task-menu {
+.task-list-content-kanban .monday-task-title .task-menu {
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
 }
-.task-list-content-kanban .task-title .task-menu .icon {
+.task-list-content-kanban .monday-task-title .task-menu .icon {
     cursor: pointer;
     font-size: calc($remSize * 1rem);
     color: #676879;
 }
-.task-list-content-kanban .task-title .task-menu:hover {
+.task-list-content-kanban .monday-task-title .task-menu:hover {
     background-color: #dcdfec;
 }
-.task-list-content-kanban .task-content .task-titles-container li {
+.task-list-content-kanban .task-content .monday-task-titles-container li {
     margin-bottom: 8px;
     height: 36px;
 }
@@ -2608,48 +2611,49 @@ blockquote {
     height: 36px;
     min-width: 87px;
     position: relative;
-    border: 1px solid rgba(143, 153, 191, 0.4);
+    border-left: 1px solid rgba(143, 153, 191, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .task-preview .task-person .members-imgs, .task-preview-kanban .task-person .members-imgs {
-    width: 87px;
+    /*width: 87px;*/
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .task-preview .task-person .members-imgs > *, .task-preview-kanban .task-person .members-imgs > * {
-    height: calc($remSize * 1rem);
-    width: calc($remSize * 1rem);
+    /*height: calc($remSize * 1rem);*/
+    /*width: calc($remSize * 1rem);*/
     border-radius: 50%;
 }
 .task-preview .task-person .members-imgs .member-img1, .task-preview-kanban .task-person .members-imgs .member-img1 {
     margin-right: -5px;
     margin-left: 0;
-    width: 30px;
-    height: 30px;
+    /*width: 30px;*/
+    /*height: 30px;*/
 }
 .task-preview .task-person .members-imgs .member-img2, .task-preview-kanban .task-person .members-imgs .member-img2 {
     margin-left: -5px;
     margin-right: -5px;
-    height: 30px;
-    width: 30px;
+    /*height: 30px;*/
+    /*width: 30px;*/
 }
 .task-preview .task-person .members-imgs .show-more-members, .task-preview-kanban .task-person .members-imgs .show-more-members {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: calc($remSize * 1rem);
-    background-color: #323338;
+    /*font-size: calc($remSize * 1rem);*/
+    background-color: #3e3e42;
     margin-left: -5px;
-    border: 1px solid #d0d4e466;
-    padding: calc(($pixels/$context) * 1em);
+    /*border: 1px solid #d0d4e466;*/
+    /*padding: calc(($pixels/$context) * 1em);*/
     text-align: center;
-    width: 30px;
-    height: 30px;
+    /*width: 30px;*/
+    /*height: 30px;*/
     color: white;
+    z-index: 1;
 }
 .task-preview .task-person .icon-person, .task-preview-kanban .task-person .icon-person {
     color: rgba(143, 153, 191, 0.4);
@@ -3145,17 +3149,17 @@ blockquote {
     height: 36px;
     border: 1px solid rgba(143, 153, 191, 0.4);
 }
-.task-preview .task-title {
+.task-preview .monday-task-title {
     width: 336px;
     cursor: pointer;
 }
-.task-preview .task-title:hover .open-task-details {
+.task-preview .monday-task-title:hover .open-task-details {
     opacity: 1;
 }
-.task-preview .task-title blockquote {
+.task-preview .monday-task-title blockquote {
     height: 70%;
 }
-.task-preview .task-title .open-task-details {
+.task-preview .monday-task-title .open-task-details {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3164,11 +3168,11 @@ blockquote {
     color: #676879;
 }
 @media (max-width: calc($mobile-breakpoint + 40px)) {
-    .task-preview .task-title .open-task-details .open-btn {
+    .task-preview .monday-task-title .open-task-details .open-btn {
         display: none;
     }
 }
-.task-preview .task-title .chat-icon {
+.task-preview .monday-task-title .chat-icon {
     font-size: calc($remSize * 1rem);
     padding: 0 16px;
     height: 100%;
@@ -3179,15 +3183,15 @@ blockquote {
     justify-content: center;
     position: relative;
 }
-.task-preview .task-title .chat-icon .icon:hover {
+.task-preview .monday-task-title .chat-icon .icon:hover {
     color: #0073ea;
     cursor: pointer;
 }
-.task-preview .task-title .chat-icon div {
+.task-preview .monday-task-title .chat-icon div {
     display: flex;
     align-items: center;
 }
-.task-preview .task-title .chat-icon .count-comment {
+.task-preview .monday-task-title .chat-icon .count-comment {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3203,7 +3207,7 @@ blockquote {
     margin: 0;
     cursor: pointer;
 }
-.task-preview .task-title .chat-icon .comment-chat {
+.task-preview .monday-task-title .chat-icon .comment-chat {
     color: #0073ea;
 }
 .task-preview.on-typing {
@@ -3230,7 +3234,7 @@ blockquote {
     outline: 1px solid rgba(143, 153, 191, 0.4);
 }
 .task-preview .empty-div {
-    border-bottom: 1px solid rgba(143, 153, 191, 0.4);
+    border-bottom: 0px solid rgba(143, 153, 191, 0.4);
     flex-grow: 100%;
     padding-right: 188px;
 }
@@ -3440,3 +3444,116 @@ blockquote {
              width: 100%;
          }
      }
+
+.no-inner-input_styles input {
+
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: #676879;
+    /*width: 100%;*/
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    /*height: 100%;*/
+}
+
+.task-preview .picker {
+    border: 0px solid transparent;
+}
+
+.task-preview {
+    border-bottom: 1px solid rgba(143, 153, 191, 0.4);
+}
+
+.group-preview .check-box {
+    border: 0px solid transparent;
+    border-right: 1px solid rgba(143, 153, 191, 0.4);
+}
+
+
+.group-preview .check-box:last-of-type {
+    border-right: 0px solid transparent;
+    border-bottom: 1px solid rgba(143, 153, 191, 0.4);
+}
+
+.group-preview .check-box:first-of-type {
+    /*border-right: 0px solid transparent;*/
+    /*border-top: 1px solid rgba(143, 153, 191, 0.4);*/
+}
+
+
+.task-preview .monday-task-title blockquote {
+    overflow: hidden;
+}
+
+.count-comment {
+    font-size: 10px;
+}
+
+
+
+section.picker.date-picker-btn {
+    border-right: 1px solid rgba(143, 153, 191, 0.4);
+}
+
+
+img.smaller-imgs {
+    height: 24px;
+    width: 24px;
+}
+
+.monday-group-title,
+.monday-group-title>*,
+.monday-group-title>*>* {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin-bottom: 0px;
+    text-transform: capitalize;
+}
+
+.monday-date-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*gap: 8px;*/
+    /*padding: 4px 8px;*/
+    padding-block: 0px;
+    border-radius: 20px;
+    background-color: #579bfc;
+    /*color: #676879;*/
+    font-size: 12px;
+    font-weight: 400;
+    padding-inline: 16px;
+    color: white;
+
+}
+
+.check-box-0 {
+    border-top: 1px solid rgba(143, 153, 191, 0.4) !important;
+}
+
+.status-text {
+    text-transform: capitalize;
+}
+
+.no-inner-input_styles {
+    position: relative;
+}
+
+.no-inner-input_styles svg{
+    position: absolute;
+    top: 25%;
+    left: 5%;
+
+}
+
