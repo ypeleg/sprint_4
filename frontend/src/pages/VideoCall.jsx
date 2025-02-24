@@ -29,7 +29,7 @@ export function VideoCall() {
     const [localStream, setLocalStream] = useState(null);
     const [remoteStream, setRemoteStream] = useState(null);
 
-    const [callId, setCallId] = useState("");
+    const [callId, setCallId] = useState(routeCallId||"");
     const [isConnecting, setIsConnecting] = useState(false);
 
     const [isWebcamActive, setIsWebcamActive] = useState(false);
@@ -47,25 +47,34 @@ export function VideoCall() {
     const [users, setUsers] = useState([]);
     const [pickedUser, setPickedUser] = useState(null);
 
-    useEffect(() => {
+    useEffect(async() => {
         console.log("[VideoCall] Initializing Firebase + PeerConnection");
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        const app =   initializeApp(firebaseConfig);
+        const db =  getFirestore(app);
         setFirestore(db);
 
         const servers = {
             iceServers: [{urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"]},], iceCandidatePoolSize: 10,
         };
         const pc = new RTCPeerConnection(servers);
-
+        if (routeCallId) {
+            console.log("[Route] Auto-join ->", routeCallId);
+            setCallId(routeCallId);
+            (async () => {
+                 startWebcam(pc);
+                 answerCall(routeCallId, pc, db);
+            })();
+        }
+   
         // ontrack -> add incoming tracks to single remote stream
         pc.ontrack = (event) => {
             console.log("[ontrack] Remote track event ->", event.streams[0]);
             const remoteStreamObj = remoteMediaStreamRef.current;
-            event.streams[0].getTracks().forEach((track) => {
+             event.streams[0].getTracks().forEach(async (track) => {
                 console.log("[ontrack] Adding track ->", track.kind);
-                remoteStreamObj.addTrack(track);
+                 remoteStreamObj.addTrack(track);
             });
+                // debugger
             setRemoteStream(remoteStreamObj);
         };
 
@@ -74,8 +83,8 @@ export function VideoCall() {
             if (pc.iceConnectionState === "connected" || pc.iceConnectionState === "completed") {
                 console.log("[ICE] connected -> call established");
                 setIsConnecting(false);
-                const interval = setInterval(() => setCallTimer((prev) => prev + 1), 1000);
-                setTimerInterval(interval);
+                // const interval = setInterval(() => setCallTimer((prev) => prev + 1), 1000);
+                setTimerInterval(0);
             } else if (pc.iceConnectionState === "disconnected" || pc.iceConnectionState === "failed") {
                 console.log("[ICE] disconnected/failed -> stop call");
                 setIsConnecting(false);
@@ -87,14 +96,6 @@ export function VideoCall() {
 
         setPeerConnection(pc);
 
-        if (routeCallId) {
-            console.log("[Route] Auto-join ->", routeCallId);
-            setCallId(routeCallId);
-            (async () => {
-                await startWebcam(pc);
-                await answerCall(routeCallId, pc, db);
-            })();
-        }
 
         return () => {
             pc.close();
@@ -110,6 +111,7 @@ export function VideoCall() {
 
     useEffect(() => {
         if (remoteStream && remoteVideoRef.current) {
+            
             console.log("[RemoteStream] Attaching to remote video");
             remoteVideoRef.current.srcObject = remoteStream;
             remoteVideoRef.current
@@ -147,9 +149,9 @@ export function VideoCall() {
             }
 
             // Add tracks
-            stream.getTracks().forEach((track) => {
+            stream.getTracks().forEach( async(track) => {
                 console.log("[startWebcam] Adding local track ->", track.kind);
-                pc.addTrack(track, stream);
+              await pc.addTrack(track, stream);
             });
         } catch (err) {
             console.error("[startWebcam] Error:", err);
@@ -200,15 +202,15 @@ export function VideoCall() {
 
         try {
             console.log("[initiateCall] Creating Firestore doc...");
-            const callDocRef = doc(collection(firestore, "calls"));
-            const offerCandidates = collection(callDocRef, "offerCandidates");
-            const answerCandidates = collection(callDocRef, "answerCandidates");
+            const callDocRef =   doc(collection(firestore, "calls"));
+            const offerCandidates =  collection(callDocRef, "offerCandidates");
+            const answerCandidates =  collection(callDocRef, "answerCandidates");
             setCallId(callDocRef.id);
 
-            peerConnection.onicecandidate = (e) => {
+            peerConnection.onicecandidate = async(e) => {
                 if (e.candidate) {
                     console.log("[initiateCall] Local ICE ->", e.candidate);
-                    addDoc(offerCandidates, e.candidate.toJSON());
+                    await addDoc(offerCandidates, e.candidate.toJSON());
                 }
             };
 
@@ -226,22 +228,22 @@ export function VideoCall() {
                 callId: callDocRef.id, callerName: loggedUser?.fullname || "Unknown", callReceiver: userToCall._id, callerImg: loggedUser?.imgUrl || "",
             });
 
-            onSnapshot(callDocRef, (snapshot) => {
+            onSnapshot(callDocRef, async(snapshot) => {
                 const data = snapshot.data();
                 if (data?.answer && !peerConnection.currentRemoteDescription) {
                     console.log("[initiateCall] Remote answer ->", data.answer);
                     const answerDesc = new RTCSessionDescription(data.answer);
-                    peerConnection.setRemoteDescription(answerDesc);
+                    await peerConnection.setRemoteDescription(answerDesc);
                 }
             });
 
-            onSnapshot(answerCandidates, (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
+            onSnapshot(answerCandidates, async(snapshot) => {
+                snapshot.docChanges().forEach(async(change) => {
                     if (change.type === "added") {
-                        const candidateData = change.doc.data();
+                        const candidateData =  change.doc.data();
                         console.log("[initiateCall] Remote ICE ->", candidateData);
-                        const candidate = new RTCIceCandidate(candidateData);
-                        peerConnection.addIceCandidate(candidate);
+                        const candidate =  new RTCIceCandidate(candidateData);
+                        await peerConnection.addIceCandidate(candidate);
                     }
                 });
             });
@@ -272,13 +274,13 @@ export function VideoCall() {
         try {
             console.log("[answerCall] Reading doc: calls/", callIdToJoin);
             const callDocRef = doc(db, "calls", callIdToJoin);
-            const offerCandidates = collection(callDocRef, "offerCandidates");
-            const answerCandidates = collection(callDocRef, "answerCandidates");
+            const offerCandidates =  collection(callDocRef, "offerCandidates");
+            const answerCandidates =  collection(callDocRef, "answerCandidates");
 
-            pc.onicecandidate = (e) => {
+            pc.onicecandidate = async(e) => {
                 if (e.candidate) {
                     console.log("[answerCall] Local ICE ->", e.candidate);
-                    addDoc(answerCandidates, e.candidate.toJSON());
+                    await addDoc(answerCandidates, e.candidate.toJSON());
                 }
             };
 
@@ -296,7 +298,7 @@ export function VideoCall() {
             }
 
             console.log("[answerCall] Setting remote desc from offer...");
-            const offerDesc = new RTCSessionDescription(callData.offer);
+            const offerDesc =  new RTCSessionDescription(callData.offer);
             await pc.setRemoteDescription(offerDesc);
 
             console.log("[answerCall] Creating answer...");
@@ -307,12 +309,12 @@ export function VideoCall() {
             await setDoc(callDocRef, {answer: {type: answerDesc.type, sdp: answerDesc.sdp}}, {merge: true});
 
             onSnapshot(offerCandidates, (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
+                snapshot.docChanges().forEach(async(change) => {
                     if (change.type === "added") {
-                        const candidateData = change.doc.data();
+                        const candidateData =  change.doc.data();
                         console.log("[answerCall] Remote ICE (caller) ->", candidateData);
                         const candidate = new RTCIceCandidate(candidateData);
-                        pc.addIceCandidate(candidate);
+                        await pc.addIceCandidate(candidate);
                     }
                 });
             });
@@ -398,7 +400,7 @@ export function VideoCall() {
     };
 
     const hideUserPicker = Boolean(isConnecting || callId);
-
+    console.log('ha')
     return (<div className="video-call-container" onMouseMove={handleMouseMove}>
             <AppHeader useDarkTextColors={false}/>
 
