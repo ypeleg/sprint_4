@@ -3498,8 +3498,14 @@ export function BoardDetails() {
                 })
             })
             boardLabels = boardLabels.filter((label, index, self) =>
-                index === self.findIndex((t) => (
-                    t.id === label.id
+                index === self.findIndex((t) => ( () => {
+                    try {
+                        return t.id === label.id
+                    } catch {
+                        return false
+                    }
+                }
+                    
                 )))
             currentBoard.labels = boardLabels
             task.boardLabels = boardLabels

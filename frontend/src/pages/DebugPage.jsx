@@ -10,12 +10,17 @@ import {loadBoards, getEmptyBoard, getRandomBoard, loadBoard, addBoard, updateBo
 export function DebugPage() {
 
     const boards = useSelector(state => state.boardModule.boards)
-    const [boardToShow, setBoardToShow] = useState()
+    const [boardToShow, setBoardToShow] = useState(null)
 
+    useEffect(() => {
+        loadBoards()
+    }, [])
+    
     useEffect(() => {
         if (boards.length) {
 
             const selectedBoard = boards[0]
+            console.log('selectedBoard', selectedBoard)
             // const selectedBoard = filterBy...
             setBoardToShow(selectedBoard)
         }
@@ -25,14 +30,16 @@ export function DebugPage() {
         // getEmptyBoard().then(e => addBoard(e)).then(e => {
         // setBoardToShow(e)
         // })
-        addBoard(getRandomBoard())
+        // addBoard(getRandomBoard())
         // getRandomBoard().then(e => addBoard(e)).then(e => {
         // setBoardToShow(e)
         // })
 
     }, [])
 
-
+    if (!(boardToShow)) return (<div className="trello-loader">
+        <img src="trello-loader.svg" alt=""/>
+    </div>)
     return (
         <section className="actually-overflow">
 
