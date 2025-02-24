@@ -4546,7 +4546,7 @@ function MondayTableGroup({ group, board, onLoadTask, ...props }) {
         {!isCollapsed && (
           <div className="statistic flex">
             <div className="sticky-container">
-              <div className="hidden"></div>
+              {/* <div className="hidden"></div> */}
             </div>
             <div className="statistic-container flex">
               {/* For Owner column, we might not need stats */}
