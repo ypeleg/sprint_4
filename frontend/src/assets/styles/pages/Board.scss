@@ -525,6 +525,11 @@ header:not(.upper-bar-open) .highlighted-btn {
     color: #fff;
 }
 
+header:not(.upper-bar-open) .highlighted-btn.white-colors-btn {
+    background-color: rgba(0, 0, 0, 0.16);
+    color: #fff;
+}
+
 
 
 .picker-popup .search-container input::after {

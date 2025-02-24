@@ -4171,8 +4171,11 @@ main {
 }
 
 .roi svg {
-    color: white;
+    color: #172b4d;
+}
 
+.roi.white-logo svg {
+    color: white;
 }
 
 
