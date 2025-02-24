@@ -28,11 +28,12 @@ export function VideoCallNotification() {
     const [callId, setCallId] = useState(null);
     const [isVibrating, setIsVibrating] = useState(true);
     const [exitAnimation, setExitAnimation] = useState(false);
-    const loggedUser = useSelector((state) => state.userModule.user);
+    const loggedUser = useSelector(state => state.userModule.user);
     const navigate = useNavigate();
 
     useEffect(() => {
         socketService.on(INCOMING_SOCKET_CALL, (payload) => {
+            console.log(loggedUser)
             if (payload.callReceiver === loggedUser._id) {
                 setCallerName(payload.callerName);
                 setCallerImg(payload.callerImg);

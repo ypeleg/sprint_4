@@ -228,7 +228,7 @@ export function GroupList({
 
 
     return (
-        <section className="group-lists" style={{ display: "flex", flexDirection: "row" }}
+        <section id="group-lists" className="group-lists" 
             ref={containerRef}>
             {boardToShow?.groups?.map((group) => {
                 if (group.isMinimaized) {
