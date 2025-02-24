@@ -170,4 +170,33 @@
             }
         }
     }
+
+    
+    
+    
+}
+.show-decilend{
+
+    background-color: white;
+    position: absolute;
+    height: 100px;
+    width: 336px;
+    padding: 20px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    bottom: 70px;
+    left: 70px;
+    h3{
+        span{
+            font-size: 24px;
+            color: #1b222e;
+            font-weight: 500;
+        }
+    }
+    button{
+        position: absolute;
+        top: -5px;
+        right: 0;
+    }
 }

@@ -309,7 +309,7 @@ export const BOARD_ADDED = 'board-added'
 export const BOARD_UPDATED = 'board-updated'
 export const BOARD_REMOVED = 'board-removed'
 export const INCOMING_SOCKET_CALL = 'incoming-call'
-
+export const DECLINE_CALL = 'decline-call'
 
 export const socketService = createSocketService()
 
