@@ -53,7 +53,7 @@ export function VideoCall() {
         const db = getFirestore(app);
         setFirestore(db);
         socketService.on(DECLINE_CALL, (payload) => {
-            debugger
+            // debugger
             if (payload === loggedUser.fullname) {
                 setShowDeclined(true)
             }

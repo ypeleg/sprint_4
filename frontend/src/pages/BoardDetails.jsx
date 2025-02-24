@@ -3724,22 +3724,6 @@ export function BoardDetails() {
         updateBoard(boardCopy)
     }
 
-    // new code
-    // const [useDarkTextColors, setUseDarkTextColors] = useState(true)
-    // const [colorsSetted, setColorsSetted] = useState(false)
-    // const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(4, 44.3%, 76.1%, 0.9)')
-    // const [sidebarBorderColor, setSidebarBorderColor] = useState('#c2a5a7')
-    // const [headerBackgroundColor, setHeaderBackgroundColor] = useState('#e4bcb9')
-    // const [headerBorderColor, setHeaderBorderColor] = useState('#c2a5a7')
-
-
-
-    // const [useDarkTextColors, setUseDarkTextColors] = useState(true);
-    // const [colorsSetted, setColorsSetted] = useState(false);
-    // const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(208, 93%, 85%, 0.9)');
-    // const [sidebarBorderColor, setSidebarBorderColor] = useState('hsla(208, 93%, 75%, 0.15)');
-    // const [headerBackgroundColor, setHeaderBackgroundColor] = useState('hsla(208, 93%, 88%, 0.95)');
-    // const [headerBorderColor, setHeaderBorderColor] = useState('hsla(208, 93%, 75%, 0.15)');
 
     const [useDarkTextColors, setUseDarkTextColors] = useState(true);
     const [colorsSetted, setColorsSetted] = useState(false);
@@ -3749,23 +3733,18 @@ export function BoardDetails() {
     const [headerBorderColor, setHeaderBorderColor] = useState('hsla(208, 93%, 75%, 0.15)');
 
     useEffect(() => {
-        // Exit early if boardToShow is not available
         if (!boardToShow) return;
         if (colorsSetted) return;
 
-        // Extract the background image URL from boardToShow.style.backgroundImage
         let rawUrl = boardToShow.style?.backgroundImage || "";
         const match = rawUrl.match(/url\(["']?(.*?)["']?\)/);
         if (match && match[1]) rawUrl = match[1];
         if (!rawUrl) {
-            // Fallback to a default image if no URL is provided
             rawUrl = "https://picsum.photos/600/300?random=877";
         }
 
-        // Flag to prevent state updates after component unmount
         let isCancelled = false;
 
-        // Helper function to convert RGB to HSL
         function rgbToHsl(r, g, b) {
             r /= 255;
             g /= 255;
@@ -3776,7 +3755,7 @@ export function BoardDetails() {
             let l = (max + min) / 2;
 
             if (max === min) {
-                h = s = 0; // Achromatic (grayscale)
+                h = s = 0;
             } else {
                 const d = max - min;
                 s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
@@ -3795,75 +3774,62 @@ export function BoardDetails() {
                 }
                 h /= 6;
             }
-            return [h * 360, s, l]; // Hue (0-360), Saturation (0-1), Lightness (0-1)
+            return [h * 360, s, l];
         }
 
-        // Function to generate colors based on average RGB
         function getTrelloColors(r, g, b) {
             let [h, s, l] = rgbToHsl(r, g, b);
 
-            // Handle grayscale images (saturation < 10%)
             if (s < 0.1) {
-                h = 208; // Default to a soft blue hue
+                h = 208;
             }
 
             const base = {
                 h: h,
-                s: 50, // Fixed saturation (50%) for pastel effect
+                s: 50,
             };
 
-            // Adjust lightness based on original lightness for contrast
-            if (l >= 0.5) {
-                base.l = 90; // Light background for dark text
-            } else {
-                base.l = 40; // Dark background for white text
-            }
+            if (l >= 0.5) { base.l = 90;
+            } else { base.l = 40 }
 
             return {
                 sidebar: `hsla(${base.h}, ${base.s}%, ${base.l}%, 0.9)`,
                 header: `hsla(${base.h}, ${base.s}%, ${Math.min(base.l + 5, 95)}%, 0.95)`,
                 border: `hsla(${base.h}, 40%, ${base.l >= 50 ? 75 : 35}%, 0.15)`,
-                isDark: base.l >= 50, // True if light background (use dark text)
+                isDark: base.l >= 50,
             };
         }
-
-        // Fallback colors using default blue hue
         function applyFallbackColors() {
             const fallback = {
-                h: 208, // Default blue hue
-                s: 50, // Fixed saturation
-                l: 90, // Default to light background
+                h: 208,
+                s: 50,
+                l: 90,
             };
-            setSidebarBackgroundColor(`hsla(${fallback.h}, ${fallback.s}%, ${fallback.l}%, 0.9)`);
-            setHeaderBackgroundColor(`hsla(${fallback.h}, ${fallback.s}%, 95%, 0.95)`);
-            setSidebarBorderColor(`hsla(${fallback.h}, 40%, 75%, 0.15)`);
-            setHeaderBorderColor(`hsla(${fallback.h}, 40%, 75%, 0.15)`);
-            setUseDarkTextColors(true); // Default to dark text
-            setColorsSetted(true);
+            setSidebarBackgroundColor(`hsla(${fallback.h}, ${fallback.s}%, ${fallback.l}%, 0.9)`)
+            setHeaderBackgroundColor(`hsla(${fallback.h}, ${fallback.s}%, 95%, 0.95)`)
+            setSidebarBorderColor(`hsla(${fallback.h}, 40%, 75%, 0.15)`)
+            setHeaderBorderColor(`hsla(${fallback.h}, 40%, 75%, 0.15)`)
+            setUseDarkTextColors(true)
+            setColorsSetted(true)
         }
 
-        // Load and process the image
-        const img = new Image();
-        img.crossOrigin = "Anonymous";
-        img.referrerPolicy = "no-referrer";
-
+        const img = new Image()
+        img.crossOrigin = "Anonymous"
+        img.referrerPolicy = "no-referrer"
         img.onload = () => {
             if (isCancelled) return;
 
             try {
-                // Downscale the image to 50x50 for efficient color sampling
-                const canvas = document.createElement("canvas");
-                const ctx = canvas.getContext("2d");
-                canvas.width = 50;
-                canvas.height = 50;
-                ctx.drawImage(img, 0, 0, 50, 50);
+                const canvas = document.createElement("canvas")
+                const ctx = canvas.getContext("2d")
+                canvas.width = 50
+                canvas.height = 50
+                ctx.drawImage(img, 0, 0, 50, 50)
 
-                // Get the image data
-                const { data } = ctx.getImageData(0, 0, 50, 50);
-                let rSum = 0, gSum = 0, bSum = 0;
-                const numPixels = 50 * 50;
+                const { data } = ctx.getImageData(0, 0, 50, 50)
+                let rSum = 0, gSum = 0, bSum = 0
+                const numPixels = 50 * 50
 
-                // Calculate the sum of R, G, B values
                 for (let i = 0; i < numPixels; i++) {
                     const idx = i * 4;
                     rSum += data[idx];
@@ -3871,35 +3837,31 @@ export function BoardDetails() {
                     bSum += data[idx + 2];
                 }
 
-                // Compute the average RGB
                 const r = Math.round(rSum / numPixels);
                 const g = Math.round(gSum / numPixels);
                 const b = Math.round(bSum / numPixels);
 
-                // Generate colors based on the average RGB
-                const colors = getTrelloColors(r, g, b);
-                setSidebarBackgroundColor(colors.sidebar);
-                setHeaderBackgroundColor(colors.header);
-                setSidebarBorderColor(colors.border);
-                setHeaderBorderColor(colors.border);
-                setUseDarkTextColors(colors.isDark); // Set text color based on background lightness
-                setColorsSetted(true);
+                const colors = getTrelloColors(r, g, b)
+                setSidebarBackgroundColor(colors.sidebar)
+                setHeaderBackgroundColor(colors.header)
+                setSidebarBorderColor(colors.border)
+                setHeaderBorderColor(colors.border)
+                setUseDarkTextColors(colors.isDark)
+                setColorsSetted(true)
             } catch (error) {
-                console.error("Error processing image colors:", error);
-                applyFallbackColors();
+                console.error("Error processing image colors:", error)
+                applyFallbackColors()
             }
-        };
+        }
 
         img.onerror = () => {
             if (!isCancelled) {
-                console.error("Error loading image");
-                applyFallbackColors();
+                console.error("Error loading image")
+                applyFallbackColors()
             }
         };
 
         img.src = rawUrl;
-
-        // Cleanup to prevent state updates after unmount
         return () => {
             isCancelled = true;
         };

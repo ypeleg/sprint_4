@@ -36,6 +36,7 @@ export default [
             'no-unused-vars': 'warn',
             //   'react/react-in-jsx-scope': 'off',
             'no-empty-pattern': 'off',
+            'react-hooks/exhaustive-deps': 'off',
             'no-case-declarations': 'off',
             'no-extra-boolean-cast': 'off',
             'no-constant-condition': 'off',
