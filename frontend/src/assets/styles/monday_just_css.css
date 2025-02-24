@@ -33,7 +33,7 @@ header {
     border: 0px;
 }
 
-.board-main {
+.monday-board-main {
     border-radius: 8px 0px 0px 8px;
     /*margin-top: 16px;*/
     background-color: #ffffff;
@@ -44,7 +44,7 @@ header {
 .board-details {
     background-color: #eceff8;
     /*overflow: hidden;*/
-    height: calc(100vh - 200px);
+    /*height: calc(100vh - 200px);*/
 }
 
 main {
@@ -5370,6 +5370,7 @@ button.monday-add-card-btn {
 /* Board Preview Cards */
 .monday-board-preview {
     width: 254px;
+    /*width: 200px;*/
     /*height: 135px;*/
     background: white;
     border-radius: 4px;

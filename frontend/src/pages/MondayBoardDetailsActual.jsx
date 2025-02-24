@@ -5088,7 +5088,7 @@ export function MondayBoardDetails() {
             <TopHeader/>
             <section className="board-details flex">
                 <MondaySidebar/>
-                <main className="board-main">
+                <main className="monday-board-main">
                     <MondayBoardHeader
                         board={board}
                         searchQuery={searchQuery}

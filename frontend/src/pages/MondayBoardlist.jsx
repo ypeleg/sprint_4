@@ -1060,7 +1060,7 @@ export function MondayBoardIndex() {
         <TopHeader/>
         <section className="board-details flex">
             <MondaySidebar/>
-            <main className="board-main">
+            <main className="monday-board-main">
 
                 {/*<MondayBoardHeader board={workspaceBoard} searchQuery={searchQuery} setSearchQuery={setSearchQuery} filterText={filterText} setFilterText={setFilterText} sortBy={sortBy} setSortBy={setSortBy}/>*/}
 

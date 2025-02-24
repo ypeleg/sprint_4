@@ -244,13 +244,14 @@ button {
     border: none;
     color: whitesmoke;
 }
-.board-main {
+
+.monday-board-main {
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
     /*overflow: auto;*/
 }
 @media (max-width: calc($mobile-breakpoint + 40px)) {
-    .board-main {
+    .monday-board-main {
         height: 92vh;
     }
 }
