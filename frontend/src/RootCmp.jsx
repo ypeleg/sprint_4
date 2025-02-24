@@ -9,6 +9,7 @@ import { DebugPage } from './pages/DebugPage.jsx'
 import { BoardIndex } from './pages/BoardIndex.jsx'
 import { BoardDetails } from './pages/BoardDetails.jsx'
 import { MondayBoardDetails } from './pages/MondayBoardDetailsActual.jsx'
+import { MondayBoardIndex } from './pages/MondayBoardlist.jsx'
 
 
 import { useSelector } from "react-redux"
@@ -130,14 +131,24 @@ export function RootCmp() {
             <VideoCallNotification />
             <main>
                 <Routes>
+                    {/*home*/}
                     <Route path="/home" element={<HomePage />} />
-                    <Route path="/" element={<BoardIndex />} />
-                    <Route path="/monday/:boardId" element={<MondayBoardDetails />} />
-                    <Route path="/:boardId" element={<BoardDetails />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/debug" element={<DebugPage />} />
+
+                    {/* trello (index + board) */}
+                    <Route path="/" element={<BoardIndex />} />
+                    <Route path="/:boardId" element={<BoardDetails />} />
+
+                    {/* monday (index + board) */}
+                    <Route path="/monday" element={<MondayBoardIndex/>} />
+                    <Route path="/monday/:boardId" element={<MondayBoardDetails />} />
+
+                    {/* video calls */}
                     <Route path="/video" element={<VideoCall />} />
                     <Route path="/video/:callId" element={<VideoCall />} />
+
+                    <Route path="/debug" element={<DebugPage />} />
+
                 </Routes>
             </main>
         </div>
