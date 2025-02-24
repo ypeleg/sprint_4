@@ -12,11 +12,64 @@ import { MondayBoardDetails } from './pages/MondayBoardDetailsActual.jsx'
 import { MondayBoardIndex } from './pages/MondayBoardlist.jsx'
 
 
+
+
+
+
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { VideoCall } from './pages/VideoCall.jsx'
 import { DECLINE_CALL, INCOMING_SOCKET_CALL, socketService } from "./services/util.service.js"
+
+import { useRef } from "react"
+import { eventBusService } from "./services/util.service.js"
+
+
+export function UserMsg() {
+    const [msg, setMsg] = useState(null);
+    const timeoutIdRef = useRef();
+
+    useEffect(() => {
+        const unsubscribe = eventBusService.on('show-user-msg', (msg) => {
+            console.log('Got msg', msg);
+            setMsg(msg);
+
+            if (timeoutIdRef.current) {
+                clearTimeout(timeoutIdRef.current);
+                timeoutIdRef.current = null;
+            }
+
+            if (msg.type !== 'spinner') {
+                timeoutIdRef.current = setTimeout(closeMsg, 3000);
+            }
+        });
+        return unsubscribe;
+    }, []);
+
+    function closeMsg() {
+        setMsg(null);
+    }
+
+    if (!msg) return <span></span>;
+
+    return (
+        <div className={`trello-notification ${msg.type}`}>
+            {msg.type === 'spinner' && (
+                <div className="spinner-icon"></div>
+            )}
+            <div className="trello-notification-content">
+                <p className="trello-notification-message">
+                    {msg.txt}
+                </p>
+            </div>
+            <button className="trello-notification-close" onClick={closeMsg}>
+                ×
+            </button>
+        </div>
+    );
+}
+
 
 const ANIMATION_DURATION = 400;
 const VIBRATION_INTERVAL = 1000;
@@ -132,6 +185,7 @@ export function VideoCallNotification() {
 export function RootCmp() {
     return (
         <div className="main-container">
+            <UserMsg />
             <VideoCallNotification />
             <main>
                 <Routes>

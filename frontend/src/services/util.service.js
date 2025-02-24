@@ -206,7 +206,9 @@ function createEventEmitter() {
 }
 
 export function showUserMsg(msg) { eventBusService.emit('show-user-msg', msg) }
+export function showSpinner(txt) { showUserMsg({txt, type: 'spinner'}) }
 export function showSuccessMsg(txt) { showUserMsg({txt, type: 'success'}) }
+export function showSimpleMsg(txt) { showUserMsg({txt, type: 'simple'}) }
 export function showErrorMsg(txt) { showUserMsg({txt, type: 'error'}) }
 
 function query(entityType, delay = 500) {

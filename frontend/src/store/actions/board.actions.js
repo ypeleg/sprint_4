@@ -101,6 +101,7 @@ export async function loadBoard(boardId, filterBy = { title: '' }) {
         store.dispatch(getCmdSetBoard(board))
        
         if (USE_AI) {
+            console.log('inside', board.generator)
             if (board.generator === 'getRandomBoard') {
                 aiGenerator().then(
                     aiBoard => {

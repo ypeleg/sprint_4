@@ -1721,14 +1721,14 @@ const userFriendlyTopics = [
 
 
 
-// import OpenAI from 'openai'
-// import { API_KEY } from './secrets.js'
-import { random, showUserMsg } from './util.service.js'
+import OpenAI from 'openai'
+import { API_KEY } from './secrets.js'
+import { random, showUserMsg, showSuccessMsg, showErrorMsg, showSpinner } from './util.service.js'
 
 
 let openai = null
 
-async function generateText(prompt, temperature = 1.0, fallback = '') {
+async function generateText(prompt, temperature = 1.0, fallback = '', length = 128) {
     openai = new OpenAI({
         dangerouslyAllowBrowser: true,
         apiKey: API_KEY,
@@ -1741,7 +1741,7 @@ async function generateText(prompt, temperature = 1.0, fallback = '') {
             model: 'gpt-3.5-turbo',
             temperature,
             // max_tokens: 8192,
-            max_tokens: 4096,
+            max_tokens: length,
             messages: [{ role: 'user', content: prompt }],
         })
         let text = response.choices?.[0]?.message?.content?.trim() || ''
@@ -1873,6 +1873,7 @@ GPT_USER_POOL = gUsersPool
 async function initUserPool() {
     if (GPT_USER_POOL.length) return
 
+    console.log('users')
     const fallbackPool = [
         { _id: 'u101', fullname: 'Ava Placeholder', imgUrl: '' },
         { _id: 'u102', fullname: 'Ben Placeholder', imgUrl: '' },
@@ -1904,8 +1905,11 @@ Return only valid JSON. e.g.
         users = fallbackPool
     }
 
+    console.log('users 2')
+
     if (users.length < 5) {
         while (users.length < 5) {
+            console.log('users 4', users.length)
             users.push({
                 _id: 'u_' + random.id(),
                 fullname: 'FallbackUser ' + random.id(),
@@ -1913,6 +1917,9 @@ Return only valid JSON. e.g.
             })
         }
     }
+
+    console.log('users 3')
+
     if (users.length > 8) users = users.slice(0, 8)
 
     for (let u of users) {
@@ -2076,7 +2083,7 @@ create a short but realistic task. Format EXACTLY as:
 "Title: XYZ; Description: ABC"
 Return no extra text or code blocks, just that line.
 `
-    const response = await generateText(prompt, 1.0, fallbackResp)
+    const response = await generateText(prompt, 1.0, fallbackResp, 128)
     let taskTitle = 'RandomTask'
     let taskDescription = 'No desc from GPT'
     const match = response.match(/Title:\s*(.+?);\s*Description:\s*(.+)/)
@@ -2096,8 +2103,34 @@ Return no extra text or code blocks, just that line.
         createdAt: random.date('2024-01-01', '2026-12-31'),
         description: taskDescription,
         checklists: await generateChecklists(boardTitle, groupTitle),
-        members: random.sample(GPT_USER_POOL, random.randint(0, GPT_USER_POOL.length)),
-        style: await generateTaskStyle(),
+        // members: random.sample(GPT_USER_POOL, random.randint(0, GPT_USER_POOL.length)),
+        members: random.sample(GPT_USER_POOL, random.randint(0, 5)),
+        // style: await generateTaskStyle(),
+        style:
+            random.choice([
+                {
+                    backgroundColor: (getRandomColorLabels()),
+                    coverSize: random.choice(['small', 'large'])
+                },
+                {
+                    backgroundImage: random.choice([
+                        null, null, null, `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                        'cover-img.png', 'cover-img-1.png', 'cover-img-2.png', 'cover-img-3.png', 'amination_gif.gif',
+                    ]),
+                    coverSize: random.choice(['small', 'large'])
+                },
+                {
+
+                },
+                {
+
+                },
+                {
+
+                }
+
+            ]),
+
         badges,
         attachments: getRandomAttachments(),
         activity: generateTaskActivities(taskTitle),
@@ -2225,6 +2258,52 @@ function generateTaskActivities(taskTitle) {
 }
 
 async function generateGroups(boardTitle) {
+    const fallback = `Home; Work; Personal`;
+    const groupCount = random.randint(5, 8);
+    const prompt = `
+Board: "${boardTitle}"
+Generate ${groupCount} short sub-topics/group-titles/task-lists about the topic of this board and everyday life, work or task categories related to this board topic, separated by semicolons.
+Example: "Groceries; Home Maintenance; Work Projects; Financial Plan; Everyday; Project General Goals; Wishlist"
+No code blocks, just semicolons.
+`;
+    const text = await generateText(prompt, 1.0, fallback);
+    let groupTitles = text.split(';').map(t => t.trim()).filter(Boolean);
+    if (groupTitles.length < groupCount) {
+        while (groupTitles.length < groupCount) {
+            groupTitles.push('Group ' + random.id().slice(0, 3));
+        }
+    }
+    groupTitles = groupTitles.slice(0, groupCount);
+
+    // Generate each group concurrently.
+    const groups = await Promise.all(
+        groupTitles.map(async title => {
+            const taskCount = random.randint(3, 6);
+            // Generate tasks concurrently for this group.
+            const tasks = await Promise.all(
+                Array.from({ length: taskCount }, () => generateTask(boardTitle, title))
+            );
+            const backgroundColor = getRandomColor();
+            return {
+                id: random.id(),
+                title,
+                archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),
+                tasks,
+                style: {
+                    backgroundColor,
+                    color: getColorFromBackgroundColor(backgroundColor),
+                },
+                watched: random.choice([true, false]),
+                isMinimaized: random.choice([true, false]),
+            };
+        })
+    );
+
+    return groups;
+}
+
+
+async function generateGroupsSeq(boardTitle) {
     const fallback = `Home; Work; Personal`
     const groupCount = random.randint(5, 8)
     const prompt = `
@@ -2242,12 +2321,15 @@ No code blocks, just semicolons.
     }
     groupTitles = groupTitles.slice(0, groupCount)
 
+    let totalTasks = 0
     const groups = []
     for (let title of groupTitles) {
         const taskCount = random.randint(3, 6)
         const tasks = []
         for (let i = 0; i < taskCount; i++) {
+            console.log('task', totalTasks, 'from ', taskCount * groupCount)
             tasks.push(await generateTask(boardTitle, title))
+            totalTasks += 1
         }
         const backgroundColor = getRandomColor()
         groups.push({
@@ -2303,9 +2385,10 @@ function getRandomBoardActivities(board) {
 
 export async function getRandomBoardAI() {
 
+    showUserMsg('AI: Generating new board..')
     console.log(' ---- GENERATING AI BOARD -----')
 
-    console.log('Progress: 1')
+    // console.log('Progress: 1')
 
     await initUserPool()
 
@@ -2341,14 +2424,15 @@ Return just the name, no extra text.
     const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackBoardTitle)
 
     // showUserMsg('progress')
-    console.log('Progress: 2')
+    // console.log('Progress: 2')
+    showSpinner('AI: Generating board..')
 
     const groups = await generateGroups(boardTitle)
 
-    console.log('Progress: 3')
+    // console.log('Progress: 3')
     const labels = await generateLabels(boardTitle)
 
-    console.log('Progress: 4')
+    // console.log('Progress: 4')
     for (const group of groups) {
         for (const task of group.tasks) {
             const labelSubset = random.sample(labels.map((lbl) => lbl.id), random.randint(0, labels.length))
@@ -2357,7 +2441,7 @@ Return just the name, no extra text.
         }
     }
 
-    console.log('Progress: 5')
+    // console.log('Progress: 5')
 
     const createdBy = random.choice(GPT_USER_POOL) || {
         _id: 'u_fallback',
@@ -2377,7 +2461,31 @@ Return just the name, no extra text.
             imgUrl: createdBy.imgUrl,
         },
         style: {
-            backgroundImage: `https://picsum.photos/600/300?random=${random.randint(1, 1000)}`,
+            backgroundImage:
+                random.choice([
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    'color_1.svg',
+                    'color_2.svg',
+                    'color_3.svg',
+                    'color_4.svg',
+                    'color_5.svg',
+                    'color_6.svg',
+                    'color_7.svg',
+                    'color_8.svg',
+                    'color_9.svg',
+                    'color_10.svg',
+                    'color_11.svg',
+                    ])
+
         },
         labels,
         members: GPT_USER_POOL,
@@ -2386,13 +2494,15 @@ Return just the name, no extra text.
         cmpsOrder: random.sample(CMP_ORDER_OPTIONS, random.randint(2, CMP_ORDER_OPTIONS.length)),
     }
 
-    console.log('Progress: 6')
+    // console.log('Progress: 6')
 
     board.activities = getRandomBoardActivities(board)
 
-    console.log('Progress: 7')
+    // console.log('Progress: 7')
 
-    console.log('Final Board from GPT:', board)
+    // console.log('Final Board from GPT:', board)
+
+    showSuccessMsg('AI: Board generation complete!')
 
     board.generator = 'getRandomBoardAI'
     return board

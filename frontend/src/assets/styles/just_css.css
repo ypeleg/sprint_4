@@ -5002,3 +5002,228 @@ main {
     width: 336px;
 
 }
+
+
+
+
+.trello-notification {
+    gap: 12px;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    padding: 16px;
+    position: fixed;
+    font-size: 24px;
+    min-width: 300px;
+    font-weight: bold;
+    align-items: center;
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    animation: slide-in 0.3s ease-out;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+    z-index: 3000;
+}
+
+.trello-notification-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.trello-notification-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 4px 0;
+}
+
+.trello-notification-message {
+    margin: 0;
+    color: #666;
+    font-size: 20px;
+}
+
+.trello-notification-close {
+    color: #999;
+    margin: -4px;
+    padding: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    background: transparent;
+
+    margin-left: 12px;
+}
+
+.trello-notification-content { flex: 1; }
+.trello-notification-close:hover { color: #666; }
+.trello-notification.error { border-left: 4px solid #ff3b30; }
+.trello-notification.success { border-left: 4px solid #34c759;}
+
+.trello-notification.success-spinner {
+
+}
+
+
+
+@keyframes slide-in {
+    0% {
+        translate: 100% 0;
+        opacity: 0;
+    }
+    100% {
+        translate: 0 0;
+        opacity: 1;
+    }
+}
+
+
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 15px rgba(52, 199, 89, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(52, 199, 89, 0.7); }
+  100% { box-shadow: 0 0 15px rgba(52, 199, 89, 0.4); }
+}
+
+@keyframes slide-in {
+  0% { transform: translateX(30px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+.trello-notification {
+  gap: 12px;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  padding: 16px;
+  position: fixed;
+  font-size: 24px;
+  min-width: 300px;
+  font-weight: bold;
+  align-items: center;
+  border-radius: 12px;
+  animation: slide-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35);
+  transform-origin: right top;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 9999;
+}
+
+.trello-notification:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.4);
+}
+
+.trello-notification-content {
+  flex: 1;
+}
+
+.trello-notification-message {
+  margin: 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.trello-notification-close {
+  color: #777;
+  margin: -8px;
+  padding: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  background: transparent;
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  margin-left: 12px;
+}
+
+.trello-notification-close:hover {
+  color: #333;
+  background: #f0f0f0;
+  transform: rotate(90deg) scale(1.1);
+}
+
+.trello-notification.error {
+  border-left: 4px solid #ff3b30;
+  background: linear-gradient(to right, #fff0f0, #ffffff);
+  /*box-shadow: 0 10px 25px -5px rgba(255, 59, 48, 0.25);*/
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.trello-notification.success {
+  border-left: 4px solid #34c759;
+  background: linear-gradient(to right, #f0fff5, #ffffff);
+  box-shadow: 0 10px 25px -5px rgba(52, 199, 89, 0.25);
+}
+
+.trello-notification.simple {
+  /*border-left: 4px solid #999;*/
+  border-left: 4px solid #218c3e;
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: slide-in 0.3s ease;
+}
+
+.trello-notification.spinner {
+  border-left: 4px solid #34c759;
+  background: linear-gradient(135deg, #f5fff9, #ffffff);
+  animation: slide-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), pulse-glow 3s infinite ease-in-out;
+}
+
+.spinner-icon {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(52, 199, 89, 0.15);
+  border-radius: 50%;
+  border-top-color: #34c759;
+  border-left-color: #34c759;
+  animation: spin 0.8s infinite cubic-bezier(0.6, 0.2, 0.4, 0.8);
+  margin-right: 12px;
+  position: relative;
+}
+
+.spinner-icon::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(52, 199, 89, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.trello-notification.spinner .trello-notification-message {
+  font-weight: 500;
+  color: #218c3e;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .trello-notification {
+    left: 20px;
+    right: 20px;
+    width: calc(100% - 40px);
+    max-width: none;
+    min-width: auto;
+  }
+}

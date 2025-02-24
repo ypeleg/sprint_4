@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { getEmptyUser, signup, login } from "../store/store.js"
-import { showSuccessMsg, showErrorMsg } from "../services/util.service.js"
+import { showSuccessMsg, showSimpleMsg, showErrorMsg } from "../services/util.service.js"
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode';
 const GOOGLE_CLIENT_ID = "742335397862-9a6i4r97803l0k4at1o6i6i6m3ojcmvp.apps.googleusercontent.com"
@@ -148,7 +148,7 @@ export function Login() {
     try {
       await login({ ...credentials, loginType: "userNameAndPassword" })
       navigate('/')
-      showSuccessMsg('Logged in successfully')
+      showSimpleMsg('Logged in successfully')
     } catch (err) {
       setLoginError(`⚠ Something wrong, please try again`)
       showErrorMsg('Oops, try again')
@@ -162,7 +162,7 @@ export function Login() {
     try {
       await login({ oAuthCredentials: credential, loginType: "google" })
       navigate('/');
-      showSuccessMsg('Logged in successfully with Google!');
+      showSimpleMsg('Logged in successfully with Google!');
     } catch (err) {
       setLoginError(`⚠ Something wrong, please try again`)
       showErrorMsg('Oops, try again')

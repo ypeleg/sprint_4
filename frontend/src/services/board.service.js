@@ -10,9 +10,9 @@ export let USE_AI = false
 export let aiGenerator = null
 
 
-// USE_AI = true
-// import { getRandomBoardAI } from './data_ai.js'
-// aiGenerator = getRandomBoardAI
+USE_AI = true
+import { getRandomBoardAI } from './data_ai.js'
+aiGenerator = getRandomBoardAI
 // localStorage.clear()
 
 
@@ -274,7 +274,7 @@ export const remoteBoardService = {
     _createBoards: async () => {
         try {
             const boardIds = []
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 20; i++) {
                 const board = getRandomBoard()
                 const savedBoard = await remoteBoardService.save(board)
                 boardIds.push(savedBoard._id)

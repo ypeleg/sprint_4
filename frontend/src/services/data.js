@@ -331,7 +331,32 @@ export function getRandomBoard() {
             imgUrl: createdBy.imgUrl
         },
         style: {
-            backgroundImage: `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+            backgroundImage:                 random.choice([
+                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                'color_1.svg',
+                'color_2.svg',
+                'color_3.svg',
+                'color_4.svg',
+                'color_5.svg',
+                'color_6.svg',
+                'color_7.svg',
+                'color_8.svg',
+                'color_9.svg',
+                'color_10.svg',
+                'color_11.svg',
+            ])
+
+
+                // `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
         },
         labels: getRandomLabels(),
         members: gUsersPool,

@@ -6,12 +6,10 @@ export function GroupTable() {
     const boardToShow = useSelector((state) => state.boardModule.board);
     const dispatch = useDispatch();
 
-    // Flatten tasks for a single droppable area, preserving group info
     const flatTasks = boardToShow.groups.flatMap((group) => group.tasks.map((task) => ({
         ...task, groupId: group.id, groupTitle: group.title,
     })));
 
-    // Handle drag end: reorder tasks and update group associations
     const handleDragEnd = (result) => {
         const {source, destination} = result;
         if (!destination) return;
@@ -23,7 +21,6 @@ export function GroupTable() {
         const [movedTask] = tasksCopy.splice(sourceIndex, 1);
         tasksCopy.splice(destIndex, 0, movedTask);
 
-        // Reconstruct groups based on new task order
         const updatedGroups = boardToShow.groups.map((group) => ({
             ...group, tasks: [],
         }));
@@ -42,7 +39,6 @@ export function GroupTable() {
 
             const groupIndex = updatedGroups.findIndex((g) => g.id === targetGroupId);
             if (groupIndex === -1) {
-                // Fallback to original group if target not found
                 updatedGroups[originalGroupIndex].tasks.push({
                     ...task, groupId: undefined, groupTitle: undefined,
                 });
@@ -57,7 +53,6 @@ export function GroupTable() {
         dispatch(updateBoard(updatedBoard));
     };
 
-    // Handle task title edit
     const handleTitleBlur = (e, taskId) => {
         const newTitle = e.target.innerText;
         const updatedGroups = boardToShow.groups.map((group) => ({
@@ -67,7 +62,6 @@ export function GroupTable() {
         dispatch(updateBoard(updatedBoard));
     };
 
-    // Handle group title edit
     const handleGroupTitleBlur = (e, groupId) => {
         const newTitle = e.target.innerText;
         const updatedGroups = boardToShow.groups.map((group) => group.id === groupId ? {...group, title: newTitle} : group);
