@@ -88,7 +88,7 @@ export function VideoCall() {
             if (pc.iceConnectionState === "connected" || pc.iceConnectionState === "completed") {
                 console.log("[ICE] connected -> call established");
                 setIsConnecting(false);
-                // const interval = setInterval(() => setCallTimer((prev) => prev + 1), 1000);
+                const interval = setInterval(() => setCallTimer((prev) => prev + 1), 1000);
                 setTimerInterval(0);
             } else if (pc.iceConnectionState === "disconnected" || pc.iceConnectionState === "failed") {
                 console.log("[ICE] disconnected/failed -> stop call");
