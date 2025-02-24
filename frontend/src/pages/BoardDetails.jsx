@@ -440,7 +440,17 @@ export function QuickEdit({
         })
         return boardCopy
     }
-
+    function calcAside(){
+      
+        const windowHeight = window.innerHeight
+        
+        let desiredTop = y
+        debugger
+        if (desiredTop + 348 +30 > windowHeight) {
+            desiredTop = -desiredTop -348 + windowHeight -30
+        }else desiredTop =0
+        return desiredTop +'px'
+    }
     function updateTaskState(changes) {
         const boardCopy = task.board
         const groupIdx = boardCopy.groups.findIndex((g) => g.id === task.group.id)
@@ -462,7 +472,7 @@ export function QuickEdit({
 
         updateBoard(cleanBoard(boardCopy))
     }
-
+    const asideTop = calcAside()
     return (<>
             <div onClick={closePopupOnlyIfClickedOutOfIt} className="quick-edit-container">
                 <div className="quick-edit-content" style={{top: y, left: x}}>
@@ -478,7 +488,7 @@ export function QuickEdit({
 
                         {/*</div>*/}
 
-                        <aside style={{marginLeft: w * 1.05}}>
+                        <aside style={{top:asideTop,marginLeft: w * 1.05,position:'absolute'}}>
                             <div className="option" onClick={(ev) => {
                                 closePopupOnlyIfClickedOutOfIt(ev)
                                 // togglePopup(ev)
@@ -550,7 +560,7 @@ export function QuickEdit({
                         </aside>
                     </div>
                 </div>
-                {/* MEMBERS PICKER */} {showPickerMembers && (<div className="picker-popup" style={{left: pickerLeft, top: pickerTop}}>
+                {/* MEMBERS PICKER */} {showPickerMembers && (<div className="picker-popup" style={{left: pickerLeft, top: pickerTop,height:'360px'}}>
                 <div className="picker-header">
                     <h3>Members</h3>
                     <button className="task-modal-close" onClick={hidePicker}>
@@ -559,19 +569,20 @@ export function QuickEdit({
                         </svg>
                     </button>
                 </div>
-                <div className="search-container">
+                {/* <div className="search-container">
                     <input type="text" placeholder="Search members"/>
-                </div>
-                <div>
+                </div> */}
+                <div style={{overflowY:'scroll'}}>
+                <div >
                     <h4>Card members</h4>
                     <div className="members-list">
-                        {members.map((m) => (<div key={m._id} className="member-item just-flex" onClick={() => onRemoveMember(m)}>
+                        {members.map((m) => (<div key={m._id} className="member-item just-flex" >
                             <div className="just-flex">
                                 {m.imgUrl ? (<div className="user-circle" style={{backgroundImage: `url(${m.imgUrl})`}}></div>) : (<div className="user-circle">
                                     {m.fullname?.split(" ")[0][0]?.toUpperCase() || ""} {m.fullname?.split(" ")[1]?.[0]?.toUpperCase() || ""}
                                 </div>)} <span>{m.fullname}</span>
                             </div>
-                            <button className="task-modal-close" onClick={hidePicker}>
+                            <button className="task-modal-close" onClick={() => onRemoveMember(m)}>
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                                 </svg>
@@ -588,15 +599,17 @@ export function QuickEdit({
                                     {m.fullname?.split(" ")[0][0]?.toUpperCase() || ""} {m.fullname?.split(" ")[1]?.[0]?.toUpperCase() || ""}
                                 </div>)} <span>{m.fullname}</span>
                             </div>
-                            <button className="task-modal-close" onClick={hidePicker}>
+                            {/* <button className="task-modal-close" onClick={hidePicker}>
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
                                 </svg>
-                            </button>
+                            </button> */}
                         </div>))}
+                </div>
                     </div>
                 </div>
             </div>)}
+                
 
                 {/* LABELS PICKER */} {showPickerLabels && (<div className="picker-popup"
 
