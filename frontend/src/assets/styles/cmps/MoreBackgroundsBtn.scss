@@ -83,24 +83,3 @@
   background-color: blue;
 }
 
-.boardsearch{
-  position:'absolute';
-  width:'300px';
-  background-color:'white';
-  max-height: 200px;
-  overflow-y: scroll;
-   top:'40px';
-   .borad-option{
-    color:'black';
-    display:'flex';
-    gap:'8px';
-    margin-top:'8px';
-    padding:'8px;';
-     width:'100%';
-     img{
-      width:'30px';
-      height:'30px';
-      border-radius:'50%';
-     }
-   }
-}
