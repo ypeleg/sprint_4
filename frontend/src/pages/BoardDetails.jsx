@@ -445,7 +445,7 @@ export function QuickEdit({
         const windowHeight = window.innerHeight
         
         let desiredTop = y
-        debugger
+        // debugger
         if (desiredTop + 348 +30 > windowHeight) {
             desiredTop = -desiredTop -348 + windowHeight -30
         }else desiredTop =0

@@ -54,7 +54,7 @@ export function FilterCards({ el, setShowFilter }) {
     }
     console.log(boardToShow)
     return (
-        <div tabIndex="0" className="filter-cards-container"  >
+        <div tabIndex="0" className="filter-cards-container header-popup recent-popup popup-opens-right"  >
             <div className="filter-content">
                 <header className="filter-header">
 
