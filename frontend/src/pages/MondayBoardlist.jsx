@@ -835,12 +835,11 @@ export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterTe
 }
 
 
-export function MondayBoardList({boards}) {
+export function MondayBoardList({boards, loggedUser}) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const starredBoards = boards.filter((board) => board.isStarred);
 
     function onToggleStar(board, ev) {
@@ -869,7 +868,7 @@ export function MondayBoardList({boards}) {
 
         <div className="monday-boardlist-header">
             <div className="header-left">
-                <div className="header-greeting">Good night, Yam!</div>
+                <div className="header-greeting">Good night, {loggedUser?.fullname}</div>
                 <div className="header-subtitle">Quickly access your recent boards, Inbox and workspaces</div>
             </div>
             <div className="header-right">
@@ -1065,7 +1064,7 @@ export function MondayBoardIndex() {
 
                 {/*<MondayBoardHeader board={workspaceBoard} searchQuery={searchQuery} setSearchQuery={setSearchQuery} filterText={filterText} setFilterText={setFilterText} sortBy={sortBy} setSortBy={setSortBy}/>*/}
 
-                <MondayBoardList boards={boards}/>
+                <MondayBoardList boards={boards} loggedUser={loggedUser}/>
 
             </main>
         </section>
