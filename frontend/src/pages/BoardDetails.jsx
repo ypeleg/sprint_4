@@ -3751,6 +3751,7 @@ export function BoardDetails() {
     useEffect(() => {
         // Exit early if boardToShow is not available
         if (!boardToShow) return;
+        if (colorsSetted) return;
 
         // Extract the background image URL from boardToShow.style.backgroundImage
         let rawUrl = boardToShow.style?.backgroundImage || "";
@@ -3902,7 +3903,7 @@ export function BoardDetails() {
         return () => {
             isCancelled = true;
         };
-    }, []);
+    }, [boardToShow]);
 
 
     if (!(boardToShow && colorsSetted)) return (<div className="trello-loader">

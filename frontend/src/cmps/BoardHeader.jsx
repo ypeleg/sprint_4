@@ -29,7 +29,7 @@ export function BoardHeader({ onSetActivityMenu, onSetTable, onStarBoard, isStar
                     // backgroundImage: `url(${selectedBoard.style?.backgroundImage})`
 
 
-                    backgroundColor: (!useDarkTextColors? "rgba(55, 52, 48, 0.5)" : "rgba(255, 255, 255, 0.2)"),
+                    backgroundColor: (!useDarkTextColors? "rgba(55, 52, 48, 0.5)" : "rgba(255, 255, 255, 0.4)"),
                     // borderColor: borderColor,
                     color: (useDarkTextColors? '#172b4d': 'white')
                 }}>
