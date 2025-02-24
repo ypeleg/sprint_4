@@ -3902,7 +3902,7 @@ export function BoardDetails() {
         return () => {
             isCancelled = true;
         };
-    }, [boardToShow]);
+    }, []);
 
 
     if (!(boardToShow && colorsSetted)) return (<div className="trello-loader">
