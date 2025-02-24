@@ -16,7 +16,7 @@ import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { VideoCall } from './pages/VideoCall.jsx'
-import { INCOMING_SOCKET_CALL, socketService } from "./services/util.service.js"
+import { DECLINE_CALL, INCOMING_SOCKET_CALL, socketService } from "./services/util.service.js"
 
 const ANIMATION_DURATION = 400;
 const VIBRATION_INTERVAL = 1000;
@@ -67,6 +67,7 @@ export function VideoCallNotification() {
     const handleDecline = () => {
         setIsVibrating(false);
         setExitAnimation(true);
+        socketService.emit(DECLINE_CALL,callerName)
         setTimeout(() => setShowCall(false), ANIMATION_DURATION);
     };
 

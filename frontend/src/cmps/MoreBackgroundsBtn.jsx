@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 export function MoreBackgroundsBtn({ onClose, onChangeBg, setSelectedBg, elMoreBg }) {
 
   const loc = elMoreBg.getBoundingClientRect()
-  const inset = `auto ${loc.left}px auto ${loc.top}px`
 
 
   const initialBackgroundColor = [
@@ -51,7 +50,7 @@ export function MoreBackgroundsBtn({ onClose, onChangeBg, setSelectedBg, elMoreB
   }
 
   return (
-    <div className="mini-modal-content" style={{ inset }}>
+    <div className="mini-modal-content">
       <div className="modal-header ">
         <div className="title">Board background</div>
         <button className="close-btn" onClick={onClose}>

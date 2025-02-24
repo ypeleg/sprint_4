@@ -1,11 +1,11 @@
-import {useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
-import {initializeApp} from "firebase/app";
-import {AppHeader} from "../cmps/AppHeader";
-import {useEffect, useState, useRef} from "react";
-import {userService} from "../services/user.service";
-import {OUTGOING_VIDEO_CALL, socketService} from "../services/util.service";
-import {getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot} from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { initializeApp } from "firebase/app";
+import { AppHeader } from "../cmps/AppHeader";
+import { useEffect, useState, useRef } from "react";
+import { userService } from "../services/user.service";
+import { DECLINE_CALL, OUTGOING_VIDEO_CALL, socketService } from "../services/util.service";
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot } from "firebase/firestore";
 
 
 const firebaseConfig = {
@@ -20,7 +20,7 @@ export function VideoCall() {
     const callInputRef = useRef(null)
     const remoteMediaStreamRef = useRef(new MediaStream())
 
-    const {callId: routeCallId} = useParams();
+    const { callId: routeCallId } = useParams();
     const loggedUser = useSelector((state) => state.userModule.user);
 
     const [firestore, setFirestore] = useState(null);
@@ -29,7 +29,7 @@ export function VideoCall() {
     const [localStream, setLocalStream] = useState(null);
     const [remoteStream, setRemoteStream] = useState(null);
 
-    const [callId, setCallId] = useState(routeCallId||"");
+    const [callId, setCallId] = useState(routeCallId || "");
     const [isConnecting, setIsConnecting] = useState(false);
 
     const [isWebcamActive, setIsWebcamActive] = useState(false);
@@ -46,35 +46,40 @@ export function VideoCall() {
     const [showUserPicker, setShowUserPicker] = useState(true);
     const [users, setUsers] = useState([]);
     const [pickedUser, setPickedUser] = useState(null);
-
-    useEffect(async() => {
+    const [showDeclined, setShowDeclined] = useState(false)
+    useEffect(async () => {
         console.log("[VideoCall] Initializing Firebase + PeerConnection");
-        const app =   initializeApp(firebaseConfig);
-        const db =  getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
         setFirestore(db);
-
+        socketService.on(DECLINE_CALL, (payload) => {
+            debugger
+            if (payload === loggedUser.fullname) {
+                setShowDeclined(true)
+            }
+        })
         const servers = {
-            iceServers: [{urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"]},], iceCandidatePoolSize: 10,
+            iceServers: [{ urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"] },], iceCandidatePoolSize: 10,
         };
         const pc = new RTCPeerConnection(servers);
         if (routeCallId) {
             console.log("[Route] Auto-join ->", routeCallId);
             setCallId(routeCallId);
             (async () => {
-                 startWebcam(pc);
-                 answerCall(routeCallId, pc, db);
+                startWebcam(pc);
+                answerCall(routeCallId, pc, db);
             })();
         }
-   
+
         // ontrack -> add incoming tracks to single remote stream
         pc.ontrack = (event) => {
             console.log("[ontrack] Remote track event ->", event.streams[0]);
             const remoteStreamObj = remoteMediaStreamRef.current;
-             event.streams[0].getTracks().forEach(async (track) => {
+            event.streams[0].getTracks().forEach(async (track) => {
                 console.log("[ontrack] Adding track ->", track.kind);
-                 remoteStreamObj.addTrack(track);
+                remoteStreamObj.addTrack(track);
             });
-                // debugger
+            // debugger
             setRemoteStream(remoteStreamObj);
         };
 
@@ -83,7 +88,7 @@ export function VideoCall() {
             if (pc.iceConnectionState === "connected" || pc.iceConnectionState === "completed") {
                 console.log("[ICE] connected -> call established");
                 setIsConnecting(false);
-                // const interval = setInterval(() => setCallTimer((prev) => prev + 1), 1000);
+                const interval = setInterval(() => setCallTimer((prev) => prev + 1), 1000);
                 setTimerInterval(0);
             } else if (pc.iceConnectionState === "disconnected" || pc.iceConnectionState === "failed") {
                 console.log("[ICE] disconnected/failed -> stop call");
@@ -111,7 +116,7 @@ export function VideoCall() {
 
     useEffect(() => {
         if (remoteStream && remoteVideoRef.current) {
-            
+
             console.log("[RemoteStream] Attaching to remote video");
             remoteVideoRef.current.srcObject = remoteStream;
             remoteVideoRef.current
@@ -136,7 +141,7 @@ export function VideoCall() {
 
         try {
             console.log("[startWebcam] Getting user media...");
-            const stream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
             console.log("[startWebcam] localStream ->", stream);
             setLocalStream(stream);
             setIsWebcamActive(true);
@@ -149,9 +154,9 @@ export function VideoCall() {
             }
 
             // Add tracks
-            stream.getTracks().forEach( async(track) => {
+            stream.getTracks().forEach(async (track) => {
                 console.log("[startWebcam] Adding local track ->", track.kind);
-              await pc.addTrack(track, stream);
+                await pc.addTrack(track, stream);
             });
         } catch (err) {
             console.error("[startWebcam] Error:", err);
@@ -202,12 +207,12 @@ export function VideoCall() {
 
         try {
             console.log("[initiateCall] Creating Firestore doc...");
-            const callDocRef =   doc(collection(firestore, "calls"));
-            const offerCandidates =  collection(callDocRef, "offerCandidates");
-            const answerCandidates =  collection(callDocRef, "answerCandidates");
+            const callDocRef = doc(collection(firestore, "calls"));
+            const offerCandidates = collection(callDocRef, "offerCandidates");
+            const answerCandidates = collection(callDocRef, "answerCandidates");
             setCallId(callDocRef.id);
 
-            peerConnection.onicecandidate = async(e) => {
+            peerConnection.onicecandidate = async (e) => {
                 if (e.candidate) {
                     console.log("[initiateCall] Local ICE ->", e.candidate);
                     await addDoc(offerCandidates, e.candidate.toJSON());
@@ -220,7 +225,7 @@ export function VideoCall() {
 
             console.log("[initiateCall] Writing offer to Firestore...");
             await setDoc(callDocRef, {
-                offer: {sdp: offerDesc.sdp, type: offerDesc.type},
+                offer: { sdp: offerDesc.sdp, type: offerDesc.type },
             });
 
             console.log("[initiateCall] Emitting socket event (OUTGOING_VIDEO_CALL)...");
@@ -228,7 +233,7 @@ export function VideoCall() {
                 callId: callDocRef.id, callerName: loggedUser?.fullname || "Unknown", callReceiver: userToCall._id, callerImg: loggedUser?.imgUrl || "",
             });
 
-            onSnapshot(callDocRef, async(snapshot) => {
+            onSnapshot(callDocRef, async (snapshot) => {
                 const data = snapshot.data();
                 if (data?.answer && !peerConnection.currentRemoteDescription) {
                     console.log("[initiateCall] Remote answer ->", data.answer);
@@ -237,12 +242,12 @@ export function VideoCall() {
                 }
             });
 
-            onSnapshot(answerCandidates, async(snapshot) => {
-                snapshot.docChanges().forEach(async(change) => {
+            onSnapshot(answerCandidates, async (snapshot) => {
+                snapshot.docChanges().forEach(async (change) => {
                     if (change.type === "added") {
-                        const candidateData =  change.doc.data();
+                        const candidateData = change.doc.data();
                         console.log("[initiateCall] Remote ICE ->", candidateData);
-                        const candidate =  new RTCIceCandidate(candidateData);
+                        const candidate = new RTCIceCandidate(candidateData);
                         await peerConnection.addIceCandidate(candidate);
                     }
                 });
@@ -274,10 +279,10 @@ export function VideoCall() {
         try {
             console.log("[answerCall] Reading doc: calls/", callIdToJoin);
             const callDocRef = doc(db, "calls", callIdToJoin);
-            const offerCandidates =  collection(callDocRef, "offerCandidates");
-            const answerCandidates =  collection(callDocRef, "answerCandidates");
+            const offerCandidates = collection(callDocRef, "offerCandidates");
+            const answerCandidates = collection(callDocRef, "answerCandidates");
 
-            pc.onicecandidate = async(e) => {
+            pc.onicecandidate = async (e) => {
                 if (e.candidate) {
                     console.log("[answerCall] Local ICE ->", e.candidate);
                     await addDoc(answerCandidates, e.candidate.toJSON());
@@ -298,7 +303,7 @@ export function VideoCall() {
             }
 
             console.log("[answerCall] Setting remote desc from offer...");
-            const offerDesc =  new RTCSessionDescription(callData.offer);
+            const offerDesc = new RTCSessionDescription(callData.offer);
             await pc.setRemoteDescription(offerDesc);
 
             console.log("[answerCall] Creating answer...");
@@ -306,12 +311,12 @@ export function VideoCall() {
             await pc.setLocalDescription(answerDesc);
 
             console.log("[answerCall] Saving answer in Firestore...");
-            await setDoc(callDocRef, {answer: {type: answerDesc.type, sdp: answerDesc.sdp}}, {merge: true});
+            await setDoc(callDocRef, { answer: { type: answerDesc.type, sdp: answerDesc.sdp } }, { merge: true });
 
             onSnapshot(offerCandidates, (snapshot) => {
-                snapshot.docChanges().forEach(async(change) => {
+                snapshot.docChanges().forEach(async (change) => {
                     if (change.type === "added") {
-                        const candidateData =  change.doc.data();
+                        const candidateData = change.doc.data();
                         console.log("[answerCall] Remote ICE (caller) ->", candidateData);
                         const candidate = new RTCIceCandidate(candidateData);
                         await pc.addIceCandidate(candidate);
@@ -344,7 +349,7 @@ export function VideoCall() {
         remoteMediaStreamRef.current = new MediaStream();
 
         const servers = {
-            iceServers: [{urls: ["stun:stun1.l.google.com:19302"]}], iceCandidatePoolSize: 10,
+            iceServers: [{ urls: ["stun:stun1.l.google.com:19302"] }], iceCandidatePoolSize: 10,
         };
         const newPc = new RTCPeerConnection(servers);
         newPc.ontrack = (event) => {
@@ -402,80 +407,90 @@ export function VideoCall() {
     const hideUserPicker = Boolean(isConnecting || callId);
     console.log('ha')
     return (<div className="video-call-container" onMouseMove={handleMouseMove}>
-            <AppHeader useDarkTextColors={false}/>
+        <AppHeader useDarkTextColors={false} />
 
-            <div className="video-grid">
-                <div className="remote-video-container">
-                  (<video ref={remoteVideoRef} autoPlay playsInline style={{width: "600px", height: "400px", background: "black"}} className="remote-video"/>)
-                </div>
-
-                <div className="local-video-wrapper">
-                    {isLoadingCamera ? (<div className="loading">Starting camera...</div>) : localStream ? (<video ref={webcamVideoRef} autoPlay playsInline muted style={{width: "240px", height: "180px", background: "#333"}} className="local-video"/>) : (<div className="no-video">No local video</div>)}
-
-                    {localStream && (<div className="video-overlay">
-              <span className="recording-indicator">
-                <span className="dot"/>
-                Live
-              </span>
-                        </div>)}
-                </div>
+        <div className="video-grid">
+            <div className="remote-video-container">
+                (<video ref={remoteVideoRef} autoPlay playsInline style={{ width: "600px", height: "400px", background: "black" }} className="remote-video" />)
             </div>
 
-            <div className={`control-bar ${showControls ? "visible" : ""}`}>
-                <div className="control-section left">
-                    <div className="timer">{formatTimer(callTimer)}</div>
-                </div>
-                <div className="control-section center">
-                    <button className={`control-btn ${isAudioOn ? "active" : ""}`} onClick={toggleAudio} title={isAudioOn ? "Mute" : "Unmute"} disabled={!localStream}>
-                        <svg viewBox="0 0 24 24" className="control-icon">
-                            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-                            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-                        </svg>
-                    </button>
+            <div className="local-video-wrapper">
+                {isLoadingCamera ? (<div className="loading">Starting camera...</div>) : localStream ? (<video ref={webcamVideoRef} autoPlay playsInline muted style={{ width: "240px", height: "180px", background: "#333" }} className="local-video" />) : (<div className="no-video">No local video</div>)}
 
-                    <button className={`control-btn ${isVideoOn ? "active" : ""}`} onClick={toggleVideo} title={isVideoOn ? "Turn Off Video" : "Turn On Video"} disabled={!localStream}>
-                        <svg viewBox="0 0 24 24" className="control-icon">
-                            <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
-                        </svg>
-                    </button>
-
-                    <button className="control-btn" onClick={() => setShowUserPicker(!showUserPicker)} title="Search Users" disabled={hideUserPicker}>
-                        <svg viewBox="0 0 24 24" className="control-icon">
-                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99 1.49-1.49-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                        </svg>
-                    </button>
-
-                    <button className="control-btn danger" onClick={hangUp} title="End Call" disabled={!localStream}>
-                        <svg viewBox="0 0 24 24" className="control-icon">
-                            <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17l-3.59-3.59L8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41l-3.59 3.59L17 15.59z"/>
-                        </svg>
-                    </button>
-                </div>
-                <div className="control-section right">
-                    <button className="control-btn" title="More Options">
-                        <svg viewBox="0 0 24 24" className="control-icon">
-                            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
-                        </svg>
-                    </button>
-                </div>
+                {localStream && (<div className="video-overlay">
+                    <span className="recording-indicator">
+                        <span className="dot" />
+                        Live
+                    </span>
+                </div>)}
             </div>
+        </div>
 
-            {!hideUserPicker && showUserPicker && (<div className="user-search-overlay">
-                    <div className="search-container no-mag-glass">
-                        <input type="text" placeholder="Search users to call..." value={userFilter} onChange={onUserFilter} className="search-input" autoFocus/>
-                    </div>
-                    {users.length > 0 && (<div className="user-list">
-                            {users.map((u) => (<div key={u._id} className="user-item">
-                                    <img src={u.imgUrl || "roi.png"} alt={u.fullname}/> <span>{u.fullname}</span>
-                                    <button onClick={() => initiateCall(u)}>Call</button>
-                                </div>))}
-                        </div>)}
-                </div>)}
+        <div className={`control-bar ${showControls ? "visible" : ""}`}>
+            <div className="control-section left">
+                <div className="timer">{formatTimer(callTimer)}</div>
+            </div>
+            <div className="control-section center">
+                <button className={`control-btn ${isAudioOn ? "active" : ""}`} onClick={toggleAudio} title={isAudioOn ? "Mute" : "Unmute"} disabled={!localStream}>
+                    <svg viewBox="0 0 24 24" className="control-icon">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+                    </svg>
+                </button>
 
-            {!pickedUser && (<div className="join-call">
-                    <input ref={callInputRef} placeholder="Enter call ID to join" value={callId} onChange={(e) => setCallId(e.target.value)}/>
-                    <button onClick={() => answerCall(callId)}>Join Call</button>
-                </div>)}
-        </div>);
+                <button className={`control-btn ${isVideoOn ? "active" : ""}`} onClick={toggleVideo} title={isVideoOn ? "Turn Off Video" : "Turn On Video"} disabled={!localStream}>
+                    <svg viewBox="0 0 24 24" className="control-icon">
+                        <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" />
+                    </svg>
+                </button>
+
+                <button className="control-btn" onClick={() => setShowUserPicker(!showUserPicker)} title="Search Users" disabled={hideUserPicker}>
+                    <svg viewBox="0 0 24 24" className="control-icon">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99 1.49-1.49-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                    </svg>
+                </button>
+
+                <button className="control-btn danger" onClick={hangUp} title="End Call" disabled={!localStream}>
+                    <svg viewBox="0 0 24 24" className="control-icon">
+                        <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17l-3.59-3.59L8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41l-3.59 3.59L17 15.59z" />
+                    </svg>
+                </button>
+            </div>
+            <div className="control-section right">
+                <button className="control-btn" title="More Options">
+                    <svg viewBox="0 0 24 24" className="control-icon">
+                        <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        {!hideUserPicker && showUserPicker && (<div className="user-search-overlay">
+            <div className="search-container no-mag-glass">
+                <input type="text" placeholder="Search users to call..." value={userFilter} onChange={onUserFilter} className="search-input" autoFocus />
+            </div>
+            {users.length > 0 && (<div className="user-list">
+                {users.map((u) => (<div key={u._id} className="user-item">
+                    <img src={u.imgUrl || "roi.png"} alt={u.fullname} /> <span>{u.fullname}</span>
+                    <button onClick={() => initiateCall(u)}>Call</button>
+                </div>))}
+            </div>)}
+        </div>)}
+
+        {!pickedUser && (<div className="join-call">
+            <input ref={callInputRef} placeholder="Enter call ID to join" value={callId} onChange={(e) => setCallId(e.target.value)} />
+            <button onClick={() => answerCall(callId)}>Join Call</button>
+        </div>)}
+
+        {showDeclined&&<div  className="show-decilend">
+            <h3 ><span className="cancleduser">{pickedUser.fullname}</span> has Declined your call</h3>
+            <button className="task-modal-close" onClick={() => setShowDeclined(false)}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor" />
+                </svg>
+            </button>
+        </div>}
+
+    </div>);
 }
 

@@ -24,6 +24,9 @@ export function setupSocketAPI(http) {
             
             socket.broadcast.emit("board-updated", updatedBoard);
         });
+        socket.on('decline-call',(data) =>{
+            socket.broadcast.emit('decline-call',data)
+        })
 
         socket.on('outgoing-call' , (data) => {
             console.log('outgoing call to', data)
