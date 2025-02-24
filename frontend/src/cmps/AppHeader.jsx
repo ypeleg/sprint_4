@@ -3,7 +3,7 @@ import { useState, useRef } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router"
 import { CreateBoardModal } from '../pages/CreateBoardModal.jsx'
-import { logout } from "../store/store.js"
+import { loadBoard, logout } from "../store/store.js"
 
 export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
     onToggleSideBar, sideBarOpen, onToggleUpperBar, upperBarOpen }) {
@@ -23,7 +23,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
     const [showStarred, setShowStarred] = useState(false)
     const getCreateBoardRef = useRef(null)
     const navgite = useNavigate()
-
+    const [boardsFilter,SetBoardFilter] = useState('')
     function closeAllPopups() {
         setShowPremiumTrial(false)
         setShowQuestionMarkPopup(false)
@@ -266,10 +266,20 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
                 </div>
 
                 <div className="search-container">
-                    <input className={`white ${useDarkTextColors ? ' ' : ' white-search'}`} placeholder="     Search" />
+                    <input className={`white ${useDarkTextColors ? ' ' : ' white-search'}`}  onChange={(ev)=>SetBoardFilter(ev.target.value)} value={boardsFilter} placeholder="     Search" />
 
                 </div>
-
+              
+                    {boardsFilter&&<div className="boardsearch">
+                        {
+                            boards.filter(brd => new RegExp(boardsFilter, 'i').test(brd.title))?.map(brd =>{
+                                return (
+                                    <button className="borad-option"  key={brd._id}  onClick={()=>{ navgite(`/${brd._id}`); loadBoard(brd._id)}}><img   src={brd.style.backgroundImage}/>   {brd.title}</button>
+                                )
+                            })
+                        }
+                    </div>}
+               
                 <div className="btn-popup-container just-flexer">
                     <svg width="24" height="24" viewBox="0 0 24 24" role="presentation" onClick={() => {
                         closeAllPopups();
