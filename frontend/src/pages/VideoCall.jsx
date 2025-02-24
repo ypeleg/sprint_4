@@ -406,7 +406,7 @@ export function VideoCall() {
 
             <div className="video-grid">
                 <div className="remote-video-container">
-                    {isConnecting ? (<div className="connecting">Connecting to call...</div>) : remoteStream ? (<video ref={remoteVideoRef} autoPlay playsInline style={{width: "600px", height: "400px", background: "black"}} className="remote-video"/>) : (<div className="no-video">Waiting for remote video</div>)}
+                  (<video ref={remoteVideoRef} autoPlay playsInline style={{width: "600px", height: "400px", background: "black"}} className="remote-video"/>)
                 </div>
 
                 <div className="local-video-wrapper">
