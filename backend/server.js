@@ -112,5 +112,5 @@ server.listen(port, () => {
 
 
 app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'))
+    res.sendFile(path.join(__dirname, 'index.html'))
 })
