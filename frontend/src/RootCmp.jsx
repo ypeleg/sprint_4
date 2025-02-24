@@ -33,7 +33,10 @@ export function VideoCallNotification() {
 
     useEffect(() => {
         socketService.on(INCOMING_SOCKET_CALL, (payload) => {
-            console.log(loggedUser)
+            console.log('------- incoming call -------')
+            console.log('loggedUser: ', loggedUser)
+            console.log('payload: ', payload)            
+            console.log('------- incoming call -------')
             if (payload.callReceiver === loggedUser._id) {
                 setCallerName(payload.callerName);
                 setCallerImg(payload.callerImg);
