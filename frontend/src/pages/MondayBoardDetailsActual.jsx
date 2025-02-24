@@ -4844,7 +4844,7 @@ export function MondaySidebar() {
     );
 }
 
-export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterText, setFilterText, sortBy, setSortBy}) {
+export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterText, setFilterText, sortBy, setSortBy, onSetShowKanban, showKanban}) {
     const dispatch = useDispatch();
 
     const handleTitleChange = (e) => {
@@ -4925,19 +4925,31 @@ export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterTe
             </section>
 
             <div className="board-display-btns flex">
-                <div className="type-btn" aria-label="Main table" data-mui-internal-clone-element="true">
+                
+                <div className="type-btn" aria-label="Main table" data-mui-internal-clone-element="true"
+                                onClick={() => {
+                                    console.log('show kanban')
+                                    onSetShowKanban(!showKanban)}}
+                                >                
                     <svg stroke="currentColor" fill="none" strokeWidth="0" viewBox="0 0 24 24" className="icon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                         <path strokeWidth="2" d="M1 22V9.76a2 2 0 01.851-1.636l9.575-6.72a1 1 0 011.149 0l9.574 6.72A2 2 0 0123 9.76V22a1 1 0 01-1 1h-5.333a1 1 0 01-1-1v-5.674a1 1 0 00-1-1H9.333a1 1 0 00-1 1V22a1 1 0 01-1 1H2a1 1 0 01-1-1z"></path>
                     </svg>
                     <span className="wide">Main Table</span> <span className="mobile">Main Table</span>
                 </div>
-                <div className="type-btn" aria-label="Kanban" data-mui-internal-clone-element="true">
+
+                <div className="type-btn" aria-label="Kanban" data-mui-internal-clone-element="true" 
+                                
+                onClick={() => {
+                    console.log('show kanban')
+                    onSetShowKanban(!showKanban)}}
+                >
                     <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13.5 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h11zm-11-1a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2h-11z"></path>
                         <path d="M6.5 3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3zm-4 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3zm8 0a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3z"></path>
                     </svg>
                     <span className="wide">Kanban</span><span className="mobile">Kanban</span>
                 </div>
+
                 <div className="type-btn" aria-label="Kanban" data-mui-internal-clone-element="true">
                     <span className="wide">Kanban</span><span className="mobile">+</span>
                 </div>
@@ -5303,6 +5315,13 @@ export function MondayBoardDetails() {
     const [isPopupShown, togglePopup] = useToggle(false)
     const board = useSelector(state => state.boardModule.board)
 
+    
+    const [showKanban, setShowKanban] = useState(false);
+
+    function onSetShowKanban(shouldShow) {
+        setShowKanban(shouldShow)
+    }
+
     // const [board] = useState(initialBoardData);
     const {boardId} = useParams()
     useEffect(() => {
@@ -5393,8 +5412,14 @@ export function MondayBoardDetails() {
             })
         })
         boardLabels = boardLabels.filter((label, index, self) =>
-            index === self.findIndex((t) => (
-                t.id === label.id
+            index === self.findIndex((t) => ( () => {
+                try {
+                    return t.id === label.id
+                } catch {
+                    return false
+                }
+            }
+                
             )))
         currentBoard.labels = boardLabels
         task.boardLabels = boardLabels
@@ -5442,10 +5467,15 @@ export function MondayBoardDetails() {
                         setFilterText={setFilterText}
                         sortBy={sortBy}
                         setSortBy={setSortBy}
+                        onSetShowKanban={onSetShowKanban}
+                        showKanban={showKanban}
                     />
 
-                    {/*<MondayTaskList board={board} onLoadTask={onLoadTask} />*/}
-                    <MondayBoardTableView board={board} onLoadTask={onLoadTask} />
+                    {!showKanban && <MondayTaskList board={board} onLoadTask={onLoadTask} /> }
+                    
+                    {showKanban && <MondayBoardTableView board={board} onLoadTask={onLoadTask} /> }
+                    
+                    
                 </main>
             </section>
         </div>)
