@@ -349,7 +349,7 @@ export function GroupList({
             {showMoveAll && <MoveAll onSetMoveAll={onSetMoveAll} group={grp} header={header} onSetGroupEdit={onSetGroupEdit} />}
             {showSort && <GroupSort header={header} onSetGroupEdit={onSetGroupEdit} onSetSort={onSetSort} group={grp} />}
             <AddGroup useDarkTextColors={useDarkTextColors} />
-            {/*<AddGPTGroup useDarkTextColors={useDarkTextColors} />*/}
+            <AddGPTGroup useDarkTextColors={useDarkTextColors} />
 
         </section>
     )

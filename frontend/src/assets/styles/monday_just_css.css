@@ -5695,3 +5695,10 @@ img.smaller-imgs.small-circle {
 .btn-plans svg {
     color: #0073ea;
 }
+
+#monday-board-main,
+.monday-board-main {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100vh;
+}
