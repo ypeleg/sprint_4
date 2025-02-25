@@ -1717,7 +1717,7 @@ const userFriendlyTopics = [
 
 ]
 
-const MASSIVE_BADGE_CATALOG = [
+const MASSIVE_BADGE_CATALOG_NOT_SORTED_BY_CATEGORY = [
 
   // HEALTH & WELLNESS
   {
@@ -3179,6 +3179,8 @@ const MASSIVE_BADGE_CATALOG = [
     },
     ];
 
+
+
 // PATTERN CONTINUATION INSTRUCTIONS:
 // 1. For each userFriendlyTopics category (Health, Finance, etc.)
 // 2. Create 2-5 badge categories with relevant values
@@ -3191,18 +3193,11 @@ const MASSIVE_BADGE_CATALOG = [
 // 200 categories × 20 values = 4,000 badges
 // Add more categories as needed to reach 10,000
 
-
-
-
-
-
-
-import OpenAI from 'openai'
-import { API_KEY } from './secrets.js'
-import { random, showUserMsg, showSuccessMsg, showErrorMsg, showSpinner } from './util.service.js'
-
-
-let openai = null
+// import OpenAI from 'openai'
+// import { API_KEY } from './secrets.js'
+// import { random, showUserMsg, showSuccessMsg, showErrorMsg, showSpinner } from './util.service.js'
+//
+// let openai = null
 
 // async function generateTaext(prompt, temperature = 1.0, fallback = '', length = 128) {
 //     openai = new OpenAI({
@@ -3290,8 +3285,7 @@ let openai = null
 //
 // let GPT_USER_POOL = []
 
-
-
+import {getColorFromBackgroundColor, getRandomColor} from "./data.js"
 
 const USER_POOL = [
     { _id: 'u101', fullname: 'Abi Abambi', imgUrl: 'roi.png' },
@@ -3330,12 +3324,12 @@ const lastNames = [
 ]
 
 let gUsersPool = []
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 200; i++) {
     const firstName = firstNames[Math.floor(Math.random() * firstNames.length)]
     const lastName = lastNames[Math.floor(Math.random() * lastNames.length)]
     const fullName = `${firstName} ${lastName}`
     let imgUrl = 'generated_faces/' + allImgs[Math.floor(Math.random() * allImgs.length)]
-    if (Math.random() < 0.8) imgUrl = null
+    if (Math.random() < 0.2) imgUrl = null
     gUsersPool.push({
         _id: `u${i + 1}`,
         fullname: fullName,
@@ -4523,193 +4517,877 @@ console.log(gUsersPool)
 // }
 //
 //
-// // Improved board activity generation
-// function generateBoardActivity(board) {
-//     const group = random.choice(board.groups);
-//     const task = group.tasks.length > 0 ? random.choice(group.tasks) : null;
+
+// async function generateText(prompt, temperature = 1.0, fallback = '', length = 128) {
+//     openai = new OpenAI({
+//         dangerouslyAllowBrowser: true,
+//         apiKey: API_KEY,
+//     })
 //
-//     // More diverse activity types
-//     const activityTypes = [
-//         { type: 'added', weight: 3 },
-//         { type: 'moved', weight: 2 },
-//         { type: 'updated', weight: 3 },
-//         { type: 'commented', weight: 4 },
-//         { type: 'attached', weight: 2 },
-//         { type: 'labeled', weight: 2 },
-//         { type: 'archived', weight: 1 },
-//         { type: 'assigned', weight: 3 }
-//     ];
-//
-//     // Weighted choice for activity type
-//     const weights = activityTypes.map(t => t.weight);
-//     const activityType = weightedChoice(
-//         activityTypes.map(t => t.type),
-//         weights
-//     ) || 'updated';
-//
-//     let title;
-//
-//     if (task) {
-//         if (activityType === 'added') {
-//             title = `Added task '${task.title}' to group '${group.title}'`;
-//         } else if (activityType === 'moved') {
-//             const otherGroups = board.groups.filter(g => g.id !== group.id);
-//             const otherGroup = otherGroups.length > 0 ? random.choice(otherGroups) : null;
-//             title = otherGroup
-//                 ? `Moved task '${task.title}' from '${otherGroup.title}' to '${group.title}'`
-//                 : `Moved task '${task.title}' to '${group.title}'`;
-//         } else if (activityType === 'updated') {
-//             title = `Updated status of task '${task.title}' to '${random.choice(STATUS_OPTIONS)}'`;
-//         } else if (activityType === 'commented') {
-//             const comments = [
-//                 "Looks good!",
-//                 "I have questions about this.",
-//                 "Please review ASAP.",
-//                 "Made a few changes, check it out.",
-//                 "This is nearly complete.",
-//                 "Need more information here.",
-//                 "Great progress so far!",
-//                 "Let's discuss this in the meeting."
-//             ];
-//             title = `Commented on '${task.title}': "${random.choice(comments)}"`;
-//         } else if (activityType === 'attached') {
-//             title = `Attached a file to task '${task.title}'`;
-//         } else if (activityType === 'labeled') {
-//             const label = board.labels.length > 0 ? random.choice(board.labels) : null;
-//             title = label
-//                 ? `Added label '${label.title}' to task '${task.title}'`
-//                 : `Updated labels on task '${task.title}'`;
-//         } else if (activityType === 'archived') {
-//             title = `Archived task '${task.title}'`;
-//         } else if (activityType === 'assigned') {
-//             const member = GPT_USER_POOL.length > 0 ? random.choice(GPT_USER_POOL) : null;
-//             title = member
-//                 ? `Assigned ${member.fullname} to task '${task.title}'`
-//                 : `Updated assignments on task '${task.title}'`;
+//     try {
+//         const response = await openai.chat.completions.create({
+//             model: 'gpt-3.5-turbo',
+//             // model: 'gpt-4o-mini',
+//             temperature,
+//             max_tokens: length,
+//             messages: [{ role: 'user', content: prompt }],
+//         })
+//         let text = response.choices?.[0]?.message?.content?.trim() || ''
+//         while (text.length && !/[\w\d]/.test(text[0])) text = text.slice(1)
+//         while (text.length && !/[\w\d]/.test(text[text.length - 1])) {
+//             text = text.slice(0, -1)
 //         }
-//     } else {
-//         // Fallback activities when no task is available
-//         const actions = [
-//             `Created group '${group.title}'`,
-//             `Updated board settings`,
-//             `Invited new members to the board`,
-//             `Created a new label`,
-//             `Reviewed board progress`
-//         ];
-//         title = random.choice(actions);
+//         if (!text) text = fallback
+//         else text = text.trim()
+//         return text
+//     } catch (error) {
+//         console.error('OpenAI API error:', error)
+//         return fallback
+//     }
+// }
+//
+// function bracketBalanceRepair(str) {
+//     const openCurly = (str.match(/\{/g) || []).length
+//     const closeCurly = (str.match(/\}/g) || []).length
+//     const openSquare = (str.match(/\[/g) || []).length
+//     const closeSquare = (str.match(/\]/g) || []).length
+//
+//     let fixed = str
+//     if (openCurly === closeCurly + 1 && !str.trim().endsWith('}')) {
+//         fixed += '}'
+//     }
+//     if (openSquare === closeSquare + 1 && !str.trim().endsWith(']')) {
+//         fixed += ']'
+//     }
+//     return fixed
+// }
+//
+// function safeJsonParse(rawStr, fallback = '[]') {
+//     let str = rawStr || ''
+//     str = str.trim()
+//     str = str.replace(/^```+(\w+)?\s*/i, '')
+//     str = str.replace(/^json\s*/i, '')
+//     if (str.startsWith('[') && !str.endsWith(']')) {
+//         str += ']'
+//     } else if (str.startsWith('{') && !str.endsWith('}')) {
+//         str += '}'
+//     }
+//     try {
+//         return JSON.parse(str)
+//     } catch (err) {
+//         console.warn('First JSON.parse attempt failed, trying bracketBalanceRepair:', err)
+//     }
+//     const repaired = bracketBalanceRepair(str)
+//     if (repaired) {
+//         try {
+//             return JSON.parse(repaired)
+//         } catch (err2) {
+//             console.warn('Second JSON.parse attempt failed:', err2)
+//         }
+//     }
+//     try {
+//         return JSON.parse(fallback)
+//     } catch {
+//         return Array.isArray(fallback) ? [] : {}
+//     }
+// }
+//
+// export const STATUS_OPTIONS = ['inProgress', 'done', 'review', 'stuck', 'blocked']
+// export const PRIORITY_OPTIONS = ['low', 'medium', 'high']
+// export const CMP_ORDER_OPTIONS = ['StatusPicker', 'MemberPicker', 'DatePicker', 'SomeNewPicker', 'OtherPicker']
+//
+// let GPT_USER_POOL = []
+//
+// async function initUserPool() {
+//     if (GPT_USER_POOL.length) return
+//
+//     const fallbackPool = [
+//         { _id: 'u101', fullname: 'Ava Placeholder', imgUrl: '' },
+//         { _id: 'u102', fullname: 'Ben Placeholder', imgUrl: '' },
+//         { _id: 'u103', fullname: 'Cara Placeholder', imgUrl: '' },
+//     ]
+//
+//     const prompt = `Generate an array of 5 to 8 distinct "users" for a collaborative project tool.
+// Each user = {
+//   "_id": "unique string id",
+//   "fullname": "some realistic or creative full name",
+//   "imgUrl": "some valid image URL or empty"
+// }
+// Return only valid JSON. e.g.
+// [
+//   {"_id":"u111", "fullname":"Alice Wonderland", "imgUrl":"https://..."},
+//   ...
+// ]`
+//
+//     let text = await generateText(prompt, 1.0)
+//     let users = []
+//     try {
+//         users = safeJsonParse(text, JSON.stringify(fallbackPool))
+//     } catch (err) {
+//         console.error('Failed to parse GPT user pool. Using fallback.', err)
+//         users = fallbackPool
 //     }
 //
-//     const byMember = random.choice(GPT_USER_POOL) || {
-//         _id: 'fallback',
-//         fullname: 'Fallback user',
-//         imgUrl: '',
-//     };
+//     if (!Array.isArray(users) || !users.length) {
+//         users = fallbackPool
+//     }
+//
+//     if (users.length < 5) {
+//         while (users.length < 5) {
+//             users.push({
+//                 _id: 'u_' + random.id(),
+//                 fullname: 'FallbackUser ' + random.id(),
+//                 imgUrl: '',
+//             })
+//         }
+//     }
+//
+//     if (users.length > 8) users = users.slice(0, 8)
+//
+//     for (let u of users) {
+//         if (!u._id || !u.fullname) {
+//             u._id = 'u_' + random.id()
+//             if (!u.fullname) u.fullname = 'FallbackUser ' + random.id()
+//         }
+//         if (typeof u.imgUrl !== 'string') {
+//             u.imgUrl = ''
+//         }
+//     }
+//
+//     GPT_USER_POOL = users
+// }
+//
+// export function getUserPool() {
+//     return GPT_USER_POOL
+// }
+//
+// export function getColorFromBackgroundColor(bg) {
+//     switch (bg) {
+//         case '#baf3db': return '#164b35'
+//         case '#f8e6a0': return '#4f3a0e'
+//         case '#fedec8': return '#6e3b0d'
+//         case '#ffd5d2': return '#6e0d0d'
+//         case '#dfd8fd': return '#4f3a0e'
+//         case '#cce0ff': return '#0d2e6e'
+//         case '#c6edfb': return '#0d3a4f'
+//         case '#fdd0ec': return '#6e0d3a'
+//         case '#f1f2f4': return '#3a3a3a'
+//         default: return '#3a3a3a'
+//     }
+// }
+//
+// function getRandomColor() {
+//     const trelloColors = [
+//         '#baf3db',
+//         '#f8e6a0',
+//         '#fedec8',
+//         '#ffd5d2',
+//         '#dfd8fd',
+//         '#cce0ff',
+//         '#c6edfb',
+//         '#fdd0ec',
+//         '#f1f2f4',
+//     ]
+//     return random.choice(trelloColors)
+// }
+//
+
+//
+// function getRandomLocation() {
+//     const locations = [
+//         { name: 'Tel Aviv-Yafo', lat: 32.109333, lng: 34.855499, zoom: 11 },
+//         { name: 'New York City', lat: 40.7128, lng: -74.006, zoom: 12 },
+//         { name: 'Paris', lat: 48.8566, lng: 2.3522, zoom: 12 },
+//         { name: 'Tokyo', lat: 35.6895, lng: 139.6917, zoom: 12 },
+//         { name: 'London', lat: 51.5074, lng: -0.1278, zoom: 12 },
+//         { name: 'Sydney', lat: -33.8688, lng: 151.2093, zoom: 12 },
+//     ]
+//     return random.choice(locations)
+// }
+//
+// async function generateLabels(boardTitle) {
+//     const prompt = `
+// Board Title: "${boardTitle}"
+// Generate an array of 5 short labels for a project mgmt board.
+// Some examples: "Grocery", "Weekend Plans", "Work Tasks".
+// Return JSON:
+// [
+//   {"id":"some-id","title":"...","color":"(placeholder)"},
+//   ...
+// ]
+// We only care about 'id', 'title', 'color'.
+// Return valid JSON only.
+// `
+//     const fallback = JSON.stringify([
+//         { id: 'lbl1', title: 'Tasks', color: '#9f8fef' },
+//         { id: 'lbl2', title: 'Personal', color: '#f87168' },
+//         { id: 'lbl3', title: 'Work', color: '#fea362' },
+//         { id: 'lbl4', title: 'Errands', color: '#f5cd47' },
+//         { id: 'lbl5', title: 'Household', color: '#4bce97' },
+//     ])
+//
+//     const text = await generateText(prompt, 1.0, fallback)
+//     let rawLabels = safeJsonParse(text, fallback)
+//     if (!Array.isArray(rawLabels) || !rawLabels.length) {
+//         rawLabels = safeJsonParse(fallback)
+//     }
+//
+//     const uniqueColors = new Set()
+//     return rawLabels.slice(0, 5).map((lbl) => {
+//         if (!lbl.id) lbl.id = 'lbl_' + random.id()
+//         if (!lbl.title) lbl.title = 'Label ' + random.id()
+//         let col = getRandomColorLabels()
+//         while (uniqueColors.has(col) && uniqueColors.size < 6) {
+//             col = getRandomColorLabels()
+//         }
+//         uniqueColors.add(col)
+//         lbl.color = col
+//         return lbl
+//     })
+// }
+//
+// const BADGE_COLOR_MAP = {
+//     risk: '#fdddc7',
+//     approved: '#f8e6a0',
+//     priority: '#ffe2bd',
+//     now: '#ffc0cb',
+// }
+// const BADGE_TEXT_COLOR_MAP = {
+//     risk: '#6e3b0d',
+//     approved: '#4f3a0e',
+//     priority: '#6e3b0d',
+//     now: '#6e0d3a',
+// }
+// const BADGE_TYPE_ARRAY = ['risk', 'approved', 'priority', 'now']
+//
+// async function generateBadges(boardTitle, groupTitle) {
+//     const prompt = `
+// For the group "${groupTitle}" in the board "${boardTitle}",
+// Generate an array of 10 "badge" objects with selectable categories.
+// Example:
+// [
+//   {"categ":"Workload", "badgeOptions": ["Light", "Heavy", "Medium"], "text":"Heavy"},
+//   {"categ":"NeedsApproval", "badgeOptions": ["Pending", "Need Approval", "Rejected"], "text":"Pending"},
+//   ...
+// ]
+// Return strictly valid JSON only.
+// `
+//     const fallback = '[{"categ":"NeedsApproval","text":"Pending"},{"categ":"HighRisk","text":"Proceed Carefully"}]'
+//
+//     const text = await generateText(prompt, 1.0, fallback)
+//     let rawBadges = safeJsonParse(text, fallback)
+//     if (!Array.isArray(rawBadges)) {
+//         rawBadges = safeJsonParse(fallback)
+//     }
+//
+//     return rawBadges.map((b) => {
+//         const randomType = random.choice(BADGE_TYPE_ARRAY)
+//         return {
+//             id: 'badg_' + random.id(),
+//             categ: b.categ || 'General',
+//             color: BADGE_COLOR_MAP[randomType] || '#ccc',
+//             textColor: BADGE_TEXT_COLOR_MAP[randomType] || '#000',
+//             badgeOptions: b.badgeOptions || [],
+//             chosenOption: b.text || 'Note',
+//         }
+//     })
+// }
+//
+// async function generateTask(boardTitle, groupTitle) {
+//     const fallbackResp = `Title: Kitchen Chores; Description: Clean the fridge and wipe the counters.`
+//     const prompt = `
+// For the group "${groupTitle}" in the board "${boardTitle}",
+// create a short but realistic task. Format EXACTLY as:
+// "Title: XYZ; Description: ABC"
+// Return no extra text or code blocks, just that line.
+// `
+//     const response = await generateText(prompt, 1.0, fallbackResp, 128)
+//     let taskTitle = 'RandomTask'
+//     let taskDescription = 'No desc from GPT'
+//     const match = response.match(/Title:\s*(.+?);\s*Description:\s*(.+)/)
+//     if (match) {
+//         taskTitle = match[1].trim()
+//         taskDescription = match[2].trim()
+//     }
+//
+//     const badges = await generateBadges(boardTitle, groupTitle)
 //
 //     return {
 //         id: random.id(),
-//         title,
-//         createdAt: random.date('2023-01-01', '2025-12-31').getTime(),
-//         byMember: {
-//             _id: byMember._id,
-//             fullname: byMember.fullname,
-//             imgUrl: byMember.imgUrl,
+//         title: taskTitle,
+//         status: random.choice(STATUS_OPTIONS),
+//         priority: random.choice(PRIORITY_OPTIONS),
+//         dueDate: random.date('2024-01-01', '2026-12-31').toISOString(),
+//         createdAt: random.date('2024-01-01', '2026-12-31'),
+//         description: taskDescription,
+//         checklists: await generateChecklists(boardTitle, groupTitle),
+//         members: random.sample(GPT_USER_POOL, random.randint(0, GPT_USER_POOL.length)),
+//         style: await generateTaskStyle(),
+//         badges,
+//         attachments: getRandomAttachments(),
+//         activity: generateTaskActivities(taskTitle),
+//         isUserWatching: random.choice([true, false]),
+//         labels: [],
+//         location: random.choice([null, null, null, getRandomLocation()]),
+//     }
+// }
+//
+// function getRandomAttachments() {
+//     const cnt = random.randint(0, 2)
+//     return Array.from({ length: cnt }, () => ({
+//         path: `file-${random.randint(1, 999)}.png`,
+//         date: Date.now() - random.randint(0, 1_000_000_000),
+//         text: random.choice([
+//             'Photo proof!',
+//             'Attached doc',
+//             'Uploaded file',
+//             '',
+//         ]),
+//     }))
+// }
+//
+// async function generateChecklists(boardTitle, groupTitle) {
+//     const fallback = JSON.stringify([
+//         {
+//             id: 'cl_fallback',
+//             title: 'Fallback Checklist',
+//             progress: 0,
+//             todos: [
+//                 { id: 'todo1', title: 'Fallback item', isDone: false },
+//                 { id: 'todo2', title: 'Another fallback', isDone: true },
+//             ],
 //         },
-//         group: { id: group.id, title: group.title },
-//         task: task ? { id: task.id, title: task.title } : null,
-//     };
+//     ])
+//     const prompt = `
+// For the group "${groupTitle}" in the board "${boardTitle}",
+// Generate an array of 3 short "todo" items related to the group title and board title. Return strictly JSON:
+// [
+//   {"title":"something short","isDone": true/false},
+//   ...
+// ]
+// `
+//
+//     const text = await generateText(prompt, 1.0, fallback)
+//     let todosArray = safeJsonParse(text, '[]')
+//     if (!Array.isArray(todosArray)) {
+//         console.warn('GPT todos not an array, using fallback.')
+//         todosArray = safeJsonParse(fallback)[0].todos
+//     }
+//     if (!todosArray.length) {
+//         todosArray = safeJsonParse(fallback)[0].todos
+//     }
+//
+//     const cCount = random.randint(0, 2)
+//     const checklists = []
+//     for (let i = 0; i < cCount; i++) {
+//         const tCount = 1 + Math.floor(Math.random() * todosArray.length)
+//         const partialTodos = todosArray.slice(0, tCount).map((t) => ({
+//             id: 'todo_' + random.id(),
+//             title: t.title || 'UntitledTodo',
+//             isDone: typeof t.isDone === 'boolean' ? t.isDone : false,
+//         }))
+//         checklists.push({
+//             id: 'cl_' + random.id(),
+//             title: 'Checklist ' + random.id().slice(0, 4),
+//             progress: random.randint(0, 100),
+//             todos: partialTodos,
+//         })
+//     }
+//     return checklists
+// }
+//
+// async function generateTaskStyle() {
+//     const styleType = random.randint(0, 2)
+//     if (styleType === 0) {
+//         return {
+//             backgroundColor: getRandomColorLabels(),
+//             coverSize: random.choice(['small', 'large']),
+//         }
+//     } else if (styleType === 1) {
+//         const images = [
+//             null,
+//             `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//             'cover-img.png',
+//             'cover-img-1.png',
+//             'cover-img-2.png',
+//             'cover-img-3.png',
+//         ]
+//         return {
+//             backgroundImage: random.choice(images),
+//             coverSize: random.choice(['small', 'large']),
+//         }
+//     } else {
+//         return {}
+//     }
+// }
+//
+// function generateTaskActivities(taskTitle) {
+//     const activityTypes = [
+//         `Commented: "Looks good!"`,
+//         `Updated title to: ${taskTitle}`,
+//         `Attached a new file`,
+//         `Status changed to ${random.choice(STATUS_OPTIONS)}`,
+//     ]
+//     const count = random.randint(1, 3)
+//     return Array.from({ length: count }, () => {
+//         const byMember = random.choice(GPT_USER_POOL) || {
+//             _id: 'fallback',
+//             fullname: 'Fallback user',
+//             imgUrl: '',
+//         }
+//         return {
+//             id: random.id(),
+//             title: random.choice(activityTypes),
+//             createdAt: random.date('2023-01-01', '2025-12-31').getTime(),
+//             byMember: {
+//                 _id: byMember._id,
+//                 fullname: byMember.fullname,
+//                 imgUrl: byMember.imgUrl,
+//             },
+//         }
+//     })
+// }
+//
+// async function generateGroups(boardTitle) {
+//     const fallback = `Home; Work; Personal`
+//     const groupCount = random.randint(5, 8)
+//     const prompt = `
+// Board: "${boardTitle}"
+// Generate ${groupCount} short sub-topics/group-titles/task-lists about the topic of this board and everyday life, work or task categories related to this board topic, separated by semicolons.
+// Example: "Groceries; Home Maintenance; Work Projects; Financial Plan; Everyday; Project General Goals; Wishlist"
+// No code blocks, just semicolons.
+// `
+//     const text = await generateText(prompt, 1.0, fallback)
+//     let groupTitles = text.split(';').map((t) => t.trim()).filter(Boolean)
+//     if (groupTitles.length < groupCount) {
+//         while (groupTitles.length < groupCount) {
+//             groupTitles.push('Group ' + random.id().slice(0, 3))
+//         }
+//     }
+//     groupTitles = groupTitles.slice(0, groupCount)
+//
+//     const groups = await Promise.all(
+//         groupTitles.map(async (title) => {
+//             const taskCount = random.randint(3, 6)
+//             const tasks = await Promise.all(
+//                 Array.from({ length: taskCount }, () => generateTask(boardTitle, title))
+//             )
+//             const backgroundColor = getRandomColor()
+//             return {
+//                 id: random.id(),
+//                 title,
+//                 archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),
+//                 tasks,
+//                 style: {
+//                     backgroundColor,
+//                     color: getColorFromBackgroundColor(backgroundColor),
+//                 },
+//                 watched: random.choice([true, false]),
+//                 isMinimaized: random.choice([true, false]),
+//             }
+//         })
+//     )
+//
+//     return groups
+// }
+//
+// function getRandomBoardActivities(board) {
+//     const count = random.randint(2, 5)
+//     return Array.from({ length: count }, () => {
+//         const group = random.choice(board.groups)
+//         const task = random.choice(group.tasks)
+//         const activityType = random.choice(['added', 'moved', 'updated'])
+//         let title
+//         if (activityType === 'added') {
+//             title = `Added task '${task.title}' to group '${group.title}'`
+//         } else if (activityType === 'moved') {
+//             const otherGroup = random.choice(board.groups.filter((g) => g.id !== group.id))
+//             title = `Moved task '${task.title}' from '${otherGroup?.title}' to '${group.title}'`
+//         } else {
+//             title = `Updated status of task '${task.title}' to '${random.choice(STATUS_OPTIONS)}'`
+//         }
+//         const byMember = random.choice(GPT_USER_POOL) || {
+//             _id: 'fallback',
+//             fullname: 'Fallback user',
+//             imgUrl: '',
+//         }
+//         return {
+//             id: random.id(),
+//             title,
+//             createdAt: random.date('2023-01-01', '2025-12-31').getTime(),
+//             byMember: {
+//                 _id: byMember._id,
+//                 fullname: byMember.fullname,
+//                 imgUrl: byMember.imgUrl,
+//             },
+//             group: { id: group.id, title: group.title },
+//             task: { id: task.id, title: task.title },
+//         }
+//     })
+// }
+//
+// export async function getRandomBoardAI() {
+//     showUserMsg('AI: Generating new board..')
+//     await initUserPool()
+//
+//     const randomTopic = 'Random Topic'
+//     const boardTitlePrompt = `
+// Generate a single realistic board name for a project management system based on the topic "${randomTopic}".
+// Return just the name, no extra text.
+// `
+//     const fallbackBoardTitle = 'Generic Board'
+//     const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackBoardTitle)
+//
+//     showSpinner('AI: Generating board..')
+//
+//     const groups = await generateGroups(boardTitle)
+//     const labels = await generateLabels(boardTitle)
+//
+//     for (const group of groups) {
+//         for (const task of group.tasks) {
+//             const labelSubset = random.sample(labels.map((lbl) => lbl.id), random.randint(0, labels.length))
+//             task.labelIds = labelSubset
+//             task.labels = labels
+//         }
+//     }
+//
+//     const createdBy = random.choice(GPT_USER_POOL) || {
+//         _id: 'u_fallback', fullname: 'Unknown user', imgUrl: '',
+//     }
+//     const boardId = random.id(random.randint(4, 10))
+//     const board = {
+//         id                : boardId, title: boardTitle, isStarred: random.choice([true, false]), archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]), createdBy: {
+//             _id: createdBy._id, fullname: createdBy.fullname, imgUrl: createdBy.imgUrl,
+//         }, style          : {
+//             backgroundImage: random.choice([
+//
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+//
+//
+//
+//
+//                 'color_1.svg', 'color_2.svg', 'color_3.svg', 'color_4.svg', 'color_5.svg', 'color_6.svg', 'color_7.svg', 'color_8.svg', 'color_9.svg', 'color_10.svg', 'color_11.svg',]),
+//         }, labels, members: GPT_USER_POOL, groups, activities: [], cmpsOrder: random.sample(CMP_ORDER_OPTIONS, random.randint(2, CMP_ORDER_OPTIONS.length)),
+//     }
+//
+//     board.activities = getRandomBoardActivities(board)
+//
+//     showSuccessMsg('AI: Board generation complete!')
+//
+//     board.generator = 'getRandomBoardAI'
+//     return board
+//
 // }
 
 
-async function generateText(prompt, temperature = 1.0, fallback = '', length = 128) {
-    openai = new OpenAI({
-        dangerouslyAllowBrowser: true,
-        apiKey: API_KEY,
-    })
 
+
+
+/*******************************************
+ * Massive Data Generation Pipeline
+ * ---------------------------------
+ * Creates "Trello-like" boards with:
+ * - Domain-based topics
+ * - GPT-lifted or fallback task text
+ * - Random attachments, checklists
+ * - Realistic distribution of members, labels, badges
+ * - Optional domain-based images
+ *******************************************/
+
+// ===============  YOUR DATA SOURCES  ===============
+import OpenAI from 'openai'
+import { API_KEY } from './secrets.js'
+
+// The user-friendly topics you provided (massive list)
+// export const userFriendlyTopics = [
+//     // EXAMPLE SUBSET (You have 600+)
+//     "Planning My Marketing Push", "Building a Sales Plan", "Running Social Media", "Boosting SEO",
+//     "Sending Email Blasts", "Creating Ads", "Growing the Brand", // ...
+//     "Planning My Money", "Budgeting Ahead", "Reporting Cash", // ...
+//     "Building Software", "Launching My Product", "Doing R&D", // ...
+//     "Defining Target Markets", "Setting Marketing Objectives", // ...
+//     // etc. entire massive array...
+// ]
+
+// The giant “MASSIVE_BADGE_CATALOG” you provided, containing arrays of categories
+// with each category an object: {category, values, colors, ...}
+export const MASSIVE_BADGE_CATALOG = [
+    // Many categories... your large code snippet with 200+ categories...
+    // e.g.
+    {
+      category: "Appointment Type",
+      values: ["Physical","Dental","Vision","Specialist","Emergency","Follow-Up"],
+      colors: ["#FFB3BA","#FFDFBA","#BAFFC9","#BAE1FF","#FF6961","#FDFD96"]
+    },
+    // ...
+    // {category: "Priority", values: [...], colors: [...]},
+    // ...
+]
+
+// Some utility code you have:
+import { random, showUserMsg, showSuccessMsg, showErrorMsg, showSpinner } from './util.service.js'
+
+
+// ===============  HELPER UTILS  ===============
+
+// Weighted or random picks, etc. You can adapt from your code:
+function safeJsonParse(str, fallback = '[]') {
+    let s = str?.trim() || ''
+    // remove triple-backticks, etc.
+    s = s.replace(/^```+(\w+)?\s*/i, '').replace(/^json\s*/i, '')
+
+    // fix bracket imbalance
+    function bracketBalanceRepair(raw) {
+        const openCurly = (raw.match(/\{/g) || []).length
+        const closeCurly = (raw.match(/\}/g) || []).length
+        const openSquare = (raw.match(/\[/g) || []).length
+        const closeSquare = (raw.match(/\]/g) || []).length
+        let out = raw
+        if (openCurly === closeCurly+1 && !raw.trim().endsWith('}')) out += '}'
+        if (openSquare === closeSquare+1 && !raw.trim().endsWith(']')) out += ']'
+        return out
+    }
+
+    try {
+        return JSON.parse(s)
+    } catch (err) {
+        // Attempt bracket fix
+        const repaired = bracketBalanceRepair(s)
+        try {
+            return JSON.parse(repaired)
+        } catch (err2) {
+            // fallback
+            return JSON.parse(fallback)
+        }
+    }
+}
+
+function isColorDark(hexColor) {
+    // crude check
+    if (!hexColor || !hexColor.startsWith('#') || hexColor.length !== 7) return true;
+    const r = parseInt(hexColor.slice(1,3), 16)
+    const g = parseInt(hexColor.slice(3,5), 16)
+    const b = parseInt(hexColor.slice(5,7), 16)
+    const brightness = Math.sqrt(0.299*r*r + 0.587*g*g + 0.114*b*b)
+    return (brightness < 140)
+}
+
+// “Domain inference” - naive approach: check if the chosen topic has certain keywords
+function inferDomainFromTopic(topic) {
+    const t = topic.toLowerCase()
+    if (t.includes('marketing') || t.includes('sales') || t.includes('brand') || t.includes('seo') || t.includes('ads')) {
+        return 'Marketing and Sales'
+    } else if (t.includes('finance') || t.includes('budget') || t.includes('money') || t.includes('tax') || t.includes('cash')) {
+        return 'Finance and Accounting'
+    } else if (t.includes('software') || t.includes('product') || t.includes('r&d') || t.includes('engineering') || t.includes('launching my product')) {
+        return 'Product and Engineering'
+    } else if (t.includes('hr') || t.includes('hire') || t.includes('talent') || t.includes('payroll')) {
+        return 'Human Resources'
+    } else if (t.includes('audit') || t.includes('compliance') || t.includes('legal') || t.includes('regulation') || t.includes('lawsuit')) {
+        return 'Legal and Compliance'
+    } else if (t.includes('cust') || t.includes('support') || t.includes('helping')) {
+        return 'Customer Support'
+    } else if (t.includes('business') || t.includes('stakeholders') || t.includes('merger') || t.includes('leadership')) {
+        return 'Business and Management'
+    } else if (t.includes('health') || t.includes('doctor') || t.includes('wellness') || t.includes('appointment') || t.includes('fitness')) {
+        return 'Health and Wellness'
+    } else if (t.includes('event') || t.includes('festival') || t.includes('conference') || t.includes('planning a wedding')) {
+        return 'Event Planning'
+    } else if (t.includes('education') || t.includes('courses') || t.includes('study') || t.includes('lesson')) {
+        return 'Education and Learning'
+    } else if (t.includes('creative') || t.includes('painting') || t.includes('craft') || t.includes('design')) {
+        return 'Creative Projects'
+    } else if (t.includes('it') || t.includes('security') || t.includes('tech') || t.includes('digital')) {
+        return 'IT and Security'
+    } else if (t.includes('personal') || t.includes('lifestyle') || t.includes('wedding') || t.includes('daily') || t.includes('trip')) {
+        return 'Personal and Lifestyle'
+    } else {
+        // fallback
+        return 'General'
+    }
+}
+
+// Filter from MASSIVE_BADGE_CATALOG any categories that match domain via a naive approach:
+function filterBadgeCategoriesByDomain(allCatalog, domain) {
+    // e.g. if domain is "Marketing and Sales," we look for categories that appear in
+    // the snippet section for “Marketing and Sales.” This is naive: we can just search
+    // the category name or the comment in the code. For your use, you might add
+    // a custom “domain” field to each category or do a better approach.
+
+    // We'll do a simple substring check:
+    const dLower = domain.toLowerCase()
+    const matches = []
+    for (let catObj of allCatalog) {
+        const catTitle = catObj.category.toLowerCase()
+        // if it includes "marketing", "sales", "seo", or if domain is general
+        if (domain === 'General') {
+            // Take about 3 random categories from the entire set
+            // We do that after finishing the loop, or we can push everything into a pool
+            matches.push(catObj)
+        } else {
+            // check if catTitle has marketing or sales
+            if (catTitle.includes('marketing') || catTitle.includes('sales')) {
+                if (dLower.includes('marketing') || dLower.includes('sales')) {
+                    matches.push(catObj)
+                }
+            }
+            else if (catTitle.includes('finance') || catTitle.includes('budget')) {
+                if (dLower.includes('finance') || dLower.includes('accounting')) {
+                    matches.push(catObj)
+                }
+            }
+            else if (catTitle.includes('product') || catTitle.includes('engineering') || catTitle.includes('dev') || catTitle.includes('bug') || catTitle.includes('code')) {
+                if (dLower.includes('product') || dLower.includes('engineering') || dLower.includes('software')) {
+                    matches.push(catObj)
+                }
+            }
+            else if (catTitle.includes('hr') || catTitle.includes('recruit') || catTitle.includes('talent') || catTitle.includes('performance review')) {
+                if (dLower.includes('human resources')) {
+                    matches.push(catObj)
+                }
+            }
+            else if (catTitle.includes('compliance') || catTitle.includes('legal') || catTitle.includes('lawsuit') || catTitle.includes('risk') || catTitle.includes('contract')) {
+                if (dLower.includes('legal') || dLower.includes('compliance')) {
+                    matches.push(catObj)
+                }
+            }
+            else if (catTitle.includes('customer') || catTitle.includes('support') || catTitle.includes('ticket')) {
+                if (dLower.includes('customer')) {
+                    matches.push(catObj)
+                }
+            }
+            else if (catTitle.includes('business') || catTitle.includes('stakeholder') || catTitle.includes('management') || catTitle.includes('merger')) {
+                if (dLower.includes('business')) {
+                    matches.push(catObj)
+                }
+            }
+            else if (catTitle.includes('health') || catTitle.includes('wellness') || catTitle.includes('doctor') || catTitle.includes('treatment')) {
+                if (dLower.includes('health') || dLower.includes('wellness')) {
+                    matches.push(catObj)
+                }
+            }
+            else if (catTitle.includes('event') || catTitle.includes('conference')) {
+                if (dLower.includes('event')) {
+                    matches.push(catObj)
+                }
+            }
+            else if (catTitle.includes('education') || catTitle.includes('learning') || catTitle.includes('academic')) {
+                if (dLower.includes('education')) {
+                    matches.push(catObj)
+                }
+            }
+            else if (catTitle.includes('creative') || catTitle.includes('art') || catTitle.includes('design') || catTitle.includes('writing stage')) {
+                if (dLower.includes('creative')) {
+                    matches.push(catObj)
+                }
+            }
+            else if (catTitle.includes('it') || catTitle.includes('security') || catTitle.includes('privacy')) {
+                if (dLower.includes('it') || dLower.includes('security')) {
+                    matches.push(catObj)
+                }
+            }
+            else if (catTitle.includes('personal') || catTitle.includes('daily') || catTitle.includes('routine') || catTitle.includes('meal plan')) {
+                if (dLower.includes('personal') || dLower.includes('lifestyle')) {
+                    matches.push(catObj)
+                }
+            }
+        }
+    }
+
+    // If domain=General, we only random-sample from the entire set.
+    if (domain === 'General') {
+        // just sample ~6 to 10 categories from entire MASSIVE_BADGE_CATALOG
+        const sized = random.randint(6,10)
+        const entire = [...allCatalog]
+        random.shuffle(entire)
+        return entire.slice(0, sized)
+    }
+
+    if (!matches.length) {
+        // fallback: pick any 5 from entire
+        const entire = [...allCatalog]
+        random.shuffle(entire)
+        return entire.slice(0,5)
+    }
+
+    // limit to around 4..8 categories:
+    random.shuffle(matches)
+    const sized2 = random.randint(4,8)
+    return matches.slice(0, sized2)
+}
+
+function pickBadgeValue(badgeCategory) {
+    if (!badgeCategory.values?.length) return null
+    const idx = random.randint(0, badgeCategory.values.length -1)
+    return {
+        value: badgeCategory.values[idx],
+        color: badgeCategory.colors?.[idx] ?? '#ccc'
+    }
+}
+
+function isColorTooDark(hex) {
+    // same as isColorDark
+    return isColorDark(hex)
+}
+
+
+// ===============  GPT ENABLER  ===============
+let openai = null
+async function generateText(prompt, temperature=1.0, fallback='', length=128) {
+    if (!openai) {
+        openai = new OpenAI({
+            dangerouslyAllowBrowser: true,
+            apiKey: API_KEY,
+        })
+    }
     try {
         const response = await openai.chat.completions.create({
             // model: 'gpt-3.5-turbo',
             model: 'gpt-4o-mini',
             temperature,
             max_tokens: length,
-            messages: [{ role: 'user', content: prompt }],
+            messages: [{role: 'user', content: prompt}],
         })
         let text = response.choices?.[0]?.message?.content?.trim() || ''
+        // remove leading/trailing weirdness
         while (text.length && !/[\w\d]/.test(text[0])) text = text.slice(1)
-        while (text.length && !/[\w\d]/.test(text[text.length - 1])) {
-            text = text.slice(0, -1)
-        }
+        while (text.length && !/[\w\d]/.test(text[text.length-1])) text = text.slice(0, -1)
         if (!text) text = fallback
         else text = text.trim()
         return text
-    } catch (error) {
-        console.error('OpenAI API error:', error)
+    } catch (err) {
+        console.error('OpenAI error:', err)
         return fallback
     }
 }
 
-function bracketBalanceRepair(str) {
-    const openCurly = (str.match(/\{/g) || []).length
-    const closeCurly = (str.match(/\}/g) || []).length
-    const openSquare = (str.match(/\[/g) || []).length
-    const closeSquare = (str.match(/\]/g) || []).length
-
-    let fixed = str
-    if (openCurly === closeCurly + 1 && !str.trim().endsWith('}')) {
-        fixed += '}'
-    }
-    if (openSquare === closeSquare + 1 && !str.trim().endsWith(']')) {
-        fixed += ']'
-    }
-    return fixed
-}
-
-function safeJsonParse(rawStr, fallback = '[]') {
-    let str = rawStr || ''
-    str = str.trim()
-    str = str.replace(/^```+(\w+)?\s*/i, '')
-    str = str.replace(/^json\s*/i, '')
-    if (str.startsWith('[') && !str.endsWith(']')) {
-        str += ']'
-    } else if (str.startsWith('{') && !str.endsWith('}')) {
-        str += '}'
-    }
-    try {
-        return JSON.parse(str)
-    } catch (err) {
-        console.warn('First JSON.parse attempt failed, trying bracketBalanceRepair:', err)
-    }
-    const repaired = bracketBalanceRepair(str)
-    if (repaired) {
-        try {
-            return JSON.parse(repaired)
-        } catch (err2) {
-            console.warn('Second JSON.parse attempt failed:', err2)
-        }
-    }
-    try {
-        return JSON.parse(fallback)
-    } catch {
-        return Array.isArray(fallback) ? [] : {}
-    }
-}
-
-export const STATUS_OPTIONS = ['inProgress', 'done', 'review', 'stuck', 'blocked']
-export const PRIORITY_OPTIONS = ['low', 'medium', 'high']
-export const CMP_ORDER_OPTIONS = ['StatusPicker', 'MemberPicker', 'DatePicker', 'SomeNewPicker', 'OtherPicker']
-
-let GPT_USER_POOL = []
+// ===============  USER POOL  ===============
+let GPT_USER_POOL = gUsersPool
 
 async function initUserPool() {
     if (GPT_USER_POOL.length) return
 
+    // If you want truly random user images, you can adapt your code that picks from a large face library
+    // For demonstration, we do a short fallback:
     const fallbackPool = [
-        { _id: 'u101', fullname: 'Ava Placeholder', imgUrl: '' },
-        { _id: 'u102', fullname: 'Ben Placeholder', imgUrl: '' },
-        { _id: 'u103', fullname: 'Cara Placeholder', imgUrl: '' },
+        { _id:'u101', fullname:'Alice Placeholder', imgUrl:'' },
+        { _id:'u102', fullname:'Bob Placeholder',   imgUrl:'' },
+        { _id:'u103', fullname:'Cara Placeholder',  imgUrl:'' },
     ]
 
-    const prompt = `Generate an array of 5 to 8 distinct "users" for a collaborative project tool.
+    const prompt = `
+Generate an array of 5 distinct "users" for a collaborative project tool.
 Each user = {
   "_id": "unique string id",
   "fullname": "some realistic or creative full name",
@@ -4717,80 +5395,1501 @@ Each user = {
 }
 Return only valid JSON. e.g.
 [
-  {"_id":"u111", "fullname":"Alice Wonderland", "imgUrl":"https://..."},
+  {"_id":"u111","fullname":"Alice Wonderland","imgUrl":"https://example.com/alice.jpg"},
   ...
 ]`
 
-    let text = await generateText(prompt, 1.0)
-    let users = []
+    const text = await generateText(prompt, 1.0)
+    let arr = []
     try {
-        users = safeJsonParse(text, JSON.stringify(fallbackPool))
-    } catch (err) {
-        console.error('Failed to parse GPT user pool. Using fallback.', err)
-        users = fallbackPool
+        arr = safeJsonParse(text, JSON.stringify(fallbackPool))
+    } catch(e) {
+        console.error('Failed parse GPT userpool:', e)
+        arr = fallbackPool
     }
+    if (!Array.isArray(arr) || !arr.length) arr = fallbackPool
 
-    if (!Array.isArray(users) || !users.length) {
-        users = fallbackPool
+    // ensure min 5
+    while (arr.length < 5) {
+        arr.push({
+            _id:'u_'+random.id(),
+            fullname:'FallbackUser '+random.id(),
+            imgUrl:''
+        })
     }
-
-    if (users.length < 5) {
-        while (users.length < 5) {
-            users.push({
-                _id: 'u_' + random.id(),
-                fullname: 'FallbackUser ' + random.id(),
-                imgUrl: '',
-            })
-        }
-    }
-
-    if (users.length > 8) users = users.slice(0, 8)
-
-    for (let u of users) {
-        if (!u._id || !u.fullname) {
-            u._id = 'u_' + random.id()
-            if (!u.fullname) u.fullname = 'FallbackUser ' + random.id()
-        }
-        if (typeof u.imgUrl !== 'string') {
-            u.imgUrl = ''
-        }
-    }
-
-    GPT_USER_POOL = users
+    // max 8
+    if (arr.length>8) arr=arr.slice(0,8)
+    // final
+    GPT_USER_POOL = arr
 }
 
 export function getUserPool() {
     return GPT_USER_POOL
 }
 
-export function getColorFromBackgroundColor(bg) {
-    switch (bg) {
-        case '#baf3db': return '#164b35'
-        case '#f8e6a0': return '#4f3a0e'
-        case '#fedec8': return '#6e3b0d'
-        case '#ffd5d2': return '#6e0d0d'
-        case '#dfd8fd': return '#4f3a0e'
-        case '#cce0ff': return '#0d2e6e'
-        case '#c6edfb': return '#0d3a4f'
-        case '#fdd0ec': return '#6e0d3a'
-        case '#f1f2f4': return '#3a3a3a'
-        default: return '#3a3a3a'
+
+// ===============  CHECKLISTS  ===============
+async function generateChecklistItems(boardTitle, groupTitle) {
+    // ask GPT for 3 short items
+    const fallback = JSON.stringify([
+        {"title":"Fallback item 1","isDone":false},
+        {"title":"Fallback item 2","isDone":true},
+        {"title":"Fallback item 3","isDone":false},
+    ])
+    const prompt = `
+For the group "${groupTitle}" in the board "${boardTitle}",
+Generate exactly 3 short "todo" items. 
+Return strictly JSON array:
+[{"title":"xxx","isDone":true/false}, ...]
+`
+    const txt = await generateText(prompt,1.0,fallback)
+    let parsed = safeJsonParse(txt, fallback)
+    if (!Array.isArray(parsed) || !parsed.length) parsed = safeJsonParse(fallback)
+    // ensure we have 3
+    while (parsed.length <3) {
+        parsed.push({"title":"Added fallback item","isDone": random.choice([true,false])})
+    }
+    return parsed.slice(0,3)
+}
+
+
+// Cache for Unsplash image URLs to avoid redundant API calls
+const unsplashImageCache = new Map();
+
+// Advanced image source management system with multi-provider fallbacks
+const imageCache = new Map();
+
+// CORE TASK GENERATION FUNCTION
+// async function generateSingleTask(boardTitle, groupTitle) {
+//     // Start critical async operations immediately
+//     const gptRespPromise = generateText(`
+// For the group "${groupTitle}" in the board "${boardTitle}",
+// Create a short realistic task.
+// Format EXACTLY:
+// "Title: XYZ; Description: ABC"
+// No code blocks, no extra text.
+// `, 1.0, `Title: My Fallback Task; Description: This is a fallback.`, 128);
+//
+//     const checklistPromises = Array(random.randint(0,2)).fill().map(() =>
+//         generateChecklistItems(boardTitle, groupTitle)
+//     );
+//
+//     // Fast synchronous operations
+//     const styleType = random.choice([0,1,2]);
+//     let style = {};
+//     if (styleType === 0) {
+//         style = {
+//             backgroundColor: random.choice(['#9f8fef','#f87168','#fea362','#f5cd47','#4bce97','#579dff']),
+//             coverSize: random.choice(['small','large'])
+//         };
+//     } else if (styleType === 1) {
+//         // Will be populated with appropriate image URL later
+//         style = {
+//             backgroundImage: null,
+//             coverSize: random.choice(['small','large'])
+//         };
+//     }
+//
+//     // More fast local operations
+//     const attachments = Array(random.randint(0,2)).fill().map(() => ({
+//         path: `file-${random.randint(1,999)}.png`,
+//         date: Date.now() - random.randint(0,1_000_000_000),
+//         text: random.choice(['Photo proof!','Attached doc','Uploaded file',''])
+//     }));
+//
+//     const mems = random.sample(GPT_USER_POOL, random.randint(0,3));
+//     const loc = (Math.random()<0.1) ? {
+//         name: 'Tel Aviv-Yafo', lat: 32.109333, lng: 34.855499, zoom: 11
+//     } : null;
+//
+//     // WAIT POINT: Get task title and description
+//     const gptResp = await gptRespPromise;
+//     let title = 'RandomTask';
+//     let desc = 'No desc from GPT';
+//     const match = gptResp.match(/Title:\s*(.+?);\s*Description:\s*(.+)/);
+//     if (match) {
+//         title = match[1].trim();
+//         desc = match[2].trim();
+//     }
+//
+//     // Start image request only after we have title/desc
+//     let imagePromise = null;
+//     if (styleType === 1) {
+//         imagePromise = getDesignAssetForTask(title, desc, boardTitle, groupTitle);
+//     }
+//
+//     // Generate activities using title
+//     const activities = Array(random.randint(1,3)).fill().map(() => {
+//         const byMem = random.choice(GPT_USER_POOL) || {_id:'fallback', fullname:'Fallback user', imgUrl:''};
+//         return {
+//             id: random.id(),
+//             title: random.choice([
+//                 `Commented: "Looks good!"`,
+//                 `Edited title to: ${title}`,
+//                 `Attached a new file`,
+//                 `Set status to 'inProgress'`
+//             ]),
+//             createdAt: random.date('2023-01-01','2025-12-31').getTime(),
+//             byMember: {
+//                 _id: byMem._id,
+//                 fullname: byMem.fullname,
+//                 imgUrl: byMem.imgUrl
+//             }
+//         };
+//     });
+//
+//     // Wait for all remaining promises
+//     const [checklistResults, imageUrl] = await Promise.all([
+//         Promise.all(checklistPromises),
+//         imagePromise || Promise.resolve(null)
+//     ]);
+//
+//     // Process checklists
+//     const checklists = checklistResults.map(items => {
+//         const todos = items.map(it => ({
+//             id: 'todo_' + random.id(),
+//             title: it.title,
+//             isDone: it.isDone,
+//         }));
+//         return {
+//             id: 'cl_' + random.id(),
+//             title: 'Checklist ' + random.id().slice(0,4),
+//             progress: 0,
+//             todos
+//         };
+//     });
+//
+//     // Apply image URL if we got one
+//     if (styleType === 1 && imageUrl) {
+//         style.backgroundImage = imageUrl;
+//     }
+//
+//     // Return final task object
+//     return {
+//         id: 'tsk_' + random.id(),
+//         title,
+//         status: random.choice(['inProgress','done','review','stuck','blocked']),
+//         priority: random.choice(['low','medium','high']),
+//         dueDate: random.date('2024-01-01','2026-12-31').toISOString(),
+//         createdAt: random.date('2023-01-01','2024-12-31').getTime(),
+//         description: desc,
+//         checklists,
+//         members: mems,
+//         style,
+//         badges: [],
+//         attachments,
+//         activity: activities,
+//         isUserWatching: random.choice([true,false]),
+//         labelIds: [],
+//         location: loc
+//     };
+// }
+
+/**
+ * MASTER IMAGE SOURCE ROUTER - Determines the best image source based on task type
+ * and dispatches to appropriate providers
+ */
+// async function getDesignAssetForTask(title, desc, boardTitle, groupTitle) {
+//     // Create a cache key
+//     const combinedText = `${title}${desc}${boardTitle}${groupTitle}`.toLowerCase();
+//     const cacheKey = combinedText.replace(/[^a-z0-9]/g, '').slice(0, 60);
+//
+//     // Return cached image if available
+//     if (imageCache.has(cacheKey)) {
+//         return imageCache.get(cacheKey);
+//     }
+//
+//     // Analyze task content to determine best image type
+//     const taskType = analyzeTaskType(title, desc);
+//
+//     // Track attempts for logging and debugging
+//     const attempts = [];
+//     let imageUrl = null;
+//
+//     // TRY STRATEGY 1: Based on task type, try the most appropriate source first
+//     try {
+//         switch(taskType) {
+//             case 'technical':
+//                 attempts.push('TECHNICAL');
+//                 imageUrl = await getTechnicalImage(title, desc);
+//                 break;
+//             case 'creative':
+//                 attempts.push('CREATIVE');
+//                 imageUrl = await getCreativeImage(title, desc);
+//                 break;
+//             case 'planning':
+//                 attempts.push('PLANNING');
+//                 imageUrl = await getPlanningImage(title, desc);
+//                 break;
+//             case 'meeting':
+//                 attempts.push('MEETING');
+//                 imageUrl = await getMeetingImage(title, desc);
+//                 break;
+//             default:
+//                 attempts.push('GENERIC');
+//                 imageUrl = await getGenericWorkImage(title, desc);
+//         }
+//     } catch (e) {
+//         console.error(`Primary source error for ${taskType}:`, e);
+//     }
+//
+//     // TRY STRATEGY 2: If primary source failed, try Unsplash
+//     if (!imageUrl) {
+//         try {
+//             attempts.push('UNSPLASH');
+//             imageUrl = await getUnsplashImage(title, desc);
+//         } catch (e) {
+//             console.error('Unsplash fallback error:', e);
+//         }
+//     }
+//
+//     // TRY STRATEGY 3: If Unsplash failed, try icon/sticker source
+//     if (!imageUrl) {
+//         try {
+//             attempts.push('ICON_STICKER');
+//             imageUrl = await getIconOrSticker(title, desc);
+//         } catch (e) {
+//             console.error('Icon/Sticker fallback error:', e);
+//         }
+//     }
+//
+//     // ULTIMATE FALLBACK: Guaranteed to work
+//     if (!imageUrl) {
+//         attempts.push('ULTIMATE_FALLBACK');
+//         imageUrl = getUltimateFallbackImage(taskType);
+//     }
+//
+//     // Cache the result
+//     if (imageUrl) {
+//         imageCache.set(cacheKey, imageUrl);
+//     }
+//
+//     return imageUrl;
+// }
+
+/**
+ * Analyze task content to determine its general type
+ */
+// function analyzeTaskType(title, desc) {
+//     const fullText = `${title} ${desc}`.toLowerCase();
+//
+//     // Technical keywords
+//     const technicalTerms = ['code', 'bug', 'fix', 'develop', 'implement', 'feature',
+//                             'system', 'api', 'database', 'server', 'test', 'refactor',
+//                             'debug', 'deploy', 'architecture', 'schema', 'diagram',
+//                             'infrastructure', 'algorithm', 'prototype', 'engineering'];
+//
+//     // Creative keywords
+//     const creativeTerms = ['design', 'create', 'draft', 'mockup', 'sketch', 'wireframe',
+//                           'graphic', 'illustration', 'artwork', 'visual', 'logo', 'brand',
+//                           'style', 'creative', 'color', 'typography', 'layout', 'drawing'];
+//
+//     // Planning keywords
+//     const planningTerms = ['plan', 'strategy', 'roadmap', 'timeline', 'schedule', 'milestone',
+//                           'objective', 'goal', 'kpi', 'metric', 'project', 'task', 'backlog',
+//                           'sprint', 'prioritize', 'organize', 'coordinate', 'requirement'];
+//
+//     // Meeting keywords
+//     const meetingTerms = ['meeting', 'call', 'discuss', 'conversation', 'sync', 'presentation',
+//                          'review', 'retrospective', 'standup', 'session', 'workshop',
+//                          'conference', 'interview', 'demo', 'pitch', 'briefing'];
+//
+//     // Count occurrences
+//     const counts = {
+//         technical: technicalTerms.filter(term => fullText.includes(term)).length,
+//         creative: creativeTerms.filter(term => fullText.includes(term)).length,
+//         planning: planningTerms.filter(term => fullText.includes(term)).length,
+//         meeting: meetingTerms.filter(term => fullText.includes(term)).length
+//     };
+//
+//     // Find the highest count
+//     let maxCount = 0;
+//     let maxType = 'generic';
+//
+//     for (const [type, count] of Object.entries(counts)) {
+//         if (count > maxCount) {
+//             maxCount = count;
+//             maxType = type;
+//         }
+//     }
+//
+//     // If we found matching keywords, return that type
+//     if (maxCount > 0) {
+//         return maxType;
+//     }
+//
+//     // Default to generic if no specific keywords found
+//     return 'generic';
+// }
+
+/**
+ * Get technical diagram, schematic, or code-related image
+ */
+async function getTechnicalImage(title, desc) {
+    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
+
+    // Technical-specific search terms that yield diagrams and schematics
+    const technicalQueries = [
+        'code diagram', 'technical schematic', 'system architecture',
+        'flowchart', 'code on screen', 'programming', 'tech diagram',
+        'network diagram', 'software development', 'database schema',
+        'circuit board', 'algorithm diagram', 'engineering drawing'
+    ];
+
+    // Extract keywords from title/desc
+    const keywords = extractKeywords(title + ' ' + desc);
+
+    // Combine a technical term with a content keyword for better results
+    const technicalTerm = technicalQueries[Math.floor(Math.random() * technicalQueries.length)];
+    const searchQuery = keywords.length > 0
+        ? `${technicalTerm} ${keywords[0]}`
+        : technicalTerm;
+
+    try {
+        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
+        const response = await fetch(endpoint, {
+            headers: {
+                'Authorization': `Client-ID ${unsplashAccessKey}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Technical image search failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+            return data.results[0].urls.regular;
+        }
+
+        return null;
+    } catch (e) {
+        console.error('Technical image fetch failed:', e);
+        return null;
     }
 }
 
-function getRandomColor() {
-    const trelloColors = [
-        '#baf3db',
-        '#f8e6a0',
-        '#fedec8',
-        '#ffd5d2',
-        '#dfd8fd',
-        '#cce0ff',
-        '#c6edfb',
-        '#fdd0ec',
-        '#f1f2f4',
-    ]
-    return random.choice(trelloColors)
+/**
+ * Get creative, hand-drawn, sketch, or design-related image
+ */
+async function getCreativeImage(title, desc) {
+    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
+
+    // Creative-specific search terms that yield hand-drawn, sketched images
+    const creativeQueries = [
+        'hand drawn sketch', 'design sketch', 'artist drawing', 'creative sketch',
+        'sketch notebook', 'design process', 'wireframe drawing', 'sketchbook',
+        'hand drawn mockup', 'creative doodle', 'design thinking', 'paper prototype',
+        'sketch notes', 'illustrated notes', 'concept art', 'storyboard'
+    ];
+
+    // Extract keywords from title/desc
+    const keywords = extractKeywords(title + ' ' + desc);
+
+    // Combine a creative term with a content keyword for better results
+    const creativeTerm = creativeQueries[Math.floor(Math.random() * creativeQueries.length)];
+    const searchQuery = keywords.length > 0
+        ? `${creativeTerm} ${keywords[0]}`
+        : creativeTerm;
+
+    try {
+        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
+        const response = await fetch(endpoint, {
+            headers: {
+                'Authorization': `Client-ID ${unsplashAccessKey}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Creative image search failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+            return data.results[0].urls.regular;
+        }
+
+        return null;
+    } catch (e) {
+        console.error('Creative image fetch failed:', e);
+        return null;
+    }
+}
+
+/**
+ * Get planning, roadmap, schedule, or strategy-related image
+ */
+async function getPlanningImage(title, desc) {
+    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
+
+    // Planning-specific search terms that yield planning artifacts
+    const planningQueries = [
+        'strategic planning', 'project planning', 'planning board', 'roadmap',
+        'sticky notes planning', 'kanban board', 'sprint planning', 'task board',
+        'planning session', 'planner notebook', 'planning diagram', 'strategy map',
+        'timeline planning', 'project management', 'task planning', 'goal setting'
+    ];
+
+    // Extract keywords from title/desc
+    const keywords = extractKeywords(title + ' ' + desc);
+
+    // Combine a planning term with a content keyword for better results
+    const planningTerm = planningQueries[Math.floor(Math.random() * planningQueries.length)];
+    const searchQuery = keywords.length > 0
+        ? `${planningTerm} ${keywords[0]}`
+        : planningTerm;
+
+    try {
+        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
+        const response = await fetch(endpoint, {
+            headers: {
+                'Authorization': `Client-ID ${unsplashAccessKey}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Planning image search failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+            return data.results[0].urls.regular;
+        }
+
+        return null;
+    } catch (e) {
+        console.error('Planning image fetch failed:', e);
+        return null;
+    }
+}
+
+/**
+ * Get meeting, conversation, or collaboration-related image
+ */
+async function getMeetingImage(title, desc) {
+    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
+
+    // Meeting-specific search terms
+    const meetingQueries = [
+        'team meeting', 'conference room', 'whiteboard meeting', 'collaboration session',
+        'video conference', 'meeting notes', 'presentation meeting', 'team discussion',
+        'brainstorming session', 'meeting room', 'team workshop', 'design thinking',
+        'team huddle', 'one on one meeting', 'standup meeting', 'office meeting'
+    ];
+
+    // Extract keywords from title/desc
+    const keywords = extractKeywords(title + ' ' + desc);
+
+    // Combine a meeting term with a content keyword for better results
+    const meetingTerm = meetingQueries[Math.floor(Math.random() * meetingQueries.length)];
+    const searchQuery = keywords.length > 0
+        ? `${meetingTerm} ${keywords[0]}`
+        : meetingTerm;
+
+    try {
+        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
+        const response = await fetch(endpoint, {
+            headers: {
+                'Authorization': `Client-ID ${unsplashAccessKey}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Meeting image search failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+            return data.results[0].urls.regular;
+        }
+
+        return null;
+    } catch (e) {
+        console.error('Meeting image fetch failed:', e);
+        return null;
+    }
+}
+
+/**
+ * Generic work-related image fallback
+ */
+async function getGenericWorkImage(title, desc) {
+    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
+
+    // Generic work-related queries
+    const genericQueries = [
+        'productivity', 'workspace', 'office desk', 'work environment',
+        'task management', 'work tools', 'office supplies', 'organization',
+        'work planning', 'laptop work', 'modern office', 'work setup',
+        'business desk', 'professional workspace', 'clean desk'
+    ];
+
+    // Extract keywords from title/desc
+    const keywords = extractKeywords(title + ' ' + desc);
+
+    // Combine a generic term with a content keyword for better results
+    const genericTerm = genericQueries[Math.floor(Math.random() * genericQueries.length)];
+    const searchQuery = keywords.length > 0
+        ? `${genericTerm} ${keywords[0]}`
+        : genericTerm;
+
+    try {
+        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
+        const response = await fetch(endpoint, {
+            headers: {
+                'Authorization': `Client-ID ${unsplashAccessKey}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Generic image search failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+            return data.results[0].urls.regular;
+        }
+
+        return null;
+    } catch (e) {
+        console.error('Generic image fetch failed:', e);
+        return null;
+    }
+}
+
+/**
+ * Get a simple Unsplash image based on keywords
+ */
+async function getUnsplashImage(title, desc) {
+    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
+
+    // Extract keywords from title/desc
+    const keywords = extractKeywords(title + ' ' + desc);
+
+    // If no keywords found, use fallback term
+    const searchQuery = keywords.length > 0
+        ? keywords.slice(0, 2).join(' ')
+        : 'productivity work';
+
+    try {
+        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
+        const response = await fetch(endpoint, {
+            headers: {
+                'Authorization': `Client-ID ${unsplashAccessKey}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Unsplash search failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+            return data.results[0].urls.regular;
+        }
+
+        return null;
+    } catch (e) {
+        console.error('Unsplash fetch failed:', e);
+        return null;
+    }
+}
+
+/**
+ * Get icon or sticker-like image using The Noun Project API
+ * NOTE: This is a MOCK implementation since we don't have actual Noun Project credentials
+ * In a real implementation, you would use their API with proper authentication
+ */
+async function getIconOrSticker(title, desc) {
+    // Since we don't have Noun Project API credentials, simulate with hardcoded sticker URLs
+    // In a real implementation, replace this with actual API calls
+
+    // These are placeholder URLs for various sticker/icon style images
+    // Replace these with your actual sticker sources or API implementation
+    const stickerUrls = [
+        // Colorful sticker-like images
+        'https://cdn.dribbble.com/users/113499/screenshots/16599280/media/a7211408676ba2cbc0860a0464c93071.png',
+        'https://cdn.dribbble.com/users/43762/screenshots/16587858/media/f7f87f9437a13a1d3ae63b18276dfe7c.png',
+        'https://cdn.dribbble.com/users/471921/screenshots/16571682/media/a9e7b7aa72b1ea64b1e158e4cf2175f7.jpg',
+        'https://cdn.dribbble.com/users/2424687/screenshots/16559718/media/8b78217fabe34fdc07080747e6da88bd.png',
+        'https://cdn.dribbble.com/users/427857/screenshots/16551537/media/a8f18b2d2a8c1e4e2216e8410c4c20a0.png',
+
+        // Hand-drawn style images
+        'https://cdn.dribbble.com/users/1728196/screenshots/16556285/media/8292e077f1c8c7b053c98368f350a25a.jpg',
+        'https://cdn.dribbble.com/users/1585453/screenshots/16573417/media/00dfd6bea20cf92641ff4752cfc1e87e.jpg',
+        'https://cdn.dribbble.com/users/66319/screenshots/16559233/media/51a6eb892913e2bfa75a45a1bf9c5ec7.png',
+
+        // Schematic/diagram style images
+        'https://cdn.dribbble.com/users/311304/screenshots/16575909/media/67c689926c358cf0c6167c3181b77c1e.png',
+        'https://cdn.dribbble.com/users/1874303/screenshots/16558429/media/d8807b79cbf0d1893959e1df90c8da8c.png'
+    ];
+
+    // In a real implementation, do actual keyword matching here
+    // For now, just use the extracted keywords to select a sticker semi-deterministically
+    const keywords = extractKeywords(title + ' ' + desc);
+    let seed = 0;
+
+    if (keywords.length > 0) {
+        // Create a deterministic seed from the first keyword
+        seed = Array.from(keywords[0]).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    } else {
+        // Fallback to random if no keywords
+        seed = Math.floor(Math.random() * 1000);
+    }
+
+    // Select a sticker URL based on the seed
+    const index = seed % stickerUrls.length;
+    return stickerUrls[index];
+}
+
+/**
+ * Ultimate fallback that can never fail - uses themed dummy images
+ */
+function getUltimateFallbackImage(taskType) {
+    // Generate a seed for consistent but varied images
+    const seed = Math.floor(Math.random() * 10000);
+
+    // Map task types to specific colors for visual differentiation
+    const typeColors = {
+        'technical': '5B8AF9',    // Blue
+        'creative': 'F96E5B',     // Red-Orange
+        'planning': '8BC34A',     // Green
+        'meeting': 'FFC107',      // Amber
+        'generic': '9E9E9E'       // Grey
+    };
+
+    // Get the appropriate color for this task type
+    const color = typeColors[taskType] || '9E9E9E';
+
+    // Create a dummy image URL with task type as text
+    return `https://dummyimage.com/800x600/${color}/fff&text=${taskType}+task`;
+}
+
+/**
+ * Extract meaningful keywords from text
+ */
+function extractKeywords(text) {
+    // List of common stop words to filter out
+    const stopWords = [
+        'a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'with', 'by',
+        'about', 'as', 'into', 'like', 'through', 'after', 'before', 'between', 'from',
+        'of', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had',
+        'do', 'does', 'did', 'will', 'would', 'shall', 'should', 'can', 'could', 'may',
+        'might', 'must', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her',
+        'us', 'them', 'this', 'that', 'these', 'those'
+    ];
+
+    // Process the text into keywords
+    let words = text.toLowerCase()
+                    .replace(/[^\w\s]/g, '')  // Remove punctuation
+                    .split(/\s+/);            // Split on whitespace
+
+    // Filter out stop words, empty strings, and very short words
+    words = words.filter(word =>
+        word.length > 3 && !stopWords.includes(word)
+    );
+
+    // Sort by word length (longer words are often more specific/meaningful)
+    words.sort((a, b) => b.length - a.length);
+
+    // Return the top 3 keywords
+    return words.slice(0, 3);
+}
+
+// Global registry to track used images per board
+const boardImageRegistry = new Map();
+
+// Global cache for all image URLs to avoid redundant API calls
+// const imageCache = new Map();
+
+// ENHANCED TASK GENERATION FUNCTION
+async function generateSingleTask(boardTitle, groupTitle, useEmoji) {
+    // Check if we need emoji in this task (30% probability)
+
+
+    // Start critical async operations immediately
+    const gptPrompt = useEmoji
+        ? `
+For the group "${groupTitle}" in the board "${boardTitle}",
+Create a short realistic task. 
+IMPORTANT: Include 1-2 relevant emojis in the title and/or description.
+Format EXACTLY:
+"Title: XYZ; Description: ABC"
+No code blocks, no extra text.
+`
+        : `
+For the group "${groupTitle}" in the board "${boardTitle}",
+Create a short realistic task. 
+Format EXACTLY:
+"Title: XYZ; Description: ABC"
+No code blocks, no extra text.
+`;
+
+    const gptRespPromise = generateText(gptPrompt, 1.0, `Title: My Fallback Task; Description: This is a fallback.`, 128);
+
+    const checklistPromises = Array(random.randint(0,2)).fill().map(() =>
+        generateChecklistItems(boardTitle, groupTitle)
+    );
+
+    // Fast synchronous operations
+    const styleType = random.choice([0,1,2]);
+    let style = {};
+    if (styleType === 0) {
+        style = {
+            backgroundColor: random.choice(['#9f8fef','#f87168','#fea362','#f5cd47','#4bce97','#579dff']),
+            coverSize: random.choice(['small','large'])
+        };
+    } else if (styleType === 1) {
+        // Will be populated with appropriate image URL later
+        style = {
+            backgroundImage: null,
+            coverSize: random.choice(['small','large'])
+        };
+    }
+
+    // More fast local operations
+    const attachments = Array(random.randint(0,2)).fill().map(() => ({
+        path: `file-${random.randint(1,999)}.png`,
+        date: Date.now() - random.randint(0,1_000_000_000),
+        text: random.choice(['Photo proof!','Attached doc','Uploaded file',''])
+    }));
+
+    const mems = random.sample(GPT_USER_POOL, random.randint(0,3));
+
+    // ENHANCED LOCATION RANDOMIZATION - increased probability and wider variety
+    const includeLocation = Math.random() < 0.2; // Increased from 0.1 to 0.2
+    const loc = includeLocation ? getRandomLocation() : null;
+
+    // WAIT POINT: Get task title and description
+    const gptResp = await gptRespPromise;
+    let title = 'RandomTask';
+    let desc = 'No desc from GPT';
+    const match = gptResp.match(/Title:\s*(.+?);\s*Description:\s*(.+)/);
+    if (match) {
+        title = match[1].trim();
+        desc = match[2].trim();
+    }
+
+    // Start image request only after we have title/desc
+    let imagePromise = null;
+    if (styleType === 1) {
+        imagePromise = getUniqueDesignAssetForTask(title, desc, boardTitle, groupTitle);
+    }
+
+    // Generate activities using title
+    const activities = Array(random.randint(1,3)).fill().map(() => {
+        const byMem = random.choice(GPT_USER_POOL) || {_id:'fallback', fullname:'Fallback user', imgUrl:''};
+        return {
+            id: random.id(),
+            title: random.choice([
+                `Commented: "Looks good!"`,
+                `Edited title to: ${title}`,
+                `Attached a new file`,
+                `Set status to 'inProgress'`
+            ]),
+            createdAt: random.date('2023-01-01','2025-12-31').getTime(),
+            byMember: {
+                _id: byMem._id,
+                fullname: byMem.fullname,
+                imgUrl: byMem.imgUrl
+            }
+        };
+    });
+
+    // Wait for all remaining promises
+    const [checklistResults, imageUrl] = await Promise.all([
+        Promise.all(checklistPromises),
+        imagePromise || Promise.resolve(null)
+    ]);
+
+    // Process checklists
+    const checklists = checklistResults.map(items => {
+        const todos = items.map(it => ({
+            id: 'todo_' + random.id(),
+            title: it.title,
+            isDone: it.isDone,
+        }));
+        return {
+            id: 'cl_' + random.id(),
+            title: 'Checklist ' + random.id().slice(0,4),
+            progress: 0,
+            todos
+        };
+    });
+
+    // Apply image URL if we got one
+    if (styleType === 1 && imageUrl) {
+        style.backgroundImage = imageUrl;
+    }
+
+    // Return final task object
+    return {
+        id: 'tsk_' + random.id(),
+        title,
+        status: random.choice(['inProgress','done','review','stuck','blocked']),
+        priority: random.choice(['low','medium','high']),
+        dueDate: random.date('2024-01-01','2026-12-31').toISOString(),
+        createdAt: random.date('2023-01-01','2024-12-31').getTime(),
+        description: desc,
+        checklists,
+        members: mems,
+        style,
+        badges: [],
+        attachments,
+        activity: activities,
+        isUserWatching: random.choice([true,false]),
+        labelIds: [],
+        location: loc
+    };
+}
+
+/**
+ * Get a unique image that hasn't been used elsewhere on the board
+ */
+async function getUniqueDesignAssetForTask(title, desc, boardTitle, groupTitle) {
+    // Initialize the board's image registry if it doesn't exist
+    if (!boardImageRegistry.has(boardTitle)) {
+        boardImageRegistry.set(boardTitle, new Set());
+    }
+
+    // Get the set of used images for this board
+    const usedImages = boardImageRegistry.get(boardTitle);
+
+    // Maximum attempts to find a unique image
+    const MAX_ATTEMPTS = 5;
+    let imageUrl = null;
+    let attempts = 0;
+
+    // Try to get a unique image
+    while (!imageUrl && attempts < MAX_ATTEMPTS) {
+        attempts++;
+
+        // Get a candidate image
+        const candidateImage = await getDesignAssetForTask(title, desc, boardTitle, groupTitle);
+
+        // If the image isn't already used on this board, use it
+        if (candidateImage && !usedImages.has(candidateImage)) {
+            imageUrl = candidateImage;
+            usedImages.add(imageUrl); // Mark this image as used
+            break;
+        }
+
+        // If we're at the last attempt and still don't have a unique image, force uniqueness
+        // by appending a random query param
+        if (attempts === MAX_ATTEMPTS && candidateImage) {
+            const forcedUniqueUrl = `${candidateImage}${candidateImage.includes('?') ? '&' : '?'}uniqueId=${random.id()}`;
+            imageUrl = forcedUniqueUrl;
+            usedImages.add(imageUrl);
+        }
+    }
+
+    return imageUrl;
+}
+
+/**
+ * MASTER IMAGE SOURCE ROUTER - Determines the best image source based on task type
+ * and dispatches to appropriate providers
+ */
+async function getDesignAssetForTask(title, desc, boardTitle, groupTitle) {
+    // Create a cache key
+    const combinedText = `${title}${desc}${boardTitle}${groupTitle}`.toLowerCase();
+    const cacheKey = combinedText.replace(/[^a-z0-9]/g, '').slice(0, 60);
+
+    // Return cached image if available
+    if (imageCache.has(cacheKey)) {
+        return imageCache.get(cacheKey);
+    }
+
+    // Analyze task content to determine best image type
+    const taskType = analyzeTaskType(title, desc);
+
+    // Track attempts for logging and debugging
+    const attempts = [];
+    let imageUrl = null;
+
+    // TRY STRATEGY 1: Based on task type, try the most appropriate source first
+    try {
+        switch(taskType) {
+            case 'technical':
+                attempts.push('TECHNICAL');
+                imageUrl = await getTechnicalImage(title, desc);
+                break;
+            case 'creative':
+                attempts.push('CREATIVE');
+                imageUrl = await getCreativeImage(title, desc);
+                break;
+            case 'planning':
+                attempts.push('PLANNING');
+                imageUrl = await getPlanningImage(title, desc);
+                break;
+            case 'meeting':
+                attempts.push('MEETING');
+                imageUrl = await getMeetingImage(title, desc);
+                break;
+            default:
+                attempts.push('GENERIC');
+                imageUrl = await getGenericWorkImage(title, desc);
+        }
+    } catch (e) {
+        console.error(`Primary source error for ${taskType}:`, e);
+    }
+
+    // TRY STRATEGY 2: If primary source failed, try Unsplash
+    if (!imageUrl) {
+        try {
+            attempts.push('UNSPLASH');
+            imageUrl = await getUnsplashImage(title, desc);
+        } catch (e) {
+            console.error('Unsplash fallback error:', e);
+        }
+    }
+
+    // TRY STRATEGY 3: If Unsplash failed, try icon/sticker source
+    if (!imageUrl) {
+        try {
+            attempts.push('ICON_STICKER');
+            imageUrl = await getIconOrSticker(title, desc);
+        } catch (e) {
+            console.error('Icon/Sticker fallback error:', e);
+        }
+    }
+
+    // ULTIMATE FALLBACK: Guaranteed to work
+    if (!imageUrl) {
+        attempts.push('ULTIMATE_FALLBACK');
+        imageUrl = getUltimateFallbackImage(taskType);
+    }
+
+    // Cache the result
+    if (imageUrl) {
+        imageCache.set(cacheKey, imageUrl);
+    }
+
+    return imageUrl;
+}
+
+/**
+ * Generate a diverse range of realistic locations
+ */
+function getRandomLocation() {
+    // List of interesting cities with accurate coordinates
+    const cities = [
+        { name: 'Tel Aviv-Yafo, Israel', lat: 32.109333, lng: 34.855499, zoom: 10 },
+        { name: 'New York, USA', lat: 40.7128, lng: -74.0060, zoom: 12 },
+        { name: 'San Francisco, USA', lat: 37.7749, lng: -122.4194, zoom: 12 },
+        { name: 'London, UK', lat: 51.5074, lng: -0.1278, zoom: 11 },
+        { name: 'Berlin, Germany', lat: 52.5200, lng: 13.4050, zoom: 11 },
+        { name: 'Tokyo, Japan', lat: 35.6762, lng: 139.6503, zoom: 10 },
+        { name: 'Sydney, Australia', lat: 33.8688, lng: 151.2093, zoom: 12 },
+        { name: 'Singapore', lat: 1.3521, lng: 103.8198, zoom: 11 },
+        { name: 'Toronto, Canada', lat: 43.6532, lng: -79.3832, zoom: 11 },
+        { name: 'Paris, France', lat: 48.8566, lng: 2.3522, zoom: 11 },
+        { name: 'Austin, USA', lat: 30.2672, lng: -97.7431, zoom: 11 },
+        { name: 'Amsterdam, Netherlands', lat: 52.3676, lng: 4.9041, zoom: 11 },
+        { name: 'Barcelona, Spain', lat: 41.3851, lng: 2.1734, zoom: 12 },
+        { name: 'Bangkok, Thailand', lat: 13.7563, lng: 100.5018, zoom: 11 },
+        { name: 'Dubai, UAE', lat: 25.2048, lng: 55.2708, zoom: 11 },
+        { name: 'Copenhagen, Denmark', lat: 55.6761, lng: 12.5683, zoom: 12 },
+        { name: 'São Paulo, Brazil', lat: -23.5505, lng: -46.6333, zoom: 10 },
+        { name: 'Cape Town, South Africa', lat: -33.9249, lng: 18.4241, zoom: 12 },
+        { name: 'Seoul, South Korea', lat: 37.5665, lng: 126.9780, zoom: 11 },
+        { name: 'Mumbai, India', lat: 19.0760, lng: 72.8777, zoom: 11 }
+    ];
+
+    // Occasionally add special locations like conference centers, offices, etc.
+    const specialLocations = [
+        { name: 'Silicon Valley HQ', lat: 37.4275, lng: -122.1697, zoom: 15 },
+        { name: 'Downtown Office', lat: 40.7127, lng: -74.0134, zoom: 16 },
+        { name: 'Tech Conference Center', lat: 37.7833, lng: -122.4167, zoom: 16 },
+        { name: 'Client HQ', lat: 51.5007, lng: -0.1246, zoom: 15 },
+        { name: 'Remote Work Retreat', lat: 20.7984, lng: -156.3319, zoom: 14 },
+        { name: 'Industry Summit', lat: 48.8606, lng: 2.3376, zoom: 16 },
+        { name: 'Partner Office', lat: 34.0522, lng: -118.2437, zoom: 15 },
+        { name: 'Coworking Space', lat: 52.5200, lng: 13.4050, zoom: 16 }
+    ];
+
+    // 25% chance of using a special location
+    if (Math.random() < 0.25) {
+        return specialLocations[Math.floor(Math.random() * specialLocations.length)];
+    }
+
+    // Otherwise use a regular city
+    return cities[Math.floor(Math.random() * cities.length)];
+}
+
+// The rest of the image fetching functions would remain the same as previous implementation
+// I'm including placeholders to indicate they should be kept
+
+async function analyzeTaskType(title, desc) {
+    // Implementation from previous code
+    const fullText = `${title} ${desc}`.toLowerCase();
+
+    // Technical keywords
+    const technicalTerms = ['code', 'bug', 'fix', 'develop', 'implement', 'feature',
+                          'system', 'api', 'database', 'server', 'test', 'refactor',
+                          'debug', 'deploy', 'architecture', 'schema', 'diagram',
+                          'infrastructure', 'algorithm', 'prototype', 'engineering'];
+
+    // Creative keywords
+    const creativeTerms = ['design', 'create', 'draft', 'mockup', 'sketch', 'wireframe',
+                          'graphic', 'illustration', 'artwork', 'visual', 'logo', 'brand',
+                          'style', 'creative', 'color', 'typography', 'layout', 'drawing'];
+
+    // Planning keywords
+    const planningTerms = ['plan', 'strategy', 'roadmap', 'timeline', 'schedule', 'milestone',
+                          'objective', 'goal', 'kpi', 'metric', 'project', 'task', 'backlog',
+                          'sprint', 'prioritize', 'organize', 'coordinate', 'requirement'];
+
+    // Meeting keywords
+    const meetingTerms = ['meeting', 'call', 'discuss', 'conversation', 'sync', 'presentation',
+                         'review', 'retrospective', 'standup', 'session', 'workshop',
+                         'conference', 'interview', 'demo', 'pitch', 'briefing'];
+
+    // Count occurrences
+    const counts = {
+        technical: technicalTerms.filter(term => fullText.includes(term)).length,
+        creative: creativeTerms.filter(term => fullText.includes(term)).length,
+        planning: planningTerms.filter(term => fullText.includes(term)).length,
+        meeting: meetingTerms.filter(term => fullText.includes(term)).length
+    };
+
+    // Find the highest count
+    let maxCount = 0;
+    let maxType = 'generic';
+
+    for (const [type, count] of Object.entries(counts)) {
+        if (count > maxCount) {
+            maxCount = count;
+            maxType = type;
+        }
+    }
+
+    // If we found matching keywords, return that type
+    if (maxCount > 0) {
+        return maxType;
+    }
+
+    // Default to generic if no specific keywords found
+    return 'generic';
+}
+
+
+// If using with generateMultipleGroups, you should clear the board image registry
+// at the start of a new board generation to maintain uniqueness across groups
+function generateMultipleGroupsWithUniqueImages(boardTitle, useEmoji) {
+    // Clear the image registry for this board before generating
+    boardImageRegistry.set(boardTitle, new Set());
+
+    // Then call the existing generateMultipleGroups function
+    return generateMultipleGroups(boardTitle, useEmoji);
+}
+
+
+/**
+ * Fetches relevant image from Unsplash based on task content
+ * Implements caching, error handling, and intelligent keyword extraction
+ */
+async function fetchUnsplashImage(title, description) {
+    // Unsplash API credentials
+    const accessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
+
+    // Combine title and description for better keyword extraction
+    const text = `${title} ${description}`;
+
+    // Generate a cache key from the text
+    const cacheKey = text.trim().toLowerCase().slice(0, 50);
+
+    // Return cached result if available
+    if (unsplashImageCache.has(cacheKey)) {
+        return unsplashImageCache.get(cacheKey);
+    }
+
+    // Extract keywords - do this properly for better results
+    // First, create a list of stop words to filter out
+    const stopWords = [
+        'a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'with', 'by',
+        'about', 'as', 'into', 'like', 'through', 'after', 'before', 'between', 'from',
+        'of', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had',
+        'do', 'does', 'did', 'will', 'would', 'shall', 'should', 'can', 'could', 'may',
+        'might', 'must', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her',
+        'us', 'them', 'this', 'that', 'these', 'those'
+    ];
+
+    // Process the text into keywords
+    let words = text.toLowerCase()
+                    .replace(/[^\w\s]/g, '') // Remove punctuation
+                    .split(/\s+/);            // Split on whitespace
+
+    // Filter out stop words and short words
+    words = words.filter(word =>
+        word.length > 3 && !stopWords.includes(word)
+    );
+
+    // If no good keywords, use these defaults
+    if (words.length === 0) {
+        words = ['work', 'productivity', 'task'];
+    }
+
+    // Get top 2 longest words as they tend to be more specific
+    words.sort((a, b) => b.length - a.length);
+    const primaryKeywords = words.slice(0, 2);
+
+    // Add common categories based on top words
+    // Mapping specific domains to broader categories
+    const domainMap = {
+        'finance': 'business',
+        'report': 'business',
+        'meeting': 'business meeting',
+        'analysis': 'data analysis',
+        'review': 'review process',
+        'design': 'creative design',
+        'code': 'programming',
+        'develop': 'software development',
+        'test': 'quality testing',
+        'launch': 'product launch',
+        'marketing': 'digital marketing',
+        'sales': 'sales strategy',
+        'customer': 'customer service',
+        'research': 'market research',
+        'plan': 'strategic planning',
+        'budget': 'financial planning',
+    };
+
+    // Add domain categories if applicable
+    for (const word of primaryKeywords) {
+        if (domainMap[word]) {
+            primaryKeywords.push(domainMap[word]);
+            break;
+        }
+    }
+
+    // Join the primary keywords for search
+    const searchQuery = primaryKeywords.join(' ');
+
+    try {
+        // Make request to Unsplash
+        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
+        const response = await fetch(endpoint, {
+            headers: {
+                'Authorization': `Client-ID ${accessKey}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Unsplash API responded with status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Check if we got results
+        if (data.results && data.results.length > 0) {
+            // Get the regular-sized image (not too large, not too small)
+            const imageUrl = data.results[0].urls.regular;
+
+            // Cache the result
+            unsplashImageCache.set(cacheKey, imageUrl);
+
+            return imageUrl;
+        }
+
+        // If no results for specific query, try a more general fallback
+        return await fallbackToGenericImage();
+
+    } catch (error) {
+        console.error("Error fetching Unsplash image:", error);
+        return await fallbackToGenericImage();
+    }
+}
+
+/**
+ * Fallback function that tries to get a generic work/task related image
+ * when specific search fails
+ */
+async function fallbackToGenericImage() {
+    const accessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
+    const fallbackQueries = [
+        'work desk',
+        'productivity',
+        'office work',
+        'task management',
+        'business planning',
+        'workspace'
+    ];
+
+    // Get a random query from our fallbacks
+    const query = fallbackQueries[Math.floor(Math.random() * fallbackQueries.length)];
+
+    try {
+        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape`;
+        const response = await fetch(endpoint, {
+            headers: {
+                'Authorization': `Client-ID ${accessKey}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Fallback Unsplash API responded with status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+            return data.results[0].urls.regular;
+        }
+
+        // Final picsum fallback if Unsplash completely fails
+        return `https://picsum.photos/800/600?random=${Math.floor(Math.random() * 1000)}`;
+
+    } catch (error) {
+        console.error("Error fetching fallback image:", error);
+        // Ultimate fallback that can't fail
+        return `https://picsum.photos/800/600?random=${Math.floor(Math.random() * 1000)}`;
+    }
+}
+// ===============  CONCURRENT GROUPS  ===============
+async function generateOneGroup(boardTitle, groupTitle, useEmoji) {
+    const backgroundColor = getRandomColor();
+
+    // Generate tasks concurrently
+    const tasksCount = random.randint(3, 6);
+
+    // Create an array of task generation promises
+    const taskPromises = Array(tasksCount).fill().map(() =>
+        generateSingleTask(boardTitle, groupTitle, useEmoji)
+    );
+
+    // Wait for all tasks to complete concurrently
+    const tasks = await Promise.all(taskPromises);
+
+    return {
+        id: 'grp_' + random.id(),
+        title: groupTitle,
+        archivedAt: (Math.random() < 0.1) ? random.date('2022-01-01', '2023-12-31').getTime() : null,
+        tasks,
+        style: {
+            backgroundColor,
+            color: getColorFromBackgroundColor(backgroundColor),
+        },
+        watched: (Math.random() < 0.2),
+        isMinimaized: (Math.random() < 0.05)
+    };
+}
+
+// For multi-group boards
+async function generateMultipleGroups(boardTitle, useEmoji) {
+    // Generate the group titles first
+    const fallback = 'Home;Work;Personal';
+    const groupCount = random.randint(4, 7);
+    const prompt = `
+Board: "${boardTitle}"
+Generate ${groupCount} short sub-topic group titles, separated by semicolons (like "Grocery; Work; Project X").
+No code blocks, just semicolons.
+`;
+
+    // Get group titles
+    const gptRespPromise = generateText(prompt, 1.0, fallback);
+
+    // Wait for the AI response
+    const gptResp = await gptRespPromise;
+    let arr = gptResp.split(';').map(s => s.trim()).filter(Boolean);
+
+    while (arr.length < groupCount) {
+        arr.push('Group ' + random.id().slice(0, 4));
+    }
+    arr = arr.slice(0, groupCount);
+
+    // Generate all groups concurrently
+    const groupPromises = arr.map(gTitle =>
+        generateOneGroup(boardTitle, gTitle, useEmoji)
+    );
+
+    // Wait for all groups to be generated in parallel
+    return Promise.all(groupPromises);
+}
+
+
+
+// ===============  LABELS  ===============
+async function generateBoardLabels(boardTitle) {
+    // from your code
+    const prompt = `
+Board Title: "${boardTitle}"
+Generate an array of 5 short labels for a project mgmt board. 
+Return JSON:
+[
+  {"id":"some-id","title":"...","color":"(placeholder)"},
+  ...
+]
+Return valid JSON only.
+`
+    const fallback = JSON.stringify([
+        { id:'lbl1', title:'Task', color:'#9f8fef' },
+        { id:'lbl2', title:'Bug',  color:'#f87168' },
+        { id:'lbl3', title:'UX',   color:'#fea362' },
+        { id:'lbl4', title:'Future', color:'#f5cd47'},
+        { id:'lbl5', title:'Misc',   color:'#4bce97'},
+    ])
+    const text = await generateText(prompt, 1.0, fallback)
+    let raw = safeJsonParse(text, fallback)
+    if (!Array.isArray(raw) || !raw.length) raw = safeJsonParse(fallback)
+    // ensure 5
+    while (raw.length<5) {
+        raw.push({id:'lbl_'+random.id(), title:'Label'+random.id().slice(0,3), color:getRandomColorLabels()})
+    }
+    return raw.slice(0,5).map(lbl => {
+        if (!lbl.id) lbl.id='lbl_'+random.id()
+        if (!lbl.title) lbl.title='Untitled '+random.id().slice(0,3)
+        if (!lbl.color) lbl.color=getRandomColorLabels()
+        return lbl
+    })
+}
+
+function backgroundColorToTextColor(backColor) {
+    // Helper: Hex to RGB
+    function hexToRgb(hex) {
+        hex = hex.replace(/^#/, '');
+        if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+        let r = parseInt(hex.substring(0, 2), 16);
+        let g = parseInt(hex.substring(2, 4), 16);
+        let b = parseInt(hex.substring(4, 6), 16);
+        return [r, g, b];
+    }
+
+    // Helper: RGB to HSL
+    function rgbToHsl(r, g, b) {
+        r /= 255; g /= 255; b /= 255;
+        let max = Math.max(r, g, b);
+        let min = Math.min(r, g, b);
+        let h, s, l = (max + min) / 2;
+        if (max === min) {
+            h = s = 0; // achromatic
+        } else {
+            let d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h /= 6;
+        }
+        return [h, s, l];
+    }
+
+    // Helper: HSL to RGB
+    function hslToRgb(h, s, l) {
+        let r, g, b;
+        if (s === 0) {
+            r = g = b = l; // achromatic
+        } else {
+            let hue2rgb = (p, q, t) => {
+                if (t < 0) t += 1;
+                if (t > 1) t -= 1;
+                if (t < 1/6) return p + (q - p) * 6 * t;
+                if (t < 1/2) return q;
+                if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                return p;
+            };
+            let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+            let p = 2 * l - q;
+            r = hue2rgb(p, q, h + 1/3);
+            g = hue2rgb(p, q, h);
+            b = hue2rgb(p, q, h - 1/3);
+        }
+        return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+    }
+
+    // Helper: RGB to Hex
+    function rgbToHex(r, g, b) {
+        let toHex = val => {
+            let hex = val.toString(16);
+            return hex.length === 1 ? '0' + hex : hex;
+        };
+        return '#' + toHex(r) + toHex(g) + toHex(b);
+    }
+
+    // Main logic
+    let [r, g, b] = hexToRgb(backColor);
+    let [h, s, l] = rgbToHsl(r, g, b);
+    let textL = l > 0.5 ? 0.2 : 0.8; // Darker if light, lighter if dark
+    let [textR, textG, textB] = hslToRgb(h, s, textL);
+    return rgbToHex(textR, textG, textB);
+}
+
+// ===============  BADGES (domain-based)  ===============
+function assignDomainBadgesToBoard(board, domain) {
+    // 1) filter from MASSIVE_BADGE_CATALOG
+    const relevantCats = filterBadgeCategoriesByDomain(MASSIVE_BADGE_CATALOG, domain)
+    // 2) for each group, each task, we pick 0..2 categories
+    for (let g of board.groups) {
+        for (let t of g.tasks) {
+            // ~50% chance to have 1 or 2 badges
+            const badgeCount = random.randint(0,2)
+            const usedCats = []
+            const finalBadges = []
+            for (let i=0; i<badgeCount; i++) {
+                // pick a cat not used yet
+                const candidates = relevantCats.filter(rc => !usedCats.includes(rc.category))
+                if (!candidates.length) break
+                const catChosen = random.choice(candidates)
+                usedCats.push(catChosen.category)
+                const {value,color} = pickBadgeValue(catChosen) || {}
+                if (!value) continue
+                finalBadges.push({
+                    id: 'badg_'+random.id(),
+                    categ: catChosen.category,
+                    color,
+                    // this needs to calculate the text color based on background color
+                    textColor: backgroundColorToTextColor(color),
+                    badgeOptions: catChosen.values,  // optional
+                    chosenOption: value
+                })
+            }
+            t.badges = finalBadges
+        }
+    }
+}
+
+
+// ===============  BOARD ACTIVITIES  ===============
+function generateBoardActivities(board) {
+    const count = random.randint(3,6)
+    const acts = []
+    for (let i=0; i<count; i++) {
+        const group = random.choice(board.groups)
+        const task = random.choice(group.tasks)
+        const activityType = random.choice(['added','moved','updated','commented'])
+        let title
+        if (activityType==='added') {
+            title = `Added task '${task.title}' to group '${group.title}'`
+        } else if (activityType==='moved') {
+            title = `Moved task '${task.title}' around`
+        } else if (activityType==='updated') {
+            title = `Updated status of '${task.title}' to '${task.status}'`
+        } else {
+            title = `Commented on '${task.title}': "Looks good to me!"`
+        }
+        const byMem = random.choice(board.members) || { _id:'u000',fullname:'GhostUser',imgUrl:''}
+        acts.push({
+            id:'act_'+random.id(),
+            title,
+            createdAt: random.date('2023-01-01','2025-12-31').getTime(),
+            byMember:{
+                _id: byMem._id,
+                fullname: byMem.fullname,
+                imgUrl: byMem.imgUrl,
+            },
+            group:{id: group.id, title: group.title},
+            task:{id: task.id, title: task.title},
+        })
+    }
+    return acts
 }
 
 function getRandomColorLabels() {
@@ -4798,399 +6897,477 @@ function getRandomColorLabels() {
     return random.choice(colors)
 }
 
-function getRandomLocation() {
-    const locations = [
-        { name: 'Tel Aviv-Yafo', lat: 32.109333, lng: 34.855499, zoom: 11 },
-        { name: 'New York City', lat: 40.7128, lng: -74.006, zoom: 12 },
-        { name: 'Paris', lat: 48.8566, lng: 2.3522, zoom: 12 },
-        { name: 'Tokyo', lat: 35.6895, lng: 139.6917, zoom: 12 },
-        { name: 'London', lat: 51.5074, lng: -0.1278, zoom: 12 },
-        { name: 'Sydney', lat: -33.8688, lng: 151.2093, zoom: 12 },
-    ]
-    return random.choice(locations)
-}
+// ===============  MAIN BOARD GENERATOR  ===============
+// export async function getRandomBoardAI() {
+//     showUserMsg('AI: Generating an ultimate board...')
+//
+//     // 1) ensure we have at least 5 users
+//     await initUserPool()
+//
+//     // 2) pick a random topic from userFriendlyTopics
+//     const chosenTopic = random.choice(userFriendlyTopics)
+//
+//     // 3) infer domain
+//     const domain = inferDomainFromTopic(chosenTopic)
+//
+//     // 4) board name from GPT
+//     const fallbackTitle = 'Generic '+domain+' Board'
+//     const boardTitlePrompt = `
+// Given the topic "${chosenTopic}",
+// Generate a single realistic board name for a project management system.
+// Return only the name, no extra text.
+// `
+//     const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackTitle)
+//
+//     showSpinner('AI: Building board structure...')
+//     // 5) create groups & tasks
+//     const groups = await generateMultipleGroups(boardTitle)
+//     // 6) create labels
+//     const labels = await generateBoardLabels(boardTitle)
+//
+//     // 7) assign random labelIDs to tasks
+//     for (let g of groups) {
+//         for (let t of g.tasks) {
+//             // 30% chance no labels
+//             if (Math.random()<0.3) {
+//                 t.labelIds=[]
+//                 continue
+//             }
+//             // 1..3 random labels
+//             const labelCount = random.randint(1,3)
+//             const chosenLabelIds = random.sample(labels.map(l=>l.id), labelCount)
+//             t.labelIds = chosenLabelIds
+//             t.labels = labels.filter(l => chosenLabelIds.includes(l.id))
+//
+//         }
+//     }
+//
+//     // 8) build final board skeleton
+//     const createdBy = random.choice(GPT_USER_POOL) || {
+//         _id:'u_fallback', fullname:'Unknown user', imgUrl:''
+//     }
+//     const isStarred = (Math.random()<0.3)
+//     const archivedAt = (Math.random()<0.05) ? random.date('2022-01-01','2023-12-31').getTime() : null
+//
+//     const board = {
+//         id: 'brd_'+random.id(),
+//         title: boardTitle,
+//         isStarred,
+//         archivedAt,
+//         createdBy:{
+//             _id:createdBy._id,
+//             fullname:createdBy.fullname,
+//             imgUrl:createdBy.imgUrl
+//         },
+//         style:{
+//             backgroundImage: random.choice([
+//                 `https://picsum.photos/2400/1600?random=${random.randint(1,9999)}`,
+//                 'color_1.svg','color_2.svg','color_3.svg','color_4.svg'
+//             ])
+//         },
+//         labels,
+//         members: GPT_USER_POOL,
+//         groups,
+//         activities: [], // fill below
+//         cmpsOrder: random.sample(['StatusPicker','MemberPicker','DatePicker','PriorityPicker','OtherPicker'], random.randint(3,5)),
+//         generator: 'getUltimateAIBoard',
+//         topicChosen: chosenTopic,
+//         domain
+//     }
+//
+//     // 9) domain-based badges
+//     assignDomainBadgesToBoard(board, domain)
+//
+//     // 10) board activities
+//     board.activities = generateBoardActivities(board)
+//
+//     showSuccessMsg(`AI: Done! Board “${boardTitle}” generated with domain ${domain}`)
+//
+//     return board
+// }
 
-async function generateLabels(boardTitle) {
-    const prompt = `
-Board Title: "${boardTitle}"
-Generate an array of 5 short labels for a project mgmt board. 
-Some examples: "Grocery", "Weekend Plans", "Work Tasks".
-Return JSON:
-[
-  {"id":"some-id","title":"...","color":"(placeholder)"},
-  ...
-]
-We only care about 'id', 'title', 'color'.
-Return valid JSON only.
-`
-    const fallback = JSON.stringify([
-        { id: 'lbl1', title: 'Tasks', color: '#9f8fef' },
-        { id: 'lbl2', title: 'Personal', color: '#f87168' },
-        { id: 'lbl3', title: 'Work', color: '#fea362' },
-        { id: 'lbl4', title: 'Errands', color: '#f5cd47' },
-        { id: 'lbl5', title: 'Household', color: '#4bce97' },
-    ])
 
-    const text = await generateText(prompt, 1.0, fallback)
-    let rawLabels = safeJsonParse(text, fallback)
-    if (!Array.isArray(rawLabels) || !rawLabels.length) {
-        rawLabels = safeJsonParse(fallback)
-    }
 
-    const uniqueColors = new Set()
-    return rawLabels.slice(0, 5).map((lbl) => {
-        if (!lbl.id) lbl.id = 'lbl_' + random.id()
-        if (!lbl.title) lbl.title = 'Label ' + random.id()
-        let col = getRandomColorLabels()
-        while (uniqueColors.has(col) && uniqueColors.size < 6) {
-            col = getRandomColorLabels()
-        }
-        uniqueColors.add(col)
-        lbl.color = col
-        return lbl
-    })
-}
 
-const BADGE_COLOR_MAP = {
-    risk: '#fdddc7',
-    approved: '#f8e6a0',
-    priority: '#ffe2bd',
-    now: '#ffc0cb',
-}
-const BADGE_TEXT_COLOR_MAP = {
-    risk: '#6e3b0d',
-    approved: '#4f3a0e',
-    priority: '#6e3b0d',
-    now: '#6e0d3a',
-}
-const BADGE_TYPE_ARRAY = ['risk', 'approved', 'priority', 'now']
+// Global registry to track board backgrounds by domain to prevent repetition
+const usedBoardBackgrounds = new Map();
 
-async function generateBadges(boardTitle, groupTitle) {
-    const prompt = `
-For the group "${groupTitle}" in the board "${boardTitle}", 
-Generate an array of 10 "badge" objects with selectable categories.
-Example:
-[
-  {"categ":"Workload", "badgeOptions": ["Light", "Heavy", "Medium"], "text":"Heavy"},
-  {"categ":"NeedsApproval", "badgeOptions": ["Pending", "Need Approval", "Rejected"], "text":"Pending"},
-  ...
-]
-Return strictly valid JSON only.
-`
-    const fallback = '[{"categ":"NeedsApproval","text":"Pending"},{"categ":"HighRisk","text":"Proceed Carefully"}]'
-
-    const text = await generateText(prompt, 1.0, fallback)
-    let rawBadges = safeJsonParse(text, fallback)
-    if (!Array.isArray(rawBadges)) {
-        rawBadges = safeJsonParse(fallback)
-    }
-
-    return rawBadges.map((b) => {
-        const randomType = random.choice(BADGE_TYPE_ARRAY)
-        return {
-            id: 'badg_' + random.id(),
-            categ: b.categ || 'General',
-            color: BADGE_COLOR_MAP[randomType] || '#ccc',
-            textColor: BADGE_TEXT_COLOR_MAP[randomType] || '#000',
-            badgeOptions: b.badgeOptions || [],
-            chosenOption: b.text || 'Note',
-        }
-    })
-}
-
-async function generateTask(boardTitle, groupTitle) {
-    const fallbackResp = `Title: Kitchen Chores; Description: Clean the fridge and wipe the counters.`
-    const prompt = `
-For the group "${groupTitle}" in the board "${boardTitle}", 
-create a short but realistic task. Format EXACTLY as:
-"Title: XYZ; Description: ABC"
-Return no extra text or code blocks, just that line.
-`
-    const response = await generateText(prompt, 1.0, fallbackResp, 128)
-    let taskTitle = 'RandomTask'
-    let taskDescription = 'No desc from GPT'
-    const match = response.match(/Title:\s*(.+?);\s*Description:\s*(.+)/)
-    if (match) {
-        taskTitle = match[1].trim()
-        taskDescription = match[2].trim()
-    }
-
-    const badges = await generateBadges(boardTitle, groupTitle)
-
-    return {
-        id: random.id(),
-        title: taskTitle,
-        status: random.choice(STATUS_OPTIONS),
-        priority: random.choice(PRIORITY_OPTIONS),
-        dueDate: random.date('2024-01-01', '2026-12-31').toISOString(),
-        createdAt: random.date('2024-01-01', '2026-12-31'),
-        description: taskDescription,
-        checklists: await generateChecklists(boardTitle, groupTitle),
-        members: random.sample(GPT_USER_POOL, random.randint(0, GPT_USER_POOL.length)),
-        style: await generateTaskStyle(),
-        badges,
-        attachments: getRandomAttachments(),
-        activity: generateTaskActivities(taskTitle),
-        isUserWatching: random.choice([true, false]),
-        labels: [],
-        location: random.choice([null, null, null, getRandomLocation()]),
-    }
-}
-
-function getRandomAttachments() {
-    const cnt = random.randint(0, 2)
-    return Array.from({ length: cnt }, () => ({
-        path: `file-${random.randint(1, 999)}.png`,
-        date: Date.now() - random.randint(0, 1_000_000_000),
-        text: random.choice([
-            'Photo proof!',
-            'Attached doc',
-            'Uploaded file',
-            '',
-        ]),
-    }))
-}
-
-async function generateChecklists(boardTitle, groupTitle) {
-    const fallback = JSON.stringify([
-        {
-            id: 'cl_fallback',
-            title: 'Fallback Checklist',
-            progress: 0,
-            todos: [
-                { id: 'todo1', title: 'Fallback item', isDone: false },
-                { id: 'todo2', title: 'Another fallback', isDone: true },
-            ],
-        },
-    ])
-    const prompt = `
-For the group "${groupTitle}" in the board "${boardTitle}", 
-Generate an array of 3 short "todo" items related to the group title and board title. Return strictly JSON:
-[
-  {"title":"something short","isDone": true/false},
-  ...
-]
-`
-
-    const text = await generateText(prompt, 1.0, fallback)
-    let todosArray = safeJsonParse(text, '[]')
-    if (!Array.isArray(todosArray)) {
-        console.warn('GPT todos not an array, using fallback.')
-        todosArray = safeJsonParse(fallback)[0].todos
-    }
-    if (!todosArray.length) {
-        todosArray = safeJsonParse(fallback)[0].todos
-    }
-
-    const cCount = random.randint(0, 2)
-    const checklists = []
-    for (let i = 0; i < cCount; i++) {
-        const tCount = 1 + Math.floor(Math.random() * todosArray.length)
-        const partialTodos = todosArray.slice(0, tCount).map((t) => ({
-            id: 'todo_' + random.id(),
-            title: t.title || 'UntitledTodo',
-            isDone: typeof t.isDone === 'boolean' ? t.isDone : false,
-        }))
-        checklists.push({
-            id: 'cl_' + random.id(),
-            title: 'Checklist ' + random.id().slice(0, 4),
-            progress: random.randint(0, 100),
-            todos: partialTodos,
-        })
-    }
-    return checklists
-}
-
-async function generateTaskStyle() {
-    const styleType = random.randint(0, 2)
-    if (styleType === 0) {
-        return {
-            backgroundColor: getRandomColorLabels(),
-            coverSize: random.choice(['small', 'large']),
-        }
-    } else if (styleType === 1) {
-        const images = [
-            null,
-            `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-            'cover-img.png',
-            'cover-img-1.png',
-            'cover-img-2.png',
-            'cover-img-3.png',
-        ]
-        return {
-            backgroundImage: random.choice(images),
-            coverSize: random.choice(['small', 'large']),
-        }
-    } else {
-        return {}
-    }
-}
-
-function generateTaskActivities(taskTitle) {
-    const activityTypes = [
-        `Commented: "Looks good!"`,
-        `Updated title to: ${taskTitle}`,
-        `Attached a new file`,
-        `Status changed to ${random.choice(STATUS_OPTIONS)}`,
-    ]
-    const count = random.randint(1, 3)
-    return Array.from({ length: count }, () => {
-        const byMember = random.choice(GPT_USER_POOL) || {
-            _id: 'fallback',
-            fullname: 'Fallback user',
-            imgUrl: '',
-        }
-        return {
-            id: random.id(),
-            title: random.choice(activityTypes),
-            createdAt: random.date('2023-01-01', '2025-12-31').getTime(),
-            byMember: {
-                _id: byMember._id,
-                fullname: byMember.fullname,
-                imgUrl: byMember.imgUrl,
-            },
-        }
-    })
-}
-
-async function generateGroups(boardTitle) {
-    const fallback = `Home; Work; Personal`
-    const groupCount = random.randint(5, 8)
-    const prompt = `
-Board: "${boardTitle}"
-Generate ${groupCount} short sub-topics/group-titles/task-lists about the topic of this board and everyday life, work or task categories related to this board topic, separated by semicolons.
-Example: "Groceries; Home Maintenance; Work Projects; Financial Plan; Everyday; Project General Goals; Wishlist"
-No code blocks, just semicolons.
-`
-    const text = await generateText(prompt, 1.0, fallback)
-    let groupTitles = text.split(';').map((t) => t.trim()).filter(Boolean)
-    if (groupTitles.length < groupCount) {
-        while (groupTitles.length < groupCount) {
-            groupTitles.push('Group ' + random.id().slice(0, 3))
-        }
-    }
-    groupTitles = groupTitles.slice(0, groupCount)
-
-    const groups = await Promise.all(
-        groupTitles.map(async (title) => {
-            const taskCount = random.randint(3, 6)
-            const tasks = await Promise.all(
-                Array.from({ length: taskCount }, () => generateTask(boardTitle, title))
-            )
-            const backgroundColor = getRandomColor()
-            return {
-                id: random.id(),
-                title,
-                archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),
-                tasks,
-                style: {
-                    backgroundColor,
-                    color: getColorFromBackgroundColor(backgroundColor),
-                },
-                watched: random.choice([true, false]),
-                isMinimaized: random.choice([true, false]),
-            }
-        })
-    )
-
-    return groups
-}
-
-function getRandomBoardActivities(board) {
-    const count = random.randint(2, 5)
-    return Array.from({ length: count }, () => {
-        const group = random.choice(board.groups)
-        const task = random.choice(group.tasks)
-        const activityType = random.choice(['added', 'moved', 'updated'])
-        let title
-        if (activityType === 'added') {
-            title = `Added task '${task.title}' to group '${group.title}'`
-        } else if (activityType === 'moved') {
-            const otherGroup = random.choice(board.groups.filter((g) => g.id !== group.id))
-            title = `Moved task '${task.title}' from '${otherGroup?.title}' to '${group.title}'`
-        } else {
-            title = `Updated status of task '${task.title}' to '${random.choice(STATUS_OPTIONS)}'`
-        }
-        const byMember = random.choice(GPT_USER_POOL) || {
-            _id: 'fallback',
-            fullname: 'Fallback user',
-            imgUrl: '',
-        }
-        return {
-            id: random.id(),
-            title,
-            createdAt: random.date('2023-01-01', '2025-12-31').getTime(),
-            byMember: {
-                _id: byMember._id,
-                fullname: byMember.fullname,
-                imgUrl: byMember.imgUrl,
-            },
-            group: { id: group.id, title: group.title },
-            task: { id: task.id, title: task.title },
-        }
-    })
-}
-
+/**
+ * Enhanced board generator with domain-relevant backgrounds
+ */
 export async function getRandomBoardAI() {
-    showUserMsg('AI: Generating new board..')
+    showUserMsg('AI: Generating an ultimate board...')
+
+    // 1) ensure we have at least 5 users
     await initUserPool()
 
-    const randomTopic = 'Random Topic'
+    // 2) pick a random topic from userFriendlyTopics
+    const chosenTopic = random.choice(userFriendlyTopics)
+
+    // 3) infer domain
+    const domain = inferDomainFromTopic(chosenTopic)
+
+    // 4) board name from GPT
+    const fallbackTitle = 'Generic '+domain+' Board'
     const boardTitlePrompt = `
-Generate a single realistic board name for a project management system based on the topic "${randomTopic}".
-Return just the name, no extra text.
+Given the topic "${chosenTopic}",
+Generate a single realistic board name for a project management system. 
+Return only the name, no extra text.
 `
-    const fallbackBoardTitle = 'Generic Board'
-    const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackBoardTitle)
+    const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackTitle)
 
-    showSpinner('AI: Generating board..')
+    // NEW: Start the background image fetch IMMEDIATELY after we have domain info
+    // This parallelizes it with the rest of the board generation
+    const backgroundPromise = getDomainRelevantBackground(domain, boardTitle, chosenTopic);
 
-    const groups = await generateGroups(boardTitle)
-    const labels = await generateLabels(boardTitle)
+    showSpinner('AI: Building board structure...')
 
-    for (const group of groups) {
-        for (const task of group.tasks) {
-            const labelSubset = random.sample(labels.map((lbl) => lbl.id), random.randint(0, labels.length))
-            task.labelIds = labelSubset
-            task.labels = labels
+    const useEmoji = Math.random() < 0.3;
+
+    // 5) create groups & tasks
+    const groups = await generateMultipleGroupsWithUniqueImages(boardTitle, useEmoji)
+
+    // 6) create labels
+    const labels = await generateBoardLabels(boardTitle)
+
+    // 7) assign random labelIDs to tasks
+    for (let g of groups) {
+        for (let t of g.tasks) {
+            // 30% chance no labels
+            if (Math.random()<0.3) {
+                t.labelIds=[]
+                continue
+            }
+            // 1..3 random labels
+            const labelCount = random.randint(1,3)
+            const chosenLabelIds = random.sample(labels.map(l=>l.id), labelCount)
+            t.labelIds = chosenLabelIds
+            t.labels = labels.filter(l => chosenLabelIds.includes(l.id))
         }
     }
 
+    // WAIT POINT: Get our background image that's been loading in parallel
+    const backgroundImage = await backgroundPromise;
+
+    // 8) build final board skeleton
     const createdBy = random.choice(GPT_USER_POOL) || {
-        _id: 'u_fallback', fullname: 'Unknown user', imgUrl: '',
+        _id:'u_fallback', fullname:'Unknown user', imgUrl:''
     }
-    const boardId = random.id(random.randint(4, 10))
+    const isStarred = (Math.random()<0.3)
+    const archivedAt = (Math.random()<0.05) ? random.date('2022-01-01','2023-12-31').getTime() : null
+
     const board = {
-        id                : boardId, title: boardTitle, isStarred: random.choice([true, false]), archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]), createdBy: {
-            _id: createdBy._id, fullname: createdBy.fullname, imgUrl: createdBy.imgUrl,
-        }, style          : {
-            backgroundImage: random.choice([
-
-                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-                `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-
-
-
-
-                'color_1.svg', 'color_2.svg', 'color_3.svg', 'color_4.svg', 'color_5.svg', 'color_6.svg', 'color_7.svg', 'color_8.svg', 'color_9.svg', 'color_10.svg', 'color_11.svg',]),
-        }, labels, members: GPT_USER_POOL, groups, activities: [], cmpsOrder: random.sample(CMP_ORDER_OPTIONS, random.randint(2, CMP_ORDER_OPTIONS.length)),
+        id: 'brd_'+random.id(),
+        title: boardTitle,
+        isStarred,
+        archivedAt,
+        createdBy:{
+            _id:createdBy._id,
+            fullname:createdBy.fullname,
+            imgUrl:createdBy.imgUrl
+        },
+        style:{
+            backgroundImage // Domain-relevant background from our new function
+        },
+        labels,
+        members: GPT_USER_POOL,
+        groups,
+        activities: [], // fill below
+        cmpsOrder: random.sample(['StatusPicker','MemberPicker','DatePicker','PriorityPicker','OtherPicker'], random.randint(3,5)),
+        generator: 'getUltimateAIBoard',
+        topicChosen: chosenTopic,
+        domain
     }
 
-    board.activities = getRandomBoardActivities(board)
+    // 9) domain-based badges
+    assignDomainBadgesToBoard(board, domain)
 
-    showSuccessMsg('AI: Board generation complete!')
+    // 10) board activities
+    board.activities = generateBoardActivities(board)
 
-    board.generator = 'getRandomBoardAI'
+    showSuccessMsg(`AI: Done! Board "${boardTitle}" generated with domain ${domain}`)
+
     return board
+}
 
+/**
+ * Get a domain-relevant, professional background image for a board
+ * This is the main function that handles the entire background selection process
+ */
+async function getDomainRelevantBackground(domain, boardTitle, topic) {
+    // Initialize domain background registry if needed
+    if (!usedBoardBackgrounds.has(domain)) {
+        usedBoardBackgrounds.set(domain, new Set());
+    }
+
+    const usedBackgrounds = usedBoardBackgrounds.get(domain);
+
+    // 1. First - try to get a domain-specific Unsplash image
+    let backgroundUrl = null;
+
+    try {
+        backgroundUrl = await getUnsplashDomainBackground(domain, boardTitle, topic);
+
+        // If this image was already used for this domain, try again up to 3 times
+        let attempts = 0;
+        while (backgroundUrl && usedBackgrounds.has(backgroundUrl) && attempts < 3) {
+            attempts++;
+            backgroundUrl = await getUnsplashDomainBackground(domain, boardTitle, topic);
+        }
+
+        // If we still got a duplicate after 3 attempts, force uniqueness
+        if (backgroundUrl && usedBackgrounds.has(backgroundUrl)) {
+            backgroundUrl = `${backgroundUrl}${backgroundUrl.includes('?') ? '&' : '?'}uniqueId=${random.id()}`;
+        }
+
+        // If we got a valid background, mark it as used
+        if (backgroundUrl) {
+            usedBackgrounds.add(backgroundUrl);
+        }
+    } catch (e) {
+        console.error('Error fetching domain background:', e);
+    }
+
+    // 2. If Unsplash failed, try premium curated backgrounds
+    if (!backgroundUrl) {
+        try {
+            backgroundUrl = getCuratedDomainBackground(domain);
+
+            // Check for uniqueness
+            if (backgroundUrl && usedBackgrounds.has(backgroundUrl)) {
+                // For curated backgrounds, append a unique parameter to make it "different"
+                backgroundUrl = `${backgroundUrl}${backgroundUrl.includes('?') ? '&' : '?'}uniqueId=${random.id()}`;
+            }
+
+            if (backgroundUrl) {
+                usedBackgrounds.add(backgroundUrl);
+            }
+        } catch (e) {
+            console.error('Error fetching curated background:', e);
+        }
+    }
+
+    // 3. If everything failed, use domain-colored fallback
+    if (!backgroundUrl) {
+        backgroundUrl = getDomainColorBackground(domain);
+    }
+
+    return backgroundUrl;
+}
+
+/**
+ * Get a domain-specific background from Unsplash
+ */
+async function getUnsplashDomainBackground(domain, boardTitle, topic) {
+    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
+
+    // Map domains to appropriate Unsplash search terms
+    // The goal is professional, subtle backgrounds appropriate for each domain
+    const domainSearchTerms = {
+        'development': ['code background', 'programming workspace', 'tech pattern', 'software development', 'data visualization'],
+        'design': ['design studio', 'creative workspace', 'design pattern', 'color palette', 'minimal design'],
+        'marketing': ['marketing strategy', 'social media pattern', 'digital marketing', 'branding minimal', 'marketing abstract'],
+        'sales': ['business meeting', 'sales chart', 'professional office', 'business abstract', 'corporate minimal'],
+        'hr': ['office team', 'professional workplace', 'hiring', 'team collaboration', 'human resources'],
+        'finance': ['finance chart', 'business analysis', 'financial data', 'accounting workspace', 'economy abstract'],
+        'legal': ['law books', 'legal document', 'courthouse architecture', 'justice symbol', 'legal office'],
+        'education': ['education pattern', 'learning materials', 'school supplies', 'education workspace', 'academic abstract'],
+        'healthcare': ['medical pattern', 'healthcare symbol', 'medical research', 'health technology', 'medical minimal'],
+        'manufacturing': ['factory pattern', 'industrial design', 'manufacturing process', 'production line', 'engineering schematics'],
+        'realestate': ['architecture pattern', 'modern building', 'real estate minimal', 'property design', 'construction abstract'],
+        'hospitality': ['hotel pattern', 'hospitality design', 'restaurant ambient', 'travel minimal', 'service industry'],
+        'entertainment': ['entertainment stage', 'media production', 'film abstract', 'music studio', 'creative arts'],
+        'nonprofit': ['community pattern', 'volunteer work', 'charity minimal', 'social impact', 'nonprofit abstract'],
+        'government': ['government building', 'policy pattern', 'civic design', 'public service', 'national abstract'],
+        'automotive': ['car design pattern', 'automotive engineering', 'vehicle abstract', 'transportation technology', 'automotive minimal'],
+        'personal': ['personal planning', 'home office', 'lifestyle minimal', 'personal growth', 'self improvement']
+    };
+
+    // Default search terms for unknown domains
+    const defaultSearchTerms = ['productivity', 'workflow', 'professional pattern', 'workspace', 'business minimal'];
+
+    // Get search terms for this domain
+    const searchTerms = domainSearchTerms[domain] || defaultSearchTerms;
+
+    // Pick 1 or 2 random search terms
+    const primaryTerm = searchTerms[Math.floor(Math.random() * searchTerms.length)];
+
+    // Occasionally add a term from the board title or topic for more specificity
+    // But clean it first to avoid weird searches
+    let additionalTerm = '';
+    if (Math.random() < 0.3) {
+        // Extract keywords from board title or topic
+        const allText = `${boardTitle} ${topic}`;
+        const words = allText.toLowerCase().split(/\s+/);
+        const stopWords = ['a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'with', 'by', 'about'];
+
+        // Filter out stop words and short words
+        const keywords = words
+            .filter(word => word.length > 3)
+            .filter(word => !stopWords.includes(word))
+            .map(word => word.replace(/[^\w]/g, ''));
+
+        if (keywords.length > 0) {
+            // Pick a random keyword
+            additionalTerm = keywords[Math.floor(Math.random() * keywords.length)];
+        }
+    }
+
+    // Build search query
+    const searchQuery = additionalTerm
+        ? `${primaryTerm} ${additionalTerm}`
+        : primaryTerm;
+
+    try {
+        // Key parameters for board backgrounds:
+        // - landscape orientation (for wide screens)
+        // - good quality (regular size)
+        // - query for domain-relevant terms
+        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&orientation=landscape&content_filter=high&per_page=1`;
+
+        const response = await fetch(endpoint, {
+            headers: {
+                'Authorization': `Client-ID ${unsplashAccessKey}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Unsplash API responded with status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+            // Use regular size - large enough for quality but not too large to slow loading
+            return data.results[0].urls.regular;
+        }
+
+        return null;
+    } catch (e) {
+        console.error('Error fetching from Unsplash:', e);
+        return null;
+    }
+}
+
+/**
+ * Get a premium curated background for specific domains
+ * These are hand-selected high-quality backgrounds appropriate for each domain
+ */
+function getCuratedDomainBackground(domain) {
+    // These would ideally be your own hosted images for reliability
+    // For now, using public CDN URLs as examples
+    const curatedBackgrounds = {
+        'development': [
+            'https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?q=80&w=1200',
+            'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200',
+            'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?q=80&w=1200'
+        ],
+        'design': [
+            'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=1200',
+            'https://images.unsplash.com/photo-1545670723-196ed0954986?q=80&w=1200',
+            'https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1200'
+        ],
+        'marketing': [
+            'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1200',
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200',
+            'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=1200'
+        ],
+        'finance': [
+            'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200',
+            'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200',
+            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200'
+        ],
+        'healthcare': [
+            'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1200',
+            'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=1200',
+            'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=1200'
+        ]
+        // Add more domains as needed
+    };
+
+    // For domains without curated backgrounds, map them to related domains
+    const domainAlternatives = {
+        'sales': 'marketing',
+        'hr': 'finance',
+        'legal': 'finance',
+        'education': 'design',
+        'manufacturing': 'development',
+        'realestate': 'finance',
+        'hospitality': 'marketing',
+        'entertainment': 'design',
+        'nonprofit': 'marketing',
+        'government': 'finance',
+        'automotive': 'development',
+        'personal': 'design'
+    };
+
+    // Get backgrounds for this domain
+    let domainBackgrounds = curatedBackgrounds[domain];
+
+    // If no backgrounds for this domain, try an alternative domain
+    if (!domainBackgrounds && domainAlternatives[domain]) {
+        domainBackgrounds = curatedBackgrounds[domainAlternatives[domain]];
+    }
+
+    // If we have backgrounds, pick a random one
+    if (domainBackgrounds && domainBackgrounds.length > 0) {
+        return domainBackgrounds[Math.floor(Math.random() * domainBackgrounds.length)];
+    }
+
+    // If all else fails, return null (will trigger color fallback)
+    return null;
+}
+
+/**
+ * Get a domain-colored SVG background as ultimate fallback
+ * This is guaranteed to work even if all API calls fail
+ */
+function getDomainColorBackground(domain) {
+    // Domain-specific colors that match the industry/domain
+    const domainColors = {
+        'development': ['#0B4F6C', '#1C7293', '#03256C', '#2A6F97', '#012A4A'],
+        'design': ['#7B2CBF', '#9D4EDD', '#C77DFF', '#E0AAFF', '#5A189A'],
+        'marketing': ['#FF5A5F', '#FF8A80', '#B00020', '#F25F5C', '#A8201A'],
+        'sales': ['#0077B6', '#00B4D8', '#90E0EF', '#023E8A', '#0096C7'],
+        'hr': ['#8EA604', '#A5BE00', '#ECBE13', '#95C623', '#BAB700'],
+        'finance': ['#005F73', '#0A9396', '#94D2BD', '#001219', '#778DA9'],
+        'legal': ['#353535', '#3C6E71', '#284B63', '#4F646F', '#333533'],
+        'education': ['#FFB703', '#FD9E02', '#FB8500', '#F48C06', '#DC2F02'],
+        'healthcare': ['#52B788', '#2D6A4F', '#95D5B2', '#74C69D', '#40916C'],
+        'manufacturing': ['#6A040F', '#9D0208', '#D00000', '#E85D04', '#DC2F02'],
+        'realestate': ['#FFBA08', '#FAA307', '#F48C06', '#E85D04', '#DC2F02'],
+        'hospitality': ['#0B525B', '#144552', '#1B3A4B', '#212F45', '#272640'],
+        'entertainment': ['#5F0F40', '#9A031E', '#FB8B24', '#0F4C5C', '#E36414'],
+        'nonprofit': ['#588157', '#4F772D', '#31572C', '#90A955', '#3A5A40'],
+        'government': ['#003049', '#2C7DA0', '#468FAF', '#A8DADC', '#1D3557'],
+        'automotive': ['#2B2D42', '#8D99AE', '#EDF2F4', '#EF233C', '#D90429'],
+        'personal': ['#9F86C0', '#BE95C4', '#E0B1CB', '#FDE2E4', '#FEC5BB']
+    };
+
+    // Default colors for unknown domains
+    const defaultColors = ['#5390D9', '#4EA8DE', '#56CFE1', '#48BF84', '#4CC9F0'];
+
+    // Get colors for this domain
+    const colors = domainColors[domain] || defaultColors;
+
+    // Pick a random color from the domain palette
+    const backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+    // SVG patterns are more interesting than flat colors
+    // This uses a diagonal pattern with the domain color
+    const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <defs>
+            <pattern id="diagonalPattern" patternUnits="userSpaceOnUse" width="40" height="40" patternTransform="rotate(45)">
+                <rect width="20" height="40" fill="${backgroundColor}" opacity="0.9" />
+                <rect x="20" width="20" height="40" fill="${backgroundColor}" opacity="0.7" />
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#diagonalPattern)" />
+    </svg>
+    `;
+
+    // Convert SVG to data URL
+    const svgBase64 = btoa(svg);
+    return `data:image/svg+xml;base64,${svgBase64}`;
 }

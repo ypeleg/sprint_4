@@ -256,7 +256,7 @@ function getRandomGroups1() {
     })
 }
 
-function getRandomColor() {
+export function getRandomColor() {
     const trelloColors = [
         '#baf3db',
         '#f8e6a0',
