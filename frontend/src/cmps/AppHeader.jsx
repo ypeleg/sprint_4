@@ -371,7 +371,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
 
                         {(loggedUser?.imgUrl) ?
 
-                            (loggedUser?.imgUrl) :
+                            <img src={loggedUser?.imgUrl} alt="" /> :
 
                             (loggedUser?.fullname.includes(' '))? (loggedUser?.fullname?.split(' ')[0][0]?.toUpperCase() || '') + '' + (loggedUser?.fullname?.split(' ')[1][0]?.toUpperCase() || ''):loggedUser?.fullname[0].toUpperCase()
 

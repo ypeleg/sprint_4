@@ -48,6 +48,7 @@ export function getEmptyTask() {
         checklists: [],
         memberIds: [],
         labelIds: [],
+        labels:[],
         byMember: '',
         activity: [],
         attachments: [],
