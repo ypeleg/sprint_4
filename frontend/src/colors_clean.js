@@ -1,7 +1,7 @@
 
 
 
-
+// set the colors of the layout by the colors of the background set by the user
 
 // Load the background
 const img = new Image()

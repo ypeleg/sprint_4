@@ -12,8 +12,8 @@ import { MondayBoardIndex } from './pages/MondayBoardlist.jsx'
 
 
 
-// import { MondayBoardDetails } from './pages/MondayBoardDetailsActualNew.jsx'
-import { MondayBoardDetails } from './pages/MondayBoardDetailsActualOld.jsx'
+import { MondayBoardDetails } from './pages/MondayBoardDetailsActualNew.jsx'
+// import { MondayBoardDetails } from './pages/MondayBoardDetailsActualOld.jsx'
 
 
 

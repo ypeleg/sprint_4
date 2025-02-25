@@ -27,7 +27,1039 @@ import { StandaloneSearchBox, useJsApiLoader, GoogleMap, Marker } from '@react-g
 
 
 
-export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
+
+import {
+  CheckCircle, Circle, User, Calendar, Eye, Tag, Grid,
+    CheckSquare, Paperclip, MessageSquare, Edit, ChevronDown,
+    Plus, X, Send, MoreHorizontal, Link2, Clock, ArrowRight,
+} from 'lucide-react';
+
+export function TaskModal () {
+  // State management
+  const [isDone, setIsDone] = useState(false);
+  const [cardTitle, setCardTitle] = useState('Evaluate Community Feedback');
+  const [description, setDescription] = useState('Analyze the feedback collected from last month\'s community engagement session and summarize the key points for the upcoming board meeting');
+  const [isDescriptionEditing, setIsDescriptionEditing] = useState(false);
+  const [date, setDate] = useState('2025-07-22');
+  const [isWatching, setIsWatching] = useState(true);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [isCustomFieldsOpen, setIsCustomFieldsOpen] = useState(true);
+  const [showLabels, setShowLabels] = useState(true);
+  const [addingToChecklist, setAddingToChecklist] = useState(0);
+  const [newChecklistItem, setNewChecklistItem] = useState('');
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [isHovering, setIsHovering] = useState({});
+
+  // Refs
+  const dateInputRef = useRef(null);
+  const activityInputRef = useRef(null);
+  const titleInputRef = useRef(null);
+  const descriptionRef = useRef(null);
+
+  // Click outside handler for dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (activeDropdown && !event.target.closest('.dropdown-container')) {
+        setActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [activeDropdown]);
+
+  // Effect for title input focus
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Focus title on Ctrl+T or Cmd+T
+      if ((e.ctrlKey || e.metaKey) && e.key === 't' && titleInputRef.current) {
+        e.preventDefault();
+        titleInputRef.current.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Custom fields/badges data
+  const [badges, setBadges] = useState([
+    { id: 1, categ: 'NeedsApproval', text: '', badgeOptions: ['Yes', 'No', 'Pending'] },
+    { id: 2, categ: 'HighRisk', text: '', badgeOptions: ['Yes', 'No', 'Unknown'] }
+  ]);
+
+  // Labels data
+  const [cardLabels, setCardLabels] = useState([
+    { color: '#fbbf24', title: 'P1' },
+    { color: '#ef4444', title: 'Urgent' }
+  ]);
+
+  // Members data
+  const [members, setMembers] = useState([
+    { id: 1, fullname: 'Sarah Wilson', imgUrl: '' },
+    { id: 2, fullname: 'John Doe', imgUrl: '' }
+  ]);
+
+  // Logged in user
+  const loggedUser = { fullname: 'You', imgUrl: '' };
+
+  // Task metadata
+  const listName = 'Feedback Analysis';
+  const taskToShow = {
+    group: { style: { backgroundColor: '#3b82f6' } },
+    location: null
+  };
+
+  // Checklist data
+  const [checklists, setChecklists] = useState([
+    {
+      id: 1,
+      title: 'Preparation Steps',
+      progress: 33,
+      todos: [
+        { id: 1, title: 'Review feedback form responses', isDone: true },
+        { id: 2, title: 'Identify common themes', isDone: false },
+        { id: 3, title: 'Create visualization of key metrics', isDone: false }
+      ]
+    }
+  ]);
+
+  // Files/attachments data
+  const [attachments, setAttachments] = useState([
+    { id: 1, type: 'file', text: 'Feedback_Survey_Results.pdf', path: '/files/feedback.pdf', date: Date.now() - 86400000 },
+    { id: 2, type: 'link', text: 'Community Dashboard', path: 'https://dashboard.example.com', date: Date.now() - 172800000 }
+  ]);
+
+  // Activity log
+  const [activityLog, setActivityLog] = useState([
+    {
+      id: 1,
+      title: 'Added the initial feedback collection documents',
+      byMember: { fullname: 'John Doe', imgUrl: '' },
+      createdAt: Date.now() - 259200000
+    }
+  ]);
+
+  // Computed values
+  const checklistItemCount = checklists.reduce((total, list) => total + list.todos.length, 0);
+  const completedItemCount = checklists.reduce((total, list) => total + list.todos.filter(todo => todo.isDone).length, 0);
+  const attachmentCount = attachments.length;
+  const activityCount = activityLog.length;
+
+  // Get due date status
+  const getDueDateStatus = () => {
+    const today = new Date();
+    const dueDate = new Date(date);
+    if (isDone) return 'completed';
+    if (dueDate < today) return 'overdue';
+
+    // Due soon (within 2 days)
+    const twoDaysFromNow = new Date();
+    twoDaysFromNow.setDate(today.getDate() + 2);
+    if (dueDate <= twoDaysFromNow) return 'soon';
+
+    return 'upcoming';
+  };
+
+  // Date handlers
+  const onDateClick = () => {
+    if (dateInputRef.current) {
+      dateInputRef.current.click();
+    }
+  };
+
+  const onDateChange = (e) => {
+    setDate(e.target.value);
+  };
+
+  // For demo purposes - function to handle pickers
+  const setActivePicker = (picker) => {
+    console.log(`Opening ${picker} picker`);
+  };
+
+  // Toggle checklist item
+  const toggleChecklistItem = (checklistId, todoId) => {
+    const newChecklists = checklists.map(c => {
+      if (c.id === checklistId) {
+        return {
+          ...c,
+          todos: c.todos.map(t =>
+            t.id === todoId ? {...t, isDone: !t.isDone} : t
+          )
+        };
+      }
+      return c;
+    });
+
+    // Recalculate progress
+    newChecklists.forEach(c => {
+      if (c.id === checklistId && c.todos.length > 0) {
+        const doneTodos = c.todos.filter(t => t.isDone).length;
+        c.progress = Math.floor((doneTodos / c.todos.length) * 100);
+      }
+    });
+
+    setChecklists(newChecklists);
+  };
+
+  // Add new checklist item
+  const addChecklistItem = (checklistId) => {
+    if (newChecklistItem.trim()) {
+      setChecklists(checklists.map(c => {
+        if (c.id === checklistId) {
+          const updatedChecklist = {
+            ...c,
+            todos: [...c.todos, {
+              id: Date.now(),
+              title: newChecklistItem,
+              isDone: false
+            }]
+          };
+
+          // Update progress
+          const doneTodos = updatedChecklist.todos.filter(t => t.isDone).length;
+          updatedChecklist.progress = Math.floor((doneTodos / updatedChecklist.todos.length) * 100);
+
+          return updatedChecklist;
+        }
+        return c;
+      }));
+      setNewChecklistItem('');
+      setAddingToChecklist(0);
+    }
+  };
+
+  // Delete attachment
+  const deleteAttachment = (attachmentId) => {
+    setAttachments(attachments.filter(a => a.id !== attachmentId));
+  };
+
+  // Add comment
+  const addComment = () => {
+    if (activityInputRef.current?.value.trim()) {
+      setActivityLog([...activityLog, {
+        id: Date.now(),
+        title: activityInputRef.current.value,
+        byMember: {
+          fullname: loggedUser?.fullname || 'User',
+          imgUrl: loggedUser?.imgUrl || ''
+        },
+        createdAt: Date.now()
+      }]);
+      activityInputRef.current.value = '';
+    }
+  };
+
+  // Handle enter key in comment input
+  const handleCommentKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      addComment();
+    }
+  };
+
+  // Format relative time
+  const formatRelativeTime = (timestamp) => {
+    const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+    const now = Date.now();
+    const diffInSeconds = Math.floor((timestamp - now) / 1000);
+
+    if (Math.abs(diffInSeconds) < 60) {
+      return rtf.format(diffInSeconds, 'second');
+    }
+
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (Math.abs(diffInMinutes) < 60) {
+      return rtf.format(diffInMinutes, 'minute');
+    }
+
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (Math.abs(diffInHours) < 24) {
+      return rtf.format(diffInHours, 'hour');
+    }
+
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (Math.abs(diffInDays) < 7) {
+      return rtf.format(diffInDays, 'day');
+    }
+
+    const diffInWeeks = Math.floor(diffInDays / 7);
+    if (Math.abs(diffInWeeks) < 4) {
+      return rtf.format(diffInWeeks, 'week');
+    }
+
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (Math.abs(diffInMonths) < 12) {
+      return rtf.format(diffInMonths, 'month');
+    }
+
+    const diffInYears = Math.floor(diffInDays / 365);
+    return rtf.format(diffInYears, 'year');
+  };
+
+  // Get formatted date display
+  const getFormattedDate = (dateString) => {
+    const date = new Date(dateString);
+    return new Date(date).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  return (
+      <div className="task-modal monday-task-modal" id="monday-task-modal">
+
+      <div className="flex flex-col w-full h-full bg-white rounded-xl shadow-xl overflow-hidden font-sans text-gray-800 relative">
+      {/* Glass overlay for status - flashes on status change */}
+      <div className={`absolute inset-0 bg-emerald-50 pointer-events-none z-20 opacity-0 transition-opacity duration-500 ${isDone ? 'flash-in-out' : ''}`}></div>
+
+      {/* Status Header */}
+      <div className="px-7 py-4 flex items-center justify-between border-b border-gray-100">
+        <div className="flex items-center gap-3">
+          {/* Status toggle with animation */}
+          <button
+            className="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-md hover:bg-gray-50 transition-colors cursor-pointer"
+            onClick={() => setIsDone(!isDone)}
+            aria-label={isDone ? "Mark as in progress" : "Mark as completed"}
+          >
+            <div className="relative">
+              <Circle className={`w-5 h-5 absolute inset-0 ${isDone ? 'text-emerald-500 scale-0' : 'text-gray-300 scale-100'} transition-all duration-300`} />
+              <CheckCircle className={`w-5 h-5 text-emerald-500 ${isDone ? 'scale-100 opacity-100' : 'scale-75 opacity-0'} transition-all duration-300`} />
+            </div>
+            <span className={`text-sm font-medium ${isDone ? 'text-emerald-600' : 'text-gray-600'} transition-colors duration-300`}>
+              {isDone ? 'Completed' : 'In Progress'}
+            </span>
+          </button>
+
+          {/* Divider */}
+          <div className="h-5 w-px bg-gray-200"></div>
+
+          {/* Board/list name */}
+          <div
+            className="flex items-center gap-1.5 px-2 py-1 rounded hover:bg-gray-50 cursor-pointer transition-colors"
+            onClick={() => setActivePicker('move')}
+          >
+            <div
+              className="w-2.5 h-2.5 rounded-sm"
+              style={{ backgroundColor: taskToShow.group.style?.backgroundColor || '#ddd' }}
+            ></div>
+            <span className="text-sm text-gray-600 font-medium">{listName}</span>
+            <ChevronDown className="w-3.5 h-3.5 text-gray-400 ml-0.5" />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-1">
+          {/* Members button */}
+          <div className="dropdown-container relative">
+            <button
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-md transition-colors"
+              onClick={() => setActiveDropdown(activeDropdown === 'members' ? null : 'members')}
+              aria-expanded={activeDropdown === 'members'}
+              aria-haspopup="true"
+            >
+              <User className="w-4 h-4" />
+              <span className="font-medium">Members</span>
+              <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${activeDropdown === 'members' ? 'rotate-180' : ''}`} />
+            </button>
+
+            {/* Members dropdown - just a placeholder */}
+            {activeDropdown === 'members' && (
+              <div className="absolute right-0 top-full mt-1 w-56 bg-white rounded-md shadow-lg border border-gray-100 z-10 py-1">
+                <div className="px-3 py-2 text-xs font-medium text-gray-500">Assigned members</div>
+                {members.map(member => (
+                  <div key={member.id} className="px-3 py-1.5 hover:bg-gray-50 flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center">
+                      <span className="text-xs font-medium text-gray-600">
+                        {member.fullname?.split(' ').map(name => name[0]?.toUpperCase()).join('')}
+                      </span>
+                    </div>
+                    <span className="text-sm text-gray-700">{member.fullname}</span>
+                  </div>
+                ))}
+                <div className="border-t border-gray-100 mt-1 pt-1">
+                  <button className="px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 w-full text-left flex items-center">
+                    <Plus className="w-3.5 h-3.5 mr-1.5" />
+                    Add members
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* More actions - could expand this with a dropdown */}
+          <button
+            className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
+            aria-label="More actions"
+          >
+            <MoreHorizontal className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+
+      {/* Card Body */}
+      <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+        <div className="px-7 py-4">
+          {/* Task Title with animations and keyboard shortcut */}
+
+
+
+          <div className="relative group mb-2">
+            <input
+              id="task-text-title"
+              ref={titleInputRef}
+              type="text"
+              className="w-full text-xl font-semibold text-gray-800 bg-transparent border-0 p-1 -ml-1 rounded focus:outline-none focus:ring-1 focus:ring-blue-400 focus:bg-blue-50/30 transition-all"
+              value={cardTitle}
+              onChange={(e) => setCardTitle(e.target.value)}
+              placeholder="Task title"
+              aria-label="Task title"
+            />
+            <div className="absolute right-1 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono font-medium text-gray-500 bg-gray-100 rounded border border-gray-200">
+
+              </kbd>
+            </div>
+          </div>
+
+          {/* Labels */}
+          {showLabels && cardLabels && cardLabels.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-4 mt-3">
+              {cardLabels.map(label => (
+                <span
+                  key={label.color}
+                  className="inline-flex px-2 py-0.5 rounded text-xs font-medium items-center gap-1.5 transition-transform hover:scale-105 cursor-pointer"
+                  style={{
+                    backgroundColor: `${label.color}25`, // 25% opacity version of the color
+                    color: label.color,
+                    border: `1px solid ${label.color}50` // 50% opacity version for border
+                  }}
+                  onClick={() => setActivePicker('labels')}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: label.color }}></span>
+                  {label.title}
+                </span>
+              ))}
+              <button
+                className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium text-gray-500 bg-gray-50 hover:bg-gray-100 border border-gray-200 transition-colors"
+                onClick={() => setActivePicker('labels')}
+              >
+                <Plus className="w-3 h-3 mr-1" />
+                Add Label
+              </button>
+            </div>
+          )}
+
+          {/* Meta Row with due date, watching, members */}
+          <div className="flex flex-wrap items-center gap-2 mb-5">
+            {/* Due date with contextual colors */}
+            {date && (
+              <button
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium transition-colors ${
+                  {
+                    'completed': 'bg-emerald-50 text-emerald-600 border border-emerald-100',
+                    'overdue': 'bg-red-50 text-red-600 border border-red-100',
+                    'soon': 'bg-amber-50 text-amber-600 border border-amber-100',
+                    'upcoming': 'bg-blue-50 text-blue-600 border border-blue-100'
+                  }[getDueDateStatus()]
+                }`}
+                onClick={onDateClick}
+              >
+                <Calendar className="w-3.5 h-3.5" />
+                <span>{getFormattedDate(date)}</span>
+                <input
+                  ref={dateInputRef}
+                  type="date"
+                  className="absolute invisible"
+                  onChange={onDateChange}
+                />
+              </button>
+            )}
+
+            {/* Watching toggle */}
+            <button
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium border transition-colors ${
+                isWatching 
+                  ? 'bg-blue-50 text-blue-600 border-blue-100' 
+                  : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100'
+              }`}
+              onClick={() => setIsWatching(!isWatching)}
+            >
+              <Eye className="w-3.5 h-3.5" />
+              <span>Watching</span>
+            </button>
+
+            {/* Members display */}
+            {members && members.length > 0 && (
+              <div className="flex -space-x-1 ml-1 hover:space-x-1 transition-all">
+                {members.map((member, index) => (
+                  <div
+                    key={member.id || member._id}
+                    className="w-7 h-7 rounded-full bg-white border-2 border-white flex items-center justify-center overflow-hidden transition-all hover:scale-110 cursor-pointer"
+                    style={{
+                      backgroundColor: ['#fee2e2', '#e0f2fe', '#f3e8ff', '#dcfce7', '#fef3c7'][index % 5],
+                      zIndex: members.length - index
+                    }}
+                    title={member.fullname}
+                  >
+                    {!member.imgUrl && (
+                      <span className="text-xs font-medium" style={{
+                        color: ['#dc2626', '#0369a1', '#7e22ce', '#16a34a', '#ca8a04'][index % 5]
+                      }}>
+                        {member.fullname?.split(' ').map(name => name[0]?.toUpperCase()).join('')}
+                      </span>
+                    )}
+                  </div>
+                ))}
+                {members.length > 3 && (
+                  <div className="w-7 h-7 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center text-xs font-medium border-2 border-white transition-all hover:scale-110 cursor-pointer">
+                    <span>+{members.length - 3}</span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Custom Fields Section */}
+          {/*{badges && badges.length > 0 && (*/}
+          {/*  <div className="mb-6">*/}
+          {/*    <div className="flex flex-col space-y-2 border border-gray-100 rounded-lg overflow-hidden divide-y divide-gray-50">*/}
+          {/*      {badges.map(badge => (*/}
+          {/*        <div key={badge.id} className="flex items-center px-3 py-2 hover:bg-gray-50 transition-colors">*/}
+          {/*          <span className="text-xs font-medium text-gray-500 w-32">{badge.categ}</span>*/}
+          {/*          <div className="relative flex-1">*/}
+          {/*            <select*/}
+          {/*              className="w-full appearance-none py-0.5 text-sm text-gray-800 bg-transparent border-0 focus:outline-none focus:ring-0 cursor-pointer pr-6"*/}
+          {/*              value={badge.text || ''}*/}
+          {/*              onChange={(e) => setBadges(badges.map(b =>*/}
+          {/*                b.categ === badge.categ ? {...b, text: e.target.value} : b*/}
+          {/*              ))}*/}
+          {/*            >*/}
+          {/*              <option value="">Not specified</option>*/}
+          {/*              {badge.badgeOptions && badge.badgeOptions.map(option => (*/}
+          {/*                <option key={option} value={option}>{option}</option>*/}
+          {/*              ))}*/}
+          {/*            </select>*/}
+          {/*            <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />*/}
+          {/*          </div>*/}
+          {/*        </div>*/}
+          {/*      ))}*/}
+          {/*    </div>*/}
+          {/*  </div>*/}
+          {/*)}*/}
+
+          {/* Category tags */}
+          {/*<div className="flex gap-2 mb-6">*/}
+          {/*  <div className="inline-flex px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700 border border-amber-100">Tasks</div>*/}
+          {/*  <div className="inline-flex px-2 py-0.5 rounded text-xs font-medium bg-gray-50 text-gray-600 border border-gray-100">Personal</div>*/}
+          {/*</div>*/}
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="border-t border-b border-gray-100">
+          <div className="flex px-7 -mb-px">
+            {[
+              { id: 'overview', icon: <Grid className="w-4 h-4" />, label: 'Overview' },
+              { id: 'checklists', icon: <CheckSquare className="w-4 h-4" />, label: 'Checklists', count: checklistItemCount > 0 ? `${completedItemCount}/${checklistItemCount}` : null },
+              { id: 'files', icon: <Paperclip className="w-4 h-4" />, label: 'Files', count: attachmentCount > 0 ? attachmentCount : null },
+              { id: 'activity', icon: <MessageSquare className="w-4 h-4" />, label: 'Activity', count: activityCount > 0 ? activityCount : null }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                className={`relative flex items-center gap-1.5 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+                  activeTab === tab.id 
+                    ? 'text-blue-600 border-blue-500' 
+                    : 'text-gray-600 border-transparent hover:text-gray-800 hover:border-gray-200'
+                }`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                {tab.icon}
+                <span>{tab.label}</span>
+                {tab.count && (
+                  <span className={`ml-1 text-xs font-normal ${activeTab === tab.id ? 'text-blue-500' : 'text-gray-400'}`}>
+                    {tab.count}
+                  </span>
+                )}
+
+                {/* Active tab indicator animation */}
+                {activeTab === tab.id && (
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-500 animate-fadeIn" />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Tab Content */}
+        <div className="p-7">
+          {/* Overview Tab */}
+          {activeTab === 'overview' && (
+            <div className="space-y-8">
+              {/* Description Section */}
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium text-gray-500">Description</h3>
+                  <button
+                    className="p-1 rounded text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-colors"
+                    onClick={() => setIsDescriptionEditing(!isDescriptionEditing)}
+                  >
+                    <Edit className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {isDescriptionEditing ? (
+                  <div
+                    ref={descriptionRef}
+                    className="px-3 py-2 border-l-2 border-blue-400 bg-blue-50/50 rounded-r-md text-sm min-h-[100px] focus:outline-none ring-1 ring-blue-200"
+                    contentEditable
+                    suppressContentEditableWarning
+                    onBlur={(e) => {
+                      setDescription(e.target.innerText);
+                      setIsDescriptionEditing(false);
+                    }}
+                    dangerouslySetInnerHTML={{__html: description}}
+                  ></div>
+                ) : (
+                  <div
+                    className="group px-3 py-2 text-sm text-gray-700 min-h-[100px] leading-relaxed border-l-2 border-gray-100 hover:border-blue-400 rounded-r-md cursor-pointer transition-all"
+                    onClick={() => setIsDescriptionEditing(true)}
+                  >
+                    {description || (
+                      <span className="text-gray-400 italic group-hover:text-gray-500 transition-colors">
+                        Add a description...
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Checklists Tab */}
+          {activeTab === 'checklists' && (
+            <div className="space-y-6">
+              {checklists.length > 0 ? (
+                <div className="space-y-6">
+                  {checklists.map(checklist => (
+                    <div key={checklist.id} className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-sm font-medium text-gray-700">{checklist.title}</h3>
+                          {checklist.progress !== undefined && (
+                            <span className="px-1.5 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-600">
+                              {checklist.progress}%
+                            </span>
+                          )}
+                        </div>
+                        <button
+                          className="p-1 rounded text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all"
+                          onClick={() => setChecklists(checklists.filter(c => c.id !== checklist.id))}
+                          title="Delete checklist"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      {/* Progress bar with animation */}
+                      {checklist.progress !== undefined && (
+                        <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-emerald-500 transition-all duration-500 ease-out rounded-full"
+                            style={{ width: `${checklist.progress}%` }}
+                          ></div>
+                        </div>
+                      )}
+
+                      {/* Checklist items */}
+                      <ul className="space-y-1.5 mt-3">
+                        {checklist.todos.map(todo => (
+                          <li
+                            key={todo.id}
+                            className={`group flex items-start gap-3 px-3 py-2 rounded-md ${
+                              todo.isDone 
+                                ? 'bg-gray-50' 
+                                : 'hover:bg-gray-50'
+                            } transition-colors`}
+                            onMouseEnter={() => setIsHovering({...isHovering, [todo.id]: true})}
+                            onMouseLeave={() => setIsHovering({...isHovering, [todo.id]: false})}
+                          >
+                            <div className="mt-0.5 relative">
+                              <input
+                                type="checkbox"
+                                id={`todo-${todo.id}`}
+                                checked={todo.isDone}
+                                onChange={() => toggleChecklistItem(checklist.id, todo.id)}
+                                className="peer absolute opacity-0 w-5 h-5 cursor-pointer"
+                              />
+                              <div className="w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center peer-checked:border-emerald-500 peer-checked:bg-emerald-500 transition-all peer-focus:ring-2 peer-focus:ring-offset-1 peer-focus:ring-blue-400">
+                                <svg
+                                  width="10"
+                                  height="10"
+                                  viewBox="0 0 10 10"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="text-white scale-0 peer-checked:scale-100 transition-transform duration-200"
+                                >
+                                  <path d="M8.33334 2.5L3.75001 7.08333L1.66667 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                              </div>
+                            </div>
+
+                            <label
+                              htmlFor={`todo-${todo.id}`}
+                              className={`flex-1 text-sm leading-tight cursor-pointer ${
+                                todo.isDone 
+                                  ? 'text-gray-400 line-through' 
+                                  : 'text-gray-700'
+                              } transition-colors`}
+                            >
+                              {todo.title}
+                            </label>
+
+                            {/* Actions that appear on hover */}
+                            <div className={`flex items-center gap-1 ${isHovering[todo.id] ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
+                              <button className="p-1 text-gray-400 hover:text-gray-600 rounded">
+                                <Edit className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+
+                      {/* Add item input or button */}
+                      {addingToChecklist === checklist.id ? (
+                        <div className="pl-9 pr-3 space-y-2">
+                          <input
+                            type="text"
+                            className="w-full p-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400"
+                            value={newChecklistItem}
+                            onChange={(e) => setNewChecklistItem(e.target.value)}
+                            placeholder="Add an item..."
+                            autoFocus
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                addChecklistItem(checklist.id);
+                              } else if (e.key === 'Escape') {
+                                setNewChecklistItem('');
+                                setAddingToChecklist(0);
+                              }
+                            }}
+                          />
+                          <div className="flex gap-2">
+                            <button
+                              className="px-3 py-1.5 text-xs font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 shadow-sm transition-colors"
+                              onClick={() => addChecklistItem(checklist.id)}
+                            >
+                              Add
+                            </button>
+                            <button
+                              className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+                              onClick={() => {
+                                setNewChecklistItem('');
+                                setAddingToChecklist(0);
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <button
+                          className="flex items-center gap-2 pl-9 py-2 text-left text-sm text-gray-600 hover:text-gray-800 w-full rounded-md hover:bg-gray-50 transition-colors"
+                          onClick={() => setAddingToChecklist(checklist.id)}
+                        >
+                          <Plus className="w-4 h-4" />
+                          <span>Add an item</span>
+                        </button>
+                      )}
+                    </div>
+                  ))}
+
+                  {/* Add another checklist button */}
+                  <button
+                    className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-blue-600 border border-blue-200 rounded-md hover:bg-blue-50 transition-colors"
+                    onClick={() => setActivePicker('checklists')}
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Add another checklist</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mb-4 text-gray-400">
+                    <CheckSquare className="w-6 h-6" />
+                  </div>
+                  <h3 className="mb-2 text-gray-700 font-medium">No checklists yet</h3>
+                  <p className="text-sm text-gray-500 mb-4">Add a checklist to track task progress</p>
+                  <button
+                    className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 shadow-sm transition-colors"
+                    onClick={() => setActivePicker('checklists')}
+                  >
+                    Add a checklist
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Files Tab */}
+          {activeTab === 'files' && (
+            <div className="space-y-6">
+              {attachments.length > 0 ? (
+                <div className="space-y-3">
+                  {attachments.map(attachment => (
+                    <div
+                      key={attachment.id}
+                      className="group relative flex items-center gap-3 p-3.5 border border-gray-100 rounded-lg hover:border-gray-200 hover:shadow-sm transition-all cursor-pointer"
+                      onMouseEnter={() => setIsHovering({...isHovering, [attachment.id]: true})}
+                      onMouseLeave={() => setIsHovering({...isHovering, [attachment.id]: false})}
+                    >
+                      {/* File type icon with color based on mime type */}
+                      <div className={`flex-shrink-0 w-10 h-10 rounded-md flex items-center justify-center ${
+                        attachment.type === 'file' 
+                          ? 'bg-blue-50 text-blue-500' 
+                          : 'bg-purple-50 text-purple-500'
+                      }`}>
+                        {attachment.type === 'file' ? (
+                          <Paperclip className="w-5 h-5" />
+                        ) : (
+                          <Link2 className="w-5 h-5" />
+                        )}
+                      </div>
+
+                      {/* File name and date */}
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-medium text-gray-800 truncate group-hover:text-blue-600 transition-colors">
+                          {attachment.text || attachment.path}
+                        </h4>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <p className="text-xs text-gray-500">
+                            {new Date(attachment.date).toLocaleDateString('en-US', {
+                              month: 'short', day: 'numeric', year: 'numeric'
+                            })}
+                          </p>
+                          <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+                          <p className="text-xs text-gray-500">
+                            {formatRelativeTime(attachment.date)}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Actions on hover */}
+                      <div className={`absolute right-3 flex items-center gap-1 ${isHovering[attachment.id] ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
+                        <button
+                          className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded transition-colors"
+                          title="Download"
+                        >
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M14 10v2.667A1.334 1.334 0 0112.667 14H3.333A1.334 1.334 0 012 12.667V10M4.667 6.667L8 10m0 0l3.333-3.333M8 10V2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </button>
+                        <button
+                          className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors"
+                          onClick={() => deleteAttachment(attachment.id)}
+                          title="Delete"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Add attachment button */}
+                  <button
+                    className="flex items-center gap-1.5 w-full p-3 text-sm font-medium text-blue-600 border border-blue-100 border-dashed rounded-lg hover:bg-blue-50 transition-colors justify-center"
+                    onClick={() => setActivePicker('attachments')}
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Add attachment</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mb-4 text-gray-400">
+                    <Paperclip className="w-6 h-6" />
+                  </div>
+                  <h3 className="mb-2 text-gray-700 font-medium">No files attached</h3>
+                  <p className="text-sm text-gray-500 mb-4">Add files or links to the task</p>
+                  <div className="flex gap-2">
+                    <button
+                      className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 shadow-sm transition-colors"
+                      onClick={() => setActivePicker('attachments')}
+                    >
+                      Add file
+                    </button>
+                    <button
+                      className="px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors"
+                      onClick={() => setActivePicker('attachments')}
+                    >
+                      Add link
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Activity Tab */}
+          {activeTab === 'activity' && (
+            <div className="space-y-6">
+              {/* Comment input */}
+              <div className="flex gap-3 mb-6">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-bold">
+                  {loggedUser?.imgUrl ? (
+                    <img
+                      src={loggedUser.imgUrl}
+                      alt={loggedUser.fullname}
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  ) : (
+                    <span>{loggedUser?.fullname?.[0] || 'U'}</span>
+                  )}
+                </div>
+
+                <div className="flex-1 relative">
+                  <textarea
+                    ref={activityInputRef}
+                    className="w-full p-3 pr-10 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 min-h-10 max-h-32 transition-shadow"
+                    placeholder="Write a comment..."
+                    rows={1}
+                    onKeyDown={handleCommentKeyDown}
+                  ></textarea>
+                  <button
+                    className="absolute right-2 bottom-2 p-1.5 text-blue-500 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
+                    onClick={addComment}
+                  >
+                    <Send className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Activity listing */}
+              {activityLog.length > 0 ? (
+                <div className="space-y-4">
+                  {activityLog.map((entry, index) => (
+                    <div key={entry.id || index} className="group flex gap-3">
+                      {/* User avatar */}
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 text-xs font-bold">
+                        {entry?.byMember?.imgUrl ? (
+                          <img
+                            src={entry.byMember.imgUrl}
+                            alt={entry.byMember.fullname}
+                            className="w-full h-full object-cover rounded-full"
+                          />
+                        ) : (
+                          <span>
+                            {entry?.byMember?.fullname?.split(' ').map(name => name[0]?.toUpperCase()).join('') || 'U'}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Comment content */}
+                      <div className="flex-1">
+                        <div className="p-3 bg-gray-50 rounded-lg relative group">
+                          {/* Hover actions */}
+                          <div className="absolute -top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button className="p-1 text-gray-400 hover:text-gray-600 bg-white rounded shadow-sm">
+                              <MoreHorizontal className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+
+                          {/* Author and time */}
+                          <div className="flex items-baseline mb-1.5">
+                            <span className="text-sm font-medium text-gray-800 mr-2">
+                              {entry?.byMember?.fullname}
+                            </span>
+                            <span className="text-xs text-gray-400">
+                              {formatRelativeTime(entry.createdAt)}
+                            </span>
+                          </div>
+
+                          {/* Comment text */}
+                          <p className="text-sm text-gray-700 whitespace-pre-line">
+                            {entry.title}
+                          </p>
+
+                          {/* Comment actions */}
+                          <div className="mt-2 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button className="text-xs text-gray-500 hover:text-blue-600 transition-colors">
+                              Reply
+                            </button>
+                            <button className="text-xs text-gray-500 hover:text-blue-600 transition-colors">
+                              Edit
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mb-4 text-gray-400">
+                    <MessageSquare className="w-6 h-6" />
+                  </div>
+                  <h3 className="mb-2 text-gray-700 font-medium">No activity yet</h3>
+                  <p className="text-sm text-gray-500">Comments and actions will appear here</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* CSS for Animations */}
+      <style jsx>{`
+        @keyframes flashInOut {
+          0%, 100% { opacity: 0; }
+          50% { opacity: 0.25; }
+        }
+        
+        .flash-in-out {
+          animation: flashInOut 1s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        /* Custom scrollbar */
+        .scrollbar-thin::-webkit-scrollbar {
+          width: 6px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+          background-color: rgba(203, 213, 225, 0.8);
+          border-radius: 3px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+          background-color: rgba(148, 163, 184, 0.8);
+        }
+        
+        /* Hide scrollbar for Firefox */
+        .scrollbar-thin {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(203, 213, 225, 0.8) transparent;
+        }
+      `}</style>
+    </div>
+      </div>
+  );
+};
+
+
+
+
+export function TaskModaal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
     const { board, group, taskList, ...cleanTask } = taskToShow;
 
     console.log('task', taskToShow);
@@ -63,6 +1095,15 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
     const [activePicker, setActivePicker] = useState(null); // Single state for active picker tab
 
     const coverFileInputRef = useRef(null);
+
+    const [activeTab, setActiveTab] = useState('overview');
+    const [isDescriptionEditing, setIsDescriptionEditing] = useState(false);
+
+    // Calculate badge counts
+    const checklistItemCount = checklists.reduce((acc, list) => acc + list.todos.length, 0);
+    const completedItemCount = checklists.reduce((acc, list) =>
+        acc + list.todos.filter(todo => todo.isDone).length, 0);
+
 
     // Picker Components
     function MembersPicker({ members, boardMembersToShow, onAddMember, onRemoveMember, onClose }) {
@@ -1261,6 +2302,13 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
         updateBoard(boardCopy);
     }
 
+    // Derived values for badges
+    // const checklistItemCount = checklists.reduce((total, list) => total + list.todos.length, 0);
+    // const completedItemCount = checklists.reduce((total, list) => total + list.todos.filter(todo => todo.isDone).length, 0);
+    const attachmentCount = attachments.length;
+    const activityCount = activityLog.length;
+
+
     // Render
     return (
         <>
@@ -1291,351 +2339,607 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
 
                 <div className="monday-task-modal-content">
                     <div className="monday-task-layout">
-                        {/* Left Side: Task Details */}
-                        <div className="monday-task-details">
-                            <div className="task-modal-header">
-                                <div className="task-left">
-                                    {isDone ? (
-                                        <div className="task-icon status-icon" title="Card is complete" onClick={() => setIsDone(!isDone)}>
-                                            <i className="fa-regular fa-check"></i>
-                                        </div>
-                                    ) : (
-                                        <div className="task-icon status-icon-incomplete" title="Card is incomplete" onClick={() => setIsDone(!isDone)}></div>
-                                    )}
-                                    <div className="task-title-section">
-                                        <input type="text" className="task-title" value={cardTitle} onChange={(e) => setCardTitle(e.target.value)} />
-                                        <div className="task-subtitle">
-                                            in list <strong style={{ backgroundColor: taskToShow.group.style?.backgroundColor || '' }} onClick={() => setActivePicker('move')}>
-                                                {listName} <i className="fa-regular fa-chevron-down"></i>
-                                            </strong> {isWatching && (
-                                                <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fillRule="evenodd" clipRule="evenodd" d="M12.0006 18C7.46367 18 4.00142 13.74 4.00142 12C4.00142 9.999 7.45967 6 12.0006 6C16.3775 6 19.9988 9.973 19.9988 12C19.9988 13.74 16.5366 18 12.0006 18ZM12.0006 4C6.48003 4 2.00012 8.841 2.00012 12C2.00012 15.086 6.5771 20 12.0006 20C17.4241 20 22.0001 15.086 22.0001 12C22.0001 8.841 17.5212 4 12.0006 4ZM11.9775 13.9844C10.8745 13.9844 9.97752 13.0874 9.97752 11.9844C9.97752 10.8814 10.8745 9.9844 11.9775 9.9844C13.0805 9.9844 13.9775 10.8814 13.9775 11.9844C13.9775 13.0874 13.0805 13.9844 11.9775 13.9844ZM11.9775 7.9844C9.77152 7.9844 7.97752 9.7784 7.97752 11.9844C7.97752 14.1904 9.77152 15.9844 11.9775 15.9844C14.1835 15.9844 15.9775 14.1904 15.9775 11.9844C15.9775 9.7784 14.1835 7.9844 11.9775 7.9844Z" fill="currentColor"></path>
-                                                </svg>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div className="task-main">
-                                <div className="the-tasks task-section task-right inner-component-left-padding">
-                                    {showMembers && (
-                                        <div className="task-members">
-                                            <div className="section-inner">
-                                                <div className="section-label">Members</div>
-                                                <div className="just-flex-without-anything">
-                                                    {members.map(member => (
-                                                        member?.imgUrl ? (
-                                                            <div className="user-circle" key={member.id} style={{ backgroundImage: `url(${member.imgUrl})` }}></div>
-                                                        ) : (
-                                                            <div key={member.id} className="member-circle" title="LH">
-                                                                {member?.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{member?.fullname?.split(' ')[1][0]?.toUpperCase() || ''}
-                                                            </div>
-                                                        )
-                                                    ))}
-                                                    <button className="add-member-btn" onClick={() => setActivePicker('members')}>
-                                                        <i className="fa-regular fa-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
+                        <div className="flex flex-col w-full h-full bg-white rounded-lg shadow-lg overflow-hidden">
+      {/* Status Header */}
+      <div className="px-6 py-4 flex items-center justify-between">
+        <div
+          className="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-gray-50 rounded-md transition-colors"
+          onClick={() => setIsDone(!isDone)}
+        >
+          <span>
+            {isDone ?
+              <CheckCircle className="text-emerald-500 w-4.5 h-4.5" /> :
+              <Circle className="text-gray-400 w-4.5 h-4.5" />
+            }
+          </span>
+          <span className={`text-sm font-medium ${isDone ? 'text-emerald-600' : 'text-gray-600'}`}>
+            {isDone ? 'Completed' : 'In Progress'}
+          </span>
+        </div>
 
-                                    {showLabels && (
-                                        <div className="task-labels">
-                                            <div className="section-inner">
-                                                <div className="section-label">Labels</div>
-                                                <div className="just-flex-without-anything">
-                                                    {(!!cardLabels) && (
-                                                        <>
-                                                            {cardLabels.map(label => (
-                                                                <div key={label.color} className={`member-label ${label.color}`} style={{ backgroundColor: label.color || '' }}></div>
-                                                            ))}
-                                                        </>
-                                                    )}
-                                                    <button className="add-label-btn" onClick={() => setActivePicker('labels')}>
-                                                        <i className="fa-regular fa-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
+        <div className="flex items-center gap-2">
+          <button
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-md transition-colors"
+            onClick={() => setActivePicker('members')}
+          >
+            <User className="w-4 h-4" />
+            <span>Members</span>
+          </button>
+        </div>
+      </div>
 
-                                    <div className="task-notifications">
-                                        <div className="task-members">
-                                            <div className="section-inner">
-                                                <div className="section-label">Notifications</div>
-                                                <div className="just-flex-without-anything">
-                                                    <button className={`task-watch ${isWatching ? "" : ""}`} onClick={() => setIsWatching(!isWatching)}>
-                                                        <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                            <path fillRule="evenodd" clipRule="evenodd" d="M12.0006 18C7.46367 18 4.00142 13.74 4.00142 12C4.00142 9.999 7.45967 6 12.0006 6C16.3775 6 19.9988 9.973 19.9988 12C19.9988 13.74 16.5366 18 12.0006 18ZM12.0006 4C6.48003 4 2.00012 8.841 2.00012 12C2.00012 15.086 6.5771 20 12.0006 20C17.4241 20 22.0001 15.086 22.0001 12C22.0001 8.841 17.5212 4 12.0006 4ZM11.9775 13.9844C10.8745 13.9844 9.97752 13.0874 9.97752 11.9844C9.97752 10.8814 10.8745 9.9844 11.9775 9.9844C13.0805 9.9844 13.9775 10.8814 13.9775 11.9844C13.9775 13.0874 13.0805 13.9844 11.9775 13.9844ZM11.9775 7.9844C9.77152 7.9844 7.97752 9.7784 7.97752 11.9844C7.97752 14.1904 9.77152 15.9844 11.9775 15.9844C14.1835 15.9844 15.9775 14.1904 15.9775 11.9844C15.9775 9.7784 14.1835 7.9844 11.9775 7.9844Z" fill="currentColor"></path>
-                                                        </svg>
-                                                        {isWatching ? "Watching" : "Watch"} {isWatching && <i className="fa-regular fa-check"></i>}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+      {/* Task Title */}
+      <div className="px-6 pt-6 pb-3">
+        <input
+          type="text"
+          className="w-full text-xl font-semibold text-gray-800 bg-transparent border-0 focus:outline-none focus:ring-1 focus:ring-blue-400 focus:ring-opacity-50 rounded px-1 py-0.5"
+          value={cardTitle}
+          onChange={(e) => setCardTitle(e.target.value)}
+          placeholder="Task title"
+        />
+      </div>
 
-                                    {showDate && (
-                                        <div className="task-notifications">
-                                            <div className="task-members">
-                                                <div className="section-inner">
-                                                    <div className="section-label">Due Date</div>
-                                                    <div className="just-flex-without-anything">
-                                                        <div className="date-picker" onClick={onDateClick}>
-                                                            <span className="pointer-cursor">{new Date(date).toLocaleDateString()} </span>
-                                                            {(new Date(date) < Date.now()) ? (
-                                                                (taskToShow.status === 'done') ? (
-                                                                    <span className="complete-label">Complete</span>
-                                                                ) : (
-                                                                    <span className="incomplete-label">Overdue</span>
-                                                                )
-                                                            ) : <span></span>}
-                                                            <i className="fa-regular fa-chevron-down"></i>
-                                                            <input ref={dateInputRef} type="date" onChange={onDateChange} className="date-picker-input pointer-cursor" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+      {/* Labels */}
+      <div className="px-6 py-2">
+        {showLabels && cardLabels && cardLabels.length > 0 && (
+          <div className="flex flex-wrap gap-2 items-center">
+            {cardLabels.map(label => (
+              <div
+                key={label.color}
+                className="px-2.5 py-1 rounded-md text-xs font-medium text-white"
+                style={{ backgroundColor: `${label.color}` }}
+              >
+                {label.title}
+              </div>
+            ))}
+            <button
+              className="w-6 h-6 flex items-center justify-center rounded-md bg-gray-50 hover:bg-gray-100 transition-colors"
+              onClick={() => setActivePicker('labels')}
+            >
+              <Plus className="w-3.5 h-3.5 text-gray-500" />
+            </button>
+          </div>
+        )}
 
-                                <div className="task-section">
-                                    <div className="flex-space-between">
-                                        <div className="section-icon-title">
-                                            <i>
-                                                <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fillRule="evenodd" clipRule="evenodd" d="M4 5C3.44772 5 3 5.44772 3 6C3 6.55228 3.44772 7 4 7H20C20.5523 7 21 6.55228 21 6C21 5.44772 20.5523 5 20 5H4ZM4 9C3.44772 9 3 9.44772 3 10C3 10.5523 3.44772 11 4 11H20C20.5523 11 21 10.5523 21 10C21 9.44772 20.5523 9 20 9H4ZM3 14C3 13.4477 3.44772 13 4 13H20C20.5523 13 21 13.4477 21 14C21 14.5523 20.5523 15 20 15H4C3.44772 15 3 14.5523 3 14ZM4 17C3.44772 17 3 17.4477 3 18C3 18.5523 3.44772 19 4 19H14C14.5523 19 15 18.5523 15 18C15 17.4477 14.5523 17 14 17H4Z" fill="currentColor"></path>
-                                                </svg>
-                                            </i>
-                                            <h3>Description</h3>
-                                        </div>
-                                    </div>
-                                    <div className="inner-component-left-padding">
-                                        <p contentEditable className="task-description" onChange={setDescription}>{description}</p>
-                                    </div>
-                                </div>
+        {(!cardLabels || cardLabels.length === 0) && (
+          <button
+            className="flex items-center gap-2 px-3 py-1.5 text-sm rounded-md bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
+            onClick={() => setActivePicker('labels')}
+          >
+            <Tag className="w-4 h-4" />
+            <span>Add Label</span>
+          </button>
+        )}
+      </div>
 
-                                {(!!taskToShow.location) && (
-                                    <div className="task-section">
-                                        <div className="flex-space-between">
-                                            <div className="section-icon-title">
-                                                <i>
-                                                    <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M12 21C14.2802 21 18 12.3137 18 9C18 5.68629 15.3137 3 12 3C8.68629 3 6 5.68629 6 9C6 12.3137 9.71981 21 12 21ZM12 12C13.6081 12 14.9118 10.6964 14.9118 9.08823C14.9118 7.48011 13.6081 6.17647 12 6.17647C10.3919 6.17647 9.08824 7.48011 9.08824 9.08823C9.08824 10.6964 10.3919 12 12 12Z" fill="currentColor"></path>
-                                                    </svg>
-                                                </i>
-                                                <h3>Location</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
+      {/* Meta Information Row */}
+      <div className="px-6 py-3 flex flex-wrap gap-2 items-center">
+        {date && (
+          <div
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium cursor-pointer ${
+              new Date(date) < Date.now() 
+                ? (isDone ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600') 
+                : 'bg-blue-50 text-blue-600'
+            }`}
+            onClick={onDateClick}
+          >
+            <Calendar className="w-3.5 h-3.5" />
+            <span>
+              {new Date(date).toLocaleDateString('en-US', {
+                month: 'short', day: 'numeric'
+              })}
+            </span>
+            <input
+              ref={dateInputRef}
+              type="date"
+              className="absolute invisible"
+              onChange={onDateChange}
+            />
+          </div>
+        )}
 
-                                {showCustomFields && (
-                                    <div className="task-section">
-                                        <div className="section-icon-title">
-                                            <i>
-                                                <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fillRule="evenodd" clipRule="evenodd" d="M3 6C2.44772 6 2 6.44772 2 7C2 7.55228 2.44772 8 3 8H11C11.5523 8 12 7.55228 12 7C12 6.44772 11.5523 6 11 6H3ZM4 16V12H20V16H4ZM2 12C2 10.8954 2.89543 10 4 10H20C21.1046 10 22 10.8954 22 12V16C22 17.1046 21.1046 18 20 18H4C2.89543 18 2 17.1046 2 16V12Z" fill="currentColor"></path>
-                                                </svg>
-                                            </i>
-                                            <h3>Custom Fields</h3>
-                                        </div>
-                                        <div className="task-custom-fields inner-component-left-padding">
-                                            {badges.map(badge => (
-                                                <div key={badge.id}>
-                                                    <div className="just-flex">
-                                                        <svg width="20" height="20" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M6 8C6 8.55228 5.55228 9 5 9C4.44772 9 4 8.55228 4 8C4 7.44772 4.44772 7 5 7C5.55228 7 6 7.44772 6 8ZM8 8C8 9.65685 6.65685 11 5 11C3.34315 11 2 9.65685 2 8C2 6.34315 3.34315 5 5 5C6.65685 5 8 6.34315 8 8ZM6 16C6 16.5523 5.55228 17 5 17C4.44772 17 4 16.5523 4 16C4 15.4477 4.44772 15 5 15C5.55228 15 6 15.4477 6 16ZM8 16C8 17.6569 6.65685 19 5 19C3.34315 19 2 17.6569 2 16C2 14.3431 3.34315 13 5 13C6.65685 13 8 14.3431 8 16ZM19 7H13C12.4477 7 12 7.44772 12 8C12 8.55228 12.4477 9 13 9H19C19.5523 9 20 8.55228 20 8C20 7.44772 19.5523 7 19 7ZM13 5C11.3431 5 10 6.34315 10 8C10 9.65685 11.3431 11 13 11H19C20.6569 11 22 9.65685 22 8C22 6.34315 20.6569 5 19 5H13ZM13 15H16C16.5523 15 17 15.4477 17 16C17 16.5523 16.5523 17 16 17H13C12.4477 17 12 16.5523 12 16C12 15.4477 12.4477 15 13 15ZM10 16C10 14.3431 11.3431 13 13 13H16C17.6569 13 19 14.3431 19 16C19 17.6569 17.6569 19 16 19H13C11.3431 19 10 17.6569 10 16Z" fill="currentColor"></path>
-                                                        </svg>
-                                                        <label>{badge.categ}</label>
-                                                    </div>
-                                                    <select value={badge.text} onChange={(e) => setBadges(badges.map(b => b.categ === badge.categ ? { ...b, text: e.target.value } : b))} className="custom-dropdown" style={{ backgroundColor: `${badge.color}` }}>
-                                                        <option value="">Select...</option>
-                                                        {badge.badgeOptions.map(option => (
-                                                            <option key={option} value={option}>{option}</option>
-                                                        ))}
-                                                    </select>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
+        <div
+          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium cursor-pointer ${
+            isWatching ? 'bg-blue-50 text-blue-600' : 'bg-gray-50 text-gray-600'
+          }`}
+          onClick={() => setIsWatching(!isWatching)}
+        >
+          <Eye className="w-3.5 h-3.5" />
+          <span>Watching</span>
+        </div>
 
-                                {((attachments.length !== 0) || showAttachments) && (
-                                    <div className="task-section">
-                                        <div className="flex-space-between">
-                                            <div className="section-icon-title">
-                                                <i>
-                                                    <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M11.6426 17.9647C10.1123 19.46 7.62736 19.4606 6.10092 17.9691C4.57505 16.478 4.57769 14.0467 6.10253 12.5566L13.2505 5.57184C14.1476 4.6952 15.5861 4.69251 16.4832 5.56921C17.3763 6.44184 17.3778 7.85135 16.4869 8.72199L9.78361 15.2722C9.53288 15.5172 9.12807 15.5163 8.86954 15.2636C8.61073 15.0107 8.60963 14.6158 8.86954 14.3618L15.0989 8.27463C15.4812 7.90109 15.4812 7.29546 15.0989 6.92192C14.7167 6.54838 14.0969 6.54838 13.7146 6.92192L7.48523 13.0091C6.45911 14.0118 6.46356 15.618 7.48523 16.6163C8.50674 17.6145 10.1511 17.6186 11.1679 16.6249L17.8712 10.0747C19.5274 8.45632 19.5244 5.83555 17.8676 4.2165C16.2047 2.59156 13.5266 2.59657 11.8662 4.21913L4.71822 11.2039C2.42951 13.4404 2.42555 17.083 4.71661 19.3218C7.00774 21.5606 10.7323 21.5597 13.0269 19.3174L19.7133 12.7837C20.0956 12.4101 20.0956 11.8045 19.7133 11.431C19.331 11.0574 18.7113 11.0574 18.329 11.431L11.6426 17.9647Z" fill="currentColor"></path>
-                                                    </svg>
-                                                </i>
-                                                <h3>Attachments</h3>
-                                            </div>
-                                            <button className="delete-btn" onClick={() => setActivePicker('attachments')}>Add</button>
-                                        </div>
-                                        <div className="inner-component-left-padding">Files</div>
-                                        <div className="task-attachment-row inner-component-left-padding just-flex-cols">
-                                            {attachments.map(attachment => (
-                                                <div key={attachment.id} className="flex-space-between-align full-width">
-                                                    <div className="flex-space-between-align">
-                                                        <button className="attachment-extention">PNG</button>
-                                                        <div className="file-info">
-                                                            {attachment.text && <h5>{attachment.text}</h5>}
-                                                            {!attachment.text && <h5>{attachment.path}</h5>}
-                                                            <label>{new Date(attachment.date).toLocaleDateString()}</label>
-                                                        </div>
-                                                    </div>
-                                                    <button className="delete-btn-del" onClick={() => setAttachments(attachments.filter(a => a.id !== attachment.id))}>Delete</button>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
+        {members && members.length > 0 && (
+          <div className="flex -space-x-2 ml-2">
+            {members.slice(0, 3).map((member, index) => (
+              <div
+                key={member.id || member._id}
+                className="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium text-gray-700 border-2 border-white"
+                style={member.imgUrl ? { backgroundImage: `url(${member.imgUrl})` } : {}}
+              >
+                {!member.imgUrl && (
+                  <span>
+                    {member.fullname?.split(' ').map(name => name[0]?.toUpperCase()).join('')}
+                  </span>
+                )}
+              </div>
+            ))}
+            {members.length > 3 && (
+              <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-xs font-medium text-gray-600 border-2 border-white">
+                <span>+{members.length - 3}</span>
+              </div>
+            )}
+          </div>
+        )}
 
-                                {(showChecklist || checklists.length > 0) && (
-                                    <div className="task-section">
-                                        {checklists.map(checklist => (
-                                            <div key={checklist.id} className="checklist-container">
-                                                <div className="flex-space-between">
-                                                    <div className="section-icon-title">
-                                                        <i>
-                                                            <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                <path fillRule="evenodd" clipRule="evenodd" d="M6 4C4.89543 4 4 4.89543 4 6V18C4 19.1046 4.89543 20 6 20H18C19.1046 20 20 19.1046 20 18V13C20 12.4477 19.5523 12 19 12C18.4477 12 18 12.4477 18 13V18H6V6L16 6C16.5523 6 17 5.55228 17 5C17 4.44772 16.5523 4 16 4H6ZM8.73534 10.3223C8.36105 9.91618 7.72841 9.89038 7.3223 10.2647C6.91619 10.639 6.89039 11.2716 7.26467 11.6777L10.8768 15.597C11.4143 16.1231 12.2145 16.1231 12.7111 15.6264L13.0754 15.2683C13.3699 14.9785 13.6981 14.6556 14.0516 14.3075C15.0614 13.313 16.0713 12.3169 17.014 11.3848L17.0543 11.3449C18.7291 9.68869 20.0004 8.42365 20.712 7.70223C21.0998 7.30904 21.0954 6.67589 20.7022 6.28805C20.309 5.90022 19.6759 5.90457 19.2881 6.29777C18.5843 7.01131 17.3169 8.27244 15.648 9.92281L15.6077 9.96263C14.6662 10.8937 13.6572 11.8889 12.6483 12.8825L11.8329 13.6851L8.73534 10.3223Z" fill="currentColor"></path>
-                                                            </svg>
-                                                        </i>
-                                                        <h3>{checklist.title}</h3>
-                                                    </div>
-                                                    <button className="delete-btn" onClick={() => setChecklists(checklists.filter(c => c.id !== checklist.id))}>Delete</button>
-                                                </div>
-                                                {checklist.progress && (
-                                                    <div className="progress inner-component-left-padding">
-                                                        <div className="progress-container">
-                                                            <div className="progress-num">{checklist.progress}%</div>
-                                                            <div className="progress-bar">
-                                                                <div className="progress-bar-internal" style={{ width: `${checklist.progress}%` }}></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                                {checklist.todos.map(todo => (
-                                                    <div key={todo.id}>
-                                                        <div className="just-flex-with-center checklist-todos">
-                                                            <input name={todo.title} type="checkbox" checked={todo.isDone} onChange={() => {
-                                                                const newChecklists = checklists.map(c => {
-                                                                    if (c.id === checklist.id) {
-                                                                        return { ...c, todos: c.todos.map(t => t.id === todo.id ? { ...t, isDone: !t.isDone } : t) };
-                                                                    }
-                                                                    return c;
-                                                                });
-                                                                newChecklists.forEach(c => {
-                                                                    if (c.id === checklist.id) {
-                                                                        let doneTodos = c.todos.filter(t => t.isDone);
-                                                                        c.progress = Math.floor((doneTodos.length / c.todos.length) * 100);
-                                                                    }
-                                                                });
-                                                                setChecklists(newChecklists);
-                                                            }} />
-                                                            <label style={{ textDecoration: todo.isDone ? 'line-through' : 'none' }}>{todo.title}</label>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                                {(addingToChecklist === 0) && (
-                                                    <div className="task-checklist-add inner-component-left-padding">
-                                                        <button className="delete-btn-del" onClick={() => setAddingToChecklist(checklist.id)}>Add an item</button>
-                                                    </div>
-                                                )}
-                                                {(addingToChecklist === checklist.id) && (
-                                                    <>
-                                                        <div className="task-checklist-add inner-component-left-padding">
-                                                            <input className="checklist-input" type="text" placeholder="Add an item" value={newChecklistItem} onChange={(e) => setNewChecklistItem(e.target.value)} />
-                                                        </div>
-                                                        <div className="side-by-side inner-component-left-padding">
-                                                            <div className="just-flex">
-                                                                <div className="checklist-actions">
-                                                                    <button className="btn-add" onClick={() => {
-                                                                        setChecklists(checklists.map(c => {
-                                                                            if (c.id === checklist.id) {
-                                                                                return { ...c, todos: [...c.todos, { id: Date.now(), title: newChecklistItem, isDone: false }] };
-                                                                            }
-                                                                            return c;
-                                                                        }));
-                                                                        setNewChecklistItem('');
-                                                                    }}>Add</button>
-                                                                    <button className="btn-cancel" onClick={() => { setNewChecklistItem(''); setAddingToChecklist(0); }}>Cancel</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
+        <div
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium ml-auto cursor-pointer hover:bg-gray-50 transition-colors"
+          onClick={() => setActivePicker('move')}
+        >
+          <div
+            className="w-2.5 h-2.5 rounded"
+            style={{ backgroundColor: taskToShow.group.style?.backgroundColor || '#ddd' }}
+          ></div>
+          <span className="text-gray-600">{listName}</span>
+        </div>
+      </div>
 
-                                {(activityLog.length || showActivity) && (
-                                    <div className="task-section">
-                                        <div className="section-icon-bit-down"></div>
-                                        <div className="flex-space-between">
-                                            <div className="section-icon-title">
-                                                <i>
-                                                    <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M4 5C2.8955 5 2 5.89543 2 7C2 8.1045 2.89543 9 4 9C5.1045 9 6 8.10457 6 7C6 5.8955 5.10457 5 4 5Z" fill="currentColor"></path>
-                                                        <path d="M4 13C2.8955 13 2 13.8954 2 15C2 16.1045 2.89543 17 4 17C5.1045 17 6 16.1046 6 15C6 13.8955 5.10457 13 4 13Z" fill="currentColor"></path>
-                                                        <path d="M8 6C8 5.44772 8.44772 5 9 5H21C21.5523 5 22 5.44772 22 6C22 6.55228 21.5523 7 21 7H9C8.44772 7 8 6.55228 8 6Z" fill="currentColor"></path>
-                                                        <path d="M9 9C8.44772 9 8 9.44772 8 10C8 10.5523 8.44771 11 9 11H18C18.5523 11 19 10.5523 19 10C19 9.44772 18.5523 9 18 9H9Z" fill="currentColor"></path>
-                                                        <path d="M8 14C8 13.4477 8.44772 13 9 13H21C21.5523 13 22 13.4477 22 14C22 14.5523 21.5523 15 21 15H9C8.44772 15 8 14.5523 8 14Z" fill="currentColor"></path>
-                                                        <path d="M9 17C8.44772 17 8 17.4477 8 18C8 18.5523 8.44771 19 9 19H18C18.5523 19 19 18.5523 19 18C19 17.4477 18.5523 17 18 17H9Z" fill="currentColor"></path>
-                                                    </svg>
-                                                </i>
-                                                <h3>Activity</h3>
-                                            </div>
-                                        </div>
-                                        <ul className="task-activity-list">
-                                            <li key="1">
-                                                <div className="just-flex">
-                                                    <div className="user-circle">{(!!loggedUser)? loggedUser.fullname: 'G'}</div>
-                                                    <div className="flex-col input-container">
-                                                        <input className="activity-input" type="text" placeholder="Write a comment..." ref={activityInputRef} />
-                                                        <button className="activity-btn" onClick={(e) => {
-                                                            setActivityLog([...activityLog, {
-                                                                id: Date.now(), title: activityInputRef.current.value, byMember: { fullname: 'Yam Peleg', imgUrl: '' }, createdAt: Date.now()
-                                                            }]);
-                                                            activityInputRef.current.value = '';
-                                                        }}>Save</button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            {activityLog.map((entry, idx) => (
-                                                <li key={idx}>
-                                                    <div className="just-flex">
-                                                        {!(entry?.byMember?.imgUrl) && (
-                                                            <div className="user-circle">
-                                                                {entry?.byMember?.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{entry?.byMember?.fullname?.split(' ')[1][0]?.toUpperCase() || ''}
-                                                            </div>
-                                                        )}
-                                                        {(entry?.byMember?.imgUrl) && (
-                                                            <div className="user-circle" style={{ backgroundImage: `url(${entry.byMember.imgUrl})` }}></div>
-                                                        )}
-                                                        <div className="flex-col">
-                                                            <div className="text-size-activity">
-                                                                <span className="full-name">{entry?.byMember?.fullname}</span> {entry.title}
-                                                            </div>
-                                                            <div className="text-size-activity-2">
-                                                                {new Date(entry.createdAt).toLocaleDateString()}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-                            </div>
+      {/* Custom Fields - Moved here */}
+      {badges && badges.length > 0 && (
+        <div className="mx-6 my-1">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-2 border-t border-b border-gray-100 py-3">
+            {badges.map(badge => (
+              <div key={badge.id} className="flex items-center justify-between">
+                <span className="text-xs text-gray-500">{badge.categ}</span>
+                <div className="relative">
+                  <select
+                    className="appearance-none py-1 pl-0 pr-5 text-xs text-gray-700 bg-transparent border-0 focus:outline-none focus:ring-0 focus:border-blue-400"
+                    value={badge.text || ''}
+                    onChange={(e) => setBadges(badges.map(b =>
+                      b.categ === badge.categ ? {...b, text: e.target.value} : b
+                    ))}
+                  >
+                    <option value="">-</option>
+                    {badge.badgeOptions && badge.badgeOptions.map(option => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Category Tags */}
+      <div className="px-6 py-3 flex gap-2">
+        <div className="px-2.5 py-1 rounded-md text-xs font-medium bg-amber-50 text-amber-700">Tasks</div>
+        <div className="px-2.5 py-1 rounded-md text-xs font-medium bg-gray-50 text-gray-600">Personal</div>
+      </div>
+
+      {/* Tab Navigation */}
+      <div className="mt-4">
+        <div className="flex px-6 border-b border-gray-100">
+          <button
+            className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium ${
+              activeTab === 'overview' 
+                ? 'text-blue-500 border-b-2 border-blue-400' 
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('overview')}
+          >
+            <Grid className="w-4 h-4" />
+            <span>Overview</span>
+          </button>
+
+          <button
+            className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium ${
+              activeTab === 'checklists' 
+                ? 'text-blue-500 border-b-2 border-blue-400' 
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('checklists')}
+          >
+            <CheckSquare className="w-4 h-4" />
+            <span>Checklists</span>
+            {checklistItemCount > 0 && (
+              <span className="ml-1.5 text-xs font-normal text-gray-500">
+                {completedItemCount}/{checklistItemCount}
+              </span>
+            )}
+          </button>
+
+          <button
+            className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium ${
+              activeTab === 'files' 
+                ? 'text-blue-500 border-b-2 border-blue-400' 
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('files')}
+          >
+            <Paperclip className="w-4 h-4" />
+            <span>Files</span>
+            {attachmentCount > 0 && (
+              <span className="ml-1.5 text-xs font-normal text-gray-500">
+                {attachmentCount}
+              </span>
+            )}
+          </button>
+
+          <button
+            className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium ${
+              activeTab === 'activity' 
+                ? 'text-blue-500 border-b-2 border-blue-400' 
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('activity')}
+          >
+            <MessageSquare className="w-4 h-4" />
+            <span>Activity</span>
+            {activityCount > 0 && (
+              <span className="ml-1.5 text-xs font-normal text-gray-500">
+                {activityCount}
+              </span>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Tab Content */}
+      <div className="flex-1 overflow-y-auto p-6">
+        {/* Overview Tab */}
+        {activeTab === 'overview' && (
+          <div className="space-y-8">
+            {/* Description Section */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-medium text-gray-600">Description</h3>
+                <button
+                  className="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors"
+                  onClick={() => setIsDescriptionEditing(!isDescriptionEditing)}
+                >
+                  <Edit className="w-4 h-4" />
+                </button>
+              </div>
+
+              {isDescriptionEditing ? (
+                <div
+                  className="p-3 border-l-2 border-blue-400 bg-blue-50 rounded-r-md text-sm"
+                  contentEditable
+                  suppressContentEditableWarning
+                  onBlur={(e) => {
+                    setDescription(e.target.innerText);
+                    setIsDescriptionEditing(false);
+                  }}
+                  dangerouslySetInnerHTML={{__html: description}}
+                ></div>
+              ) : (
+                <div
+                  className="p-3 text-sm text-gray-700 min-h-20 leading-relaxed border-l-2 border-gray-200 hover:border-blue-400 rounded-r-md cursor-pointer transition-colors"
+                  onClick={() => setIsDescriptionEditing(true)}
+                >
+                  {description || 'Add a description...'}
+                </div>
+              )}
+            </div>
+
+            {/* Custom Fields Section - Removed from here */}
+          </div>
+        )}
+
+        {/* Checklists Tab */}
+        {activeTab === 'checklists' && (
+          <div className="space-y-6">
+            {checklists.length > 0 ? (
+              <div className="space-y-6">
+                {checklists.map(checklist => (
+                  <div key={checklist.id} className="mb-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-sm font-medium text-gray-500">{checklist.title}</h3>
+                        {checklist.progress !== undefined && (
+                          <span className="text-xs font-medium text-gray-400">
+                            {checklist.progress}%
+                          </span>
+                        )}
+                      </div>
+                      <button
+                        className="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-600"
+                        onClick={() => setChecklists(checklists.filter(c => c.id !== checklist.id))}
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    {checklist.progress !== undefined && (
+                      <div className="h-1 bg-gray-100 mb-3">
+                        <div
+                          className="h-full bg-emerald-500 transition-all duration-300"
+                          style={{ width: `${checklist.progress}%` }}
+                        ></div>
+                      </div>
+                    )}
+
+                    <div className="p-4 space-y-2">
+                      {checklist.todos.map(todo => (
+                        <div
+                          key={todo.id}
+                          className={`flex items-start gap-3 p-2 rounded-md ${
+                            todo.isDone ? 'bg-gray-50' : 'hover:bg-gray-50'
+                          }`}
+                        >
+                          <div className="pt-0.5">
+                            <input
+                              type="checkbox"
+                              id={`todo-${todo.id}`}
+                              checked={todo.isDone}
+                              onChange={() => {
+                                const newChecklists = checklists.map(c => {
+                                  if (c.id === checklist.id) {
+                                    return {
+                                      ...c,
+                                      todos: c.todos.map(t =>
+                                        t.id === todo.id ? {...t, isDone: !t.isDone} : t
+                                      )
+                                    };
+                                  }
+                                  return c;
+                                });
+
+                                // Recalculate progress
+                                newChecklists.forEach(c => {
+                                  if (c.id === checklist.id && c.todos.length > 0) {
+                                    const doneTodos = c.todos.filter(t => t.isDone).length;
+                                    c.progress = Math.floor((doneTodos / c.todos.length) * 100);
+                                  }
+                                });
+
+                                setChecklists(newChecklists);
+                              }}
+                              className="h-4 w-4 text-blue-500 rounded border-gray-300 focus:ring-blue-500"
+                            />
+                          </div>
+                          <label
+                            htmlFor={`todo-${todo.id}`}
+                            className={`text-sm flex-1 cursor-pointer ${
+                              todo.isDone ? 'text-gray-500 line-through' : 'text-gray-700'
+                            }`}
+                          >
+                            {todo.title}
+                          </label>
                         </div>
+                      ))}
+                    </div>
+
+                    {addingToChecklist === checklist.id ? (
+                      <div className="p-4 pt-0">
+                        <input
+                          type="text"
+                          className="w-full p-2 mb-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          value={newChecklistItem}
+                          onChange={(e) => setNewChecklistItem(e.target.value)}
+                          placeholder="Add an item..."
+                          autoFocus
+                        />
+                        <div className="flex gap-2">
+                          <button
+                            className="px-3 py-1.5 text-xs font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
+                            onClick={() => {
+                              if (newChecklistItem.trim()) {
+                                setChecklists(checklists.map(c => {
+                                  if (c.id === checklist.id) {
+                                    return {
+                                      ...c,
+                                      todos: [...c.todos, {
+                                        id: Date.now(),
+                                        title: newChecklistItem,
+                                        isDone: false
+                                      }]
+                                    };
+                                  }
+                                  return c;
+                                }));
+                                setNewChecklistItem('');
+                              }
+                            }}
+                          >
+                            Add
+                          </button>
+                          <button
+                            className="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                            onClick={() => {
+                              setNewChecklistItem('');
+                              setAddingToChecklist(0);
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <button
+                        className="flex items-center gap-2 w-full p-3 text-left text-sm text-gray-600 hover:bg-gray-50 border-t border-gray-200"
+                        onClick={() => setAddingToChecklist(checklist.id)}
+                      >
+                        <Plus className="w-4 h-4" />
+                        <span>Add an item</span>
+                      </button>
+                    )}
+                  </div>
+                ))}
+
+                <button
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 rounded-md border border-gray-200 hover:bg-gray-50"
+                  onClick={() => setActivePicker('checklists')}
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add another checklist</span>
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center p-8 text-center">
+                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                  <CheckSquare className="w-6 h-6 text-gray-400" />
+                </div>
+                <p className="mb-2 text-gray-700 font-medium">No checklists yet</p>
+                <button
+                  className="mt-2 px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 transition-colors"
+                  onClick={() => setActivePicker('checklists')}
+                >
+                  Add a checklist
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Files Tab */}
+        {activeTab === 'files' && (
+          <div className="space-y-6">
+            {attachments.length > 0 ? (
+              <div className="space-y-3">
+                {attachments.map(attachment => (
+                  <div
+                    key={attachment.id}
+                    className="flex items-center gap-4 p-3 border border-gray-200 rounded-lg hover:bg-gray-50"
+                  >
+                    <div className="flex-shrink-0 w-10 h-10 rounded bg-gray-100 flex items-center justify-center text-gray-500">
+                      {attachment.type === 'file' ? (
+                        <Paperclip className="w-5 h-5" />
+                      ) : (
+                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                        </svg>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-medium text-gray-900 truncate">{attachment.text || attachment.path}</h4>
+                      <p className="text-xs text-gray-500">
+                        {new Date(attachment.date).toLocaleDateString('en-US', {
+                          month: 'short', day: 'numeric', year: 'numeric'
+                        })}
+                      </p>
+                    </div>
+                    <button
+                      className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-200 text-gray-500"
+                      onClick={() => setAttachments(attachments.filter(a => a.id !== attachment.id))}
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+
+                <button
+                  className="flex items-center gap-2 w-full p-3 text-left text-sm text-gray-600 rounded-md border border-gray-200 hover:bg-gray-50"
+                  onClick={() => setActivePicker('attachments')}
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add attachment</span>
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center p-8 text-center">
+                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                  <Paperclip className="w-6 h-6 text-gray-400" />
+                </div>
+                <p className="mb-2 text-gray-700 font-medium">No files attached</p>
+                <button
+                  className="mt-2 px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 transition-colors"
+                  onClick={() => setActivePicker('attachments')}
+                >
+                  Add an attachment
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Activity Tab */}
+        {activeTab === 'activity' && (
+          <div className="space-y-6">
+            <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-md mb-6">
+              <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                {loggedUser?.imgUrl ? (
+                  <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${loggedUser.imgUrl})` }}></div>
+                ) : (
+                  <span className="text-xs font-medium text-gray-600">
+                    {loggedUser?.fullname?.[0] || 'U'}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex-1 relative">
+                <input
+                  type="text"
+                  className="w-full p-2 pr-9 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400"
+                  placeholder="Write a comment..."
+                  ref={activityInputRef}
+                />
+                <button
+                  className="absolute right-1.5 top-1/2 transform -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+                  onClick={() => {
+                    if (activityInputRef.current?.value) {
+                      setActivityLog([...activityLog, {
+                        id: Date.now(),
+                        title: activityInputRef.current.value,
+                        byMember: {
+                          fullname: loggedUser?.fullname || 'User',
+                          imgUrl: loggedUser?.imgUrl || ''
+                        },
+                        createdAt: Date.now()
+                      }]);
+                      activityInputRef.current.value = '';
+                    }
+                  }}
+                >
+                  <Send className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            {activityLog.length > 0 ? (
+              <div className="space-y-4">
+                {activityLog.map((entry, index) => (
+                  <div key={entry.id || index} className="flex items-start gap-3 mb-4">
+                    <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                      {entry?.byMember?.imgUrl ? (
+                        <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${entry.byMember.imgUrl})` }}></div>
+                      ) : (
+                        <span className="text-xs font-medium text-gray-600">
+                          {entry?.byMember?.fullname?.split(' ').map(name => name[0]?.toUpperCase()).join('') || 'U'}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex-1 p-3 bg-gray-50 rounded-md">
+                      <div className="flex justify-between items-center mb-1.5">
+                        <span className="text-sm font-medium text-gray-700">{entry?.byMember?.fullname}</span>
+                        <span className="text-xs text-gray-400">
+                          {new Date(entry.createdAt).toLocaleDateString('en-US', {
+                            month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                          })}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 leading-relaxed">{entry.title}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-10 text-center">
+                <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center mb-3">
+                  <MessageSquare className="w-5 h-5 text-gray-400" />
+                </div>
+                <p className="mb-1 text-gray-700 font-medium text-sm">No activity yet</p>
+                <p className="text-xs text-gray-500">Comments and actions will appear here</p>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
 
                         {/* Right Side: Tabbed Pickers */}
                         <div className="monday-task-pickers">
@@ -2530,7 +3834,7 @@ function useSortedTasks(tasks, sortBy) {
 }
 
 // Components
-function MondayTableTask({ idx, task, group, board, onLoadTask }) {
+function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = false }) {
   const dispatch = useDispatch();
 
   // Toggle task completion status
@@ -2582,162 +3886,106 @@ function MondayTableTask({ idx, task, group, board, onLoadTask }) {
   }
 
   return (
-    <section className="task-preview flex">
-      <div
-        className="sticky-div"
-        style={{
-          borderColor: mapTrelloToMonday(group.style?.backgroundColor),
-        }}
-      >
-        <div className="task-menu">
-          <svg viewBox="0 0 24 24" className="icon">
-            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-          </svg>
-        </div>
-        <div className={`check-box monday-check-box check-box-${idx}`}>
-          <input
-            type="checkbox"
-            checked={task.status === 'done'}
-            onChange={onToggleDone}
-          />
-        </div>
-        <div className="monday-task-title picker flex align-center space-between">
-          <blockquote>
-            <span>{task.title}</span>
-          </blockquote>
 
-          {/* "Open" button or clickable area */}
-          <div className="open-task-details" onClick={handleOpenTask}>
-            <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-            <span className="open-btn">Open</span>
-          </div>
+      <section className={`monday-table-task-preview task-preview flex ${ isSubtask ? 'subtask' : ''}`}>
 
-          {/* Chat/Comments icon + count */}
-          <div className="chat-icon">
-            {!!(task.activity?.length) && (
-              <div>
-                <svg
-                  className="comment-chat"
-                  strokeWidth="1.5"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  width="22"
-                  height="22"
-                  aria-hidden="true"
-                  data-testid="icon"
-                >
-                  <path d="M10.4339 1.95001C11.5975 1.94802 12.7457 2.2162 13.7881 2.73345C14.8309 3.25087 15.7392 4.0034 16.4416 4.93172C17.1439 5.86004 17.6211 6.93879 17.8354 8.08295C18.0498 9.22712 17.9955 10.4054 17.6769 11.525C17.3582 12.6447 16.7839 13.675 15.9992 14.5348C15.2144 15.3946 14.2408 16.0604 13.1549 16.4798C12.0689 16.8991 10.9005 17.0606 9.74154 16.9514C8.72148 16.8553 7.73334 16.5518 6.83716 16.0612L4.29488 17.2723C3.23215 17.7786 2.12265 16.6693 2.6287 15.6064L3.83941 13.0637C3.26482 12.0144 2.94827 10.8411 2.91892 9.64118C2.88616 8.30174 3.21245 6.97794 3.86393 5.80714C4.51541 4.63635 5.46834 3.66124 6.62383 2.98299C7.77896 2.30495 9.09445 1.9483 10.4339 1.95001ZM10.4339 1.95001C10.4343 1.95001 10.4347 1.95001 10.4351 1.95001L10.434 2.70001L10.4326 1.95001C10.433 1.95001 10.4334 1.95001 10.4339 1.95001ZM13.1214 4.07712C12.2867 3.66294 11.3672 3.44826 10.4354 3.45001L10.4329 3.45001C9.3608 3.44846 8.30778 3.73387 7.38315 4.2766C6.45852 4.81934 5.69598 5.59963 5.17467 6.5365C4.65335 7.47337 4.39226 8.53268 4.41847 9.6045C4.44469 10.6763 4.75726 11.7216 5.32376 12.6319C5.45882 12.8489 5.47405 13.1198 5.36416 13.3506L4.28595 15.6151L6.54996 14.5366C6.78072 14.4266 7.05158 14.4418 7.26863 14.5768C8.05985 15.0689 8.95456 15.3706 9.88225 15.458C10.8099 15.5454 11.7452 15.4162 12.6145 15.0805C13.4837 14.7448 14.2631 14.2119 14.8912 13.5236C15.5194 12.8354 15.9791 12.0106 16.2341 11.1144C16.4892 10.2182 16.5327 9.27504 16.3611 8.35918C16.1895 7.44332 15.8075 6.57983 15.2453 5.83674C14.6831 5.09366 13.9561 4.49129 13.1214 4.07712Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
-                </svg>
-                <div className="count-comment">{task.activity.length}</div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Owner column */}
-      <section className="task-person">
-        <div className="members-imgs monday-members-imgs">
-          {task.members?.slice(0,2).map((member, idx) => (
-            member.imgUrl ? (
-              <img key={member.id} className={`smaller-imgs member-img${idx+1} small-circle`} src={member.imgUrl.startsWith('/') ? member.imgUrl : '/' + member.imgUrl} alt="member" />
-            ) : (
-              <div key={member.id} className={`monday-user-circle small-circle smaller-imgs member-img${idx+1} small-circle`} >
-                {member.fullname[0]}
-              </div>
-            )
-          ))}
-          {task.members && task.members.length > 2 && (
-            <div className="show-more-members">
-              <span className="show-more-count">+{task.members.length - 2}</span>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Status column */}
-      <section
-        className="status-priority-picker picker"
-        style={{ backgroundColor: statusToColor(task.status, task.dueDate) }}
-      >
-        <div className="label-text status-text">{statusToText(task.status, task.dueDate)}</div>
-        <span className="fold"></span>
-      </section>
-
-      {/* Due Date */}
-      <section className="picker date-picker-btn">
-        <div className="react-datepicker-wrapper">
-          <div className="no-inner-input_styles">
-            {(!isDone(task.status) && isStuck(task.status, task.dueDate)) && (
-              <svg
-                style={{ color: statusToColor(task.status, task.dueDate) }}
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                width="18"
-                height="18"
-                aria-hidden="true"
-                className="icon_f74f57d4ab deadline-icon overdue"
-                data-testid="icon"
-              >
-                <path d="M10 10.977c-.414 0-.75-.355-.75-.793V6.369c0-.438.336-.792.75-.792s.75.354.75.792v3.815c0 .438-.336.793-.75.793Zm0 3.1a1 1 0 1 0 0-2.002 1 1 0 0 0 0 2.002Z"></path>
-                <path d="M15.638 15.636A7.97 7.97 0 1 1 4.366 4.364a7.97 7.97 0 0 1 11.272 11.272Zm-5.636.835a6.471 6.471 0 1 0 0-12.942 6.471 6.471 0 0 0 0 12.942Z" fill-rule="evenodd" clip-rule="evenodd"></path>
-              </svg>
-            )}
-
-            {isDone(task.status) && (
-              <svg
-                style={{ color: statusToColor(task.status, task.dueDate) }}
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                width="18"
-                height="18"
-                aria-hidden="true"
-                className="icon_f74f57d4ab deadline-icon"
-                data-testid="icon"
-              >
-                <path d="M8.53033 14.2478L8 13.7175L7.46967 14.2478C7.76256 14.5407 8.23744 14.5407 8.53033 14.2478ZM8 12.6569L4.53033 9.18718C4.23744 8.89429 3.76256 8.89429 3.46967 9.18718C3.17678 9.48008 3.17678 9.95495 3.46967 10.2478L7.46967 14.2478L8 13.7175L8.53033 14.2478L16.2478 6.53033C16.5407 6.23743 16.5407 5.76256 16.2478 5.46967C15.955 5.17677 15.4801 5.17677 15.1872 5.46967L8 12.6569Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
-              </svg>
-            )}
-
-            <input
-              className={`${isDone(task.status) ? 'date-done' : ''}`}
-              type="text"
-              value={task.dueDate ? formatDateNicely(task.dueDate) : 'Set date'}
-              readOnly
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Priority Column */}
-      <section className="picker priority-picker">
-        {task.priority && (
-          <div className="priority-indicator" style={{
-            backgroundColor: task.priority.toLowerCase() === 'high' ? '#e44258' :
-                             task.priority.toLowerCase() === 'medium' ? '#fdab3d' : '#00c875'
+          <div className="sticky-div" style={{
+              borderColor: mapTrelloToMonday(group.style?.backgroundColor),
           }}>
-            {task.priority}
+              <div className="task-menu">
+                  <svg viewBox="0 0 24 24" className="icon">
+                      <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                  </svg>
+              </div>
+              <div className={`check-box monday-check-box check-box-${idx}`}>
+                  <input type="checkbox" checked={task.status === 'done'} onChange={onToggleDone}/>
+              </div>
+              <div className="monday-task-title picker flex align-center space-between">
+
+                  <div className="open-task-details" onClick={handleOpenTask}>
+                      <i className="fa-solid fa-chevron-right arrow-icon"></i>
+                  </div>
+
+                  <blockquote>
+                      <span>{task.title}</span>
+                  </blockquote>
+
+                  {/* "Open" button or clickable area */}
+                  <div className="open-task-details" onClick={handleOpenTask}>
+                      <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M9 18l6-6-6-6"/>
+                      </svg>
+                      <span className="open-btn"><svg width="24" height="24" viewBox="0 0 24 24" role="presentation"><path fill="currentcolor" d="M18.062 11 16.5 9.914A1 1 0 1 1 17.914 8.5l2.616 2.616c.28.167.47.5.47.884s-.19.717-.47.884L17.914 15.5a1 1 0 0 1-1.414-1.414L18.062 13h-3.68c-.487 0-.882-.448-.882-1s.395-1 .882-1zM3.47 12.884c-.28-.167-.47-.5-.47-.884s.19-.717.47-.884L6.086 8.5A1 1 0 0 1 7.5 9.914L5.938 11h3.68c.487 0 .882.448.882 1s-.395 1-.882 1h-3.68L7.5 14.086A1 1 0 0 1 6.086 15.5z"></path></svg></span>
+                  </div>
+
+                  {/* Chat/Comments icon + count */}
+                  <div className="chat-icon">
+                      {!!(task.activity?.length) && (<div>
+                          <svg className="comment-chat" strokeWidth="1.5" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true" data-testid="icon">
+                              <path d="M10.4339 1.95001C11.5975 1.94802 12.7457 2.2162 13.7881 2.73345C14.8309 3.25087 15.7392 4.0034 16.4416 4.93172C17.1439 5.86004 17.6211 6.93879 17.8354 8.08295C18.0498 9.22712 17.9955 10.4054 17.6769 11.525C17.3582 12.6447 16.7839 13.675 15.9992 14.5348C15.2144 15.3946 14.2408 16.0604 13.1549 16.4798C12.0689 16.8991 10.9005 17.0606 9.74154 16.9514C8.72148 16.8553 7.73334 16.5518 6.83716 16.0612L4.29488 17.2723C3.23215 17.7786 2.12265 16.6693 2.6287 15.6064L3.83941 13.0637C3.26482 12.0144 2.94827 10.8411 2.91892 9.64118C2.88616 8.30174 3.21245 6.97794 3.86393 5.80714C4.51541 4.63635 5.46834 3.66124 6.62383 2.98299C7.77896 2.30495 9.09445 1.9483 10.4339 1.95001ZM10.4339 1.95001C10.4343 1.95001 10.4347 1.95001 10.4351 1.95001L10.434 2.70001L10.4326 1.95001C10.433 1.95001 10.4334 1.95001 10.4339 1.95001ZM13.1214 4.07712C12.2867 3.66294 11.3672 3.44826 10.4354 3.45001L10.4329 3.45001C9.3608 3.44846 8.30778 3.73387 7.38315 4.2766C6.45852 4.81934 5.69598 5.59963 5.17467 6.5365C4.65335 7.47337 4.39226 8.53268 4.41847 9.6045C4.44469 10.6763 4.75726 11.7216 5.32376 12.6319C5.45882 12.8489 5.47405 13.1198 5.36416 13.3506L4.28595 15.6151L6.54996 14.5366C6.78072 14.4266 7.05158 14.4418 7.26863 14.5768C8.05985 15.0689 8.95456 15.3706 9.88225 15.458C10.8099 15.5454 11.7452 15.4162 12.6145 15.0805C13.4837 14.7448 14.2631 14.2119 14.8912 13.5236C15.5194 12.8354 15.9791 12.0106 16.2341 11.1144C16.4892 10.2182 16.5327 9.27504 16.3611 8.35918C16.1895 7.44332 15.8075 6.57983 15.2453 5.83674C14.6831 5.09366 13.9561 4.49129 13.1214 4.07712Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
+                          </svg>
+                          <div className="count-comment">{task.activity.length}</div>
+                      </div>)}
+                  </div>
+              </div>
           </div>
-        )}
-      </section>
 
-      {/* Last Updated */}
-      <section className="picker updated-picker">
-        {task.updatedAt && (
-          <span>{formatDateNicely(task.updatedAt)}</span>
-        )}
-      </section>
+          {/* Owner column */}
+          <section className="task-person">
+              <div className="members-imgs monday-members-imgs">
+                  {task.members?.length ? (task.members.slice(0, 2).map((member, idx) => (member.imgUrl ? (<img key={member.id} className={`smaller-imgs member-img${idx + 1} small-circle`} src={member.imgUrl.startsWith('/') ? member.imgUrl : '/' + member.imgUrl} alt="member"/>) : (<div key={member.id} className={`monday-user-circle small-circle smaller-imgs member-img${idx + 1} small-circle`}>
+                      {member.fullname[0]}
+                  </div>)))) : (<img className="monday-missing-img" src="/monday-missing-img.svg" alt="No owner"/>)} {task.members && task.members.length > 2 && (<div className="show-more-members">
+                      <span className="show-more-count">+{task.members.length - 2}</span>
+                  </div>)}
+              </div>
+          </section>
 
-      {/* Filler to align columns */}
-      <div className="empty-div"></div>
-    </section>
-  );
+          {/* Status column */}
+          <section className="status-priority-picker picker" style={{backgroundColor: statusToColor(task.status, task.dueDate)}}>
+              <div className="label-text status-text">{statusToText(task.status, task.dueDate)}</div>
+              <span className="fold"></span>
+          </section>
+
+          {/* Due Date */}
+          <section className="picker date-picker-btn">
+              <div className="react-datepicker-wrapper">
+                  <div className="no-inner-input_styles">
+                      {(!isDone(task.status) && isStuck(task.status, task.dueDate)) && (<svg style={{color: statusToColor(task.status, task.dueDate)}} viewBox="0 0 20 20" fill="currentColor" width="18" height="18" aria-hidden="true" className="icon_f74f57d4ab deadline-icon overdue" data-testid="icon">
+                              <path d="M10 10.977c-.414 0-.75-.355-.75-.793V6.369c0-.438.336-.792.75-.792s.75.354.75.792v3.815c0 .438-.336.793-.75.793Zm0 3.1a1 1 0 1 0 0-2.002 1 1 0 0 0 0 2.002Z"></path>
+                              <path d="M15.638 15.636A7.97 7.97 0 1 1 4.366 4.364a7.97 7.97 0 0 1 11.272 11.272Zm-5.636.835a6.471 6.471 0 1 0 0-12.942 6.471 6.471 0 0 0 0 12.942Z" fill-rule="evenodd" clip-rule="evenodd"></path>
+                          </svg>)}
+
+                      {isDone(task.status) && (<svg style={{color: statusToColor(task.status, task.dueDate)}} viewBox="0 0 20 20" fill="currentColor" width="18" height="18" aria-hidden="true" className="icon_f74f57d4ab deadline-icon" data-testid="icon">
+                              <path d="M8.53033 14.2478L8 13.7175L7.46967 14.2478C7.76256 14.5407 8.23744 14.5407 8.53033 14.2478ZM8 12.6569L4.53033 9.18718C4.23744 8.89429 3.76256 8.89429 3.46967 9.18718C3.17678 9.48008 3.17678 9.95495 3.46967 10.2478L7.46967 14.2478L8 13.7175L8.53033 14.2478L16.2478 6.53033C16.5407 6.23743 16.5407 5.76256 16.2478 5.46967C15.955 5.17677 15.4801 5.17677 15.1872 5.46967L8 12.6569Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+                          </svg>)}
+
+                      <input className={`${isDone(task.status) ? 'date-done' : ''}`} type="text" value={task.dueDate ? formatDateNicely(task.dueDate) : 'Set date'} readOnly/>
+                  </div>
+              </div>
+          </section>
+
+          {/* Priority Column */}
+          <section className="status-priority-picker picker">
+              {task.priority && (<div className="just-100-everything label-text status-text priority-indicator" style={{
+                      backgroundColor: task.priority.toLowerCase() === 'high' ? '#e44258' : task.priority.toLowerCase() === 'medium' ? '#fdab3d' : '#00c875'
+                  }}>
+                      {task.priority}
+                  </div>)}
+          </section>
+
+          {/* Last Updated */}
+          <section className="picker updated-picker">
+              {task.updatedAt && (<span>{formatDateNicely(task.updatedAt)}</span>)}
+          </section>
+
+          {/* Filler to align columns */}
+          <div className="empty-div"></div>
+      </section>);
 }
 
-function MondayTableGroup({ group, board, onLoadTask, searchQuery, filterText, sortBy }) {
-  const dispatch = useDispatch();
+function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, sortBy}) {
+    const dispatch = useDispatch();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [groupTitle, setGroupTitle] = useState(group.title);
@@ -2870,23 +4118,56 @@ function MondayTableGroup({ group, board, onLoadTask, searchQuery, filterText, s
     return `${formatDateNicely(earliest)} - ${formatDateNicely(latest)}`;
   }, [group.tasks]);
 
+    // Add to MondayTableGroup component state
+    const [expandedTaskIds, setExpandedTaskIds] = useState(new Set());
+
+// Add this function to toggle task expansion
+    const toggleTaskExpansion = (taskId, event) => {
+        event.stopPropagation();
+        setExpandedTaskIds(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(taskId)) {
+                newSet.delete(taskId);
+            } else {
+                newSet.add(taskId);
+            }
+            return newSet;
+        });
+    };
+
+// Add this function to add a new subtask
+    const addSubtask = (taskId, title) => {
+        if (!title.trim()) return;
+
+        const updatedBoard = { ...board };
+        const groupIndex = updatedBoard.groups.findIndex(g => g.id === group.id);
+        const taskIndex = updatedBoard.groups[groupIndex].tasks.findIndex(t => t.id === taskId);
+
+        if (!updatedBoard.groups[groupIndex].tasks[taskIndex].checklists) {
+            updatedBoard.groups[groupIndex].tasks[taskIndex].checklists = [{
+                id: makeId(),
+                title: 'Subtasks',
+                todos: []
+            }];
+        }
+
+        updatedBoard.groups[groupIndex].tasks[taskIndex].checklists[0].todos.push({
+            id: makeId(),
+            title: title,
+            isDone: false
+        });
+
+        dispatch(updateBoard(updatedBoard));
+    };
+
   return (
-    <ul className="group-preview flex column">
+    <ul className="monday-group-preview group-preview flex column">
       <div
         className="group-header flex align-center"
         style={{ color: mapTrelloToMonday(group.style?.backgroundColor) }}
       >
         <div className="group-header-title flex align-center">
-          {/* Arrow icon toggling */}
-          <svg
-            onClick={handleToggleCollapse}
-            viewBox="0 0 24 24"
-            className={`arrow-icon ${isCollapsed ? 'collapsed' : ''}`}
-            width="20"
-            height="20"
-          >
-            <path d={isCollapsed ? 'M8 5v14l11-7z' : 'M7 10l5 5 5-5z'} />
-          </svg>
+
 
           {/* Group menu */}
           <div className="group-menu">
@@ -2910,9 +4191,28 @@ function MondayTableGroup({ group, board, onLoadTask, searchQuery, filterText, s
 
           {/* Group title & item count */}
           <div className="group-title-info flex align-center">
-            <svg viewBox="0 0 20 20" fill="currentColor" width="24" height="24">
-              <path d="M10.5303 12.5303L10 12L9.46967 12.5303C9.76256 12.8232 10.2374 12.8232 10.5303 12.5303ZM10 10.9393L6.53033 7.46967C6.23744 7.17678 5.76256 7.17678 5.46967 7.46967C5.17678 7.76256 5.17678 8.23744 5.46967 8.53033L9.46967 12.5303L10 12L10.5303 12.5303L14.5303 8.53033C14.8232 8.23744 14.8232 7.76256 14.5303 7.46967C14.2374 7.17678 13.7626 7.17678 13.4697 7.46967L10 10.9393Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
-            </svg>
+
+              {/* Arrow icon toggling */}
+              <svg
+                  onClick={handleToggleCollapse}
+                  viewBox="0 0 22 22"
+                  className={`arrow-icon ${isCollapsed ? 'collapsed' : ''}`}
+                  width="26"
+                  height="26"
+                  style={{ fill: mapTrelloToMonday(group.style?.backgroundColor) }}
+              >
+                  <path d={isCollapsed ? 'M8 5v14l11-7z' : 'M7 10l5 5 5-5z'} />
+              </svg>
+
+
+            {/*<svg viewBox="0 0 20 20" fill="currentColor" width="24" height="24"*/}
+
+            {/*    onClick={handleToggleCollapse}*/}
+            {/*    className={`arrow-icon ${isCollapsed ? 'collapsed' : ''}`}*/}
+            {/*    height="20"*/}
+            {/*>*/}
+            {/*  <path d="M10.5303 12.5303L10 12L9.46967 12.5303C9.76256 12.8232 10.2374 12.8232 10.5303 12.5303ZM10 10.9393L6.53033 7.46967C6.23744 7.17678 5.76256 7.17678 5.46967 7.46967C5.17678 7.76256 5.17678 8.23744 5.46967 8.53033L9.46967 12.5303L10 12L10.5303 12.5303L14.5303 8.53033C14.8232 8.23744 14.8232 7.76256 14.5303 7.46967C14.2374 7.17678 13.7626 7.17678 13.4697 7.46967L10 10.9393Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>*/}
+            {/*</svg>*/}
             <blockquote className="group-title monday-group-title" onClick={handleGroupTitleEdit}>
               {isEditing ? (
                 <input
@@ -2935,7 +4235,7 @@ function MondayTableGroup({ group, board, onLoadTask, searchQuery, filterText, s
       </div>
 
       {/* The main table "header" row with column titles */}
-      <div className="group-preview-content">
+      <div className="monday-group-preview-content group-preview-content">
         <div className="title-container flex">
           <div className="sticky-div titles flex" style={{borderColor: mapTrelloToMonday(group.style?.backgroundColor)}}>
             <div className="hidden"></div>
@@ -2946,7 +4246,7 @@ function MondayTableGroup({ group, board, onLoadTask, searchQuery, filterText, s
           </div>
 
           {/* Next columns: Owner, Status, Date, Priority, Updated, etc. */}
-          <li className="member-picker cmp-order-title title">
+          <li className="monday-table-task-row member-picker cmp-order-title title">
             Owner
             <span className="open-modal-icon">
               <svg viewBox="0 0 24 24" width="16" height="16">
@@ -2955,7 +4255,7 @@ function MondayTableGroup({ group, board, onLoadTask, searchQuery, filterText, s
             </span>
           </li>
 
-          <li className="status-picker cmp-order-title title">
+          <li className="monday-table-task-row status-picker cmp-order-title title">
             Status
             <span className="open-modal-icon">
               <svg viewBox="0 0 24 24" width="16" height="16">
@@ -2964,7 +4264,7 @@ function MondayTableGroup({ group, board, onLoadTask, searchQuery, filterText, s
             </span>
           </li>
 
-          <li className="date-picker-btn cmp-order-title title">
+          <li className="monday-table-task-row date-picker-btn cmp-order-title title">
             Due Date
             <span className="open-modal-icon">
               <svg viewBox="0 0 24 24" width="16" height="16">
@@ -2973,7 +4273,7 @@ function MondayTableGroup({ group, board, onLoadTask, searchQuery, filterText, s
             </span>
           </li>
 
-          <li className="priority-picker cmp-order-title title">
+          <li className="monday-table-task-row priority-picker cmp-order-title title">
             Priority
             <span className="open-modal-icon">
               <svg viewBox="0 0 24 24" width="16" height="16">
@@ -2982,7 +4282,7 @@ function MondayTableGroup({ group, board, onLoadTask, searchQuery, filterText, s
             </span>
           </li>
 
-          <li className="updated-picker cmp-order-title title">
+          <li className="monday-table-task-row updated-picker cmp-order-title title">
             Last Updated
             <span className="open-modal-icon">
               <svg viewBox="0 0 24 24" width="16" height="16">
@@ -3005,17 +4305,110 @@ function MondayTableGroup({ group, board, onLoadTask, searchQuery, filterText, s
         {/* Task rows */}
         {!isCollapsed && (
           <>
-            {sortedTasks.map((task, idx) => (
-              <li key={task.id}>
-                <MondayTableTask
-                  idx={idx}
-                  task={task}
-                  group={group}
-                  board={board}
-                  onLoadTask={onLoadTask}
+
+{sortedTasks.map((task, idx) => {
+  const hasSubtasks = task.checklists && task.checklists.length > 0 &&
+                     task.checklists[0].todos && task.checklists[0].todos.length > 0;
+  const isExpanded = true; // expandedTaskIds.has(task.id);
+
+  return (
+    <React.Fragment key={task.id}>
+      <li>
+        <MondayTableTask
+          idx={idx}
+          task={task}
+          group={group}
+          board={board}
+          onLoadTask={onLoadTask}
+            isSubTask={false}
+        />
+        {hasSubtasks && (
+          <div
+            className="expand-subtasks-button"
+            onClick={(e) => toggleTaskExpansion(task.id, e)}
+            style={{
+              position: 'absolute',
+              left: '10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+              zIndex: 10
+            }}
+          >
+            {/*{isExpanded ? '▼' : '►'}*/}
+          </div>
+        )}
+      </li>
+
+      {isExpanded && hasSubtasks && task.checklists[0].todos.map(todo => (
+        <li key={todo.id} className="subtask-row" style={{ paddingLeft: '40px' }}>
+          <MondayTableTask
+            idx={`${idx}-sub-${todo.id}`}
+            task={{
+              ...task,
+              id: todo.id,
+              title: todo.title,
+              status: todo.isDone ? 'done' : '',
+              // Keep other properties from parent, or customize as needed
+            }}
+            group={group}
+            board={board}
+            onLoadTask={() => {
+              // Toggle subtask completion
+              const updatedBoard = { ...board };
+              const groupIndex = updatedBoard.groups.findIndex(g => g.id === group.id);
+              const taskIndex = updatedBoard.groups[groupIndex].tasks.findIndex(t => t.id === task.id);
+
+              if (updatedBoard.groups[groupIndex].tasks[taskIndex].checklists) {
+                const todoIndex = updatedBoard.groups[groupIndex].tasks[taskIndex].checklists[0].todos.findIndex(t => t.id === todo.id);
+
+                if (todoIndex !== -1) {
+                  updatedBoard.groups[groupIndex].tasks[taskIndex].checklists[0].todos[todoIndex].isDone =
+                    !updatedBoard.groups[groupIndex].tasks[taskIndex].checklists[0].todos[todoIndex].isDone;
+
+                  dispatch(updateBoard(updatedBoard));
+                }
+              }
+            }}
+            isSubtask={true}
+          />
+        </li>
+      ))}
+
+      {isExpanded && hasSubtasks && (
+        <li className="add-subtask-row" style={{ paddingLeft: '40px' }}>
+          <div className="add-task flex">
+            <div
+              className="sticky-div"
+              style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor) }}
+            >
+              <div className="check-box add-task">
+                <input type="checkbox" disabled />
+              </div>
+
+              <form
+                className="no-inner-input_styles add-task-form flex align-center"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const input = e.target.elements.title;
+                  addSubtask(task.id, input.value);
+                  input.value = '';
+                }}
+              >
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="+ Add Subitem"
                 />
-              </li>
-            ))}
+              </form>
+            </div>
+            <div className="empty-div"></div>
+          </div>
+        </li>
+      )}
+    </React.Fragment>
+  );
+})}
 
             {/* Add Task row */}
             <div className="add-task flex">

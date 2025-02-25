@@ -27,8 +27,8 @@ import { StandaloneSearchBox, useJsApiLoader, GoogleMap, Marker } from '@react-g
 
 
 
-export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
-    const { board, group, taskList, ...cleanTask } = taskToShow;
+export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
+    const {board, group, taskList, ...cleanTask} = taskToShow;
 
     console.log('task', taskToShow);
     const loggedUser = useSelector((state) => state.userModule.user);
@@ -65,9 +65,8 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
     const coverFileInputRef = useRef(null);
 
     // Picker Components
-    function MembersPicker({ members, boardMembersToShow, onAddMember, onRemoveMember, onClose }) {
-        return (
-            <div className="picker-content">
+    function MembersPicker({members, boardMembersToShow, onAddMember, onRemoveMember, onClose}) {
+        return (<div className="picker-content">
                 <div className="picker-header">
                     <h3>Members</h3>
                     <button className="task-modal-close" onClick={onClose}>
@@ -77,63 +76,50 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                     </button>
                 </div>
                 <div className="search-container">
-                    <input type="text" placeholder="Search members" />
+                    <input type="text" placeholder="Search members"/>
                 </div>
                 <div>
                     <h4>Card members</h4>
                     <div className="members-list">
-                        {members.map(member => (
-                            <div key={member.id} className="member-item just-flex" onClick={() => onRemoveMember(member)}>
-                                {member.imgUrl ? (
-                                    <div className="just-flex">
-                                        <div className="user-circle" style={{ backgroundImage: `url(${member.imgUrl})` }}></div>
+                        {members.map(member => (<div key={member.id} className="member-item just-flex" onClick={() => onRemoveMember(member)}>
+                                {member.imgUrl ? (<div className="just-flex">
+                                        <div className="user-circle" style={{backgroundImage: `url(${member.imgUrl})`}}></div>
                                         <span>{member.fullname}</span>
-                                    </div>
-                                ) : (
-                                    <div className="just-flex">
+                                    </div>) : (<div className="just-flex">
                                         <div className="user-circle">{member.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{member.fullname?.split(' ')[1][0]?.toUpperCase() || ''}</div>
                                         <span>{member.fullname}</span>
-                                    </div>
-                                )}
+                                    </div>)}
                                 <button className="task-modal-close" onClick={() => onRemoveMember(member)}>
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
                                     </svg>
                                 </button>
-                            </div>
-                        ))}
+                            </div>))}
                     </div>
                 </div>
                 <div>
                     <h4>Board members</h4>
                     <div className="members-list">
-                        {boardMembersToShow.map(member => (
-                            <div key={member.id} className="member-item just-flex" onClick={() => onAddMember(member)}>
-                                {member.imgUrl ? (
-                                    <div className="just-flex">
-                                        <div className="user-circle" style={{ backgroundImage: `url(${member.imgUrl})` }}></div>
+                        {boardMembersToShow.map(member => (<div key={member.id} className="member-item just-flex" onClick={() => onAddMember(member)}>
+                                {member.imgUrl ? (<div className="just-flex">
+                                        <div className="user-circle" style={{backgroundImage: `url(${member.imgUrl})`}}></div>
                                         <span>{member.fullname}</span>
-                                    </div>
-                                ) : (
-                                    <div className="just-flex">
+                                    </div>) : (<div className="just-flex">
                                         <div className="user-circle">{member.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{member.fullname?.split(' ')[1][0]?.toUpperCase() || ''}</div>
                                         <span>{member.fullname}</span>
-                                    </div>
-                                )}
+                                    </div>)}
                                 <button className="task-modal-close" onClick={() => onAddMember(member)}>
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
                                     </svg>
                                 </button>
-                            </div>
-                        ))}
+                            </div>))}
                     </div>
                 </div>
-            </div>
-        );
+            </div>);
     }
 
-    function LabelsPicker({ cardLabels, groupLabels, onToggleLabel, onSaveLabelChange, onDeleteLabel, onClose }) {
+    function LabelsPicker({cardLabels, groupLabels, onToggleLabel, onSaveLabelChange, onDeleteLabel, onClose}) {
         const [showChangeALabel, setShowChangeALabel] = useState(false);
         const [currentLabelText, setCurrentLabelText] = useState('');
         const [previousLabelColor, setPreviousLabelColor] = useState('');
@@ -147,10 +133,8 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
             setCurrentLabelText(ev.target.value);
         }
 
-        return (
-            <div className="picker-content">
-                {showChangeALabel ? (
-                    <>
+        return (<div className="picker-content">
+                {showChangeALabel ? (<>
                         <div className="picker-header">
                             <button className="back-btn" onClick={() => setShowChangeALabel(false)}>
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -165,22 +149,24 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                             </button>
                         </div>
                         <div className="edit-label-content">
-                            <div className="label-preview" style={{ backgroundColor: currentLabelColor }}></div>
+                            <div className="label-preview" style={{backgroundColor: currentLabelColor}}></div>
                             <div className="title-section">
-                                <label>Title</label>
-                                <input type="text" className="title-input" value={currentLabelText} onChange={onChangeCurrentLabelText} />
+                                <label>Title</label> <input type="text" className="title-input" value={currentLabelText} onChange={onChangeCurrentLabelText}/>
                             </div>
                             <div className="colors-section">
                                 <label>Select a color</label>
                                 <div className="color-grid">
-                                    <button className={`color-btn ${currentLabelColor === '#4BCE97' ? 'selected' : ''}`} style={{ backgroundColor: '#4BCE97' }} onClick={onChangeCurrentLabelColor}></button>
-                                    <button className={`color-btn ${currentLabelColor === '#F5CD47' ? 'selected' : ''}`} style={{ backgroundColor: '#F5CD47' }} onClick={onChangeCurrentLabelColor}></button>
-                                    <button className={`color-btn ${currentLabelColor === '#FAA53D' ? 'selected' : ''}`} style={{ backgroundColor: '#FAA53D' }} onClick={onChangeCurrentLabelColor}></button>
-                                    <button className={`color-btn ${currentLabelColor === '#F87168' ? 'selected' : ''}`} style={{ backgroundColor: '#F87168' }} onClick={onChangeCurrentLabelColor}></button>
-                                    <button className={`color-btn ${currentLabelColor === '#9F8FEF' ? 'selected' : ''}`} style={{ backgroundColor: '#9F8FEF' }} onClick={onChangeCurrentLabelColor}></button>
+                                    <button className={`color-btn ${currentLabelColor === '#4BCE97' ? 'selected' : ''}`} style={{backgroundColor: '#4BCE97'}} onClick={onChangeCurrentLabelColor}></button>
+                                    <button className={`color-btn ${currentLabelColor === '#F5CD47' ? 'selected' : ''}`} style={{backgroundColor: '#F5CD47'}} onClick={onChangeCurrentLabelColor}></button>
+                                    <button className={`color-btn ${currentLabelColor === '#FAA53D' ? 'selected' : ''}`} style={{backgroundColor: '#FAA53D'}} onClick={onChangeCurrentLabelColor}></button>
+                                    <button className={`color-btn ${currentLabelColor === '#F87168' ? 'selected' : ''}`} style={{backgroundColor: '#F87168'}} onClick={onChangeCurrentLabelColor}></button>
+                                    <button className={`color-btn ${currentLabelColor === '#9F8FEF' ? 'selected' : ''}`} style={{backgroundColor: '#9F8FEF'}} onClick={onChangeCurrentLabelColor}></button>
                                     {/* Add more colors as in original */}
                                 </div>
-                                <button className="remove-color-btn" onClick={() => { setShowChangeALabel(false); onDeleteLabel(); }}>
+                                <button className="remove-color-btn" onClick={() => {
+                                    setShowChangeALabel(false);
+                                    onDeleteLabel();
+                                }}>
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
                                     </svg>
@@ -188,13 +174,19 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                                 </button>
                             </div>
                             <div className="label-actions">
-                                <button className="save-btn" onClick={() => { setShowChangeALabel(false); onSaveLabelChange(); }}>Save</button>
-                                <button className="delete-btn" onClick={() => { setShowChangeALabel(false); onDeleteLabel(); }}>Delete</button>
+                                <button className="save-btn" onClick={() => {
+                                    setShowChangeALabel(false);
+                                    onSaveLabelChange();
+                                }}>Save
+                                </button>
+                                <button className="delete-btn" onClick={() => {
+                                    setShowChangeALabel(false);
+                                    onDeleteLabel();
+                                }}>Delete
+                                </button>
                             </div>
                         </div>
-                    </>
-                ) : (
-                    <>
+                    </>) : (<>
                         <div className="picker-header">
                             <h3>Labels</h3>
                             <button className="task-modal-close" onClick={onClose}>
@@ -204,19 +196,18 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                             </button>
                         </div>
                         <div className="search-container">
-                            <input type="text" placeholder="Search labels..." />
+                            <input type="text" placeholder="Search labels..."/>
                         </div>
                         <div>
                             <h4>Labels</h4>
                             <div className="labels-list">
                                 {groupLabels.map((label) => {
                                     const isChecked = cardLabels.some((l) => l.color === label.color);
-                                    return (
-                                        <label className="label-item" key={label.color}>
+                                    return (<label className="label-item" key={label.color}>
                                             <div className="label-checkbox">
-                                                <input type="checkbox" checked={isChecked} onChange={() => onToggleLabel(label)} />
+                                                <input type="checkbox" checked={isChecked} onChange={() => onToggleLabel(label)}/>
                                             </div>
-                                            <div className="label-color" style={{ backgroundColor: label.color }} />
+                                            <div className="label-color" style={{backgroundColor: label.color}}/>
                                             <button className="edit-label" onClick={() => {
                                                 setCurrentLabelText(label.title);
                                                 setCurrentLabelColor(label.color);
@@ -227,8 +218,7 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                                                     <path fillRule="evenodd" clipRule="evenodd" d="M7.82034 14.4893L9.94134 16.6103L18.4303 8.12131L16.3093 6.00031H16.3073L7.82034 14.4893ZM17.7233 4.58531L19.8443 6.70731C20.6253 7.48831 20.6253 8.7543 19.8443 9.53531L10.0873 19.2933L5.13734 14.3433L14.8943 4.58531C15.2853 4.19531 15.7973 4.00031 16.3093 4.00031C16.8203 4.00031 17.3323 4.19531 17.7233 4.58531ZM5.20094 20.4097C4.49794 20.5537 3.87694 19.9327 4.02094 19.2297L4.80094 15.4207L9.00994 19.6297L5.20094 20.4097Z" fill="currentColor"/>
                                                 </svg>
                                             </button>
-                                        </label>
-                                    );
+                                        </label>);
                                 })}
                             </div>
                         </div>
@@ -236,21 +226,19 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                             setCurrentLabelText('');
                             setCurrentLabelColor('#4BCE97');
                             setShowChangeALabel(true);
-                        }}>Create a new label</button>
+                        }}>Create a new label
+                        </button>
                         <div className="just-margin"></div>
                         <div className="color-blind-toggle">
-                            <label><input type="checkbox" /> <span>Enable colorblind friendly mode</span></label>
+                            <label><input type="checkbox"/> <span>Enable colorblind friendly mode</span></label>
                         </div>
-                    </>
-                )}
-            </div>
-        );
+                    </>)}
+            </div>);
     }
 
-    function ChecklistsPicker({ onAddChecklist, onClose }) {
+    function ChecklistsPicker({onAddChecklist, onClose}) {
         const [newChecklistTitle, setNewChecklistTitle] = useState('');
-        return (
-            <div className="picker-content">
+        return (<div className="picker-content">
                 <div className="picker-header">
                     <h3>Add checklist</h3>
                     <button className="task-modal-close" onClick={onClose}>
@@ -261,26 +249,22 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                 </div>
                 <div className="checklist-content">
                     <div className="title-section">
-                        <label>Title</label>
-                        <input type="text" className="title-input" value={newChecklistTitle} onChange={(ev) => setNewChecklistTitle(ev.target.value)} />
+                        <label>Title</label> <input type="text" className="title-input" value={newChecklistTitle} onChange={(ev) => setNewChecklistTitle(ev.target.value)}/>
                     </div>
                     <div className="copy-section">
                         <label>Copy items from...</label>
                         <div className="copy-select">
                             <select defaultValue="(none)">
-                                {checklists.map(checklist => (
-                                    <option key={checklist.id} value={checklist.id}>{checklist.title}</option>
-                                ))}
+                                {checklists.map(checklist => (<option key={checklist.id} value={checklist.id}>{checklist.title}</option>))}
                             </select>
                         </div>
                     </div>
                     <button className="add-checklist-btn" onClick={() => onAddChecklist(newChecklistTitle)}>Add</button>
                 </div>
-            </div>
-        );
+            </div>);
     }
 
-    function AttachmentsPicker({ onInsertAttachment, onClose }) {
+    function AttachmentsPicker({onInsertAttachment, onClose}) {
         const [attachmentFile, setAttachmentFile] = useState(null);
         const [attachmentLink, setAttachmentLink] = useState("");
         const [attachmentText, setAttachmentText] = useState("");
@@ -291,8 +275,7 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
             if (file) setAttachmentFile(file);
         }
 
-        return (
-            <div className="picker-content">
+        return (<div className="picker-content">
                 <div className="picker-header">
                     <div className="header-with-icon">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -307,27 +290,25 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                     </button>
                 </div>
                 <div className="attachment-content">
-                    <input ref={fileInputRef} type="file" style={{ display: "none" }} onChange={onFileSelected} />
+                    <input ref={fileInputRef} type="file" style={{display: "none"}} onChange={onFileSelected}/>
                     <div className="file-upload-section">
                         <h4>Attach a file from your computer</h4>
                         <p className="upload-hint">You can also drag and drop files to upload them.</p>
                         <button className="choose-file-btn" onClick={() => fileInputRef.current.click()}>
                             Choose a file
                         </button>
-                        {attachmentFile && (
-                            <p style={{ marginTop: "8px", color: "#026aa7" }}>
+                        {attachmentFile && (<p style={{marginTop: "8px", color: "#026aa7"}}>
                                 Chosen file: <strong>{attachmentFile.name}</strong>
-                            </p>
-                        )}
+                            </p>)}
                     </div>
                     <div className="link-section">
                         Search or paste a link
                         <div className="link-input-container">
-                            <input type="text" placeholder="Find recent links or paste a new link" className="link-input" value={attachmentLink} onChange={(ev) => setAttachmentLink(ev.target.value)} />
+                            <input type="text" placeholder="Find recent links or paste a new link" className="link-input" value={attachmentLink} onChange={(ev) => setAttachmentLink(ev.target.value)}/>
                         </div>
                         Display text (optional)
                         <div className="display-text-container">
-                            <input type="text" placeholder="Text to display" className="display-text-input" value={attachmentText} onChange={(ev) => setAttachmentText(ev.target.value)} />
+                            <input type="text" placeholder="Text to display" className="display-text-input" value={attachmentText} onChange={(ev) => setAttachmentText(ev.target.value)}/>
                         </div>
                     </div>
                     <div className="popup-footer">
@@ -335,13 +316,11 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                         <button className="insert-btn" onClick={(ev) => onInsertAttachment(ev, attachmentFile, attachmentLink, attachmentText)}>Insert</button>
                     </div>
                 </div>
-            </div>
-        );
+            </div>);
     }
 
-    function LocationPicker({ onPlaceChange, onClose }) {
-        return (
-            <div className="picker-content">
+    function LocationPicker({onPlaceChange, onClose}) {
+        return (<div className="picker-content">
                 <div className="picker-header">
                     <h3>Add location</h3>
                     <button className="task-modal-close" onClick={onClose}>
@@ -351,28 +330,24 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                     </button>
                 </div>
                 <div className="location-content">
-                    {/* Uncomment and adjust if Google Maps integration is needed */}
-                    {/* {isLoaded && <StandaloneSearchBox libraries={["places"]} onPlacesChanged={onPlaceChange} onLoad={(ref) => elGoogleSearch.current = ref}>
+                    {/* Uncomment and adjust if Google Maps integration is needed */} {/* {isLoaded && <StandaloneSearchBox libraries={["places"]} onPlacesChanged={onPlaceChange} onLoad={(ref) => elGoogleSearch.current = ref}>
                         <div className="search-container">
                             <input type="text" placeholder="Search Google Maps" className="location-input"/>
                         </div>
                     </StandaloneSearchBox>} */}
                 </div>
-            </div>
-        );
+            </div>);
     }
 
-    function CustomFieldsPicker({ badges, onCreateField, onClose }) {
+    function CustomFieldsPicker({badges, onCreateField, onClose}) {
         const [showFieldsEditor, setShowFieldsEditor] = useState(false);
         const [newFieldId, setNewFieldId] = useState(null);
         const [newFieldTitle, setNewFieldTitle] = useState('');
         const [newFieldOptions, setNewFieldOptions] = useState([]);
         const [newFieldOption, setNewFieldOption] = useState('');
 
-        return (
-            <div className="picker-content">
-                {!showFieldsEditor ? (
-                    <>
+        return (<div className="picker-content">
+                {!showFieldsEditor ? (<>
                         <div className="picker-header">
                             <div className="header-with-icon tooltip" data-tip="Select “New field” to build a completely customizable field. Fields will be added to every card on the board.">
                                 <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -390,8 +365,7 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                         </div>
                         <div className="custom-fields-content">
                             <div className="fields-list">
-                                {badges.map((badge) => (
-                                    <div className="field-item" key={badge.id} onClick={() => {
+                                {badges.map((badge) => (<div className="field-item" key={badge.id} onClick={() => {
                                         setNewFieldId(badge.id);
                                         setNewFieldTitle(badge.categ);
                                         setShowFieldsEditor(true);

@@ -1446,7 +1446,7 @@ blockquote {
     white-space: wrap;
 }
 .board-description-modal .board-edit .board-edit-title blockquote:hover {
-    outline: 1px solid #c3c6d4;
+    outline: 1px solid #d0d4e4;
 }
 .board-description-modal .board-edit .board-edit-title blockquote:focus-visible {
     outline: 1px solid #0073ea;
@@ -1466,7 +1466,7 @@ blockquote {
     cursor: default;
 }
 .board-description-modal .board-edit .board-edit-description:hover {
-    border: 1px dashed #c3c6d4;
+    border: 1px dashed #d0d4e4;
     cursor: text;
 }
 .board-description-modal .board-edit .board-edit-description blockquote {
@@ -2203,7 +2203,7 @@ blockquote {
     justify-content: center;
     width: 63px;
     height: 100%;
-    border-left: 2px solid #c3c6d4;
+    border-left: 2px solid #d0d4e4;
 }
 .task-tools-modal .task-tools .close-btn:hover .icon {
     color: #0073ea;
@@ -2521,7 +2521,7 @@ blockquote {
     left: calc(100% - 14px);
     padding: 4px;
     border-radius: 20px;
-    border: 1px solid #c3c6d4;
+    border: 1px solid #d0d4e4;
     background-color: #fff;
     z-index: 50;
     cursor: pointer;
@@ -2741,7 +2741,15 @@ blockquote {
     display: flex;
     align-items: center;
     justify-content: center;
+
+
 }
+
+.cmp-order-title.updated-picker {
+    border-top: 1px solid #d0d4e4 !important;
+}
+
+
 .updated-picker-content {
     width: 60px;
 }
@@ -2757,7 +2765,7 @@ blockquote {
 .activity-preview {
     display: flex;
     padding: 8px 0 8px 0;
-    border-bottom: 1px solid #c3c6d4;
+    border-bottom: 1px solid #d0d4e4;
     margin: 0 25px 0 25px;
     gap: 5%;
     font-size: calc(1.6rem);
@@ -3573,3 +3581,535 @@ img.smaller-imgs {
 
 }
 
+.monday-table-task-row:hover {
+
+}
+
+
+
+.monday-task-title.picker.flex.align-center.space-between blockquote {
+    /*width: fit-content;*/
+    /*overflow: hidden;*/
+    padding-right: 0px;
+    margin-left: 0px;
+}
+
+.monday-table-task-preview blockquote {
+    color: #323338;
+}
+
+blockquote span {
+    padding-inline: 3px;
+}
+
+.open-task-details i {
+    color: #d3d6dc;
+    font-size: 14px;
+    margin-left: 8px;
+}
+
+.monday-group-preview {
+    margin-bottom: 24px !important;
+}
+
+/*.sticky-div,*/
+/*.sticky-div>*,*/
+/*.sticky-div>*>*,*/
+/*.sticky-div>*>*>*,*/
+/*.sticky-div>*>*>*>*,*/
+/*.sticky-div>*>*>*>*>*,*/
+.monday-group-preview-content,
+.monday-group-preview-content>*,
+.monday-group-preview-content>*>*,
+.monday-group-preview-content>*>*>*,
+.monday-group-preview-content>*>*>*>*,
+.monday-group-preview-content>*>*>*>*>*,
+.monday-group-preview-content>*>*>*>*>*>*,
+.monday-group-preview-content>*>*>*>*>*>*>*,
+.monday-group-preview-content>*>*>*>*>*>*>*>*,
+.monday-group-preview-content>*>*>*>*>*>*>*>*>*,
+.monday-group-preview-content>*>*>*>*>*>*>*>*>*>*,
+.monday-group-preview-content>*>*>*>*>*>*>*>*>*>*>*,
+{
+    /*    border-color: #d0d4e4 !important;*/
+    font-family: Figtree, Roboto, "Noto Sans Hebrew", "Noto Kufi Arabic", "Noto Sans JP", sans-serif;
+}
+
+.monday-group-preview-content {
+    font-family: Figtree, Roboto, "Noto Sans Hebrew", "Noto Kufi Arabic", "Noto Sans JP", sans-serif;
+
+}
+
+
+.monday-table-task-preview:hover,
+.monday-table-task-preview:hover > *{
+    background-color: #f4f5f8;
+    cursor: grab;
+
+    /*box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.2);*/
+    /*0px 8px 8px -8px rgba(0, 0, 0, 0.1) !important;*/
+    /*box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 -1px 3px rgba(0, 0, 0, 0.1) !important;*/
+    z-index: 1000;
+    .sticky-div:not(.status-priority-picker),
+    .date-picker-btn:not(.status-priority-picker),
+    .task-person:not(.status-priority-picker){
+        box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+        /*0px 8px 8px -8px rgba(0, 0, 0, 0.1) !important;*/
+        /*box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 -1px 3px rgba(0, 0, 0, 0.1) !important;*/
+        z-index: 1000;
+    }
+    .status-priority-picker.picker {
+        /*  simple brightness filter  */
+        filter: brightness(1.05);
+        /*display: none;*/
+    }
+
+}
+
+.monday-missing-img {
+
+
+    height: 24px !important;
+    width: 24px !important;
+
+
+    filter: drop-shadow(0 0 0.2em rgba(102, 102, 102, 0.24));
+    background-color: white;
+}
+
+.just-100-everything {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.label-text.status-text {
+    font-weight: 400;
+}
+
+.open-btn svg {
+    rotate: 135deg;
+}
+
+.monday-group-preview {
+    padding-top: 12px;
+}
+
+
+/* Add these CSS styles to your stylesheet */
+.with-checklists {
+    background-color: #e0f4ff;
+}
+
+.subitem-header-row, .subitem-row, .add-subitem-row {
+    padding-left: 40px;
+}
+
+.subitem-container {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #e6e9ef;
+}
+
+.subitem-cell {
+    flex: 1;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.subitem-title {
+    flex: 2;
+}
+
+.subitem-header-row .subitem-container {
+    background-color: #f5f6f8;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.add-column-button {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background-color: #dfe1e6;
+    border: none;
+    cursor: pointer;
+}
+
+.add-subitem-input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+}
+
+.add-subitem-row {
+    background-color: #f5f6f8;
+}
+
+/* Replace your subtask CSS with this */
+.task-row.with-checklists {
+    background-color: #e5f4ff !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.subitem-header-row, .subitem-row, .add-subitem-row {
+    display: flex;
+    width: 100%;
+    position: relative;
+    background-color: #f6f7fb;
+    border-bottom: 1px solid #e6e9ef;
+}
+
+.subitem-container {
+    display: flex;
+    width: 100%;
+    padding-left: 40px;
+    position: relative;
+}
+
+.subitem-container:before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #e0e0e0;
+}
+
+.subitem-cell {
+    flex: 1;
+    height: 40px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    min-width: 120px;
+    border-right: 1px solid #e6e9ef;
+}
+
+.subitem-title {
+    flex: 2;
+    min-width: 240px;
+}
+
+.subitem-header-row .subitem-container {
+    background-color: #f0f1f5;
+    font-weight: 500;
+    font-size: 13px;
+    color: #676879;
+}
+
+.add-column-button {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background-color: #dfe1e6;
+    border: none;
+    cursor: pointer;
+}
+
+.add-subitem-input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+}
+
+.add-subitem-row .subitem-container {
+    background-color: #f5f6f8;
+}
+
+/* Add this to ensure proper alignment with parent task */
+.subitem-row input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Style for expanded parent task with blue highlight */
+.task-row.with-checklists .monday-table-task-preview {
+    position: relative;
+    z-index: 1;
+}
+
+/* Fix alignment of the subtask rows */
+.subitem-container {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+/* Add vertical indicator line for subtasks */
+.subitem-row:before {
+    content: '';
+    position: absolute;
+    left: 32px;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background-color: #c3c6d4;
+}
+
+/* Add this to your CSS */
+.subtask-row {
+    position: relative;
+    background-color: #f6f7fb;
+}
+
+.subtask-row::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background-color: #dce0e6;
+    z-index: 1;
+}
+
+.subtask-row .sticky-div {
+    border-left: 4px solid #dce0e6 !important;
+}
+
+/*.add-subtask-row {*/
+/*    background-color: #f6f7fb;*/
+/*}*/
+
+/* This is for the task that has subtasks - add blue highlight */
+.has-subtasks .sticky-div {
+    background-color: #e5f4ff;
+}
+
+.subtasks-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.completed-subitem {
+    text-decoration: line-through;
+    color: #676879;
+}
+
+/* Ensure parent task row has the same blue background as in the image */
+.with-checklists td,
+.with-checklists th,
+.with-checklists .monday-table-task-preview,
+.with-checklists .sticky-div {
+    background-color: #e5f4ff !important;
+}
+
+/* Replace your subtask CSS with this */
+.task-row.with-checklists {
+    background-color: #e5f4ff !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.subitem-header-row, .subitem-row, .add-subitem-row {
+    display: flex;
+    width: 100%;
+    position: relative;
+    background-color: #f6f7fb;
+    border-bottom: 1px solid #e6e9ef;
+}
+
+.subitem-container {
+    display: flex;
+    width: 100%;
+    padding-left: 40px;
+    position: relative;
+}
+
+.subitem-container:before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #e0e0e0;
+}
+
+.subitem-cell {
+    flex: 1;
+    height: 40px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    min-width: 120px;
+    border-right: 1px solid #e6e9ef;
+}
+
+.subitem-title {
+    flex: 2;
+    min-width: 240px;
+}
+
+.subitem-header-row .subitem-container {
+    background-color: #f0f1f5;
+    font-weight: 500;
+    font-size: 13px;
+    color: #676879;
+}
+
+.add-column-button {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background-color: #dfe1e6;
+    border: none;
+    cursor: pointer;
+}
+
+.add-subitem-input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+}
+
+.add-subitem-row .subitem-container {
+    background-color: #f5f6f8;
+}
+
+/* Add this to ensure proper alignment with parent task */
+.subitem-row input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Style for expanded parent task with blue highlight */
+.task-row.with-checklists .monday-table-task-preview {
+    position: relative;
+    z-index: 1;
+}
+
+/* Fix alignment of the subtask rows */
+.subitem-container {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+/* Add vertical indicator line for subtasks */
+.subitem-row:before {
+    content: '';
+    position: absolute;
+    left: 32px;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background-color: #c3c6d4;
+}
+
+
+/* Add these CSS styles to your stylesheet */
+.with-checklists {
+    background-color: #e0f4ff;
+}
+
+.subitem-header-row, .subitem-row, .add-subitem-row {
+    padding-left: 40px;
+}
+
+.subitem-container {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #e6e9ef;
+}
+
+.subitem-cell {
+    flex: 1;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.subitem-title {
+    flex: 2;
+}
+
+.subitem-header-row .subitem-container {
+    background-color: #f5f6f8;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.add-column-button {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background-color: #dfe1e6;
+    border: none;
+    cursor: pointer;
+}
+
+.add-subitem-input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+}
+
+.add-subitem-row {
+    background-color: #f5f6f8;
+}
+
+.monday-table-task-preview.subtask {
+    border-top: 1px solid #e6e9ef;
+}
+
+    /* Add this to your CSS */
+.subtask-row {
+    margin-top: 16px;
+    /*margin-left: 20px;*/
+    position: relative;
+    background-color: #f6f7fb;
+    /*border-top: 1px solid #e6e9ef;*/
+
+}
+
+.subtask-row::before {
+    content: '';
+    position: absolute;
+    /*left: 20px;*/
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background-color: #dce0e6;
+    z-index: 1;
+}
+
+.subtask-row .sticky-div {
+    border-left: 4px solid #dce0e6 !important;
+}
+
+.add-subtask-row {
+    /*background-color: #f6f7fb;*/
+    margin-bottom: 16px;
+}
+
+/* This is for the task that has subtasks - add blue highlight */
+.has-subtasks .sticky-div {
+    background-color: #e5f4ff;
+}

@@ -279,6 +279,14 @@ main {
     color: #676879;
 }
 
+
+.arrow-icon-group {
+    margin-left: auto;
+    font-size: 20px;
+    margin-left: 13px;
+    cursor: pointer;
+}
+
 .nav-section {
     /*margin-top: 16px;*/
     /*padding-top: 16px;*/
@@ -2644,14 +2652,16 @@ button.monday-add-card-btn {
 }
 
 /* Modal Container */
-.monday-task-modal {
+#monday-task-modal {
     position: fixed;
-    /*top: 50%;*/
-    /*left: 50%;*/
+    top: 0%;
+    right: 0%;
     /*transform: translate(-50%, -50%);*/
-    width: 90vw;
+    width: 60vw;
     max-width: 1200px;
-    height: 85vh;
+    /*height: fit-content;*/
+    height: 100%;
+    margin: 0px;
     background: var(--background-light);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-medium);
@@ -5701,4 +5711,14 @@ img.smaller-imgs.small-circle {
     overflow-y: scroll;
     overflow-x: hidden;
     height: 100vh;
+}
+
+
+
+.task-menu svg {
+    width: 24px;
+    height: 24px;
+    color: #676879;
+    rotate: 90deg;
+    padding: 4px;
 }
