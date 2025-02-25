@@ -1717,1575 +1717,104 @@ const userFriendlyTopics = [
 
 ]
 
-const MASSIVE_BADGE_CATALOG_NOT_SORTED_BY_CATEGORY = [
-
-  // HEALTH & WELLNESS
-  {
-    category: "Appointment Type",
-    values: ["Physical", "Dental", "Vision", "Specialist", "Emergency", "Follow-Up", "Vaccination", "Checkup", "Screening", "Therapy", "Prenatal", "Postnatal", "Pediatric", "Geriatric", "Lab Work", "Imaging", "Surgical", "Mental Health", "Alternative", "Canceled"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-  {
-    category: "Medication Status",
-    values: ["Prescribed", "OTC", "Active", "Completed", "Missed", "Refilled", "Expired", "Allergic", "Suspended", "Tapering", "PRN", "Chronic", "Acute", "Preventative", "Experimental", "Generic", "Brand", "Interacted", "Adverse", "Monitoring"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-
-  // PERSONAL FINANCE
-  {
-    category: "Budget Category",
-    values: ["Housing", "Utilities", "Food", "Transport", "Insurance", "Medical", "Debt", "Savings", "Entertainment", "Education", "Personal", "Gifts", "Donations", "Investments", "Taxes", "Childcare", "Pets", "Travel", "Emergency", "Misc"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-  {
-    category: "Investment Type",
-    values: ["Stocks", "Bonds", "ETF", "Mutual", "Real Estate", "Crypto", "IRA", "401k", "CD", "Annuity", "Commodities", "Forex", "Startup", "P2P", "Index", "REIT", "HSA", "529", "Pension", "Collectibles"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-
-  // HOME MANAGEMENT
-  {
-    category: "Home Project",
-    values: ["Remodel", "Repair", "Landscape", "Deep Clean", "Organize", "Renovate", "Paint", "Furnish", "Decorate", "Smart Home", "Security", "Energy", "Plumbing", "Electrical", "HVAC", "Roof", "Foundation", "Pest", "Permit", "Inspection"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-  {
-    category: "Maintenance Cycle",
-    values: ["Daily", "Weekly", "Monthly", "Quarterly", "Biannual", "Annual", "Seasonal", "Preventative", "Emergency", "Warranty", "Spring", "Summer", "Fall", "Winter", "Move-In", "Move-Out", "Tenant", "Owner", "Scheduled", "Overdue"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-
-  // EDUCATION & LEARNING
-  {
-    category: "Learning Format",
-    values: ["Online", "In-Person", "Hybrid", "Self-Paced", "Cohort", "Workshop", "Seminar", "Degree", "Certificate", "Bootcamp", "Tutorial", "Webinar", "MOOC", "Apprenticeship", "Internship", "Lecture", "Lab", "Fieldwork", "Study Group", "Research"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-  {
-    category: "Study Method",
-    values: ["Pomodoro", "Feynman", "SQ3R", "Leitner", "Mind Map", "Active Recall", "Spaced Rep", "Interleaving", "Self-Test", "Group", "Teach", "Visual", "Auditory", "Kinesthetic", "Note-Taking", "Summarize", "Practice", "Drill", "Simulate", "Immersion"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-
-  // CREATIVE PROJECTS
-  {
-    category: "Art Medium",
-    values: ["Oil", "Acrylic", "Watercolor", "Charcoal", "Pastel", "Digital", "Clay", "Wood", "Metal", "Textile", "Glass", "Paper", "Photography", "Mixed", "Collage", "Spray", "Ink", "Stone", "Found", "Ephemeral"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-  {
-    category: "Writing Stage",
-    values: ["Brainstorm", "Outline", "Draft", "Revise", "Edit", "Beta", "Publish", "Market", "Royalties", "Series", "Standalone", "Fiction", "Non-Fic", "Poetry", "Script", "Blog", "Technical", "Academic", "Ghost", "Collaborative"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-
-  // TECHNOLOGY & INNOVATION
-  {
-    category: "Emerging Tech",
-    values: ["AI", "Blockchain", "IoT", "AR/VR", "Quantum", "Biotech", "Robotics", "Drones", "3D Print", "Nanotech", "Energy", "Space", "Autonomous", "5G", "Edge", "Metaverse", "Web3", "SynBio", "Climate", "Neuro"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-  {
-    category: "Dev Stage",
-    values: ["Concept", "Prototype", "Alpha", "Beta", "RC", "Launch", "Scale", "EOL", "OpenSource", "Patent", "Incubate", "Accelerate", "Crowdfund", "Pivot", "Acquired", "Disrupt", "Monetize", "Community", "Regulate", "Ethics"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-
-  // SAMPLE ADDITIONAL CATEGORIES
-  {
-    category: "Parenting Stage",
-    values: ["Newborn", "Infant", "Toddler", "Preschool", "Elementary", "Tween", "Teen", "Adult", "Special Needs", "Homeschool", "Sports", "Arts", "College", "Empty Nest", "Multiples", "Adoption", "Foster", "Single", "Co-Parent", "Blended"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-  {
-    category: "Travel Phase",
-    values: ["Dreaming", "Planning", "Booking", "Packing", "Transit", "Arrival", "Exploring", "Adventure", "Relax", "Work", "Volunteer", "Study", "Cuisine", "Culture", "Nature", "Solo", "Group", "Family", "Budget", "Luxury"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-  {
-    category: "Legal Status",
-    values: ["Draft", "Review", "Notarize", "Execute", "Archive", "Compliance", "Violation", "Litigation", "Settlement", "Appeal", "Intellectual", "Contract", "Regulation", "Policy", "License", "Permit", "Dispute", "Mediation", "Arbitration", "Enforce"],
-    colors: ["#FFB3BA", "#FFDFBA", "#BAFFC9", "#BAE1FF", "#FF6961", "#FDFD96", "#84DCC6", "#A5A5A5", "#FFD3B6", "#D4A5A5", "#FF9AA2", "#FFB7B2", "#B5EAD7", "#C7CEEA", "#E2F0CB", "#FFDAC1", "#FF9AA2", "#B5EAD7", "#FDC5F5", "#FF7575"]
-  },
-// PROJECT MANAGEMENT FUNDAMENTALS
-{
-    category: "Priority",
-    values: ["Trivial", "Low", "Medium", "High", "Critical", "Blocker", "Urgent", "Emergency", "Can Wait", "ASAP", "When Possible", "Immediate", "Show-Stopper", "P0", "P1", "P2", "P3", "P4"],
-    colors: ["#baf3db", "#c6edfb", "#f8e6a0", "#fedec8", "#ffd5d2", "#f87168", "#ff5630", "#ffbdad", "#79e2f2", "#ff8f73", "#c0b6f2", "#998dd9", "#ff7452", "#00c7e6", "#36b37e", "#ff5230", "#ffab00", "#6554c0"]
-},
-{
-    category: "Status",
-    values: ["Backlog", "To Do", "In Progress", "Code Review", "Testing", "Blocked", "On Hold", "Ready", "Done", "Delayed", "Pending", "Waiting", "Approved", "Rejected", "Under Review", "Deployed", "Released", "Verified", "Ready for QA", "Needs Info", "Cannot Reproduce", "Won't Fix", "Duplicate", "Implemented", "Cancelled", "Reopened", "Fixed", "Merged", "Archived", "Reviewing", "Paused", "Active", "Stalled", "Completed", "Inactive", "Not Started", "Being Tested", "Awaiting Deployment", "Awaiting Approval", "QA Failed", "QA Passed", "Deferred", "In Development", "Not Planned", "Planned"],
-    colors: ["#dfd8fd", "#c6edfb", "#579dff", "#79e2f2", "#00c7e6", "#ffd5d2", "#ff8f73", "#f8e6a0", "#4bce97", "#fedec8", "#cce0ff", "#ffab00", "#36b37e", "#ff5630", "#998dd9", "#57d9a3", "#00b8d9", "#00a3bf", "#00875a", "#ffc400", "#ff7452", "#de350b", "#6554c0", "#0065ff", "#c0b6f2", "#ffe380", "#fff0b3", "#f4f5f7", "#ebecf0", "#f87168", "#ffbdad", "#79f2c0", "#2684ff", "#8777d9", "#8993a4", "#8f7ee7", "#4c9aff", "#79e2f2", "#b3d4ff", "#ffc400", "#00b8d9", "#00c7e6", "#5243aa", "#4c9aff"]
-},
-{
-    category: "Effort",
-    values: ["Trivial", "Easy", "Medium", "Hard", "Complex", "XS", "S", "M", "L", "XL", "XXL", "1 Point", "2 Points", "3 Points", "5 Points", "8 Points", "13 Points", "21 Points", "34 Points", "Minutes", "Hours", "Days", "Weeks", "Months", "Quick Win", "Major Project", "Significant", "Minimal", "Substantial", "Massive", "Tiny"],
-    colors: ["#c6edfb", "#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2", "#00c7e6", "#36b37e", "#f8e6a0", "#fedec8", "#ff8f73", "#ff5630", "#cce0ff", "#b3d4ff", "#4c9aff", "#2684ff", "#0052cc", "#172b4d", "#091e42", "#ff7452", "#79e2f2", "#4c9aff", "#ffab00", "#ff8f73", "#ff5630", "#36b37e", "#de350b", "#ff7452", "#00c7e6", "#ff8f73", "#ff5630", "#00c7e6"]
-},
-{
-    category: "Complexity",
-    values: ["Trivial", "Simple", "Moderate", "Complex", "Very Complex", "Extremely Complex", "Easy", "Challenging", "Straightforward", "Intricate", "Sophisticated", "Elementary", "Difficult", "Advanced", "Basic", "Beginner", "Intermediate", "Expert", "Low", "Medium", "High", "Rocket Science"],
-    colors: ["#c6edfb", "#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2", "#ff5630", "#36b37e", "#ffab00", "#00c7e6", "#998dd9", "#de350b", "#79e2f2", "#ff8f73", "#ff5630", "#cce0ff", "#00c7e6", "#ff8f73", "#de350b", "#baf3db", "#f8e6a0", "#ffd5d2", "#ff5630"]
-},
-{
-    category: "Impact",
-    values: ["Minimal", "Low", "Medium", "High", "Critical", "Negligible", "Moderate", "Significant", "Major", "Minor", "Severe", "Transformative", "Game-Changing", "Incremental", "Revolutionary", "Evolutionary", "Disruptive", "Market-Defining", "Company-Wide", "Team-Level", "Strategic", "Tactical", "Operational", "Global", "Local"],
-    colors: ["#c6edfb", "#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2", "#79e2f2", "#ffab00", "#ff8f73", "#de350b", "#cce0ff", "#ff5630", "#6554c0", "#0052cc", "#00c7e6", "#0065ff", "#36b37e", "#0052cc", "#172b4d", "#ff5630", "#00c7e6", "#0052cc", "#36b37e", "#cce0ff", "#0052cc", "#36b37e"]
-},
-
-// SOFTWARE DEVELOPMENT SPECIFIC
-{
-    category: "Bug Severity",
-    values: ["Trivial", "Minor", "Major", "Critical", "Blocker", "Cosmetic", "Low", "Medium", "High", "Showstopper", "P1", "P2", "P3", "P4", "P5", "Severe", "Normal", "Enhancement", "Edge Case", "Core Functionality", "Security", "Performance", "UI/UX", "Accessibility", "Mobile", "Desktop", "Regression", "New Bug"],
-    colors: ["#c6edfb", "#baf3db", "#fedec8", "#ffd5d2", "#ff5630", "#c6edfb", "#baf3db", "#f8e6a0", "#fedec8", "#ff5630", "#ff5630", "#ff8f73", "#ffab00", "#f8e6a0", "#c6edfb", "#ff5630", "#f8e6a0", "#c6edfb", "#f8e6a0", "#ff5630", "#ff5630", "#ff8f73", "#6554c0", "#de350b", "#36b37e", "#0052cc", "#ff5630", "#f8e6a0"]
-},
-{
-    category: "Tech Stack",
-    values: ["JavaScript", "Python", "Java", "C#", "C++", "Go", "Ruby", "PHP", "Swift", "Kotlin", "TypeScript", "React", "Angular", "Vue", "Node.js", "Django", "Flask", "Spring", "Rails", ".NET", "AWS", "Azure", "GCP", "Firebase", "MongoDB", "MySQL", "PostgreSQL", "Oracle", "SQL Server", "Redis", "Elasticsearch", "Docker", "Kubernetes", "Terraform", "Ansible", "Jenkins", "GitHub Actions", "CircleCI", "Travis CI", "Selenium", "Cypress", "Jest", "Mocha", "Pytest", "JUnit", "Android", "iOS", "Flutter", "React Native", "Xamarin"],
-    colors: ["#f7df1e", "#3572A5", "#b07219", "#178600", "#f34b7d", "#00ADD8", "#701516", "#4F5D95", "#ffac45", "#A97BFF", "#2b7489", "#61dafb", "#dd0031", "#42b883", "#68a063", "#092e20", "#000000", "#6db33f", "#cc0000", "#512bd4", "#ff9900", "#0078d7", "#4285f4", "#ffca28", "#4DB33D", "#00758f", "#336791", "#f80000", "#cc2927", "#dc382d", "#43853d", "#0db7ed", "#326ce5", "#623ce4", "#1A1918", "#f0d6b7", "#4078c0", "#343434", "#3eaaaf", "#5b9bd5", "#17202c", "#15c213", "#8d6748", "#4B8BBE", "#25A9E0", "#a4c639", "#000000", "#42d1f5", "#61dafb", "#512bd4"]
-},
-{
-    category: "Code Review",
-    values: ["Needs Review", "Reviewing", "Changes Requested", "Approved", "Merged", "Blocked", "WIP", "Ready for Review", "Review Complete", "Needs Testing", "Needs Documentation", "Ready to Merge", "Pending CI", "CI Failed", "CI Passed", "Hold", "RFC", "Experimental", "Needs Rework", "Minor Changes", "Major Changes", "Requested Changes", "No Changes Needed", "Quality Concerns", "Performance Concerns", "Security Concerns", "Best Practices", "Clean Code", "Technical Debt", "Architecture Concerns"],
-    colors: ["#f8e6a0", "#0065ff", "#ff8f73", "#36b37e", "#0065ff", "#ff5630", "#6554c0", "#f8e6a0", "#36b37e", "#f8e6a0", "#f8e6a0", "#36b37e", "#f8e6a0", "#ff5630", "#36b37e", "#ff8f73", "#6554c0", "#8777d9", "#ff8f73", "#f8e6a0", "#ff8f73", "#ff8f73", "#36b37e", "#ff8f73", "#ff8f73", "#ff5630", "#f8e6a0", "#36b37e", "#ff8f73", "#ff8f73"]
-},
-
-// MARKETING & SALES
-{
-    category: "Campaign Status",
-    values: ["Planning", "In Progress", "Live", "Completed", "On Hold", "Cancelled", "Delayed", "Scheduled", "Launching Soon", "Active", "Inactive", "Pending Approval", "Approved", "Rejected", "Draft", "Ready to Launch", "Testing", "Analyzing", "Post-Campaign", "Paused", "Restarting", "Iterating", "A/B Testing", "Final Review", "Pre-Launch", "Soft Launch", "Full Launch", "Limited", "Targeted", "Global"],
-    colors: ["#f8e6a0", "#0065ff", "#36b37e", "#00b8d9", "#ff8f73", "#ff5630", "#ffab00", "#6554c0", "#f8e6a0", "#36b37e", "#ff8f73", "#f8e6a0", "#36b37e", "#ff5630", "#6554c0", "#f8e6a0", "#00b8d9", "#0065ff", "#00b8d9", "#ff8f73", "#f8e6a0", "#0065ff", "#6554c0", "#f8e6a0", "#f8e6a0", "#36b37e", "#36b37e", "#ffab00", "#0065ff", "#0052cc"]
-},
-{
-    category: "Channel",
-    values: ["Email", "Social Media", "Website", "Blog", "Podcast", "Video", "SEO", "PPC", "Display", "Mobile", "Direct Mail", "TV", "Radio", "Print", "Event", "Webinar", "Affiliate", "Influencer", "PR", "Content", "SMS", "Push Notification", "In-App", "Outdoor", "Retail", "Point of Sale", "Word of Mouth", "Community", "Partnership", "Referral"],
-    colors: ["#0065ff", "#6554c0", "#36b37e", "#00b8d9", "#8777d9", "#ff8f73", "#0052cc", "#f8e6a0", "#ffab00", "#36b37e", "#ff8f73", "#ff5630", "#ffab00", "#ff8f73", "#6554c0", "#0065ff", "#f8e6a0", "#ffab00", "#ff5630", "#00b8d9", "#36b37e", "#8777d9", "#0065ff", "#36b37e", "#00b8d9", "#f8e6a0", "#6554c0", "#00b8d9", "#0065ff", "#36b37e"]
-},
-
-// CREATIVE & DESIGN
-{
-    category: "Design Stage",
-    values: ["Research", "Ideation", "Sketching", "Wireframing", "Mockups", "Prototyping", "User Testing", "Revisions", "Final Design", "Handoff", "Development", "QA", "Live", "Archived", "Inspiration", "Concepting", "Drafting", "Feedback", "Approval", "Production", "Review", "Implementation", "Iteration", "Validation", "Exploration", "Discovery", "Planning", "Execution", "Finalization", "Delivery"],
-    colors: ["#0065ff", "#8777d9", "#6554c0", "#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#ff8f73", "#00b8d9", "#36b37e", "#0065ff", "#00b8d9", "#36b37e", "#6554c0", "#8777d9", "#6554c0", "#f8e6a0", "#ff8f73", "#36b37e", "#00b8d9", "#ff8f73", "#36b37e", "#ff8f73", "#36b37e", "#8777d9", "#0065ff", "#f8e6a0", "#00b8d9", "#36b37e", "#00b8d9"]
-},
-{
-    category: "Creative Brief",
-    values: ["Received", "Reviewed", "Clarifying", "Approved", "In Progress", "Completed", "Needs Revision", "Missing Info", "Final", "Draft", "Detailed", "Vague", "Clear", "Confusing", "Inspiring", "Limiting", "Flexible", "Rigid", "Comprehensive", "Minimal", "Standard", "Custom", "Template", "Unique", "Brand Aligned", "Off-Brand", "Challenging", "Achievable", "Ambitious", "Realistic"],
-    colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#0065ff", "#36b37e", "#ff8f73", "#ff5630", "#36b37e", "#6554c0", "#36b37e", "#ff8f73", "#36b37e", "#ff5630", "#8777d9", "#ff8f73", "#36b37e", "#ff8f73", "#36b37e", "#f8e6a0", "#f8e6a0", "#6554c0", "#f8e6a0", "#6554c0", "#36b37e", "#ff5630", "#ff8f73", "#36b37e", "#ff8f73", "#36b37e"]
-},
-
-// PRODUCT DEVELOPMENT
-{
-    category: "Product Stage",
-    values: ["Concept", "Planning", "Development", "Alpha", "Beta", "RC", "GA", "Maintenance", "EOL", "Ideation", "Research", "Validation", "Prototyping", "Testing", "Launch", "Growth", "Maturity", "Decline", "Revival", "MVP", "MMP", "V1", "V2", "Major Release", "Minor Release", "Patch", "Sunset", "Discovery", "Definition", "Delivery"],
-    colors: ["#8777d9", "#f8e6a0", "#0065ff", "#8777d9", "#8777d9", "#f8e6a0", "#36b37e", "#00b8d9", "#ff5630", "#8777d9", "#0065ff", "#36b37e", "#00b8d9", "#00b8d9", "#36b37e", "#00b8d9", "#00b8d9", "#ff8f73", "#8777d9", "#f8e6a0", "#0065ff", "#0065ff", "#0065ff", "#ff5630", "#f8e6a0", "#baf3db", "#ff5630", "#8777d9", "#f8e6a0", "#36b37e"]
-},
-{
-    category: "Feature Type",
-    values: ["Core", "Secondary", "Nice-to-Have", "Experimental", "Legacy", "Competitive", "Differentiator", "Parity", "Innovation", "User Request", "Compliance", "Performance", "Security", "UI/UX", "Accessibility", "Localization", "Integration", "API", "Infrastructure", "Analytics", "Reporting", "Automation", "Mobile", "Desktop", "Web", "Admin", "Customer Facing", "Internal", "Platform", "Extension"],
-    colors: ["#ff5630", "#ff8f73", "#ffab00", "#8777d9", "#6554c0", "#0052cc", "#0065ff", "#00b8d9", "#8777d9", "#36b37e", "#ff5630", "#ff8f73", "#ff5630", "#6554c0", "#de350b", "#00b8d9", "#0065ff", "#0065ff", "#0052cc", "#00b8d9", "#00b8d9", "#36b37e", "#36b37e", "#0052cc", "#0065ff", "#6554c0", "#36b37e", "#6554c0", "#0052cc", "#00b8d9"]
-},
-
-// EVENT PLANNING
-{
-    category: "Event Phase",
-    values: ["Planning", "Preparation", "Execution", "Follow-up", "Evaluation", "Conceptualization", "Budgeting", "Booking", "Marketing", "Registration", "Setup", "Live", "Teardown", "Debrief", "Reporting", "Initial Planning", "Detailed Planning", "Final Planning", "Pre-Event", "During Event", "Post-Event", "Venue Selection", "Vendor Selection", "Attendee Management", "Speaker Management", "Logistics", "Promotion", "Content Creation", "Technical Setup", "Feedback Collection"],
-    colors: ["#f8e6a0", "#0065ff", "#36b37e", "#00b8d9", "#0065ff", "#8777d9", "#f8e6a0", "#0065ff", "#ff8f73", "#00b8d9", "#0065ff", "#36b37e", "#ff8f73", "#00b8d9", "#0065ff", "#f8e6a0", "#0065ff", "#00b8d9", "#f8e6a0", "#36b37e", "#00b8d9", "#f8e6a0", "#f8e6a0", "#00b8d9", "#00b8d9", "#0065ff", "#ff8f73", "#6554c0", "#0065ff", "#00b8d9"]
-},
-{
-    category: "Event Type",
-    values: ["Conference", "Workshop", "Webinar", "Meetup", "Trade Show", "Exhibition", "Seminar", "Panel", "Hackathon", "Product Launch", "Team Building", "Award Ceremony", "Networking", "Training", "Retreat", "Summit", "Symposium", "Forum", "Convention", "Festival", "Fair", "Roadshow", "Virtual Event", "Hybrid Event", "Internal", "External", "Public", "Private", "VIP", "Community"],
-    colors: ["#0052cc", "#0065ff", "#0065ff", "#00b8d9", "#ff8f73", "#ff8f73", "#00b8d9", "#6554c0", "#8777d9", "#36b37e", "#00b8d9", "#6554c0", "#0065ff", "#00b8d9", "#8777d9", "#0052cc", "#0052cc", "#0065ff", "#0052cc", "#ff8f73", "#ff8f73", "#0065ff", "#6554c0", "#0065ff", "#6554c0", "#36b37e", "#36b37e", "#6554c0", "#ff8f73", "#00b8d9"]
-},
-
-// HUMAN RESOURCES
-{
-    category: "Recruitment Stage",
-    values: ["Sourcing", "Screening", "Interviewing", "Technical Assessment", "Reference Check", "Offer Made", "Negotiation", "Accepted", "Rejected", "Onboarding", "Probation", "Hired", "Application Received", "Resume Review", "Phone Screen", "First Interview", "Second Interview", "Final Interview", "Background Check", "Offer Pending", "Offer Accepted", "Offer Declined", "Candidate Withdrew", "Position Filled", "Position On Hold", "Active", "Inactive", "Future Pipeline", "Not Qualified", "Maybe Later"],
-    colors: ["#f8e6a0", "#00b8d9", "#0065ff", "#0052cc", "#00b8d9", "#36b37e", "#f8e6a0", "#36b37e", "#ff5630", "#36b37e", "#f8e6a0", "#36b37e", "#f8e6a0", "#00b8d9", "#00b8d9", "#0065ff", "#0065ff", "#0065ff", "#00b8d9", "#f8e6a0", "#36b37e", "#ff5630", "#ff8f73", "#36b37e", "#ff8f73", "#36b37e", "#ff8f73", "#00b8d9", "#ff5630", "#ff8f73"]
-},
-{
-    category: "Performance Review",
-    values: ["Exceeds Expectations", "Meets Expectations", "Needs Improvement", "Unsatisfactory", "Outstanding", "Excellent", "Good", "Satisfactory", "Fair", "Poor", "Above Average", "Average", "Below Average", "Top Performer", "High Potential", "Solid Performer", "Developing", "Underperforming", "5/5", "4/5", "3/5", "2/5", "1/5", "A", "B", "C", "D", "F", "Pass", "Fail"],
-    colors: ["#36b37e", "#f8e6a0", "#ff8f73", "#ff5630", "#36b37e", "#36b37e", "#f8e6a0", "#f8e6a0", "#ff8f73", "#ff5630", "#36b37e", "#f8e6a0", "#ff8f73", "#36b37e", "#36b37e", "#f8e6a0", "#ffab00", "#ff5630", "#36b37e", "#36b37e", "#f8e6a0", "#ff8f73", "#ff5630", "#36b37e", "#f8e6a0", "#ffab00", "#ff8f73", "#ff5630", "#36b37e", "#ff5630"]
-},
-
-// CUSTOMER SUPPORT
-{
-    category: "Support Ticket Status",
-    values: ["New", "Open", "In Progress", "Waiting on Customer", "Waiting on Third-Party", "Resolved", "Closed", "Reopened", "Escalated", "On Hold", "Pending", "Assigned", "Unassigned", "Needs Attention", "Critical", "Urgent", "High", "Medium", "Low", "Trivial", "Bug", "Feature Request", "Question", "Problem", "Incident", "Service Request", "Complaint", "Feedback", "Compliment", "Information"],
-    colors: ["#f8e6a0", "#0065ff", "#0065ff", "#ffab00", "#ffab00", "#36b37e", "#6554c0", "#ff8f73", "#ff5630", "#ff8f73", "#f8e6a0", "#0065ff", "#f8e6a0", "#ff5630", "#ff5630", "#ff5630", "#ff8f73", "#f8e6a0", "#c6edfb", "#c6edfb", "#ff5630", "#8777d9", "#00b8d9", "#ff8f73", "#ff5630", "#f8e6a0", "#ff5630", "#00b8d9", "#36b37e", "#00b8d9"]
-},
-{
-    category: "Customer Satisfaction",
-    values: ["Very Satisfied", "Satisfied", "Neutral", "Dissatisfied", "Very Dissatisfied", "Promoter", "Passive", "Detractor", "Excellent", "Good", "Average", "Poor", "Terrible", "5 Star", "4 Star", "3 Star", "2 Star", "1 Star", "Happy", "Unhappy", "Delighted", "Frustrated", "Impressed", "Disappointed", "Loyal", "At Risk", "Churned", "Recovered", "New", "Returning"],
-    colors: ["#36b37e", "#57d9a3", "#f8e6a0", "#ff8f73", "#ff5630", "#36b37e", "#f8e6a0", "#ff5630", "#36b37e", "#57d9a3", "#f8e6a0", "#ff8f73", "#ff5630", "#36b37e", "#57d9a3", "#f8e6a0", "#ff8f73", "#ff5630", "#36b37e", "#ff5630", "#36b37e", "#ff5630", "#36b37e", "#ff5630", "#36b37e", "#ff8f73", "#ff5630", "#57d9a3", "#00b8d9", "#36b37e"]
-},
-
-// FINANCE
-{
-    category: "Budget Status",
-    values: ["Under Budget", "On Budget", "Over Budget", "Significantly Over", "Significantly Under", "Within Range", "Exceeded", "Not Started", "In Progress", "Completed", "Approved", "Pending Approval", "Rejected", "Needs Review", "Forecast", "Actual", "Variance", "Positive Variance", "Negative Variance", "Zero Variance", "Q1", "Q2", "Q3", "Q4", "Annual", "Monthly", "Weekly", "Daily", "YTD", "MTD"],
-    colors: ["#36b37e", "#f8e6a0", "#ff8f73", "#ff5630", "#36b37e", "#f8e6a0", "#ff8f73", "#6554c0", "#0065ff", "#36b37e", "#36b37e", "#f8e6a0", "#ff5630", "#ff8f73", "#00b8d9", "#36b37e", "#f8e6a0", "#36b37e", "#ff8f73", "#f8e6a0", "#00b8d9", "#00b8d9", "#00b8d9", "#00b8d9", "#0052cc", "#00b8d9", "#00b8d9", "#00b8d9", "#0052cc", "#00b8d9"]
-},
-{
-    category: "Financial Impact",
-    values: ["High ROI", "Medium ROI", "Low ROI", "Negative ROI", "Cost Saving", "Revenue Generating", "Profit Increasing", "Loss Reducing", "Break Even", "Investment", "Expense", "Capital", "Operational", "Tax Deductible", "Non-Deductible", "Depreciating", "Appreciating", "Fixed Cost", "Variable Cost", "One-time Cost", "Recurring Cost", "High Cost", "Medium Cost", "Low Cost", "No Cost", "High Value", "Medium Value", "Low Value", "No Value", "Priceless"],
-    colors: ["#36b37e", "#f8e6a0", "#ff8f73", "#ff5630", "#36b37e", "#36b37e", "#36b37e", "#36b37e", "#f8e6a0", "#00b8d9", "#ff8f73", "#0052cc", "#00b8d9", "#36b37e", "#ff8f73", "#ff8f73", "#36b37e", "#f8e6a0", "#f8e6a0", "#36b37e", "#ff8f73", "#ff5630", "#ff8f73", "#36b37e", "#36b37e", "#36b37e", "#f8e6a0", "#ff8f73", "#ff5630", "#6554c0"]
-},
-
-// OPERATIONS
-{
-    category: "Operational Status",
-    values: ["Operational", "Partial Outage", "Major Outage", "Planned Maintenance", "Degraded Performance", "Under Investigation", "Resolved", "Monitoring", "Stable", "Unstable", "Critical", "Warning", "Healthy", "Unhealthy", "Online", "Offline", "Available", "Unavailable", "Active", "Inactive", "Running", "Stopped", "Starting", "Stopping", "Restarting", "Scaling Up", "Scaling Down", "Deploying", "Rollback", "Recovery"],
-    colors: ["#36b37e", "#ffab00", "#ff5630", "#f8e6a0", "#ff8f73", "#0065ff", "#36b37e", "#00b8d9", "#36b37e", "#ff8f73", "#ff5630", "#ffab00", "#36b37e", "#ff5630", "#36b37e", "#ff5630", "#36b37e", "#ff5630", "#36b37e", "#ff5630", "#36b37e", "#ff5630", "#f8e6a0", "#f8e6a0", "#00b8d9", "#36b37e", "#ff8f73", "#0065ff", "#ff8f73", "#00b8d9"]
-},
-
-    // SUPPLY CHAIN & LOGISTICS
-    {
-        category: "Shipping Status",
-        values: ["Processing", "Packed", "Ready to Ship", "In Transit", "Out for Delivery", "Delivered", "Failed Delivery", "Returned", "Backordered", "Pre-Order", "Customs", "Held", "Delayed", "Expedited", "Standard", "Economy", "International", "Domestic", "Last Mile", "First Mile"],
-        colors: ["#f8e6a0", "#00b8d9", "#36b37e", "#0065ff", "#ffab00", "#36b37e", "#ff5630", "#ff8f73", "#ff8f73", "#6554c0", "#ffab00", "#ff5630", "#ff8f73", "#36b37e", "#00b8d9", "#f8e6a0", "#0052cc", "#36b37e", "#ffab00", "#00b8d9"]
-    },
-    {
-        category: "Inventory Status",
-        values: ["In Stock", "Low Stock", "Out of Stock", "Discontinued", "Seasonal", "Reserved", "On Order", "Excess", "Optimal", "Damaged", "Quarantined", "Inspected", "Allocated", "Unallocated", "Expired", "Near Expiry", "Fresh", "Returned", "Recalled", "Reordered"],
-        colors: ["#36b37e", "#ffab00", "#ff5630", "#6554c0", "#f8e6a0", "#00b8d9", "#0065ff", "#ff8f73", "#36b37e", "#ff5630", "#ff5630", "#36b37e", "#00b8d9", "#f8e6a0", "#ff5630", "#ffab00", "#36b37e", "#ff8f73", "#ff5630", "#0065ff"]
-    },
-
-// DATA & ANALYTICS
-    {
-        category: "Data Quality",
-        values: ["Clean", "Dirty", "Missing", "Duplicate", "Incomplete", "Validated", "Unvalidated", "Accurate", "Inaccurate", "Consistent", "Inconsistent", "Timely", "Outdated", "Relevant", "Irrelevant", "Structured", "Unstructured", "Primary", "Secondary", "Derived"],
-        colors: ["#36b37e", "#ff5630", "#ff8f73", "#ffab00", "#ff8f73", "#36b37e", "#ff8f73", "#36b37e", "#ff5630", "#36b37e", "#ff5630", "#36b37e", "#ff5630", "#36b37e", "#ff5630", "#00b8d9", "#ff8f73", "#0065ff", "#00b8d9", "#f8e6a0"]
-    },
-    {
-        category: "Analytics Stage",
-        values: ["Data Collection", "Data Cleaning", "Data Preparation", "Exploratory Analysis", "Statistical Analysis", "Modeling", "Visualization", "Interpretation", "Reporting", "Presentation", "Decision Making", "Implementation", "Monitoring", "Evaluation", "Iteration", "Hypothesis", "Testing", "Validation", "Production", "Archival"],
-        colors: ["#f8e6a0", "#00b8d9", "#00b8d9", "#0065ff", "#0052cc", "#8777d9", "#6554c0", "#0065ff", "#36b37e", "#f8e6a0", "#36b37e", "#36b37e", "#00b8d9", "#0065ff", "#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#36b37e", "#6554c0"]
-    },
-
-// HEALTHCARE & MEDICAL
-    {
-        category: "Patient Status",
-        values: ["Admitted", "Discharged", "Stable", "Critical", "Serious", "Fair", "Good", "Improving", "Deteriorating", "In Recovery", "Pre-Op", "Post-Op", "ICU", "ER", "Outpatient", "Inpatient", "Observation", "Quarantine", "Isolation", "Palliative"],
-        colors: ["#ffab00", "#36b37e", "#36b37e", "#ff5630", "#ff8f73", "#ffab00", "#36b37e", "#36b37e", "#ff5630", "#36b37e", "#f8e6a0", "#00b8d9", "#ff5630", "#ff8f73", "#36b37e", "#00b8d9", "#f8e6a0", "#ff8f73", "#ff8f73", "#6554c0"]
-    },
-    {
-        category: "Treatment Phase",
-        values: ["Diagnosis", "Initial Treatment", "Ongoing Treatment", "Follow-up", "Remission", "Recurrence", "Preventative", "Palliative", "Curative", "Experimental", "Alternative", "Complementary", "Maintenance", "Escalation", "De-escalation", "First Line", "Second Line", "Emergency", "Routine", "Specialized"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#36b37e", "#ff5630", "#36b37e", "#6554c0", "#36b37e", "#8777d9", "#6554c0", "#00b8d9", "#36b37e", "#ff8f73", "#36b37e", "#0065ff", "#ff8f73", "#ff5630", "#36b37e", "#0052cc"]
-    },
-
-// EDUCATION & ACADEMIA
-    {
-        category: "Academic Progress",
-        values: ["Enrolled", "In Progress", "Completed", "Withdrawn", "On Leave", "Probation", "Honors", "Distinction", "Passing", "Failing", "Incomplete", "Audit", "Credit", "No Credit", "Satisfactory", "Unsatisfactory", "Freshman", "Sophomore", "Junior", "Senior"],
-        colors: ["#f8e6a0", "#0065ff", "#36b37e", "#ff5630", "#ff8f73", "#ffab00", "#36b37e", "#36b37e", "#36b37e", "#ff5630", "#ff8f73", "#00b8d9", "#36b37e", "#ff8f73", "#36b37e", "#ff5630", "#f8e6a0", "#f8e6a0", "#00b8d9", "#36b37e"]
-    },
-    {
-        category: "Research Phase",
-        values: ["Literature Review", "Hypothesis Formation", "Methodology Design", "IRB Approval", "Data Collection", "Data Analysis", "Preliminary Results", "Peer Review", "Publication", "Presentation", "Grant Writing", "Funding Secured", "Replication", "Application", "Theory Building", "Interdisciplinary", "Collaborative", "Independent", "Longitudinal", "Cross-Sectional"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#f8e6a0", "#0065ff", "#f8e6a0", "#00b8d9", "#36b37e", "#f8e6a0", "#00b8d9", "#36b37e", "#00b8d9", "#36b37e", "#8777d9", "#6554c0", "#0065ff", "#00b8d9", "#0052cc", "#00b8d9"]
-    },
-
-// GAMING & GAMIFICATION
-    {
-        category: "Player Status",
-        values: ["Newbie", "Casual", "Regular", "Hardcore", "Pro", "Veteran", "Legend", "Banned", "Inactive", "VIP", "Subscriber", "Free", "Premium", "Beta Tester", "Early Access", "Founder", "Guild Member", "Solo", "Team Player", "Community Leader"],
-        colors: ["#f8e6a0", "#00b8d9", "#36b37e", "#ff8f73", "#ff5630", "#0052cc", "#6554c0", "#ff5630", "#ff8f73", "#ffab00", "#36b37e", "#f8e6a0", "#6554c0", "#8777d9", "#8777d9", "#0052cc", "#0065ff", "#00b8d9", "#36b37e", "#6554c0"]
-    },
-    {
-        category: "Achievement Level",
-        values: ["Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster", "Challenger", "Beginner", "Intermediate", "Advanced", "Expert", "Novice", "Skilled", "Proficient", "Elite", "Legendary", "Mythic", "Epic", "Common"],
-        colors: ["#cd7f32", "#c0c0c0", "#ffd700", "#e5e4e2", "#b9f2ff", "#8777d9", "#6554c0", "#ff5630", "#f8e6a0", "#00b8d9", "#0065ff", "#0052cc", "#f8e6a0", "#00b8d9", "#36b37e", "#ff5630", "#6554c0", "#8777d9", "#ff8f73", "#c6edfb"]
-    },
-
-// ENVIRONMENTAL & SUSTAINABILITY
-    {
-        category: "Sustainability Impact",
-        values: ["Carbon Neutral", "Carbon Negative", "Zero Waste", "Recyclable", "Biodegradable", "Renewable", "Non-Renewable", "Energy Efficient", "Water Saving", "Eco-Friendly", "Harmful", "Neutral", "Beneficial", "Low Impact", "High Impact", "Certified", "Not Certified", "Sustainable", "Unsustainable", "In Transition"],
-        colors: ["#36b37e", "#57d9a3", "#36b37e", "#57d9a3", "#57d9a3", "#36b37e", "#ff5630", "#36b37e", "#00b8d9", "#36b37e", "#ff5630", "#f8e6a0", "#36b37e", "#57d9a3", "#ff5630", "#36b37e", "#ff8f73", "#36b37e", "#ff5630", "#f8e6a0"]
-    },
-    {
-        category: "Environmental Risk",
-        values: ["Low", "Medium", "High", "Critical", "Negligible", "Managed", "Unmanaged", "Mitigated", "Unmitigated", "Monitored", "Unmonitored", "Increasing", "Decreasing", "Stable", "Variable", "Short-Term", "Long-Term", "Local", "Regional", "Global"],
-        colors: ["#36b37e", "#f8e6a0", "#ff8f73", "#ff5630", "#36b37e", "#36b37e", "#ff5630", "#36b37e", "#ff5630", "#36b37e", "#ff5630", "#ff5630", "#36b37e", "#00b8d9", "#f8e6a0", "#00b8d9", "#0052cc", "#36b37e", "#ff8f73", "#ff5630"]
-    },
-
-// MANUFACTURING & PRODUCTION
-    {
-        category: "Production Stage",
-        values: ["Raw Materials", "Processing", "Assembly", "Quality Control", "Packaging", "Shipping", "R&D", "Design", "Prototyping", "Testing", "Rework", "Finished Goods", "Custom Build", "Mass Production", "Batch Production", "Just-in-Time", "Made to Order", "In Spec", "Out of Spec", "Recalled"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#00b8d9", "#36b37e", "#8777d9", "#6554c0", "#8777d9", "#00b8d9", "#ff8f73", "#36b37e", "#6554c0", "#0052cc", "#00b8d9", "#f8e6a0", "#00b8d9", "#36b37e", "#ff5630", "#ff5630"]
-    },
-    {
-        category: "Quality Rating",
-        values: ["Premium", "Standard", "Economy", "Defective", "A Grade", "B Grade", "C Grade", "Rejected", "Certified", "Non-Certified", "Military Spec", "Industrial", "Consumer", "Medical", "Aerospace", "Automotive", "Food Grade", "Cosmetic Issue", "Functional Issue", "Safety Issue"],
-        colors: ["#0052cc", "#00b8d9", "#f8e6a0", "#ff5630", "#36b37e", "#00b8d9", "#f8e6a0", "#ff5630", "#36b37e", "#ff8f73", "#0052cc", "#00b8d9", "#f8e6a0", "#0065ff", "#0052cc", "#00b8d9", "#36b37e", "#f8e6a0", "#ff8f73", "#ff5630"]
-    },
-
-// CONTENT CREATION & PUBLISHING
-    {
-        category: "Content Status",
-        values: ["Draft", "Review", "Approved", "Published", "Scheduled", "Archived", "Trending", "Evergreen", "Seasonal", "Time-Sensitive", "Viral", "Promoted", "Organic", "Featured", "Premium", "Exclusive", "Members Only", "Free", "Paywalled", "Sponsored"],
-        colors: ["#f8e6a0", "#00b8d9", "#36b37e", "#36b37e", "#00b8d9", "#6554c0", "#ff5630", "#36b37e", "#f8e6a0", "#ff8f73", "#ff5630", "#ffab00", "#36b37e", "#0065ff", "#0052cc", "#6554c0", "#8777d9", "#36b37e", "#ff8f73", "#ffab00"]
-    },
-    {
-        category: "Audience Engagement",
-        values: ["High", "Medium", "Low", "Viral", "Growing", "Declining", "Steady", "Targeted", "Broad", "Niche", "Core", "New", "Returning", "Loyal", "Casual", "Active", "Passive", "Engaged", "Disengaged", "Converting"],
-        colors: ["#36b37e", "#f8e6a0", "#ff8f73", "#ff5630", "#36b37e", "#ff8f73", "#00b8d9", "#0065ff", "#00b8d9", "#6554c0", "#0052cc", "#f8e6a0", "#36b37e", "#36b37e", "#f8e6a0", "#36b37e", "#ff8f73", "#36b37e", "#ff8f73", "#0065ff"]
-    },
-
-// LEGAL & COMPLIANCE
-    {
-        category: "Compliance Status",
-        values: ["Compliant", "Non-Compliant", "Pending Review", "Remediation", "Waiver", "Exemption", "High Risk", "Medium Risk", "Low Risk", "No Risk", "Audit Required", "Certified", "Expired", "Renewing", "New Requirement", "Legacy", "Critical", "Important", "Advisory", "Voluntary"],
-        colors: ["#36b37e", "#ff5630", "#f8e6a0", "#ff8f73", "#ffab00", "#f8e6a0", "#ff5630", "#ff8f73", "#36b37e", "#36b37e", "#ff8f73", "#36b37e", "#ff5630", "#00b8d9", "#ff8f73", "#6554c0", "#ff5630", "#ff8f73", "#f8e6a0", "#36b37e"]
-    },
-    {
-        category: "Contract Phase",
-        values: ["Drafting", "Negotiation", "Review", "Approval", "Execution", "Active", "Renewal", "Expiring", "Expired", "Terminated", "Amended", "Disputed", "Breached", "Remedied", "Template", "Custom", "Standard", "Legacy", "Auto-Renew", "Fixed Term"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#36b37e", "#36b37e", "#00b8d9", "#ffab00", "#ff5630", "#ff5630", "#f8e6a0", "#ff8f73", "#ff5630", "#36b37e", "#6554c0", "#0065ff", "#00b8d9", "#6554c0", "#00b8d9", "#0052cc"]
-    },
-
-// INTERNATIONALIZATION & LOCALIZATION
-    {
-        category: "Localization Status",
-        values: ["Not Started", "In Progress", "Translated", "Reviewed", "Implemented", "Live", "Needs Update", "Outdated", "Complete", "Partial", "Machine Translated", "Human Translated", "Native Review", "Cultural Adaptation", "Technical Review", "Legal Review", "Terminology Check", "Format Check", "Testing", "Approved"],
-        colors: ["#ff5630", "#0065ff", "#f8e6a0", "#00b8d9", "#36b37e", "#36b37e", "#ff8f73", "#ff5630", "#36b37e", "#ff8f73", "#f8e6a0", "#36b37e", "#00b8d9", "#6554c0", "#0065ff", "#0052cc", "#f8e6a0", "#f8e6a0", "#00b8d9", "#36b37e"]
-    },
-    {
-        category: "Market Readiness",
-        values: ["Research", "Strategy", "Adaptation", "Testing", "Soft Launch", "Full Launch", "Established", "Growing", "Mature", "Declining", "Regulated", "Unregulated", "Restricted", "Open", "Competitive", "Monopolistic", "Emerging", "Developed", "Untapped", "Saturated"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#00b8d9", "#f8e6a0", "#36b37e", "#36b37e", "#36b37e", "#00b8d9", "#ff8f73", "#ff8f73", "#36b37e", "#ff5630", "#36b37e", "#ff8f73", "#ff5630", "#f8e6a0", "#36b37e", "#f8e6a0", "#ff5630"]
-    },
-
-// USER EXPERIENCE & INTERFACE DESIGN
-    {
-        category: "UX Stage",
-        values: ["Research", "Personas", "Journey Maps", "Wireframes", "Prototypes", "User Testing", "Iteration", "Implementation", "Analysis", "Refinement", "Accessibility", "Usability", "Visual Design", "Information Architecture", "Interaction Design", "Content Strategy", "Microcopy", "Animation", "Responsive", "Mobile First"],
-        colors: ["#f8e6a0", "#6554c0", "#8777d9", "#00b8d9", "#0065ff", "#36b37e", "#f8e6a0", "#36b37e", "#00b8d9", "#36b37e", "#0052cc", "#36b37e", "#6554c0", "#8777d9", "#0065ff", "#8777d9", "#00b8d9", "#6554c0", "#36b37e", "#0065ff"]
-    },
-    {
-        category: "Design System",
-        values: ["Foundation", "Components", "Patterns", "Guidelines", "Tokens", "Templates", "Icons", "Typography", "Color", "Spacing", "Grid", "Motion", "Voice & Tone", "Accessibility", "Responsive", "Interactive", "Documentation", "Versioning", "Deprecated", "Experimental"],
-        colors: ["#0052cc", "#0065ff", "#00b8d9", "#f8e6a0", "#8777d9", "#00b8d9", "#6554c0", "#8777d9", "#ff8f73", "#f8e6a0", "#00b8d9", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#0065ff", "#f8e6a0", "#00b8d9", "#ff5630", "#8777d9"]
-    },
-
-// SOCIAL MEDIA & COMMUNITY
-    {
-        category: "Engagement Level",
-        values: ["Lurker", "Observer", "Occasional", "Regular", "Active", "Super User", "Advocate", "Influencer", "Creator", "Curator", "Mentor", "Moderator", "Admin", "Newcomer", "Core Member", "Veteran", "VIP", "Banned", "Muted", "Restricted"],
-        colors: ["#f8e6a0", "#00b8d9", "#f8e6a0", "#00b8d9", "#36b37e", "#0065ff", "#36b37e", "#0052cc", "#6554c0", "#8777d9", "#36b37e", "#0052cc", "#ff5630", "#f8e6a0", "#0065ff", "#0052cc", "#6554c0", "#ff5630", "#ff8f73", "#ff8f73"]
-    },
-    {
-        category: "Content Performance",
-        values: ["Viral", "High Reach", "Medium Reach", "Low Reach", "Trending", "Evergreen", "Seasonal", "Time-Sensitive", "High Engagement", "Low Engagement", "Controversial", "Popular", "Unpopular", "Educational", "Entertaining", "Informative", "Promotional", "Original", "Curated", "User-Generated"],
-        colors: ["#ff5630", "#36b37e", "#f8e6a0", "#ff8f73", "#ff5630", "#36b37e", "#f8e6a0", "#ff8f73", "#36b37e", "#ff8f73", "#ff5630", "#36b37e", "#ff8f73", "#0065ff", "#6554c0", "#00b8d9", "#ffab00", "#0052cc", "#00b8d9", "#36b37e"]
-    },
-
-// CYBERSECURITY & PRIVACY
-    {
-        category: "Security Level",
-        values: ["Critical", "High", "Medium", "Low", "Informational", "Patched", "Unpatched", "Mitigated", "Unmitigated", "Exploitable", "Theoretical", "Zero-Day", "Known", "Unknown", "Internal", "External", "Physical", "Digital", "Social", "Procedural"],
-        colors: ["#ff5630", "#ff8f73", "#f8e6a0", "#36b37e", "#00b8d9", "#36b37e", "#ff5630", "#36b37e", "#ff5630", "#ff5630", "#f8e6a0", "#ff5630", "#f8e6a0", "#ff5630", "#00b8d9", "#ff5630", "#ff8f73", "#0065ff", "#f8e6a0", "#00b8d9"]
-    },
-    {
-        category: "Privacy Compliance",
-        values: ["GDPR", "CCPA", "HIPAA", "PCI DSS", "COPPA", "FERPA", "GLBA", "PIPEDA", "ePrivacy", "Compliant", "Non-Compliant", "In Process", "Exempt", "Not Applicable", "Under Review", "High Risk", "Medium Risk", "Low Risk", "No Risk", "Requires DPA"],
-        colors: ["#0052cc", "#0065ff", "#0052cc", "#ff5630", "#f8e6a0", "#00b8d9", "#f8e6a0", "#00b8d9", "#0065ff", "#36b37e", "#ff5630", "#f8e6a0", "#00b8d9", "#6554c0", "#0065ff", "#ff5630", "#ff8f73", "#36b37e", "#36b37e", "#f8e6a0"]
-    },
-
-// AGRICULTURE & FARMING
-    {
-        category: "Crop Stage",
-        values: ["Planting", "Germination", "Seedling", "Vegetative", "Flowering", "Fruiting", "Ripening", "Harvesting", "Post-Harvest", "Dormant", "Early", "Mid", "Late", "Organic", "Conventional", "Hydroponic", "Drought", "Diseased", "Pest Issue", "Thriving"],
-        colors: ["#f8e6a0", "#36b37e", "#57d9a3", "#36b37e", "#6554c0", "#ffab00", "#ff8f73", "#36b37e", "#00b8d9", "#6554c0", "#f8e6a0", "#00b8d9", "#ff8f73", "#36b37e", "#f8e6a0", "#00b8d9", "#ff5630", "#ff5630", "#ff5630", "#36b37e"]
-    },
-    {
-        category: "Livestock Status",
-        values: ["Newborn", "Juvenile", "Adult", "Breeding", "Pregnant", "Lactating", "Dry", "Market Ready", "Retired", "Sick", "Treated", "Quarantined", "Vaccinated", "Organic", "Free Range", "Grass Fed", "Grain Fed", "Registered", "Commercial", "Show Quality"],
-        colors: ["#f8e6a0", "#00b8d9", "#36b37e", "#6554c0", "#8777d9", "#00b8d9", "#f8e6a0", "#36b37e", "#6554c0", "#ff5630", "#ff8f73", "#ff5630", "#36b37e", "#36b37e", "#36b37e", "#36b37e", "#f8e6a0", "#0052cc", "#00b8d9", "#6554c0"]
-    },
-
-// FITNESS & WELLNESS
-    {
-        category: "Workout Intensity",
-        values: ["Light", "Moderate", "Vigorous", "HIIT", "Recovery", "Endurance", "Strength", "Power", "Speed", "Agility", "Flexibility", "Balance", "Cardio", "Resistance", "Circuit", "CrossFit", "Yoga", "Pilates", "Functional", "Sport Specific"],
-        colors: ["#c6edfb", "#f8e6a0", "#ff8f73", "#ff5630", "#00b8d9", "#0065ff", "#ff5630", "#ff5630", "#ff5630", "#ff8f73", "#00b8d9", "#00b8d9", "#0065ff", "#ff5630", "#ff8f73", "#ff5630", "#00b8d9", "#00b8d9", "#f8e6a0", "#0052cc"]
-    },
-    {
-        category: "Wellness Dimension",
-        values: ["Physical", "Mental", "Emotional", "Social", "Spiritual", "Intellectual", "Occupational", "Environmental", "Financial", "Nutritional", "Sleep", "Stress", "Energy", "Mindfulness", "Resilience", "Balance", "Purpose", "Growth", "Connection", "Happiness"],
-        colors: ["#36b37e", "#0065ff", "#6554c0", "#00b8d9", "#8777d9", "#0052cc", "#f8e6a0", "#36b37e", "#ffab00", "#57d9a3", "#6554c0", "#ff8f73", "#ff8f73", "#8777d9", "#36b37e", "#00b8d9", "#8777d9", "#36b37e", "#00b8d9", "#36b37e"]
-    },
-
-// CONSTRUCTION & REAL ESTATE
-    {
-        category: "Construction Phase",
-        values: ["Planning", "Design", "Permits", "Foundation", "Framing", "Mechanical", "Electrical", "Plumbing", "Insulation", "Drywall", "Finishing", "Landscaping", "Inspection", "Punch List", "Final", "Warranty", "Renovation", "Demolition", "Excavation", "Site Prep"],
-        colors: ["#f8e6a0", "#6554c0", "#00b8d9", "#0052cc", "#0065ff", "#ff8f73", "#ff8f73", "#00b8d9", "#f8e6a0", "#f8e6a0", "#36b37e", "#36b37e", "#00b8d9", "#ff8f73", "#36b37e", "#00b8d9", "#ff8f73", "#ff5630", "#ff8f73", "#f8e6a0"]
-    },
-    {
-        category: "Property Status",
-        values: ["For Sale", "For Rent", "Under Contract", "Pending", "Closed", "Off Market", "Coming Soon", "Price Reduced", "New Listing", "Back on Market", "Foreclosure", "Short Sale", "Bank Owned", "As-Is", "Fixer Upper", "Move-In Ready", "Luxury", "Investment", "Development", "Historic"],
-        colors: ["#36b37e", "#00b8d9", "#f8e6a0", "#f8e6a0", "#36b37e", "#6554c0", "#f8e6a0", "#ff8f73", "#36b37e", "#ff8f73", "#ff5630", "#ff8f73", "#ff5630", "#ff8f73", "#ff8f73", "#36b37e", "#0052cc", "#00b8d9", "#0065ff", "#6554c0"]
-    },
-// FREELANCE & GIG ECONOMY
-    {
-        category: "Freelancer Status",
-        values: ["Available", "Booked", "Partial Availability", "On Project", "Between Projects", "Taking Break", "Not Available", "Looking for Work", "Exclusive Contract", "Multiple Clients", "Full-Time", "Part-Time", "Side Hustle", "Nights & Weekends", "Remote", "On-Site", "Hybrid", "Local Only", "International", "Traveling"],
-        colors: ["#36b37e", "#ff5630", "#f8e6a0", "#0065ff", "#f8e6a0", "#6554c0", "#ff5630", "#f8e6a0", "#0052cc", "#00b8d9", "#0052cc", "#00b8d9", "#f8e6a0", "#00b8d9", "#36b37e", "#f8e6a0", "#00b8d9", "#f8e6a0", "#0052cc", "#0065ff"]
-    },
-    {
-        category: "Client Relationship",
-        values: ["New", "Established", "Long-Term", "Repeat", "One-Time", "VIP", "High Priority", "Regular", "Difficult", "Easy", "Collaborative", "Hands-Off", "Micromanage", "Late Payer", "Prompt Payer", "Referral Source", "High Budget", "Low Budget", "Potential", "Former"],
-        colors: ["#f8e6a0", "#36b37e", "#0052cc", "#36b37e", "#f8e6a0", "#ff5630", "#ff5630", "#00b8d9", "#ff8f73", "#36b37e", "#36b37e", "#36b37e", "#ff8f73", "#ff5630", "#36b37e", "#36b37e", "#0052cc", "#ff8f73", "#f8e6a0", "#6554c0"]
-    },
-
-    // STARTUPS & ENTREPRENEURSHIP
-    {
-        category: "Startup Phase",
-        values: ["Ideation", "Validation", "Pre-Seed", "Seed", "Series A", "Series B", "Series C+", "Bootstrapped", "Profitable", "Pre-Revenue", "Revenue", "Growth", "Scale", "Mature", "Acquisition Target", "Pre-IPO", "Public", "Pivot", "Restructuring", "Exit"],
-        colors: ["#f8e6a0", "#f8e6a0", "#f8e6a0", "#00b8d9", "#0065ff", "#0052cc", "#6554c0", "#36b37e", "#36b37e", "#f8e6a0", "#36b37e", "#0065ff", "#0052cc", "#00b8d9", "#0052cc", "#ff5630", "#6554c0", "#ff8f73", "#ff8f73", "#ff5630"]
-    },
-    // PROJECT MANAGEMENT FUNDAMENTALS
-    {
-        category: "Priority",
-        values: ["Trivial", "Low", "Medium", "High", "Critical", "Blocker", "Urgent", "Emergency", "Can Wait", "ASAP", "When Possible", "Immediate", "Show-Stopper", "P0", "P1", "P2", "P3", "P4"],
-        colors: ["#baf3db", "#c6edfb", "#f8e6a0", "#fedec8", "#ffd5d2", "#f87168", "#ff5630", "#ffbdad", "#79e2f2", "#ff8f73", "#c0b6f2", "#998dd9", "#ff7452", "#00c7e6", "#36b37e", "#ff5230", "#ffab00", "#6554c0"]
-    },
-    {
-        category: "Status",
-        values: ["Backlog", "To Do", "In Progress", "Code Review", "Testing", "Blocked", "On Hold", "Ready", "Done", "Delayed", "Pending", "Waiting", "Approved", "Rejected", "Under Review", "Deployed", "Released", "Verified", "Ready for QA", "Needs Info", "Cannot Reproduce", "Won't Fix", "Duplicate", "Implemented", "Cancelled", "Reopened", "Fixed", "Merged", "Archived", "Reviewing", "Paused", "Active", "Stalled", "Completed", "Inactive", "Not Started", "Being Tested", "Awaiting Deployment", "Awaiting Approval", "QA Failed", "QA Passed", "Deferred", "In Development", "Not Planned", "Planned"],
-        colors: ["#dfd8fd", "#c6edfb", "#579dff", "#79e2f2", "#00c7e6", "#ffd5d2", "#ff8f73", "#f8e6a0", "#4bce97", "#fedec8", "#cce0ff", "#ffab00", "#36b37e", "#ff5630", "#998dd9", "#57d9a3", "#00b8d9", "#00a3bf", "#00875a", "#ffc400", "#ff7452", "#de350b", "#6554c0", "#0065ff", "#c0b6f2", "#ffe380", "#fff0b3", "#f4f5f7", "#ebecf0", "#f87168", "#ffbdad", "#79f2c0", "#2684ff", "#8777d9", "#8993a4", "#8f7ee7", "#4c9aff", "#79e2f2", "#b3d4ff", "#ffc400", "#00b8d9", "#00c7e6", "#5243aa", "#4c9aff"]
-    },
-    {
-        category: "Effort",
-        values: ["Trivial", "Easy", "Medium", "Hard", "Complex", "XS", "S", "M", "L", "XL", "XXL", "1 Point", "2 Points", "3 Points", "5 Points", "8 Points", "13 Points", "21 Points", "34 Points", "Minutes", "Hours", "Days", "Weeks", "Months", "Quick Win", "Major Project", "Significant", "Minimal", "Substantial", "Massive", "Tiny"],
-        colors: ["#c6edfb", "#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2", "#00c7e6", "#36b37e", "#f8e6a0", "#fedec8", "#ff8f73", "#ff5630", "#cce0ff", "#b3d4ff", "#4c9aff", "#2684ff", "#0052cc", "#172b4d", "#091e42", "#ff7452", "#79e2f2", "#4c9aff", "#ffab00", "#ff8f73", "#ff5630", "#36b37e", "#de350b", "#ff7452", "#00c7e6", "#ff8f73", "#ff5630", "#00c7e6"]
-    },
-    {
-        category: "Complexity",
-        values: ["Trivial", "Simple", "Moderate", "Complex", "Very Complex", "Extremely Complex", "Easy", "Challenging", "Straightforward", "Intricate", "Sophisticated", "Elementary", "Difficult", "Advanced", "Basic", "Beginner", "Intermediate", "Expert", "Low", "Medium", "High", "Rocket Science"],
-        colors: ["#c6edfb", "#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2", "#ff5630", "#36b37e", "#ffab00", "#00c7e6", "#998dd9", "#de350b", "#79e2f2", "#ff8f73", "#ff5630", "#cce0ff", "#00c7e6", "#ff8f73", "#de350b", "#baf3db", "#f8e6a0", "#ffd5d2", "#ff5630"]
-    },
-    {
-        category: "Impact",
-        values: ["Minimal", "Low", "Medium", "High", "Critical", "Negligible", "Moderate", "Significant", "Major", "Minor", "Severe", "Transformative", "Game-Changing", "Incremental", "Revolutionary", "Evolutionary", "Disruptive", "Market-Defining", "Company-Wide", "Team-Level", "Strategic", "Tactical", "Operational", "Global", "Local"],
-        colors: ["#c6edfb", "#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2", "#79e2f2", "#ffab00", "#ff8f73", "#de350b", "#cce0ff", "#ff5630", "#6554c0", "#0052cc", "#00c7e6", "#0065ff", "#36b37e", "#0052cc", "#172b4d", "#ff5630", "#00c7e6", "#0052cc", "#36b37e", "#cce0ff", "#0052cc", "#36b37e"]
-    },
-    {
-        category: "Size",
-        values: ["XS", "S", "M", "L", "XL", "XXL", "Tiny", "Small", "Medium", "Large", "Huge", "Enormous", "Mini", "Compact", "Standard", "Expanded", "Massive", "Gigantic", "T-Shirt S", "T-Shirt M", "T-Shirt L", "T-Shirt XL", "T-Shirt XXL", "Microscopic", "Planetary"],
-        colors: ["#c6edfb", "#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2", "#ff5630", "#c6edfb", "#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2", "#ff5630", "#c6edfb", "#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2", "#ff5630", "#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2", "#ff5630", "#c6edfb", "#ff5630"]
-    },
-    {
-        category: "Due Date",
-        values: ["Overdue", "Today", "Tomorrow", "This Week", "Next Week", "This Month", "Next Month", "This Quarter", "Next Quarter", "This Year", "Future", "ASAP", "No Rush", "End of Day", "End of Week", "End of Month", "End of Quarter", "End of Year", "Now", "Later", "Soon", "Eventually", "Immediately", "Yesterday", "Long Overdue"],
-        colors: ["#ff5630", "#ff8f73", "#ffab00", "#f8e6a0", "#ffc400", "#fedec8", "#ff8f73", "#ffc400", "#ff8f73", "#ffab00", "#00b8d9", "#ff5630", "#36b37e", "#ff8f73", "#ffab00", "#ff8f73", "#ffab00", "#ff8f73", "#ff5630", "#00b8d9", "#ffab00", "#36b37e", "#ff5630", "#ff5630", "#de350b"]
-    },
-    {
-        category: "Risk",
-        values: ["None", "Low", "Medium", "High", "Critical", "Minimal", "Moderate", "Significant", "Extreme", "Acceptable", "Unacceptable", "Tolerable", "Negligible", "Severe", "Catastrophic", "Green", "Yellow", "Orange", "Red", "Managed", "Unmanaged", "Mitigated", "Transferred", "Avoided", "Accepted"],
-        colors: ["#36b37e", "#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2", "#36b37e", "#ffab00", "#ff8f73", "#ff5630", "#36b37e", "#ff5630", "#ffab00", "#36b37e", "#ff5630", "#de350b", "#36b37e", "#ffab00", "#ff8f73", "#ff5630", "#36b37e", "#ff5630", "#36b37e", "#00b8d9", "#36b37e", "#ffab00"]
-    },
-    {
-        category: "Sprint",
-        values: ["Sprint 1", "Sprint 2", "Sprint 3", "Sprint 4", "Sprint 5", "Sprint 6", "Sprint 7", "Sprint 8", "Sprint 9", "Sprint 10", "Current Sprint", "Next Sprint", "Backlog", "Future Sprint", "Sprint Planning", "Not Scheduled", "Sprint Review", "Sprint Retro", "Jan Sprint", "Feb Sprint", "Mar Sprint", "Apr Sprint", "May Sprint", "Jun Sprint", "Jul Sprint", "Aug Sprint", "Sep Sprint", "Oct Sprint", "Nov Sprint", "Dec Sprint"],
-        colors: ["#4c9aff", "#2684ff", "#0065ff", "#0052cc", "#0747a6", "#172b4d", "#091e42", "#8777d9", "#5243aa", "#8f7ee7", "#0065ff", "#0052cc", "#6554c0", "#8777d9", "#0065ff", "#6554c0", "#0065ff", "#0052cc", "#4c9aff", "#2684ff", "#0065ff", "#0052cc", "#0747a6", "#172b4d", "#091e42", "#8777d9", "#5243aa", "#8f7ee7", "#0065ff", "#0052cc"]
-    },
-    {
-        category: "Team",
-        values: ["Product", "Engineering", "Design", "Marketing", "Sales", "Customer Support", "IT", "HR", "Finance", "Legal", "Operations", "Research", "Frontend", "Backend", "DevOps", "QA", "UX", "UI", "Data Science", "Analytics", "Infrastructure", "Mobile", "Web", "Desktop", "Security", "Compliance", "Platform", "Content", "Strategy", "Innovation"],
-        colors: ["#0065ff", "#36b37e", "#6554c0", "#ff8f73", "#ffab00", "#00b8d9", "#0052cc", "#ff5630", "#00a3bf", "#de350b", "#36b37e", "#8777d9", "#0065ff", "#36b37e", "#0052cc", "#00b8d9", "#6554c0", "#6554c0", "#8777d9", "#0065ff", "#0052cc", "#36b37e", "#0065ff", "#0052cc", "#ff5630", "#de350b", "#0052cc", "#6554c0", "#ffab00", "#8777d9"]
-    },
-    // SOFTWARE DEVELOPMENT SPECIFIC
-    {
-        category: "Bug Severity",
-        values: ["Trivial", "Minor", "Major", "Critical", "Blocker", "Cosmetic", "Low", "Medium", "High", "Showstopper", "P1", "P2", "P3", "P4", "P5", "Severe", "Normal", "Enhancement", "Edge Case", "Core Functionality", "Security", "Performance", "UI/UX", "Accessibility", "Mobile", "Desktop", "Regression", "New Bug"],
-        colors: ["#c6edfb", "#baf3db", "#fedec8", "#ffd5d2", "#ff5630", "#c6edfb", "#baf3db", "#f8e6a0", "#fedec8", "#ff5630", "#ff5630", "#ff8f73", "#ffab00", "#f8e6a0", "#c6edfb", "#ff5630", "#f8e6a0", "#c6edfb", "#f8e6a0", "#ff5630", "#ff5630", "#ff8f73", "#6554c0", "#de350b", "#36b37e", "#0052cc", "#ff5630", "#f8e6a0"]
-    },
-    {
-        category: "Tech Stack",
-        values: ["JavaScript", "Python", "Java", "C#", "C++", "Go", "Ruby", "PHP", "Swift", "Kotlin", "TypeScript", "React", "Angular", "Vue", "Node.js", "Django", "Flask", "Spring", "Rails", ".NET", "AWS", "Azure", "GCP", "Firebase", "MongoDB", "MySQL", "PostgreSQL", "Oracle", "SQL Server", "Redis", "Elasticsearch", "Docker", "Kubernetes", "Terraform", "Ansible", "Jenkins", "GitHub Actions", "CircleCI", "Travis CI", "Selenium", "Cypress", "Jest", "Mocha", "Pytest", "JUnit", "Android", "iOS", "Flutter", "React Native", "Xamarin"],
-        colors: ["#f7df1e", "#3572A5", "#b07219", "#178600", "#f34b7d", "#00ADD8", "#701516", "#4F5D95", "#ffac45", "#A97BFF", "#2b7489", "#61dafb", "#dd0031", "#42b883", "#68a063", "#092e20", "#000000", "#6db33f", "#cc0000", "#512bd4", "#ff9900", "#0078d7", "#4285f4", "#ffca28", "#4DB33D", "#00758f", "#336791", "#f80000", "#cc2927", "#dc382d", "#43853d", "#0db7ed", "#326ce5", "#623ce4", "#1A1918", "#f0d6b7", "#4078c0", "#343434", "#3eaaaf", "#5b9bd5", "#17202c", "#15c213", "#8d6748", "#4B8BBE", "#25A9E0", "#a4c639", "#000000", "#42d1f5", "#61dafb", "#512bd4"]
-    },
-    {
-        category: "Code Review",
-        values: ["Needs Review", "Reviewing", "Changes Requested", "Approved", "Merged", "Blocked", "WIP", "Ready for Review", "Review Complete", "Needs Testing", "Needs Documentation", "Ready to Merge", "Pending CI", "CI Failed", "CI Passed", "Hold", "RFC", "Experimental", "Needs Rework", "Minor Changes", "Major Changes", "Requested Changes", "No Changes Needed", "Quality Concerns", "Performance Concerns", "Security Concerns", "Best Practices", "Clean Code", "Technical Debt", "Architecture Concerns"],
-        colors: ["#f8e6a0", "#0065ff", "#ff8f73", "#36b37e", "#0065ff", "#ff5630", "#6554c0", "#f8e6a0", "#36b37e", "#f8e6a0", "#f8e6a0", "#36b37e", "#f8e6a0", "#ff5630", "#36b37e", "#ff8f73", "#6554c0", "#8777d9", "#ff8f73", "#f8e6a0", "#ff8f73", "#ff8f73", "#36b37e", "#ff8f73", "#ff8f73", "#ff5630", "#f8e6a0", "#36b37e", "#ff8f73", "#ff8f73"]
-    },
-    {
-        category: "Environment",
-        values: ["Development", "Testing", "Staging", "Production", "QA", "Local", "CI/CD", "Sandbox", "Demo", "Lab", "Integration", "UAT", "Pre-Production", "Hotfix", "Canary", "Beta", "Alpha", "Gamma", "Dev", "Test", "Prod", "Localhost", "Cloud", "On-Premise", "Hybrid", "Shared", "Isolated", "Containerized", "Serverless", "Legacy"],
-        colors: ["#36b37e", "#00b8d9", "#f8e6a0", "#ff5630", "#00b8d9", "#36b37e", "#0065ff", "#36b37e", "#6554c0", "#0065ff", "#0065ff", "#f8e6a0", "#f8e6a0", "#ff5630", "#f8e6a0", "#8777d9", "#8777d9", "#8777d9", "#36b37e", "#00b8d9", "#ff5630", "#36b37e", "#0065ff", "#0052cc", "#6554c0", "#0065ff", "#36b37e", "#0065ff", "#0065ff", "#ff8f73"]
-    },
-    {
-        category: "Release",
-        values: ["v1.0", "v1.1", "v1.2", "v2.0", "Alpha", "Beta", "RC", "GA", "Hotfix", "Patch", "Major", "Minor", "Bugfix", "Unreleased", "Next", "Current", "Previous", "LTS", "Deprecated", "Preview", "Stable", "Unstable", "Development", "Production", "Q1 Release", "Q2 Release", "Q3 Release", "Q4 Release", "Future Release", "Shipped"],
-        colors: ["#0065ff", "#0065ff", "#0065ff", "#0065ff", "#8777d9", "#8777d9", "#f8e6a0", "#36b37e", "#ff5630", "#f8e6a0", "#ff8f73", "#f8e6a0", "#36b37e", "#6554c0", "#0065ff", "#36b37e", "#0065ff", "#36b37e", "#ff8f73", "#8777d9", "#36b37e", "#ff8f73", "#36b37e", "#ff5630", "#0065ff", "#0065ff", "#0065ff", "#0065ff", "#0065ff", "#36b37e"]
-    },
-    {
-        category: "Quality Assurance",
-        values: ["Not Tested", "Testing", "Passed", "Failed", "Blocked", "Flaky", "Pending", "Skipped", "Automated", "Manual", "UI Testing", "Unit Testing", "Integration Testing", "Regression Testing", "Performance Testing", "Security Testing", "Accessibility Testing", "Edge Cases", "Happy Path", "Smoke Test", "Sanity Test", "Load Test", "Stress Test", "Penetration Test", "User Acceptance", "Compatibility", "Alpha Testing", "Beta Testing", "Production Validation", "Exploratory"],
-        colors: ["#f8e6a0", "#0065ff", "#36b37e", "#ff5630", "#ff8f73", "#ffab00", "#f8e6a0", "#6554c0", "#36b37e", "#0065ff", "#6554c0", "#36b37e", "#0065ff", "#ff8f73", "#ffab00", "#ff5630", "#6554c0", "#ffab00", "#36b37e", "#0065ff", "#0065ff", "#ffab00", "#ff8f73", "#ff5630", "#36b37e", "#0065ff", "#8777d9", "#8777d9", "#36b37e", "#6554c0"]
-    },
-    {
-        category: "Technical Debt",
-        values: ["None", "Low", "Medium", "High", "Critical", "Acceptable", "Unacceptable", "Tech Debt", "Refactor Needed", "Clean Code", "Maintainable", "Unmaintainable", "Legacy Code", "Good Architecture", "Poor Architecture", "Documentation Needed", "Well Documented", "Optimized", "Unoptimized", "Scalable", "Not Scalable", "Testable", "Untestable", "Complexity", "Dependency Hell", "Well Designed", "Poorly Designed", "Quick Fix", "Proper Solution", "Temporary Workaround"],
-        colors: ["#36b37e", "#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2", "#baf3db", "#ffd5d2", "#fedec8", "#fedec8", "#baf3db", "#baf3db", "#ffd5d2", "#ffd5d2", "#baf3db", "#ffd5d2", "#f8e6a0", "#baf3db", "#baf3db", "#ffd5d2", "#baf3db", "#ffd5d2", "#baf3db", "#ffd5d2", "#fedec8", "#ffd5d2", "#baf3db", "#ffd5d2", "#ffd5d2", "#baf3db", "#fedec8"]
-    },
-    {
-        category: "Deploy Status",
-        values: ["Not Deployed", "Deploying", "Deployed", "Deployment Failed", "Ready to Deploy", "Scheduled", "Cancelled", "Rolled Back", "Hotfix", "Canary Deployed", "Blue/Green", "Partial", "Complete", "Verified", "Unverified", "In Progress", "Queued", "On Hold", "Skipped", "Pending Approval", "Approved for Deploy", "Rejected", "Production", "Staging", "Development", "Testing", "Canary", "Beta", "Alpha", "Integration"],
-        colors: ["#f8e6a0", "#0065ff", "#36b37e", "#ff5630", "#f8e6a0", "#0065ff", "#6554c0", "#ff8f73", "#ff5630", "#f8e6a0", "#0065ff", "#f8e6a0", "#36b37e", "#36b37e", "#f8e6a0", "#0065ff", "#6554c0", "#ff8f73", "#6554c0", "#f8e6a0", "#36b37e", "#ff5630", "#ff5630", "#f8e6a0", "#36b37e", "#0065ff", "#f8e6a0", "#8777d9", "#8777d9", "#0065ff"]
-    },
-    {
-        category: "Code Coverage",
-        values: ["0-20%", "20-40%", "40-60%", "60-80%", "80-100%", "Low", "Medium", "High", "Complete", "Incomplete", "Minimal", "Good", "Excellent", "Poor", "Needs Improvement", "Acceptable", "Unacceptable", "Below Standard", "Meets Standard", "Exceeds Standard", "Critical Paths Covered", "Happy Path Only", "Edge Cases Covered", "Unit Test", "Integration Test", "UI Test", "No Tests", "Partial Tests", "Full Test Suite", "Test Driven"],
-        colors: ["#ff5630", "#ff8f73", "#ffab00", "#36b37e", "#00b8d9", "#ff5630", "#ffab00", "#36b37e", "#00b8d9", "#ff5630", "#ff5630", "#ffab00", "#00b8d9", "#ff5630", "#ff8f73", "#ffab00", "#ff5630", "#ff5630", "#36b37e", "#00b8d9", "#36b37e", "#ffab00", "#00b8d9", "#36b37e", "#0065ff", "#6554c0", "#ff5630", "#ffab00", "#00b8d9", "#36b37e"]
-    },
-    {
-        category: "API Status",
-        values: ["Planned", "In Development", "Testing", "Stable", "Deprecated", "Legacy", "V1", "V2", "V3", "Beta", "Alpha", "Production", "Public", "Private", "Internal", "Partner", "Documented", "Undocumented", "REST", "GraphQL", "SOAP", "gRPC", "Webhook", "WebSocket", "OpenAPI", "Swagger", "Healthy", "Degraded", "Down", "Maintenance"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#ff8f73", "#ff5630", "#0065ff", "#0065ff", "#0065ff", "#8777d9", "#8777d9", "#36b37e", "#36b37e", "#6554c0", "#6554c0", "#0065ff", "#36b37e", "#ff8f73", "#0065ff", "#e535ab", "#4a154b", "#244c5a", "#0065ff", "#0065ff", "#85ea2d", "#85ea2d", "#36b37e", "#ffab00", "#ff5630", "#f8e6a0"]
-    },
-    // MARKETING & SALES
-    {
-        category: "Campaign Status",
-        values: ["Planning", "In Progress", "Live", "Completed", "On Hold", "Cancelled", "Delayed", "Scheduled", "Launching Soon", "Active", "Inactive", "Pending Approval", "Approved", "Rejected", "Draft", "Ready to Launch", "Testing", "Analyzing", "Post-Campaign", "Paused", "Restarting", "Iterating", "A/B Testing", "Final Review", "Pre-Launch", "Soft Launch", "Full Launch", "Limited", "Targeted", "Global"],
-        colors: ["#f8e6a0", "#0065ff", "#36b37e", "#00b8d9", "#ff8f73", "#ff5630", "#ffab00", "#6554c0", "#f8e6a0", "#36b37e", "#ff8f73", "#f8e6a0", "#36b37e", "#ff5630", "#6554c0", "#f8e6a0", "#00b8d9", "#0065ff", "#00b8d9", "#ff8f73", "#f8e6a0", "#0065ff", "#6554c0", "#f8e6a0", "#f8e6a0", "#36b37e", "#36b37e", "#ffab00", "#0065ff", "#0052cc"]
-    },
-    {
-        category: "Channel",
-        values: ["Email", "Social Media", "Website", "Blog", "Podcast", "Video", "SEO", "PPC", "Display", "Mobile", "Direct Mail", "TV", "Radio", "Print", "Event", "Webinar", "Affiliate", "Influencer", "PR", "Content", "SMS", "Push Notification", "In-App", "Outdoor", "Retail", "Point of Sale", "Word of Mouth", "Community", "Partnership", "Referral"],
-        colors: ["#0065ff", "#6554c0", "#36b37e", "#00b8d9", "#8777d9", "#ff8f73", "#0052cc", "#f8e6a0", "#ffab00", "#36b37e", "#ff8f73", "#ff5630", "#ffab00", "#ff8f73", "#6554c0", "#0065ff", "#f8e6a0", "#ffab00", "#ff5630", "#00b8d9", "#36b37e", "#8777d9", "#0065ff", "#36b37e", "#00b8d9", "#f8e6a0", "#6554c0", "#00b8d9", "#0065ff", "#36b37e"]
-    },
-    {
-        category: "Audience",
-        values: ["Enterprise", "SMB", "Startup", "Consumer", "B2B", "B2C", "Developer", "Designer", "Manager", "Executive", "Student", "Teacher", "Parent", "Child", "Teen", "Young Adult", "Adult", "Senior", "Male", "Female", "Gen Z", "Millennial", "Gen X", "Baby Boomer", "Silent Generation", "Local", "Regional", "National", "Global", "Niche"],
-        colors: ["#0052cc", "#0065ff", "#00b8d9", "#36b37e", "#0052cc", "#36b37e", "#6554c0", "#8777d9", "#f8e6a0", "#ff8f73", "#00b8d9", "#00b8d9", "#36b37e", "#00b8d9", "#00b8d9", "#00b8d9", "#00b8d9", "#00b8d9", "#0065ff", "#ff8f73", "#00b8d9", "#36b37e", "#f8e6a0", "#ffab00", "#ff8f73", "#36b37e", "#0065ff", "#0052cc", "#6554c0", "#8777d9"]
-    },
-    {
-        category: "Content Type",
-        values: ["Blog Post", "Case Study", "White Paper", "Ebook", "Infographic", "Video", "Podcast", "Webinar", "Social Post", "Email", "Newsletter", "Press Release", "Tutorial", "How-To Guide", "Interview", "Review", "Testimonial", "Product Demo", "Advertisement", "Landing Page", "Brochure", "Catalog", "Report", "Survey", "Quiz", "Interactive", "Template", "Checklist", "Worksheet", "Presentation"],
-        colors: ["#00b8d9", "#0065ff", "#0052cc", "#00b8d9", "#6554c0", "#ff8f73", "#8777d9", "#0065ff", "#6554c0", "#0065ff", "#0065ff", "#ff5630", "#36b37e", "#36b37e", "#6554c0", "#f8e6a0", "#36b37e", "#00b8d9", "#ff8f73", "#00b8d9", "#f8e6a0", "#f8e6a0", "#0052cc", "#6554c0", "#00b8d9", "#6554c0", "#36b37e", "#36b37e", "#36b37e", "#6554c0"]
-    },
-    // BUSINESS AND MANAGEMENT
-    {
-        category: "Business Strategy",
-        values: ["Drafting", "Approved", "Implementing", "Reviewing", "Stalled", "Completed", "Pivot Needed", "On Track", "At Risk", "Vision Set", "Goals Defined", "Metrics Assigned"],
-        colors: ["#f8e6a0", "#36b37e", "#00b8d9", "#6554c0", "#ff8f73", "#00c7e6", "#ff5630", "#36b37e", "#ffab00", "#0052cc", "#f8e6a0", "#8777d9"]
-    },
-    {
-        category: "Operations",
-        values: ["Planning", "Active", "Optimized", "Disrupted", "Streamlined", "Blocked", "Under Review", "Scaling", "Stable", "Overloaded", "Maintenance", "Scheduled", "Emergency Fix"],
-        colors: ["#f8e6a0", "#36b37e", "#00b8d9", "#ff5630", "#0065ff", "#ff8f73", "#6554c0", "#0052cc", "#36b37e", "#ffab00", "#8777d9", "#f8e6a0", "#ff5630"]
-    },
-    {
-        category: "Leadership Skills",
-        values: ["Developing", "Coaching", "Delegating", "Inspiring", "Struggling", "Mastered", "Training", "Mentoring", "Evaluating", "Adapting", "Visionary", "Tactical", "Empowering"],
-        colors: ["#0065ff", "#36b37e", "#00b8d9", "#6554c0", "#ff8f73", "#00c7e6", "#f8e6a0", "#8777d9", "#0052cc", "#ffab00", "#ff5630", "#36b37e", "#00b8d9"]
-    },
-    // MARKETING AND SALES
-    {
-        category: "Sales Plan",
-        values: ["Drafting", "Active", "Closed", "Lost", "Won", "Pending", "Forecasting", "Negotiating", "Follow-Up", "Cold Calling", "Upselling", "Target Met", "Below Target"],
-        colors: ["#f8e6a0", "#36b37e", "#00b8d9", "#ff5630", "#00c7e6", "#ff8f73", "#0065ff", "#6554c0", "#8777d9", "#ffab00", "#0052cc", "#36b37e", "#ff5630"]
-    },
-    {
-        category: "Social Media",
-        values: ["Scheduled", "Posted", "Engaging", "Trending", "Flopped", "Drafted", "Boosted", "Organic", "Paid", "Analyzing", "Paused", "Viral", "Moderated"],
-        colors: ["#6554c0", "#36b37e", "#00b8d9", "#ffab00", "#ff5630", "#f8e6a0", "#0065ff", "#00c7e6", "#ff8f73", "#8777d9", "#0052cc", "#36b37e", "#6554c0"]
-    },
-    {
-        category: "SEO",
-        values: ["Researching", "Optimizing", "Ranking", "Dropped", "Indexing", "Crawled", "Backlinked", "Audited", "Improved", "Stagnant", "Competitive", "Tracked", "Analyzed"],
-        colors: ["#0065ff", "#36b37e", "#00b8d9", "#ff5630", "#f8e6a0", "#ff8f73", "#00c7e6", "#6554c0", "#8777d9", "#ffab00", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // PRODUCT AND ENGINEERING
-    {
-        category: "Software Building",
-        values: ["Planning", "Coding", "Testing", "Debugging", "Deployed", "Failed", "Refactoring", "Optimized", "Blocked", "Released", "Prototyped", "Iterating", "Stable"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#ff8f73", "#36b37e", "#ff5630", "#6554c0", "#00c7e6", "#ffab00", "#8777d9", "#0052cc", "#36b37e", "#00b8d9"]
-    },
-    {
-        category: "Product Launch",
-        values: ["Pre-Launch", "Soft Launch", "Full Launch", "Delayed", "Cancelled", "Beta", "Alpha", "Live", "Post-Launch", "Analyzing", "Promoted", "Shipped", "Feedback Collected"],
-        colors: ["#f8e6a0", "#00b8d9", "#36b37e", "#ffab00", "#ff5630", "#8777d9", "#6554c0", "#0065ff", "#ff8f73", "#00c7e6", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "R&D",
-        values: ["Ideation", "Experimenting", "Prototyping", "Failed", "Promising", "Validated", "Researching", "Abandoned", "Funded", "Breakthrough", "Stagnant", "Scaled", "Documented"],
-        colors: ["#0065ff", "#00b8d9", "#f8e6a0", "#ff5630", "#36b37e", "#00c7e6", "#6554c0", "#ff8f73", "#8777d9", "#ffab00", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // FINANCE AND ACCOUNTING
-    {
-        category: "Money Planning",
-        values: ["Drafting", "Approved", "Tracking", "Over Budget", "Under Budget", "Balanced", "Adjusted", "Forecasted", "Reviewed", "Audited", "Pending", "Finalized", "Emergency Fund"],
-        colors: ["#f8e6a0", "#36b37e", "#0065ff", "#ff5630", "#00b8d9", "#00c7e6", "#ff8f73", "#6554c0", "#8777d9", "#ffab00", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "Budgeting Ahead",
-        values: ["Planning", "Set", "Overspent", "Underspent", "Adjusted", "Locked", "Projected", "Exceeded", "Saved", "Cut", "Reviewed", "Proposed", "Approved"],
-        colors: ["#f8e6a0", "#36b37e", "#ff5630", "#00b8d9", "#ff8f73", "#0065ff", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#00b8d9"]
-    },
-    {
-        category: "Cash Reporting",
-        values: ["Drafted", "Submitted", "Verified", "Discrepancy", "Balanced", "Pending", "Audited", "Positive", "Negative", "Projected", "Reconciled", "Delayed", "Final"],
-        colors: ["#f8e6a0", "#0065ff", "#36b37e", "#ff5630", "#00b8d9", "#ff8f73", "#6554c0", "#00c7e6", "#ffab00", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // HUMAN RESOURCES
-    {
-        category: "HR Management",
-        values: ["Active", "Onboarding", "Offboarding", "Planning", "Conflict", "Resolved", "Training", "Hiring", "Firing", "Promoting", "Evaluating", "Engaged", "Disengaged"],
-        colors: ["#36b37e", "#00b8d9", "#ff8f73", "#f8e6a0", "#ff5630", "#00c7e6", "#0065ff", "#6554c0", "#ffab00", "#8777d9", "#0052cc", "#36b37e", "#ff5630"]
-    },
-    {
-        category: "Team Training",
-        values: ["Scheduled", "In Progress", "Completed", "Cancelled", "Needs Update", "Certified", "Pending", "Skill Gap", "Upskilled", "Assessed", "Ongoing", "Refresher", "Advanced"],
-        colors: ["#f8e6a0", "#0065ff", "#36b37e", "#ff5630", "#ff8f73", "#00b8d9", "#6554c0", "#ffab00", "#00c7e6", "#8777d9", "#0052cc", "#36b37e", "#00b8d9"]
-    },
-    {
-        category: "Hiring Talent",
-        values: ["Sourcing", "Interviewing", "Offered", "Rejected", "Hired", "Screening", "Shortlisted", "Declined", "Pending", "On Hold", "Background Check", "Negotiating", "Signed"],
-        colors: ["#f8e6a0", "#0065ff", "#36b37e", "#ff5630", "#00b8d9", "#ff8f73", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // CUSTOMER SUPPORT
-    {
-        category: "Customer Helping",
-        values: ["Open", "Resolved", "Escalated", "Pending", "Closed", "Follow-Up", "Satisfied", "Dissatisfied", "In Progress", "Stalled", "Urgent", "Routine", "Feedback Received"],
-        colors: ["#f8e6a0", "#36b37e", "#ff5630", "#ff8f73", "#00b8d9", "#00c7e6", "#0065ff", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "Ticket Management",
-        values: ["New", "Assigned", "In Progress", "Resolved", "Reopened", "Closed", "Blocked", "High Priority", "Low Priority", "Awaiting User", "Escalated", "Merged", "Duplicate"],
-        colors: ["#f8e6a0", "#0065ff", "#36b37e", "#00b8d9", "#ff8f73", "#00c7e6", "#ff5630", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // IT AND SECURITY
-    {
-        category: "IT Running",
-        values: ["Operational", "Down", "Maintenance", "Upgrading", "Stable", "Unstable", "Monitoring", "Issue Detected", "Resolved", "Deploying", "Backup", "Restored", "Optimized"],
-        colors: ["#36b37e", "#ff5630", "#f8e6a0", "#0065ff", "#00b8d9", "#ff8f73", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "Network Security",
-        values: ["Secure", "Vulnerable", "Breached", "Patched", "Scanning", "Threat Detected", "Mitigated", "Unprotected", "Encrypted", "Monitored", "Firewall Up", "Intrusion", "Safe"],
-        colors: ["#36b37e", "#ff5630", "#ff8f73", "#00b8d9", "#0065ff", "#ffab00", "#00c7e6", "#f8e6a0", "#6554c0", "#8777d9", "#0052cc", "#ff5630", "#36b37e"]
-    },
-    // LEGAL AND COMPLIANCE
-    {
-        category: "Staying Legal",
-        values: ["Compliant", "Non-Compliant", "Under Review", "Pending", "Approved", "Violated", "Audited", "Drafted", "Enforced", "Updated", "Expired", "Investigated", "Cleared"],
-        colors: ["#36b37e", "#ff5630", "#f8e6a0", "#ff8f73", "#00b8d9", "#ffab00", "#0065ff", "#00c7e6", "#6554c0", "#8777d9", "#0052cc", "#ff5630", "#36b37e"]
-    },
-    {
-        category: "Contract Management",
-        values: ["Drafted", "Signed", "Expired", "Renewed", "Terminated", "Negotiating", "Reviewed", "Pending", "Active", "Breached", "Amended", "Finalized", "Disputed"],
-        colors: ["#f8e6a0", "#36b37e", "#ff5630", "#00b8d9", "#ff8f73", "#0065ff", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#ff5630"]
-    },
-    // FACILITIES AND OPERATIONS
-    {
-        category: "Facilities Running",
-        values: ["Operational", "Closed", "Maintenance", "Upgraded", "Damaged", "Repaired", "Inspected", "Overloaded", "Stable", "Renovating", "Occupied", "Vacant", "Optimized"],
-        colors: ["#36b37e", "#ff5630", "#f8e6a0", "#0065ff", "#ff8f73", "#00b8d9", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "Property Handling",
-        values: ["Owned", "Leased", "Vacant", "Occupied", "Sold", "Purchased", "Renovated", "Listed", "Pending Sale", "Inspected", "Appraised", "Developed", "Abandoned"],
-        colors: ["#36b37e", "#00b8d9", "#f8e6a0", "#0065ff", "#ff5630", "#ff8f73", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#ff5630"]
-    },
-    // PERSONAL AND LIFESTYLE
-    {
-        category: "Goal Setting",
-        values: ["Set", "In Progress", "Achieved", "Missed", "Adjusted", "Abandoned", "Pending", "Long-Term", "Short-Term", "Daily", "Weekly", "Monthly", "Yearly"],
-        colors: ["#f8e6a0", "#0065ff", "#36b37e", "#ff5630", "#ff8f73", "#00b8d9", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "Daily Stuff",
-        values: ["Planned", "Completed", "Skipped", "Overdue", "In Progress", "Blocked", "Routine", "Urgent", "Relaxed", "Busy", "Delegated", "Reviewed", "Optimized"],
-        colors: ["#f8e6a0", "#36b37e", "#ff8f73", "#ff5630", "#0065ff", "#00b8d9", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // HEALTH AND WELLNESS
-    {
-        category: "Doctor Appointments",
-        values: ["Scheduled", "Attended", "Missed", "Rescheduled", "Pending", "Confirmed", "Cancelled", "Urgent", "Routine", "Follow-Up", "Telehealth", "In-Person", "Completed"],
-        colors: ["#f8e6a0", "#36b37e", "#ff5630", "#ff8f73", "#0065ff", "#00b8d9", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // PERSONAL FINANCE
-    {
-        category: "Monthly Budget",
-        values: ["Drafted", "Set", "Overspent", "Underspent", "Adjusted", "Balanced", "Reviewed", "Exceeded", "Saved", "Tracked", "Pending", "Finalized", "Emergency"],
-        colors: ["#f8e6a0", "#36b37e", "#ff5630", "#00b8d9", "#ff8f73", "#0065ff", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // HOME MANAGEMENT
-    {
-        category: "Cleaning Routine",
-        values: ["Scheduled", "Completed", "Skipped", "In Progress", "Overdue", "Daily", "Weekly", "Monthly", "Deep Clean", "Spot Clean", "Delegated", "Planned", "Optimized"],
-        colors: ["#f8e6a0", "#36b37e", "#ff8f73", "#0065ff", "#ff5630", "#00b8d9", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // RELATIONSHIPS
-    {
-        category: "Family Game Nights",
-        values: ["Planned", "Held", "Cancelled", "Rescheduled", "In Progress", "Fun", "Chaotic", "Weekly", "Monthly", "Special Event", "Pending", "Enjoyed", "Memorable"],
-        colors: ["#f8e6a0", "#36b37e", "#ff5630", "#ff8f73", "#0065ff", "#00b8d9", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // PERSONAL DEVELOPMENT
-    {
-        category: "Online Courses",
-        values: ["Enrolled", "In Progress", "Completed", "Dropped", "Paused", "Certified", "Pending", "Self-Paced", "Live", "Reviewed", "Challenging", "Mastered", "Exploring"],
-        colors: ["#f8e6a0", "#0065ff", "#36b37e", "#ff5630", "#ff8f73", "#00b8d9", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // TRAVEL AND LEISURE
-    {
-        category: "Weekend Getaways",
-        values: ["Planned", "Booked", "Completed", "Cancelled", "In Progress", "Budgeted", "Spontaneous", "Relaxing", "Adventurous", "Pending", "Memorable", "Local", "Distant"],
-        colors: ["#f8e6a0", "#36b37e", "#00b8d9", "#ff5630", "#0065ff", "#ff8f73", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // DAILY ROUTINES
-    {
-        category: "Morning Rituals",
-        values: ["Set", "Completed", "Skipped", "Adjusted", "In Progress", "Relaxed", "Rushed", "Daily", "Optimized", "Disrupted", "Pending", "Energizing", "Calm"],
-        colors: ["#f8e6a0", "#36b37e", "#ff8f73", "#ff5630", "#0065ff", "#00b8d9", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // AGING AND ELDER CARE
-    {
-        category: "Health Check-ups for Seniors",
-        values: ["Scheduled", "Completed", "Missed", "Rescheduled", "Urgent", "Routine", "Pending", "Follow-Up", "Cancelled", "Confirmed", "Telehealth", "In-Person", "Reviewed"],
-        colors: ["#f8e6a0", "#36b37e", "#ff5630", "#ff8f73", "#ffab00", "#00b8d9", "#0065ff", "#00c7e6", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // CHILDCARE AND PARENTING
-    {
-        category: "Child’s Daily Routine",
-        values: ["Set", "Followed", "Disrupted", "Adjusted", "Skipped", "Morning", "Afternoon", "Evening", "Bedtime", "Playtime", "School", "Homework", "Flexible"],
-        colors: ["#f8e6a0", "#36b37e", "#ff5630", "#ff8f73", "#0065ff", "#00b8d9", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // IMMIGRATION AND RELOCATION
-    {
-        category: "Immigration Laws",
-        values: ["Researching", "Understood", "Confusing", "Applying", "Approved", "Denied", "Pending", "Updated", "Expired", "Consulted", "Complied", "Violated", "Reviewed"],
-        colors: ["#f8e6a0", "#36b37e", "#ff8f73", "#0065ff", "#00b8d9", "#ff5630", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // MILITARY AND VETERAN AFFAIRS
-    {
-        category: "Veteran Benefits",
-        values: ["Applied", "Approved", "Denied", "Pending", "Processing", "Received", "Expired", "Renewed", "Reviewed", "Appealed", "Delayed", "Completed", "In Progress"],
-        colors: ["#f8e6a0", "#36b37e", "#ff5630", "#ff8f73", "#0065ff", "#00b8d9", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // SPACE EXPLORATION AND ASTRONOMY
-    {
-        category: "Stargazing",
-        values: ["Planned", "Completed", "Cloudy", "Clear", "In Progress", "Logged", "Missed", "Telescoped", "Naked Eye", "Photographed", "Shared", "Solo", "Group"],
-        colors: ["#f8e6a0", "#36b37e", "#ff8f73", "#0065ff", "#00b8d9", "#00c7e6", "#ff5630", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // EDUCATION AND LEARNING
-    {
-        category: "Course Creation",
-        values: ["Planning", "Drafting", "Reviewing", "Approved", "Published", "Updating", "Archived", "In Development", "Pilot", "Live", "Feedback Collected", "Iterating", "Completed"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#00c7e6", "#ff8f73", "#ff5630", "#6554c0", "#8777d9", "#ffab00", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "Lesson Planning",
-        values: ["Drafted", "Reviewed", "Approved", "Taught", "Revised", "Archived", "In Progress", "Scheduled", "Cancelled", "Rescheduled", "Completed", "Feedback Received", "Optimized"],
-        colors: ["#f8e6a0", "#0065ff", "#36b37e", "#00b8d9", "#ff8f73", "#ff5630", "#6554c0", "#00c7e6", "#ffab00", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // CREATIVE PROJECTS
-    {
-        category: "Content Making",
-        values: ["Ideation", "Drafting", "Editing", "Published", "Promoted", "Archived", "In Progress", "Completed", "Feedback Received", "Iterating", "Abandoned", "Scheduled", "Live"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#00c7e6", "#ff8f73", "#ff5630", "#6554c0", "#8777d9", "#ffab00", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "Photography",
-        values: ["Planning", "Shooting", "Editing", "Published", "Exhibited", "Archived", "In Progress", "Completed", "Feedback Received", "Iterating", "Abandoned", "Scheduled", "Live"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#00c7e6", "#ff8f73", "#ff5630", "#6554c0", "#8777d9", "#ffab00", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // EVENT PLANNING
-    {
-        category: "Event Planning",
-        values: ["Ideation", "Planning", "Scheduling", "Promoting", "Executing", "Post-Event", "Completed", "Cancelled", "Rescheduled", "In Progress", "Feedback Collected", "Iterating", "Live"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#00c7e6", "#ff8f73", "#ff5630", "#6554c0", "#8777d9", "#ffab00", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "Conference Management",
-        values: ["Planning", "Scheduling", "Promoting", "Executing", "Post-Event", "Completed", "Cancelled", "Rescheduled", "In Progress", "Feedback Collected", "Iterating", "Live", "Registrations Open"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#00c7e6", "#ff8f73", "#ff5630", "#6554c0", "#8777d9", "#ffab00", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // HEALTH AND WELLNESS
-    {
-        category: "Wellness Management",
-        values: ["Planning", "Tracking", "Improving", "Maintaining", "Struggling", "Achieved", "In Progress", "Completed", "Feedback Received", "Iterating", "Abandoned", "Scheduled", "Live"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#36b37e", "#00c7e6", "#ff8f73", "#ff5630", "#6554c0", "#8777d9", "#ffab00", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "Workout Planning",
-        values: ["Scheduled", "Completed", "Skipped", "In Progress", "Overdue", "Daily", "Weekly", "Monthly", "Intense", "Light", "Delegated", "Planned", "Optimized"],
-        colors: ["#f8e6a0", "#36b37e", "#ff8f73", "#0065ff", "#ff5630", "#00b8d9", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // HOBBIES AND INTERESTS
-    {
-        category: "Hobby Running",
-        values: ["Planning", "Active", "Paused", "Completed", "Abandoned", "In Progress", "Feedback Received", "Iterating", "Scheduled", "Live", "Shared", "Solo", "Group"],
-        colors: ["#f8e6a0", "#36b37e", "#ff8f73", "#ff5630", "#0065ff", "#00b8d9", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "Garden Planning",
-        values: ["Planning", "Planting", "Growing", "Harvesting", "Maintaining", "Abandoned", "In Progress", "Feedback Received", "Iterating", "Scheduled", "Live", "Shared", "Solo"],
-        colors: ["#f8e6a0", "#36b37e", "#00b8d9", "#ff8f73", "#ff5630", "#0065ff", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    // TECHNOLOGY AND INNOVATION
-    {
-        category: "AI Exploration",
-        values: ["Researching", "Experimenting", "Prototyping", "Failed", "Promising", "Validated", "Researching", "Abandoned", "Funded", "Breakthrough", "Stagnant", "Scaled", "Documented"],
-        colors: ["#0065ff", "#00b8d9", "#f8e6a0", "#ff5630", "#36b37e", "#00c7e6", "#6554c0", "#ff8f73", "#8777d9", "#ffab00", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "Machine Learning",
-        values: ["Planning", "Modeling", "Training", "Testing", "Deployed", "Failed", "Refining", "Optimized", "Blocked", "Released", "Prototyped", "Iterating", "Stable"],
-        colors: ["#f8e6a0", "#0065ff", "#00b8d9", "#ff8f73", "#36b37e", "#ff5630", "#6554c0", "#00c7e6", "#ffab00", "#8777d9", "#0052cc", "#36b37e", "#00b8d9"]
-    },
-    // COMMUNITY AND SOCIAL PROJECTS
-    {
-        category: "Community Art Initiative",
-        values: ["Proposed", "Funded", "In Progress", "Completed", "Displayed", "Cancelled", "Collaborating", "Solo", "Public", "Private", "Planned", "Critiqued", "Celebrated"],
-        colors: ["#f8e6a0", "#36b37e", "#0065ff", "#00b8d9", "#ff8f73", "#ff5630", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-    {
-        category: "Weekly Meal Prep",
-        values: ["Planned", "Prepped", "Cooked", "Stored", "Eaten", "Skipped", "Shared", "Healthy", "Quick", "Complex", "Budgeted", "Tasted", "Adjusted"],
-        colors: ["#f8e6a0", "#36b37e", "#00b8d9", "#0065ff", "#ff8f73", "#ff5630", "#00c7e6", "#ffab00", "#6554c0", "#8777d9", "#0052cc", "#36b37e", "#f8e6a0"]
-    },
-
-    // ----------------------------------------------------------------
-    //  BUSINESS & MANAGEMENT (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Board Meeting Phase",
-        values: [
-            "Agenda Setting", "Board Packet Sent", "In Session", "Quorum Reached", "Voting", "Minutes Drafted",
-            "Minutes Approved", "Action Items Assigned", "Follow-Up Scheduled", "Executive Session", "Adjourned",
-            "Post-Meeting Survey", "Ratification", "Closed Session", "Open Forum", "Special Meeting",
-            "Emergency Meeting", "Annual Meeting", "Budget Approval", "New Policies Review",
-            "Awaiting Documents", "Auditor Report Received", "Committee Updates", "Performance Review",
-            "Strategic Review", "Crisis Discussion", "Appointment of Officers", "Bylaws Amendment", "Board Renewal"
-        ],
-        colors: [
-            "#D0E8F2", "#BAE1FF", "#FFF5BA", "#FED9B7", "#E2F0CB", "#FFB3C6", "#D4A5A5", "#B5EAD7", "#FDC5F5",
-            "#FFDAC1", "#B5B9FC", "#FFC6FF", "#FFD3B6", "#B0FFB0", "#A5A5A5", "#FFAACC", "#C0C0C0", "#FFD580",
-            "#CCFFCC", "#F2C6FF", "#FFE5B4", "#BCAAA4", "#CECECE", "#D8D8D8", "#DAF7A6", "#FF5733", "#C70039",
-            "#900C3F", "#581845"
-        ]
-    },
-    {
-        category: "Merger Integration Stage",
-        values: [
-            "Pre-Due Diligence", "Due Diligence", "Regulatory Filing", "Closing Approaches", "Day One Planning",
-            "Legal Entity Consolidation", "IT Systems Merge", "Brand Identity Merge", "HR Integration",
-            "Culture Harmonization", "Product Overlap Review", "Redundancy Check", "Synergy Realization",
-            "Communication Plan", "Post-Merger Transition", "Integration Steering Committee", "Office Relocation",
-            "Financial Systems Alignment", "Contract Harmonization", "Customer Communication", "Vendor Transition",
-            "Post-Merger Review", "Success Metrics", "Regulatory Approval", "Implementation Kickoff",
-            "Stakeholder Roadshow", "Interim Leadership", "Full Integration Achieved", "Retrospective", "Spin-Off"
-        ],
-        colors: [
-            "#FFF7E6", "#FFEBCC", "#FFDFB3", "#FFD399", "#FFC680", "#FFBA66", "#FFAE4D", "#FFA333", "#FF971A",
-            "#FF8B00", "#E67E22", "#CF711F", "#B7641B", "#9F5718", "#884914", "#703B11", "#FFECB3", "#FFF8E1",
-            "#FFE082", "#FFD54F", "#FFCA28", "#FFB300", "#FFA000", "#FF7F0E", "#FFB347", "#FFDAB9", "#EECBAD",
-            "#FFD1DC", "#F7CAC9", "#92A8D1"
-        ]
-    },
-    {
-        category: "Leadership Trait",
-        values: [
-            "Empathy", "Visionary", "Strategic Thinker", "Decisive", "Collaborative", "Inspirational",
-            "Emotionally Intelligent", "Adaptable", "Ethical", "Transparent", "Accountable", "Responsible",
-            "Innovative", "Delegator", "Motivator", "Empowerer", "Listener", "Mentor", "Role Model", "Risk-Taker",
-            "Integrity", "Confidence", "Approachable", "Credible", "Resilience", "Humble", "Futuristic",
-            "Diplomatic", "Servant Leader", "Results-Oriented", "Persuasive", "Trustworthy", "Inclusive",
-            "Growth Mindset", "Logical", "Vision Communicator", "Culture Builder", "Big-Picture Oriented"
-        ],
-        colors: [
-            "#C8FACC", "#ADEFD1", "#FFB6C1", "#FF7F50", "#FFFFE0", "#D1E231", "#76EEC6", "#7FFFD4", "#E0FFFF",
-            "#F0FFF0", "#FFF8DC", "#FFE4C4", "#FFDAB9", "#FFEFD5", "#FFFACD", "#FFFFE0", "#98FB98", "#90EE90",
-            "#00FA9A", "#00FF7F", "#7CFC00", "#7FFF00", "#ADFF2F", "#B0E0E6", "#87CEEB", "#87CEFA", "#4682B4",
-            "#B0C4DE", "#ADD8E6", "#F08080", "#FA8072", "#E9967A", "#FFA07A", "#FF7F50", "#F4A460", "#CD5C5C",
-            "#FFC0CB", "#FFE4E1"
-        ]
-    },
-    {
-        category: "Risk Audit Topics",
-        values: [
-            "Market Volatility", "Credit Exposure", "Operational Gaps", "Compliance Gaps", "Fraud Detection",
-            "Supply Chain Interruption", "Vendor Reliability", "Data Breach Risk", "Regulatory Shifts",
-            "Technology Obsolescence", "Climate Impact", "Pandemic Resilience", "Political Instability",
-            "Reputational Damage", "Management Override", "SOX Compliance", "Ethics Violation", "Corruption Risk",
-            "Whistleblower Cases", "Cybersecurity", "Cloud Migration Risk", "Data Privacy Violations",
-            "License Compliance", "Tax Evasion Risk", "Uninsured Liabilities", "Budget Overruns", "Project Slippage",
-            "Adverse Currency Fluctuations", "Stagnant Innovation", "Merger Risk", "Third-Party Dependency",
-            "IT System Failure", "Employee Turnover Risk", "Pandemic Response", "Crisis Management Efficacy"
-        ],
-        colors: [
-            "#C9C9FF", "#B9B9F3", "#CCFFFF", "#CCE5FF", "#D6EAF8", "#AED6F1", "#85C1E9", "#5DADE2", "#3498DB",
-            "#2E86C1", "#2874A6", "#21618C", "#1B4F72", "#1B2631", "#641E16", "#7D6608", "#145A32", "#0B5345",
-            "#186A3B", "#17A589", "#148F77", "#117864", "#0E6251", "#7E5109", "#6E2C00", "#D4AC0D", "#7D6608",
-            "#E67E22", "#BA4A00", "#A04000", "#6E2C00", "#5B2C6F", "#6C3483", "#7D3C98", "#8E44AD"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    // MARKETING & SALES (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Market Segmentation",
-        values: [
-            "Demographic", "Geographic", "Behavioral", "Psychographic", "Firmographic", "Lifestyle", "Income-Based",
-            "Gender-Focused", "High Net Worth", "Low-Income", "College Students", "Professionals", "Retirees",
-            "Impulse Buyers", "Brand-Loyal", "Deal Seekers", "Tech-Savvy", "Health Conscious", "Environmentalists",
-            "Travel Lovers", "Foodies", "Sports Fans", "DIY Enthusiasts", "Pet Owners", "Gamers", "New Parents",
-            "Seniors 65+", "Millennials", "Gen Z", "Gen X", "Rural", "Urban", "Suburban", "Niche Hobbyists",
-            "Luxury Seekers", "Value Seekers", "Early Adopters", "Late Majority"
-        ],
-        colors: [
-            "#FFF0F5", "#FDEEF4", "#F5EEF8", "#EBF5FB", "#E8F8F5", "#E9F7EF", "#FEF9E7", "#FEF5E7", "#FDF2E9",
-            "#FAE5D3", "#F9EBEA", "#FDEDEC", "#FDFEFE", "#F8F9F9", "#EBEDEF", "#EAECEE", "#D5DBDB", "#CCD1D1",
-            "#AEB6BF", "#ABB2B9", "#D2B4DE", "#BB8FCE", "#E8DAEF", "#F2D7D5", "#FADBD8", "#FDEBD0", "#FCF3CF",
-            "#F9E79F", "#F7DC6F", "#F5B7B1", "#FAD7A0", "#FFDFBA", "#FFD3B6", "#FFB7B2", "#D4A5A5", "#CAB2FF"
-        ]
-    },
-    {
-        category: "Pricing Strategy",
-        values: [
-            "Penetration Pricing", "Skimming Pricing", "Competition-Based", "Cost-Plus", "Dynamic Pricing",
-            "Bundle Pricing", "Psychological Pricing", "Premium Pricing", "Freemium Model", "Pay-What-You-Want",
-            "Subscription Model", "Value-Based", "Loss Leader", "Volume Discount", "Tiered Pricing",
-            "Geographic Pricing", "Segmented Pricing", "Peak Pricing", "Paywall", "Auction Pricing",
-            "Name Your Price", "Hourly Billing", "Flat Rate", "Licensing Fee", "Markup Pricing",
-            "Membership Discount", "Promotional Discount", "Seasonal Pricing", "Two-Part Tariff", "Personalized Pricing"
-        ],
-        colors: [
-            "#FAFAD2", "#FFE4C4", "#FFDAB9", "#E6E6FA", "#FFFACD", "#FF69B4", "#FFD700", "#DAA520", "#B8860B",
-            "#F4A460", "#CD853F", "#D2B48C", "#DEB887", "#F5DEB3", "#FFEFD5", "#FFEBCD", "#FFF8DC", "#FFF5EE",
-            "#FFDEAD", "#FAEBD7", "#FFE4E1", "#F0FFF0", "#F0FFFF", "#00FFFF", "#7FFFD4", "#E0FFFF", "#F5FFFA",
-            "#E6F2FF", "#ACE1AF", "#E3F9F2"
-        ]
-    },
-    {
-        category: "Influencer Collab Stage",
-        values: [
-            "Research Influencers", "Contact Initiated", "Negotiations", "Contract Drafted", "Creative Brief Shared",
-            "Content Creation", "Content Approval", "Scheduled Post", "Post Live", "Monitoring Engagement",
-            "Payment Processed", "Case Study", "Relationship Building", "Renewal Discussion", "Affiliate Links Set",
-            "Product Seeded", "Sponsored Story Posted", "Whitelisting Ads", "Channel Takeover", "Giveaway Collab",
-            "Short-Form Video", "Long-Form Video", "Brand Ambassador Contract", "Exclusive Collab",
-            "Influencer Event", "Influencer Trip", "Feedback Session", "Performance Review", "Collab Extended",
-            "Collab Ended"
-        ],
-        colors: [
-            "#FFFFE0", "#FFFACD", "#FAFAD2", "#FFEFD5", "#FFE4E1", "#FFDEAD", "#DEB887", "#CD853F", "#D2691E",
-            "#F4A460", "#DAA520", "#B8860B", "#CD5C5C", "#BC8F8F", "#DB7093", "#FFC0CB", "#EE82EE", "#DDA0DD",
-            "#BA55D3", "#9932CC", "#8A2BE2", "#9400D3", "#8B008B", "#800080", "#9370DB", "#7B68EE", "#6A5ACD",
-            "#483D8B", "#663399", "#4B0082"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  PRODUCT & ENGINEERING (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Architecture Style",
-        values: [
-            "Monolith", "Microservices", "Service-Oriented", "Event-Driven", "Serverless", "Layered", "Hexagonal",
-            "Onion", "Clean Architecture", "MVC", "MVVM", "CQRS", "Microkernel", "Plugin-Based", "Big Ball of Mud",
-            "Client-Server", "Peer-to-Peer", "Embedded", "Real-Time System", "Machine Learning Pipeline",
-            "Data Warehouse", "Data Lake", "Data Lakehouse", "Graph Architecture", "Service Mesh", "Single-Page App",
-            "Multi-Page App", "Headless", "Composable", "Zero Trust Security"
-        ],
-        colors: [
-            "#B0E0E6", "#AFEEEE", "#ADD8E6", "#87CEFA", "#87CEEB", "#6495ED", "#00BFFF", "#1E90FF", "#4169E1",
-            "#4682B4", "#5F9EA0", "#6495ED", "#7B68EE", "#6A5ACD", "#483D8B", "#191970", "#00008B", "#0000CD",
-            "#0000FF", "#4169E1", "#8A2BE2", "#4B0082", "#9370DB", "#BA55D3", "#EE82EE", "#DDA0DD", "#DA70D6",
-            "#9932CC", "#9400D3", "#800080"
-        ]
-    },
-    {
-        category: "Technical Documentation",
-        values: [
-            "API Reference", "Developer Guide", "User Manual", "System Design Doc", "Release Notes",
-            "Installation Guide", "Architecture Diagram", "Data Dictionary", "Design Proposal",
-            "Style Guide", "Coding Standards", "Runbook", "Troubleshooting Guide", "FAQ",
-            "Contributing Guidelines", "Test Plan", "Roadmap", "Security Policy", "Performance Metrics",
-            "Service Level Agreement (SLA)", "Tutorial", "Knowledge Base Article", "Migration Guide",
-            "Upgrade Instructions", "Rollout Checklist", "Incident Postmortem", "Support Handbook",
-            "Development Workflow", "Infrastructure Diagram", "Integration Guide"
-        ],
-        colors: [
-            "#FDF5E6", "#FAEBD7", "#FAF0E6", "#F0FFF0", "#F0FFFF", "#E6E6FA", "#FFF0F5", "#FFE4E1", "#FFEBCD",
-            "#FFEFD5", "#FFFACD", "#FFF8DC", "#FFFAF0", "#FFF5EE", "#F8F8FF", "#E0FFFF", "#F5FFFA", "#FFF8DC",
-            "#FFFAF0", "#FFF5EE", "#F8F8FF", "#E6E6FA", "#FAFAD2", "#F5DEB3", "#FFE4B5", "#F0E68C", "#BDB76B",
-            "#EEE8AA", "#F0E68C", "#F5F5DC"
-        ]
-    },
-    {
-        category: "Refactor Category",
-        values: [
-            "Code Clean-Up", "Modularization", "De-Spaghetti", "Renaming Variables", "Splitting Classes",
-            "Method Extraction", "Removing Dead Code", "Performance Tuning", "Language Upgrade",
-            "Dependency Update", "Eliminating Globals", "Reducing Cyclomatic Complexity",
-            "Improve Readability", "Restructure Folders", "Normalize Database", "Dockerize",
-            "Decouple Layers", "API Versioning", "Separate Concerns", "Lint Fixes",
-            "Switch from OOP to Functional", "Switch from ORM X to Y", "Standardize Logging",
-            "Memory Optimization", "Break Circular Dependencies", "Cleanup Code Smells",
-            "Simplify Conditionals", "Replace If-Else with Polymorphism", "Introduce Patterns",
-            "Orchestrate Microservices"
-        ],
-        colors: [
-            "#FFFDD0", "#FAFAD2", "#FFE4B5", "#FFD700", "#FFA500", "#FF8C00", "#FF7F50", "#FF6347", "#FF4500",
-            "#FF1493", "#FF69B4", "#FFB6C1", "#FFC0CB", "#FFDAB9", "#EEE8AA", "#F0E68C", "#BDB76B", "#A9A9A9",
-            "#D3D3D3", "#696969", "#708090", "#778899", "#808080", "#A9A9A9", "#C0C0C0", "#DCDCDC", "#F5F5F5",
-            "#BC8F8F", "#B8860B", "#DAA520"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  FINANCE & ACCOUNTING (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Invoice Status",
-        values: [
-            "Draft", "Sent", "Viewed", "Partially Paid", "Fully Paid", "Overpaid", "Void", "Write-Off",
-            "Disputed", "Refunded", "Under Review", "Payment Plan", "Awaiting Approval",
-            "Awaiting Payment", "Net 15", "Net 30", "Net 45", "Net 60", "Late", "Penalty Incurred",
-            "Collections", "Revised", "Credit Note Issued", "Recurring Invoice", "Pending Refund",
-            "Chargeback", "Cancelled", "Archived", "Auto-Billed", "Bounced"
-        ],
-        colors: [
-            "#E1F7E7", "#C1E1C1", "#B4E1B4", "#A7E1A7", "#9AE19A", "#81E181", "#6AE16A", "#4BE14B", "#2FE12F",
-            "#17E117", "#D5F5E3", "#ABEBC6", "#82E0AA", "#58D68D", "#2ECC71", "#28B463", "#1D8348", "#145A32",
-            "#0B5345", "#212F3D", "#2C3E50", "#273746", "#1B4F72", "#148F77", "#117A65", "#0E6251", "#09BDBE",
-            "#036666", "#C5E7E2", "#CFD8DC"
-        ]
-    },
-    {
-        category: "Grant Type",
-        values: [
-            "Research Grant", "Scholarship Grant", "Startup Grant", "Community Development Grant", "Arts Grant",
-            "STEM Education Grant", "Healthcare Grant", "Nonprofit Operational Grant", "Capacity-Building Grant",
-            "Emergency Relief Grant", "Youth Program Grant", "Elder Care Grant", "Housing Grant", "Environmental Grant",
-            "Food Security Grant", "Tech Innovation Grant", "Minority-Owned Business Grant", "Women-Led Initiative Grant",
-            "Cultural Preservation Grant", "Historic Restoration Grant", "Science & Tech Fellowship", "Travel Grant",
-            "Sabbatical Grant", "Infrastructure Grant", "Rural Development Grant", "Urban Renewal Grant",
-            "Sustainability Grant", "Climate Research Grant", "Social Enterprise Grant", "Arts Fellowship"
-        ],
-        colors: [
-            "#FFFACD", "#FFF8DC", "#FAFAD2", "#FFEFD5", "#FFEB99", "#FFE066", "#FFD633", "#FFCC00", "#FFBF00",
-            "#FFB300", "#FFAA00", "#FFA500", "#E28B00", "#CC7A00", "#B36B00", "#995C00", "#804D00", "#663E00",
-            "#4D2F00", "#331F00", "#FFF0F5", "#FFE4E1", "#FFEFDB", "#F8F0E3", "#FFF5E1", "#FFF9E1", "#FEFCE0",
-            "#F9FFE1", "#EBFFE1", "#E6F2F0"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  HUMAN RESOURCES (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Conflict Resolution",
-        values: [
-            "Mediation Started", "Mediation Completed", "Arbitration Required", "Manager Intervention",
-            "Peer-to-Peer Dialogue", "Conflict Training", "Formal Warning", "Verbal Counseling",
-            "External Coach Brought In", "Situation Escalated", "Resolution Achieved", "Ongoing Tension",
-            "Policy Update Needed", "Anonymous Reporting", "Team Communication Workshop",
-            "Mutual Agreement", "Compensation Adjustment", "Department Transfer", "Leadership Mentorship",
-            "No-Fault Separation", "Constructive Discussion", "Documented Warning", "Final Warning",
-            "Probation Extended", "Relocation Option", "Job Reassignment", "Cultural Sensitivity Training",
-            "Performance Review Triggered", "Conflict Dissolved", "Follow-Up Scheduled"
-        ],
-        colors: [
-            "#E0FFFF", "#AFEEEE", "#B0E0E6", "#ADD8E6", "#87CEFA", "#87CEEB", "#00BFFF", "#1E90FF", "#6495ED",
-            "#4169E1", "#4682B4", "#5F9EA0", "#7B68EE", "#6A5ACD", "#483D8B", "#191970", "#00008B", "#0000CD",
-            "#0000FF", "#B0C4DE", "#708090", "#778899", "#808080", "#A9A9A9", "#696969", "#2F4F4F", "#FAF0E6",
-            "#FAEBD7", "#FFE4C4", "#E9967A"
-        ]
-    },
-    {
-        category: "Payroll Event",
-        values: [
-            "Monthly Payout", "Bi-Weekly Payout", "Weekly Payout", "Tax Withholding Update",
-            "Year-End Bonus", "Performance Bonus", "Overtime Pay", "Commission Pay", "Payroll Error",
-            "Back Pay", "Pay Rate Change", "Holiday Pay", "Sick Leave Payment", "Maternity Leave Payment",
-            "Bereavement Leave Payment", "Retroactive Pay", "Garnishment", "401(k) Contribution",
-            "Pension Contribution", "Insurance Deduction", "Loan Repayment Deduction", "Pay Stub Issued",
-            "W-2 Issued", "1099 Issued", "Severance Pay", "Expense Reimbursement", "Lump Sum Payment",
-            "Final Paycheck", "Hourly Rate Adjustment", "Annual Salary Adjustment"
-        ],
-        colors: [
-            "#E6E6FA", "#D8BFD8", "#DDA0DD", "#EE82EE", "#DA70D6", "#BA55D3", "#9932CC", "#8A2BE2", "#9400D3",
-            "#800080", "#4B0082", "#663399", "#7B68EE", "#6A5ACD", "#483D8B", "#9370DB", "#C8A2C8", "#D8BFD8",
-            "#DDA0DD", "#DEB887", "#F5DEB3", "#FFE4C4", "#FFDAB9", "#FFE4B5", "#F5F5DC", "#FAF0E6", "#FAEBD7",
-            "#FFEBCD", "#FFEFD5", "#FFF8DC"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  CUSTOMER SUPPORT (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Complaints Handling",
-        values: [
-            "Received", "Assigned Agent", "Investigating", "Waiting on Info", "Replied to Customer",
-            "Solution Offered", "Escalated to Supervisor", "Resolved: Partial Refund", "Resolved: Full Refund",
-            "Resolved: Replacement Sent", "Resolved: Apology Email", "No Response from Customer",
-            "Closed - Customer Happy", "Closed - Customer Unhappy", "Under Legal Review",
-            "Automated Acknowledgment Sent", "Awaiting Customer Documents", "Technical Analysis Ongoing",
-            "Pending Management Approval", "Additional Evidence Required", "Ticket Re-Opened", "Ticket Merged",
-            "Goodwill Gesture Offered", "Service Recovery Attempt", "Follow-Up Survey Sent", "Positive Survey Return",
-            "Negative Survey Return", "Public Complaint Social Media", "VIP Complaint", "Brand Reputation Risk"
-        ],
-        colors: [
-            "#E3F2FD", "#BBDEFB", "#90CAF9", "#64B5F6", "#42A5F5", "#2196F3", "#1E88E5", "#1976D2", "#1565C0",
-            "#0D47A1", "#E8EAF6", "#C5CAE9", "#9FA8DA", "#7986CB", "#5C6BC0", "#3F51B5", "#3949AB", "#303F9F",
-            "#283593", "#1A237E", "#F3E5F5", "#E1BEE7", "#CE93D8", "#BA68C8", "#AB47BC", "#9C27B0", "#8E24AA",
-            "#7B1FA2", "#6A1B9A", "#4A148C"
-        ]
-    },
-    {
-        category: "Ticket Priority Reason",
-        values: [
-            "Security Breach", "Data Loss", "Revenue Impacting", "Feature Unusable", "Major Bug",
-            "Minor Bug", "Billing Error", "Fraud Alert", "Legal Inquiry", "Compliance Issue",
-            "VIP Customer", "Escalation Policy", "Multiple Complaints Merged", "Time-Sensitive",
-            "Downtime Caused", "Service Instability", "Hardware Failure", "API Outage", "Accidental Deletion",
-            "Recovery Needed", "User Error", "Miscommunication", "SLA Requirement", "Customer Breach",
-            "Server Crash", "Performance Degradation", "High Impact Region", "Large Customer Account",
-            "Pending Renewal", "Threat to Churn"
-        ],
-        colors: [
-            "#FCE4EC", "#F8BBD0", "#F48FB1", "#F06292", "#EC407A", "#E91E63", "#D81B60", "#C2185B", "#AD1457",
-            "#880E4F", "#F9FBE7", "#F0F4C3", "#E6EE9C", "#DCE775", "#D4E157", "#CDDC39", "#C0CA33", "#AFB42B",
-            "#9E9D24", "#827717", "#F3E5F5", "#E1BEE7", "#CE93D8", "#BA68C8", "#BBDEFB", "#E3F2FD", "#FFCDD2",
-            "#EF9A9A", "#FFCCBC", "#FFAB91"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  IT & SECURITY (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Incident Classification",
-        values: [
-            "Unplanned Outage", "Partial Degradation", "Network Latency", "Security Incident", "Phishing Attempt",
-            "Malware Infection", "Ransomware Detected", "Service Misconfiguration", "Unauthorized Access",
-            "API Rate Limits Reached", "Server Crash", "Memory Leak", "Database Lock", "DNS Issue",
-            "Email Outage", "Expired Certificate", "DDoS Attack", "Failover Triggered", "Replication Failure",
-            "Hardware Burnout", "Cooling Failure", "Rack Overheating", "Privilege Escalation Attempt",
-            "Password Dump", "Insider Threat", "Botnet Attack", "Social Engineering", "Zero-Day Exploit",
-            "Data Corruption", "Resource Exhaustion", "Brute Force Attempt", "Man-in-the-Middle Attack"
-        ],
-        colors: [
-            "#F8BBD0", "#F48FB1", "#F06292", "#EC407A", "#E91E63", "#D81B60", "#C2185B", "#AD1457", "#880E4F",
-            "#FCE4EC", "#FFEBEE", "#FFCDD2", "#EF9A9A", "#E57373", "#EF5350", "#F44336", "#E53935", "#D32F2F",
-            "#C62828", "#B71C1C", "#FFD54F", "#FFCA28", "#FFC107", "#FFB300", "#FFA000", "#FF8F00", "#FF6F00",
-            "#FFE57F", "#FFD740", "#FFC400", "#FFAB00", "#FFF9C4"
-        ]
-    },
-    {
-        category: "Access Control Type",
-        values: [
-            "Password-Based", "Multi-Factor Authentication", "Single Sign-On", "Biometric", "Role-Based Access",
-            "Attribute-Based Access", "Discretionary Access", "Mandatory Access", "OAuth2", "OpenID Connect",
-            "JWT Token", "SAML", "LDAP", "RADIUS", "Zero Trust Network", "Privileged Access Management",
-            "Least Privilege", "Federated Identity", "Certificate-Based", "Smart Card", "Time-Based Access",
-            "Geo-Restricted Access", "Conditional Access", "Device Fingerprinting", "SSO with Okta",
-            "SSO with Azure AD", "SSO with Ping", "SSO with Auth0", "API Key", "IP Whitelisting"
-        ],
-        colors: [
-            "#C8E6C9", "#A5D6A7", "#81C784", "#66BB6A", "#4CAF50", "#43A047", "#388E3C", "#2E7D32", "#1B5E20",
-            "#C5E1A5", "#AED581", "#9CCC65", "#8BC34A", "#7CB342", "#689F38", "#558B2F", "#33691E", "#CCFF90",
-            "#B2FF59", "#76FF03", "#64DD17", "#C8E6C9", "#A5D6A7", "#81C784", "#66BB6A", "#4CAF50", "#43A047",
-            "#388E3C", "#2E7D32", "#1B5E20"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  LEGAL & COMPLIANCE (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Regulation Tracking",
-        values: [
-            "FTC Compliance", "FDA Compliance", "ITAR", "Export Control", "CPSIA", "HIPAA Update", "PCI 4.0",
-            "GDPR Fines", "CCPA Deadline", "NYDFS Cyber Regs", "SOX 404", "Basel III", "MiFID II", "PSD2",
-            "DFARS", "FedRAMP", "FERPA Update", "COBIT 2020", "EBA Guidelines", "FINRA Rules",
-            "HMDA", "ECOA", "RESPA", "OSHA Update", "EPA Standards", "Title IX Changes",
-            "Housing Discrimination", "Americans with Disabilities Act", "COPPA Update", "PHI Disposal"
-        ],
-        colors: [
-            "#FDEDEC", "#FADBD8", "#F5B7B1", "#F1948A", "#EC7063", "#E74C3C", "#CB4335", "#B03A2E", "#943126",
-            "#78281F", "#EBDEF0", "#D7BDE2", "#C39BD3", "#AF7AC5", "#9B59B6", "#8E44AD", "#7D3C98", "#6C3483",
-            "#5B2C6F", "#4A235A", "#EAECEE", "#D5D8DC", "#CCD1D1", "#ABB2B9", "#979A9A", "#7B7D7D", "#707B7C",
-            "#616A6B", "#515A5A", "#424949"
-        ]
-    },
-    {
-        category: "Lawsuit Stage",
-        values: [
-            "Complaint Filed", "Service of Process", "Answer Filed", "Motion to Dismiss", "Discovery Phase",
-            "Depositions", "Expert Witness", "Mediation", "Settlement Negotiations", "Pre-Trial Motions",
-            "Jury Selection", "Trial In Session", "Verdict Reached", "Appeal Filed", "Remanded",
-            "Settlement Accepted", "Class Certification", "Summary Judgment", "Appeal Denied",
-            "Case Dismissed", "Case Sealed", "Consent Decree", "Permanent Injunction", "Temporary Restraining Order",
-            "Counterclaim Filed", "Change of Venue", "Judgment Entered", "Execution of Judgment", "Enforcement",
-            "Case Reopened"
-        ],
-        colors: [
-            "#BBDEFB", "#90CAF9", "#64B5F6", "#42A5F5", "#2196F3", "#1E88E5", "#1976D2", "#1565C0", "#0D47A1",
-            "#E3F2FD", "#C5CAE9", "#9FA8DA", "#7986CB", "#5C6BC0", "#3F51B5", "#3949AB", "#303F9F", "#283593",
-            "#1A237E", "#F3E5F5", "#E1BEE7", "#CE93D8", "#BA68C8", "#AB47BC", "#9C27B0", "#8E24AA", "#7B1FA2",
-            "#6A1B9A", "#4A148C", "#F8BBD0"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  FACILITIES & OPERATIONS (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Emergency Protocol",
-        values: [
-            "Fire Drill", "Earthquake Drill", "Tornado Drill", "Active Shooter Drill", "Evacuation Plan",
-            "Lockdown Procedure", "Shelter-In-Place", "Pandemic Response", "Medical Emergency",
-            "Security Breach", "Chemical Spill", "Bomb Threat", "Severe Weather Alert", "Power Outage",
-            "Generator Test", "Elevator Entrapment", "Structural Damage Response", "Gas Leak",
-            "Flood Response", "Cyber Attack Drills", "Winter Storm Prep", "Incident Command Center",
-            "Red Cross Coordination", "First Aid Kit Check", "AED Inspection", "Fire Extinguisher Check",
-            "Emergency Lighting", "Backup Water Supply", "Snow Removal Plan", "Hurricane Shutters"
-        ],
-        colors: [
-            "#FFEBEE", "#FFCDD2", "#EF9A9A", "#E57373", "#EF5350", "#F44336", "#E53935", "#D32F2F", "#C62828",
-            "#B71C1C", "#FF8A80", "#FF5252", "#FF1744", "#D50000", "#FFAB91", "#FF5722", "#F4511E", "#E64A19",
-            "#D84315", "#BF360C", "#FFCCBC", "#FFAB91", "#FF8A65", "#FF7043", "#FF5722", "#F4511E", "#E64A19",
-            "#D84315", "#BF360C", "#FFE0B2"
-        ]
-    },
-    {
-        category: "Gear Tracking",
-        values: [
-            "Maintenance", "Inspection Due", "Replaced", "Upgraded", "Repaired", "Lost", "Expired", "Needs Calibration",
-            "Retired", "Loaned", "Reserved", "In Use", "Available", "Damaged", "Stolen", "Disposed",
-            "Under Warranty", "Warranty Expired", "OEM Parts On Order", "Generic Parts On Order", "Refurbished",
-            "Awaiting Spare", "Recycling", "E-Waste", "Physical Damage", "Software Update Required", "Firmware Update Required",
-            "Shipping Delayed", "Arrived in Warehouse", "Installed"
-        ],
-        colors: [
-            "#FFF3E0", "#FFE0B2", "#FFCC80", "#FFB74D", "#FFA726", "#FF9800", "#FB8C00", "#F57C00", "#EF6C00",
-            "#E65100", "#FFF8E1", "#FFECB3", "#FFE082", "#FFD54F", "#FFCA28", "#FFC107", "#FFB300", "#FFA000",
-            "#FF8F00", "#FF6F00", "#FFE57F", "#FFD740", "#FFC400", "#FFAB00", "#FFF9C4", "#FFF59D", "#FFF176",
-            "#FFEE58", "#FFEB3B"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  PERSONAL & LIFESTYLE (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Meal Planning Stage",
-        values: [
-            "Recipe Searching", "Grocery List", "Shopping", "Prep Work", "Cooking", "Serving", "Leftovers",
-            "Meal Prepped", "Budget Meals", "Healthy Option", "Cheat Day", "Vegetarian", "Vegan",
-            "Gluten-Free", "Dairy-Free", "Keto-Friendly", "Low Carb", "Paleo", "Mediterranean Diet",
-            "High Protein", "Snack Prep", "Breakfast Prep", "Lunch Prep", "Dinner Prep", "Dessert",
-            "Slow Cooker", "Air Fryer", "Instant Pot", "Soup Sunday", "Meal Swap"
-        ],
-        colors: [
-            "#FFFDE7", "#FFF9C4", "#FFF59D", "#FFF176", "#FFEE58", "#FFEB3B", "#FDD835", "#FBC02D", "#F9A825",
-            "#F57F17", "#FFF8E1", "#FFECB3", "#FFE082", "#FFD54F", "#FFCA28", "#FFC107", "#FFB300", "#FFA000",
-            "#FF8F00", "#FF6F00", "#FFF3E0", "#FFE0B2", "#FFCC80", "#FFB74D", "#FFA726", "#FF9800", "#FB8C00",
-            "#F57C00", "#EF6C00", "#E65100"
-        ]
-    },
-    {
-        category: "Self-Care Routine",
-        values: [
-            "Mindful Meditation", "Journaling", "Digital Detox", "Gratitude Practice", "Yoga Session",
-            "Spa Treatment", "Nature Walk", "Reading Hour", "Aromatherapy", "Sleep Hygiene",
-            "Breathwork", "Therapy Session", "Emotional Check-In", "Unplug Evening", "Stretching Routine",
-            "Healthy Boundaries", "Positive Affirmations", "Screen Time Limit", "Creative Expression",
-            "Music Therapy", "Art Therapy", "Hydration Challenge", "Nutrient Tracking", "No Sugar Day",
-            "Massage Appointment", "Weekend Getaway", "Nap Time", "Support Group", "Manicure Monday",
-            "Laughing Therapy"
-        ],
-        colors: [
-            "#E0F7FA", "#B2EBF2", "#80DEEA", "#4DD0E1", "#26C6DA", "#00BCD4", "#00ACC1", "#0097A7", "#00838F",
-            "#006064", "#E1F5FE", "#B3E5FC", "#81D4FA", "#4FC3F7", "#29B6F6", "#03A9F4", "#039BE5", "#0288D1",
-            "#0277BD", "#01579B", "#F1F8E9", "#DCEDC8", "#C5E1A5", "#AED581", "#9CCC65", "#8BC34A", "#7CB342",
-            "#689F38", "#558B2F", "#33691E"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  EDUCATION & LEARNING (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Online Class Format",
-        values: [
-            "Live Zoom Lecture", "Recorded Lecture", "Discussion Forum", "Weekly Quiz", "Live Q&A",
-            "Peer Review", "Group Project", "Virtual Breakout", "Guest Speaker", "Capstone Project",
-            "Hybrid Synchronous", "Hybrid Asynchronous", "Fully Asynchronous", "Virtual Lab",
-            "Interactive Whiteboard", "3D Virtual Space", "Office Hours", "Homework Submission",
-            "Assignment Feedback", "Plagiarism Check", "Auto-Grading", "Peer Mentoring",
-            "Simulation Session", "Language Exchange", "Coding Interview Prep", "Virtual Flashcards",
-            "Gamified Learning", "Adaptive Learning", "Proctored Exam", "Mock Tests"
-        ],
-        colors: [
-            "#FAFAFA", "#F5F5F5", "#EEEEEE", "#E0E0E0", "#BDBDBD", "#9E9E9E", "#757575", "#616161",
-            "#424242", "#212121", "#CFD8DC", "#B0BEC5", "#90A4AE", "#78909C", "#607D8B", "#546E7A",
-            "#455A64", "#37474F", "#263238", "#FAFAFA", "#F5F5F5", "#EEEEEE", "#E0E0E0", "#BDBDBD",
-            "#9E9E9E", "#757575", "#616161", "#424242", "#212121", "#ECEFF1"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  CREATIVE PROJECTS (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "DIY Difficulty",
-        values: [
-            "Beginner-Friendly", "Intermediate Complexity", "Advanced Complexity", "Expert Craftsmanship",
-            "Kids Safe", "Requires Power Tools", "Time-Intensive", "Budget-Friendly", "High Material Cost",
-            "Low Material Cost", "Eco-Friendly Materials", "Toxic Materials Warning",
-            "Garage Workspace Needed", "Outdoor Project", "Indoor Project", "Weekend Project",
-            "All-Day Project", "Quick Fix", "Major Overhaul", "Collaboration Recommended",
-            "Personal Protective Equipment Required", "Sewing Skills Needed", "Carpentry Skills Needed",
-            "Metalworking Skills Needed", "Electronics Knowledge Required", "Upcycling Project",
-            "Refinishing Technique", "Spray Painting", "Sanding & Polishing", "Resin Craft"
-        ],
-        colors: [
-            "#FFF9EC", "#FFEFD0", "#FFE4B5", "#FFD194", "#FFC181", "#FFB366", "#FFA64D", "#FF9933", "#FF8C1A",
-            "#FF8000", "#FF7300", "#FF6600", "#E65C00", "#CC5200", "#B34700", "#993D00", "#803300", "#662900",
-            "#4D1F00", "#331400", "#FFE4E1", "#FFF0F5", "#E6E6FA", "#F0F8FF", "#E0FFFF", "#F0FFF0", "#FAFAD2",
-            "#FFFACD", "#FFF5EE", "#F0FFF0"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  EVENT PLANNING (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Trade Show Booth Type",
-        values: [
-            "Inline Booth", "Corner Booth", "Peninsula Booth", "Island Booth", "Pop-Up Display",
-            "Modular Exhibit", "Custom Exhibit", "Double Decker", "Interactive Booth", "Product Showcase",
-            "Demo Station", "VR Experience", "Freight On-Site", "Kiosk Style", "Social Media Lounge",
-            "Charging Station", "Swag Giveaway", "Food Sampling", "Prize Wheel", "Photo Booth",
-            "Multi-Brand Collaboration", "Partner Pavilion", "Media Press Corner", "Private Meeting Room",
-            "Open Seating Area", "Lead Capture Tech", "Gamified Booth", "AR Demo", "Multi-Screen Wall",
-            "Zero-Waste Booth"
-        ],
-        colors: [
-            "#E8F5E9", "#C8E6C9", "#A5D6A7", "#81C784", "#66BB6A", "#4CAF50", "#43A047", "#388E3C", "#2E7D32",
-            "#1B5E20", "#E0F7FA", "#B2EBF2", "#80DEEA", "#4DD0E1", "#26C6DA", "#00ACC1", "#00838F", "#006064",
-            "#F1F8E9", "#DCEDC8", "#C5E1A5", "#AED581", "#9CCC65", "#8BC34A", "#7CB342", "#558B2F", "#33691E",
-            "#DCEDC8", "#C5E1A5", "#AED581"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  HEALTH & WELLNESS (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Meditation Techniques",
-        values: [
-            "Mindfulness Meditation", "Vipassana", "Loving-Kindness", "Body Scan", "Transcendental",
-            "Chakra Cleansing", "Zen Meditation", "Walking Meditation", "Guided Imagery",
-            "Mantra Repetition", "Pranayama Breathing", "Sound Bath", "Candle Gazing", "Yoga Nidra",
-            "Visualization", "Kundalini Meditation", "Tonglen", "Movement Meditation",
-            "Mindful Eating Meditation", "Stoic Reflection", "Metta Meditation", "Third Eye Focus",
-            "Walking Labyrinth", "Open Monitoring", "Focused Attention", "Progressive Muscle Relaxation",
-            "Crystal Meditation", "Forest Bathing", "Gratitude Meditation", "Inner Child Meditation"
-        ],
-        colors: [
-            "#FFFDE7", "#FFF9C4", "#FFF59D", "#FFF176", "#FFEE58", "#FFEB3B", "#FDD835", "#FBC02D", "#F9A825",
-            "#F57F17", "#F4FF81", "#EEFF41", "#C6FF00", "#AEEA00", "#76FF03", "#64DD17", "#CCFF90", "#B2FF59",
-            "#76FF03", "#64DD17", "#4CAF50", "#2E7D32", "#C8E6C9", "#A5D6A7", "#81C784", "#66BB6A", "#43A047",
-            "#388E3C", "#2E7D32", "#1B5E20"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  HOBBIES & INTERESTS (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Knitting Skill Level",
-        values: [
-            "Cast-On Basics", "Knit & Purl", "Simple Scarves", "Increasing/Decreasing", "Circular Needles",
-            "Double-Point Needles", "Cabling", "Colorwork", "Fair Isle Technique", "Intarsia",
-            "Brioche Stitch", "Lace Knitting", "Shawl Construction", "Top-Down Sweater", "Bottom-Up Sweater",
-            "Toe-Up Socks", "Magic Loop Technique", "Steeking", "Blocking", "Finishing & Seaming",
-            "Expert Patterns", "Complex Textures", "Designing Patterns", "Repairing Mistakes",
-            "Felting Projects", "Tunisian Crochet", "Yarn Dyeing", "Yarn Spinning", "Stash Organization", "Festival Knits"
-        ],
-        colors: [
-            "#FFF0F5", "#FFE4E1", "#FFDAB9", "#FFEFD5", "#FFFACD", "#EEE8AA", "#FAFAD2", "#F0FFF0", "#F0FFFF",
-            "#E6E6FA", "#FFF5EE", "#F5F5F5", "#DCDCDC", "#696969", "#708090", "#778899", "#B0C4DE", "#FFE4C4",
-            "#FFF8DC", "#E0FFFF", "#98FB98", "#AFEEEE", "#FFB6C1", "#FFA07A", "#FFDEAD", "#FA8072", "#FFA500",
-            "#FF6347", "#BC8F8F", "#FF4500"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  TECHNOLOGY & INNOVATION (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Blockchain Use Cases",
-        values: [
-            "Cryptocurrency", "NFT Marketplace", "Smart Contracts", "Supply Chain Tracking",
-            "Identity Management", "Decentralized Finance (DeFi)", "Stablecoins", "Voting Systems",
-            "Healthcare Records", "Decentralized Storage", "Asset Tokenization", "Energy Trading",
-            "Data Marketplace", "Prediction Markets", "DAOs", "Charity Transparency", "Real Estate Tokenization",
-            "IPFS Hosting", "Cross-Border Payments", "Remittances", "Insurance Claims",
-            "KYC Compliance", "Gaming Assets", "Metaverse Land", "Blockchain as a Service",
-            "Blockchain in IoT", "Loyalty Programs", "Carbon Credits", "Advertising Proof-of-View",
-            "Digital Twins"
-        ],
-        colors: [
-            "#F0FFF0", "#E0FFE0", "#D0FFDF", "#C0FFDF", "#B0FFDE", "#A0FFDE", "#90FFDE", "#80FFDD", "#70FFDD",
-            "#60FFDD", "#50FFDC", "#40FFDC", "#30FFDC", "#20FFDB", "#10FFDB", "#00FFDB", "#00E6C7", "#00CCB3",
-            "#00B39F", "#00998B", "#008077", "#006663", "#004D4F", "#00343B", "#001B27", "#000213", "#000000",
-            "#FFFFF0", "#FFFACD", "#FAFAD2"
-        ]
-    },
-
-    // ----------------------------------------------------------------
-    //  COMMUNITY & SOCIAL PROJECTS (ADDITIONAL CATEGORIES)
-    // ----------------------------------------------------------------
-    {
-        category: "Homeless Outreach Program",
-        values: [
-            "Street Outreach", "Shelter Coordination", "Food Distribution", "Clothing Donation",
-            "Housing Placement", "Healthcare Check", "Mental Health Support", "Addiction Recovery Referral",
-            "Job Training", "Case Management", "Meal Center Volunteer", "Emergency Shelter",
-            "Youth Homeless Services", "Family Shelter", "Permanent Supportive Housing", "Transitional Housing",
-            "Donation Drive", "Fundraising Event", "Blanket Drive", "Community Partnership",
-            "Religious Organization Collab", "Government Grant Received", "Substance Abuse Counseling",
-            "Counseling Services", "Transportation Assistance", "Legal Assistance", "ID Recovery",
-            "Mentorship Program", "Life Skills Workshop", "Success Story"
-        ],
-        colors: [
-            "#FFFBF0", "#FFF7E0", "#FFF3D0", "#FFEFBD", "#FFEAAA", "#FFE699", "#FFE288", "#FFDE77", "#FFD966",
-            "#FFD655", "#FFD244", "#FFCE33", "#F7CA4D", "#F0C036", "#EAB827", "#E5B01A", "#FFEC8B", "#FFE066",
-            "#FFD740", "#FFC400", "#FFAB00", "#FF9100", "#FF6F00", "#E65100", "#FFD180", "#FFCC80", "#FFB74D",
-            "#FFA726", "#FF9800", "#FB8C00"
-        ]
-    },
-    ];
 
 
 
-// PATTERN CONTINUATION INSTRUCTIONS:
-// 1. For each userFriendlyTopics category (Health, Finance, etc.)
-// 2. Create 2-5 badge categories with relevant values
-// 3. Use color variations from the established palette
-// 4. Maintain consistent value count per category (15-20)
-// 5. Ensure comprehensive coverage of sub-domains
-// 6. Repeat until all life areas are represented
 
-// ESTIMATED TOTAL BADGES:
-// 200 categories × 20 values = 4,000 badges
-// Add more categories as needed to reach 10,000
+import OpenAI from 'openai'
+import { API_KEY } from './secrets.js'
+import { random, showUserMsg, showSuccessMsg, showErrorMsg, showSpinner } from './util.service.js'
 
-// import OpenAI from 'openai'
-// import { API_KEY } from './secrets.js'
-// import { random, showUserMsg, showSuccessMsg, showErrorMsg, showSpinner } from './util.service.js'
-//
-// let openai = null
 
-// async function generateTaext(prompt, temperature = 1.0, fallback = '', length = 128) {
-//     openai = new OpenAI({
-//         dangerouslyAllowBrowser: true,
-//         apiKey: API_KEY,
-//     })
-//
-//     // console.log('PROMPT to GPT:\n', prompt)
-//     try {
-//         const response = await openai.chat.completions.create({
-//             // model: 'gpt-4o-mini',
-//             model: 'gpt-3.5-turbo',
-//             temperature,
-//             // max_tokens: 8192,
-//             max_tokens: length,
-//             messages: [{ role: 'user', content: prompt }],
-//         })
-//         let text = response.choices?.[0]?.message?.content?.trim() || ''
-//         while (text.length && !/[\w\d]/.test(text[0])) text = text.slice(1)
-//         while (text.length && !/[\w\d]/.test(text[text.length - 1])) {
-//             text = text.slice(0, -1)
-//         }
-//         if (!text) text = fallback
-//         else text = text.trim()
-//
-//         // console.log('GPT RESPONSE:\n', text)
-//         return text
-//     } catch (error) {
-//         console.log('OpenAI API error:', error)
-//         console.error('OpenAI API error:', error)
-//         return fallback
-//     }
-// }
-//
-//
-// function bracketBalanceRepair(str) {
-//     const openCurly = (str.match(/\{/g) || []).length
-//     const closeCurly = (str.match(/\}/g) || []).length
-//     const openSquare = (str.match(/\[/g) || []).length
-//     const closeSquare = (str.match(/\]/g) || []).length
-//
-//     let fixed = str
-//     if (openCurly === closeCurly + 1 && !str.trim().endsWith('}')) {
-//         fixed += '}'
-//     }
-//     if (openSquare === closeSquare + 1 && !str.trim().endsWith(']')) {
-//         fixed += ']'
-//     }
-//     return fixed
-// }
-//
-// function safeJsonParse(rawStr, fallback = '[]') {
-//     let str = rawStr || ''
-//     str = str.trim()
-//     str = str.replace(/^```+(\w+)?\s*/i, '')
-//     str = str.replace(/^json\s*/i, '')
-//     if (str.startsWith('[') && !str.endsWith(']')) {
-//         str += ']'
-//     } else if (str.startsWith('{') && !str.endsWith('}')) {
-//         str += '}'
-//     }
-//     try {
-//         return JSON.parse(str)
-//     } catch (err) {
-//         console.warn('First JSON.parse attempt failed, trying bracketBalanceRepair:', err)
-//     }
-//     const repaired = bracketBalanceRepair(str)
-//     if (repaired) {
-//         try {
-//             return JSON.parse(repaired)
-//         } catch (err2) {
-//             console.warn('Second JSON.parse attempt failed:', err2)
-//         }
-//     }
-//     try {
-//         return JSON.parse(fallback)
-//     } catch {
-//         return Array.isArray(fallback) ? [] : {}
-//     }
-// }
-//
-// export const STATUS_OPTIONS = ['inProgress', 'done', 'review', 'stuck', 'blocked']
-// export const PRIORITY_OPTIONS = ['low', 'medium', 'high']
-// export const CMP_ORDER_OPTIONS = ['StatusPicker', 'MemberPicker', 'DatePicker', 'SomeNewPicker', 'OtherPicker']
-//
-// let GPT_USER_POOL = []
+let openai = null
 
-import {getColorFromBackgroundColor, getRandomColor} from "./data.js"
+async function generateText(prompt, temperature = 1.0, fallback = '', length = 128) {
+    openai = new OpenAI({
+        dangerouslyAllowBrowser: true,
+        apiKey: API_KEY,
+    })
+
+    // console.log('PROMPT to GPT:\n', prompt)
+    try {
+        const response = await openai.chat.completions.create({
+            model: 'gpt-4o-mini',
+            // model: 'gpt-3.5-turbo',
+            temperature,
+            // max_tokens: 8192,
+            max_tokens: length,
+            messages: [{ role: 'user', content: prompt }],
+        })
+        let text = response.choices?.[0]?.message?.content?.trim() || ''
+        while (text.length && !/[\w\d]/.test(text[0])) text = text.slice(1)
+        while (text.length && !/[\w\d]/.test(text[text.length - 1])) {
+            text = text.slice(0, -1)
+        }
+        if (!text) text = fallback
+        else text = text.trim()
+
+        // console.log('GPT RESPONSE:\n', text)
+        return text
+    } catch (error) {
+        console.error('OpenAI API error:', error)
+        return fallback
+    }
+}
+
+
+function bracketBalanceRepair(str) {
+    const openCurly = (str.match(/\{/g) || []).length
+    const closeCurly = (str.match(/\}/g) || []).length
+    const openSquare = (str.match(/\[/g) || []).length
+    const closeSquare = (str.match(/\]/g) || []).length
+
+    let fixed = str
+    if (openCurly === closeCurly + 1 && !str.trim().endsWith('}')) {
+        fixed += '}'
+    }
+    if (openSquare === closeSquare + 1 && !str.trim().endsWith(']')) {
+        fixed += ']'
+    }
+    return fixed
+}
+
+function safeJsonParse(rawStr, fallback = '[]') {
+    let str = rawStr || ''
+    str = str.trim()
+    str = str.replace(/^```+(\w+)?\s*/i, '')
+    str = str.replace(/^json\s*/i, '')
+    if (str.startsWith('[') && !str.endsWith(']')) {
+        str += ']'
+    } else if (str.startsWith('{') && !str.endsWith('}')) {
+        str += '}'
+    }
+    try {
+        return JSON.parse(str)
+    } catch (err) {
+        console.warn('First JSON.parse attempt failed, trying bracketBalanceRepair:', err)
+    }
+    const repaired = bracketBalanceRepair(str)
+    if (repaired) {
+        try {
+            return JSON.parse(repaired)
+        } catch (err2) {
+            console.warn('Second JSON.parse attempt failed:', err2)
+        }
+    }
+    try {
+        return JSON.parse(fallback)
+    } catch {
+        return Array.isArray(fallback) ? [] : {}
+    }
+}
+
+export const STATUS_OPTIONS = ['inProgress', 'done', 'review', 'stuck', 'blocked']
+export const PRIORITY_OPTIONS = ['low', 'medium', 'high']
+export const CMP_ORDER_OPTIONS = ['StatusPicker', 'MemberPicker', 'DatePicker', 'SomeNewPicker', 'OtherPicker']
+
+let GPT_USER_POOL = []
+
+
+
 
 const USER_POOL = [
     { _id: 'u101', fullname: 'Abi Abambi', imgUrl: 'roi.png' },
@@ -3324,12 +1853,12 @@ const lastNames = [
 ]
 
 let gUsersPool = []
-for (let i = 0; i < 200; i++) {
+for (let i = 0; i < 20; i++) {
     const firstName = firstNames[Math.floor(Math.random() * firstNames.length)]
     const lastName = lastNames[Math.floor(Math.random() * lastNames.length)]
     const fullName = `${firstName} ${lastName}`
     let imgUrl = 'generated_faces/' + allImgs[Math.floor(Math.random() * allImgs.length)]
-    if (Math.random() < 0.2) imgUrl = null
+    if (Math.random() < 0.5) imgUrl = null
     gUsersPool.push({
         _id: `u${i + 1}`,
         fullname: fullName,
@@ -3339,2055 +1868,19 @@ for (let i = 0; i < 200; i++) {
 
 console.log(gUsersPool)
 
-// GPT_USER_POOL = gUsersPool
-
-// async function initUserPool() {
-//     if (GPT_USER_POOL.length) return
-//
-//     console.log('users')
-//     const fallbackPool = [
-//         { _id: 'u101', fullname: 'Ava Placeholder', imgUrl: '' },
-//         { _id: 'u102', fullname: 'Ben Placeholder', imgUrl: '' },
-//         { _id: 'u103', fullname: 'Cara Placeholder', imgUrl: '' },
-//     ]
-//
-//     const prompt = `Generate an array of 5 to 8 distinct "users" for a collaborative project tool.
-// Each user = {
-//   "_id": "unique string id",
-//   "fullname": "some realistic or creative full name",
-//   "imgUrl": "some valid image URL or empty"
-// }
-// Return only valid JSON. e.g.
-// [
-//   {"_id":"u111", "fullname":"Alice Wonderland", "imgUrl":"https://..."},
-//   ...
-// ]`
-//
-//     let text = await generateText(prompt, 1.0)
-//     let users = []
-//     try {
-//         users = safeJsonParse(text, JSON.stringify(fallbackPool))
-//     } catch (err) {
-//         console.error('Failed to parse GPT user pool. Using fallback.', err)
-//         users = fallbackPool
-//     }
-//
-//     if (!Array.isArray(users) || !users.length) {
-//         users = fallbackPool
-//     }
-//
-//     console.log('users 2')
-//
-//     if (users.length < 5) {
-//         while (users.length < 5) {
-//             console.log('users 4', users.length)
-//             users.push({
-//                 _id: 'u_' + random.id(),
-//                 fullname: 'FallbackUser ' + random.id(),
-//                 imgUrl: '',
-//             })
-//         }
-//     }
-//
-//     console.log('users 3')
-//
-//     if (users.length > 8) users = users.slice(0, 8)
-//
-//     for (let u of users) {
-//         if (!u._id || !u.fullname) {
-//             u._id = 'u_' + random.id()
-//             if (!u.fullname) u.fullname = 'FallbackUser ' + random.id()
-//         }
-//         if (typeof u.imgUrl !== 'string') {
-//             u.imgUrl = ''
-//         }
-//     }
-//
-//     GPT_USER_POOL = users
-// }
-//
-// export function getUserPool() {
-//     return GPT_USER_POOL
-// }
-//
-// export function getColorFromBackgroundColor(bg) {
-//     switch (bg) {
-//         case '#baf3db': return '#164b35'
-//         case '#f8e6a0': return '#4f3a0e'
-//         case '#fedec8': return '#6e3b0d'
-//         case '#ffd5d2': return '#6e0d0d'
-//         case '#dfd8fd': return '#4f3a0e'
-//         case '#cce0ff': return '#0d2e6e'
-//         case '#c6edfb': return '#0d3a4f'
-//         case '#fdd0ec': return '#6e0d3a'
-//         case '#f1f2f4': return '#3a3a3a'
-//         default: return '#3a3a3a'
-//     }
-// }
-//
-//
-// function getRandomColor() {
-//     const trelloColors = [
-//         '#baf3db',
-//         '#f8e6a0',
-//         '#fedec8',
-//         '#ffd5d2',
-//         '#dfd8fd',
-//         '#cce0ff',
-//         '#c6edfb',
-//         '#fdd0ec',
-//         '#f1f2f4',
-//     ]
-//     return random.choice(trelloColors)
-// }
-//
-// function getRandomColorLabels() {
-//     const colors = ['#9f8fef', '#f87168', '#fea362', '#f5cd47', '#4bce97', '#579dff']
-//     return random.choice(colors)
-// }
-//
-// function getRandomLocation() {
-//     const locations = [
-//         { name: 'Tel Aviv-Yafo', lat: 32.109333, lng: 34.855499, zoom: 11 },
-//         { name: 'New York City', lat: 40.7128, lng: -74.006, zoom: 12 },
-//         { name: 'Paris', lat: 48.8566, lng: 2.3522, zoom: 12 },
-//         { name: 'Tokyo', lat: 35.6895, lng: 139.6917, zoom: 12 },
-//         { name: 'London', lat: 51.5074, lng: -0.1278, zoom: 12 },
-//         { name: 'Sydney', lat: -33.8688, lng: 151.2093, zoom: 12 },
-//     ]
-//     return random.choice(locations)
-// }
-//
-// async function generateLabels(boardTitle) {
-//     const prompt = `
-// Board Title: "${boardTitle}"
-// Generate an array of 5 short labels for a project mgmt board.
-// Some examples: "Grocery", "Weekend Plans", "Work Tasks".
-// Return JSON:
-// [
-//   {"id":"some-id","title":"...","color":"(placeholder)"},
-//   ...
-// ]
-// We only care about 'id', 'title', 'color'.
-// Return valid JSON only.
-// `
-//     const fallback = JSON.stringify([
-//         { id: 'lbl1', title: 'Tasks', color: '#9f8fef' },
-//         { id: 'lbl2', title: 'Personal', color: '#f87168' },
-//         { id: 'lbl3', title: 'Work', color: '#fea362' },
-//         { id: 'lbl4', title: 'Errands', color: '#f5cd47' },
-//         { id: 'lbl5', title: 'Household', color: '#4bce97' },
-//     ])
-//
-//     const text = await generateText(prompt, 1.0, fallback)
-//     let rawLabels = safeJsonParse(text, fallback)
-//     if (!Array.isArray(rawLabels) || !rawLabels.length) {
-//         rawLabels = safeJsonParse(fallback)
-//     }
-//
-//     const uniqueColors = new Set()
-//     return rawLabels.slice(0, 5).map((lbl) => {
-//         if (!lbl.id) lbl.id = 'lbl_' + random.id()
-//         if (!lbl.title) lbl.title = 'Label ' + random.id()
-//         let col = getRandomColorLabels()
-//         while (uniqueColors.has(col) && uniqueColors.size < 6) {
-//             col = getRandomColorLabels()
-//         }
-//         uniqueColors.add(col)
-//         lbl.color = col
-//         return lbl
-//     })
-// }
-//
-// const BADGE_COLOR_MAP = {
-//     risk: '#fdddc7',
-//     approved: '#f8e6a0',
-//     priority: '#ffe2bd',
-//     now: '#ffc0cb',
-// }
-// const BADGE_TEXT_COLOR_MAP = {
-//     risk: '#6e3b0d',
-//     approved: '#4f3a0e',
-//     priority: '#6e3b0d',
-//     now: '#6e0d3a',
-// }
-// const BADGE_TYPE_ARRAY = ['risk', 'approved', 'priority', 'now']
-//
-// async function generateBadges(boardTitle, groupTitle) {
-//     const prompt = `
-// For the group "${groupTitle}" in the board "${boardTitle}",
-// Generate an array of 10 "badge" objects with selectble categories.
-// Example:
-// [
-//   {"categ":"Workload", "badgeOptions": ["Light", "Heavy", "Medium"], "text":"Heavy"},
-//   {"categ":"NeedsApproval", "badgeOptions": ["Pending", "Need Approval", "Rejected"], "text":"Pending"},
-//   ...
-// ]
-// Return strictly valid JSON only.
-// `
-//     const fallback = '[{"categ":"NeedsApproval","text":"Pending"},{"categ":"HighRisk","text":"Proceed Carefully"}]'
-//
-//     const text = await generateText(prompt, 1.0, fallback)
-//     let rawBadges = safeJsonParse(text, fallback)
-//     if (!Array.isArray(rawBadges)) {
-//         rawBadges = safeJsonParse(fallback)
-//     }
-//
-//     return rawBadges.map((b) => {
-//         const randomType = random.choice(BADGE_TYPE_ARRAY)
-//         return {
-//             id: 'badg_' + random.id(),
-//             categ: b.categ || 'General',
-//             color: BADGE_COLOR_MAP[randomType] || '#ccc',
-//             textColor: BADGE_TEXT_COLOR_MAP[randomType] || '#000',
-//             badgeOptions: b.badgeOptions || [],
-//             chosenOption: b.text || 'Note',
-//         }
-//     })
-// }
-//
-// // async function generateTask(boardTitle, groupTitle) {
-// //     const fallbackResp = `Title: Kitchen Chores; Description: Clean the fridge and wipe the counters.`
-// //     const prompt = `
-// // For the group "${groupTitle}" in the board "${boardTitle}",
-// // create a short but realistic task. Format EXACTLY as:
-// // "Title: XYZ; Description: ABC"
-// // Return no extra text or code blocks, just that line.
-// // `
-// //     const response = await generateText(prompt, 1.0, fallbackResp, 128)
-// //     let taskTitle = 'RandomTask'
-// //     let taskDescription = 'No desc from GPT'
-// //     const match = response.match(/Title:\s*(.+?);\s*Description:\s*(.+)/)
-// //     if (match) {
-// //         taskTitle = match[1].trim()
-// //         taskDescription = match[2].trim()
-// //     }
-// //
-// //     const badges = await generateBadges(boardTitle, groupTitle)
-// //
-// //     return {
-// //         id: random.id(),
-// //         title: taskTitle,
-// //         status: random.choice(STATUS_OPTIONS),
-// //         priority: random.choice(PRIORITY_OPTIONS),
-// //         dueDate: random.date('2024-01-01', '2026-12-31').toISOString(),
-// //         createdAt: random.date('2024-01-01', '2026-12-31'),
-// //         description: taskDescription,
-// //         checklists: await generateChecklists(boardTitle, groupTitle),
-// //         // members: random.sample(GPT_USER_POOL, random.randint(0, GPT_USER_POOL.length)),
-// //         members: random.sample(GPT_USER_POOL, random.randint(0, 5)),
-// //         // style: await generateTaskStyle(),
-// //         style:
-// //             random.choice([
-// //                 {
-// //                     backgroundColor: (getRandomColorLabels()),
-// //                     coverSize: random.choice(['small', 'large'])
-// //                 },
-// //                 {
-// //                     backgroundImage: random.choice([
-// //                         null, null, null, `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-// //                         'cover-img.png', 'cover-img-1.png', 'cover-img-2.png', 'cover-img-3.png', 'amination_gif.gif',
-// //                     ]),
-// //                     coverSize: random.choice(['small', 'large'])
-// //                 },
-// //                 {
-// //
-// //                 },
-// //                 {
-// //
-// //                 },
-// //                 {
-// //
-// //                 }
-// //
-// //             ]),
-// //
-// //         badges,
-// //         attachments: getRandomAttachments(),
-// //         activity: generateTaskActivities(taskTitle),
-// //         isUserWatching: random.choice([true, false]),
-// //         labels: [],
-// //         location: random.choice([null, null, null, getRandomLocation()]),
-// //     }
-// // }
-//
-// function getRandomAttachments() {
-//     const cnt = random.randint(0, 2)
-//     return Array.from({ length: cnt }, () => ({
-//         path: `file-${random.randint(1, 999)}.png`,
-//         date: Date.now() - random.randint(0, 1_000_000_000),
-//         text: random.choice([
-//             'Photo proof!',
-//             'Attached doc',
-//             'Uploaded file',
-//             '',
-//         ]),
-//     }))
-// }
-//
-// async function generateChecklists(boardTitle, groupTitle) {
-//     const fallback = JSON.stringify([
-//         {
-//             id: 'cl_fallback',
-//             title: 'Fallback Checklist',
-//             progress: 0,
-//             todos: [
-//                 { id: 'todo1', title: 'Fallback item', isDone: false },
-//                 { id: 'todo2', title: 'Another fallback', isDone: true },
-//             ],
-//         },
-//     ])
-//     const prompt = `
-// For the group "${groupTitle}" in the board "${boardTitle}",
-// Generate an array of 3 short "todo" items related to the group title and board title. Return strictly JSON:
-// [
-//   {"title":"something short","isDone": true/false},
-//   ...
-// ]
-// `
-//
-//     const text = await generateText(prompt, 1.0, fallback)
-//     let todosArray = safeJsonParse(text, '[]')
-//     if (!Array.isArray(todosArray)) {
-//         console.warn('GPT todos not an array, using fallback.')
-//         todosArray = safeJsonParse(fallback)[0].todos
-//     }
-//     if (!todosArray.length) {
-//         todosArray = safeJsonParse(fallback)[0].todos
-//     }
-//
-//     const cCount = random.randint(0, 2)
-//     const checklists = []
-//     for (let i = 0; i < cCount; i++) {
-//         const tCount = 1 + Math.floor(Math.random() * todosArray.length)
-//         const partialTodos = todosArray.slice(0, tCount).map((t) => ({
-//             id: 'todo_' + random.id(),
-//             title: t.title || 'UntitledTodo',
-//             isDone: typeof t.isDone === 'boolean' ? t.isDone : false,
-//         }))
-//         checklists.push({
-//             id: 'cl_' + random.id(),
-//             title: 'Checklist ' + random.id().slice(0, 4),
-//             progress: random.randint(0, 100),
-//             todos: partialTodos,
-//         })
-//     }
-//     return checklists
-// }
-//
-// async function generateTaskStyle() {
-//     const styleType = random.randint(0, 2)
-//     if (styleType === 0) {
-//         return {
-//             backgroundColor: getRandomColorLabels(),
-//             coverSize: random.choice(['small', 'large']),
-//         }
-//     } else if (styleType === 1) {
-//             const images = [
-//             null,
-//             null,
-//             `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//             'cover-img.png',
-//             'cover-img-1.png',
-//             'cover-img-2.png',
-//             'cover-img-3.png',
-//         ]
-//         return {
-//             backgroundImage: random.choice(images),
-//             coverSize: random.choice(['small', 'large']),
-//         }
-//     } else {
-//         return {}
-//     }
-// }
-//
-// function generateTaskActivities(taskTitle) {
-//     const activityTypes = [
-//         `Commented: "Looks good!"`,
-//         `Updated title to: ${taskTitle}`,
-//         `Attached a new file`,
-//         `Status changed to ${random.choice(STATUS_OPTIONS)}`,
-//     ]
-//     const count = random.randint(1, 3)
-//     return Array.from({ length: count }, () => {
-//         const byMember = random.choice(GPT_USER_POOL) || {
-//             _id: 'fallback',
-//             fullname: 'Fallback user',
-//             imgUrl: '',
-//         }
-//         return {
-//             id: random.id(),
-//             title: random.choice(activityTypes),
-//             createdAt: random.date('2023-01-01', '2025-12-31').getTime(),
-//             byMember: {
-//                 _id: byMember._id,
-//                 fullname: byMember.fullname,
-//                 imgUrl: byMember.imgUrl,
-//             },
-//         }
-//     })
-// }
-//
-// // async function generateGroups(boardTitle) {
-// //     const fallback = `Home; Work; Personal`;
-// //     const groupCount = random.randint(5, 8);
-// //     const prompt = `
-// // Board: "${boardTitle}"
-// // Generate ${groupCount} short sub-topics/group-titles/task-lists about the topic of this board and everyday life, work or task categories related to this board topic, separated by semicolons.
-// // Example: "Groceries; Home Maintenance; Work Projects; Financial Plan; Everyday; Project General Goals; Wishlist"
-// // No code blocks, just semicolons.
-// // `;
-// //     const text = await generateText(prompt, 1.0, fallback);
-// //     let groupTitles = text.split(';').map(t => t.trim()).filter(Boolean);
-// //     if (groupTitles.length < groupCount) {
-// //         while (groupTitles.length < groupCount) {
-// //             groupTitles.push('Group ' + random.id().slice(0, 3));
-// //         }
-// //     }
-// //     groupTitles = groupTitles.slice(0, groupCount);
-// //
-// //     // Generate each group concurrently.
-// //     const groups = await Promise.all(
-// //         groupTitles.map(async title => {
-// //             const taskCount = random.randint(3, 6);
-// //             // Generate tasks concurrently for this group.
-// //             const tasks = await Promise.all(
-// //                 Array.from({ length: taskCount }, () => generateTask(boardTitle, title))
-// //             );
-// //             const backgroundColor = getRandomColor();
-// //             return {
-// //                 id: random.id(),
-// //                 title,
-// //                 archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),
-// //                 tasks,
-// //                 style: {
-// //                     backgroundColor,
-// //                     color: getColorFromBackgroundColor(backgroundColor),
-// //                 },
-// //                 watched: random.choice([true, false]),
-// //                 isMinimaized: random.choice([true, false]),
-// //             };
-// //         })
-// //     );
-// //
-// //     return groups;
-// // }
-//
-//
-// async function generateGroupsSeq(boardTitle) {
-//     const fallback = `Home; Work; Personal`
-//     const groupCount = random.randint(5, 8)
-//     const prompt = `
-// Board: "${boardTitle}"
-// Generate ${groupCount} short sub-topics/group-titles/task-lists about the topic of this board and everyday life, work or task categories realted to this board topic, separated by semicolons.
-// Example: "Groceries; Home Maintenance; Work Projects; Financial Plan; Everyday; Project General Goals; Wishlist"
-// No code blocks, just semicolons.
-// `
-//     const text = await generateText(prompt, 1.0, fallback)
-//     let groupTitles = text.split(';').map((t) => t.trim()).filter(Boolean)
-//     if (groupTitles.length < groupCount) {
-//         while (groupTitles.length < groupCount) {
-//             groupTitles.push('Group ' + random.id().slice(0, 3))
-//         }
-//     }
-//     groupTitles = groupTitles.slice(0, groupCount)
-//
-//     let totalTasks = 0
-//     const groups = []
-//     for (let title of groupTitles) {
-//         const taskCount = random.randint(3, 6)
-//         const tasks = []
-//         for (let i = 0; i < taskCount; i++) {
-//             console.log('task', totalTasks, 'from ', taskCount * groupCount)
-//             tasks.push(await generateTask(boardTitle, title))
-//             totalTasks += 1
-//         }
-//         const backgroundColor = getRandomColor()
-//         groups.push({
-//             id: random.id(),
-//             title,
-//             archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),
-//             tasks,
-//             style: {
-//                 backgroundColor,
-//                 color: getColorFromBackgroundColor(backgroundColor),
-//             },
-//             watched: random.choice([true, false]),
-//             isMinimaized: random.choice([true, false]),
-//         })
-//     }
-//     return groups
-// }
-//
-// function getRandomBoardActivities(board) {
-//     const count = random.randint(2, 5)
-//     return Array.from({ length: count }, () => {
-//         const group = random.choice(board.groups)
-//         const task = random.choice(group.tasks)
-//         const activityType = random.choice(['added', 'moved', 'updated'])
-//         let title
-//         if (activityType === 'added') {
-//             title = `Added task '${task.title}' to group '${group.title}'`
-//         } else if (activityType === 'moved') {
-//             const otherGroup = random.choice(board.groups.filter((g) => g.id !== group.id))
-//             title = `Moved task '${task.title}' from '${otherGroup?.title}' to '${group.title}'`
-//         } else {
-//             title = `Updated status of task '${task.title}' to '${random.choice(STATUS_OPTIONS)}'`
-//         }
-//         const byMember = random.choice(GPT_USER_POOL) || {
-//             _id: 'fallback',
-//             fullname: 'Fallback user',
-//             imgUrl: '',
-//         }
-//         return {
-//             id: random.id(),
-//             title,
-//             createdAt: random.date('2023-01-01', '2025-12-31').getTime(),
-//             byMember: {
-//                 _id: byMember._id,
-//                 fullname: byMember.fullname,
-//                 imgUrl: byMember.imgUrl,
-//             },
-//             group: { id: group.id, title: group.title },
-//             task: { id: task.id, title: task.title },
-//         }
-//     })
-// }
-//
-// // export async function getRandomBoardAI() {
-// //
-// //     showUserMsg('AI: Generating new board..')
-// //     console.log(' ---- GENERATING AI BOARD -----')
-// //
-// //     // console.log('Progress: 1')
-// //
-// //     await initUserPool()
-// //
-// //     //     const topicsPrompt = `
-// //     // Generate a list of 100 random topics that could be the topics of a Trello tasks board.
-// //     // Return the list as a JSON array of strings.
-// //     // Return strictly JSON:
-// //     // [
-// //     //   {"topic": the_topic},
-// //     //   ...
-// //     // ]
-// //     // `
-// //     //
-// //     //     const fallbackTopics = [
-// //     //         "Project Management", "Marketing Campaign", "Product Launch", "Event Planning", "Content Creation",
-// //     //         "Software Development", "Customer Support", "Sales Strategy", "Financial Planning", "Human Resources"
-// //     //     ]
-// //     //     const topics = await generateText(topicsPrompt, 1.0, JSON.stringify(fallbackTopics))
-// //     //
-// //     //     console.log('Topic orig:', topics)
-// //     //     const parsedTopics = safeJsonParse(topics, JSON.stringify(fallbackTopics))
-// //     //     const randomTopic = parsedTopics[Math.floor(Math.random() * parsedTopics.length)]['topic']
-// //     //     console.log('Topic:', randomTopic)
-// //
-// //
-// //     const randomTopic = random.choice(userFriendlyTopics)
-// //
-// //     const boardTitlePrompt = `
-// // Generate a single realistic board name for a project management system based on the topic "${randomTopic}".
-// // Return just the name, no extra text.
-// // `
-// //     const fallbackBoardTitle = 'Generic Board'
-// //     const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackBoardTitle)
-// //
-// //     // showUserMsg('progress')
-// //     // console.log('Progress: 2')
-// //     showSpinner('AI: Generating board..')
-// //
-// //     const groups = await generateGroups(boardTitle)
-// //
-// //     // console.log('Progress: 3')
-// //     const labels = await generateLabels(boardTitle)
-// //
-// //     // console.log('Progress: 4')
-// //     for (const group of groups) {
-// //         for (const task of group.tasks) {
-// //             const labelSubset = random.sample(labels.map((lbl) => lbl.id), random.randint(0, labels.length))
-// //             task.labelIds = labelSubset
-// //             task.labels = labels
-// //         }
-// //     }
-// //
-// //     // console.log('Progress: 5')
-// //
-// //     const createdBy = random.choice(GPT_USER_POOL) || {
-// //         _id: 'u_fallback',
-// //         fullname: 'Unknown user',
-// //         imgUrl: '',
-// //     }
-// //     const boardId = random.id(random.randint(4, 10))
-// //     const board = {
-// //         id: boardId,
-// //         // _id: boardId,
-// //         title: boardTitle,
-// //         isStarred: random.choice([true, false]),
-// //         archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),
-// //         createdBy: {
-// //             _id: createdBy._id,
-// //             fullname: createdBy.fullname,
-// //             imgUrl: createdBy.imgUrl,
-// //         },
-// //         style: {
-// //             backgroundImage:
-// //                 random.choice([
-// //                     `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-// //                     `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-// //                     `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-// //                     `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-// //                     `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-// //                     `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-// //                     `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-// //                     `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-// //                     `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-// //                     `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-// //                     'color_1.svg',
-// //                     'color_2.svg',
-// //                     'color_3.svg',
-// //                     'color_4.svg',
-// //                     'color_5.svg',
-// //                     'color_6.svg',
-// //                     'color_7.svg',
-// //                     'color_8.svg',
-// //                     'color_9.svg',
-// //                     'color_10.svg',
-// //                     'color_11.svg',
-// //                     ])
-// //
-// //         },
-// //         labels,
-// //         members: GPT_USER_POOL,
-// //         groups,
-// //         activities: [],
-// //         cmpsOrder: random.sample(CMP_ORDER_OPTIONS, random.randint(2, CMP_ORDER_OPTIONS.length)),
-// //     }
-// //
-// //     // console.log('Progress: 6')
-// //
-// //     board.activities = getRandomBoardActivities(board)
-// //
-// //     // console.log('Progress: 7')
-// //
-// //     // console.log('Final Board from GPT:', board)
-// //
-// //     showSuccessMsg('AI: Board generation complete!')
-// //
-// //     board.generator = 'getRandomBoardAI'
-// //     return board
-// // }
-//
-//
-//
-//
-// // Global cache for badge categories across the board
-// let globalBadgeCategoriesCache = null;
-//
-// // Utility function to calculate if a color is dark
-// function isColorDark(hexColor) {
-//     if (!hexColor || !hexColor.startsWith('#') || hexColor.length !== 7) return true;
-//
-//     // Convert hex to RGB
-//     const r = parseInt(hexColor.slice(1, 3), 16);
-//     const g = parseInt(hexColor.slice(3, 5), 16);
-//     const b = parseInt(hexColor.slice(5, 7), 16);
-//
-//     // Calculate brightness (HSP formula)
-//     const brightness = Math.sqrt(
-//         0.299 * (r * r) +
-//         0.587 * (g * g) +
-//         0.114 * (b * b)
-//     );
-//
-//     return brightness < 140; // Threshold for dark colors
-// }
-//
-// // Weighted random choice function
-// function weightedChoice(items, weights) {
-//     if (!items || !weights || items.length === 0) return null;
-//
-//     const totalWeight = weights.reduce((sum, w) => sum + (w || 0), 0);
-//     let randomValue = Math.random() * totalWeight;
-//
-//     for (let i = 0; i < items.length; i++) {
-//         randomValue -= (weights[i] || 0);
-//         if (randomValue <= 0) {
-//             return items[i];
-//         }
-//     }
-//
-//     return items[0];
-// }
-//
-// // Generate board-specific badge categories based on board domain
-// async function generateBoardBadgeSystem(boardTitle, groups) {
-//     // If we already cached categories, use them
-//     if (globalBadgeCategoriesCache) return globalBadgeCategoriesCache;
-//
-//     // Step 1: Generate diverse badge categories
-//     const badgeCategoriesPrompt = `
-// Generate an extensive list of 20+ diverse badge categories for project management tasks.
-// Include industry-standard categories AND unique creative ones.
-//
-// For each, provide 3-6 possible values and a suitable color hex code for each value.
-//
-// Return valid JSON array:
-// [
-//   {
-//     "category": "Priority",
-//     "values": ["Low", "Medium", "High", "Urgent"],
-//     "colors": ["#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2"],
-//     "isCommon": true
-//   },
-//   {
-//     "category": "Epic Size",
-//     "values": ["Small", "Medium", "Large", "X-Large"],
-//     "colors": ["#cce0ff", "#579dff", "#0055cc", "#00368c"],
-//     "isCommon": false
-//   }
-// ]
-//
-// Use a wide variety of categories that could apply to different board types, from software development to marketing, event planning, HR, facilities, etc.
-// Include some unusual but useful categories. Return JSON only.
-// `;
-//
-//     const fallbackCategories = JSON.stringify([
-//         {
-//             "category": "Priority",
-//             "values": ["Low", "Medium", "High", "Urgent"],
-//             "colors": ["#baf3db", "#f8e6a0", "#fedec8", "#ffd5d2"],
-//             "isCommon": true
-//         },
-//         {
-//             "category": "Status",
-//             "values": ["To Do", "In Progress", "Blocked", "Done"],
-//             "colors": ["#dfd8fd", "#c6edfb", "#ffd5d2", "#4bce97"],
-//             "isCommon": true
-//         },
-//         {
-//             "category": "Effort",
-//             "values": ["Quick", "Medium", "Large", "Massive"],
-//             "colors": ["#cce0ff", "#579dff", "#0055cc", "#00368c"],
-//             "isCommon": true
-//         },
-//         {
-//             "category": "Complexity",
-//             "values": ["Simple", "Moderate", "Complex", "Very Complex"],
-//             "colors": ["#c6edfb", "#f8e6a0", "#fedec8", "#ffd5d2"],
-//             "isCommon": false
-//         },
-//         {
-//             "category": "Impact",
-//             "values": ["Low", "Medium", "High", "Critical"],
-//             "colors": ["#f1f2f4", "#f8e6a0", "#fea362", "#f87168"],
-//             "isCommon": false
-//         }
-//     ]);
-//
-//     const response = await generateText(badgeCategoriesPrompt, 1.0, fallbackCategories);
-//     let categories = [];
-//
-//     try {
-//         categories = safeJsonParse(response, fallbackCategories);
-//         if (!Array.isArray(categories) || categories.length < 5) {
-//             categories = safeJsonParse(fallbackCategories);
-//         }
-//     } catch (e) {
-//         console.error("Failed to parse badge categories:", e);
-//         categories = safeJsonParse(fallbackCategories);
-//     }
-//
-//     // Step 2: Analyze board context to determine which categories make the most sense
-//     const contextAnalysisPrompt = `
-// Analyze this board title and its groups to identify what type of work/project this is:
-// Board: "${boardTitle}"
-// Groups: ${groups.map(g => g.title).join(', ')}
-//
-// Identify 5-8 badge categories from the list below that would be MOST RELEVANT for this specific board:
-// ${categories.map(c => `- ${c.category}: ${c.values.join(', ')}`).join('\n')}
-//
-// Return as valid JSON with explanations:
-// {
-//   "boardType": "type of board (e.g. software development, marketing, event planning)",
-//   "relevantCategories": [
-//     {
-//       "category": "category name",
-//       "relevance": "explanation of why this category fits this board"
-//     }
-//   ]
-// }
-// `;
-//
-//     const fallbackAnalysis = `{"boardType":"Generic Project","relevantCategories":[{"category":"Priority","relevance":"Every project needs priorities"},{"category":"Status","relevance":"Track progress of tasks"},{"category":"Effort","relevance":"Estimate work required"}]}`;
-//     const analysisResponse = await generateText(contextAnalysisPrompt, 0.9, fallbackAnalysis);
-//
-//     let boardContext = {};
-//     try {
-//         boardContext = safeJsonParse(analysisResponse, fallbackAnalysis);
-//     } catch (e) {
-//         console.error("Failed to parse board context:", e);
-//         boardContext = safeJsonParse(fallbackAnalysis);
-//     }
-//
-//     // Step 3: Create a board-specific badge system
-//     const boardCategories = [];
-//
-//     // First, add common categories (every board needs these)
-//     const commonCategories = categories.filter(c => c.isCommon);
-//     boardCategories.push(...commonCategories);
-//
-//     // Next, add board-specific categories
-//     if (boardContext.relevantCategories && Array.isArray(boardContext.relevantCategories)) {
-//         for (const relevantCat of boardContext.relevantCategories) {
-//             const matchingCategory = categories.find(c => c.category === relevantCat.category);
-//             if (matchingCategory && !boardCategories.some(bc => bc.category === matchingCategory.category)) {
-//                 // Add the relevance explanation to the category
-//                 matchingCategory.relevance = relevantCat.relevance;
-//                 boardCategories.push(matchingCategory);
-//             }
-//         }
-//     }
-//
-//     // Ensure we have at least 5 categories
-//     if (boardCategories.length < 5) {
-//         const remainingCategories = categories.filter(c =>
-//             !boardCategories.some(bc => bc.category === c.category)
-//         );
-//
-//         // Add random categories until we reach at least 5
-//         while (boardCategories.length < 5 && remainingCategories.length > 0) {
-//             const randomIndex = Math.floor(Math.random() * remainingCategories.length);
-//             boardCategories.push(remainingCategories[randomIndex]);
-//             remainingCategories.splice(randomIndex, 1);
-//         }
-//     }
-//
-//     // Step 4: Create color and style systems
-//     const badgeSystem = {
-//         boardType: boardContext.boardType || "Generic Project",
-//         categories: boardCategories,
-//         // Generate a consistent badge style for this board
-//         style: random.choice([
-//             { style: "rounded", borderRadius: "12px", padding: "4px 8px" },
-//             { style: "pill", borderRadius: "16px", padding: "4px 10px" },
-//             { style: "square", borderRadius: "4px", padding: "4px 8px" },
-//             { style: "tag", borderRadius: "0 8px 8px 0", padding: "4px 12px", leftBorder: true }
-//         ])
-//     };
-//
-//     // Cache it
-//     globalBadgeCategoriesCache = badgeSystem;
-//     return badgeSystem;
-// }
-//
-// // Generate badges for a specific task
-// // Generate badges for a specific task
-// async function generateTaskBadges(boardTitle, groupTitle, taskTitle, taskDescription, badgeSystem) {
-//     // Reduced from 40% to 25% - more tasks should have badges
-//     if (Math.random() < 0.25) return [];
-//
-//     // Determine how many badges this task should have (increased frequency of 2 badges)
-//     const badgeCount = Math.random() < 0.5 ? 1 : 2;
-//
-//     // IMPORTANT: Create an array to store our badges
-//     const badges = [];
-//
-//     // Get all available badge categories
-//     const availableCategories = badgeSystem.categories.map(c => c.category);
-//
-//     // Loop through the number of badges we want
-//     for (let i = 0; i < badgeCount; i++) {
-//         // Select a category we haven't used yet
-//         const unusedCategories = availableCategories.filter(cat =>
-//             !badges.some(b => b.categ === cat)
-//         );
-//
-//         if (unusedCategories.length === 0) break;
-//
-//         const chosenCategory = random.choice(unusedCategories);
-//         const categoryData = badgeSystem.categories.find(c => c.category === chosenCategory);
-//
-//         if (!categoryData) continue;
-//
-//         // HERE'S THE FIX: Create a TRUE RANDOM distribution of values
-//         // Instead of asking GPT for suggestions which skews to medium
-//         // And FORCE all ranges in values to be used
-//         const valueIndex = Math.floor(Math.random() * categoryData.values.length);
-//         const chosenValue = categoryData.values[valueIndex];
-//
-//         // Get corresponding color
-//         const color = categoryData.colors && categoryData.colors[valueIndex]
-//             ? categoryData.colors[valueIndex]
-//             : "#f1f2f4";
-//
-//         // Determine text color based on background brightness
-//         const textColor = isColorDark(color) ? "#ffffff" : "#172b4d";
-//
-//         badges.push({
-//             id: 'badg_' + random.id(),
-//             categ: categoryData.category,
-//             color: color,
-//             textColor: textColor,
-//             badgeOptions: categoryData.values,
-//             chosenOption: chosenValue
-//         });
-//     }
-//
-//     return badges;
-// }
-//
-// // Create a fallback badge when needed
-// function createFallbackBadge(category, value) {
-//     // Default badge colors
-//     const colors = ["#dfd8fd", "#c6edfb", "#f8e6a0", "#fedec8", "#ffd5d2", "#baf3db"];
-//     const color = random.choice(colors);
-//
-//     return {
-//         id: 'badg_' + random.id(),
-//         categ: category || "Note",
-//         color: color,
-//         textColor: isColorDark(color) ? "#ffffff" : "#172b4d",
-//         badgeOptions: [value],
-//         chosenOption: value || "Default"
-//     };
-// }
-//
-// // Smart label assignment with natural distribution
-// async function assignLabelsToTask(task, boardTitle, groupTitle, labels) {
-//     // Reduced from 30% to 15% - more tasks should have labels
-//     if (Math.random() < 0.15 || !Array.isArray(labels) || labels.length === 0) {
-//         return [];
-//     }
-//
-//     // Increased likelihood of 2 labels
-//     const maxLabels = Math.random() < 0.6 ? 1 : 2;
-//
-//     // Use GPT to suggest relevant labels
-//     const labelPrompt = `
-// Analyze this task in its context:
-// Board: "${boardTitle}"
-// Group: "${groupTitle}"
-// Task: "${task.title}"
-// Description: "${task.description || ''}"
-//
-// Available labels: ${labels.map(l => l.title).join(', ')}
-//
-// Based on the task content, suggest ${maxLabels === 1 ? 'the most' : 'up to ' + maxLabels} appropriate label(s).
-// If no labels seem to fit, return an empty array.
-//
-// Return just the label names as a JSON array:
-// ["Label1"${maxLabels > 1 ? ', "Label2"' : ''}]
-// `;
-//
-//     const fallbackLabels = "[]";
-//     const response = await generateText(labelPrompt, 0.7, fallbackLabels);
-//
-//     let suggestedLabels = [];
-//     try {
-//         suggestedLabels = safeJsonParse(response, fallbackLabels);
-//         if (!Array.isArray(suggestedLabels)) {
-//             suggestedLabels = [];
-//         }
-//     } catch (e) {
-//         console.error("Failed to parse label suggestions:", e);
-//         suggestedLabels = [];
-//     }
-//
-//     // If GPT didn't suggest any labels but we want labels, pick randomly
-//     if (suggestedLabels.length === 0 && Math.random() < 0.4) { // 40% chance of random labels when none suggested
-//         const randomLabelCount = Math.random() < 0.7 ? 1 : 2;
-//         for (let i = 0; i < randomLabelCount && i < labels.length; i++) {
-//             suggestedLabels.push(labels[Math.floor(Math.random() * labels.length)].title);
-//         }
-//     }
-//
-//     // Match suggested labels to actual label IDs
-//     const labelIds = [];
-//     for (const suggestion of suggestedLabels) {
-//         // Try to find the label by exact title
-//         const matchingLabel = labels.find(l =>
-//             l.title.toLowerCase() === suggestion.toLowerCase()
-//         );
-//
-//         if (matchingLabel) {
-//             labelIds.push(matchingLabel.id);
-//         } else {
-//             // Try partial matching
-//             for (const label of labels) {
-//                 if (label.title.toLowerCase().includes(suggestion.toLowerCase()) ||
-//                     suggestion.toLowerCase().includes(label.title.toLowerCase())) {
-//                     labelIds.push(label.id);
-//                     break;
-//                 }
-//             }
-//         }
-//
-//         // Stop once we've reached the maximum
-//         if (labelIds.length >= maxLabels) break;
-//     }
-//
-//     // If we still have no labels but want some, randomly pick 1
-//     if (labelIds.length === 0 && Math.random() < 0.3) {
-//         labelIds.push(labels[Math.floor(Math.random() * labels.length)].id);
-//     }
-//
-//     return labelIds;
-// }
-//
-// // Main task generation function with improved badges and labels
-// async function generateTask(boardTitle, groupTitle) {
-//     const fallbackResp = `Title: Kitchen Chores; Description: Clean the fridge and wipe the counters.`
-//     const prompt = `
-// For the group "${groupTitle}" in the board "${boardTitle}",
-// create a short but realistic task. Format EXACTLY as:
-// "Title: XYZ; Description: ABC"
-// Return no extra text or code blocks, just that line.
-// `
-//     const response = await generateText(prompt, 1.0, fallbackResp, 128)
-//     let taskTitle = 'RandomTask'
-//     let taskDescription = 'No desc from GPT'
-//     const match = response.match(/Title:\s*(.+?);\s*Description:\s*(.+)/)
-//     if (match) {
-//         taskTitle = match[1].trim()
-//         taskDescription = match[2].trim()
-//     }
-//
-//     // Get badge system for the board (if not already cached)
-//     const badgeSystem = await generateBoardBadgeSystem(boardTitle, [{ title: groupTitle }]);
-//
-//     // Generate badges specifically for this task
-//     const badges = await generateTaskBadges(boardTitle, groupTitle, taskTitle, taskDescription, badgeSystem);
-//
-//     return {
-//         id: random.id(),
-//         title: taskTitle,
-//         status: random.choice(STATUS_OPTIONS),
-//         priority: random.choice(PRIORITY_OPTIONS),
-//         dueDate: random.date('2024-01-01', '2026-12-31').toISOString(),
-//         createdAt: random.date('2024-01-01', '2026-12-31'),
-//         description: taskDescription,
-//         checklists: await generateChecklists(boardTitle, groupTitle),
-//         // Increased member assignments
-//         members: random.sample(GPT_USER_POOL, Math.random() < 0.8 ? random.randint(1, 3) : random.randint(0, 5)),
-//         // Increased styling frequency from 25% to 40%
-//         style: Math.random() < 0.4 ? random.choice([
-//             { backgroundColor: getRandomColorLabels(), coverSize: random.choice(['small', 'large']) },
-//             { backgroundImage: `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`, coverSize: random.choice(['small', 'large']) }
-//         ]) : {},
-//         badges,
-//         // Increased attachment frequency from 30% to 50%
-//         attachments: Math.random() < 0.5 ? getRandomAttachments() : [],
-//         activity: generateTaskActivities(taskTitle),
-//         // Increased watching frequency from 20% to 30%
-//         isUserWatching: Math.random() < 0.3,
-//         labelIds: [], // Will be populated after board generation
-//         // Increased location frequency from 10% to 20%
-//         location: Math.random() < 0.2 ? getRandomLocation() : null,
-//     }
-// }
-//
-// // Enhanced group generation function
-// async function generateGroups(boardTitle) {
-//     const fallback = `Home; Work; Personal`;
-//     const groupCount = random.randint(5, 8);
-//     const prompt = `
-// Board: "${boardTitle}"
-// Generate ${groupCount} short sub-topics/group-titles/task-lists about the topic of this board and everyday life, work or task categories related to this board topic, separated by semicolons.
-// Example: "Groceries; Home Maintenance; Work Projects; Financial Plan; Everyday; Project General Goals; Wishlist"
-// No code blocks, just semicolons.
-// `;
-//     const text = await generateText(prompt, 1.0, fallback);
-//     let groupTitles = text.split(';').map(t => t.trim()).filter(Boolean);
-//     if (groupTitles.length < groupCount) {
-//         while (groupTitles.length < groupCount) {
-//             groupTitles.push('Group ' + random.id().slice(0, 3));
-//         }
-//     }
-//     groupTitles = groupTitles.slice(0, groupCount);
-//
-//     // Generate each group concurrently
-//     const groups = await Promise.all(
-//         groupTitles.map(async title => {
-//             // Increased task count per group
-//             const taskCount = random.randint(4, 8);
-//             // Generate tasks concurrently for this group
-//             const tasks = await Promise.all(
-//                 Array.from({ length: taskCount }, () => generateTask(boardTitle, title))
-//             );
-//             const backgroundColor = getRandomColor();
-//             return {
-//                 id: random.id(),
-//                 title,
-//                 // Reduced archive frequency from 10% to 5%
-//                 archivedAt: Math.random() < 0.05 ? random.date('2022-01-01', '2023-12-31').getTime() : null,
-//                 tasks,
-//                 style: {
-//                     backgroundColor,
-//                     color: getColorFromBackgroundColor(backgroundColor),
-//                 },
-//                 // Increased watching frequency from 30% to 40%
-//                 watched: Math.random() < 0.4,
-//                 // Reduced minimization from 10% to 5%
-//                 isMinimaized: Math.random() < 0.05,
-//             };
-//         })
-//     );
-//
-//     return groups;
-// }
-//
-// // Enhanced board generation with smarter label assignment
-// export async function getRandomBoardAI() {
-//     showUserMsg('AI: Generating new board..')
-//     console.log(' ---- GENERATING AI BOARD -----')
-//
-//     await initUserPool()
-//     const randomTopic = random.choice(userFriendlyTopics)
-//     const boardTitlePrompt = `
-// Generate a single realistic board name for a project management system based on the topic "${randomTopic}".
-// Return just the name, no extra text.
-// `
-//     const fallbackBoardTitle = 'Generic Board'
-//     const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackBoardTitle)
-//
-//     showSpinner('AI: Generating board..')
-//     const groups = await generateGroups(boardTitle)
-//     const labels = await generateLabels(boardTitle)
-//
-//     // Process labels for each task after we have all data
-//     for (const group of groups) {
-//         for (const task of group.tasks) {
-//             // Assign labels based on task content
-//             task.labelIds = await assignLabelsToTask(task, boardTitle, group.title, labels);
-//         }
-//     }
-//
-//     const createdBy = random.choice(GPT_USER_POOL) || {
-//         _id: 'u_fallback',
-//         fullname: 'Unknown user',
-//         imgUrl: '',
-//     }
-//     const boardId = random.id(random.randint(4, 10))
-//     const board = {
-//         id: boardId,
-//         title: boardTitle,
-//         // Increased star frequency from 30% to 50%
-//         isStarred: Math.random() < 0.5,
-//         // Reduced archive frequency
-//         archivedAt: Math.random() < 0.03 ? random.date('2022-01-01', '2023-12-31').getTime() : null,
-//         createdBy: {
-//             _id: createdBy._id,
-//             fullname: createdBy.fullname,
-//             imgUrl: createdBy.imgUrl,
-//         },
-//         style: {
-//             backgroundImage:
-//                 random.choice([
-//                     `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//                     'color_1.svg',
-//                     'color_2.svg',
-//                     'color_3.svg',
-//                     'color_4.svg',
-//                     'color_5.svg',
-//                     'color_6.svg',
-//                     'color_7.svg',
-//                     'color_8.svg',
-//                     'color_9.svg',
-//                     'color_10.svg',
-//                     'color_11.svg',
-//                     ])
-//         },
-//         labels,
-//         members: GPT_USER_POOL,
-//         groups,
-//         activities: [],
-//         cmpsOrder: random.sample(CMP_ORDER_OPTIONS, random.randint(2, CMP_ORDER_OPTIONS.length)),
-//         badgeSystem: globalBadgeCategoriesCache // Store the badge system with the board
-//     }
-//
-//     // Generate more activities
-//     const activityCount = random.randint(4, 10); // Increased from 2-5 to 4-10
-//     board.activities = Array.from({ length: activityCount }, () => generateBoardActivity(board));
-//
-//     showSuccessMsg('AI: Board generation complete!')
-//     board.generator = 'getRandomBoardAI'
-//     return board
-// }
-//
-//
-
-// async function generateText(prompt, temperature = 1.0, fallback = '', length = 128) {
-//     openai = new OpenAI({
-//         dangerouslyAllowBrowser: true,
-//         apiKey: API_KEY,
-//     })
-//
-//     try {
-//         const response = await openai.chat.completions.create({
-//             model: 'gpt-3.5-turbo',
-//             // model: 'gpt-4o-mini',
-//             temperature,
-//             max_tokens: length,
-//             messages: [{ role: 'user', content: prompt }],
-//         })
-//         let text = response.choices?.[0]?.message?.content?.trim() || ''
-//         while (text.length && !/[\w\d]/.test(text[0])) text = text.slice(1)
-//         while (text.length && !/[\w\d]/.test(text[text.length - 1])) {
-//             text = text.slice(0, -1)
-//         }
-//         if (!text) text = fallback
-//         else text = text.trim()
-//         return text
-//     } catch (error) {
-//         console.error('OpenAI API error:', error)
-//         return fallback
-//     }
-// }
-//
-// function bracketBalanceRepair(str) {
-//     const openCurly = (str.match(/\{/g) || []).length
-//     const closeCurly = (str.match(/\}/g) || []).length
-//     const openSquare = (str.match(/\[/g) || []).length
-//     const closeSquare = (str.match(/\]/g) || []).length
-//
-//     let fixed = str
-//     if (openCurly === closeCurly + 1 && !str.trim().endsWith('}')) {
-//         fixed += '}'
-//     }
-//     if (openSquare === closeSquare + 1 && !str.trim().endsWith(']')) {
-//         fixed += ']'
-//     }
-//     return fixed
-// }
-//
-// function safeJsonParse(rawStr, fallback = '[]') {
-//     let str = rawStr || ''
-//     str = str.trim()
-//     str = str.replace(/^```+(\w+)?\s*/i, '')
-//     str = str.replace(/^json\s*/i, '')
-//     if (str.startsWith('[') && !str.endsWith(']')) {
-//         str += ']'
-//     } else if (str.startsWith('{') && !str.endsWith('}')) {
-//         str += '}'
-//     }
-//     try {
-//         return JSON.parse(str)
-//     } catch (err) {
-//         console.warn('First JSON.parse attempt failed, trying bracketBalanceRepair:', err)
-//     }
-//     const repaired = bracketBalanceRepair(str)
-//     if (repaired) {
-//         try {
-//             return JSON.parse(repaired)
-//         } catch (err2) {
-//             console.warn('Second JSON.parse attempt failed:', err2)
-//         }
-//     }
-//     try {
-//         return JSON.parse(fallback)
-//     } catch {
-//         return Array.isArray(fallback) ? [] : {}
-//     }
-// }
-//
-// export const STATUS_OPTIONS = ['inProgress', 'done', 'review', 'stuck', 'blocked']
-// export const PRIORITY_OPTIONS = ['low', 'medium', 'high']
-// export const CMP_ORDER_OPTIONS = ['StatusPicker', 'MemberPicker', 'DatePicker', 'SomeNewPicker', 'OtherPicker']
-//
-// let GPT_USER_POOL = []
-//
-// async function initUserPool() {
-//     if (GPT_USER_POOL.length) return
-//
-//     const fallbackPool = [
-//         { _id: 'u101', fullname: 'Ava Placeholder', imgUrl: '' },
-//         { _id: 'u102', fullname: 'Ben Placeholder', imgUrl: '' },
-//         { _id: 'u103', fullname: 'Cara Placeholder', imgUrl: '' },
-//     ]
-//
-//     const prompt = `Generate an array of 5 to 8 distinct "users" for a collaborative project tool.
-// Each user = {
-//   "_id": "unique string id",
-//   "fullname": "some realistic or creative full name",
-//   "imgUrl": "some valid image URL or empty"
-// }
-// Return only valid JSON. e.g.
-// [
-//   {"_id":"u111", "fullname":"Alice Wonderland", "imgUrl":"https://..."},
-//   ...
-// ]`
-//
-//     let text = await generateText(prompt, 1.0)
-//     let users = []
-//     try {
-//         users = safeJsonParse(text, JSON.stringify(fallbackPool))
-//     } catch (err) {
-//         console.error('Failed to parse GPT user pool. Using fallback.', err)
-//         users = fallbackPool
-//     }
-//
-//     if (!Array.isArray(users) || !users.length) {
-//         users = fallbackPool
-//     }
-//
-//     if (users.length < 5) {
-//         while (users.length < 5) {
-//             users.push({
-//                 _id: 'u_' + random.id(),
-//                 fullname: 'FallbackUser ' + random.id(),
-//                 imgUrl: '',
-//             })
-//         }
-//     }
-//
-//     if (users.length > 8) users = users.slice(0, 8)
-//
-//     for (let u of users) {
-//         if (!u._id || !u.fullname) {
-//             u._id = 'u_' + random.id()
-//             if (!u.fullname) u.fullname = 'FallbackUser ' + random.id()
-//         }
-//         if (typeof u.imgUrl !== 'string') {
-//             u.imgUrl = ''
-//         }
-//     }
-//
-//     GPT_USER_POOL = users
-// }
-//
-// export function getUserPool() {
-//     return GPT_USER_POOL
-// }
-//
-// export function getColorFromBackgroundColor(bg) {
-//     switch (bg) {
-//         case '#baf3db': return '#164b35'
-//         case '#f8e6a0': return '#4f3a0e'
-//         case '#fedec8': return '#6e3b0d'
-//         case '#ffd5d2': return '#6e0d0d'
-//         case '#dfd8fd': return '#4f3a0e'
-//         case '#cce0ff': return '#0d2e6e'
-//         case '#c6edfb': return '#0d3a4f'
-//         case '#fdd0ec': return '#6e0d3a'
-//         case '#f1f2f4': return '#3a3a3a'
-//         default: return '#3a3a3a'
-//     }
-// }
-//
-// function getRandomColor() {
-//     const trelloColors = [
-//         '#baf3db',
-//         '#f8e6a0',
-//         '#fedec8',
-//         '#ffd5d2',
-//         '#dfd8fd',
-//         '#cce0ff',
-//         '#c6edfb',
-//         '#fdd0ec',
-//         '#f1f2f4',
-//     ]
-//     return random.choice(trelloColors)
-// }
-//
-
-//
-// function getRandomLocation() {
-//     const locations = [
-//         { name: 'Tel Aviv-Yafo', lat: 32.109333, lng: 34.855499, zoom: 11 },
-//         { name: 'New York City', lat: 40.7128, lng: -74.006, zoom: 12 },
-//         { name: 'Paris', lat: 48.8566, lng: 2.3522, zoom: 12 },
-//         { name: 'Tokyo', lat: 35.6895, lng: 139.6917, zoom: 12 },
-//         { name: 'London', lat: 51.5074, lng: -0.1278, zoom: 12 },
-//         { name: 'Sydney', lat: -33.8688, lng: 151.2093, zoom: 12 },
-//     ]
-//     return random.choice(locations)
-// }
-//
-// async function generateLabels(boardTitle) {
-//     const prompt = `
-// Board Title: "${boardTitle}"
-// Generate an array of 5 short labels for a project mgmt board.
-// Some examples: "Grocery", "Weekend Plans", "Work Tasks".
-// Return JSON:
-// [
-//   {"id":"some-id","title":"...","color":"(placeholder)"},
-//   ...
-// ]
-// We only care about 'id', 'title', 'color'.
-// Return valid JSON only.
-// `
-//     const fallback = JSON.stringify([
-//         { id: 'lbl1', title: 'Tasks', color: '#9f8fef' },
-//         { id: 'lbl2', title: 'Personal', color: '#f87168' },
-//         { id: 'lbl3', title: 'Work', color: '#fea362' },
-//         { id: 'lbl4', title: 'Errands', color: '#f5cd47' },
-//         { id: 'lbl5', title: 'Household', color: '#4bce97' },
-//     ])
-//
-//     const text = await generateText(prompt, 1.0, fallback)
-//     let rawLabels = safeJsonParse(text, fallback)
-//     if (!Array.isArray(rawLabels) || !rawLabels.length) {
-//         rawLabels = safeJsonParse(fallback)
-//     }
-//
-//     const uniqueColors = new Set()
-//     return rawLabels.slice(0, 5).map((lbl) => {
-//         if (!lbl.id) lbl.id = 'lbl_' + random.id()
-//         if (!lbl.title) lbl.title = 'Label ' + random.id()
-//         let col = getRandomColorLabels()
-//         while (uniqueColors.has(col) && uniqueColors.size < 6) {
-//             col = getRandomColorLabels()
-//         }
-//         uniqueColors.add(col)
-//         lbl.color = col
-//         return lbl
-//     })
-// }
-//
-// const BADGE_COLOR_MAP = {
-//     risk: '#fdddc7',
-//     approved: '#f8e6a0',
-//     priority: '#ffe2bd',
-//     now: '#ffc0cb',
-// }
-// const BADGE_TEXT_COLOR_MAP = {
-//     risk: '#6e3b0d',
-//     approved: '#4f3a0e',
-//     priority: '#6e3b0d',
-//     now: '#6e0d3a',
-// }
-// const BADGE_TYPE_ARRAY = ['risk', 'approved', 'priority', 'now']
-//
-// async function generateBadges(boardTitle, groupTitle) {
-//     const prompt = `
-// For the group "${groupTitle}" in the board "${boardTitle}",
-// Generate an array of 10 "badge" objects with selectable categories.
-// Example:
-// [
-//   {"categ":"Workload", "badgeOptions": ["Light", "Heavy", "Medium"], "text":"Heavy"},
-//   {"categ":"NeedsApproval", "badgeOptions": ["Pending", "Need Approval", "Rejected"], "text":"Pending"},
-//   ...
-// ]
-// Return strictly valid JSON only.
-// `
-//     const fallback = '[{"categ":"NeedsApproval","text":"Pending"},{"categ":"HighRisk","text":"Proceed Carefully"}]'
-//
-//     const text = await generateText(prompt, 1.0, fallback)
-//     let rawBadges = safeJsonParse(text, fallback)
-//     if (!Array.isArray(rawBadges)) {
-//         rawBadges = safeJsonParse(fallback)
-//     }
-//
-//     return rawBadges.map((b) => {
-//         const randomType = random.choice(BADGE_TYPE_ARRAY)
-//         return {
-//             id: 'badg_' + random.id(),
-//             categ: b.categ || 'General',
-//             color: BADGE_COLOR_MAP[randomType] || '#ccc',
-//             textColor: BADGE_TEXT_COLOR_MAP[randomType] || '#000',
-//             badgeOptions: b.badgeOptions || [],
-//             chosenOption: b.text || 'Note',
-//         }
-//     })
-// }
-//
-// async function generateTask(boardTitle, groupTitle) {
-//     const fallbackResp = `Title: Kitchen Chores; Description: Clean the fridge and wipe the counters.`
-//     const prompt = `
-// For the group "${groupTitle}" in the board "${boardTitle}",
-// create a short but realistic task. Format EXACTLY as:
-// "Title: XYZ; Description: ABC"
-// Return no extra text or code blocks, just that line.
-// `
-//     const response = await generateText(prompt, 1.0, fallbackResp, 128)
-//     let taskTitle = 'RandomTask'
-//     let taskDescription = 'No desc from GPT'
-//     const match = response.match(/Title:\s*(.+?);\s*Description:\s*(.+)/)
-//     if (match) {
-//         taskTitle = match[1].trim()
-//         taskDescription = match[2].trim()
-//     }
-//
-//     const badges = await generateBadges(boardTitle, groupTitle)
-//
-//     return {
-//         id: random.id(),
-//         title: taskTitle,
-//         status: random.choice(STATUS_OPTIONS),
-//         priority: random.choice(PRIORITY_OPTIONS),
-//         dueDate: random.date('2024-01-01', '2026-12-31').toISOString(),
-//         createdAt: random.date('2024-01-01', '2026-12-31'),
-//         description: taskDescription,
-//         checklists: await generateChecklists(boardTitle, groupTitle),
-//         members: random.sample(GPT_USER_POOL, random.randint(0, GPT_USER_POOL.length)),
-//         style: await generateTaskStyle(),
-//         badges,
-//         attachments: getRandomAttachments(),
-//         activity: generateTaskActivities(taskTitle),
-//         isUserWatching: random.choice([true, false]),
-//         labels: [],
-//         location: random.choice([null, null, null, getRandomLocation()]),
-//     }
-// }
-//
-// function getRandomAttachments() {
-//     const cnt = random.randint(0, 2)
-//     return Array.from({ length: cnt }, () => ({
-//         path: `file-${random.randint(1, 999)}.png`,
-//         date: Date.now() - random.randint(0, 1_000_000_000),
-//         text: random.choice([
-//             'Photo proof!',
-//             'Attached doc',
-//             'Uploaded file',
-//             '',
-//         ]),
-//     }))
-// }
-//
-// async function generateChecklists(boardTitle, groupTitle) {
-//     const fallback = JSON.stringify([
-//         {
-//             id: 'cl_fallback',
-//             title: 'Fallback Checklist',
-//             progress: 0,
-//             todos: [
-//                 { id: 'todo1', title: 'Fallback item', isDone: false },
-//                 { id: 'todo2', title: 'Another fallback', isDone: true },
-//             ],
-//         },
-//     ])
-//     const prompt = `
-// For the group "${groupTitle}" in the board "${boardTitle}",
-// Generate an array of 3 short "todo" items related to the group title and board title. Return strictly JSON:
-// [
-//   {"title":"something short","isDone": true/false},
-//   ...
-// ]
-// `
-//
-//     const text = await generateText(prompt, 1.0, fallback)
-//     let todosArray = safeJsonParse(text, '[]')
-//     if (!Array.isArray(todosArray)) {
-//         console.warn('GPT todos not an array, using fallback.')
-//         todosArray = safeJsonParse(fallback)[0].todos
-//     }
-//     if (!todosArray.length) {
-//         todosArray = safeJsonParse(fallback)[0].todos
-//     }
-//
-//     const cCount = random.randint(0, 2)
-//     const checklists = []
-//     for (let i = 0; i < cCount; i++) {
-//         const tCount = 1 + Math.floor(Math.random() * todosArray.length)
-//         const partialTodos = todosArray.slice(0, tCount).map((t) => ({
-//             id: 'todo_' + random.id(),
-//             title: t.title || 'UntitledTodo',
-//             isDone: typeof t.isDone === 'boolean' ? t.isDone : false,
-//         }))
-//         checklists.push({
-//             id: 'cl_' + random.id(),
-//             title: 'Checklist ' + random.id().slice(0, 4),
-//             progress: random.randint(0, 100),
-//             todos: partialTodos,
-//         })
-//     }
-//     return checklists
-// }
-//
-// async function generateTaskStyle() {
-//     const styleType = random.randint(0, 2)
-//     if (styleType === 0) {
-//         return {
-//             backgroundColor: getRandomColorLabels(),
-//             coverSize: random.choice(['small', 'large']),
-//         }
-//     } else if (styleType === 1) {
-//         const images = [
-//             null,
-//             `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//             'cover-img.png',
-//             'cover-img-1.png',
-//             'cover-img-2.png',
-//             'cover-img-3.png',
-//         ]
-//         return {
-//             backgroundImage: random.choice(images),
-//             coverSize: random.choice(['small', 'large']),
-//         }
-//     } else {
-//         return {}
-//     }
-// }
-//
-// function generateTaskActivities(taskTitle) {
-//     const activityTypes = [
-//         `Commented: "Looks good!"`,
-//         `Updated title to: ${taskTitle}`,
-//         `Attached a new file`,
-//         `Status changed to ${random.choice(STATUS_OPTIONS)}`,
-//     ]
-//     const count = random.randint(1, 3)
-//     return Array.from({ length: count }, () => {
-//         const byMember = random.choice(GPT_USER_POOL) || {
-//             _id: 'fallback',
-//             fullname: 'Fallback user',
-//             imgUrl: '',
-//         }
-//         return {
-//             id: random.id(),
-//             title: random.choice(activityTypes),
-//             createdAt: random.date('2023-01-01', '2025-12-31').getTime(),
-//             byMember: {
-//                 _id: byMember._id,
-//                 fullname: byMember.fullname,
-//                 imgUrl: byMember.imgUrl,
-//             },
-//         }
-//     })
-// }
-//
-// async function generateGroups(boardTitle) {
-//     const fallback = `Home; Work; Personal`
-//     const groupCount = random.randint(5, 8)
-//     const prompt = `
-// Board: "${boardTitle}"
-// Generate ${groupCount} short sub-topics/group-titles/task-lists about the topic of this board and everyday life, work or task categories related to this board topic, separated by semicolons.
-// Example: "Groceries; Home Maintenance; Work Projects; Financial Plan; Everyday; Project General Goals; Wishlist"
-// No code blocks, just semicolons.
-// `
-//     const text = await generateText(prompt, 1.0, fallback)
-//     let groupTitles = text.split(';').map((t) => t.trim()).filter(Boolean)
-//     if (groupTitles.length < groupCount) {
-//         while (groupTitles.length < groupCount) {
-//             groupTitles.push('Group ' + random.id().slice(0, 3))
-//         }
-//     }
-//     groupTitles = groupTitles.slice(0, groupCount)
-//
-//     const groups = await Promise.all(
-//         groupTitles.map(async (title) => {
-//             const taskCount = random.randint(3, 6)
-//             const tasks = await Promise.all(
-//                 Array.from({ length: taskCount }, () => generateTask(boardTitle, title))
-//             )
-//             const backgroundColor = getRandomColor()
-//             return {
-//                 id: random.id(),
-//                 title,
-//                 archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),
-//                 tasks,
-//                 style: {
-//                     backgroundColor,
-//                     color: getColorFromBackgroundColor(backgroundColor),
-//                 },
-//                 watched: random.choice([true, false]),
-//                 isMinimaized: random.choice([true, false]),
-//             }
-//         })
-//     )
-//
-//     return groups
-// }
-//
-// function getRandomBoardActivities(board) {
-//     const count = random.randint(2, 5)
-//     return Array.from({ length: count }, () => {
-//         const group = random.choice(board.groups)
-//         const task = random.choice(group.tasks)
-//         const activityType = random.choice(['added', 'moved', 'updated'])
-//         let title
-//         if (activityType === 'added') {
-//             title = `Added task '${task.title}' to group '${group.title}'`
-//         } else if (activityType === 'moved') {
-//             const otherGroup = random.choice(board.groups.filter((g) => g.id !== group.id))
-//             title = `Moved task '${task.title}' from '${otherGroup?.title}' to '${group.title}'`
-//         } else {
-//             title = `Updated status of task '${task.title}' to '${random.choice(STATUS_OPTIONS)}'`
-//         }
-//         const byMember = random.choice(GPT_USER_POOL) || {
-//             _id: 'fallback',
-//             fullname: 'Fallback user',
-//             imgUrl: '',
-//         }
-//         return {
-//             id: random.id(),
-//             title,
-//             createdAt: random.date('2023-01-01', '2025-12-31').getTime(),
-//             byMember: {
-//                 _id: byMember._id,
-//                 fullname: byMember.fullname,
-//                 imgUrl: byMember.imgUrl,
-//             },
-//             group: { id: group.id, title: group.title },
-//             task: { id: task.id, title: task.title },
-//         }
-//     })
-// }
-//
-// export async function getRandomBoardAI() {
-//     showUserMsg('AI: Generating new board..')
-//     await initUserPool()
-//
-//     const randomTopic = 'Random Topic'
-//     const boardTitlePrompt = `
-// Generate a single realistic board name for a project management system based on the topic "${randomTopic}".
-// Return just the name, no extra text.
-// `
-//     const fallbackBoardTitle = 'Generic Board'
-//     const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackBoardTitle)
-//
-//     showSpinner('AI: Generating board..')
-//
-//     const groups = await generateGroups(boardTitle)
-//     const labels = await generateLabels(boardTitle)
-//
-//     for (const group of groups) {
-//         for (const task of group.tasks) {
-//             const labelSubset = random.sample(labels.map((lbl) => lbl.id), random.randint(0, labels.length))
-//             task.labelIds = labelSubset
-//             task.labels = labels
-//         }
-//     }
-//
-//     const createdBy = random.choice(GPT_USER_POOL) || {
-//         _id: 'u_fallback', fullname: 'Unknown user', imgUrl: '',
-//     }
-//     const boardId = random.id(random.randint(4, 10))
-//     const board = {
-//         id                : boardId, title: boardTitle, isStarred: random.choice([true, false]), archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]), createdBy: {
-//             _id: createdBy._id, fullname: createdBy.fullname, imgUrl: createdBy.imgUrl,
-//         }, style          : {
-//             backgroundImage: random.choice([
-//
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
-//
-//
-//
-//
-//                 'color_1.svg', 'color_2.svg', 'color_3.svg', 'color_4.svg', 'color_5.svg', 'color_6.svg', 'color_7.svg', 'color_8.svg', 'color_9.svg', 'color_10.svg', 'color_11.svg',]),
-//         }, labels, members: GPT_USER_POOL, groups, activities: [], cmpsOrder: random.sample(CMP_ORDER_OPTIONS, random.randint(2, CMP_ORDER_OPTIONS.length)),
-//     }
-//
-//     board.activities = getRandomBoardActivities(board)
-//
-//     showSuccessMsg('AI: Board generation complete!')
-//
-//     board.generator = 'getRandomBoardAI'
-//     return board
-//
-// }
-
-
-
-
-
-/*******************************************
- * Massive Data Generation Pipeline
- * ---------------------------------
- * Creates "Trello-like" boards with:
- * - Domain-based topics
- * - GPT-lifted or fallback task text
- * - Random attachments, checklists
- * - Realistic distribution of members, labels, badges
- * - Optional domain-based images
- *******************************************/
-
-// ===============  YOUR DATA SOURCES  ===============
-import OpenAI from 'openai'
-import { API_KEY } from './secrets.js'
-
-// The user-friendly topics you provided (massive list)
-// export const userFriendlyTopics = [
-//     // EXAMPLE SUBSET (You have 600+)
-//     "Planning My Marketing Push", "Building a Sales Plan", "Running Social Media", "Boosting SEO",
-//     "Sending Email Blasts", "Creating Ads", "Growing the Brand", // ...
-//     "Planning My Money", "Budgeting Ahead", "Reporting Cash", // ...
-//     "Building Software", "Launching My Product", "Doing R&D", // ...
-//     "Defining Target Markets", "Setting Marketing Objectives", // ...
-//     // etc. entire massive array...
-// ]
-
-// The giant “MASSIVE_BADGE_CATALOG” you provided, containing arrays of categories
-// with each category an object: {category, values, colors, ...}
-export const MASSIVE_BADGE_CATALOG = [
-    // Many categories... your large code snippet with 200+ categories...
-    // e.g.
-    {
-      category: "Appointment Type",
-      values: ["Physical","Dental","Vision","Specialist","Emergency","Follow-Up"],
-      colors: ["#FFB3BA","#FFDFBA","#BAFFC9","#BAE1FF","#FF6961","#FDFD96"]
-    },
-    // ...
-    // {category: "Priority", values: [...], colors: [...]},
-    // ...
-]
-
-// Some utility code you have:
-import { random, showUserMsg, showSuccessMsg, showErrorMsg, showSpinner } from './util.service.js'
-
-
-// ===============  HELPER UTILS  ===============
-
-// Weighted or random picks, etc. You can adapt from your code:
-function safeJsonParse(str, fallback = '[]') {
-    let s = str?.trim() || ''
-    // remove triple-backticks, etc.
-    s = s.replace(/^```+(\w+)?\s*/i, '').replace(/^json\s*/i, '')
-
-    // fix bracket imbalance
-    function bracketBalanceRepair(raw) {
-        const openCurly = (raw.match(/\{/g) || []).length
-        const closeCurly = (raw.match(/\}/g) || []).length
-        const openSquare = (raw.match(/\[/g) || []).length
-        const closeSquare = (raw.match(/\]/g) || []).length
-        let out = raw
-        if (openCurly === closeCurly+1 && !raw.trim().endsWith('}')) out += '}'
-        if (openSquare === closeSquare+1 && !raw.trim().endsWith(']')) out += ']'
-        return out
-    }
-
-    try {
-        return JSON.parse(s)
-    } catch (err) {
-        // Attempt bracket fix
-        const repaired = bracketBalanceRepair(s)
-        try {
-            return JSON.parse(repaired)
-        } catch (err2) {
-            // fallback
-            return JSON.parse(fallback)
-        }
-    }
-}
-
-function isColorDark(hexColor) {
-    // crude check
-    if (!hexColor || !hexColor.startsWith('#') || hexColor.length !== 7) return true;
-    const r = parseInt(hexColor.slice(1,3), 16)
-    const g = parseInt(hexColor.slice(3,5), 16)
-    const b = parseInt(hexColor.slice(5,7), 16)
-    const brightness = Math.sqrt(0.299*r*r + 0.587*g*g + 0.114*b*b)
-    return (brightness < 140)
-}
-
-// “Domain inference” - naive approach: check if the chosen topic has certain keywords
-function inferDomainFromTopic(topic) {
-    const t = topic.toLowerCase()
-    if (t.includes('marketing') || t.includes('sales') || t.includes('brand') || t.includes('seo') || t.includes('ads')) {
-        return 'Marketing and Sales'
-    } else if (t.includes('finance') || t.includes('budget') || t.includes('money') || t.includes('tax') || t.includes('cash')) {
-        return 'Finance and Accounting'
-    } else if (t.includes('software') || t.includes('product') || t.includes('r&d') || t.includes('engineering') || t.includes('launching my product')) {
-        return 'Product and Engineering'
-    } else if (t.includes('hr') || t.includes('hire') || t.includes('talent') || t.includes('payroll')) {
-        return 'Human Resources'
-    } else if (t.includes('audit') || t.includes('compliance') || t.includes('legal') || t.includes('regulation') || t.includes('lawsuit')) {
-        return 'Legal and Compliance'
-    } else if (t.includes('cust') || t.includes('support') || t.includes('helping')) {
-        return 'Customer Support'
-    } else if (t.includes('business') || t.includes('stakeholders') || t.includes('merger') || t.includes('leadership')) {
-        return 'Business and Management'
-    } else if (t.includes('health') || t.includes('doctor') || t.includes('wellness') || t.includes('appointment') || t.includes('fitness')) {
-        return 'Health and Wellness'
-    } else if (t.includes('event') || t.includes('festival') || t.includes('conference') || t.includes('planning a wedding')) {
-        return 'Event Planning'
-    } else if (t.includes('education') || t.includes('courses') || t.includes('study') || t.includes('lesson')) {
-        return 'Education and Learning'
-    } else if (t.includes('creative') || t.includes('painting') || t.includes('craft') || t.includes('design')) {
-        return 'Creative Projects'
-    } else if (t.includes('it') || t.includes('security') || t.includes('tech') || t.includes('digital')) {
-        return 'IT and Security'
-    } else if (t.includes('personal') || t.includes('lifestyle') || t.includes('wedding') || t.includes('daily') || t.includes('trip')) {
-        return 'Personal and Lifestyle'
-    } else {
-        // fallback
-        return 'General'
-    }
-}
-
-// Filter from MASSIVE_BADGE_CATALOG any categories that match domain via a naive approach:
-function filterBadgeCategoriesByDomain(allCatalog, domain) {
-    // e.g. if domain is "Marketing and Sales," we look for categories that appear in
-    // the snippet section for “Marketing and Sales.” This is naive: we can just search
-    // the category name or the comment in the code. For your use, you might add
-    // a custom “domain” field to each category or do a better approach.
-
-    // We'll do a simple substring check:
-    const dLower = domain.toLowerCase()
-    const matches = []
-    for (let catObj of allCatalog) {
-        const catTitle = catObj.category.toLowerCase()
-        // if it includes "marketing", "sales", "seo", or if domain is general
-        if (domain === 'General') {
-            // Take about 3 random categories from the entire set
-            // We do that after finishing the loop, or we can push everything into a pool
-            matches.push(catObj)
-        } else {
-            // check if catTitle has marketing or sales
-            if (catTitle.includes('marketing') || catTitle.includes('sales')) {
-                if (dLower.includes('marketing') || dLower.includes('sales')) {
-                    matches.push(catObj)
-                }
-            }
-            else if (catTitle.includes('finance') || catTitle.includes('budget')) {
-                if (dLower.includes('finance') || dLower.includes('accounting')) {
-                    matches.push(catObj)
-                }
-            }
-            else if (catTitle.includes('product') || catTitle.includes('engineering') || catTitle.includes('dev') || catTitle.includes('bug') || catTitle.includes('code')) {
-                if (dLower.includes('product') || dLower.includes('engineering') || dLower.includes('software')) {
-                    matches.push(catObj)
-                }
-            }
-            else if (catTitle.includes('hr') || catTitle.includes('recruit') || catTitle.includes('talent') || catTitle.includes('performance review')) {
-                if (dLower.includes('human resources')) {
-                    matches.push(catObj)
-                }
-            }
-            else if (catTitle.includes('compliance') || catTitle.includes('legal') || catTitle.includes('lawsuit') || catTitle.includes('risk') || catTitle.includes('contract')) {
-                if (dLower.includes('legal') || dLower.includes('compliance')) {
-                    matches.push(catObj)
-                }
-            }
-            else if (catTitle.includes('customer') || catTitle.includes('support') || catTitle.includes('ticket')) {
-                if (dLower.includes('customer')) {
-                    matches.push(catObj)
-                }
-            }
-            else if (catTitle.includes('business') || catTitle.includes('stakeholder') || catTitle.includes('management') || catTitle.includes('merger')) {
-                if (dLower.includes('business')) {
-                    matches.push(catObj)
-                }
-            }
-            else if (catTitle.includes('health') || catTitle.includes('wellness') || catTitle.includes('doctor') || catTitle.includes('treatment')) {
-                if (dLower.includes('health') || dLower.includes('wellness')) {
-                    matches.push(catObj)
-                }
-            }
-            else if (catTitle.includes('event') || catTitle.includes('conference')) {
-                if (dLower.includes('event')) {
-                    matches.push(catObj)
-                }
-            }
-            else if (catTitle.includes('education') || catTitle.includes('learning') || catTitle.includes('academic')) {
-                if (dLower.includes('education')) {
-                    matches.push(catObj)
-                }
-            }
-            else if (catTitle.includes('creative') || catTitle.includes('art') || catTitle.includes('design') || catTitle.includes('writing stage')) {
-                if (dLower.includes('creative')) {
-                    matches.push(catObj)
-                }
-            }
-            else if (catTitle.includes('it') || catTitle.includes('security') || catTitle.includes('privacy')) {
-                if (dLower.includes('it') || dLower.includes('security')) {
-                    matches.push(catObj)
-                }
-            }
-            else if (catTitle.includes('personal') || catTitle.includes('daily') || catTitle.includes('routine') || catTitle.includes('meal plan')) {
-                if (dLower.includes('personal') || dLower.includes('lifestyle')) {
-                    matches.push(catObj)
-                }
-            }
-        }
-    }
-
-    // If domain=General, we only random-sample from the entire set.
-    if (domain === 'General') {
-        // just sample ~6 to 10 categories from entire MASSIVE_BADGE_CATALOG
-        const sized = random.randint(6,10)
-        const entire = [...allCatalog]
-        random.shuffle(entire)
-        return entire.slice(0, sized)
-    }
-
-    if (!matches.length) {
-        // fallback: pick any 5 from entire
-        const entire = [...allCatalog]
-        random.shuffle(entire)
-        return entire.slice(0,5)
-    }
-
-    // limit to around 4..8 categories:
-    random.shuffle(matches)
-    const sized2 = random.randint(4,8)
-    return matches.slice(0, sized2)
-}
-
-function pickBadgeValue(badgeCategory) {
-    if (!badgeCategory.values?.length) return null
-    const idx = random.randint(0, badgeCategory.values.length -1)
-    return {
-        value: badgeCategory.values[idx],
-        color: badgeCategory.colors?.[idx] ?? '#ccc'
-    }
-}
-
-function isColorTooDark(hex) {
-    // same as isColorDark
-    return isColorDark(hex)
-}
-
-
-// ===============  GPT ENABLER  ===============
-let openai = null
-async function generateText(prompt, temperature=1.0, fallback='', length=128) {
-    if (!openai) {
-        openai = new OpenAI({
-            dangerouslyAllowBrowser: true,
-            apiKey: API_KEY,
-        })
-    }
-    try {
-        const response = await openai.chat.completions.create({
-            // model: 'gpt-3.5-turbo',
-            model: 'gpt-4o-mini',
-            temperature,
-            max_tokens: length,
-            messages: [{role: 'user', content: prompt}],
-        })
-        let text = response.choices?.[0]?.message?.content?.trim() || ''
-        // remove leading/trailing weirdness
-        while (text.length && !/[\w\d]/.test(text[0])) text = text.slice(1)
-        while (text.length && !/[\w\d]/.test(text[text.length-1])) text = text.slice(0, -1)
-        if (!text) text = fallback
-        else text = text.trim()
-        return text
-    } catch (err) {
-        console.error('OpenAI error:', err)
-        return fallback
-    }
-}
-
-// ===============  USER POOL  ===============
-let GPT_USER_POOL = gUsersPool
+GPT_USER_POOL = gUsersPool
 
 async function initUserPool() {
     if (GPT_USER_POOL.length) return
 
-    // If you want truly random user images, you can adapt your code that picks from a large face library
-    // For demonstration, we do a short fallback:
+    console.log('users')
     const fallbackPool = [
-        { _id:'u101', fullname:'Alice Placeholder', imgUrl:'' },
-        { _id:'u102', fullname:'Bob Placeholder',   imgUrl:'' },
-        { _id:'u103', fullname:'Cara Placeholder',  imgUrl:'' },
+        { _id: 'u101', fullname: 'Ava Placeholder', imgUrl: '' },
+        { _id: 'u102', fullname: 'Ben Placeholder', imgUrl: '' },
+        { _id: 'u103', fullname: 'Cara Placeholder', imgUrl: '' },
     ]
 
-    const prompt = `
-Generate an array of 5 distinct "users" for a collaborative project tool.
+    const prompt = `Generate an array of 5 to 8 distinct "users" for a collaborative project tool.
 Each user = {
   "_id": "unique string id",
   "fullname": "some realistic or creative full name",
@@ -5395,1501 +1888,86 @@ Each user = {
 }
 Return only valid JSON. e.g.
 [
-  {"_id":"u111","fullname":"Alice Wonderland","imgUrl":"https://example.com/alice.jpg"},
+  {"_id":"u111", "fullname":"Alice Wonderland", "imgUrl":"https://..."},
   ...
 ]`
 
-    const text = await generateText(prompt, 1.0)
-    let arr = []
+    let text = await generateText(prompt, 1.0)
+    let users = []
     try {
-        arr = safeJsonParse(text, JSON.stringify(fallbackPool))
-    } catch(e) {
-        console.error('Failed parse GPT userpool:', e)
-        arr = fallbackPool
+        users = safeJsonParse(text, JSON.stringify(fallbackPool))
+    } catch (err) {
+        console.error('Failed to parse GPT user pool. Using fallback.', err)
+        users = fallbackPool
     }
-    if (!Array.isArray(arr) || !arr.length) arr = fallbackPool
 
-    // ensure min 5
-    while (arr.length < 5) {
-        arr.push({
-            _id:'u_'+random.id(),
-            fullname:'FallbackUser '+random.id(),
-            imgUrl:''
-        })
+    if (!Array.isArray(users) || !users.length) {
+        users = fallbackPool
     }
-    // max 8
-    if (arr.length>8) arr=arr.slice(0,8)
-    // final
-    GPT_USER_POOL = arr
+
+    console.log('users 2')
+
+    if (users.length < 5) {
+        while (users.length < 5) {
+            console.log('users 4', users.length)
+            users.push({
+                _id: 'u_' + random.id(),
+                fullname: 'FallbackUser ' + random.id(),
+                imgUrl: '',
+            })
+        }
+    }
+
+    console.log('users 3')
+
+    if (users.length > 8) users = users.slice(0, 8)
+
+    for (let u of users) {
+        if (!u._id || !u.fullname) {
+            u._id = 'u_' + random.id()
+            if (!u.fullname) u.fullname = 'FallbackUser ' + random.id()
+        }
+        if (typeof u.imgUrl !== 'string') {
+            u.imgUrl = ''
+        }
+    }
+
+    GPT_USER_POOL = users
 }
 
 export function getUserPool() {
     return GPT_USER_POOL
 }
 
-
-// ===============  CHECKLISTS  ===============
-async function generateChecklistItems(boardTitle, groupTitle) {
-    // ask GPT for 3 short items
-    const fallback = JSON.stringify([
-        {"title":"Fallback item 1","isDone":false},
-        {"title":"Fallback item 2","isDone":true},
-        {"title":"Fallback item 3","isDone":false},
-    ])
-    const prompt = `
-For the group "${groupTitle}" in the board "${boardTitle}",
-Generate exactly 3 short "todo" items. 
-Return strictly JSON array:
-[{"title":"xxx","isDone":true/false}, ...]
-`
-    const txt = await generateText(prompt,1.0,fallback)
-    let parsed = safeJsonParse(txt, fallback)
-    if (!Array.isArray(parsed) || !parsed.length) parsed = safeJsonParse(fallback)
-    // ensure we have 3
-    while (parsed.length <3) {
-        parsed.push({"title":"Added fallback item","isDone": random.choice([true,false])})
-    }
-    return parsed.slice(0,3)
-}
-
-
-// Cache for Unsplash image URLs to avoid redundant API calls
-const unsplashImageCache = new Map();
-
-// Advanced image source management system with multi-provider fallbacks
-const imageCache = new Map();
-
-// CORE TASK GENERATION FUNCTION
-// async function generateSingleTask(boardTitle, groupTitle) {
-//     // Start critical async operations immediately
-//     const gptRespPromise = generateText(`
-// For the group "${groupTitle}" in the board "${boardTitle}",
-// Create a short realistic task.
-// Format EXACTLY:
-// "Title: XYZ; Description: ABC"
-// No code blocks, no extra text.
-// `, 1.0, `Title: My Fallback Task; Description: This is a fallback.`, 128);
-//
-//     const checklistPromises = Array(random.randint(0,2)).fill().map(() =>
-//         generateChecklistItems(boardTitle, groupTitle)
-//     );
-//
-//     // Fast synchronous operations
-//     const styleType = random.choice([0,1,2]);
-//     let style = {};
-//     if (styleType === 0) {
-//         style = {
-//             backgroundColor: random.choice(['#9f8fef','#f87168','#fea362','#f5cd47','#4bce97','#579dff']),
-//             coverSize: random.choice(['small','large'])
-//         };
-//     } else if (styleType === 1) {
-//         // Will be populated with appropriate image URL later
-//         style = {
-//             backgroundImage: null,
-//             coverSize: random.choice(['small','large'])
-//         };
-//     }
-//
-//     // More fast local operations
-//     const attachments = Array(random.randint(0,2)).fill().map(() => ({
-//         path: `file-${random.randint(1,999)}.png`,
-//         date: Date.now() - random.randint(0,1_000_000_000),
-//         text: random.choice(['Photo proof!','Attached doc','Uploaded file',''])
-//     }));
-//
-//     const mems = random.sample(GPT_USER_POOL, random.randint(0,3));
-//     const loc = (Math.random()<0.1) ? {
-//         name: 'Tel Aviv-Yafo', lat: 32.109333, lng: 34.855499, zoom: 11
-//     } : null;
-//
-//     // WAIT POINT: Get task title and description
-//     const gptResp = await gptRespPromise;
-//     let title = 'RandomTask';
-//     let desc = 'No desc from GPT';
-//     const match = gptResp.match(/Title:\s*(.+?);\s*Description:\s*(.+)/);
-//     if (match) {
-//         title = match[1].trim();
-//         desc = match[2].trim();
-//     }
-//
-//     // Start image request only after we have title/desc
-//     let imagePromise = null;
-//     if (styleType === 1) {
-//         imagePromise = getDesignAssetForTask(title, desc, boardTitle, groupTitle);
-//     }
-//
-//     // Generate activities using title
-//     const activities = Array(random.randint(1,3)).fill().map(() => {
-//         const byMem = random.choice(GPT_USER_POOL) || {_id:'fallback', fullname:'Fallback user', imgUrl:''};
-//         return {
-//             id: random.id(),
-//             title: random.choice([
-//                 `Commented: "Looks good!"`,
-//                 `Edited title to: ${title}`,
-//                 `Attached a new file`,
-//                 `Set status to 'inProgress'`
-//             ]),
-//             createdAt: random.date('2023-01-01','2025-12-31').getTime(),
-//             byMember: {
-//                 _id: byMem._id,
-//                 fullname: byMem.fullname,
-//                 imgUrl: byMem.imgUrl
-//             }
-//         };
-//     });
-//
-//     // Wait for all remaining promises
-//     const [checklistResults, imageUrl] = await Promise.all([
-//         Promise.all(checklistPromises),
-//         imagePromise || Promise.resolve(null)
-//     ]);
-//
-//     // Process checklists
-//     const checklists = checklistResults.map(items => {
-//         const todos = items.map(it => ({
-//             id: 'todo_' + random.id(),
-//             title: it.title,
-//             isDone: it.isDone,
-//         }));
-//         return {
-//             id: 'cl_' + random.id(),
-//             title: 'Checklist ' + random.id().slice(0,4),
-//             progress: 0,
-//             todos
-//         };
-//     });
-//
-//     // Apply image URL if we got one
-//     if (styleType === 1 && imageUrl) {
-//         style.backgroundImage = imageUrl;
-//     }
-//
-//     // Return final task object
-//     return {
-//         id: 'tsk_' + random.id(),
-//         title,
-//         status: random.choice(['inProgress','done','review','stuck','blocked']),
-//         priority: random.choice(['low','medium','high']),
-//         dueDate: random.date('2024-01-01','2026-12-31').toISOString(),
-//         createdAt: random.date('2023-01-01','2024-12-31').getTime(),
-//         description: desc,
-//         checklists,
-//         members: mems,
-//         style,
-//         badges: [],
-//         attachments,
-//         activity: activities,
-//         isUserWatching: random.choice([true,false]),
-//         labelIds: [],
-//         location: loc
-//     };
-// }
-
-/**
- * MASTER IMAGE SOURCE ROUTER - Determines the best image source based on task type
- * and dispatches to appropriate providers
- */
-// async function getDesignAssetForTask(title, desc, boardTitle, groupTitle) {
-//     // Create a cache key
-//     const combinedText = `${title}${desc}${boardTitle}${groupTitle}`.toLowerCase();
-//     const cacheKey = combinedText.replace(/[^a-z0-9]/g, '').slice(0, 60);
-//
-//     // Return cached image if available
-//     if (imageCache.has(cacheKey)) {
-//         return imageCache.get(cacheKey);
-//     }
-//
-//     // Analyze task content to determine best image type
-//     const taskType = analyzeTaskType(title, desc);
-//
-//     // Track attempts for logging and debugging
-//     const attempts = [];
-//     let imageUrl = null;
-//
-//     // TRY STRATEGY 1: Based on task type, try the most appropriate source first
-//     try {
-//         switch(taskType) {
-//             case 'technical':
-//                 attempts.push('TECHNICAL');
-//                 imageUrl = await getTechnicalImage(title, desc);
-//                 break;
-//             case 'creative':
-//                 attempts.push('CREATIVE');
-//                 imageUrl = await getCreativeImage(title, desc);
-//                 break;
-//             case 'planning':
-//                 attempts.push('PLANNING');
-//                 imageUrl = await getPlanningImage(title, desc);
-//                 break;
-//             case 'meeting':
-//                 attempts.push('MEETING');
-//                 imageUrl = await getMeetingImage(title, desc);
-//                 break;
-//             default:
-//                 attempts.push('GENERIC');
-//                 imageUrl = await getGenericWorkImage(title, desc);
-//         }
-//     } catch (e) {
-//         console.error(`Primary source error for ${taskType}:`, e);
-//     }
-//
-//     // TRY STRATEGY 2: If primary source failed, try Unsplash
-//     if (!imageUrl) {
-//         try {
-//             attempts.push('UNSPLASH');
-//             imageUrl = await getUnsplashImage(title, desc);
-//         } catch (e) {
-//             console.error('Unsplash fallback error:', e);
-//         }
-//     }
-//
-//     // TRY STRATEGY 3: If Unsplash failed, try icon/sticker source
-//     if (!imageUrl) {
-//         try {
-//             attempts.push('ICON_STICKER');
-//             imageUrl = await getIconOrSticker(title, desc);
-//         } catch (e) {
-//             console.error('Icon/Sticker fallback error:', e);
-//         }
-//     }
-//
-//     // ULTIMATE FALLBACK: Guaranteed to work
-//     if (!imageUrl) {
-//         attempts.push('ULTIMATE_FALLBACK');
-//         imageUrl = getUltimateFallbackImage(taskType);
-//     }
-//
-//     // Cache the result
-//     if (imageUrl) {
-//         imageCache.set(cacheKey, imageUrl);
-//     }
-//
-//     return imageUrl;
-// }
-
-/**
- * Analyze task content to determine its general type
- */
-// function analyzeTaskType(title, desc) {
-//     const fullText = `${title} ${desc}`.toLowerCase();
-//
-//     // Technical keywords
-//     const technicalTerms = ['code', 'bug', 'fix', 'develop', 'implement', 'feature',
-//                             'system', 'api', 'database', 'server', 'test', 'refactor',
-//                             'debug', 'deploy', 'architecture', 'schema', 'diagram',
-//                             'infrastructure', 'algorithm', 'prototype', 'engineering'];
-//
-//     // Creative keywords
-//     const creativeTerms = ['design', 'create', 'draft', 'mockup', 'sketch', 'wireframe',
-//                           'graphic', 'illustration', 'artwork', 'visual', 'logo', 'brand',
-//                           'style', 'creative', 'color', 'typography', 'layout', 'drawing'];
-//
-//     // Planning keywords
-//     const planningTerms = ['plan', 'strategy', 'roadmap', 'timeline', 'schedule', 'milestone',
-//                           'objective', 'goal', 'kpi', 'metric', 'project', 'task', 'backlog',
-//                           'sprint', 'prioritize', 'organize', 'coordinate', 'requirement'];
-//
-//     // Meeting keywords
-//     const meetingTerms = ['meeting', 'call', 'discuss', 'conversation', 'sync', 'presentation',
-//                          'review', 'retrospective', 'standup', 'session', 'workshop',
-//                          'conference', 'interview', 'demo', 'pitch', 'briefing'];
-//
-//     // Count occurrences
-//     const counts = {
-//         technical: technicalTerms.filter(term => fullText.includes(term)).length,
-//         creative: creativeTerms.filter(term => fullText.includes(term)).length,
-//         planning: planningTerms.filter(term => fullText.includes(term)).length,
-//         meeting: meetingTerms.filter(term => fullText.includes(term)).length
-//     };
-//
-//     // Find the highest count
-//     let maxCount = 0;
-//     let maxType = 'generic';
-//
-//     for (const [type, count] of Object.entries(counts)) {
-//         if (count > maxCount) {
-//             maxCount = count;
-//             maxType = type;
-//         }
-//     }
-//
-//     // If we found matching keywords, return that type
-//     if (maxCount > 0) {
-//         return maxType;
-//     }
-//
-//     // Default to generic if no specific keywords found
-//     return 'generic';
-// }
-
-/**
- * Get technical diagram, schematic, or code-related image
- */
-async function getTechnicalImage(title, desc) {
-    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
-
-    // Technical-specific search terms that yield diagrams and schematics
-    const technicalQueries = [
-        'code diagram', 'technical schematic', 'system architecture',
-        'flowchart', 'code on screen', 'programming', 'tech diagram',
-        'network diagram', 'software development', 'database schema',
-        'circuit board', 'algorithm diagram', 'engineering drawing'
-    ];
-
-    // Extract keywords from title/desc
-    const keywords = extractKeywords(title + ' ' + desc);
-
-    // Combine a technical term with a content keyword for better results
-    const technicalTerm = technicalQueries[Math.floor(Math.random() * technicalQueries.length)];
-    const searchQuery = keywords.length > 0
-        ? `${technicalTerm} ${keywords[0]}`
-        : technicalTerm;
-
-    try {
-        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
-        const response = await fetch(endpoint, {
-            headers: {
-                'Authorization': `Client-ID ${unsplashAccessKey}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Technical image search failed: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.results && data.results.length > 0) {
-            return data.results[0].urls.regular;
-        }
-
-        return null;
-    } catch (e) {
-        console.error('Technical image fetch failed:', e);
-        return null;
-    }
-}
-
-/**
- * Get creative, hand-drawn, sketch, or design-related image
- */
-async function getCreativeImage(title, desc) {
-    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
-
-    // Creative-specific search terms that yield hand-drawn, sketched images
-    const creativeQueries = [
-        'hand drawn sketch', 'design sketch', 'artist drawing', 'creative sketch',
-        'sketch notebook', 'design process', 'wireframe drawing', 'sketchbook',
-        'hand drawn mockup', 'creative doodle', 'design thinking', 'paper prototype',
-        'sketch notes', 'illustrated notes', 'concept art', 'storyboard'
-    ];
-
-    // Extract keywords from title/desc
-    const keywords = extractKeywords(title + ' ' + desc);
-
-    // Combine a creative term with a content keyword for better results
-    const creativeTerm = creativeQueries[Math.floor(Math.random() * creativeQueries.length)];
-    const searchQuery = keywords.length > 0
-        ? `${creativeTerm} ${keywords[0]}`
-        : creativeTerm;
-
-    try {
-        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
-        const response = await fetch(endpoint, {
-            headers: {
-                'Authorization': `Client-ID ${unsplashAccessKey}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Creative image search failed: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.results && data.results.length > 0) {
-            return data.results[0].urls.regular;
-        }
-
-        return null;
-    } catch (e) {
-        console.error('Creative image fetch failed:', e);
-        return null;
-    }
-}
-
-/**
- * Get planning, roadmap, schedule, or strategy-related image
- */
-async function getPlanningImage(title, desc) {
-    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
-
-    // Planning-specific search terms that yield planning artifacts
-    const planningQueries = [
-        'strategic planning', 'project planning', 'planning board', 'roadmap',
-        'sticky notes planning', 'kanban board', 'sprint planning', 'task board',
-        'planning session', 'planner notebook', 'planning diagram', 'strategy map',
-        'timeline planning', 'project management', 'task planning', 'goal setting'
-    ];
-
-    // Extract keywords from title/desc
-    const keywords = extractKeywords(title + ' ' + desc);
-
-    // Combine a planning term with a content keyword for better results
-    const planningTerm = planningQueries[Math.floor(Math.random() * planningQueries.length)];
-    const searchQuery = keywords.length > 0
-        ? `${planningTerm} ${keywords[0]}`
-        : planningTerm;
-
-    try {
-        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
-        const response = await fetch(endpoint, {
-            headers: {
-                'Authorization': `Client-ID ${unsplashAccessKey}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Planning image search failed: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.results && data.results.length > 0) {
-            return data.results[0].urls.regular;
-        }
-
-        return null;
-    } catch (e) {
-        console.error('Planning image fetch failed:', e);
-        return null;
-    }
-}
-
-/**
- * Get meeting, conversation, or collaboration-related image
- */
-async function getMeetingImage(title, desc) {
-    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
-
-    // Meeting-specific search terms
-    const meetingQueries = [
-        'team meeting', 'conference room', 'whiteboard meeting', 'collaboration session',
-        'video conference', 'meeting notes', 'presentation meeting', 'team discussion',
-        'brainstorming session', 'meeting room', 'team workshop', 'design thinking',
-        'team huddle', 'one on one meeting', 'standup meeting', 'office meeting'
-    ];
-
-    // Extract keywords from title/desc
-    const keywords = extractKeywords(title + ' ' + desc);
-
-    // Combine a meeting term with a content keyword for better results
-    const meetingTerm = meetingQueries[Math.floor(Math.random() * meetingQueries.length)];
-    const searchQuery = keywords.length > 0
-        ? `${meetingTerm} ${keywords[0]}`
-        : meetingTerm;
-
-    try {
-        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
-        const response = await fetch(endpoint, {
-            headers: {
-                'Authorization': `Client-ID ${unsplashAccessKey}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Meeting image search failed: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.results && data.results.length > 0) {
-            return data.results[0].urls.regular;
-        }
-
-        return null;
-    } catch (e) {
-        console.error('Meeting image fetch failed:', e);
-        return null;
-    }
-}
-
-/**
- * Generic work-related image fallback
- */
-async function getGenericWorkImage(title, desc) {
-    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
-
-    // Generic work-related queries
-    const genericQueries = [
-        'productivity', 'workspace', 'office desk', 'work environment',
-        'task management', 'work tools', 'office supplies', 'organization',
-        'work planning', 'laptop work', 'modern office', 'work setup',
-        'business desk', 'professional workspace', 'clean desk'
-    ];
-
-    // Extract keywords from title/desc
-    const keywords = extractKeywords(title + ' ' + desc);
-
-    // Combine a generic term with a content keyword for better results
-    const genericTerm = genericQueries[Math.floor(Math.random() * genericQueries.length)];
-    const searchQuery = keywords.length > 0
-        ? `${genericTerm} ${keywords[0]}`
-        : genericTerm;
-
-    try {
-        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
-        const response = await fetch(endpoint, {
-            headers: {
-                'Authorization': `Client-ID ${unsplashAccessKey}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Generic image search failed: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.results && data.results.length > 0) {
-            return data.results[0].urls.regular;
-        }
-
-        return null;
-    } catch (e) {
-        console.error('Generic image fetch failed:', e);
-        return null;
-    }
-}
-
-/**
- * Get a simple Unsplash image based on keywords
- */
-async function getUnsplashImage(title, desc) {
-    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
-
-    // Extract keywords from title/desc
-    const keywords = extractKeywords(title + ' ' + desc);
-
-    // If no keywords found, use fallback term
-    const searchQuery = keywords.length > 0
-        ? keywords.slice(0, 2).join(' ')
-        : 'productivity work';
-
-    try {
-        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
-        const response = await fetch(endpoint, {
-            headers: {
-                'Authorization': `Client-ID ${unsplashAccessKey}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Unsplash search failed: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.results && data.results.length > 0) {
-            return data.results[0].urls.regular;
-        }
-
-        return null;
-    } catch (e) {
-        console.error('Unsplash fetch failed:', e);
-        return null;
-    }
-}
-
-/**
- * Get icon or sticker-like image using The Noun Project API
- * NOTE: This is a MOCK implementation since we don't have actual Noun Project credentials
- * In a real implementation, you would use their API with proper authentication
- */
-async function getIconOrSticker(title, desc) {
-    // Since we don't have Noun Project API credentials, simulate with hardcoded sticker URLs
-    // In a real implementation, replace this with actual API calls
-
-    // These are placeholder URLs for various sticker/icon style images
-    // Replace these with your actual sticker sources or API implementation
-    const stickerUrls = [
-        // Colorful sticker-like images
-        'https://cdn.dribbble.com/users/113499/screenshots/16599280/media/a7211408676ba2cbc0860a0464c93071.png',
-        'https://cdn.dribbble.com/users/43762/screenshots/16587858/media/f7f87f9437a13a1d3ae63b18276dfe7c.png',
-        'https://cdn.dribbble.com/users/471921/screenshots/16571682/media/a9e7b7aa72b1ea64b1e158e4cf2175f7.jpg',
-        'https://cdn.dribbble.com/users/2424687/screenshots/16559718/media/8b78217fabe34fdc07080747e6da88bd.png',
-        'https://cdn.dribbble.com/users/427857/screenshots/16551537/media/a8f18b2d2a8c1e4e2216e8410c4c20a0.png',
-
-        // Hand-drawn style images
-        'https://cdn.dribbble.com/users/1728196/screenshots/16556285/media/8292e077f1c8c7b053c98368f350a25a.jpg',
-        'https://cdn.dribbble.com/users/1585453/screenshots/16573417/media/00dfd6bea20cf92641ff4752cfc1e87e.jpg',
-        'https://cdn.dribbble.com/users/66319/screenshots/16559233/media/51a6eb892913e2bfa75a45a1bf9c5ec7.png',
-
-        // Schematic/diagram style images
-        'https://cdn.dribbble.com/users/311304/screenshots/16575909/media/67c689926c358cf0c6167c3181b77c1e.png',
-        'https://cdn.dribbble.com/users/1874303/screenshots/16558429/media/d8807b79cbf0d1893959e1df90c8da8c.png'
-    ];
-
-    // In a real implementation, do actual keyword matching here
-    // For now, just use the extracted keywords to select a sticker semi-deterministically
-    const keywords = extractKeywords(title + ' ' + desc);
-    let seed = 0;
-
-    if (keywords.length > 0) {
-        // Create a deterministic seed from the first keyword
-        seed = Array.from(keywords[0]).reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    } else {
-        // Fallback to random if no keywords
-        seed = Math.floor(Math.random() * 1000);
-    }
-
-    // Select a sticker URL based on the seed
-    const index = seed % stickerUrls.length;
-    return stickerUrls[index];
-}
-
-/**
- * Ultimate fallback that can never fail - uses themed dummy images
- */
-function getUltimateFallbackImage(taskType) {
-    // Generate a seed for consistent but varied images
-    const seed = Math.floor(Math.random() * 10000);
-
-    // Map task types to specific colors for visual differentiation
-    const typeColors = {
-        'technical': '5B8AF9',    // Blue
-        'creative': 'F96E5B',     // Red-Orange
-        'planning': '8BC34A',     // Green
-        'meeting': 'FFC107',      // Amber
-        'generic': '9E9E9E'       // Grey
-    };
-
-    // Get the appropriate color for this task type
-    const color = typeColors[taskType] || '9E9E9E';
-
-    // Create a dummy image URL with task type as text
-    return `https://dummyimage.com/800x600/${color}/fff&text=${taskType}+task`;
-}
-
-/**
- * Extract meaningful keywords from text
- */
-function extractKeywords(text) {
-    // List of common stop words to filter out
-    const stopWords = [
-        'a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'with', 'by',
-        'about', 'as', 'into', 'like', 'through', 'after', 'before', 'between', 'from',
-        'of', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had',
-        'do', 'does', 'did', 'will', 'would', 'shall', 'should', 'can', 'could', 'may',
-        'might', 'must', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her',
-        'us', 'them', 'this', 'that', 'these', 'those'
-    ];
-
-    // Process the text into keywords
-    let words = text.toLowerCase()
-                    .replace(/[^\w\s]/g, '')  // Remove punctuation
-                    .split(/\s+/);            // Split on whitespace
-
-    // Filter out stop words, empty strings, and very short words
-    words = words.filter(word =>
-        word.length > 3 && !stopWords.includes(word)
-    );
-
-    // Sort by word length (longer words are often more specific/meaningful)
-    words.sort((a, b) => b.length - a.length);
-
-    // Return the top 3 keywords
-    return words.slice(0, 3);
-}
-
-// Global registry to track used images per board
-const boardImageRegistry = new Map();
-
-// Global cache for all image URLs to avoid redundant API calls
-// const imageCache = new Map();
-
-// ENHANCED TASK GENERATION FUNCTION
-async function generateSingleTask(boardTitle, groupTitle, useEmoji) {
-    // Check if we need emoji in this task (30% probability)
-
-
-    // Start critical async operations immediately
-    const gptPrompt = useEmoji
-        ? `
-For the group "${groupTitle}" in the board "${boardTitle}",
-Create a short realistic task. 
-IMPORTANT: Include 1-2 relevant emojis in the title and/or description.
-Format EXACTLY:
-"Title: XYZ; Description: ABC"
-No code blocks, no extra text.
-`
-        : `
-For the group "${groupTitle}" in the board "${boardTitle}",
-Create a short realistic task. 
-Format EXACTLY:
-"Title: XYZ; Description: ABC"
-No code blocks, no extra text.
-`;
-
-    const gptRespPromise = generateText(gptPrompt, 1.0, `Title: My Fallback Task; Description: This is a fallback.`, 128);
-
-    const checklistPromises = Array(random.randint(0,2)).fill().map(() =>
-        generateChecklistItems(boardTitle, groupTitle)
-    );
-
-    // Fast synchronous operations
-    const styleType = random.choice([0,1,2]);
-    let style = {};
-    if (styleType === 0) {
-        style = {
-            backgroundColor: random.choice(['#9f8fef','#f87168','#fea362','#f5cd47','#4bce97','#579dff']),
-            coverSize: random.choice(['small','large'])
-        };
-    } else if (styleType === 1) {
-        // Will be populated with appropriate image URL later
-        style = {
-            backgroundImage: null,
-            coverSize: random.choice(['small','large'])
-        };
-    }
-
-    // More fast local operations
-    const attachments = Array(random.randint(0,2)).fill().map(() => ({
-        path: `file-${random.randint(1,999)}.png`,
-        date: Date.now() - random.randint(0,1_000_000_000),
-        text: random.choice(['Photo proof!','Attached doc','Uploaded file',''])
-    }));
-
-    const mems = random.sample(GPT_USER_POOL, random.randint(0,3));
-
-    // ENHANCED LOCATION RANDOMIZATION - increased probability and wider variety
-    const includeLocation = Math.random() < 0.2; // Increased from 0.1 to 0.2
-    const loc = includeLocation ? getRandomLocation() : null;
-
-    // WAIT POINT: Get task title and description
-    const gptResp = await gptRespPromise;
-    let title = 'RandomTask';
-    let desc = 'No desc from GPT';
-    const match = gptResp.match(/Title:\s*(.+?);\s*Description:\s*(.+)/);
-    if (match) {
-        title = match[1].trim();
-        desc = match[2].trim();
-    }
-
-    // Start image request only after we have title/desc
-    let imagePromise = null;
-    if (styleType === 1) {
-        imagePromise = getUniqueDesignAssetForTask(title, desc, boardTitle, groupTitle);
-    }
-
-    // Generate activities using title
-    const activities = Array(random.randint(1,3)).fill().map(() => {
-        const byMem = random.choice(GPT_USER_POOL) || {_id:'fallback', fullname:'Fallback user', imgUrl:''};
-        return {
-            id: random.id(),
-            title: random.choice([
-                `Commented: "Looks good!"`,
-                `Edited title to: ${title}`,
-                `Attached a new file`,
-                `Set status to 'inProgress'`
-            ]),
-            createdAt: random.date('2023-01-01','2025-12-31').getTime(),
-            byMember: {
-                _id: byMem._id,
-                fullname: byMem.fullname,
-                imgUrl: byMem.imgUrl
-            }
-        };
-    });
-
-    // Wait for all remaining promises
-    const [checklistResults, imageUrl] = await Promise.all([
-        Promise.all(checklistPromises),
-        imagePromise || Promise.resolve(null)
-    ]);
-
-    // Process checklists
-    const checklists = checklistResults.map(items => {
-        const todos = items.map(it => ({
-            id: 'todo_' + random.id(),
-            title: it.title,
-            isDone: it.isDone,
-        }));
-        return {
-            id: 'cl_' + random.id(),
-            title: 'Checklist ' + random.id().slice(0,4),
-            progress: 0,
-            todos
-        };
-    });
-
-    // Apply image URL if we got one
-    if (styleType === 1 && imageUrl) {
-        style.backgroundImage = imageUrl;
-    }
-
-    // Return final task object
-    return {
-        id: 'tsk_' + random.id(),
-        title,
-        status: random.choice(['inProgress','done','review','stuck','blocked']),
-        priority: random.choice(['low','medium','high']),
-        dueDate: random.date('2024-01-01','2026-12-31').toISOString(),
-        createdAt: random.date('2023-01-01','2024-12-31').getTime(),
-        description: desc,
-        checklists,
-        members: mems,
-        style,
-        badges: [],
-        attachments,
-        activity: activities,
-        isUserWatching: random.choice([true,false]),
-        labelIds: [],
-        location: loc
-    };
-}
-
-/**
- * Get a unique image that hasn't been used elsewhere on the board
- */
-async function getUniqueDesignAssetForTask(title, desc, boardTitle, groupTitle) {
-    // Initialize the board's image registry if it doesn't exist
-    if (!boardImageRegistry.has(boardTitle)) {
-        boardImageRegistry.set(boardTitle, new Set());
-    }
-
-    // Get the set of used images for this board
-    const usedImages = boardImageRegistry.get(boardTitle);
-
-    // Maximum attempts to find a unique image
-    const MAX_ATTEMPTS = 5;
-    let imageUrl = null;
-    let attempts = 0;
-
-    // Try to get a unique image
-    while (!imageUrl && attempts < MAX_ATTEMPTS) {
-        attempts++;
-
-        // Get a candidate image
-        const candidateImage = await getDesignAssetForTask(title, desc, boardTitle, groupTitle);
-
-        // If the image isn't already used on this board, use it
-        if (candidateImage && !usedImages.has(candidateImage)) {
-            imageUrl = candidateImage;
-            usedImages.add(imageUrl); // Mark this image as used
-            break;
-        }
-
-        // If we're at the last attempt and still don't have a unique image, force uniqueness
-        // by appending a random query param
-        if (attempts === MAX_ATTEMPTS && candidateImage) {
-            const forcedUniqueUrl = `${candidateImage}${candidateImage.includes('?') ? '&' : '?'}uniqueId=${random.id()}`;
-            imageUrl = forcedUniqueUrl;
-            usedImages.add(imageUrl);
-        }
-    }
-
-    return imageUrl;
-}
-
-/**
- * MASTER IMAGE SOURCE ROUTER - Determines the best image source based on task type
- * and dispatches to appropriate providers
- */
-async function getDesignAssetForTask(title, desc, boardTitle, groupTitle) {
-    // Create a cache key
-    const combinedText = `${title}${desc}${boardTitle}${groupTitle}`.toLowerCase();
-    const cacheKey = combinedText.replace(/[^a-z0-9]/g, '').slice(0, 60);
-
-    // Return cached image if available
-    if (imageCache.has(cacheKey)) {
-        return imageCache.get(cacheKey);
-    }
-
-    // Analyze task content to determine best image type
-    const taskType = analyzeTaskType(title, desc);
-
-    // Track attempts for logging and debugging
-    const attempts = [];
-    let imageUrl = null;
-
-    // TRY STRATEGY 1: Based on task type, try the most appropriate source first
-    try {
-        switch(taskType) {
-            case 'technical':
-                attempts.push('TECHNICAL');
-                imageUrl = await getTechnicalImage(title, desc);
-                break;
-            case 'creative':
-                attempts.push('CREATIVE');
-                imageUrl = await getCreativeImage(title, desc);
-                break;
-            case 'planning':
-                attempts.push('PLANNING');
-                imageUrl = await getPlanningImage(title, desc);
-                break;
-            case 'meeting':
-                attempts.push('MEETING');
-                imageUrl = await getMeetingImage(title, desc);
-                break;
-            default:
-                attempts.push('GENERIC');
-                imageUrl = await getGenericWorkImage(title, desc);
-        }
-    } catch (e) {
-        console.error(`Primary source error for ${taskType}:`, e);
-    }
-
-    // TRY STRATEGY 2: If primary source failed, try Unsplash
-    if (!imageUrl) {
-        try {
-            attempts.push('UNSPLASH');
-            imageUrl = await getUnsplashImage(title, desc);
-        } catch (e) {
-            console.error('Unsplash fallback error:', e);
-        }
-    }
-
-    // TRY STRATEGY 3: If Unsplash failed, try icon/sticker source
-    if (!imageUrl) {
-        try {
-            attempts.push('ICON_STICKER');
-            imageUrl = await getIconOrSticker(title, desc);
-        } catch (e) {
-            console.error('Icon/Sticker fallback error:', e);
-        }
-    }
-
-    // ULTIMATE FALLBACK: Guaranteed to work
-    if (!imageUrl) {
-        attempts.push('ULTIMATE_FALLBACK');
-        imageUrl = getUltimateFallbackImage(taskType);
-    }
-
-    // Cache the result
-    if (imageUrl) {
-        imageCache.set(cacheKey, imageUrl);
-    }
-
-    return imageUrl;
-}
-
-/**
- * Generate a diverse range of realistic locations
- */
-function getRandomLocation() {
-    // List of interesting cities with accurate coordinates
-    const cities = [
-        { name: 'Tel Aviv-Yafo, Israel', lat: 32.109333, lng: 34.855499, zoom: 10 },
-        { name: 'New York, USA', lat: 40.7128, lng: -74.0060, zoom: 12 },
-        { name: 'San Francisco, USA', lat: 37.7749, lng: -122.4194, zoom: 12 },
-        { name: 'London, UK', lat: 51.5074, lng: -0.1278, zoom: 11 },
-        { name: 'Berlin, Germany', lat: 52.5200, lng: 13.4050, zoom: 11 },
-        { name: 'Tokyo, Japan', lat: 35.6762, lng: 139.6503, zoom: 10 },
-        { name: 'Sydney, Australia', lat: 33.8688, lng: 151.2093, zoom: 12 },
-        { name: 'Singapore', lat: 1.3521, lng: 103.8198, zoom: 11 },
-        { name: 'Toronto, Canada', lat: 43.6532, lng: -79.3832, zoom: 11 },
-        { name: 'Paris, France', lat: 48.8566, lng: 2.3522, zoom: 11 },
-        { name: 'Austin, USA', lat: 30.2672, lng: -97.7431, zoom: 11 },
-        { name: 'Amsterdam, Netherlands', lat: 52.3676, lng: 4.9041, zoom: 11 },
-        { name: 'Barcelona, Spain', lat: 41.3851, lng: 2.1734, zoom: 12 },
-        { name: 'Bangkok, Thailand', lat: 13.7563, lng: 100.5018, zoom: 11 },
-        { name: 'Dubai, UAE', lat: 25.2048, lng: 55.2708, zoom: 11 },
-        { name: 'Copenhagen, Denmark', lat: 55.6761, lng: 12.5683, zoom: 12 },
-        { name: 'São Paulo, Brazil', lat: -23.5505, lng: -46.6333, zoom: 10 },
-        { name: 'Cape Town, South Africa', lat: -33.9249, lng: 18.4241, zoom: 12 },
-        { name: 'Seoul, South Korea', lat: 37.5665, lng: 126.9780, zoom: 11 },
-        { name: 'Mumbai, India', lat: 19.0760, lng: 72.8777, zoom: 11 }
-    ];
-
-    // Occasionally add special locations like conference centers, offices, etc.
-    const specialLocations = [
-        { name: 'Silicon Valley HQ', lat: 37.4275, lng: -122.1697, zoom: 15 },
-        { name: 'Downtown Office', lat: 40.7127, lng: -74.0134, zoom: 16 },
-        { name: 'Tech Conference Center', lat: 37.7833, lng: -122.4167, zoom: 16 },
-        { name: 'Client HQ', lat: 51.5007, lng: -0.1246, zoom: 15 },
-        { name: 'Remote Work Retreat', lat: 20.7984, lng: -156.3319, zoom: 14 },
-        { name: 'Industry Summit', lat: 48.8606, lng: 2.3376, zoom: 16 },
-        { name: 'Partner Office', lat: 34.0522, lng: -118.2437, zoom: 15 },
-        { name: 'Coworking Space', lat: 52.5200, lng: 13.4050, zoom: 16 }
-    ];
-
-    // 25% chance of using a special location
-    if (Math.random() < 0.25) {
-        return specialLocations[Math.floor(Math.random() * specialLocations.length)];
-    }
-
-    // Otherwise use a regular city
-    return cities[Math.floor(Math.random() * cities.length)];
-}
-
-// The rest of the image fetching functions would remain the same as previous implementation
-// I'm including placeholders to indicate they should be kept
-
-async function analyzeTaskType(title, desc) {
-    // Implementation from previous code
-    const fullText = `${title} ${desc}`.toLowerCase();
-
-    // Technical keywords
-    const technicalTerms = ['code', 'bug', 'fix', 'develop', 'implement', 'feature',
-                          'system', 'api', 'database', 'server', 'test', 'refactor',
-                          'debug', 'deploy', 'architecture', 'schema', 'diagram',
-                          'infrastructure', 'algorithm', 'prototype', 'engineering'];
-
-    // Creative keywords
-    const creativeTerms = ['design', 'create', 'draft', 'mockup', 'sketch', 'wireframe',
-                          'graphic', 'illustration', 'artwork', 'visual', 'logo', 'brand',
-                          'style', 'creative', 'color', 'typography', 'layout', 'drawing'];
-
-    // Planning keywords
-    const planningTerms = ['plan', 'strategy', 'roadmap', 'timeline', 'schedule', 'milestone',
-                          'objective', 'goal', 'kpi', 'metric', 'project', 'task', 'backlog',
-                          'sprint', 'prioritize', 'organize', 'coordinate', 'requirement'];
-
-    // Meeting keywords
-    const meetingTerms = ['meeting', 'call', 'discuss', 'conversation', 'sync', 'presentation',
-                         'review', 'retrospective', 'standup', 'session', 'workshop',
-                         'conference', 'interview', 'demo', 'pitch', 'briefing'];
-
-    // Count occurrences
-    const counts = {
-        technical: technicalTerms.filter(term => fullText.includes(term)).length,
-        creative: creativeTerms.filter(term => fullText.includes(term)).length,
-        planning: planningTerms.filter(term => fullText.includes(term)).length,
-        meeting: meetingTerms.filter(term => fullText.includes(term)).length
-    };
-
-    // Find the highest count
-    let maxCount = 0;
-    let maxType = 'generic';
-
-    for (const [type, count] of Object.entries(counts)) {
-        if (count > maxCount) {
-            maxCount = count;
-            maxType = type;
-        }
-    }
-
-    // If we found matching keywords, return that type
-    if (maxCount > 0) {
-        return maxType;
-    }
-
-    // Default to generic if no specific keywords found
-    return 'generic';
-}
-
-
-// If using with generateMultipleGroups, you should clear the board image registry
-// at the start of a new board generation to maintain uniqueness across groups
-function generateMultipleGroupsWithUniqueImages(boardTitle, useEmoji) {
-    // Clear the image registry for this board before generating
-    boardImageRegistry.set(boardTitle, new Set());
-
-    // Then call the existing generateMultipleGroups function
-    return generateMultipleGroups(boardTitle, useEmoji);
-}
-
-
-/**
- * Fetches relevant image from Unsplash based on task content
- * Implements caching, error handling, and intelligent keyword extraction
- */
-async function fetchUnsplashImage(title, description) {
-    // Unsplash API credentials
-    const accessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
-
-    // Combine title and description for better keyword extraction
-    const text = `${title} ${description}`;
-
-    // Generate a cache key from the text
-    const cacheKey = text.trim().toLowerCase().slice(0, 50);
-
-    // Return cached result if available
-    if (unsplashImageCache.has(cacheKey)) {
-        return unsplashImageCache.get(cacheKey);
-    }
-
-    // Extract keywords - do this properly for better results
-    // First, create a list of stop words to filter out
-    const stopWords = [
-        'a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'with', 'by',
-        'about', 'as', 'into', 'like', 'through', 'after', 'before', 'between', 'from',
-        'of', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had',
-        'do', 'does', 'did', 'will', 'would', 'shall', 'should', 'can', 'could', 'may',
-        'might', 'must', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her',
-        'us', 'them', 'this', 'that', 'these', 'those'
-    ];
-
-    // Process the text into keywords
-    let words = text.toLowerCase()
-                    .replace(/[^\w\s]/g, '') // Remove punctuation
-                    .split(/\s+/);            // Split on whitespace
-
-    // Filter out stop words and short words
-    words = words.filter(word =>
-        word.length > 3 && !stopWords.includes(word)
-    );
-
-    // If no good keywords, use these defaults
-    if (words.length === 0) {
-        words = ['work', 'productivity', 'task'];
-    }
-
-    // Get top 2 longest words as they tend to be more specific
-    words.sort((a, b) => b.length - a.length);
-    const primaryKeywords = words.slice(0, 2);
-
-    // Add common categories based on top words
-    // Mapping specific domains to broader categories
-    const domainMap = {
-        'finance': 'business',
-        'report': 'business',
-        'meeting': 'business meeting',
-        'analysis': 'data analysis',
-        'review': 'review process',
-        'design': 'creative design',
-        'code': 'programming',
-        'develop': 'software development',
-        'test': 'quality testing',
-        'launch': 'product launch',
-        'marketing': 'digital marketing',
-        'sales': 'sales strategy',
-        'customer': 'customer service',
-        'research': 'market research',
-        'plan': 'strategic planning',
-        'budget': 'financial planning',
-    };
-
-    // Add domain categories if applicable
-    for (const word of primaryKeywords) {
-        if (domainMap[word]) {
-            primaryKeywords.push(domainMap[word]);
-            break;
-        }
-    }
-
-    // Join the primary keywords for search
-    const searchQuery = primaryKeywords.join(' ');
-
-    try {
-        // Make request to Unsplash
-        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&per_page=1&orientation=landscape`;
-        const response = await fetch(endpoint, {
-            headers: {
-                'Authorization': `Client-ID ${accessKey}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Unsplash API responded with status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // Check if we got results
-        if (data.results && data.results.length > 0) {
-            // Get the regular-sized image (not too large, not too small)
-            const imageUrl = data.results[0].urls.regular;
-
-            // Cache the result
-            unsplashImageCache.set(cacheKey, imageUrl);
-
-            return imageUrl;
-        }
-
-        // If no results for specific query, try a more general fallback
-        return await fallbackToGenericImage();
-
-    } catch (error) {
-        console.error("Error fetching Unsplash image:", error);
-        return await fallbackToGenericImage();
-    }
-}
-
-/**
- * Fallback function that tries to get a generic work/task related image
- * when specific search fails
- */
-async function fallbackToGenericImage() {
-    const accessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
-    const fallbackQueries = [
-        'work desk',
-        'productivity',
-        'office work',
-        'task management',
-        'business planning',
-        'workspace'
-    ];
-
-    // Get a random query from our fallbacks
-    const query = fallbackQueries[Math.floor(Math.random() * fallbackQueries.length)];
-
-    try {
-        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape`;
-        const response = await fetch(endpoint, {
-            headers: {
-                'Authorization': `Client-ID ${accessKey}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Fallback Unsplash API responded with status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.results && data.results.length > 0) {
-            return data.results[0].urls.regular;
-        }
-
-        // Final picsum fallback if Unsplash completely fails
-        return `https://picsum.photos/800/600?random=${Math.floor(Math.random() * 1000)}`;
-
-    } catch (error) {
-        console.error("Error fetching fallback image:", error);
-        // Ultimate fallback that can't fail
-        return `https://picsum.photos/800/600?random=${Math.floor(Math.random() * 1000)}`;
-    }
-}
-// ===============  CONCURRENT GROUPS  ===============
-async function generateOneGroup(boardTitle, groupTitle, useEmoji) {
-    const backgroundColor = getRandomColor();
-
-    // Generate tasks concurrently
-    const tasksCount = random.randint(3, 6);
-
-    // Create an array of task generation promises
-    const taskPromises = Array(tasksCount).fill().map(() =>
-        generateSingleTask(boardTitle, groupTitle, useEmoji)
-    );
-
-    // Wait for all tasks to complete concurrently
-    const tasks = await Promise.all(taskPromises);
-
-    return {
-        id: 'grp_' + random.id(),
-        title: groupTitle,
-        archivedAt: (Math.random() < 0.1) ? random.date('2022-01-01', '2023-12-31').getTime() : null,
-        tasks,
-        style: {
-            backgroundColor,
-            color: getColorFromBackgroundColor(backgroundColor),
-        },
-        watched: (Math.random() < 0.2),
-        isMinimaized: (Math.random() < 0.05)
-    };
-}
-
-// For multi-group boards
-async function generateMultipleGroups(boardTitle, useEmoji) {
-    // Generate the group titles first
-    const fallback = 'Home;Work;Personal';
-    const groupCount = random.randint(4, 7);
-    const prompt = `
-Board: "${boardTitle}"
-Generate ${groupCount} short sub-topic group titles, separated by semicolons (like "Grocery; Work; Project X").
-No code blocks, just semicolons.
-`;
-
-    // Get group titles
-    const gptRespPromise = generateText(prompt, 1.0, fallback);
-
-    // Wait for the AI response
-    const gptResp = await gptRespPromise;
-    let arr = gptResp.split(';').map(s => s.trim()).filter(Boolean);
-
-    while (arr.length < groupCount) {
-        arr.push('Group ' + random.id().slice(0, 4));
-    }
-    arr = arr.slice(0, groupCount);
-
-    // Generate all groups concurrently
-    const groupPromises = arr.map(gTitle =>
-        generateOneGroup(boardTitle, gTitle, useEmoji)
-    );
-
-    // Wait for all groups to be generated in parallel
-    return Promise.all(groupPromises);
-}
-
-
-
-// ===============  LABELS  ===============
-async function generateBoardLabels(boardTitle) {
-    // from your code
-    const prompt = `
-Board Title: "${boardTitle}"
-Generate an array of 5 short labels for a project mgmt board. 
-Return JSON:
-[
-  {"id":"some-id","title":"...","color":"(placeholder)"},
-  ...
-]
-Return valid JSON only.
-`
-    const fallback = JSON.stringify([
-        { id:'lbl1', title:'Task', color:'#9f8fef' },
-        { id:'lbl2', title:'Bug',  color:'#f87168' },
-        { id:'lbl3', title:'UX',   color:'#fea362' },
-        { id:'lbl4', title:'Future', color:'#f5cd47'},
-        { id:'lbl5', title:'Misc',   color:'#4bce97'},
-    ])
-    const text = await generateText(prompt, 1.0, fallback)
-    let raw = safeJsonParse(text, fallback)
-    if (!Array.isArray(raw) || !raw.length) raw = safeJsonParse(fallback)
-    // ensure 5
-    while (raw.length<5) {
-        raw.push({id:'lbl_'+random.id(), title:'Label'+random.id().slice(0,3), color:getRandomColorLabels()})
-    }
-    return raw.slice(0,5).map(lbl => {
-        if (!lbl.id) lbl.id='lbl_'+random.id()
-        if (!lbl.title) lbl.title='Untitled '+random.id().slice(0,3)
-        if (!lbl.color) lbl.color=getRandomColorLabels()
-        return lbl
-    })
-}
-
-function backgroundColorToTextColor(backColor) {
-    // Helper: Hex to RGB
-    function hexToRgb(hex) {
-        hex = hex.replace(/^#/, '');
-        if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
-        let r = parseInt(hex.substring(0, 2), 16);
-        let g = parseInt(hex.substring(2, 4), 16);
-        let b = parseInt(hex.substring(4, 6), 16);
-        return [r, g, b];
-    }
-
-    // Helper: RGB to HSL
-    function rgbToHsl(r, g, b) {
-        r /= 255; g /= 255; b /= 255;
-        let max = Math.max(r, g, b);
-        let min = Math.min(r, g, b);
-        let h, s, l = (max + min) / 2;
-        if (max === min) {
-            h = s = 0; // achromatic
-        } else {
-            let d = max - min;
-            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-            switch (max) {
-                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-                case g: h = (b - r) / d + 2; break;
-                case b: h = (r - g) / d + 4; break;
-            }
-            h /= 6;
-        }
-        return [h, s, l];
-    }
-
-    // Helper: HSL to RGB
-    function hslToRgb(h, s, l) {
-        let r, g, b;
-        if (s === 0) {
-            r = g = b = l; // achromatic
-        } else {
-            let hue2rgb = (p, q, t) => {
-                if (t < 0) t += 1;
-                if (t > 1) t -= 1;
-                if (t < 1/6) return p + (q - p) * 6 * t;
-                if (t < 1/2) return q;
-                if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-                return p;
-            };
-            let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-            let p = 2 * l - q;
-            r = hue2rgb(p, q, h + 1/3);
-            g = hue2rgb(p, q, h);
-            b = hue2rgb(p, q, h - 1/3);
-        }
-        return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
-    }
-
-    // Helper: RGB to Hex
-    function rgbToHex(r, g, b) {
-        let toHex = val => {
-            let hex = val.toString(16);
-            return hex.length === 1 ? '0' + hex : hex;
-        };
-        return '#' + toHex(r) + toHex(g) + toHex(b);
-    }
-
-    // Main logic
-    let [r, g, b] = hexToRgb(backColor);
-    let [h, s, l] = rgbToHsl(r, g, b);
-    let textL = l > 0.5 ? 0.2 : 0.8; // Darker if light, lighter if dark
-    let [textR, textG, textB] = hslToRgb(h, s, textL);
-    return rgbToHex(textR, textG, textB);
-}
-
-// ===============  BADGES (domain-based)  ===============
-function assignDomainBadgesToBoard(board, domain) {
-    // 1) filter from MASSIVE_BADGE_CATALOG
-    const relevantCats = filterBadgeCategoriesByDomain(MASSIVE_BADGE_CATALOG, domain)
-    // 2) for each group, each task, we pick 0..2 categories
-    for (let g of board.groups) {
-        for (let t of g.tasks) {
-            // ~50% chance to have 1 or 2 badges
-            const badgeCount = random.randint(0,2)
-            const usedCats = []
-            const finalBadges = []
-            for (let i=0; i<badgeCount; i++) {
-                // pick a cat not used yet
-                const candidates = relevantCats.filter(rc => !usedCats.includes(rc.category))
-                if (!candidates.length) break
-                const catChosen = random.choice(candidates)
-                usedCats.push(catChosen.category)
-                const {value,color} = pickBadgeValue(catChosen) || {}
-                if (!value) continue
-                finalBadges.push({
-                    id: 'badg_'+random.id(),
-                    categ: catChosen.category,
-                    color,
-                    // this needs to calculate the text color based on background color
-                    textColor: backgroundColorToTextColor(color),
-                    badgeOptions: catChosen.values,  // optional
-                    chosenOption: value
-                })
-            }
-            t.badges = finalBadges
-        }
+export function getColorFromBackgroundColor(bg) {
+    switch (bg) {
+        case '#baf3db': return '#164b35'
+        case '#f8e6a0': return '#4f3a0e'
+        case '#fedec8': return '#6e3b0d'
+        case '#ffd5d2': return '#6e0d0d'
+        case '#dfd8fd': return '#4f3a0e'
+        case '#cce0ff': return '#0d2e6e'
+        case '#c6edfb': return '#0d3a4f'
+        case '#fdd0ec': return '#6e0d3a'
+        case '#f1f2f4': return '#3a3a3a'
+        default: return '#3a3a3a'
     }
 }
 
 
-// ===============  BOARD ACTIVITIES  ===============
-function generateBoardActivities(board) {
-    const count = random.randint(3,6)
-    const acts = []
-    for (let i=0; i<count; i++) {
-        const group = random.choice(board.groups)
-        const task = random.choice(group.tasks)
-        const activityType = random.choice(['added','moved','updated','commented'])
-        let title
-        if (activityType==='added') {
-            title = `Added task '${task.title}' to group '${group.title}'`
-        } else if (activityType==='moved') {
-            title = `Moved task '${task.title}' around`
-        } else if (activityType==='updated') {
-            title = `Updated status of '${task.title}' to '${task.status}'`
-        } else {
-            title = `Commented on '${task.title}': "Looks good to me!"`
-        }
-        const byMem = random.choice(board.members) || { _id:'u000',fullname:'GhostUser',imgUrl:''}
-        acts.push({
-            id:'act_'+random.id(),
-            title,
-            createdAt: random.date('2023-01-01','2025-12-31').getTime(),
-            byMember:{
-                _id: byMem._id,
-                fullname: byMem.fullname,
-                imgUrl: byMem.imgUrl,
-            },
-            group:{id: group.id, title: group.title},
-            task:{id: task.id, title: task.title},
-        })
-    }
-    return acts
+function getRandomColor() {
+    const trelloColors = [
+        '#baf3db',
+        '#f8e6a0',
+        '#fedec8',
+        '#ffd5d2',
+        '#dfd8fd',
+        '#cce0ff',
+        '#c6edfb',
+        '#fdd0ec',
+        '#f1f2f4',
+    ]
+    return random.choice(trelloColors)
 }
 
 function getRandomColorLabels() {
@@ -6897,477 +1975,541 @@ function getRandomColorLabels() {
     return random.choice(colors)
 }
 
-// ===============  MAIN BOARD GENERATOR  ===============
-// export async function getRandomBoardAI() {
-//     showUserMsg('AI: Generating an ultimate board...')
-//
-//     // 1) ensure we have at least 5 users
-//     await initUserPool()
-//
-//     // 2) pick a random topic from userFriendlyTopics
-//     const chosenTopic = random.choice(userFriendlyTopics)
-//
-//     // 3) infer domain
-//     const domain = inferDomainFromTopic(chosenTopic)
-//
-//     // 4) board name from GPT
-//     const fallbackTitle = 'Generic '+domain+' Board'
-//     const boardTitlePrompt = `
-// Given the topic "${chosenTopic}",
-// Generate a single realistic board name for a project management system.
-// Return only the name, no extra text.
-// `
-//     const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackTitle)
-//
-//     showSpinner('AI: Building board structure...')
-//     // 5) create groups & tasks
-//     const groups = await generateMultipleGroups(boardTitle)
-//     // 6) create labels
-//     const labels = await generateBoardLabels(boardTitle)
-//
-//     // 7) assign random labelIDs to tasks
-//     for (let g of groups) {
-//         for (let t of g.tasks) {
-//             // 30% chance no labels
-//             if (Math.random()<0.3) {
-//                 t.labelIds=[]
-//                 continue
-//             }
-//             // 1..3 random labels
-//             const labelCount = random.randint(1,3)
-//             const chosenLabelIds = random.sample(labels.map(l=>l.id), labelCount)
-//             t.labelIds = chosenLabelIds
-//             t.labels = labels.filter(l => chosenLabelIds.includes(l.id))
-//
-//         }
-//     }
-//
-//     // 8) build final board skeleton
-//     const createdBy = random.choice(GPT_USER_POOL) || {
-//         _id:'u_fallback', fullname:'Unknown user', imgUrl:''
-//     }
-//     const isStarred = (Math.random()<0.3)
-//     const archivedAt = (Math.random()<0.05) ? random.date('2022-01-01','2023-12-31').getTime() : null
-//
-//     const board = {
-//         id: 'brd_'+random.id(),
-//         title: boardTitle,
-//         isStarred,
-//         archivedAt,
-//         createdBy:{
-//             _id:createdBy._id,
-//             fullname:createdBy.fullname,
-//             imgUrl:createdBy.imgUrl
-//         },
-//         style:{
-//             backgroundImage: random.choice([
-//                 `https://picsum.photos/2400/1600?random=${random.randint(1,9999)}`,
-//                 'color_1.svg','color_2.svg','color_3.svg','color_4.svg'
-//             ])
-//         },
-//         labels,
-//         members: GPT_USER_POOL,
-//         groups,
-//         activities: [], // fill below
-//         cmpsOrder: random.sample(['StatusPicker','MemberPicker','DatePicker','PriorityPicker','OtherPicker'], random.randint(3,5)),
-//         generator: 'getUltimateAIBoard',
-//         topicChosen: chosenTopic,
-//         domain
-//     }
-//
-//     // 9) domain-based badges
-//     assignDomainBadgesToBoard(board, domain)
-//
-//     // 10) board activities
-//     board.activities = generateBoardActivities(board)
-//
-//     showSuccessMsg(`AI: Done! Board “${boardTitle}” generated with domain ${domain}`)
-//
-//     return board
-// }
+function getRandomLocation() {
+    const locations = [
+        { name: 'Tel Aviv-Yafo', lat: 32.109333, lng: 34.855499, zoom: 11 },
+        { name: 'New York City', lat: 40.7128, lng: -74.006, zoom: 12 },
+        { name: 'Paris', lat: 48.8566, lng: 2.3522, zoom: 12 },
+        { name: 'Tokyo', lat: 35.6895, lng: 139.6917, zoom: 12 },
+        { name: 'London', lat: 51.5074, lng: -0.1278, zoom: 12 },
+        { name: 'Sydney', lat: -33.8688, lng: 151.2093, zoom: 12 },
+    ]
+    return random.choice(locations)
+}
+
+async function generateLabels(boardTitle) {
+    const prompt = `
+Board Title: "${boardTitle}"
+Generate an array of 5 short labels for a project mgmt board. 
+Some examples: "Grocery", "Weekend Plans", "Work Tasks".
+Return JSON:
+[
+  {"id":"some-id","title":"...","color":"(placeholder)"},
+  ...
+]
+We only care about 'id', 'title', 'color'.
+Return valid JSON only.
+`
+    const fallback = JSON.stringify([
+        { id: 'lbl1', title: 'Tasks', color: '#9f8fef' },
+        { id: 'lbl2', title: 'Personal', color: '#f87168' },
+        { id: 'lbl3', title: 'Work', color: '#fea362' },
+        { id: 'lbl4', title: 'Errands', color: '#f5cd47' },
+        { id: 'lbl5', title: 'Household', color: '#4bce97' },
+    ])
+
+    const text = await generateText(prompt, 1.0, fallback)
+    let rawLabels = safeJsonParse(text, fallback)
+    if (!Array.isArray(rawLabels) || !rawLabels.length) {
+        rawLabels = safeJsonParse(fallback)
+    }
+
+    const uniqueColors = new Set()
+    return rawLabels.slice(0, 5).map((lbl) => {
+        if (!lbl.id) lbl.id = 'lbl_' + random.id()
+        if (!lbl.title) lbl.title = 'Label ' + random.id()
+        let col = getRandomColorLabels()
+        while (uniqueColors.has(col) && uniqueColors.size < 6) {
+            col = getRandomColorLabels()
+        }
+        uniqueColors.add(col)
+        lbl.color = col
+        return lbl
+    })
+}
+
+const BADGE_COLOR_MAP = {
+    risk: '#fdddc7',
+    approved: '#f8e6a0',
+    priority: '#ffe2bd',
+    now: '#ffc0cb',
+}
+const BADGE_TEXT_COLOR_MAP = {
+    risk: '#6e3b0d',
+    approved: '#4f3a0e',
+    priority: '#6e3b0d',
+    now: '#6e0d3a',
+}
+const BADGE_TYPE_ARRAY = ['risk', 'approved', 'priority', 'now']
+
+async function generateBadges(boardTitle, groupTitle) {
+    const prompt = `
+For the group "${groupTitle}" in the board "${boardTitle}", 
+Generate an array of 10 "badge" objects with selectble categories.
+Example:
+[
+  {"categ":"Workload", "badgeOptions": ["Light", "Heavy", "Medium"], "text":"Heavy"},
+  {"categ":"NeedsApproval", "badgeOptions": ["Pending", "Need Approval", "Rejected"], "text":"Pending"},
+  ...
+]
+Return strictly valid JSON only.
+`
+    const fallback = '[{"categ":"NeedsApproval","text":"Pending"},{"categ":"HighRisk","text":"Proceed Carefully"}]'
+
+    const text = await generateText(prompt, 1.0, fallback)
+    let rawBadges = safeJsonParse(text, fallback)
+    if (!Array.isArray(rawBadges)) {
+        rawBadges = safeJsonParse(fallback)
+    }
+
+    return rawBadges.map((b) => {
+        const randomType = random.choice(BADGE_TYPE_ARRAY)
+        return {
+            id: 'badg_' + random.id(),
+            categ: b.categ || 'General',
+            color: BADGE_COLOR_MAP[randomType] || '#ccc',
+            textColor: BADGE_TEXT_COLOR_MAP[randomType] || '#000',
+            badgeOptions: b.badgeOptions || [],
+            chosenOption: b.text || 'Note',
+        }
+    })
+}
+
+async function generateTask(boardTitle, groupTitle) {
+    const fallbackResp = `Title: Kitchen Chores; Description: Clean the fridge and wipe the counters.`
+    const prompt = `
+For the group "${groupTitle}" in the board "${boardTitle}", 
+create a short but realistic task. Format EXACTLY as:
+"Title: XYZ; Description: ABC"
+Return no extra text or code blocks, just that line.
+`
+    const response = await generateText(prompt, 1.0, fallbackResp, 128)
+    let taskTitle = 'RandomTask'
+    let taskDescription = 'No desc from GPT'
+    const match = response.match(/Title:\s*(.+?);\s*Description:\s*(.+)/)
+    if (match) {
+        taskTitle = match[1].trim()
+        taskDescription = match[2].trim()
+    }
+
+    const badges = await generateBadges(boardTitle, groupTitle)
+
+    return {
+        id: random.id(),
+        title: taskTitle,
+        status: random.choice(STATUS_OPTIONS),
+        priority: random.choice(PRIORITY_OPTIONS),
+        dueDate: random.date('2024-01-01', '2026-12-31').toISOString(),
+        createdAt: random.date('2024-01-01', '2026-12-31'),
+        description: taskDescription,
+        checklists: await generateChecklists(boardTitle, groupTitle),
+        // members: random.sample(GPT_USER_POOL, random.randint(0, GPT_USER_POOL.length)),
+        members: random.sample(GPT_USER_POOL, random.randint(0, 5)),
+        // style: await generateTaskStyle(),
+        style:
+            random.choice([
+                {
+                    backgroundColor: (getRandomColorLabels()),
+                    coverSize: random.choice(['small', 'large'])
+                },
+                {
+                    backgroundImage: random.choice([
+                        null, null, null, `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,`https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                        'cover-img.png', 'cover-img-1.png', 'cover-img-2.png', 'cover-img-3.png', 'amination_gif.gif',
+                    ]),
+                    coverSize: random.choice(['small', 'large'])
+                },
+                {
+
+                },
+                {
+
+                },
+                {
+
+                }
+
+            ]),
+
+        badges,
+        attachments: getRandomAttachments(),
+        activity: generateTaskActivities(taskTitle),
+        isUserWatching: random.choice([true, false]),
+        labels: [],
+        location: random.choice([null, null, null, getRandomLocation()]),
+    }
+}
+
+function getRandomAttachments() {
+    const cnt = random.randint(0, 2)
+    return Array.from({ length: cnt }, () => ({
+        path: `file-${random.randint(1, 999)}.png`,
+        date: Date.now() - random.randint(0, 1_000_000_000),
+        text: random.choice([
+            'Photo proof!',
+            'Attached doc',
+            'Uploaded file',
+            '',
+        ]),
+    }))
+}
+
+async function generateChecklists(boardTitle, groupTitle) {
+    const fallback = JSON.stringify([
+        {
+            id: 'cl_fallback',
+            title: 'Fallback Checklist',
+            progress: 0,
+            todos: [
+                { id: 'todo1', title: 'Fallback item', isDone: false },
+                { id: 'todo2', title: 'Another fallback', isDone: true },
+            ],
+        },
+    ])
+    const prompt = `
+For the group "${groupTitle}" in the board "${boardTitle}", 
+Generate an array of 3 short "todo" items related to the group title and board title. Return strictly JSON:
+[
+  {"title":"something short","isDone": true/false},
+  ...
+]
+`
+
+    const text = await generateText(prompt, 1.0, fallback)
+    let todosArray = safeJsonParse(text, '[]')
+    if (!Array.isArray(todosArray)) {
+        console.warn('GPT todos not an array, using fallback.')
+        todosArray = safeJsonParse(fallback)[0].todos
+    }
+    if (!todosArray.length) {
+        todosArray = safeJsonParse(fallback)[0].todos
+    }
+
+    const cCount = random.randint(0, 2)
+    const checklists = []
+    for (let i = 0; i < cCount; i++) {
+        const tCount = 1 + Math.floor(Math.random() * todosArray.length)
+        const partialTodos = todosArray.slice(0, tCount).map((t) => ({
+            id: 'todo_' + random.id(),
+            title: t.title || 'UntitledTodo',
+            isDone: typeof t.isDone === 'boolean' ? t.isDone : false,
+        }))
+        checklists.push({
+            id: 'cl_' + random.id(),
+            title: 'Checklist ' + random.id().slice(0, 4),
+            progress: random.randint(0, 100),
+            todos: partialTodos,
+        })
+    }
+    return checklists
+}
+
+async function generateTaskStyle() {
+    const styleType = random.randint(0, 2)
+    if (styleType === 0) {
+        return {
+            backgroundColor: getRandomColorLabels(),
+            coverSize: random.choice(['small', 'large']),
+        }
+    } else if (styleType === 1) {
+            const images = [
+            null,
+            null,
+            `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+            'cover-img.png',
+            'cover-img-1.png',
+            'cover-img-2.png',
+            'cover-img-3.png',
+        ]
+        return {
+            backgroundImage: random.choice(images),
+            coverSize: random.choice(['small', 'large']),
+        }
+    } else {
+        return {}
+    }
+}
+
+function generateTaskActivities(taskTitle) {
+    const activityTypes = [
+        `Commented: "Looks good!"`,
+        `Updated title to: ${taskTitle}`,
+        `Attached a new file`,
+        `Status changed to ${random.choice(STATUS_OPTIONS)}`,
+    ]
+    const count = random.randint(1, 3)
+    return Array.from({ length: count }, () => {
+        const byMember = random.choice(GPT_USER_POOL) || {
+            _id: 'fallback',
+            fullname: 'Fallback user',
+            imgUrl: '',
+        }
+        return {
+            id: random.id(),
+            title: random.choice(activityTypes),
+            createdAt: random.date('2023-01-01', '2025-12-31').getTime(),
+            byMember: {
+                _id: byMember._id,
+                fullname: byMember.fullname,
+                imgUrl: byMember.imgUrl,
+            },
+        }
+    })
+}
+
+async function generateGroups(boardTitle) {
+    const fallback = `Home; Work; Personal`;
+    const groupCount = random.randint(5, 8);
+    const prompt = `
+Board: "${boardTitle}"
+Generate ${groupCount} short sub-topics/group-titles/task-lists about the topic of this board and everyday life, work or task categories related to this board topic, separated by semicolons.
+Example: "Groceries; Home Maintenance; Work Projects; Financial Plan; Everyday; Project General Goals; Wishlist"
+No code blocks, just semicolons.
+`;
+    const text = await generateText(prompt, 1.0, fallback);
+    let groupTitles = text.split(';').map(t => t.trim()).filter(Boolean);
+    if (groupTitles.length < groupCount) {
+        while (groupTitles.length < groupCount) {
+            groupTitles.push('Group ' + random.id().slice(0, 3));
+        }
+    }
+    groupTitles = groupTitles.slice(0, groupCount);
+
+    // Generate each group concurrently.
+    const groups = await Promise.all(
+        groupTitles.map(async title => {
+            const taskCount = random.randint(3, 6);
+            // Generate tasks concurrently for this group.
+            const tasks = await Promise.all(
+                Array.from({ length: taskCount }, () => generateTask(boardTitle, title))
+            );
+            const backgroundColor = getRandomColor();
+            return {
+                id: random.id(),
+                title,
+                archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),
+                tasks,
+                style: {
+                    backgroundColor,
+                    color: getColorFromBackgroundColor(backgroundColor),
+                },
+                watched: random.choice([true, false]),
+                isMinimaized: random.choice([true, false]),
+            };
+        })
+    );
+
+    return groups;
+}
 
 
+async function generateGroupsSeq(boardTitle) {
+    const fallback = `Home; Work; Personal`
+    const groupCount = random.randint(5, 8)
+    const prompt = `
+Board: "${boardTitle}"
+Generate ${groupCount} short sub-topics/group-titles/task-lists about the topic of this board and everyday life, work or task categories realted to this board topic, separated by semicolons.
+Example: "Groceries; Home Maintenance; Work Projects; Financial Plan; Everyday; Project General Goals; Wishlist"
+No code blocks, just semicolons.
+`
+    const text = await generateText(prompt, 1.0, fallback)
+    let groupTitles = text.split(';').map((t) => t.trim()).filter(Boolean)
+    if (groupTitles.length < groupCount) {
+        while (groupTitles.length < groupCount) {
+            groupTitles.push('Group ' + random.id().slice(0, 3))
+        }
+    }
+    groupTitles = groupTitles.slice(0, groupCount)
 
+    let totalTasks = 0
+    const groups = []
+    for (let title of groupTitles) {
+        const taskCount = random.randint(3, 6)
+        const tasks = []
+        for (let i = 0; i < taskCount; i++) {
+            console.log('task', totalTasks, 'from ', taskCount * groupCount)
+            tasks.push(await generateTask(boardTitle, title))
+            totalTasks += 1
+        }
+        const backgroundColor = getRandomColor()
+        groups.push({
+            id: random.id(),
+            title,
+            archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),
+            tasks,
+            style: {
+                backgroundColor,
+                color: getColorFromBackgroundColor(backgroundColor),
+            },
+            watched: random.choice([true, false]),
+            isMinimaized: random.choice([true, false]),
+        })
+    }
+    return groups
+}
 
-// Global registry to track board backgrounds by domain to prevent repetition
-const usedBoardBackgrounds = new Map();
+function getRandomBoardActivities(board) {
+    const count = random.randint(2, 5)
+    return Array.from({ length: count }, () => {
+        const group = random.choice(board.groups)
+        const task = random.choice(group.tasks)
+        const activityType = random.choice(['added', 'moved', 'updated'])
+        let title
+        if (activityType === 'added') {
+            title = `Added task '${task.title}' to group '${group.title}'`
+        } else if (activityType === 'moved') {
+            const otherGroup = random.choice(board.groups.filter((g) => g.id !== group.id))
+            title = `Moved task '${task.title}' from '${otherGroup?.title}' to '${group.title}'`
+        } else {
+            title = `Updated status of task '${task.title}' to '${random.choice(STATUS_OPTIONS)}'`
+        }
+        const byMember = random.choice(GPT_USER_POOL) || {
+            _id: 'fallback',
+            fullname: 'Fallback user',
+            imgUrl: '',
+        }
+        return {
+            id: random.id(),
+            title,
+            createdAt: random.date('2023-01-01', '2025-12-31').getTime(),
+            byMember: {
+                _id: byMember._id,
+                fullname: byMember.fullname,
+                imgUrl: byMember.imgUrl,
+            },
+            group: { id: group.id, title: group.title },
+            task: { id: task.id, title: task.title },
+        }
+    })
+}
 
-/**
- * Enhanced board generator with domain-relevant backgrounds
- */
 export async function getRandomBoardAI() {
-    showUserMsg('AI: Generating an ultimate board...')
 
-    // 1) ensure we have at least 5 users
+    showUserMsg('AI: Generating new board..')
+    console.log(' ---- GENERATING AI BOARD -----')
+
+    // console.log('Progress: 1')
+
     await initUserPool()
 
-    // 2) pick a random topic from userFriendlyTopics
-    const chosenTopic = random.choice(userFriendlyTopics)
+    //     const topicsPrompt = `
+    // Generate a list of 100 random topics that could be the topics of a Trello tasks board.
+    // Return the list as a JSON array of strings.
+    // Return strictly JSON:
+    // [
+    //   {"topic": the_topic},
+    //   ...
+    // ]
+    // `
+    //
+    //     const fallbackTopics = [
+    //         "Project Management", "Marketing Campaign", "Product Launch", "Event Planning", "Content Creation",
+    //         "Software Development", "Customer Support", "Sales Strategy", "Financial Planning", "Human Resources"
+    //     ]
+    //     const topics = await generateText(topicsPrompt, 1.0, JSON.stringify(fallbackTopics))
+    //
+    //     console.log('Topic orig:', topics)
+    //     const parsedTopics = safeJsonParse(topics, JSON.stringify(fallbackTopics))
+    //     const randomTopic = parsedTopics[Math.floor(Math.random() * parsedTopics.length)]['topic']
+    //     console.log('Topic:', randomTopic)
 
-    // 3) infer domain
-    const domain = inferDomainFromTopic(chosenTopic)
 
-    // 4) board name from GPT
-    const fallbackTitle = 'Generic '+domain+' Board'
+    const randomTopic = random.choice(userFriendlyTopics)
+
     const boardTitlePrompt = `
-Given the topic "${chosenTopic}",
-Generate a single realistic board name for a project management system. 
-Return only the name, no extra text.
+Generate a single realistic board name for a project management system based on the topic "${randomTopic}".
+Return just the name, no extra text.
 `
-    const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackTitle)
+    const fallbackBoardTitle = 'Generic Board'
+    const boardTitle = await generateText(boardTitlePrompt, 1.0, fallbackBoardTitle)
 
-    // NEW: Start the background image fetch IMMEDIATELY after we have domain info
-    // This parallelizes it with the rest of the board generation
-    const backgroundPromise = getDomainRelevantBackground(domain, boardTitle, chosenTopic);
+    // showUserMsg('progress')
+    // console.log('Progress: 2')
+    showSpinner('AI: Generating board..')
 
-    showSpinner('AI: Building board structure...')
+    const groups = await generateGroups(boardTitle)
 
-    const useEmoji = Math.random() < 0.3;
+    // console.log('Progress: 3')
+    const labels = await generateLabels(boardTitle)
 
-    // 5) create groups & tasks
-    const groups = await generateMultipleGroupsWithUniqueImages(boardTitle, useEmoji)
-
-    // 6) create labels
-    const labels = await generateBoardLabels(boardTitle)
-
-    // 7) assign random labelIDs to tasks
-    for (let g of groups) {
-        for (let t of g.tasks) {
-            // 30% chance no labels
-            if (Math.random()<0.3) {
-                t.labelIds=[]
-                continue
-            }
-            // 1..3 random labels
-            const labelCount = random.randint(1,3)
-            const chosenLabelIds = random.sample(labels.map(l=>l.id), labelCount)
-            t.labelIds = chosenLabelIds
-            t.labels = labels.filter(l => chosenLabelIds.includes(l.id))
+    // console.log('Progress: 4')
+    for (const group of groups) {
+        for (const task of group.tasks) {
+            const labelSubset = random.sample(labels.map((lbl) => lbl.id), random.randint(0, labels.length))
+            task.labelIds = labelSubset
+            task.labels = labels.filter((lbl) => labelSubset.includes(lbl.id))
         }
     }
 
-    // WAIT POINT: Get our background image that's been loading in parallel
-    const backgroundImage = await backgroundPromise;
+    // console.log('Progress: 5')
 
-    // 8) build final board skeleton
     const createdBy = random.choice(GPT_USER_POOL) || {
-        _id:'u_fallback', fullname:'Unknown user', imgUrl:''
+        _id: 'u_fallback',
+        fullname: 'Unknown user',
+        imgUrl: '',
     }
-    const isStarred = (Math.random()<0.3)
-    const archivedAt = (Math.random()<0.05) ? random.date('2022-01-01','2023-12-31').getTime() : null
-
+    const boardId = random.id(random.randint(4, 10))
     const board = {
-        id: 'brd_'+random.id(),
+        id: boardId,
+        // _id: boardId,
         title: boardTitle,
-        isStarred,
-        archivedAt,
-        createdBy:{
-            _id:createdBy._id,
-            fullname:createdBy.fullname,
-            imgUrl:createdBy.imgUrl
+        isStarred: random.choice([true, false]),
+        archivedAt: random.choice([null, random.date('2022-01-01', '2023-12-31').getTime()]),
+        createdBy: {
+            _id: createdBy._id,
+            fullname: createdBy.fullname,
+            imgUrl: createdBy.imgUrl,
         },
-        style:{
-            backgroundImage // Domain-relevant background from our new function
+        style: {
+            backgroundImage:
+                random.choice([
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    `https://picsum.photos/2400/1600?random=${random.randint(1, 1000)}`,
+                    'color_1.svg',
+                    'color_2.svg',
+                    'color_3.svg',
+                    'color_4.svg',
+                    'color_5.svg',
+                    'color_6.svg',
+                    'color_7.svg',
+                    'color_8.svg',
+                    'color_9.svg',
+                    'color_10.svg',
+                    'color_11.svg',
+                    ])
+
         },
         labels,
         members: GPT_USER_POOL,
         groups,
-        activities: [], // fill below
-        cmpsOrder: random.sample(['StatusPicker','MemberPicker','DatePicker','PriorityPicker','OtherPicker'], random.randint(3,5)),
-        generator: 'getUltimateAIBoard',
-        topicChosen: chosenTopic,
-        domain
+        activities: [],
+        cmpsOrder: random.sample(CMP_ORDER_OPTIONS, random.randint(2, CMP_ORDER_OPTIONS.length)),
     }
 
-    // 9) domain-based badges
-    assignDomainBadgesToBoard(board, domain)
+    // console.log('Progress: 6')
 
-    // 10) board activities
-    board.activities = generateBoardActivities(board)
+    board.activities = getRandomBoardActivities(board)
 
-    showSuccessMsg(`AI: Done! Board "${boardTitle}" generated with domain ${domain}`)
+    // console.log('Progress: 7')
 
+    // console.log('Final Board from GPT:', board)
+
+    showSuccessMsg('AI: Board generation complete!')
+
+    board.generator = 'getRandomBoardAI'
     return board
-}
-
-/**
- * Get a domain-relevant, professional background image for a board
- * This is the main function that handles the entire background selection process
- */
-async function getDomainRelevantBackground(domain, boardTitle, topic) {
-    // Initialize domain background registry if needed
-    if (!usedBoardBackgrounds.has(domain)) {
-        usedBoardBackgrounds.set(domain, new Set());
-    }
-
-    const usedBackgrounds = usedBoardBackgrounds.get(domain);
-
-    // 1. First - try to get a domain-specific Unsplash image
-    let backgroundUrl = null;
-
-    try {
-        backgroundUrl = await getUnsplashDomainBackground(domain, boardTitle, topic);
-
-        // If this image was already used for this domain, try again up to 3 times
-        let attempts = 0;
-        while (backgroundUrl && usedBackgrounds.has(backgroundUrl) && attempts < 3) {
-            attempts++;
-            backgroundUrl = await getUnsplashDomainBackground(domain, boardTitle, topic);
-        }
-
-        // If we still got a duplicate after 3 attempts, force uniqueness
-        if (backgroundUrl && usedBackgrounds.has(backgroundUrl)) {
-            backgroundUrl = `${backgroundUrl}${backgroundUrl.includes('?') ? '&' : '?'}uniqueId=${random.id()}`;
-        }
-
-        // If we got a valid background, mark it as used
-        if (backgroundUrl) {
-            usedBackgrounds.add(backgroundUrl);
-        }
-    } catch (e) {
-        console.error('Error fetching domain background:', e);
-    }
-
-    // 2. If Unsplash failed, try premium curated backgrounds
-    if (!backgroundUrl) {
-        try {
-            backgroundUrl = getCuratedDomainBackground(domain);
-
-            // Check for uniqueness
-            if (backgroundUrl && usedBackgrounds.has(backgroundUrl)) {
-                // For curated backgrounds, append a unique parameter to make it "different"
-                backgroundUrl = `${backgroundUrl}${backgroundUrl.includes('?') ? '&' : '?'}uniqueId=${random.id()}`;
-            }
-
-            if (backgroundUrl) {
-                usedBackgrounds.add(backgroundUrl);
-            }
-        } catch (e) {
-            console.error('Error fetching curated background:', e);
-        }
-    }
-
-    // 3. If everything failed, use domain-colored fallback
-    if (!backgroundUrl) {
-        backgroundUrl = getDomainColorBackground(domain);
-    }
-
-    return backgroundUrl;
-}
-
-/**
- * Get a domain-specific background from Unsplash
- */
-async function getUnsplashDomainBackground(domain, boardTitle, topic) {
-    const unsplashAccessKey = 'ZyzKcjntARCeZKFC_E6IQXVIwf9-sDidiejtnzNxFf0';
-
-    // Map domains to appropriate Unsplash search terms
-    // The goal is professional, subtle backgrounds appropriate for each domain
-    const domainSearchTerms = {
-        'development': ['code background', 'programming workspace', 'tech pattern', 'software development', 'data visualization'],
-        'design': ['design studio', 'creative workspace', 'design pattern', 'color palette', 'minimal design'],
-        'marketing': ['marketing strategy', 'social media pattern', 'digital marketing', 'branding minimal', 'marketing abstract'],
-        'sales': ['business meeting', 'sales chart', 'professional office', 'business abstract', 'corporate minimal'],
-        'hr': ['office team', 'professional workplace', 'hiring', 'team collaboration', 'human resources'],
-        'finance': ['finance chart', 'business analysis', 'financial data', 'accounting workspace', 'economy abstract'],
-        'legal': ['law books', 'legal document', 'courthouse architecture', 'justice symbol', 'legal office'],
-        'education': ['education pattern', 'learning materials', 'school supplies', 'education workspace', 'academic abstract'],
-        'healthcare': ['medical pattern', 'healthcare symbol', 'medical research', 'health technology', 'medical minimal'],
-        'manufacturing': ['factory pattern', 'industrial design', 'manufacturing process', 'production line', 'engineering schematics'],
-        'realestate': ['architecture pattern', 'modern building', 'real estate minimal', 'property design', 'construction abstract'],
-        'hospitality': ['hotel pattern', 'hospitality design', 'restaurant ambient', 'travel minimal', 'service industry'],
-        'entertainment': ['entertainment stage', 'media production', 'film abstract', 'music studio', 'creative arts'],
-        'nonprofit': ['community pattern', 'volunteer work', 'charity minimal', 'social impact', 'nonprofit abstract'],
-        'government': ['government building', 'policy pattern', 'civic design', 'public service', 'national abstract'],
-        'automotive': ['car design pattern', 'automotive engineering', 'vehicle abstract', 'transportation technology', 'automotive minimal'],
-        'personal': ['personal planning', 'home office', 'lifestyle minimal', 'personal growth', 'self improvement']
-    };
-
-    // Default search terms for unknown domains
-    const defaultSearchTerms = ['productivity', 'workflow', 'professional pattern', 'workspace', 'business minimal'];
-
-    // Get search terms for this domain
-    const searchTerms = domainSearchTerms[domain] || defaultSearchTerms;
-
-    // Pick 1 or 2 random search terms
-    const primaryTerm = searchTerms[Math.floor(Math.random() * searchTerms.length)];
-
-    // Occasionally add a term from the board title or topic for more specificity
-    // But clean it first to avoid weird searches
-    let additionalTerm = '';
-    if (Math.random() < 0.3) {
-        // Extract keywords from board title or topic
-        const allText = `${boardTitle} ${topic}`;
-        const words = allText.toLowerCase().split(/\s+/);
-        const stopWords = ['a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'with', 'by', 'about'];
-
-        // Filter out stop words and short words
-        const keywords = words
-            .filter(word => word.length > 3)
-            .filter(word => !stopWords.includes(word))
-            .map(word => word.replace(/[^\w]/g, ''));
-
-        if (keywords.length > 0) {
-            // Pick a random keyword
-            additionalTerm = keywords[Math.floor(Math.random() * keywords.length)];
-        }
-    }
-
-    // Build search query
-    const searchQuery = additionalTerm
-        ? `${primaryTerm} ${additionalTerm}`
-        : primaryTerm;
-
-    try {
-        // Key parameters for board backgrounds:
-        // - landscape orientation (for wide screens)
-        // - good quality (regular size)
-        // - query for domain-relevant terms
-        const endpoint = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&orientation=landscape&content_filter=high&per_page=1`;
-
-        const response = await fetch(endpoint, {
-            headers: {
-                'Authorization': `Client-ID ${unsplashAccessKey}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Unsplash API responded with status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.results && data.results.length > 0) {
-            // Use regular size - large enough for quality but not too large to slow loading
-            return data.results[0].urls.regular;
-        }
-
-        return null;
-    } catch (e) {
-        console.error('Error fetching from Unsplash:', e);
-        return null;
-    }
-}
-
-/**
- * Get a premium curated background for specific domains
- * These are hand-selected high-quality backgrounds appropriate for each domain
- */
-function getCuratedDomainBackground(domain) {
-    // These would ideally be your own hosted images for reliability
-    // For now, using public CDN URLs as examples
-    const curatedBackgrounds = {
-        'development': [
-            'https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?q=80&w=1200',
-            'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200',
-            'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?q=80&w=1200'
-        ],
-        'design': [
-            'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=1200',
-            'https://images.unsplash.com/photo-1545670723-196ed0954986?q=80&w=1200',
-            'https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1200'
-        ],
-        'marketing': [
-            'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1200',
-            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200',
-            'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=1200'
-        ],
-        'finance': [
-            'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200',
-            'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200',
-            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200'
-        ],
-        'healthcare': [
-            'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1200',
-            'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=1200',
-            'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=1200'
-        ]
-        // Add more domains as needed
-    };
-
-    // For domains without curated backgrounds, map them to related domains
-    const domainAlternatives = {
-        'sales': 'marketing',
-        'hr': 'finance',
-        'legal': 'finance',
-        'education': 'design',
-        'manufacturing': 'development',
-        'realestate': 'finance',
-        'hospitality': 'marketing',
-        'entertainment': 'design',
-        'nonprofit': 'marketing',
-        'government': 'finance',
-        'automotive': 'development',
-        'personal': 'design'
-    };
-
-    // Get backgrounds for this domain
-    let domainBackgrounds = curatedBackgrounds[domain];
-
-    // If no backgrounds for this domain, try an alternative domain
-    if (!domainBackgrounds && domainAlternatives[domain]) {
-        domainBackgrounds = curatedBackgrounds[domainAlternatives[domain]];
-    }
-
-    // If we have backgrounds, pick a random one
-    if (domainBackgrounds && domainBackgrounds.length > 0) {
-        return domainBackgrounds[Math.floor(Math.random() * domainBackgrounds.length)];
-    }
-
-    // If all else fails, return null (will trigger color fallback)
-    return null;
-}
-
-/**
- * Get a domain-colored SVG background as ultimate fallback
- * This is guaranteed to work even if all API calls fail
- */
-function getDomainColorBackground(domain) {
-    // Domain-specific colors that match the industry/domain
-    const domainColors = {
-        'development': ['#0B4F6C', '#1C7293', '#03256C', '#2A6F97', '#012A4A'],
-        'design': ['#7B2CBF', '#9D4EDD', '#C77DFF', '#E0AAFF', '#5A189A'],
-        'marketing': ['#FF5A5F', '#FF8A80', '#B00020', '#F25F5C', '#A8201A'],
-        'sales': ['#0077B6', '#00B4D8', '#90E0EF', '#023E8A', '#0096C7'],
-        'hr': ['#8EA604', '#A5BE00', '#ECBE13', '#95C623', '#BAB700'],
-        'finance': ['#005F73', '#0A9396', '#94D2BD', '#001219', '#778DA9'],
-        'legal': ['#353535', '#3C6E71', '#284B63', '#4F646F', '#333533'],
-        'education': ['#FFB703', '#FD9E02', '#FB8500', '#F48C06', '#DC2F02'],
-        'healthcare': ['#52B788', '#2D6A4F', '#95D5B2', '#74C69D', '#40916C'],
-        'manufacturing': ['#6A040F', '#9D0208', '#D00000', '#E85D04', '#DC2F02'],
-        'realestate': ['#FFBA08', '#FAA307', '#F48C06', '#E85D04', '#DC2F02'],
-        'hospitality': ['#0B525B', '#144552', '#1B3A4B', '#212F45', '#272640'],
-        'entertainment': ['#5F0F40', '#9A031E', '#FB8B24', '#0F4C5C', '#E36414'],
-        'nonprofit': ['#588157', '#4F772D', '#31572C', '#90A955', '#3A5A40'],
-        'government': ['#003049', '#2C7DA0', '#468FAF', '#A8DADC', '#1D3557'],
-        'automotive': ['#2B2D42', '#8D99AE', '#EDF2F4', '#EF233C', '#D90429'],
-        'personal': ['#9F86C0', '#BE95C4', '#E0B1CB', '#FDE2E4', '#FEC5BB']
-    };
-
-    // Default colors for unknown domains
-    const defaultColors = ['#5390D9', '#4EA8DE', '#56CFE1', '#48BF84', '#4CC9F0'];
-
-    // Get colors for this domain
-    const colors = domainColors[domain] || defaultColors;
-
-    // Pick a random color from the domain palette
-    const backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-
-    // SVG patterns are more interesting than flat colors
-    // This uses a diagonal pattern with the domain color
-    const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-        <defs>
-            <pattern id="diagonalPattern" patternUnits="userSpaceOnUse" width="40" height="40" patternTransform="rotate(45)">
-                <rect width="20" height="40" fill="${backgroundColor}" opacity="0.9" />
-                <rect x="20" width="20" height="40" fill="${backgroundColor}" opacity="0.7" />
-            </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#diagonalPattern)" />
-    </svg>
-    `;
-
-    // Convert SVG to data URL
-    const svgBase64 = btoa(svg);
-    return `data:image/svg+xml;base64,${svgBase64}`;
 }

@@ -1,7 +1,7 @@
 
 
 import { TaskList } from "./TaskList"
-import { AddGroup, AddGPTGroup} from "./AddGroup"
+import { AddGroup } from "./AddGroup"
 import { useSelector } from "react-redux"
 import { GroupHeader } from "./GroupHeader"
 import { MinimaizedGRoup } from "./MinimaizedGroup"
@@ -57,7 +57,14 @@ export function GroupList({
     const [grp, setGroup] = useState(null)
 
     const containerRef = useRef(null)
-  
+
+    const [isGenerateModalOpen, setIsGenerateModalOpen] = useState(false)
+
+    function toggleGenerateModal() {
+        setIsGenerateModalOpen(prev => !prev)
+    }
+
+
     function onSetSort() {
         setSort(!showSort)
     }
@@ -349,7 +356,9 @@ export function GroupList({
             {showMoveAll && <MoveAll onSetMoveAll={onSetMoveAll} group={grp} header={header} onSetGroupEdit={onSetGroupEdit} />}
             {showSort && <GroupSort header={header} onSetGroupEdit={onSetGroupEdit} onSetSort={onSetSort} group={grp} />}
             <AddGroup useDarkTextColors={useDarkTextColors} />
-            <AddGPTGroup useDarkTextColors={useDarkTextColors} />
+
+
+
 
         </section>
     )
