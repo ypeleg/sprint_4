@@ -166,7 +166,7 @@ function sleep(sleepDuration){
 var axios = Axios.create({ withCredentials: true })
 
 async function ajax(endpoint, method = 'GET', data = null) {
-    console.log(('\n\n' + '---------' + '\n') + `AJAX CALL: ${BASE_URL}${endpoint}` + ('\n' + '---------' + '\n\n'))
+    // console.log(('\n\n' + '---------' + '\n') + `AJAX CALL: ${BASE_URL}${endpoint}` + ('\n' + '---------' + '\n\n'))
     try {
         const res = await axios({
             url: `${BASE_URL}${endpoint}`,
@@ -208,7 +208,7 @@ function createEventEmitter() {
 export function showUserMsg(msg) { eventBusService.emit('show-user-msg', msg) }
 export function showSpinner(txt) { showUserMsg({txt, type: 'spinner'}) }
 export function showSuccessMsg(txt) { showUserMsg({txt, type: 'success'}) }
-export function showSimpleMsg(txt) { showUserMsg({txt, type: 'simple'}) }
+export function showSimpleMsg(txt) { showUserMsg({txt, type: 'success'}) }
 export function showErrorMsg(txt) { showUserMsg({txt, type: 'error'}) }
 
 function query(entityType, delay = 500) {

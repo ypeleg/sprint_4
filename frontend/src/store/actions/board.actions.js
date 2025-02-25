@@ -2,8 +2,9 @@
 
 import { store } from '../store'
 import { boardService, USE_AI, aiGenerator } from '../../services/board.service.js'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_FILTER_BY } from '../reducers/board.reducer.js'
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_FILTER_BY, LOCAL_SET_BOARD } from '../reducers/board.reducer.js'
 import { makeId, SOCKET_UPDATE_BOARD, socketService } from '../../services/util.service.js'
+import {storageService} from "../../services/async-storage.service.js"
 
 // import { getRandomBoardAI } from "../../services/data_ai.js"
 
@@ -98,13 +99,20 @@ export async function loadBoards(filterBy) {
 export async function loadBoard(boardId, filterBy = { title: '' }) {
     try {
         const board = await boardService.getById(boardId, filterBy)
+
+        console.log('FUCKING HERE!!', board)
+
         store.dispatch(getCmdSetBoard(board))
        
         if (USE_AI) {
-            console.log('inside', board.generator)
+            // console.log('inside', board.generator)
             if (board.generator === 'getRandomBoard') {
                 aiGenerator().then(
                     aiBoard => {
+
+                        console.log('_id', board._id)
+                        console.log('_id', board.id)
+
                         aiBoard._id = board._id
                         aiBoard.id = board.id
                         store.dispatch(getCmdUpdateBoard(aiBoard))
@@ -119,8 +127,86 @@ export async function loadBoard(boardId, filterBy = { title: '' }) {
     }
 }
 
-export function setFilterBy(filterBy) {
+export async function setFilterBy(filterBy) {
+
+    let origBoard = {...store.getState().boardModule.board}
+    let boardId = origBoard._id
+    // fetch the original board from
+
+    let boards = [...store.getState().boardModule.boards]
+    let board = boards.find(board => board._id === boardId)
+
+    const { title, members, status, dueDate } = filterBy
+
+    if (title?.length > 0) {
+        console.log('title filtered by ', title)
+        const regex = new RegExp(title, 'i')
+        board = {
+            ...board,
+            groups: board.groups.map(group => ({
+                ...group,
+                tasks: group.tasks.filter(task => regex.test(task.title))
+            }))
+        }
+    }
+
+    if (members?.length) {
+        board = {
+            ...board,
+            groups: board.groups.map(group => ({
+                ...group,
+                tasks: group.tasks.filter(task =>
+                    (!task.members.length && members.includes('1')) ||
+                    task.members.some(member => members.some(m1 => m1 === member._id))
+                )
+            }))
+        }
+    }
+
+    if (dueDate?.length) {
+        board = {
+            ...board,
+            groups: board.groups.map(group => ({
+                ...group,
+                tasks: group.tasks.filter(task =>
+                    dueDate.some(date => {
+                        const taskDate = new Date(task.dueDate)
+                        const now = Date.now()
+                        const weekFromNow = new Date(new Date().setDate(new Date().getDate() + 7)).getTime()
+
+                        switch(date) {
+                            case 'no': return !task.dueDate
+                            case 'week': return weekFromNow > taskDate.getTime() && taskDate.getTime() > now
+                            case 'over': return taskDate.getTime() < now
+                            default: return false
+                        }
+                    })
+                )
+            }))
+        }
+    }
+
+    if (status) {
+        board = {
+            ...board,
+            groups: board.groups.map(group => ({
+                ...group,
+                tasks: group.tasks.filter(task =>
+                    status === 'done' ? task.status === status : task.status !== 'done'
+                )
+            }))
+        }
+    }
+
+
+    // console.log('set filter by ', filterBy)
     store.dispatch({ type: SET_FILTER_BY, filterBy })
+    store.dispatch({ type: LOCAL_SET_BOARD, board })
+    // const currentBoardId = store.getState().boardModule.board._id
+    // console.log('currentBoardId', currentBoardId)
+    // await loadBoard(currentBoardId, filterBy)
+
+
 }
 
 export async function removeBoard(boardId) {

@@ -1,7 +1,7 @@
 
 
 import { TaskList } from "./TaskList"
-import { AddGroup } from "./AddGroup"
+import { AddGroup, AddGPTGroup} from "./AddGroup"
 import { useSelector } from "react-redux"
 import { GroupHeader } from "./GroupHeader"
 import { MinimaizedGRoup } from "./MinimaizedGroup"
@@ -349,6 +349,8 @@ export function GroupList({
             {showMoveAll && <MoveAll onSetMoveAll={onSetMoveAll} group={grp} header={header} onSetGroupEdit={onSetGroupEdit} />}
             {showSort && <GroupSort header={header} onSetGroupEdit={onSetGroupEdit} onSetSort={onSetSort} group={grp} />}
             <AddGroup useDarkTextColors={useDarkTextColors} />
+            {/*<AddGPTGroup useDarkTextColors={useDarkTextColors} />*/}
+
         </section>
     )
 }

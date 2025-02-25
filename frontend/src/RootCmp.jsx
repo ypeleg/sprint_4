@@ -71,18 +71,18 @@ export function UserMsg() {
 }
 
 
-const ANIMATION_DURATION = 400;
-const VIBRATION_INTERVAL = 1000;
+const ANIMATION_DURATION = 400
+const VIBRATION_INTERVAL = 1000
 
 export function VideoCallNotification() {
-    const [showCall, setShowCall] = useState(false);
-    const [callerName, setCallerName] = useState("");
-    const [callerImg, setCallerImg] = useState("");
-    const [callId, setCallId] = useState(null);
-    const [isVibrating, setIsVibrating] = useState(true);
-    const [exitAnimation, setExitAnimation] = useState(false);
-    const loggedUser = useSelector(state => state.userModule.user);
-    const navigate = useNavigate();
+    const [showCall, setShowCall] = useState(false)
+    const [callerName, setCallerName] = useState("")
+    const [callerImg, setCallerImg] = useState("")
+    const [callId, setCallId] = useState(null)
+    const [isVibrating, setIsVibrating] = useState(true)
+    const [exitAnimation, setExitAnimation] = useState(false)
+    const loggedUser = useSelector(state => state.userModule.user)
+    const navigate = useNavigate()
 
     useEffect(() => {
         socketService.on(INCOMING_SOCKET_CALL, (payload) => {
@@ -90,14 +90,14 @@ export function VideoCallNotification() {
             console.log('loggedUser: ', loggedUser)
             console.log('payload: ', payload)            
             console.log('------- incoming call -------')
-            if (payload.callReceiver === loggedUser._id) {
-                setCallerName(payload.callerName);
-                setCallerImg(payload.callerImg);
-                setCallId(payload.callId);
-                setShowCall(true);
+            if ((!loggedUser._id) || (payload.callReceiver === loggedUser?._id)) {
+                setCallerName(payload.callerName)
+                setCallerImg(payload.callerImg)
+                setCallId(payload.callId)
+                setShowCall(true)
             }
         });
-    }, [loggedUser]);
+    }, [loggedUser])
 
     useEffect(() => {
         let interval;
@@ -106,28 +106,28 @@ export function VideoCallNotification() {
                 if (window.navigator.vibrate) {
                     window.navigator.vibrate([200]);
                 }
-            }, VIBRATION_INTERVAL);
+            }, VIBRATION_INTERVAL)
         }
-        return () => clearInterval(interval);
-    }, [showCall, isVibrating]);
+        return () => clearInterval(interval)
+    }, [showCall, isVibrating])
 
     const handleAccept = () => {
-        setIsVibrating(false);
-        setExitAnimation(true);
+        setIsVibrating(false)
+        setExitAnimation(true)
         setTimeout(() => {
-            setShowCall(false);
-            navigate(`/video/${callId}`);
-        }, ANIMATION_DURATION);
-    };
+            setShowCall(false)
+            navigate(`/video/${callId}`)
+        }, ANIMATION_DURATION)
+    }
 
     const handleDecline = () => {
-        setIsVibrating(false);
-        setExitAnimation(true);
+        setIsVibrating(false)
+        setExitAnimation(true)
         socketService.emit(DECLINE_CALL,callerName)
         setTimeout(() => setShowCall(false), ANIMATION_DURATION);
-    };
+    }
 
-    if (!showCall) return null;
+    if (!showCall) return null
 
     return (
         <div className={`notification-container ${exitAnimation ? "exit" : ""}`}>

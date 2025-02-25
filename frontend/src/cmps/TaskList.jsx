@@ -14,7 +14,7 @@ import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/el
 import { scrollJustEnoughIntoView } from '@atlaskit/pragmatic-drag-and-drop/element/scroll-just-enough-into-view';
 
 
-import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store } from "../store/store.js"
+import { loadBoards, getEmptyBoard, addBoard, updateBoard, removeBoard, store } from "../store/store.js"
 
 // drag and drop
 const CARD_SYMBOL = Symbol("card")

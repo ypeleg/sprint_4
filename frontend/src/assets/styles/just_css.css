@@ -6,6 +6,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
 
 }
 
@@ -5227,3 +5230,7 @@ main {
     min-width: auto;
   }
 }
+
+
+
+

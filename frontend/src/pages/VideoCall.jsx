@@ -230,7 +230,10 @@ export function VideoCall() {
 
             console.log("[initiateCall] Emitting socket event (OUTGOING_VIDEO_CALL)...");
             socketService.emit(OUTGOING_VIDEO_CALL, {
-                callId: callDocRef.id, callerName: loggedUser?.fullname || "Unknown", callReceiver: userToCall._id, callerImg: loggedUser?.imgUrl || "",
+                callId: callDocRef.id,
+                callerName: loggedUser?.fullname || "Unknown",
+                callReceiver: userToCall._id,
+                callerImg: loggedUser?.imgUrl || "",
             });
 
             onSnapshot(callDocRef, async (snapshot) => {

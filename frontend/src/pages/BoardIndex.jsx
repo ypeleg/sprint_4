@@ -5,7 +5,7 @@ import { BoardList } from './BoardList.jsx'
 import { AppHeader } from '../cmps/AppHeader.jsx'
 import { NavBarPageIndex } from './NavBarPageIndex.jsx'
 import React, { useRef, useEffect, useState } from "react"
-import { loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard } from "../store/store.js"
+import { loadBoards } from "../store/store.js"
 import { getFirstName } from '../services/util.service.js'
 import { MoveLeft } from "lucide-react"
 

@@ -1,7 +1,7 @@
 
 
 import { useSelector } from "react-redux"
-import { loadBoard, loadBoards } from "../store/store"
+import { loadBoards } from "../store/store"
 import { useNavigate } from "react-router"
 
 

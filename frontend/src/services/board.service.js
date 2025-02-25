@@ -52,6 +52,9 @@ export const localBoardService = {
 
     getById: async (boardId, filterBy = { title: '' }) => {
         try {
+
+            console.log('getById: ', boardId, 'filterBy: ', filterBy)
+
             const { title, members, status, dueDate } = filterBy
             let board = await storageService.get(STORAGE_KEY, boardId)
 
@@ -207,6 +210,16 @@ export const remoteBoardService = {
                 boards = await httpService.get(BASE_URL, filterBy)
             }
 
+            const { title } = filterBy
+
+            if (title) {
+                const regex = new RegExp(title, 'i')
+                boards = boards.filter(board =>
+                    regex.test(board.vendor) || regex.test(board.description)
+                )
+            }
+
+            console.log('boards: ', boards.length)
             return boards
         } catch (error) {
             console.error('Failed to query boards:', error)
@@ -216,8 +229,71 @@ export const remoteBoardService = {
 
     getById: async (boardId, filterBy = { title: '' }) => {
         try {
-            const boards = await httpService.get(BASE_URL + boardId, filterBy)
-            return boards // [0]
+            const { title, members, status, dueDate } = filterBy
+            let board = await httpService.get(BASE_URL + boardId, {})
+
+            console.log('board we got back: ', board)
+
+            if (title?.length > 0) {
+                const regex = new RegExp(title, 'i')
+                board = {
+                    ...board,
+                    groups: board.groups.map(group => ({
+                        ...group,
+                        tasks: group.tasks.filter(task => regex.test(task.title))
+                    }))
+                }
+            }
+
+            if (members?.length) {
+                board = {
+                    ...board,
+                    groups: board.groups.map(group => ({
+                        ...group,
+                        tasks: group.tasks.filter(task =>
+                            (!task.members.length && members.includes('1')) ||
+                            task.members.some(member => members.some(m1 => m1 === member._id))
+                        )
+                    }))
+                }
+            }
+
+            if (dueDate?.length) {
+                board = {
+                    ...board,
+                    groups: board.groups.map(group => ({
+                        ...group,
+                        tasks: group.tasks.filter(task =>
+                            dueDate.some(date => {
+                                const taskDate = new Date(task.dueDate)
+                                const now = Date.now()
+                                const weekFromNow = new Date(new Date().setDate(new Date().getDate() + 7)).getTime()
+
+                                switch(date) {
+                                    case 'no': return !task.dueDate
+                                    case 'week': return weekFromNow > taskDate.getTime() && taskDate.getTime() > now
+                                    case 'over': return taskDate.getTime() < now
+                                    default: return false
+                                }
+                            })
+                        )
+                    }))
+                }
+            }
+
+            if (status) {
+                board = {
+                    ...board,
+                    groups: board.groups.map(group => ({
+                        ...group,
+                        tasks: group.tasks.filter(task =>
+                            status === 'done' ? task.status === status : task.status !== 'done'
+                        )
+                    }))
+                }
+            }
+
+            return board // [0]
         } catch (error) {
             console.error(`Failed to get board ${boardId}:`, error)
             throw error
@@ -274,7 +350,7 @@ export const remoteBoardService = {
     _createBoards: async () => {
         try {
             const boardIds = []
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 5; i++) {
                 const board = getRandomBoard()
                 const savedBoard = await remoteBoardService.save(board)
                 boardIds.push(savedBoard._id)

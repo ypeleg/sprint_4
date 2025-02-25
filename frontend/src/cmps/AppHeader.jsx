@@ -3,7 +3,7 @@ import { useState, useRef } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router"
 import { CreateBoardModal } from '../pages/CreateBoardModal.jsx'
-import { loadBoard, logout } from "../store/store.js"
+import { logout } from "../store/store.js"
 
 export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
     onToggleSideBar, sideBarOpen, onToggleUpperBar, upperBarOpen }) {
@@ -272,11 +272,11 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
               
                     {boardsFilter&&<div className="boardsearch">
                         {
-                            boards.filter(brd => new RegExp(boardsFilter, 'i').test(brd.title))?.map(brd =>{
-                                return (
-                                    <button className="borad-option"  key={brd._id}  onClick={()=>{ navgite(`/${brd._id}`); loadBoard(brd._id)}}><img   src={brd.style.backgroundImage}/>   {brd.title}</button>
-                                )
-                            })
+                            // boards.filter(brd => new RegExp(boardsFilter, 'i').test(brd.title))?.map(brd =>{
+                            //     return (
+                            //         <button className="borad-option"  key={brd._id}  onClick={()=>{ navgite(`/${brd._id}`); loadBoard(brd._id)}}><img   src={brd.style.backgroundImage}/>   {brd.title}</button>
+                            //     )
+                            // })
                         }
                     </div>}
                
@@ -349,9 +349,36 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
 
 
                 {/* <img className="user" src="user_spec.png"></img> */}
-                <div class="user-profile member-circle task-user-icon" title="LH" onClick={() => setOpenAccountPopup(!openAccountPopup)}>
-                    {(loggedUser?.fullname.includes(' '))? (loggedUser?.fullname?.split(' ')[0][0]?.toUpperCase() || '') + '' + (loggedUser?.fullname?.split(' ')[1][0]?.toUpperCase() || ''):loggedUser?.fullname[0].toUpperCase()}
-                </div>
+
+
+                {(!loggedUser) && <>
+
+                    <div className="user-profile member-circle task-user-icon" title="LH" onClick={() => setOpenAccountPopup(!openAccountPopup)}>
+
+
+
+                        {/*{(loggedUser?.fullname.includes(' ')) ? (loggedUser?.fullname?.split(' ')[0][0]?.toUpperCase() || '') + '' + (loggedUser?.fullname?.split(' ')[1][0]?.toUpperCase() || '') : loggedUser?.fullname[0].toUpperCase()}*/}
+                        {/*<i className="fa-regular fa-user" style={{fontSize: "16px"}}></i>*/}
+                        <img src="/img/not_logged_in.png" alt="user" />
+
+                    </div>
+
+                </>}
+
+                {(loggedUser) && <>
+                    <div className="user-profile member-circle task-user-icon" title="LH" onClick={() => setOpenAccountPopup(!openAccountPopup)}>
+
+
+                        {(loggedUser?.imgUrl) ?
+
+                            (loggedUser?.imgUrl) :
+
+                            (loggedUser?.fullname.includes(' '))? (loggedUser?.fullname?.split(' ')[0][0]?.toUpperCase() || '') + '' + (loggedUser?.fullname?.split(' ')[1][0]?.toUpperCase() || ''):loggedUser?.fullname[0].toUpperCase()
+
+                        }
+
+                </div> </>}
+
                 {openAccountPopup && (<div className="account-popup">
                     <section className="account-section">
                         <div className="section-header">ACCOUNT</div>
@@ -364,9 +391,12 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
                                     (loggedUser?.fullname.includes(' '))? (loggedUser?.fullname?.split(' ')[0][0]?.toUpperCase() || '') + '' + (loggedUser?.fullname?.split(' ')[1][0]?.toUpperCase() || ''):loggedUser?.fullname[0].toUpperCase()
 
                                 }
+
+                                {(!loggedUser) && <> <img src="/img/not_logged_in.png" alt="user" /> </>}
                             </div>
                             <div className="user-details">
-                                <p className="user-name">{loggedUser?.fullname || 'Welcome Guest!'}</p>{(!!loggedUser?.username) && <p className="user-email">{loggedUser?.username || 'cell@theirer.com'}</p>}
+                                <p className="user-name">{loggedUser?.fullname || 'Welcome Guest!'}</p>
+                                {(!!loggedUser?.username) && <p className="user-email">{loggedUser?.username || 'cell@theirer.com'}</p>}
                             </div>
                         </div>
 

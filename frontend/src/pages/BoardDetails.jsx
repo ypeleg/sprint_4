@@ -23,6 +23,7 @@ import {ShareModal} from "../cmps/ShareModal.jsx"
 import {StandaloneSearchBox, useJsApiLoader,GoogleMap, Marker  } from '@react-google-maps/api'
 import {ActivityMenu} from "../cmps/ActivityMenu.jsx"
 import { UPDATE_BOARD } from "../store/reducers/board.reducer.js"
+import {setFilterBy} from "../store/actions/board.actions.js"
 
 
 export function QuickEdit({
@@ -467,8 +468,8 @@ export function QuickEdit({
 
         boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask
 
-        console.log(boardCopy)
-        console.log(newTask)
+        // console.log(boardCopy)
+        // console.log(newTask)
 
         updateBoard(cleanBoard(boardCopy))
     }
@@ -1108,7 +1109,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         id: 'google-map-script', googleMapsApiKey: 'AIzaSyDxZo6xL5uDfEutSxJsA7sjMfIsQiVENg8', libraries: ["places"]
     })
 
-    console.log('task', taskToShow)
+    // console.log('task', taskToShow)
     // const [coverUrl, setCoverUrl] = useState(taskToShow.style.backgroundImage || null)
 
     const [isDone, setIsDone] = useState(taskToShow.status === 'done')
@@ -1282,7 +1283,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
 
     const [cardLabels, setCardLabels] = useState(dropDuplicateLabels(taskToShow.labels || []))
     const [groupLabels, setGroupLabels] = useState(dropDuplicateLabels(taskToShow.board.labels || []))
-    console.log('groupLabels2', groupLabels)
+    // console.log('groupLabels2', groupLabels)
 
     function onToggleLabel(label) {
         setCardLabels(prev => {
@@ -1541,7 +1542,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     function movePickerTo(ev) {
         ev.stopPropagation()
         ev.preventDefault()
-        console.log('ev', ev)
+        // console.log('ev', ev)
         const parent = popupRef.current
         const parentRect = parent.getBoundingClientRect()
         const targetRect = ev.target.getBoundingClientRect()
@@ -3443,8 +3444,8 @@ export function BoardDetails() {
     // taskService.query().then(res => console.log(res))
 
    
-    console.log('bordDetails')
-    console.log(boardToShow)
+    // console.log('bordDetails')
+    // console.log(boardToShow)
     // const allBoards = useSelector(state => state.boardModule.boards)
 
     const [taskToShow, setTaskToShow] = useState(null)
@@ -3464,6 +3465,13 @@ export function BoardDetails() {
     }, [])
 
     function onLoadBoard() {
+        setFilterBy({
+            title: '',
+            members: [],
+            labels: [],
+            status: '',
+            dueDate: []
+        })
         loadBoard(boardId).then(() => {
             setTaskToShow(null)
         })
@@ -3484,12 +3492,12 @@ export function BoardDetails() {
 
 
     async function onLoadTask(ev, task, taskList, group, currentBoard) {
-        console.log('ev.target', ev.target)
-        console.log('ev.currentTarget', ev.currentTarget)
+        // console.log('ev.target', ev.target)
+        // console.log('ev.currentTarget', ev.currentTarget)
         // if (ev.target === ev.currentTarget) {
-            console.log('task', task)
-            console.log('taskList', taskList)
-            console.log('group', group)
+        //     console.log('task', task)
+        //     console.log('taskList', taskList)
+        //     console.log('group', group)
 
             let boardLabels = []
             currentBoard.groups.forEach(group => {

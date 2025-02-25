@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react"
 import { FilterCards } from "./FilterCards"
 import { useSelector } from "react-redux"
-import { loadBoard, setFilterBy, updateBoard } from "../store/actions/board.actions"
+import { setFilterBy, updateBoard } from "../store/actions/board.actions"
 import { ShareModal } from "./ShareModal"
 import { useNavigate } from "react-router"
 
@@ -13,14 +13,23 @@ export function BoardHeader({ onSetActivityMenu, onSetTable, onStarBoard, isStar
     const navigate = useNavigate()
     const boardToShow = useSelector(state => state.boardModule.board)
     const filterBy = useSelector(state => state.boardModule.filterBy)
-    const isFilterd = (filterBy.title || filterBy.members.length > 0 || filterBy.status || filterBy.dueDate.length > 0)
-   
-    useEffect(() => {
-        
-        clearFilter()
 
-    } , [ShowFilter])
 
+    console.log('is filtered: ', filterBy)
+    console.log(filterBy?.title.length > 0, filterBy?.members?.length > 0, filterBy?.status, filterBy?.dueDate?.length > 0)
+
+    const isFilterd = (filterBy?.title?.length > 0 || filterBy?.members?.length > 0 || filterBy?.status?.length > 0 || filterBy?.dueDate?.length > 0)
+
+    console.log('isFilterd', isFilterd)
+
+    console.log('boardToShow', boardToShow)
+
+    // useEffect(() => {
+    //
+    //     clearFilter()
+    //
+    // } , [ShowFilter])
+    //
     function clearFilter() {
         setFilterBy({
             title: '',
@@ -29,8 +38,9 @@ export function BoardHeader({ onSetActivityMenu, onSetTable, onStarBoard, isStar
             status: '',
             dueDate: []
         })
-        loadBoard(boardToShow._id)
     }
+
+
     function changeStar(){
         boardToShow.isStarred = !boardToShow.isStarred
         updateBoard(boardToShow)

@@ -1755,6 +1755,7 @@ async function generateText(prompt, temperature = 1.0, fallback = '', length = 1
         // console.log('GPT RESPONSE:\n', text)
         return text
     } catch (error) {
+        console.log('OpenAI API error:', error)
         console.error('OpenAI API error:', error)
         return fallback
     }
@@ -1858,7 +1859,7 @@ for (let i = 0; i < 20; i++) {
     const lastName = lastNames[Math.floor(Math.random() * lastNames.length)]
     const fullName = `${firstName} ${lastName}`
     let imgUrl = 'generated_faces/' + allImgs[Math.floor(Math.random() * allImgs.length)]
-    if (Math.random() < 0.5) imgUrl = null
+    if (Math.random() < 0.2) imgUrl = null
     gUsersPool.push({
         _id: `u${i + 1}`,
         fullname: fullName,
