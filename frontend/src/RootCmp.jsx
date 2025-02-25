@@ -93,7 +93,7 @@ export function VideoCallNotification() {
             console.log('loggedUser: ', loggedUser)
             console.log('payload: ', payload)            
             console.log('------- incoming call -------')
-            if ((!loggedUser._id) || (payload.callReceiver === loggedUser?._id)) {
+            if ((!loggedUser) || (!loggedUser?._id) || (payload.callReceiver === loggedUser?._id)) {
                 setCallerName(payload.callerName)
                 setCallerImg(payload.callerImg)
                 setCallId(payload.callId)
