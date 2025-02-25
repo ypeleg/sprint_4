@@ -13,7 +13,7 @@ import {BoardHeader} from "../cmps/BoardHeader.jsx"
 import {GroupHeader} from "../cmps/GroupHeader.jsx"
 // import {AddGroup, AddGPTGroup} from "../cmps/AddGroup"
 import React, {useRef, useEffect, useState} from "react"
-import {random, makeId, socketService, INCOMING_SOCKET_CALL} from "../services/util.service.js"
+import {random, makeId, socketService, INCOMING_SOCKET_CALL, utilService} from "../services/util.service.js"
 import {reorderWithEdge} from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge"
 import {loadBoards, getEmptyBoard, loadBoard, addBoard, updateBoard, removeBoard, store} from "../store/store.js"
 import {ShareModal} from "../cmps/ShareModal.jsx"
@@ -179,7 +179,7 @@ export function QuickEdit({
         const isExisting = boardLabels.some((l) => l.color === previousLabelColor)
         let newBoardLabels
         let newCardLabels
-        const newLabel = {color: currentLabelColor, title: currentLabelText}
+        const newLabel = {color: currentLabelColor, title: currentLabelText , id:makeId()}
         if (isExisting) {
             newBoardLabels = boardLabels.map((l) => l.color === previousLabelColor ? newLabel : l)
             newCardLabels = cardLabels.map((l) => l.color === previousLabelColor ? newLabel : l)
@@ -1501,11 +1501,12 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
     }
 
     function onSaveLabelChange() {
+        const id = makeId()
         if (groupLabels.some(l => l.color === previousLabelColor)) {
-            setGroupLabels(prev => prev.map(l => l.color === previousLabelColor ? {color: currentLabelColor, title: currentLabelText} : l))
+            setGroupLabels(prev => prev.map(l => l.color === previousLabelColor ? {color: currentLabelColor, title: currentLabelText,id} : l))
         } else {
-            setGroupLabels(prev => [...prev, {color: currentLabelColor, title: currentLabelText}])
-            setCardLabels(prev => [...prev, {color: currentLabelColor, title: currentLabelText}])
+            setGroupLabels(prev => [...prev, {color: currentLabelColor, title: currentLabelText,id}])
+            setCardLabels(prev => [...prev, {color: currentLabelColor, title: currentLabelText,id}])
         }
         setCurrentLabelText('')
         setCurrentLabelColor('')
