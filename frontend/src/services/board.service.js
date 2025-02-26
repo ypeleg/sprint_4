@@ -10,7 +10,7 @@ export let USE_AI = false
 export let aiGenerator = null
 
 
-USE_AI = true
+USE_AI = false
 import { getRandomBoardAI } from './data_ai.js'
 // import { getRandomBoardAI } from './data_ai_bombardment.js'
 aiGenerator = getRandomBoardAI
@@ -206,8 +206,8 @@ export const remoteBoardService = {
         try {
             let boards = await httpService.get(BASE_URL, filterBy)
 
-            if ((true) || (!boards.length)) {
-            // if ((!boards.length)) {
+            // if ((true) || (!boards.length)) {
+            if ((!boards.length)) {
                 await remoteBoardService._createBoards()
                 boards = await httpService.get(BASE_URL, filterBy)
             }
