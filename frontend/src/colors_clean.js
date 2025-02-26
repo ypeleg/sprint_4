@@ -24,10 +24,10 @@ img.onload = () => {
 
     
         for (let i = 0; i < numPixels; i++) {
-            const idx = i * 4;
-            rSum += data[idx];
-            gSum += data[idx + 1]; //                          👈 Avg the colors
-            bSum += data[idx + 2];
+            const idx = i * 4
+            rSum += data[idx]
+            gSum += data[idx + 1] //                          👈 Avg the colors
+            bSum += data[idx + 2]
         }
         const r = Math.round(rSum / numPixels)
         const g = Math.round(gSum / numPixels)
@@ -103,7 +103,7 @@ img.onload = () => {
 
 
             isDark: base.l >= 50,
-        };
+        }
         
         
 

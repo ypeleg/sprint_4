@@ -6366,3 +6366,22 @@ main {
 .add-group-form button {
     width: 100px;
 }
+
+.monday-add-group-buttons {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    gap: 4px;
+    padding: 3px 10px;
+    border: 1px solid #e0e0e0;
+}
+
+
+.monday-group-header {
+    background-color: transparent;
+}
+
+.last-height-element {
+    background-color: transparent;
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.1));
+}
