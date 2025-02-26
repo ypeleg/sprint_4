@@ -1747,7 +1747,8 @@ async function generateText(prompt, temperature = 1.0, fallback = '', length = 1
             max_completion_tokens: length,
             // max_tokens: length,
             messages: [
-                { role: 'system', content: 'write it as if it is a personal board of someone and use MANY emoji.' },
+                // { role: 'system', content: 'write it as if it is a personal board of someone and use MANY emoji.' },
+                { role: 'system', content: 'write it as if it is a personal board of someone and use MANY emoji. WRITE THE ACTUAL BOARD ITEMS ONLY IN HEBREW BUT IN A WELL STRUCTURED JSON AS ASKED FOR.' },
                 { role: 'user', content: prompt }],
         })
         let text = response.choices?.[0]?.message?.content?.trim() || ''

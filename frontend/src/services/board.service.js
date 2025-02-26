@@ -11,8 +11,8 @@ export let aiGenerator = null
 
 
 USE_AI = true
-// import { getRandomBoardAI } from './data_ai.js'
-import { getRandomBoardAI } from './data_ai_bombardment.js'
+import { getRandomBoardAI } from './data_ai.js'
+// import { getRandomBoardAI } from './data_ai_bombardment.js'
 aiGenerator = getRandomBoardAI
 // localStorage.clear()
 
