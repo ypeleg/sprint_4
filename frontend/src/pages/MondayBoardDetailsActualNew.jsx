@@ -5526,10 +5526,6 @@ export function MondayBoardDetails() {
 
         return (<div className="monday-page">
 
-                        <Head>
-                            <link rel="icon" type="image/svg+xml" href="monday_logo_icon.png"/>
-                        </Head>
-
                                 {isPopupShown && (!!taskToShow) && <>
 
                                 <div id="monday-popup" className="popup monday-popup" ref={popupRef} onClick={closePopupOnlyIfClickedOutOfIt}>

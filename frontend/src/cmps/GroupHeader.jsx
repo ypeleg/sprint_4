@@ -76,8 +76,15 @@ export function GroupHeader({setGroup,group,onSetGroupEdit,setHeader}) {
     const height = ((groupTitle.length / 20 * 20) + 32) + 'px'
 
     return (
-        <div className="list-header just-flex">
-            {!showTitleEdit && <span style={{color: group.style?.color || '#172b4d'}} onClick={onSetTitlEdit}>{groupTitle}</span>}
+        <div className="list-header just-flex"
+
+        style={{
+            fontFamily: "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Noto Sans\", Ubuntu, \"Droid Sans\", \"Helvetica Neue\", sans-serif"
+        }}
+        >
+            {!showTitleEdit && <span style={{color: group.style?.color || '#172b4d',
+                fontFamily: "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Noto Sans\", Ubuntu, \"Droid Sans\", \"Helvetica Neue\", sans-serif"
+            }} onClick={onSetTitlEdit}>{groupTitle}</span>}
             {showTitleEdit && <textarea ref={elInput} className="header-textarea change-header"   onChange={onChangeGroupTitle} 
             // style={{height: height}}
             onBlur={saveGroupTitle} 
