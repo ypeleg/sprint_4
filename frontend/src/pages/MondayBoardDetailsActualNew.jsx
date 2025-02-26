@@ -4592,8 +4592,9 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
 
           {showAddGroup ? (
             <div className="add-group-form">
-              <form onSubmit={handleNewGroupSubmit}>
+              <form className="add-group-form" onSubmit={handleNewGroupSubmit}>
                 <input
+                  className="monday-group-input"
                   type="text"
                   placeholder="Enter group title..."
                   value={newGroupTitle}

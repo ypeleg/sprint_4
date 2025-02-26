@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, ChevronDown, Sparkles, Star, Check, ArrowUpRight } from 'lucide-react';
 
-export function HomePage () {
+export function HomePage2 () {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrollPosition, setScrollPosition] = useState(0);
   const [revealed, setRevealed] = useState(false);

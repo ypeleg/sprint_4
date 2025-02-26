@@ -5,6 +5,7 @@ import React from 'react'
 import { Login } from './pages/Login.jsx'
 import { Routes, Route } from 'react-router'
 import { HomePage } from './pages/HomePage.jsx'
+import { HomePage2 } from './pages/HomePage2.jsx'
 import { DebugPage } from './pages/DebugPage.jsx'
 import { BoardIndex } from './pages/BoardIndex.jsx'
 import { BoardDetails } from './pages/BoardDetails.jsx'
@@ -193,6 +194,7 @@ export function RootCmp() {
             <main>
                 <Routes>
                     {/*home*/}
+                    <Route path="/home2" element={<HomePage2 />} />
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/login" element={<Login />} />
 

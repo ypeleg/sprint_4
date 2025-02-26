@@ -6352,3 +6352,17 @@ main {
     from, to { border-color: transparent }
     50% { border-color: rgba(255, 255, 255, 0.75) }
 }
+
+
+.monday-group-input {
+    background-color: white;
+}
+
+.add-group-form {
+    display: flex;
+    justify-content: start;
+}
+
+.add-group-form button {
+    width: 100px;
+}
