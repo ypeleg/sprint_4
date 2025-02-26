@@ -85,7 +85,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
                                     <div className="workspace-content">
                                         <div className="board-logo">T</div>
                                         <div className="workspace-info">
-                                            <div className="workspace-name">Trello Workspace</div>
+                                            <div className="workspace-name">Roilo Workspace</div>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
                                     <div className="workspace-content">
                                         <div className="board-logo">T</div>
                                         <div className="workspace-info">
-                                            <div className="workspace-name">Trello Workspace</div>
+                                            <div className="workspace-name">Roilo Workspace</div>
                                         </div>
                                     </div>
                                 </div>
@@ -204,7 +204,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
                                 <h2 className="trial-title">Premium trial</h2>
 
                                 <p className="trial-description">
-                                    The Premium free trial for Trello Workspace ends on Mar 3, 2025. </p>
+                                    The Premium free trial for Roilo Workspace ends on Mar 3, 2025. </p>
 
                                 <h3 className="features-title">Get the most out of Premium</h3>
 
@@ -332,7 +332,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
                             <img src="trello_question_menu.png" alt="Team collaboration illustration" className="tips-image" />
 
                             <h2 className="tips-title">
-                                It's easy to get your team up and running with Trello playbooks </h2>
+                                It's easy to get your team up and running with Roilo playbooks </h2>
 
                             <button className="tips-button">
                                 Get a new tip.
@@ -409,7 +409,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
                     </section>
 
                     <section className="trello-section">
-                        <div className="section-header">TRELLO</div>
+                        <div className="section-header">ROILO</div>
                         <div className="menu-items">
                             <button className="menu-item">Profile and visibility</button>
                             <button className="menu-item">Activity</button>
