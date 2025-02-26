@@ -473,9 +473,9 @@ export function VideoCall() {
                 <input type="text" placeholder="Search users to call..." value={userFilter} onChange={onUserFilter} className="search-input" autoFocus />
             </div>
             {users.length > 0 && (<div className="user-list">
-                {users.map((u) => (<div key={u._id} className="user-item">
+                {users.map((u) => (<div onClick={() => initiateCall(u)} key={u._id} className="user-item">
                     <img src={u.imgUrl || "roi.png"} alt={u.fullname} /> <span>{u.fullname}</span>
-                    <button onClick={() => initiateCall(u)}>Call</button>
+                    <button >Call</button>
                 </div>))}
             </div>)}
         </div>)}
