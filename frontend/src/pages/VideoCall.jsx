@@ -418,7 +418,7 @@ export function VideoCall() {
             </div>
 
             <div className="local-video-wrapper">
-                {isLoadingCamera ? (<div className="loading">Starting camera...</div>) : localStream ? (<video ref={webcamVideoRef} autoPlay playsInline muted style={{ width: "240px", height: "180px", background: "#333" }} className="local-video" />) : (<div className="no-video">No local video</div>)}
+                {isLoadingCamera ? (<div className="loading">Starting camera...</div>) : localStream ? (<video ref={webcamVideoRef} autoPlay playsInline muted style={{ aspectRatio: '16/9', background: "#333" }} className="local-video" />) : (<div className="no-video">No local video</div>)}
 
                 {localStream && (<div className="video-overlay">
                     <span className="recording-indicator">
@@ -485,7 +485,7 @@ export function VideoCall() {
             <button onClick={() => answerCall(callId)}>Join Call</button>
         </div>)}
 
-        {showDeclined&&<div  className="show-decilend">
+        {showDeclined && <div className="show-decilend">
             <h3 ><span className="cancleduser">{pickedUser.fullname}</span> has Declined your call</h3>
             <button className="task-modal-close" onClick={() => setShowDeclined(false)}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

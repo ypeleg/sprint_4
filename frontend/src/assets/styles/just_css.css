@@ -4210,11 +4210,13 @@ main {
     background: #161616;
 }
 
-.video-call-container .remote-video, .local-video {
+.video-call-container .remote-video,
+.local-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transform: scale(1.01);
+    aspect-ratio: 16/9;
 }
 
 .video-call-container .local-video-wrapper {
@@ -4403,9 +4405,11 @@ main {
     0% {
         opacity: 1;
     }
+
     50% {
         opacity: 0.5;
     }
+
     100% {
         opacity: 1;
     }
@@ -4493,7 +4497,7 @@ main {
     border-color: rgba(255, 255, 255, 0.2);
     outline: none;
     box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1),
-    0 4px 12px rgba(0, 0, 0, 0.2);
+        0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .video-call-container .search-icon {
@@ -4566,12 +4570,10 @@ main {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-            120deg,
+    background: linear-gradient(120deg,
             transparent,
             rgba(255, 255, 255, 0.1),
-            transparent
-    );
+            transparent);
     transform: translateX(-100%);
     transition: transform 0.5s ease;
 }
@@ -4606,7 +4608,7 @@ main {
 }
 
 .video-call-container .user-item button {
-    color:white;
+    color: white;
 }
 
 .video-call-container .user-item img {
@@ -4615,7 +4617,8 @@ main {
 
 .video-call-container .user-info {
     flex: 1;
-    min-width: 0; /* Prevents text overflow */
+    min-width: 0;
+    /* Prevents text overflow */
 }
 
 .video-call-container .user-name {
@@ -4642,13 +4645,15 @@ main {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #22c55e; /* Online - green */
+    background: #22c55e;
+    /* Online - green */
     margin-left: auto;
     box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
 }
 
 .video-call-container .user-status.offline {
-    background: #6b7280; /* Offline - gray */
+    background: #6b7280;
+    /* Offline - gray */
     box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.2);
 }
 
@@ -4666,6 +4671,7 @@ main {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -4676,6 +4682,7 @@ main {
         opacity: 0;
         transform: translateY(20px) scale(0.98);
     }
+
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -4694,13 +4701,15 @@ main {
 .remote-video {
     width: 100% !important;
     height: auto !important;
-    background-color: black !important; /* Black background to confirm it’s rendering */
+    background-color: black !important;
+    /* Black background to confirm it’s rendering */
 }
 
 .remote-video {
     width: 100%;
     height: auto;
-    background-color: black; /* Helps confirm the element is rendering */
+    background-color: black;
+    /* Helps confirm the element is rendering */
 }
 
 .local-video-wrapper {
@@ -4962,6 +4971,7 @@ main {
     height: 32px;
     display: flex;
     padding-bottom: 8px;
+
     div {
         font-weight: 600;
     }
@@ -5060,14 +5070,23 @@ main {
     margin-left: 12px;
 }
 
-.trello-notification-content { flex: 1; }
-.trello-notification-close:hover { color: #666; }
-.trello-notification.error { border-left: 4px solid #ff3b30; }
-.trello-notification.success { border-left: 4px solid #34c759;}
-
-.trello-notification.success-spinner {
-
+.trello-notification-content {
+    flex: 1;
 }
+
+.trello-notification-close:hover {
+    color: #666;
+}
+
+.trello-notification.error {
+    border-left: 4px solid #ff3b30;
+}
+
+.trello-notification.success {
+    border-left: 4px solid #34c759;
+}
+
+.trello-notification.success-spinner {}
 
 
 
@@ -5076,6 +5095,7 @@ main {
         translate: 100% 0;
         opacity: 0;
     }
+
     100% {
         translate: 0 0;
         opacity: 1;
@@ -5086,149 +5106,169 @@ main {
 
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes pulse-glow {
-  0% { box-shadow: 0 0 15px rgba(52, 199, 89, 0.4); }
-  50% { box-shadow: 0 0 25px rgba(52, 199, 89, 0.7); }
-  100% { box-shadow: 0 0 15px rgba(52, 199, 89, 0.4); }
+    0% {
+        box-shadow: 0 0 15px rgba(52, 199, 89, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(52, 199, 89, 0.7);
+    }
+
+    100% {
+        box-shadow: 0 0 15px rgba(52, 199, 89, 0.4);
+    }
 }
 
 @keyframes slide-in {
-  0% { transform: translateX(30px); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
+    0% {
+        transform: translateX(30px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .trello-notification {
-  gap: 12px;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  padding: 16px;
-  position: fixed;
-  font-size: 24px;
-  min-width: 300px;
-  font-weight: bold;
-  align-items: center;
-  border-radius: 12px;
-  animation: slide-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid #e0e0e0;
-  background: #ffffff;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35);
-  transform-origin: right top;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  z-index: 9999;
+    gap: 12px;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    padding: 16px;
+    position: fixed;
+    font-size: 24px;
+    min-width: 300px;
+    font-weight: bold;
+    align-items: center;
+    border-radius: 12px;
+    animation: slide-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid #e0e0e0;
+    background: #ffffff;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35);
+    transform-origin: right top;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 9999;
 }
 
 .trello-notification:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.4);
 }
 
 .trello-notification-content {
-  flex: 1;
+    flex: 1;
 }
 
 .trello-notification-message {
-  margin: 0;
-  color: #333;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.4;
+    margin: 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
 }
 
 .trello-notification-close {
-  color: #777;
-  margin: -8px;
-  padding: 8px;
-  border: none;
-  cursor: pointer;
-  font-size: 22px;
-  background: transparent;
-  border-radius: 50%;
-  height: 32px;
-  width: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  margin-left: 12px;
+    color: #777;
+    margin: -8px;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    background: transparent;
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    margin-left: 12px;
 }
 
 .trello-notification-close:hover {
-  color: #333;
-  background: #f0f0f0;
-  transform: rotate(90deg) scale(1.1);
+    color: #333;
+    background: #f0f0f0;
+    transform: rotate(90deg) scale(1.1);
 }
 
 .trello-notification.error {
-  border-left: 4px solid #ff3b30;
-  background: linear-gradient(to right, #fff0f0, #ffffff);
-  /*box-shadow: 0 10px 25px -5px rgba(255, 59, 48, 0.25);*/
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-left: 4px solid #ff3b30;
+    background: linear-gradient(to right, #fff0f0, #ffffff);
+    /*box-shadow: 0 10px 25px -5px rgba(255, 59, 48, 0.25);*/
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .trello-notification.success {
-  border-left: 4px solid #34c759;
-  background: linear-gradient(to right, #f0fff5, #ffffff);
-  box-shadow: 0 10px 25px -5px rgba(52, 199, 89, 0.25);
+    border-left: 4px solid #34c759;
+    background: linear-gradient(to right, #f0fff5, #ffffff);
+    box-shadow: 0 10px 25px -5px rgba(52, 199, 89, 0.25);
 }
 
 .trello-notification.simple {
-  /*border-left: 4px solid #999;*/
-  border-left: 4px solid #218c3e;
-  background: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  animation: slide-in 0.3s ease;
+    /*border-left: 4px solid #999;*/
+    border-left: 4px solid #218c3e;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: slide-in 0.3s ease;
 }
 
 .trello-notification.spinner {
-  border-left: 4px solid #34c759;
-  background: linear-gradient(135deg, #f5fff9, #ffffff);
-  animation: slide-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), pulse-glow 3s infinite ease-in-out;
+    border-left: 4px solid #34c759;
+    background: linear-gradient(135deg, #f5fff9, #ffffff);
+    animation: slide-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), pulse-glow 3s infinite ease-in-out;
 }
 
 .spinner-icon {
-  width: 24px;
-  height: 24px;
-  border: 3px solid rgba(52, 199, 89, 0.15);
-  border-radius: 50%;
-  border-top-color: #34c759;
-  border-left-color: #34c759;
-  animation: spin 0.8s infinite cubic-bezier(0.6, 0.2, 0.4, 0.8);
-  margin-right: 12px;
-  position: relative;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(52, 199, 89, 0.15);
+    border-radius: 50%;
+    border-top-color: #34c759;
+    border-left-color: #34c759;
+    animation: spin 0.8s infinite cubic-bezier(0.6, 0.2, 0.4, 0.8);
+    margin-right: 12px;
+    position: relative;
 }
 
 .spinner-icon::after {
-  content: "";
-  position: absolute;
-  top: -6px;
-  left: -6px;
-  right: -6px;
-  bottom: -6px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(52, 199, 89, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
-  animation: pulse 2s infinite ease-in-out;
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(52, 199, 89, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+    animation: pulse 2s infinite ease-in-out;
 }
 
 .trello-notification.spinner .trello-notification-message {
-  font-weight: 500;
-  color: #218c3e;
-  display: flex;
-  align-items: center;
+    font-weight: 500;
+    color: #218c3e;
+    display: flex;
+    align-items: center;
 }
 
 @media (max-width: 768px) {
-  .trello-notification {
-    left: 20px;
-    right: 20px;
-    width: calc(100% - 40px);
-    max-width: none;
-    min-width: auto;
-  }
+    .trello-notification {
+        left: 20px;
+        right: 20px;
+        width: calc(100% - 40px);
+        max-width: none;
+        min-width: auto;
+    }
 }
 
 
@@ -5613,7 +5653,8 @@ main {
     color: #333;
 }
 
-.edit-button, .toggle-button {
+.edit-button,
+.toggle-button {
     width: 28px;
     height: 28px;
     display: flex;
@@ -5625,11 +5666,13 @@ main {
     cursor: pointer;
 }
 
-.edit-button:hover, .toggle-button:hover {
+.edit-button:hover,
+.toggle-button:hover {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
-.edit-button svg, .toggle-button svg {
+.edit-button svg,
+.toggle-button svg {
     width: 18px;
     height: 18px;
     fill: #666;
@@ -5821,11 +5864,11 @@ main {
     border-radius: 4px;
 }
 
-.item-label:hover input ~ .checkbox-custom {
+.item-label:hover input~.checkbox-custom {
     background-color: #f5f5f5;
 }
 
-.item-label input:checked ~ .checkbox-custom {
+.item-label input:checked~.checkbox-custom {
     background-color: #34d399;
     border-color: #34d399;
 }
@@ -5836,7 +5879,7 @@ main {
     display: none;
 }
 
-.item-label input:checked ~ .checkbox-custom:after {
+.item-label input:checked~.checkbox-custom:after {
     display: block;
 }
 
@@ -5883,7 +5926,8 @@ main {
     gap: 8px;
 }
 
-.add-btn, .cancel-btn {
+.add-btn,
+.cancel-btn {
     padding: 6px 12px;
     border-radius: 4px;
     font-size: 14px;
@@ -5910,7 +5954,9 @@ main {
     background-color: #f5f5f5;
 }
 
-.add-item-button, .add-checklist-btn, .add-file-btn {
+.add-item-button,
+.add-checklist-btn,
+.add-file-btn {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -5924,11 +5970,15 @@ main {
     text-align: left;
 }
 
-.add-item-button:hover, .add-checklist-btn:hover, .add-file-btn:hover {
+.add-item-button:hover,
+.add-checklist-btn:hover,
+.add-file-btn:hover {
     background-color: #f5f5f5;
 }
 
-.add-item-button svg, .add-checklist-btn svg, .add-file-btn svg {
+.add-item-button svg,
+.add-checklist-btn svg,
+.add-file-btn svg {
     width: 16px;
     height: 16px;
     fill: currentColor;
@@ -6015,7 +6065,8 @@ main {
     border-radius: 6px;
 }
 
-.composer-avatar, .activity-avatar {
+.composer-avatar,
+.activity-avatar {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -6173,8 +6224,15 @@ main {
 
 
 @keyframes flashInOut {
-0%, 100% { opacity: 0; }
-50% { opacity: 0.25; }
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.25;
+    }
 }
 
 .flash-in-out {
@@ -6182,8 +6240,13 @@ main {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .animate-fadeIn {
@@ -6227,15 +6290,31 @@ main {
 
 
 @keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 @keyframes text-gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .animate-text-gradient {
@@ -6259,12 +6338,15 @@ main {
     0% {
         transform: translate(0px, 0px) scale(1);
     }
+
     33% {
         transform: translate(30px, -50px) scale(1.1);
     }
+
     66% {
         transform: translate(-20px, 20px) scale(0.9);
     }
+
     100% {
         transform: translate(0px, 0px) scale(1);
     }
@@ -6281,26 +6363,57 @@ main {
 
 
 @keyframes pulse-slow {
-    0% { opacity: 0.5; }
-    50% { opacity: 0.8; }
-    100% { opacity: 0.5; }
+    0% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0.5;
+    }
 }
 
 @keyframes float {
-    0% { transform: translateY(0px) rotate(12deg); }
-    50% { transform: translateY(-10px) rotate(14deg); }
-    100% { transform: translateY(0px) rotate(12deg); }
+    0% {
+        transform: translateY(0px) rotate(12deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(14deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(12deg);
+    }
 }
 
 @keyframes float-delayed {
-    0% { transform: translateY(0px) rotate(-6deg); }
-    50% { transform: translateY(-12px) rotate(-8deg); }
-    100% { transform: translateY(0px) rotate(-6deg); }
+    0% {
+        transform: translateY(0px) rotate(-6deg);
+    }
+
+    50% {
+        transform: translateY(-12px) rotate(-8deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(-6deg);
+    }
 }
 
 @keyframes reveal {
-    0% { opacity: 0; transform: translateY(100%); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .animate-reveal {
@@ -6344,13 +6457,25 @@ main {
 }
 
 @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
 }
 
 @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: rgba(255, 255, 255, 0.75) }
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: rgba(255, 255, 255, 0.75)
+    }
 }
 
 
