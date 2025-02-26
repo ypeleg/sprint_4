@@ -1737,12 +1737,18 @@ async function generateText(prompt, temperature = 1.0, fallback = '', length = 1
     // console.log('PROMPT to GPT:\n', prompt)
     try {
         const response = await openai.chat.completions.create({
-            model: 'gpt-4o-mini',
+
+            model: 'o3-mini',
+
+            // model: 'gpt-4o',
             // model: 'gpt-3.5-turbo',
             temperature,
             // max_tokens: 8192,
-            max_tokens: length,
-            messages: [{ role: 'user', content: prompt }],
+            max_completion_tokens: length,
+            // max_tokens: length,
+            messages: [
+                { role: 'system', content: 'write it as if it is a personal board of someone and use MANY emoji.' },
+                { role: 'user', content: prompt }],
         })
         let text = response.choices?.[0]?.message?.content?.trim() || ''
         while (text.length && !/[\w\d]/.test(text[0])) text = text.slice(1)

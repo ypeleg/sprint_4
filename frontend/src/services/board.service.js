@@ -11,7 +11,8 @@ export let aiGenerator = null
 
 
 USE_AI = true
-import { getRandomBoardAI } from './data_ai.js'
+// import { getRandomBoardAI } from './data_ai.js'
+import { getRandomBoardAI } from './data_ai_bombardment.js'
 aiGenerator = getRandomBoardAI
 // localStorage.clear()
 
@@ -205,7 +206,8 @@ export const remoteBoardService = {
         try {
             let boards = await httpService.get(BASE_URL, filterBy)
 
-            if (!boards.length) {
+            if ((true) || (!boards.length)) {
+            // if ((!boards.length)) {
                 await remoteBoardService._createBoards()
                 boards = await httpService.get(BASE_URL, filterBy)
             }
@@ -232,7 +234,7 @@ export const remoteBoardService = {
             const { title, members, status, dueDate } = filterBy
             let board = await httpService.get(BASE_URL + boardId, {})
 
-            console.log('board we got back: ', board)
+            // console.log('board we got back: ', board)
 
             if (title?.length > 0) {
                 const regex = new RegExp(title, 'i')
@@ -349,27 +351,53 @@ export const remoteBoardService = {
 
     _createBoards: async () => {
         try {
-            const boardIds = []
-            for (let i = 0; i < 5; i++) {
-                const board = getRandomBoard()
-                const savedBoard = await remoteBoardService.save(board)
-                boardIds.push(savedBoard._id)
-                console.log(`Created board with ID: ${savedBoard._id}`)
-            }
-            // if (USE_AI) {
-            //     for (const boardId of boardIds) {
-            //         try {
-            //             const aiBoard = await getRandomBoardAI()
-            //             console.log(`AI data generated for board ID: ${boardId}`)
-            //             const existingBoard = await remoteBoardService.getById(boardId)
-            //             const updatedBoard = { ...aiBoard, _id: boardId }
-            //             await remoteBoardService.save(updatedBoard)
-            //             console.log(`Updated board with ID: ${boardId} with AI data`)
-            //         } catch (err) {
-            //             console.error(`Failed to update board ${boardId} with AI data:`, err)
-            //         }
-            //     }
+            let boardIds = []
+            // for (let i = 0; i < 20; i++) {
+            //     const board = getRandomBoard()
+            //     const savedBoard = await remoteBoardService.save(board)
+            //     boardIds.push(savedBoard._id)
+            //     console.log(`Created board with ID: ${savedBoard._id}`)
             // }
+
+            remoteBoardService.query().then(async (boards) => {
+                boardIds = boards.map(board => board._id)
+                if (USE_AI) {
+                    for (const boardId of boardIds) {
+                        try {
+                            const existingBoard = await remoteBoardService.getById(boardId)
+                            if ((existingBoard.generator === 'getRandomBoard') || (existingBoard.title.toLowerCase().includes('generic'))) {
+
+                                console.log(`AI: Working on board: ${existingBoard.title}`)
+                                const aiBoard = await getRandomBoardAI()
+                                console.log(`AI data generated for board ID: ${existingBoard.title}`)
+                                const updatedBoard = {...aiBoard, _id: boardId}
+                                await remoteBoardService.save(updatedBoard)
+                                console.log(`Updated board with ID: ${boardId} with AI data`)
+                            }
+                        } catch (err) {
+                            console.error(`Failed to update board ${boardId} with AI data:`, err)
+                        }
+                    }
+                }
+
+            })
+
+            if (USE_AI) {
+                for (const boardId of boardIds) {
+                    try {
+                        const existingBoard = await remoteBoardService.getById(boardId)
+                        if (existingBoard.generator === 'getRandomBoard') {
+                            const aiBoard = await getRandomBoardAI()
+                            console.log(`AI data generated for board ID: ${boardId}`)
+                            const updatedBoard = {...aiBoard, _id: boardId}
+                            await remoteBoardService.save(updatedBoard)
+                            console.log(`Updated board with ID: ${boardId} with AI data`)
+                        }
+                    } catch (err) {
+                        console.error(`Failed to update board ${boardId} with AI data:`, err)
+                    }
+                }
+            }
 
             console.log('Board creation and updates completed successfully')
         } catch (error) {
