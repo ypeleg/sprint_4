@@ -104,7 +104,7 @@ color: (useDarkTextColors? '#172b4d': 'white')
                     Table
                 </button>
                 <button style={{
-                    background: (useDarkTextColors? '#172b4d': 'transparent'),
+                    background: (useDarkTextColors? 'transparent': 'transparent'),
 color: (useDarkTextColors? '#172b4d': 'white')
 }}>
                     <svg style={{
