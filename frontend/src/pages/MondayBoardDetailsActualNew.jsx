@@ -4236,6 +4236,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
 
       {/* The main table "header" row with column titles */}
       <div className="monday-group-preview-content group-preview-content">
+        <div className="monday-group-preview-content-before" style={{backgroundColor: mapTrelloToMonday(group.style?.backgroundColor)}}></div>
         <div className="title-container flex">
           <div className="sticky-div titles flex" style={{borderColor: mapTrelloToMonday(group.style?.backgroundColor)}}>
             <div className="hidden"></div>
@@ -4340,8 +4341,8 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
         )}
       </li>
 
-      {isExpanded && hasSubtasks && task.checklists[0].todos.map(todo => (
-        <li key={todo.id} className="subtask-row" style={{ paddingLeft: '40px' }}>
+      {isExpanded && hasSubtasks && task.checklists[0].todos.map(  (todo, subIdx) => (
+        <li key={todo.id} className={`subtask-row ${((subIdx === 0)? "first-sub": '')}`} style={{ paddingLeft: '40px' }}>
           <MondayTableTask
             idx={`${idx}-sub-${todo.id}`}
             task={{
@@ -4377,6 +4378,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
 
       {isExpanded && hasSubtasks && (
         <li className="add-subtask-row" style={{ paddingLeft: '40px' }}>
+            <div className="add-subtask-row-before" style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor) }}></div>
           <div className="add-task flex">
             <div
               className="sticky-div"

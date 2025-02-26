@@ -3877,7 +3877,7 @@ blockquote span {
 }
 
 .subtask-row .sticky-div {
-    border-left: 4px solid #dce0e6 !important;
+    /*border-left: 4px solid #dce0e6 !important;*/
 }
 
 /*.add-subtask-row {*/
@@ -4080,12 +4080,15 @@ blockquote span {
 }
 
     /* Add this to your CSS */
-.subtask-row {
+.subtask-row.first-sub{
     margin-top: 16px;
     /*margin-left: 20px;*/
     position: relative;
     background-color: #f6f7fb;
     /*border-top: 1px solid #e6e9ef;*/
+    /*border-left: 1px solid white;*/
+    /*border-radius: 0px 0px 0px 0px;*/
+
 
 }
 
@@ -4100,8 +4103,10 @@ blockquote span {
     z-index: 1;
 }
 
-.subtask-row .sticky-div {
-    border-left: 4px solid #dce0e6 !important;
+.subtask-row.first-sub .sticky-div {
+    /*border-left: 4px solid #dce0e6 !important;*/
+    border-radius: 5px 0px 0px 0px;
+
 }
 
 .add-subtask-row {
@@ -4111,5 +4116,60 @@ blockquote span {
 
 /* This is for the task that has subtasks - add blue highlight */
 .has-subtasks .sticky-div {
-    background-color: #e5f4ff;
+    /*background-color: #e5f4ff;*/
+}
+
+.subtask .task-menu {
+    border-top: 1px solid white !important;
+    /*background-color: red;*/
+    border-top: 0px solid transparent ;
+    margin-top: -2px;
+    background: white;
+}
+
+.monday-table-task-preview .subtask {
+    background-color: transparent;
+
+}
+
+.monday-group-preview-content-before {
+    position: relative;
+}
+
+.monday-group-preview-content-before {
+    position: absolute;
+    content: '';
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 1px;
+    /*background-color: red;*/
+    z-index: 2;
+    margin-left: 3px;
+}
+
+.monday-group-title input {
+    background-color: white;
+}
+
+.add-subtask-row {
+    position: relative;
+}
+
+.add-subtask-row-before {
+    position: absolute;
+    content: '';
+    height: 100%;
+    width: 36px;
+    left: 3px;
+    top: -17px;
+    /*width: 1px;*/
+    /*background-color: red;*/
+    z-index: 2;
+    /*border-color: red;*/
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+    border-radius: 0px 0px 0px 12px;
+
+    /*margin-left: 3px;*/
 }
