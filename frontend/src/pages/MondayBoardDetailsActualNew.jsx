@@ -4751,7 +4751,7 @@ export function TopHeader({  }) {
     )
 }
 
-export function MondaySidebar() {
+export function MondaySidebar({ onCloseSideBar }) {
     const boards = useSelector((state) => state.boardModule.boards);
 
     const favorites = boards.filter(board => board.isStarred);
@@ -4760,7 +4760,7 @@ export function MondaySidebar() {
         <div className="sidebar flex">
             <section className="workspace-sidebar sidebar-outer workspace-sidebar-container">
                 <section className="workspace-sidebar sidebar-inner">
-                    <div className="monday-sidebar-right-btn">
+                    <div className="monday-sidebar-right-btn" onClick ={onCloseSideBar}>
                         <svg
                             viewBox="0 0 20 20"
                             fill="currentColor"
@@ -4781,7 +4781,7 @@ export function MondaySidebar() {
                     </div>
                     <nav className="sidebar-nav-container">
                         <ul className="nav-list">
-                            <li className="nav-item">
+                            <li className="monday-home nav-item">
                                 <NavLink to="/" className="nav-link monday-nav-link">
                                     <i className="fa-solid fa-house"></i>
                                     <span>Home</span>
@@ -4794,7 +4794,7 @@ export function MondaySidebar() {
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link monday-nav-link nav-link monday-nav-link-with-arrow">
+                                <a  className="nav-link monday-nav-link nav-link monday-nav-link-with-arrow">
                                     <svg
                                         viewBox="0 0 20 20"
                                         fill="currentColor"
@@ -4815,7 +4815,7 @@ export function MondaySidebar() {
                         </ul>
                         <div className="nav-section">
                             <div>
-                                <a href="#" className="nav-link monday-nav-link nav-link monday-nav-link-with-arrow">
+                                <a  className="nav-link monday-nav-link nav-link monday-nav-link-with-arrow">
                                     <i className="fa-regular fa-star"></i> <span>Favorites</span>
                                     <i className="fa-solid fa-chevron-down arrow-icon"></i>
                                 </a>
@@ -4833,7 +4833,7 @@ export function MondaySidebar() {
                         </div>
                         <div className="nav-section">
                             <div>
-                                <a href="#" className="nav-link monday-nav-link">
+                                <a  className="nav-link monday-nav-link">
                                     <i className="fa-solid fa-th-large"></i> <span>Boards</span>
                                     <svg
                                         viewBox="0 0 20 20"
@@ -5351,6 +5351,8 @@ export function MondayBoardDetails() {
     const [isPopupShown, togglePopup] = useToggle(false)
     const board = useSelector(state => state.boardModule.board)
 
+    const [showSideBar, setShowSideBar] = useState(true)
+
     
     const [showKanban, setShowKanban] = useState(true);
 
@@ -5474,6 +5476,10 @@ export function MondayBoardDetails() {
 
     }
 
+    function onCloseSideBar() {
+        setShowSideBar(false)
+    }
+
     if (!(board)) return (<div className="trello-loader">
         <img src="trello-loader.svg" alt=""/>
     </div>)
@@ -5493,7 +5499,7 @@ export function MondayBoardDetails() {
 
             <TopHeader/>
             <section className="board-details flex">
-                <MondaySidebar/>
+                {showSideBar && <MondaySidebar onCloseSideBar = { onCloseSideBar } />}
                 <main id="monday-board-main" className="monday-board-main">
                     <MondayBoardHeader
                         board={board}
