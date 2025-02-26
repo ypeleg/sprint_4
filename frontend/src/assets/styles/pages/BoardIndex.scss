@@ -73,6 +73,8 @@
 
                     h2 {
                         line-height: normal;
+                        font-size: 20px;
+                        font-weight: 600;
                     }
 
                 }
@@ -280,7 +282,7 @@ h3 {
     }
 
     .arrow {
-        margin-inline-end: 10px;
+        margin-inline-end: 12px;
         font-size: 18px;
         font-weight: 200;
     }
@@ -350,7 +352,7 @@ h3 {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 37px;
+    margin-left: 34x;
 }
 
 .active {
@@ -363,5 +365,3 @@ h3 {
         background-color: #e9f2ff;
     }
 }
-
-
