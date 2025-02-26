@@ -1,17 +1,5 @@
 
-//
-// import {useParams} from "react-router"
-// import { Tooltip } from 'react-tooltip'
-// import { useSelector } from "react-redux"
-// import { useDispatch } from 'react-redux'
-// import { NavLink } from 'react-router-dom'
-// import { AddTaskForm } from '../cmps/AddTaskForm'
-// import { eventBus } from '../services/util.service.js'
-// import {loadBoard, updateBoard } from "../store/store.js"
-// import React, { useState, useEffect, useRef } from 'react'
-// import {random, makeId} from "../services/util.service.js"
-// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-// import {StandaloneSearchBox, useJsApiLoader,GoogleMap, Marker    } from '@react-google-maps/api'
+
 
 import { useParams } from "react-router"
 import { Tooltip } from 'react-tooltip'
@@ -35,7 +23,6 @@ import {
 } from 'lucide-react'
 
 export function TaskModal () {
-    // State management
     const [isDone, setIsDone] = useState(false)
     const [cardTitle, setCardTitle] = useState('Evaluate Community Feedback')
     const [description, setDescription] = useState('Analyze the feedback collected from last month\'s community engagement session and summarize the key points for the upcoming board meeting')
@@ -50,13 +37,11 @@ export function TaskModal () {
     const [activeDropdown, setActiveDropdown] = useState(null)
     const [isHovering, setIsHovering] = useState({})
 
-    // Refs
     const dateInputRef = useRef(null)
     const activityInputRef = useRef(null)
     const titleInputRef = useRef(null)
     const descriptionRef = useRef(null)
 
-    // Click outside handler for dropdowns
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (activeDropdown && !event.target.closest('.dropdown-container')) {
@@ -68,10 +53,8 @@ export function TaskModal () {
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [activeDropdown])
 
-    // Effect for title input focus
     useEffect(() => {
         const handleKeyDown = (e) => {
-            // Focus title on Ctrl+T or Cmd+T
             if ((e.ctrlKey || e.metaKey) && e.key === 't' && titleInputRef.current) {
                 e.preventDefault()
                 titleInputRef.current.focus()
@@ -82,35 +65,29 @@ export function TaskModal () {
         return () => window.removeEventListener('keydown', handleKeyDown)
     }, [])
 
-    // Custom fields/badges data
     const [badges, setBadges] = useState([
         { id: 1, categ: 'NeedsApproval', text: '', badgeOptions: ['Yes', 'No', 'Pending'] },
         { id: 2, categ: 'HighRisk', text: '', badgeOptions: ['Yes', 'No', 'Unknown'] }
     ])
 
-    // Labels data
     const [cardLabels, setCardLabels] = useState([
         { color: '#fbbf24', title: 'P1' },
         { color: '#ef4444', title: 'Urgent' }
     ])
 
-    // Members data
     const [members, setMembers] = useState([
         { id: 1, fullname: 'Sarah Wilson', imgUrl: '' },
         { id: 2, fullname: 'John Doe', imgUrl: '' }
     ])
 
-    // Logged in user
     const loggedUser = { fullname: 'You', imgUrl: '' }
 
-    // Task metadata
     const listName = 'Feedback Analysis'
     const taskToShow = {
         group: { style: { backgroundColor: '#3b82f6' } },
         location: null
     }
 
-    // Checklist data
     const [checklists, setChecklists] = useState([
         {
             id: 1,
@@ -124,13 +101,11 @@ export function TaskModal () {
         }
     ])
 
-    // Files/attachments data
     const [attachments, setAttachments] = useState([
         { id: 1, type: 'file', text: 'Feedback_Survey_Results.pdf', path: '/files/feedback.pdf', date: Date.now() - 86400000 },
         { id: 2, type: 'link', text: 'Community Dashboard', path: 'https://dashboard.example.com', date: Date.now() - 172800000 }
     ])
 
-    // Activity log
     const [activityLog, setActivityLog] = useState([
         {
             id: 1,
@@ -140,20 +115,17 @@ export function TaskModal () {
         }
     ])
 
-    // Computed values
     const checklistItemCount = checklists.reduce((total, list) => total + list.todos.length, 0)
     const completedItemCount = checklists.reduce((total, list) => total + list.todos.filter(todo => todo.isDone).length, 0)
     const attachmentCount = attachments.length
     const activityCount = activityLog.length
 
-    // Get due date status
     const getDueDateStatus = () => {
         const today = new Date()
         const dueDate = new Date(date)
         if (isDone) return 'completed'
         if (dueDate < today) return 'overdue'
 
-        // Due soon (within 2 days)
         const twoDaysFromNow = new Date()
         twoDaysFromNow.setDate(today.getDate() + 2)
         if (dueDate <= twoDaysFromNow) return 'soon'
@@ -161,7 +133,6 @@ export function TaskModal () {
         return 'upcoming'
     }
 
-    // Date handlers
     const onDateClick = () => {
         if (dateInputRef.current) {
             dateInputRef.current.click()
@@ -172,12 +143,10 @@ export function TaskModal () {
         setDate(e.target.value)
     }
 
-    // For demo purposes - function to handle pickers
     const setActivePicker = (picker) => {
         console.log(`Opening ${picker} picker`)
     }
 
-    // Toggle checklist item
     const toggleChecklistItem = (checklistId, todoId) => {
         const newChecklists = checklists.map(c => {
             if (c.id === checklistId) {
@@ -191,7 +160,6 @@ export function TaskModal () {
             return c
         })
 
-        // Recalculate progress
         newChecklists.forEach(c => {
             if (c.id === checklistId && c.todos.length > 0) {
                 const doneTodos = c.todos.filter(t => t.isDone).length
@@ -202,7 +170,7 @@ export function TaskModal () {
         setChecklists(newChecklists)
     }
 
-    // Add new checklist item
+    
     const addChecklistItem = (checklistId) => {
         if (newChecklistItem.trim()) {
             setChecklists(checklists.map(c => {
@@ -216,7 +184,6 @@ export function TaskModal () {
                         }]
                     }
 
-                    // Update progress
                     const doneTodos = updatedChecklist.todos.filter(t => t.isDone).length
                     updatedChecklist.progress = Math.floor((doneTodos / updatedChecklist.todos.length) * 100)
 
@@ -229,12 +196,11 @@ export function TaskModal () {
         }
     }
 
-    // Delete attachment
     const deleteAttachment = (attachmentId) => {
         setAttachments(attachments.filter(a => a.id !== attachmentId))
     }
 
-    // Add comment
+    
     const addComment = () => {
         if (activityInputRef.current?.value.trim()) {
             setActivityLog([...activityLog, {
@@ -250,7 +216,7 @@ export function TaskModal () {
         }
     }
 
-    // Handle enter key in comment input
+    
     const handleCommentKeyDown = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault()
@@ -258,7 +224,7 @@ export function TaskModal () {
         }
     }
 
-    // Format relative time
+    
     const formatRelativeTime = (timestamp) => {
         const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
         const now = Date.now()
@@ -297,7 +263,7 @@ export function TaskModal () {
         return rtf.format(diffInYears, 'year')
     }
 
-    // Get formatted date display
+    
     const getFormattedDate = (dateString) => {
         const date = new Date(dateString)
         return new Date(date).toLocaleDateString('en-US', {
@@ -429,9 +395,9 @@ export function TaskModal () {
                                     key={label.color}
                                     className="inline-flex px-2 py-0.5 rounded text-xs font-medium items-center gap-1.5 transition-transform hover:scale-105 cursor-pointer"
                                     style={{
-                                        backgroundColor: `${label.color}25`, // 25% opacity version of the color
+                                        backgroundColor: `${label.color}25`, 
                                         color: label.color,
-                                        border: `1px solid ${label.color}50` // 50% opacity version for border
+                                        border: `1px solid ${label.color}50` 
                                     }}
                                     onClick={() => setActivePicker('labels')}
                                 >
@@ -725,7 +691,7 @@ export function TaskModal () {
                                                 ))}
                                             </ul>
 
-                                            {/* Add item input or button */}
+                                            
                                             {addingToChecklist === checklist.id ? (
                                                 <div className="pl-9 pr-3 space-y-2">
                                                     <input
@@ -774,7 +740,7 @@ export function TaskModal () {
                                         </div>
                                     ))}
 
-                                    {/* Add another checklist button */}
+                                    
                                     <button
                                         className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-blue-600 border border-blue-200 rounded-md hover:bg-blue-50 transition-colors"
                                         onClick={() => setActivePicker('checklists')}
@@ -865,7 +831,6 @@ export function TaskModal () {
                                         </div>
                                     ))}
 
-                                    {/* Add attachment button */}
                                     <button
                                         className="flex items-center gap-1.5 w-full p-3 text-sm font-medium text-blue-600 border border-blue-100 border-dashed rounded-lg hover:bg-blue-50 transition-colors justify-center"
                                         onClick={() => setActivePicker('attachments')}
@@ -1092,20 +1057,18 @@ export function TaskModaal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
         const [showActivity, setShowActivity] = useState(false)
         const [showAttachments, setShowAttachments] = useState(false)
 
-        const [activePicker, setActivePicker] = useState(null); // Single state for active picker tab
+        const [activePicker, setActivePicker] = useState(null); 
 
         const coverFileInputRef = useRef(null)
 
         const [activeTab, setActiveTab] = useState('overview')
         const [isDescriptionEditing, setIsDescriptionEditing] = useState(false)
 
-        // Calculate badge counts
         const checklistItemCount = checklists.reduce((acc, list) => acc + list.todos.length, 0)
         const completedItemCount = checklists.reduce((acc, list) =>
                 acc + list.todos.filter(todo => todo.isDone).length, 0)
 
 
-        // Picker Components
         function MembersPicker({ members, boardMembersToShow, onAddMember, onRemoveMember, onClose }) {
                 return (
                         <div className="picker-content">
@@ -1219,7 +1182,7 @@ export function TaskModaal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                                                                         <button className={`color-btn ${currentLabelColor === '#FAA53D' ? 'selected' : ''}`} style={{ backgroundColor: '#FAA53D' }} onClick={onChangeCurrentLabelColor}></button>
                                                                         <button className={`color-btn ${currentLabelColor === '#F87168' ? 'selected' : ''}`} style={{ backgroundColor: '#F87168' }} onClick={onChangeCurrentLabelColor}></button>
                                                                         <button className={`color-btn ${currentLabelColor === '#9F8FEF' ? 'selected' : ''}`} style={{ backgroundColor: '#9F8FEF' }} onClick={onChangeCurrentLabelColor}></button>
-                                                                        {/* Add more colors as in original */}
+                                                                        
                                                                 </div>
                                                                 <button className="remove-color-btn" onClick={() => { setShowChangeALabel(false); onDeleteLabel(); }}>
                                                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1697,7 +1660,7 @@ export function TaskModaal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                                                         <button className={`color-btn ${coverColor === '#FAA53D' ? 'selected' : ''}`} style={{ backgroundColor: '#FAA53D' }} onClick={() => onPickColor('#FAA53D')}></button>
                                                         <button className={`color-btn ${coverColor === '#F87168' ? 'selected' : ''}`} style={{ backgroundColor: '#F87168' }} onClick={() => onPickColor('#F87168')}></button>
                                                         <button className={`color-btn ${coverColor === '#9F8FEF' ? 'selected' : ''}`} style={{ backgroundColor: '#9F8FEF' }} onClick={() => onPickColor('#9F8FEF')}></button>
-                                                        {/* Add more colors as needed */}
+                                                        
                                                 </div>
                                                 <div className="color-blind-toggle">
                                                         <label><input type="checkbox" /><span>Enable colorblind friendly mode</span></label>
@@ -1942,7 +1905,6 @@ export function TaskModaal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                 )
         }
 
-        // Internal Logic Functions (Unchanged)
         async function handlePlaceChange(ev) {
                 let address = elGoogleSearch.current.getPlaces()
                 const newLocation = { lat: address[0].geometry.location.lat(), lng: address[0].geometry.location.lng(), name: address[0].name, zoom: 12 }
@@ -2302,7 +2264,6 @@ export function TaskModaal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                 updateBoard(boardCopy)
         }
 
-        // Derived values for badges
         // const checklistItemCount = checklists.reduce((total, list) => total + list.todos.length, 0)
         // const completedItemCount = checklists.reduce((total, list) => total + list.todos.filter(todo => todo.isDone).length, 0)
         const attachmentCount = attachments.length
@@ -2687,7 +2648,6 @@ export function TaskModaal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
                                                                     return c
                                                                 })
 
-                                                                // Recalculate progress
                                                                 newChecklists.forEach(c => {
                                                                     if (c.id === checklist.id && c.todos.length > 0) {
                                                                         const doneTodos = c.todos.filter(t => t.isDone).length
@@ -3161,488 +3121,13 @@ function Placeholder({placeholderHeight}) {
         return <div style={{height: placeholderHeight + "px", background: "rgba(0,0,0,0.2)", borderRadius: "8px", margin: "4px 0"}}/>
 }
 
-//
-// function mapTrelloToMonday(hex) {
-//         if (!hex) return undefined
-//         // Pre-cached HSL values for Monday colors
-//         const mondayColors = [
-//                 {hex: '#33d391', h: 151.2, s: 1.0, l: 0.39},        // strong green
-//                 {hex: '#66ccff', h: 200.0, s: 1.0, l: 0.70},        // light blue
-//                 {hex: '#782bff', h: 258.3, s: 1.0, l: 0.58},        // deep purple
-//                 {hex: '#a358df', h: 275.4, s: 0.68, l: 0.61},     // purple
-//                 {hex: '#5559df', h: 238.7, s: 0.68, l: 0.61},     // indigo
-//                 {hex: '#00a9cf', h: 190.7, s: 1.0, l: 0.41},        // teal
-//                 {hex: '#0086c0', h: 199.3, s: 1.0, l: 0.38},        // darker teal/blue
-//                 {hex: '#bb3354', h: 346.2, s: 0.57, l: 0.47},     // burgundy
-//                 {hex: '#e8697d', h: 350.6, s: 0.71, l: 0.66},     // bright red
-//                 {hex: '#003f69', h: 208.7, s: 1.0, l: 0.21},        // navy
-//                 {hex: '#323338', h: 240.0, s: 0.04, l: 0.20},     // dark grey
-//                 {hex: '#fdab3d', h: 35.4, s: 0.98, l: 0.62},        // orange
-//                 {hex: '#fdbc64', h: 48.0, s: 1.0, l: 0.50},         // yellow
-//                 {hex: '#784bd1', h: 258.0, s: 0.59, l: 0.56},     // purple
-//                 {hex: '#579bfc', h: 215.6, s: 0.96, l: 0.66},     // lighter blue
-//                 {hex: '#faa1f2', h: 305.3, s: 0.89, l: 0.79},     // pink
-//                 {hex: '#e2445c', h: 0.0, s: 1.0, l: 0.73},            // salmon
-//                 {hex: '#225091', h: 213.7, s: 0.62, l: 0.35},     // medium blue
-//                 {hex: '#9aadbd', h: 207.3, s: 0.20, l: 0.68},     // light grey-blue
-//                 {hex: '#c4c4c4', h: 0.0, s: 0.0, l: 0.77},            // mid grey
-//                 {hex: '#bda8f9', h: 253.2, s: 0.88, l: 0.82},     // lavender
-//                 {hex: '#6c6cff', h: 240.0, s: 1.0, l: 0.71},        // pastel violet/blue
-//                 {hex: '#3dd1f0', h: 190.9, s: 0.85, l: 0.59},     // light teal
-//                 {hex: '#68d391', h: 142.5, s: 0.60, l: 0.62},     // minty green
-//                 {hex: '#fdbc64', h: 34.5, s: 0.97, l: 0.69},        // orange/yellow
-//                 {hex: '#e8697d', h: 350.6, s: 0.71, l: 0.66}        // pinkish-red
-//         ]
-//
-//         // Convert input to HSL
-//         const [h, s, l] = hexToHSL(hex)
-//
-//         // Special handling for grays
-//         if (s < 0.1) {
-//                 return findClosestGray(h, l)
-//         }
-//
-//         // Find closest color considering hue family
-//         let closestColor = mondayColors[0].hex
-//         let minDistance = Infinity
-//
-//         for (const color of mondayColors) {
-//                 const distance = calculateColorDistance(h, s, l, color.h, color.s, color.l)
-//                 if (distance < minDistance) {
-//                         minDistance = distance
-//                         closestColor = color.hex
-//                 }
-//         }
-//
-//         return closestColor
-//
-//         function findClosestGray(targetH, targetL) {
-//                 const grays = ['#323338', '#9aadbd', '#c4c4c4']
-//                 return grays.reduce((closest, gray) => {
-//                         const grayL = hexToHSL(gray)[2]
-//                         return Math.abs(grayL - targetL) < Math.abs(hexToHSL(closest)[2] - targetL)
-//                                 ? gray
-//                                 : closest
-//                 }, grays[0])
-//         }
-// }
-//
-// function hexToHSL(hex) {
-//         const r = parseInt(hex.substring(1, 3), 16) / 255
-//         const g = parseInt(hex.substring(3, 5), 16) / 255
-//         const b = parseInt(hex.substring(5, 7), 16) / 255
-//
-//         const max = Math.max(r, g, b)
-//         const min = Math.min(r, g, b)
-//         let h, s, l = (max + min) / 2
-//
-//         if (max === min) {
-//                 h = s = 0
-//         } else {
-//                 const d = max - min
-//                 s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-//                 switch(max) {
-//                         case r: h = (g - b) / d + (g < b ? 6 : 0); break
-//                         case g: h = (b - r) / d + 2; break
-//                         case b: h = (r - g) / d + 4; break
-//                 }
-//                 h *= 60
-//         }
-//         return [h, s, l]
-// }
-//
-// function calculateColorDistance(h1, s1, l1, h2, s2, l2) {
-//         // Weights for perceptual importance
-//         const hueWeight = 0.6
-//         const satWeight = 0.3
-//         const lumWeight = 0.1
-//
-//         // Normalized differences
-//         const hueDiff = Math.min(Math.abs(h1 - h2), 360 - Math.abs(h1 - h2)) / 360
-//         const satDiff = Math.abs(s1 - s2)
-//         const lumDiff = Math.abs(l1 - l2)
-//
-//         return Math.sqrt(
-//                 hueWeight * Math.pow(hueDiff, 2) +
-//                 satWeight * Math.pow(satDiff, 2) +
-//                 lumWeight * Math.pow(lumDiff, 2)
-//         )
-// }
-//
-// function hexToHue(hex) {
-//         let r = parseInt(hex.substring(1, 3), 16) / 255
-//         let g = parseInt(hex.substring(3, 5), 16) / 255
-//         let b = parseInt(hex.substring(5, 7), 16) / 255
-//
-//         let cMax = Math.max(r, g, b)
-//         let cMin = Math.min(r, g, b)
-//         let delta = cMax - cMin
-//
-//         let h = 0
-//         if (delta !== 0) {
-//                 if (cMax === r) {
-//                         h = ((g - b) / delta) % 6
-//                 } else if (cMax === g) {
-//                         h = (b - r) / delta + 2
-//                 } else {
-//                         h = (r - g) / delta + 4
-//                 }
-//                 h = Math.round(h * 60)
-//                 if (h < 0) h += 360
-//         }
-//         return { hue: h }
-// }
-//
-// function formatDateNicely(stringVar) {
-//         const date = new Date(stringVar)
-//         const options = { month: 'short', day: 'numeric' }
-//         return date.toLocaleDateString('en-US', options)
-// }
-//
-// function MondayTableTask({ idx, task, group, board, onLoadTask }) {
-//     const dispatch = useDispatch()
-//
-//     // e.g. toggle done:
-//     function onToggleDone(ev) {
-//         ev.stopPropagation()
-//         // or just do the same logic from your Kanban (update store, etc.)
-//     }
-//
-//     // on open details:
-//     function handleOpenTask(ev) {
-//         ev.stopPropagation()
-//         // same logic: onLoadTask(ev, task, group, ...)
-//         onLoadTask(ev, task, null, group, board)
-//     }
-//
-//     // get the mapped color for status
-//     const statusColor = mapTrelloToMonday(group.style.backgroundColor)
-//     // or if your tasks have .labels or .badges
-//
-//     // owners are in: task.members
-//     // chat count might be: task.activity?.length
-//
-//     function statusToColor(status, dueDate) {
-//         const isDone = status === 'done'
-//         const isDateDue = dueDate && new Date(dueDate) < new Date()
-//         if (isDone) return '#18c881'
-//         if (isDateDue && !isDone) return '#df2f4a'
-//         return '#fdab3d'
-//     }
-//
-//     function statusToText(status, dueDate) {
-//             if (status.toLowerCase().includes('done')) return 'Done'
-//             if (dueDate && new Date(dueDate) < new Date()) return 'Stuck'
-//             if (status.toLowerCase().includes('progress')) return 'Working on it'
-//             return 'Stuck'
-//     }
-//
-//     function isStuck(status, dueDate) {
-//         return status.toLowerCase().includes('done') || (dueDate && new Date(dueDate) < new Date())
-//     }
-//
-//     function isDone(status) {
-//         return status.toLowerCase().includes('done')
-//     }
-//
-//     return (
-//         <section className="task-preview flex">
-//             <div
-//                 className="sticky-div"
-//                 style={{
-//                     borderColor: mapTrelloToMonday(group.style?.backgroundColor),
-//                 }}
-//             >
-//                 <div className="task-menu">
-//                     <svg viewBox="0 0 24 24" className="icon">{/* ... */}</svg>
-//                 </div>
-//                 <div className={`check-box monday-check-box check-box-${idx}`}>
-//                     <input type="checkbox" /* checked={task.status === 'done'} */ onChange={onToggleDone} />
-//                 </div>
-//                 <div className="monday-task-title picker flex align-center space-between">
-//                     <blockquote>
-//                         <span>{task.title}</span>
-//                     </blockquote>
-//
-//                     {/* "Open" button or clickable area */}
-//                     <div className="open-task-details" onClick={handleOpenTask}>
-//                         {/* arrow icon */}
-//                         <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-//                             {/* path */}
-//                         </svg>
-//                         <span className="open-btn">Open</span>
-//                     </div>
-//
-//                     {/* Chat/Comments icon + count */}
-//                     <div className="chat-icon">
-//                         {!!task.activity?.length && (
-//                             <div>
-//
-//
-//                                         <svg className="comment-chat" strokeWidth="1.5" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true"    data-testid="icon">
-//                                                 <path d="M10.4339 1.95001C11.5975 1.94802 12.7457 2.2162 13.7881 2.73345C14.8309 3.25087 15.7392 4.0034 16.4416 4.93172C17.1439 5.86004 17.6211 6.93879 17.8354 8.08295C18.0498 9.22712 17.9955 10.4054 17.6769 11.525C17.3582 12.6447 16.7839 13.675 15.9992 14.5348C15.2144 15.3946 14.2408 16.0604 13.1549 16.4798C12.0689 16.8991 10.9005 17.0606 9.74154 16.9514C8.72148 16.8553 7.73334 16.5518 6.83716 16.0612L4.29488 17.2723C3.23215 17.7786 2.12265 16.6693 2.6287 15.6064L3.83941 13.0637C3.26482 12.0144 2.94827 10.8411 2.91892 9.64118C2.88616 8.30174 3.21245 6.97794 3.86393 5.80714C4.51541 4.63635 5.46834 3.66124 6.62383 2.98299C7.77896 2.30495 9.09445 1.9483 10.4339 1.95001ZM10.4339 1.95001C10.4343 1.95001 10.4347 1.95001 10.4351 1.95001L10.434 2.70001L10.4326 1.95001C10.433 1.95001 10.4334 1.95001 10.4339 1.95001ZM13.1214 4.07712C12.2867 3.66294 11.3672 3.44826 10.4354 3.45001L10.4329 3.45001C9.3608 3.44846 8.30778 3.73387 7.38315 4.2766C6.45852 4.81934 5.69598 5.59963 5.17467 6.5365C4.65335 7.47337 4.39226 8.53268 4.41847 9.6045C4.44469 10.6763 4.75726 11.7216 5.32376 12.6319C5.45882 12.8489 5.47405 13.1198 5.36416 13.3506L4.28595 15.6151L6.54996 14.5366C6.78072 14.4266 7.05158 14.4418 7.26863 14.5768C8.05985 15.0689 8.95456 15.3706 9.88225 15.458C10.8099 15.5454 11.7452 15.4162 12.6145 15.0805C13.4837 14.7448 14.2631 14.2119 14.8912 13.5236C15.5194 12.8354 15.9791 12.0106 16.2341 11.1144C16.4892 10.2182 16.5327 9.27504 16.3611 8.35918C16.1895 7.44332 15.8075 6.57983 15.2453 5.83674C14.6831 5.09366 13.9561 4.49129 13.1214 4.07712Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
-//                                         </svg>
-//
-//                                 <div className="count-comment">{task.activity.length}</div>
-//                             </div>
-//                         )}
-//                     </div>
-//                 </div>
-//             </div>
-//
-//             {/* Owner column */}
-//             <section className="task-person">
-//                 <div className="members-imgs monday-members-imgs">
-//                     {task.members?.slice(0,2).map((member, idx) => (
-//                         member.imgUrl ? (
-//                             <img key={member.id} className={`smaller-imgs member-img${idx+1} small-circle`} src={'/' + member.imgUrl} alt="member" />
-//                         ) : (
-//                             <div key={member.id} className={`monday-user-circle small-circle smaller-imgs member-img${idx+1} small-circle`} >
-//                                 {member.fullname[0]}
-//                             </div>
-//                         )
-//                     ))}
-//                     {task.members && task.members.length > 2 && (
-//                         <div className="show-more-members">
-//                             <span className="show-more-count">+{task.members.length - 2}</span>
-//                         </div>
-//                     )}
-//                 </div>
-//             </section>
-//
-//             {/* Status column */}
-//             <section
-//                 className="status-priority-picker picker"
-//                 style={{ backgroundColor: statusToColor(task.status, task.dueDate) }}
-//             >
-//                 <div className="label-text status-text">{statusToText(task.status, task.dueDate)}</div>
-//                 <span className="fold"></span>
-//             </section>
-//
-//             {/* Due Date */}
-//             <section className="picker date-picker-btn">
-//                 <div className="react-datepicker-wrapper">
-//                         <div className="no-inner-input_styles">
-//
-//                                 {(!isDone(task.status) && isStuck(task.status, task.dueDate)) && (
-//                                 <svg style = {{ color: statusToColor(task.status, task.dueDate) }}
-//                                         viewBox="0 0 20 20" fill="currentColor" width="18" height="18" aria-hidden="true" class="icon_f74f57d4ab deadline-icon overdue" data-testid="icon"><path d="M10 10.977c-.414 0-.75-.355-.75-.793V6.369c0-.438.336-.792.75-.792s.75.354.75.792v3.815c0 .438-.336.793-.75.793Zm0 3.1a1 1 0 1 0 0-2.002 1 1 0 0 0 0 2.002Z"></path><path d="M15.638 15.636A7.97 7.97 0 1 1 4.366 4.364a7.97 7.97 0 0 1 11.272 11.272Zm-5.636.835a6.471 6.471 0 1 0 0-12.942 6.471 6.471 0 0 0 0 12.942Z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-//                                         )}
-//
-//
-//                                 {isDone(task.status) && (
-//                                         <svg style = {{ color: statusToColor(task.status, task.dueDate) }}
-//                                         viewBox="0 0 20 20" fill="currentColor" width="18" height="18" aria-hidden="true" class="icon_f74f57d4ab deadline-icon" data-testid="icon"><path d="M8.53033 14.2478L8 13.7175L7.46967 14.2478C7.76256 14.5407 8.23744 14.5407 8.53033 14.2478ZM8 12.6569L4.53033 9.18718C4.23744 8.89429 3.76256 8.89429 3.46967 9.18718C3.17678 9.48008 3.17678 9.95495 3.46967 10.2478L7.46967 14.2478L8 13.7175L8.53033 14.2478L16.2478 6.53033C16.5407 6.23743 16.5407 5.76256 16.2478 5.46967C15.955 5.17677 15.4801 5.17677 15.1872 5.46967L8 12.6569Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-//                                 )}
-//
-//                         <input
-//                                 className = {`${isDone(task.status) ? 'date-done' : ''}`}
-//                             type="text"
-//                             value={formatDateNicely(task.dueDate)}
-//                             readOnly
-//                         />
-//                     </div>
-//                 </div>
-//             </section>
-//
-//             {/* Priority Example */}
-//
-//
-//             {/* Last Updated */}
-//
-//
-//             {/* Filler to align columns */}
-//             <div className="empty-div"></div>
-//         </section>
-//     )
-// }
-//
-// function MondayTableGroup({ group, board, onLoadTask, ...props }) {
-//     // Possibly track local expand/collapse state for the group
-//     const [isCollapsed, setIsCollapsed] = useState(false)
-//
-//     const handleToggleCollapse = () => {
-//         setIsCollapsed(!isCollapsed)
-//     }
-//
-//     // For the group color, you might do:
-//     // const groupColor = mapTrelloToMonday(group.style?.backgroundColor) || '#333'
-//
-//     return (
-//         <ul className="group-preview flex column">
-//             <div
-//                 className="group-header flex align-center"
-//                 style={{ color: mapTrelloToMonday(group.style?.backgroundColor) }}
-//             >
-//                 <div className="group-header-title flex align-center">
-//                     {/* Arrow icon toggling */}
-//                     <svg
-//                         onClick={handleToggleCollapse}
-//                         viewBox="0 0 24 24"
-//                         className="arrow-icon"
-//                         // etc.
-//                     >
-//                         {/* Arrow path */}
-//                     </svg>
-//
-//                     {/* Group menu */}
-//                     <div className="group-menu">
-//                         <svg viewBox="0 0 24 24" className="icon">{/* ... */}</svg>
-//                     </div>
-//
-//                     {/* Group title & item count */}
-//                         <div className="group-title-info flex align-center">
-//                                 <svg viewBox="0 0 20 20" fill="currentColor" width="24" height="24"><path d="M10.5303 12.5303L10 12L9.46967 12.5303C9.76256 12.8232 10.2374 12.8232 10.5303 12.5303ZM10 10.9393L6.53033 7.46967C6.23744 7.17678 5.76256 7.17678 5.46967 7.46967C5.17678 7.76256 5.17678 8.23744 5.46967 8.53033L9.46967 12.5303L10 12L10.5303 12.5303L14.5303 8.53033C14.8232 8.23744 14.8232 7.76256 14.5303 7.46967C14.2374 7.17678 13.7626 7.17678 13.4697 7.46967L10 10.9393Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-//                                 <blockquote className="group-title monday-group-title">
-//                                         <h4>{group.title}</h4>
-//                                 </blockquote>
-//                                 <span className="task-count flex align-center">
-//                             {group.tasks.length} items
-//                         </span>
-//                         </div>
-//                 </div>
-//             </div>
-//
-//                 {/* The main table "header" row with column titles */}
-//                 <div className="group-preview-content">
-//                         <div className="title-container flex">
-//                                 <div className="sticky-div titles flex" style={{borderColor: mapTrelloToMonday(group.style?.backgroundColor)}}>
-//                                         <div className="hidden"></div>
-//                                         <div className="check-box">
-//                             <input type="checkbox" />
-//                         </div>
-//                         <div className="monday-task title">Task</div>
-//                     </div>
-//
-//                     {/* Next columns: Owner, Status, Date, Priority, Updated, etc. */}
-//                     <li className="member-picker cmp-order-title title">
-//                         Owner
-//                         <span className="open-modal-icon">{/* Three-dots icon */}</span>
-//                     </li>
-//
-//                     <li className="status-picker cmp-order-title title">
-//                         Status
-//                         <span className="open-modal-icon">{/* Three-dots icon */}</span>
-//                     </li>
-//
-//                     <li className="date-picker-btn cmp-order-title title">
-//                         Due Date
-//                         <span className="open-modal-icon">{/* Three-dots icon */}</span>
-//                     </li>
-//
-//                     {/* etc. Could add Priority, Last Updated, etc. */}
-//                     <div className="add-picker-task flex align-items">
-//                         <span className="monday-add-btn">
-//
-//                                 <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18" aria-hidden="true" class="icon_f74f57d4ab add-column-menu-button__icon" data-testid="icon"><g id="Icon / Basic / Add"><path id="Union" d="M10 2.25C10.4142 2.25 10.75 2.58579 10.75 3V9.25H17C17.4142 9.25 17.75 9.58579 17.75 10C17.75 10.4142 17.4142 10.75 17 10.75H10.75V17C10.75 17.4142 10.4142 17.75 10 17.75C9.58579 17.75 9.25 17.4142 9.25 17V10.75H3C2.58579 10.75 2.25 10.4142 2.25 10C2.25 9.58579 2.58579 9.25 3 9.25H9.25V3C9.25 2.58579 9.58579 2.25 10 2.25Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></g></svg>
-//
-//                         </span>
-//                     </div>
-//                 </div>
-//
-//                 {/* 1) Task rows */}
-//                 {!isCollapsed && (
-//                     <>
-//                         {group.tasks.map((task, idx) => (
-//                             <li key={task.id}>
-//                                 <MondayTableTask
-//                                     idx={idx}
-//                                     task={task}
-//                                     group={group}
-//                                     board={board}
-//                                     onLoadTask={onLoadTask}
-//                                     // other props
-//                                 />
-//                             </li>
-//                         ))}
-//
-//                         {/* 2) Add Task row */}
-//                         <div className="add-task flex">
-//                             <div
-//                                 className="sticky-div"
-//                                 style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor) }}
-//                             >
-//                                 <div className="check-box add-task">
-//                                     <input type="checkbox" disabled />
-//                                 </div>
-//
-//                                 {/* same <AddTaskForm> or your custom inline form */}
-//                                 <form className="no-inner-input_styles add-task-form flex align-center" /* onSubmit=... */>
-//                                     <input type="text" name="title" placeholder="+ Add Task" />
-//                                 </form>
-//                             </div>
-//                             <div className="empty-div"></div>
-//                         </div>
-//                     </>
-//                 )}
-//
-//                 {/* 3) Group statistic row */}
-//                 {!isCollapsed && (
-//                     <div className="statistic flex">
-//                         <div className="sticky-container">
-//                             {/* <div className="hidden"></div> */}
-//                         </div>
-//                         <div className="statistic-container flex">
-//                             {/* For Owner column, we might not need stats */}
-//                             <div className="title first member-picker"></div>
-//
-//                             {/* For Status, show color distribution, e.g. done/stuck/progress */}
-//                             <div className="title status-picker">
-//                                 {/* Example: We can compute the distribution.
-//                                         Suppose we figure out that 50% are done, 50% are stuck. */}
-//                                 <span style={{ background: '#E2445C', width: '50%' }}></span>
-//                                 <span style={{ background: '#00C875', width: '50%' }}></span>
-//                             </div>
-//
-//                             {/* For date or priority columns, likewise. */}
-//                             <div id="monday-date-pill-above" className="title date-picker-btn monday-date-pill-above">
-//                                     <div className="monday-date-pill">
-//                                     Feb 2 - 4
-//                                     </div>
-//                             </div>
-//                             <div className="title priority-picker"></div>
-//                             <div className="title updated-picker"></div>
-//                         </div>
-//                     </div>
-//                 )}
-//             </div>
-//         </ul>
-//     )
-// }
-//
-// export function MondayBoardTableView({ board, onLoadTask, ...props }) {
-//     // board will have: board.groups -> each group has group.tasks
-//     // reused logic from Redux: e.g. updateBoard, dispatch, etc.
-//     //     min-width: 32px
-//     return (
-//         <div >
-//             <section className="group-list">
-//                 <ul>
-//                     {board.groups.map((group) => (
-//                         <li key={group.id}>
-//                             <MondayTableGroup
-//                                 group={group}
-//                                 board={board}
-//                                 onLoadTask={onLoadTask}
-//                                 // pass more props for updating tasks, etc.
-//                             />
-//                         </li>
-//                     ))}
-//                 </ul>
-//             </section>
-//         </div>
-//     )
-// }
-//
 
 
 
 
 
-// Utility functions
 function mapTrelloToMonday(hex) {
         if (!hex) return undefined
-        // Pre-cached HSL values for Monday colors
         const mondayColors = [
                 {hex: '#33d391', h: 151.2, s: 1.0, l: 0.39},        // strong green
                 {hex: '#66ccff', h: 200.0, s: 1.0, l: 0.70},        // light blue
@@ -3672,15 +3157,13 @@ function mapTrelloToMonday(hex) {
                 {hex: '#e8697d', h: 350.6, s: 0.71, l: 0.66}        // pinkish-red
         ]
 
-        // Convert input to HSL
         const [h, s, l] = hexToHSL(hex)
 
-        // Special handling for grays
         if (s < 0.1) {
                 return findClosestGray(h, l)
         }
 
-        // Find closest color considering hue family
+        
         let closestColor = mondayColors[0].hex
         let minDistance = Infinity
 
@@ -3731,12 +3214,10 @@ function hexToHSL(hex) {
 }
 
 function calculateColorDistance(h1, s1, l1, h2, s2, l2) {
-        // Weights for perceptual importance
         const hueWeight = 0.6
         const satWeight = 0.3
         const lumWeight = 0.1
 
-        // Normalized differences
         const hueDiff = Math.min(Math.abs(h1 - h2), 360 - Math.abs(h1 - h2)) / 360
         const satDiff = Math.abs(s1 - s2)
         const lumDiff = Math.abs(l1 - l2)
@@ -3779,7 +3260,7 @@ function formatDateNicely(stringVar) {
         return date.toLocaleDateString('en-US', options)
 }
 
-// Custom hooks
+
 function useFilteredTasks(tasks, searchQuery, filterText) {
         return useMemo(() => {
                 if (!tasks) return []
@@ -3833,11 +3314,9 @@ function useSortedTasks(tasks, sortBy) {
         }, [tasks, sortBy])
 }
 
-// Components
 function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = false }) {
     const dispatch = useDispatch()
 
-    // Toggle task completion status
     function onToggleDone(ev) {
         ev.stopPropagation()
         const updatedTask = { ...task, status: task.status === 'done' ? 'in progress' : 'done' }
@@ -3853,19 +3332,17 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
         dispatch(updateBoard(updatedBoard))
     }
 
-    // Open task details
     function handleOpenTask(ev) {
         ev.stopPropagation()
         onLoadTask(ev, task, null, group, board)
     }
 
-    // Get the mapped color for status
     const statusColor = mapTrelloToMonday(group.style?.backgroundColor)
 
     function statusToColor(status, dueDate) {
         const isDone = status === 'done'
         const isDateDue = dueDate && new Date(dueDate) < new Date()
-        if (isDone) return '#18c881'
+        if (isDone) return '#00c775'
         if (isDateDue && !isDone) return '#df2f4a'
         return '#fdab3d'
     }
@@ -3887,7 +3364,7 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
 
     return (
 
-            <section className={`monday-table-task-preview task-preview flex ${ isSubtask ? 'subtask' : ''}`}>
+            <section className={`monday-table-task-preview task-preview flex ${(task.status === 'done')? ' monday-checked-task ': '' } ${ isSubtask ? 'subtask' : ''}`}>
 
                     <div className="sticky-div" style={{
                             borderColor: mapTrelloToMonday(group.style?.backgroundColor),
@@ -3923,14 +3400,14 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
                                     {/* Chat/Comments icon + count */}
                                     <div className="chat-icon">
 
-                                        {!!(task.activity?.length) && (<div>
+                                        {!!(task.activity?.length && (!isSubtask) ) && (<div>
                                                     <svg className="comment-chat" strokeWidth="1.5" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true" data-testid="icon">
                                                             <path d="M10.4339 1.95001C11.5975 1.94802 12.7457 2.2162 13.7881 2.73345C14.8309 3.25087 15.7392 4.0034 16.4416 4.93172C17.1439 5.86004 17.6211 6.93879 17.8354 8.08295C18.0498 9.22712 17.9955 10.4054 17.6769 11.525C17.3582 12.6447 16.7839 13.675 15.9992 14.5348C15.2144 15.3946 14.2408 16.0604 13.1549 16.4798C12.0689 16.8991 10.9005 17.0606 9.74154 16.9514C8.72148 16.8553 7.73334 16.5518 6.83716 16.0612L4.29488 17.2723C3.23215 17.7786 2.12265 16.6693 2.6287 15.6064L3.83941 13.0637C3.26482 12.0144 2.94827 10.8411 2.91892 9.64118C2.88616 8.30174 3.21245 6.97794 3.86393 5.80714C4.51541 4.63635 5.46834 3.66124 6.62383 2.98299C7.77896 2.30495 9.09445 1.9483 10.4339 1.95001ZM10.4339 1.95001C10.4343 1.95001 10.4347 1.95001 10.4351 1.95001L10.434 2.70001L10.4326 1.95001C10.433 1.95001 10.4334 1.95001 10.4339 1.95001ZM13.1214 4.07712C12.2867 3.66294 11.3672 3.44826 10.4354 3.45001L10.4329 3.45001C9.3608 3.44846 8.30778 3.73387 7.38315 4.2766C6.45852 4.81934 5.69598 5.59963 5.17467 6.5365C4.65335 7.47337 4.39226 8.53268 4.41847 9.6045C4.44469 10.6763 4.75726 11.7216 5.32376 12.6319C5.45882 12.8489 5.47405 13.1198 5.36416 13.3506L4.28595 15.6151L6.54996 14.5366C6.78072 14.4266 7.05158 14.4418 7.26863 14.5768C8.05985 15.0689 8.95456 15.3706 9.88225 15.458C10.8099 15.5454 11.7452 15.4162 12.6145 15.0805C13.4837 14.7448 14.2631 14.2119 14.8912 13.5236C15.5194 12.8354 15.9791 12.0106 16.2341 11.1144C16.4892 10.2182 16.5327 9.27504 16.3611 8.35918C16.1895 7.44332 15.8075 6.57983 15.2453 5.83674C14.6831 5.09366 13.9561 4.49129 13.1214 4.07712Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
                                                     </svg>
                                                     <div className="count-comment">{task.activity.length}</div>
                                             </div>)}
 
-                                        {!(task.activity?.length) && (<div>
+                                        {((isSubtask) ||  (!(task.activity?.length)))  && (<div>
                                             <svg className="no-comment-chat" strokeWidth="1.5" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true" data-testid="icon">
                                                 <path d="M10.4339 1.95001C11.5975 1.94802 12.7457 2.2162 13.7881 2.73345C14.8309 3.25087 15.7392 4.0034 16.4416 4.93172C17.1439 5.86004 17.6211 6.93879 17.8354 8.08295C18.0498 9.22712 17.9955 10.4054 17.6769 11.525C17.3582 12.6447 16.7839 13.675 15.9992 14.5348C15.2144 15.3946 14.2408 16.0604 13.1549 16.4798C12.0689 16.8991 10.9005 17.0606 9.74154 16.9514C8.72148 16.8553 7.73334 16.5518 6.83716 16.0612L4.29488 17.2723C3.23215 17.7786 2.12265 16.6693 2.6287 15.6064L3.83941 13.0637C3.26482 12.0144 2.94827 10.8411 2.91892 9.64118C2.88616 8.30174 3.21245 6.97794 3.86393 5.80714C4.51541 4.63635 5.46834 3.66124 6.62383 2.98299C7.77896 2.30495 9.09445 1.9483 10.4339 1.95001ZM10.4339 1.95001C10.4343 1.95001 10.4347 1.95001 10.4351 1.95001L10.434 2.70001L10.4326 1.95001C10.433 1.95001 10.4334 1.95001 10.4339 1.95001ZM13.1214 4.07712C12.2867 3.66294 11.3672 3.44826 10.4354 3.45001L10.4329 3.45001C9.3608 3.44846 8.30778 3.73387 7.38315 4.2766C6.45852 4.81934 5.69598 5.59963 5.17467 6.5365C4.65335 7.47337 4.39226 8.53268 4.41847 9.6045C4.44469 10.6763 4.75726 11.7216 5.32376 12.6319C5.45882 12.8489 5.47405 13.1198 5.36416 13.3506L4.28595 15.6151L6.54996 14.5366C6.78072 14.4266 7.05158 14.4418 7.26863 14.5768C8.05985 15.0689 8.95456 15.3706 9.88225 15.458C10.8099 15.5454 11.7452 15.4162 12.6145 15.0805C13.4837 14.7448 14.2631 14.2119 14.8912 13.5236C15.5194 12.8354 15.9791 12.0106 16.2341 11.1144C16.4892 10.2182 16.5327 9.27504 16.3611 8.35918C16.1895 7.44332 15.8075 6.57983 15.2453 5.83674C14.6831 5.09366 13.9561 4.49129 13.1214 4.07712Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
                                             </svg>
@@ -4001,13 +3478,12 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
 }
 
 function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, sortBy}) {
-        const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const [isCollapsed, setIsCollapsed] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [groupTitle, setGroupTitle] = useState(group.title)
     const [newTaskTitle, setNewTaskTitle] = useState('')
 
-    // Filter and sort tasks
     const filteredTasks = useFilteredTasks(group.tasks, searchQuery, filterText)
     const sortedTasks = useSortedTasks(filteredTasks, sortBy)
 
@@ -4090,7 +3566,6 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
         }
     }
 
-    // Calculate status distribution for statistics
     const statusDistribution = useMemo(() => {
         if (!group.tasks.length) return {}
 
@@ -4118,7 +3593,6 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
         }
     }, [group.tasks])
 
-    // Get earliest and latest due dates for date range pill
     const dateRange = useMemo(() => {
         if (!group.tasks.length) return ''
 
@@ -4134,10 +3608,10 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
         return `${formatDateNicely(earliest)} - ${formatDateNicely(latest)}`
     }, [group.tasks])
 
-        // Add to MondayTableGroup component state
+        
         const [expandedTaskIds, setExpandedTaskIds] = useState(new Set())
 
-// Add this function to toggle task expansion
+
         const toggleTaskExpansion = (taskId, event) => {
                 event.stopPropagation()
                 setExpandedTaskIds(prev => {
@@ -4151,7 +3625,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                 })
         }
 
-// Add this function to add a new subtask
+
         const addSubtask = (taskId, title) => {
                 if (!title.trim()) return
 
@@ -4176,6 +3650,41 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                 dispatch(updateBoard(updatedBoard))
         }
 
+
+    // Add this inside the MondayTableGroup component
+    useEffect(() => {
+    // When tasks change from the store
+    const newTasks = group.tasks.filter(task => 
+      !prevTasks.some(prevTask => prevTask.id === task.id)
+    );
+    
+    // For any new tasks/subtasks from store, add animation class
+    if (newTasks.length > 0) {
+      // Allow DOM to update first
+      setTimeout(() => {
+        newTasks.forEach(task => {
+          const taskEl = document.getElementById(`task-${task.id}`);
+          if (taskEl) taskEl.classList.add('store-updated');
+          
+          // If it has subtasks, those are new too
+          if (task.checklists && task.checklists.length > 0) {
+            task.checklists[0].todos.forEach(todo => {
+              const todoEl = document.getElementById(`subtask-${todo.id}`);
+              if (todoEl) todoEl.classList.add('store-updated');
+            });
+          }
+        });
+      }, 0);
+    }
+    
+    // Update the previous tasks reference
+    setPrevTasks(group.tasks);
+  }, [group.tasks]);
+  
+  // Add this state at the top of your component
+  const [prevTasks, setPrevTasks] = useState(group.tasks || []);
+
+
     return (
         <ul className="monday-group-header monday-group-preview group-preview flex column last-height-element"
         style={{ backgroundColor: "transparent" }}
@@ -4197,12 +3706,10 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                             width="20"
                             height="20"
                             onClick={() => {
-                                // Show group actions menu
                                 const actions = [
                                     { label: 'Edit Group', action: handleGroupTitleEdit },
                                     { label: 'Delete Group', action: handleDeleteGroup }
                                 ]
-                                // Implementation of menu display would go here
                             }}
                         >
                             <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
@@ -4341,13 +3848,14 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
 {sortedTasks.map((task, idx) => {
     const hasSubtasks = task.checklists && task.checklists.length > 0 &&
                                          task.checklists[0].todos && task.checklists[0].todos.length > 0
-    const isExpanded = true; // expandedTaskIds.has(task.id)
+    const isExpanded = true;
 
     return (
         <React.Fragment key={task.id}>
-            <li>
+            <li id={`task-${task.id}`} key={task.id}>
                 <MondayTableTask
                     idx={idx}
+
                     task={task}
                     group={group}
                     board={board}
@@ -4373,7 +3881,8 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
             </li>
 
             {isExpanded && hasSubtasks && task.checklists[0].todos.map(    (todo, subIdx) => (
-                <li key={todo.id} className={`subtask-row ${((subIdx === 0)? "first-sub": '')}`} style={{ paddingLeft: '40px' }}>
+                // <li id={`subtask-${todo.id}`} key={todo.id} className="subtask-row" data-parent={task.id}>
+                <li id={`subtask-${todo.id}`} key={todo.id} className={`subtask-row ${((subIdx === 0)? "first-sub": '')}`} style={{ paddingLeft: '40px' }} data-parent={task.id}>
                     <MondayTableTask
                         idx={`${idx}-sub-${todo.id}`}
                         task={{
@@ -4381,12 +3890,12 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                             id: todo.id,
                             title: todo.title,
                             status: todo.isDone ? 'done' : '',
-                            // Keep other properties from parent, or customize as needed
+                            
                         }}
                         group={group}
                         board={board}
                         onLoadTask={() => {
-                            // Toggle subtask completion
+                            
                             const updatedBoard = { ...board }
                             const groupIndex = updatedBoard.groups.findIndex(g => g.id === group.id)
                             const taskIndex = updatedBoard.groups[groupIndex].tasks.findIndex(t => t.id === task.id)
@@ -4443,7 +3952,6 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
     )
 })}
 
-                        {/* Add Task row */}
                         <div className="add-task flex ">
                             <div
                                 className="sticky-div"
@@ -4454,7 +3962,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                                 </div>
 
                                 <form
-                                    className=" no-inner-input_styles add-task-form flex align-center"
+                                    className=" no-inner-input_styles add-task-form add-task-form flex align-center"
                                     onSubmit={handleNewTaskSubmit}
                                 >
                                     <input
@@ -4522,7 +4030,7 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
             id: makeId(),
             title: newGroupTitle,
             style: {
-                backgroundColor: '#579bfc', // Default color
+                backgroundColor: '#579bfc', 
                 color: '#ffffff'
             },
             tasks: []
@@ -4538,36 +4046,31 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
         setShowAddGroup(false)
     }
 
-    // Handle drag and drop between groups
     const handleDragEnd = (result) => {
         const { source, destination, draggableId } = result
 
-        // Dropped outside the list
         if (!destination) return
 
-        // No movement
+        
         if (source.droppableId === destination.droppableId && source.index === destination.index) return
 
-        // Find the task and groups
+        
         const sourceGroup = board.groups.find(group => group.id === source.droppableId)
         const task = sourceGroup.tasks.find(task => task.id === draggableId)
 
-        // Create a new board object with the task moved
         const updatedBoard = { ...board }
 
-        // Remove task from source group
         const sourceGroupIndex = updatedBoard.groups.findIndex(group => group.id === source.droppableId)
         updatedBoard.groups[sourceGroupIndex] = {
             ...sourceGroup,
             tasks: sourceGroup.tasks.filter(t => t.id !== draggableId)
         }
 
-        // If moving to a different group
         if (source.droppableId !== destination.droppableId) {
             const destGroup = board.groups.find(group => group.id === destination.droppableId)
             const destGroupIndex = updatedBoard.groups.findIndex(group => group.id === destination.droppableId)
 
-            // Add task to destination group at the specified index
+            
             const destTasks = [...destGroup.tasks]
             destTasks.splice(destination.index, 0, task)
 
@@ -4576,7 +4079,7 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
                 tasks: destTasks
             }
         } else {
-            // Reorder within the same group
+            
             const tasks = [...sourceGroup.tasks]
             tasks.splice(source.index, 1)
             tasks.splice(destination.index, 0, task)
@@ -4655,7 +4158,7 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
 
 
 
-export function TopHeader({    }) {
+export function TopHeader({ }) {
         const loggedUser = useSelector((state) => state.userModule.user)
         return (
                 <div className="header-container">
@@ -4780,7 +4283,7 @@ export function MondaySidebarEmpty({ onCloseSideBar }) {
     return (<div className="sidebar-empty flex">
             <section className="workspace-sidebar sidebar-outer workspace-sidebar-container">
                 <section className="workspace-sidebar sidebar-inner">
-                    <div className="monday-sidebar-right-btn" onClick={onCloseSideBar}>
+                    <div className="monday-sidebar-right-btn monday-sidebar-right-btn-closed" onClick={onCloseSideBar}>
                         <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14" aria-hidden="true" tabIndex="-1" className="icon_b407e05873 GD1dz noFocusStyle_43edc8446a" data-testid="icon">
                             <path d="M5.46967 10.5303L6 10L5.46967 9.46967C5.17678 9.76256 5.17678 10.2374 5.46967 10.5303ZM7.06066 10L13.5303 3.53033C13.8232 3.23744 13.8232 2.76256 13.5303 2.46967C13.2374 2.17678 12.7626 2.17678 12.4697 2.46967L5.46967 9.46967L6 10L5.46967 10.5303L12.4697 17.5303C12.7626 17.8232 13.2374 17.8232 13.5303 17.5303C13.8232 17.2374 13.8232 16.7626 13.5303 16.4697L7.06066 10Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
                         </svg>
@@ -4920,7 +4423,7 @@ export function MondaySidebar({ onCloseSideBar }) {
         )
 }
 
-export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterText, setFilterText, sortBy, setSortBy, onSetShowKanban, showKanban}) {
+export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterText, setFilterText, sortBy, setSortBy, onSetShowKanban, showKanban, showSideBar, loggedUser}) {
         const dispatch = useDispatch()
 
         const handleTitleChange = (e) => {
@@ -4972,9 +4475,12 @@ export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterTe
                                         </div>
                                 </div>
                                 <div className="action-tools flex align-center">
-                                        <div className="tool-btn flex align-center" onClick={() => console.log('Integrate clicked')} aria-label="Integrate with other tools" data-mui-internal-clone-element="true">
+                                        
+                                        {!showSideBar &&
+                                        <div className="integrate-btn tool-btn flex align-center" onClick={() => console.log('Integrate clicked')} aria-label="Integrate with other tools" data-mui-internal-clone-element="true">
                                                 <i className="fa-solid-fr fa-plug"></i> <span className="tool-text">Integrate</span>
-                                        </div>
+                                        </div> }
+
                                         <div className="tool-btn flex align-center" onClick={() => console.log('Automate clicked')} aria-label="Set up automation" data-mui-internal-clone-element="true">
                                                 <i className="fa-solid fa-bolt"></i> <span className="tool-text">Automate</span>
                                         </div>
@@ -4982,7 +4488,7 @@ export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterTe
                                                 <i className="fa-regular fa-comments"></i>
                                         </div>
                                         <div className="monday-user-circle small-circle flex align-center justify-center" aria-label="Active user" data-mui-internal-clone-element="true">
-                                                <span className="avatar-text">YP</span>
+                                                <span className="avatar-text">{(!!loggedUser)? loggedUser.fullname: 'G'}</span>
                                         </div>
                                 </div>
                                 <div className="action-controls flex align-center">
@@ -5520,6 +5026,10 @@ export function MondayBoardDetails() {
                 setShowSideBar(false)
         }
 
+
+        const loggedUser = useSelector(state => state.userModule.user)
+
+        
         if (!(board)) return (<div className="trello-loader">
                 <img src="trello-loader.svg" alt=""/>
         </div>)
@@ -5552,6 +5062,8 @@ export function MondayBoardDetails() {
                                                 setSortBy={setSortBy}
                                                 onSetShowKanban={onSetShowKanban}
                                                 showKanban={showKanban}
+                                                showSideBar={showSideBar}
+                                                loggedUser={loggedUser}
                                         />
 
                                         {!showKanban && <MondayTaskList board={board} onLoadTask={onLoadTask} /> }

@@ -3706,7 +3706,7 @@ blockquote span {
 }
 
 
-/* Add these CSS styles to your stylesheet */
+
 .with-checklists {
     background-color: #e0f4ff;
 }
@@ -3762,7 +3762,7 @@ blockquote span {
     background-color: #f5f6f8;
 }
 
-/* Replace your subtask CSS with this */
+
 .task-row.with-checklists {
     background-color: #e5f4ff !important;
     position: relative;
@@ -3840,23 +3840,23 @@ blockquote span {
     background-color: #f5f6f8;
 }
 
-/* Add this to ensure proper alignment with parent task */
+
 .subitem-row input[type="checkbox"] {
     margin-right: 8px;
 }
 
-/* Style for expanded parent task with blue highlight */
+
 .task-row.with-checklists .monday-table-task-preview {
     position: relative;
     z-index: 1;
 }
 
-/* Fix alignment of the subtask rows */
+
 .subitem-container {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
-/* Add vertical indicator line for subtasks */
+
 .subitem-row:before {
     content: '';
     position: absolute;
@@ -3867,10 +3867,12 @@ blockquote span {
     background-color: #c3c6d4;
 }
 
-/* Add this to your CSS */
+
 .subtask-row {
     position: relative;
-    background-color: #f6f7fb;
+    /* background-color: #f6f7fb; */
+    border-bottom: 0px solid transparent;
+    border-top: 0px solid transparent;
 }
 
 .subtask-row::before {
@@ -3884,15 +3886,26 @@ blockquote span {
     z-index: 1;
 }
 
+.add-subtask-row>.add-task {
+    border-top: 1px solid #e3e5ee;
+}
+.monday-table-task-preview.subtask {
+    border-bottom: 0px solid transparent;
+}
 .subtask-row .sticky-div {
     /*border-left: 4px solid #dce0e6 !important;*/
+}
+
+.group-preview.sticky-div {
+    border-top: 0px solid transparent !important;
+    border-bottom: 0px solid transparent !important;
 }
 
 /*.add-subtask-row {*/
 /*    background-color: #f6f7fb;*/
 /*}*/
 
-/* This is for the task that has subtasks - add blue highlight */
+
 .has-subtasks .sticky-div {
     background-color: #e5f4ff;
 }
@@ -3913,15 +3926,15 @@ blockquote span {
     color: #676879;
 }
 
-/* Ensure parent task row has the same blue background as in the image */
+
 .with-checklists td,
 .with-checklists th,
 .with-checklists .monday-table-task-preview,
 .with-checklists .sticky-div {
-    background-color: #e5f4ff !important;
+    background-color: #cfd3e3 !important;
 }
 
-/* Replace your subtask CSS with this */
+
 .task-row.with-checklists {
     background-color: #e5f4ff !important;
     position: relative;
@@ -3999,23 +4012,20 @@ blockquote span {
     background-color: #f5f6f8;
 }
 
-/* Add this to ensure proper alignment with parent task */
+
 .subitem-row input[type="checkbox"] {
     margin-right: 8px;
 }
 
-/* Style for expanded parent task with blue highlight */
 .task-row.with-checklists .monday-table-task-preview {
     position: relative;
     z-index: 1;
 }
 
-/* Fix alignment of the subtask rows */
 .subitem-container {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
-/* Add vertical indicator line for subtasks */
 .subitem-row:before {
     content: '';
     position: absolute;
@@ -4027,9 +4037,8 @@ blockquote span {
 }
 
 
-/* Add these CSS styles to your stylesheet */
 .with-checklists {
-    background-color: #e0f4ff;
+    background-color: #e5f4ff;
 }
 
 .subitem-header-row, .subitem-row, .add-subitem-row {
@@ -4087,7 +4096,6 @@ blockquote span {
     border-top: 1px solid #e6e9ef;
 }
 
-    /* Add this to your CSS */
 .subtask-row.first-sub{
     margin-top: 16px;
     /*margin-left: 20px;*/
@@ -4122,7 +4130,7 @@ blockquote span {
     margin-bottom: 16px;
 }
 
-/* This is for the task that has subtasks - add blue highlight */
+
 .has-subtasks .sticky-div {
     /*background-color: #e5f4ff;*/
 }
@@ -4147,9 +4155,9 @@ blockquote span {
 .monday-group-preview-content-before {
     position: absolute;
     content: '';
-    height: 83%;
+    height: 77%;
     left: 0;
-    top: 0;
+    top: 1px;
     width: 1px;
     /*background-color: red;*/
     z-index: 2;
@@ -4168,7 +4176,7 @@ blockquote span {
     position: absolute;
     content: '';
     height: 100%;
-    width: 36px;
+    width: 37px;
     left: 3px;
     top: -17px;
     /*width: 1px;*/
@@ -4253,9 +4261,36 @@ blockquote span {
     border-right: 1px solid rgba(143, 153, 191, 0.4) !important;
 }
 
-
 .add-task {
+    background-color: white !important;
+}
+
+.add-task.check-box {
+    background-color: white !important;
+    
+    /* border-radius: 0px 0px 0px 5px !important; */
+    /* translate: -1px 0px; */
+}
+
+.check-box.add-task {
+    z-index: -1 !important;
+}
+
+sticky-div:has(>.monday-add-task-form) {
+    background-color: red !important;
+    border-bottom: 1px solid rgba(143, 153, 191, 0.4);
+}
+
+form.monday-add-task-form {
+    padding-block: 0px;
+    margin-block: 0px;
+    margin-top: 0px;
+}
+
+.monday-add-task-form {
+
     background-color: white;
+    z-index: 1000;
 }
 
 .last-empty {
@@ -4284,3 +4319,104 @@ blockquote span {
 
 }
 
+
+
+.monday-board-header h1 {
+    /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif; */
+
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+
+.monday-group-title h4 {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+
+.monday-board-title {
+    
+}
+
+
+@keyframes slickSlideDown {
+    0% {
+      opacity: 0;
+      max-height: 0;
+      transform: perspective(800px) rotateX(-15deg) translateY(-8px);
+      transform-origin: top center;
+      box-shadow: 0 -5px 10px rgba(0,0,0,0);
+    }
+    40% {
+      opacity: 1;
+      transform: perspective(800px) rotateX(3deg) translateY(0);
+      box-shadow: 0 5px 8px rgba(0,0,0,0.05);
+    }
+    70% {
+      transform: perspective(800px) rotateX(-1deg);
+    }
+    100% {
+      max-height: 100px;
+      opacity: 1;
+      transform: perspective(800px) rotateX(0);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+  }
+  
+  @keyframes subtaskLines {
+    0% {
+      height: 0%;
+      opacity: 0;
+    }
+    30% {
+      opacity: 0.3;
+    }
+    100% {
+      height: 100%;
+      opacity: 0.7;
+    }
+  }
+  
+  @keyframes iconPop {
+    0% {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .subtask-row, 
+  .task-preview.store-updated {
+    animation: slickSlideDown 0.45s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+    backface-visibility: hidden;
+    position: relative;
+    will-change: transform, opacity, max-height;
+    border-radius: 4px;
+  }
+
+  .subtask-row:nth-child(1) { animation-delay: 0.05s; }
+  .subtask-row:nth-child(2) { animation-delay: 0.1s; }
+  .subtask-row:nth-child(3) { animation-delay: 0.15s; }
+  .subtask-row:nth-child(4) { animation-delay: 0.2s; }
+  .subtask-row:nth-child(5) { animation-delay: 0.25s; }
+  
+  .subtask-row .task-checkbox,
+  .subtask-row .tasklist-icon,
+  .store-updated .task-checkbox,
+  .store-updated .tasklist-icon {
+    animation: iconPop 0.4s ease-out forwards;
+    animation-delay: 0.25s;
+  }
+  
+  .subtask-row:hover,
+  .task-preview.store-updated:hover {
+    transition: background-color 0.2s ease;
+  }
+
+
+  

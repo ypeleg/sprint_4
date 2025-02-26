@@ -1055,10 +1055,24 @@ section.board-filter {
     right: 0;
     padding: 6px 8px;
     border-radius: 0px 8px 0px 8px;
+    height: 38px;
+    display: flex;
+    align-items: center;  
     cursor: pointer;
     background: #f6f7fb;
     /*transition: background-color 0.2s;*/
 }
+
+
+.sticky-div {
+    z-index: 1000;
+}
+
+.monday-sidebar-right-btn-closed {
+    border-radius: 0px 8px 0px 0px;
+}
+
+
 
 .monday-sidebar-right-btn:hover {
     background: #ececef;

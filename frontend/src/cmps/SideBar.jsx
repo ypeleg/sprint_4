@@ -1,8 +1,8 @@
 
 
 import { useSelector } from "react-redux"
-import { loadBoards } from "../store/store"
 import { useNavigate } from "react-router"
+import { loadBoards, loadBoard } from "../store/store"
 
 
 export function SideBar({ backgrounColor, borderColor, onToggleSideBar, sideBarOpen, useDarkTextColors }) {
