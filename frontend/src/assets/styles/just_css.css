@@ -6219,3 +6219,136 @@ main {
 #task-text-title {
     font-size: 24px;
 }
+
+.homepage {
+    display: block;
+    overflow-y: auto;
+}
+
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes text-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animate-text-gradient {
+    background-size: 200% auto;
+    animation: text-gradient 4s linear infinite;
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+
+.animate-blob {
+    animation: blob 7s infinite;
+}
+
+@keyframes blob {
+    0% {
+        transform: translate(0px, 0px) scale(1);
+    }
+    33% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+    100% {
+        transform: translate(0px, 0px) scale(1);
+    }
+}
+
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+    animation-delay: 4s;
+}
+
+
+
+@keyframes pulse-slow {
+    0% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.5; }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) rotate(12deg); }
+    50% { transform: translateY(-10px) rotate(14deg); }
+    100% { transform: translateY(0px) rotate(12deg); }
+}
+
+@keyframes float-delayed {
+    0% { transform: translateY(0px) rotate(-6deg); }
+    50% { transform: translateY(-12px) rotate(-8deg); }
+    100% { transform: translateY(0px) rotate(-6deg); }
+}
+
+@keyframes reveal {
+    0% { opacity: 0; transform: translateY(100%); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-reveal {
+    animation: reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-delay-300 {
+    animation-delay: 300ms !important;
+}
+
+.animate-delay-500 {
+    animation-delay: 500ms !important;
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 4s infinite;
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+    animation: float-delayed 7s ease-in-out infinite;
+}
+
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+/* Typewriter effect */
+.typewriter {
+    overflow: hidden;
+    border-right: 2px solid rgba(255, 255, 255, 0.75);
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: 0.15em;
+    animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+    animation-delay: 1.5s;
+    animation-fill-mode: both;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: rgba(255, 255, 255, 0.75) }
+}
