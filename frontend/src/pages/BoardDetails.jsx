@@ -1270,7 +1270,7 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
         setNewChecklistTitle('')
         hidePicker(ev)
         // elTextArea
-        elTextArea.current.focus()
+        // elTextArea.current.focus()
     }
 
 
@@ -1822,12 +1822,12 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
                 // await onSubmit(ev)
             }
         }
-        
+
         window.addEventListener("keydown", handleKey)
-      
+
         return () => {
             window.removeEventListener("keydown", handleKey)
-        
+
         }
     }, [])
 

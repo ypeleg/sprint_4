@@ -3962,7 +3962,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                                 </div>
 
                                 <form
-                                    className=" no-inner-input_styles add-task-form add-task-form flex align-center"
+                                    className=" no-inner-input_styles add-task-form mondaymonday-add-task-form flex align-center"
                                     onSubmit={handleNewTaskSubmit}
                                 >
                                     <input
