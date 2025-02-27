@@ -24,8 +24,11 @@ export function AddTaskForm({ elFooter, selectedGroup, onSetShowForm }) {
             if (ev.key === "Enter") {
                 ev.preventDefault()
 
-
-                await onSubmit(ev)
+                if (!task.title) return onSetShowForm()
+                else {
+                    await onSubmit(ev)
+                }
+                // await onSubmit(ev)
             }
         }
         
