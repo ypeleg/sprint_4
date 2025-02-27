@@ -128,7 +128,7 @@ export function VideoCall() {
     }, [remoteStream]);
 
 
-    const startWebcam = async (pc = peerConnection) => {
+    const startWebcam2 = async (pc = peerConnection) => {
         if (!pc) {
             console.warn("[startWebcam] No PeerConnection yet");
             return;
@@ -165,6 +165,379 @@ export function VideoCall() {
         setIsLoadingCamera(false);
     }
 
+    const startWebcam = async (pc = peerConnection) => {
+        if (!pc) {
+            console.warn("[startWebcam] No PeerConnection yet");
+            return;
+        }
+        if (localStream) {
+            console.warn("[startWebcam] Already have localStream, skipping");
+            return;
+        }
+        setIsLoadingCamera(true);
+    
+        try {
+            // Try to silently check for permission status if the browser supports it
+            let hasPermission = false;
+            try {
+                if (navigator.permissions && navigator.permissions.query) {
+                    const permissionStatus = await navigator.permissions.query({ name: 'camera' });
+                    hasPermission = permissionStatus.state === 'granted';
+                    console.log("[startWebcam] Camera permission status:", permissionStatus.state);
+                }
+            } catch (permErr) {
+                console.warn("[startWebcam] Permission check failed:", permErr);
+            }
+            
+            // Initialize variables for device enumeration and stream
+            let videoDevices = [];
+            let stream = null;
+            
+            // Get list of video devices
+            try {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                videoDevices = devices.filter(device => device.kind === 'videoinput');
+                console.log("[startWebcam] Found", videoDevices.length, "video devices");
+            } catch (enumErr) {
+                console.warn("[startWebcam] Failed to enumerate devices:", enumErr);
+            }
+            
+            // If we have video devices, try each one until success
+            if (videoDevices.length > 0) {
+                // Try to retrieve any previously successful camera index from localStorage
+                const lastSuccessfulIndex = localStorage.getItem('lastSuccessfulCameraIndex');
+                let startIndex = 0;
+                
+                // If we have a previously successful index, try that one first
+                if (lastSuccessfulIndex !== null) {
+                    const index = parseInt(lastSuccessfulIndex);
+                    if (index >= 0 && index < videoDevices.length) {
+                        startIndex = index;
+                        console.log("[startWebcam] Starting with previously successful camera index:", startIndex);
+                    }
+                }
+                
+                // Function to reorder indices to try previously successful one first
+                const getOrderedIndices = (start, total) => {
+                    const indices = [];
+                    for (let i = 0; i < total; i++) {
+                        indices.push((start + i) % total);
+                    }
+                    return indices;
+                };
+                
+                const orderedIndices = getOrderedIndices(startIndex, videoDevices.length);
+                
+                // Try cameras in the determined order
+                for (const i of orderedIndices) {
+                    try {
+                        console.log(`[startWebcam] Trying camera index ${i}: ${videoDevices[i].label || 'Unnamed camera'}`);
+                        
+                        // Specific constraints for this device
+                        stream = await navigator.mediaDevices.getUserMedia({
+                            video: {
+                                deviceId: { exact: videoDevices[i].deviceId },
+                                width: { ideal: 640 }, // Lower resolution to improve compatibility
+                                height: { ideal: 480 }
+                            },
+                            audio: true
+                        });
+                        
+                        // If successful, save the index for future use
+                        localStorage.setItem('lastSuccessfulCameraIndex', i.toString());
+                        console.log(`[startWebcam] Successfully connected to camera ${i}`);
+                        break;
+                    } catch (err) {
+                        console.warn(`[startWebcam] Failed to access camera ${i}:`, err);
+                        // Continue to next camera
+                    }
+                }
+            }
+            
+            // If all specific cameras failed or we couldn't enumerate, try generic approach
+            if (!stream) {
+                console.log("[startWebcam] Trying default camera with generic constraints");
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { 
+                            width: { ideal: 640 },
+                            height: { ideal: 480 }
+                        }, 
+                        audio: true 
+                    });
+                    console.log("[startWebcam] Successfully connected to default camera");
+                } catch (err) {
+                    console.error("[startWebcam] Default camera failed:", err);
+                    
+                    // Final fallback: try video-only mode (no audio)
+                    console.log("[startWebcam] Final attempt: video-only mode");
+                    stream = await navigator.mediaDevices.getUserMedia({ 
+                        video: true,
+                        audio: false
+                    });
+                }
+            }
+            
+            // Successfully got a stream at this point
+            console.log("[startWebcam] localStream ->", stream);
+            setLocalStream(stream);
+            setIsWebcamActive(true);
+            setIsVideoOn(true);
+            
+            // Check if we have audio tracks and set status accordingly
+            const hasAudio = stream.getAudioTracks().length > 0;
+            setIsAudioOn(hasAudio);
+            if (!hasAudio) {
+                console.warn("[startWebcam] No audio tracks available in the stream");
+            }
+    
+            // Attach to local video
+            if (webcamVideoRef.current) {
+                webcamVideoRef.current.srcObject = stream;
+            }
+    
+            // Add tracks to peer connection
+            stream.getTracks().forEach(async (track) => {
+                console.log("[startWebcam] Adding local track ->", track.kind);
+                await pc.addTrack(track, stream);
+            });
+        } catch (err) {
+            console.error("[startWebcam] All camera access attempts failed:", err);
+            // Don't show alert to avoid disrupting the user experience
+            setIsWebcamActive(false);
+        }
+        
+        setIsLoadingCamera(false);
+    }
+
+    const startWebcam3 = async (pc = peerConnection) => {
+        if (!pc) {
+          console.warn("[startWebcam] No PeerConnection yet");
+          return;
+        }
+        if (localStream) {
+          console.warn("[startWebcam] Already have localStream, skipping");
+          return;
+        }
+        setIsLoadingCamera(true);
+      
+        try {
+          // 1) Request permission once, in broad terms (audio + any camera).
+          //    This will trigger only one permission prompt if permission is not already granted.
+          console.log("[startWebcam] Requesting initial user media permission...");
+          const tempStream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+          });
+          // Stop this temp stream's tracks to free them while we enumerate devices
+          tempStream.getTracks().forEach((track) => track.stop());
+      
+          // 2) Now that permission is granted, enumerate all devices
+          const devices = await navigator.mediaDevices.enumerateDevices();
+          const videoDevices = devices.filter((d) => d.kind === "videoinput");
+          console.log("[startWebcam] Found video devices:", videoDevices);
+      
+          let workingStream = null;
+      
+          // 3) Try each camera one by one
+          for (const device of videoDevices) {
+            try {
+              console.log("[startWebcam] Trying camera:", device.label || device.deviceId);
+              const testStream = await navigator.mediaDevices.getUserMedia({
+                audio: true,
+                video: { deviceId: device.deviceId },
+              });
+      
+              // If successful, we have our working camera stream
+              workingStream = testStream;
+              console.log("[startWebcam] Found a working camera:", device.label || device.deviceId);
+              break;
+            } catch (err) {
+              console.warn("[startWebcam] This camera failed, trying next...", err);
+            }
+          }
+      
+          if (!workingStream) {
+            throw new Error("No working camera found (all failed).");
+          }
+      
+          // 4) Once we get a working stream, set it as the local stream
+          setLocalStream(workingStream);
+          setIsWebcamActive(true);
+          setIsVideoOn(true);
+          setIsAudioOn(true);
+      
+          // Attach local stream to local video
+          if (webcamVideoRef.current) {
+            webcamVideoRef.current.srcObject = workingStream;
+          }
+      
+          // 5) Add tracks to your RTCPeerConnection
+          workingStream.getTracks().forEach(async (track) => {
+            console.log("[startWebcam] Adding local track ->", track.kind);
+            await pc.addTrack(track, workingStream);
+          });
+      
+        } catch (err) {
+          console.error("[startWebcam] Error:", err);
+          alert("Failed to access camera/mic. Please allow permissions or check device availability.");
+        } finally {
+          setIsLoadingCamera(false);
+        }
+      };
+
+      const startWebcam4 = async (pc = peerConnection) => {
+        if (!pc) {
+            console.warn("[startWebcam] No PeerConnection yet");
+            return;
+        }
+        if (localStream) {
+            console.warn("[startWebcam] Already have localStream, skipping");
+            return;
+        }
+        setIsLoadingCamera(true);
+    
+        try {
+            // Try to silently check for permission status if the browser supports it
+            let hasPermission = false;
+            try {
+                if (navigator.permissions && navigator.permissions.query) {
+                    const permissionStatus = await navigator.permissions.query({ name: 'camera' });
+                    hasPermission = permissionStatus.state === 'granted';
+                    console.log("[startWebcam] Camera permission status:", permissionStatus.state);
+                }
+            } catch (permErr) {
+                console.warn("[startWebcam] Permission check failed:", permErr);
+            }
+            
+            // Initialize variables for device enumeration and stream
+            let videoDevices = [];
+            let stream = null;
+            
+            // Get list of video devices
+            try {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                videoDevices = devices.filter(device => device.kind === 'videoinput');
+                console.log("[startWebcam] Found", videoDevices.length, "video devices");
+            } catch (enumErr) {
+                console.warn("[startWebcam] Failed to enumerate devices:", enumErr);
+            }
+            
+            // If we have video devices, try each one until success
+            if (videoDevices.length > 0) {
+                // Try to retrieve any previously successful camera index from localStorage
+                const lastSuccessfulIndex = localStorage.getItem('lastSuccessfulCameraIndex');
+                let startIndex = 0;
+                
+                // If we have a previously successful index, try that one first
+                if (lastSuccessfulIndex !== null) {
+                    const index = parseInt(lastSuccessfulIndex);
+                    if (index >= 0 && index < videoDevices.length) {
+                        startIndex = index;
+                        console.log("[startWebcam] Starting with previously successful camera index:", startIndex);
+                    }
+                }
+                
+                // Function to reorder indices to try previously successful one first
+                const getOrderedIndices = (start, total) => {
+                    const indices = [];
+                    for (let i = 0; i < total; i++) {
+                        indices.push((start + i) % total);
+                    }
+                    return indices;
+                };
+                
+                const orderedIndices = getOrderedIndices(startIndex, videoDevices.length);
+                
+                // Try cameras in the determined order
+                for (const i of orderedIndices) {
+                    // Skip OBS virtual cameras
+                    const deviceLabel = videoDevices[i].label || '';
+                    if (deviceLabel.toLowerCase().includes('obs') || 
+                        deviceLabel.toLowerCase().includes('virtual camera')) {
+                        console.log(`[startWebcam] Skipping OBS/virtual camera ${i}: ${deviceLabel}`);
+                        continue;
+                    }
+                    
+                    try {
+                        console.log(`[startWebcam] Trying camera index ${i}: ${deviceLabel || 'Unnamed camera'}`);
+                        
+                        // Specific constraints for this device
+                        stream = await navigator.mediaDevices.getUserMedia({
+                            video: {
+                                deviceId: { exact: videoDevices[i].deviceId },
+                                width: { ideal: 640 }, // Lower resolution to improve compatibility
+                                height: { ideal: 480 }
+                            },
+                            audio: true
+                        });
+                        
+                        // If successful, save the index for future use
+                        localStorage.setItem('lastSuccessfulCameraIndex', i.toString());
+                        console.log(`[startWebcam] Successfully connected to camera ${i}`);
+                        break;
+                    } catch (err) {
+                        console.warn(`[startWebcam] Failed to access camera ${i}:`, err);
+                        // Continue to next camera
+                    }
+                }
+            }
+            
+            // If all specific cameras failed or we couldn't enumerate, try generic approach
+            if (!stream) {
+                console.log("[startWebcam] Trying default camera with generic constraints");
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { 
+                            width: { ideal: 640 },
+                            height: { ideal: 480 }
+                        }, 
+                        audio: true 
+                    });
+                    console.log("[startWebcam] Successfully connected to default camera");
+                } catch (err) {
+                    console.error("[startWebcam] Default camera failed:", err);
+                    
+                    // Final fallback: try video-only mode (no audio)
+                    console.log("[startWebcam] Final attempt: video-only mode");
+                    stream = await navigator.mediaDevices.getUserMedia({ 
+                        video: true,
+                        audio: false
+                    });
+                }
+            }
+            
+            // Successfully got a stream at this point
+            console.log("[startWebcam] localStream ->", stream);
+            setLocalStream(stream);
+            setIsWebcamActive(true);
+            setIsVideoOn(true);
+            
+            // Check if we have audio tracks and set status accordingly
+            const hasAudio = stream.getAudioTracks().length > 0;
+            setIsAudioOn(hasAudio);
+            if (!hasAudio) {
+                console.warn("[startWebcam] No audio tracks available in the stream");
+            }
+    
+            // Attach to local video
+            if (webcamVideoRef.current) {
+                webcamVideoRef.current.srcObject = stream;
+            }
+    
+            // Add tracks to peer connection
+            stream.getTracks().forEach(async (track) => {
+                console.log("[startWebcam] Adding local track ->", track.kind);
+                await pc.addTrack(track, stream);
+            });
+        } catch (err) {
+            console.error("[startWebcam] All camera access attempts failed:", err);
+            // Don't show alert to avoid disrupting the user experience
+            setIsWebcamActive(false);
+        }
+        
+        setIsLoadingCamera(false);
+    }
 
     const toggleVideo = () => {
         if (!localStream) return;
