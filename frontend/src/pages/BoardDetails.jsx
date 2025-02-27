@@ -1673,6 +1673,12 @@ export function TaskModal({taskToShow, onClose, popupRef, onSaveTaskOuter}) {
 
 
     useEffect(() => {
+        if (showPickerChecklists && elInnerChecklistRef.current) {
+          elInnerChecklistRef.current.focus();
+        }
+      }, [showPickerChecklists])
+
+    useEffect(() => {
         saveTask()
     }, [isDone, cardTitle, listName, isWatching, description, attachments, checklists, newChecklistItem, activityLog, location, badges, members, boardMembers, date, showLabels, showMembers, showCustomFields, showDate, showMaps, showChecklist, showActivity, showAttachments, showPicker, showPickerDate, showPickerCustomBadges, showPickerLocation, showPickerAttachments, showPickerChecklists, showPickerLabels, showPickerMembers, showPickerMoveCard, showPickerCopyCard, showPickerMirrorCard, showPickerShareCard, showPickerChangeALabel, showPickerUnderConstruction, showPickerCover, showFieldsEditor, pickerTop, pickerLeft, coverColor, coverImage, coverSize, calendarMonth, isStartDateEnabled, isDueDateEnabled, startDate, dueDate, dueTime, dueDateReminder, currentLabelText, previousLabelColor, currentLabelColor, selectedBoardId, selectedGroupId, selectedPosition, attachmentFile, attachmentLink, attachmentText])
 
