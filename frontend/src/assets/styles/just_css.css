@@ -6581,3 +6581,72 @@ main {
 
 
   
+
+.last-empty {
+    width: 700px;
+}
+
+
+.search-task {
+    display: flex;
+    justify-content: center;    
+    padding-inline: 14px !important;
+}
+
+
+.moving-text-hint {
+    transition: 0.2s;
+}
+
+.hover-move-left:hover {
+    background-color: #f5f6f8;
+}
+
+.moving-text-hint {
+    transition: 0.2s;
+    padding: 2px 4px;
+    mouse: text;
+}
+
+.moving-text-hint:hover {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+}
+
+.hover-move-left:hover>.moving-text-hint {
+    transition: 0.2s;
+    transform: translateX(-10px);
+
+}
+
+.open-modal-icon>svg {
+    width: 24px;
+    height: 24px;
+    rotate: 90deg;
+    color: #676879 !important;
+}
+
+.open-modal-icon>svg:hover {
+    color: #676879;
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+.priority-priority-indicator {
+    color: white;
+}
+
+
+.moving-text-hint>svg {
+    /*width: 6px !important;*/
+    /*height: 6px !important;*/
+    margin-right: 4px;
+}
+
+.hover-move-left>svg {
+    padding: 0px;
+
+}

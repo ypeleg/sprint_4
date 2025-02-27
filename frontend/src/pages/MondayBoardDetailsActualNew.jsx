@@ -276,13 +276,11 @@ export function TaskModal () {
             <div className="task-modal monday-task-modal" id="monday-task-modal">
 
             <div className="flex flex-col w-full h-full bg-white rounded-xl shadow-xl overflow-hidden font-sans text-gray-800 relative">
-            {/* Glass overlay for status - flashes on status change */}
+
             <div className={`absolute inset-0 bg-emerald-50 pointer-events-none z-20 opacity-0 transition-opacity duration-500 ${isDone ? 'flash-in-out' : ''}`}></div>
 
-            {/* Status Header */}
             <div className="px-7 py-4 flex items-center justify-between border-b border-gray-100">
                 <div className="flex items-center gap-3">
-                    {/* Status toggle with animation */}
                     <button
                         className="group flex items-center gap-2.5 px-2.5 py-1.5 rounded-md hover:bg-gray-50 transition-colors cursor-pointer"
                         onClick={() => setIsDone(!isDone)}
@@ -297,10 +295,8 @@ export function TaskModal () {
                         </span>
                     </button>
 
-                    {/* Divider */}
                     <div className="h-5 w-px bg-gray-200"></div>
 
-                    {/* Board/list name */}
                     <div
                         className="flex items-center gap-1.5 px-2 py-1 rounded hover:bg-gray-50 cursor-pointer transition-colors"
                         onClick={() => setActivePicker('move')}
@@ -315,7 +311,6 @@ export function TaskModal () {
                 </div>
 
                 <div className="flex items-center gap-1">
-                    {/* Members button */}
                     <div className="dropdown-container relative">
                         <button
                             className="flex items-center gap-1.5 px-2.5 py-1.5 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-md transition-colors"
@@ -328,7 +323,6 @@ export function TaskModal () {
                             <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${activeDropdown === 'members' ? 'rotate-180' : ''}`} />
                         </button>
 
-                        {/* Members dropdown - just a placeholder */}
                         {activeDropdown === 'members' && (
                             <div className="absolute right-0 top-full mt-1 w-56 bg-white rounded-md shadow-lg border border-gray-100 z-10 py-1">
                                 <div className="px-3 py-2 text-xs font-medium text-gray-500">Assigned members</div>
@@ -352,7 +346,6 @@ export function TaskModal () {
                         )}
                     </div>
 
-                    {/* More actions - could expand this with a dropdown */}
                     <button
                         className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
                         aria-label="More actions"
@@ -362,10 +355,8 @@ export function TaskModal () {
                 </div>
             </div>
 
-            {/* Card Body */}
             <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
                 <div className="px-7 py-4">
-                    {/* Task Title with animations and keyboard shortcut */}
 
 
 
@@ -387,7 +378,6 @@ export function TaskModal () {
                         </div>
                     </div>
 
-                    {/* Labels */}
                     {showLabels && cardLabels && cardLabels.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 mb-4 mt-3">
                             {cardLabels.map(label => (
@@ -415,9 +405,7 @@ export function TaskModal () {
                         </div>
                     )}
 
-                    {/* Meta Row with due date, watching, members */}
                     <div className="flex flex-wrap items-center gap-2 mb-5">
-                        {/* Due date with contextual colors */}
                         {date && (
                             <button
                                 className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium transition-colors ${
@@ -441,7 +429,6 @@ export function TaskModal () {
                             </button>
                         )}
 
-                        {/* Watching toggle */}
                         <button
                             className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-medium border transition-colors ${
                                 isWatching 
@@ -454,7 +441,6 @@ export function TaskModal () {
                             <span>Watching</span>
                         </button>
 
-                        {/* Members display */}
                         {members && members.length > 0 && (
                             <div className="flex -space-x-1 ml-1 hover:space-x-1 transition-all">
                                 {members.map((member, index) => (
@@ -485,7 +471,6 @@ export function TaskModal () {
                         )}
                     </div>
 
-                    {/* Custom Fields Section */}
                     {/*{badges && badges.length > 0 && (*/}
                     {/*    <div className="mb-6">*/}
                     {/*        <div className="flex flex-col space-y-2 border border-gray-100 rounded-lg overflow-hidden divide-y divide-gray-50">*/}
@@ -520,7 +505,6 @@ export function TaskModal () {
                     {/*</div>*/}
                 </div>
 
-                {/* Tab Navigation */}
                 <div className="border-t border-b border-gray-100">
                     <div className="flex px-7 -mb-px">
                         {[
@@ -546,7 +530,6 @@ export function TaskModal () {
                                     </span>
                                 )}
 
-                                {/* Active tab indicator animation */}
                                 {activeTab === tab.id && (
                                     <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-500 animate-fadeIn" />
                                 )}
@@ -555,12 +538,9 @@ export function TaskModal () {
                     </div>
                 </div>
 
-                {/* Tab Content */}
                 <div className="p-7">
-                    {/* Overview Tab */}
                     {activeTab === 'overview' && (
                         <div className="space-y-8">
-                            {/* Description Section */}
                             <div>
                                 <div className="flex items-center justify-between mb-3">
                                     <h3 className="text-sm font-medium text-gray-500">Description</h3>
@@ -600,7 +580,6 @@ export function TaskModal () {
                         </div>
                     )}
 
-                    {/* Checklists Tab */}
                     {activeTab === 'checklists' && (
                         <div className="space-y-6">
                             {checklists.length > 0 ? (
@@ -625,7 +604,6 @@ export function TaskModal () {
                                                 </button>
                                             </div>
 
-                                            {/* Progress bar with animation */}
                                             {checklist.progress !== undefined && (
                                                 <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                                                     <div
@@ -635,7 +613,6 @@ export function TaskModal () {
                                                 </div>
                                             )}
 
-                                            {/* Checklist items */}
                                             <ul className="space-y-1.5 mt-3">
                                                 {checklist.todos.map(todo => (
                                                     <li
@@ -681,7 +658,6 @@ export function TaskModal () {
                                                             {todo.title}
                                                         </label>
 
-                                                        {/* Actions that appear on hover */}
                                                         <div className={`flex items-center gap-1 ${isHovering[todo.id] ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
                                                             <button className="p-1 text-gray-400 hover:text-gray-600 rounded">
                                                                 <Edit className="w-3.5 h-3.5" />
@@ -767,7 +743,6 @@ export function TaskModal () {
                         </div>
                     )}
 
-                    {/* Files Tab */}
                     {activeTab === 'files' && (
                         <div className="space-y-6">
                             {attachments.length > 0 ? (
@@ -779,7 +754,6 @@ export function TaskModal () {
                                             onMouseEnter={() => setIsHovering({...isHovering, [attachment.id]: true})}
                                             onMouseLeave={() => setIsHovering({...isHovering, [attachment.id]: false})}
                                         >
-                                            {/* File type icon with color based on mime type */}
                                             <div className={`flex-shrink-0 w-10 h-10 rounded-md flex items-center justify-center ${
                                                 attachment.type === 'file' 
                                                     ? 'bg-blue-50 text-blue-500' 
@@ -792,7 +766,6 @@ export function TaskModal () {
                                                 )}
                                             </div>
 
-                                            {/* File name and date */}
                                             <div className="flex-1 min-w-0">
                                                 <h4 className="text-sm font-medium text-gray-800 truncate group-hover:text-blue-600 transition-colors">
                                                     {attachment.text || attachment.path}
@@ -810,7 +783,6 @@ export function TaskModal () {
                                                 </div>
                                             </div>
 
-                                            {/* Actions on hover */}
                                             <div className={`absolute right-3 flex items-center gap-1 ${isHovering[attachment.id] ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
                                                 <button
                                                     className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded transition-colors"
@@ -865,10 +837,8 @@ export function TaskModal () {
                         </div>
                     )}
 
-                    {/* Activity Tab */}
                     {activeTab === 'activity' && (
                         <div className="space-y-6">
-                            {/* Comment input */}
                             <div className="flex gap-3 mb-6">
                                 <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-bold">
                                     {loggedUser?.imgUrl ? (
@@ -899,12 +869,10 @@ export function TaskModal () {
                                 </div>
                             </div>
 
-                            {/* Activity listing */}
                             {activityLog.length > 0 ? (
                                 <div className="space-y-4">
                                     {activityLog.map((entry, index) => (
                                         <div key={entry.id || index} className="group flex gap-3">
-                                            {/* User avatar */}
                                             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 text-xs font-bold">
                                                 {entry?.byMember?.imgUrl ? (
                                                     <img
@@ -919,17 +887,14 @@ export function TaskModal () {
                                                 )}
                                             </div>
 
-                                            {/* Comment content */}
                                             <div className="flex-1">
                                                 <div className="p-3 bg-gray-50 rounded-lg relative group">
-                                                    {/* Hover actions */}
                                                     <div className="absolute -top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                         <button className="p-1 text-gray-400 hover:text-gray-600 bg-white rounded shadow-sm">
                                                             <MoreHorizontal className="w-3.5 h-3.5" />
                                                         </button>
                                                     </div>
 
-                                                    {/* Author and time */}
                                                     <div className="flex items-baseline mb-1.5">
                                                         <span className="text-sm font-medium text-gray-800 mr-2">
                                                             {entry?.byMember?.fullname}
@@ -939,12 +904,10 @@ export function TaskModal () {
                                                         </span>
                                                     </div>
 
-                                                    {/* Comment text */}
                                                     <p className="text-sm text-gray-700 whitespace-pre-line">
                                                         {entry.title}
                                                     </p>
 
-                                                    {/* Comment actions */}
                                                     <div className="mt-2 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
                                                         <button className="text-xs text-gray-500 hover:text-blue-600 transition-colors">
                                                             Reply
@@ -972,7 +935,6 @@ export function TaskModal () {
                 </div>
             </div>
 
-            {/* CSS for Animations */}
             <style jsx>{`
                 @keyframes flashInOut {
                     0%, 100% { opacity: 0; }
@@ -1024,2083 +986,7 @@ export function TaskModal () {
 
 
 
-export function TaskModaal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
-        const { board, group, taskList, ...cleanTask } = taskToShow
 
-        console.log('task', taskToShow)
-        const loggedUser = useSelector((state) => state.userModule.user)
-
-        const [isDone, setIsDone] = useState(taskToShow.status === 'done')
-        const [cardTitle, setCardTitle] = useState(taskToShow.title || '')
-        const [listName, setListName] = useState(taskToShow.group?.title || '')
-        const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)
-        const [description, setDescription] = useState(taskToShow.description || [])
-        const [attachments, setAttachments] = useState(taskToShow.attachments || [])
-        const [checklists, setChecklists] = useState(taskToShow.checklists || [])
-        const [newChecklistItem, setNewChecklistItem] = useState([])
-        const [activityLog, setActivityLog] = useState(taskToShow.activity || [])
-        const [location, setLocation] = useState(taskToShow.location || {})
-        const elGoogleSearch = useRef()
-        const [badges, setBadges] = useState(taskToShow.badges || [])
-        const [members, setMembers] = useState(taskToShow.members || [])
-        const [boardMembers, setBoardMembers] = useState(taskToShow.board.members || [])
-        const [date, setDate] = useState(taskToShow.dueDate || "")
-        const dateInputRef = useRef(null)
-        const activityInputRef = useRef(null)
-
-        const [showLabels, setShowLabels] = useState(true)
-        const [showMembers, setShowMembers] = useState(true)
-        const [showCustomFields, setShowCustomFields] = useState(true)
-        const [showDate, setShowDate] = useState(true)
-        const [showMaps, setShowMaps] = useState(true)
-        const [showChecklist, setShowChecklist] = useState(false)
-        const [showActivity, setShowActivity] = useState(false)
-        const [showAttachments, setShowAttachments] = useState(false)
-
-        const [activePicker, setActivePicker] = useState(null); 
-
-        const coverFileInputRef = useRef(null)
-
-        const [activeTab, setActiveTab] = useState('overview')
-        const [isDescriptionEditing, setIsDescriptionEditing] = useState(false)
-
-        const checklistItemCount = checklists.reduce((acc, list) => acc + list.todos.length, 0)
-        const completedItemCount = checklists.reduce((acc, list) =>
-                acc + list.todos.filter(todo => todo.isDone).length, 0)
-
-
-        function MembersPicker({ members, boardMembersToShow, onAddMember, onRemoveMember, onClose }) {
-                return (
-                        <div className="picker-content">
-                                <div className="picker-header">
-                                        <h3>Members</h3>
-                                        <button className="task-modal-close" onClick={onClose}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
-                                                </svg>
-                                        </button>
-                                </div>
-                                <div className="search-container">
-                                        <input type="text" placeholder="Search members" />
-                                </div>
-                                <div>
-                                        <h4>Card members</h4>
-                                        <div className="members-list">
-                                                {members.map(member => (
-                                                        <div key={member.id} className="member-item just-flex" onClick={() => onRemoveMember(member)}>
-                                                                {member.imgUrl ? (
-                                                                        <div className="just-flex">
-                                                                                <div className="user-circle" style={{ backgroundImage: `url(${member.imgUrl})` }}></div>
-                                                                                <span>{member.fullname}</span>
-                                                                        </div>
-                                                                ) : (
-                                                                        <div className="just-flex">
-                                                                                <div className="user-circle">{member.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{member.fullname?.split(' ')[1][0]?.toUpperCase() || ''}</div>
-                                                                                <span>{member.fullname}</span>
-                                                                        </div>
-                                                                )}
-                                                                <button className="task-modal-close" onClick={() => onRemoveMember(member)}>
-                                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                </button>
-                                                        </div>
-                                                ))}
-                                        </div>
-                                </div>
-                                <div>
-                                        <h4>Board members</h4>
-                                        <div className="members-list">
-                                                {boardMembersToShow.map(member => (
-                                                        <div key={member.id} className="member-item just-flex" onClick={() => onAddMember(member)}>
-                                                                {member.imgUrl ? (
-                                                                        <div className="just-flex">
-                                                                                <div className="user-circle" style={{ backgroundImage: `url(${member.imgUrl})` }}></div>
-                                                                                <span>{member.fullname}</span>
-                                                                        </div>
-                                                                ) : (
-                                                                        <div className="just-flex">
-                                                                                <div className="user-circle">{member.fullname?.split(' ')[0][0]?.toUpperCase() || ''}{member.fullname?.split(' ')[1][0]?.toUpperCase() || ''}</div>
-                                                                                <span>{member.fullname}</span>
-                                                                        </div>
-                                                                )}
-                                                                <button className="task-modal-close" onClick={() => onAddMember(member)}>
-                                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                </button>
-                                                        </div>
-                                                ))}
-                                        </div>
-                                </div>
-                        </div>
-                )
-        }
-
-        function LabelsPicker({ cardLabels, groupLabels, onToggleLabel, onSaveLabelChange, onDeleteLabel, onClose }) {
-                const [showChangeALabel, setShowChangeALabel] = useState(false)
-                const [currentLabelText, setCurrentLabelText] = useState('')
-                const [previousLabelColor, setPreviousLabelColor] = useState('')
-                const [currentLabelColor, setCurrentLabelColor] = useState('')
-
-                function onChangeCurrentLabelColor(ev) {
-                        setCurrentLabelColor(ev.target.style.backgroundColor)
-                }
-
-                function onChangeCurrentLabelText(ev) {
-                        setCurrentLabelText(ev.target.value)
-                }
-
-                return (
-                        <div className="picker-content">
-                                {showChangeALabel ? (
-                                        <>
-                                                <div className="picker-header">
-                                                        <button className="back-btn" onClick={() => setShowChangeALabel(false)}>
-                                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C6.90237 12.3166 6.90237 11.6834 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z" fill="currentColor"/>
-                                                                </svg>
-                                                        </button>
-                                                        <h3>Edit label</h3>
-                                                        <button className="task-modal-close" onClick={onClose}>
-                                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                                </svg>
-                                                        </button>
-                                                </div>
-                                                <div className="edit-label-content">
-                                                        <div className="label-preview" style={{ backgroundColor: currentLabelColor }}></div>
-                                                        <div className="title-section">
-                                                                <label>Title</label>
-                                                                <input type="text" className="title-input" value={currentLabelText} onChange={onChangeCurrentLabelText} />
-                                                        </div>
-                                                        <div className="colors-section">
-                                                                <label>Select a color</label>
-                                                                <div className="color-grid">
-                                                                        <button className={`color-btn ${currentLabelColor === '#4BCE97' ? 'selected' : ''}`} style={{ backgroundColor: '#4BCE97' }} onClick={onChangeCurrentLabelColor}></button>
-                                                                        <button className={`color-btn ${currentLabelColor === '#F5CD47' ? 'selected' : ''}`} style={{ backgroundColor: '#F5CD47' }} onClick={onChangeCurrentLabelColor}></button>
-                                                                        <button className={`color-btn ${currentLabelColor === '#FAA53D' ? 'selected' : ''}`} style={{ backgroundColor: '#FAA53D' }} onClick={onChangeCurrentLabelColor}></button>
-                                                                        <button className={`color-btn ${currentLabelColor === '#F87168' ? 'selected' : ''}`} style={{ backgroundColor: '#F87168' }} onClick={onChangeCurrentLabelColor}></button>
-                                                                        <button className={`color-btn ${currentLabelColor === '#9F8FEF' ? 'selected' : ''}`} style={{ backgroundColor: '#9F8FEF' }} onClick={onChangeCurrentLabelColor}></button>
-                                                                        
-                                                                </div>
-                                                                <button className="remove-color-btn" onClick={() => { setShowChangeALabel(false); onDeleteLabel(); }}>
-                                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
-                                                                        </svg>
-                                                                        Remove color
-                                                                </button>
-                                                        </div>
-                                                        <div className="label-actions">
-                                                                <button className="save-btn" onClick={() => { setShowChangeALabel(false); onSaveLabelChange(); }}>Save</button>
-                                                                <button className="delete-btn" onClick={() => { setShowChangeALabel(false); onDeleteLabel(); }}>Delete</button>
-                                                        </div>
-                                                </div>
-                                        </>
-                                ) : (
-                                        <>
-                                                <div className="picker-header">
-                                                        <h3>Labels</h3>
-                                                        <button className="task-modal-close" onClick={onClose}>
-                                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                                </svg>
-                                                        </button>
-                                                </div>
-                                                <div className="search-container">
-                                                        <input type="text" placeholder="Search labels..." />
-                                                </div>
-                                                <div>
-                                                        <h4>Labels</h4>
-                                                        <div className="labels-list">
-                                                                {groupLabels.map((label) => {
-                                                                        const isChecked = cardLabels.some((l) => l.color === label.color)
-                                                                        return (
-                                                                                <label className="label-item" key={label.color}>
-                                                                                        <div className="label-checkbox">
-                                                                                                <input type="checkbox" checked={isChecked} onChange={() => onToggleLabel(label)} />
-                                                                                        </div>
-                                                                                        <div className="label-color" style={{ backgroundColor: label.color }} />
-                                                                                        <button className="edit-label" onClick={() => {
-                                                                                                setCurrentLabelText(label.title)
-                                                                                                setCurrentLabelColor(label.color)
-                                                                                                setPreviousLabelColor(label.color)
-                                                                                                setShowChangeALabel(true)
-                                                                                        }}>
-                                                                                                <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                                        <path fillRule="evenodd" clipRule="evenodd" d="M7.82034 14.4893L9.94134 16.6103L18.4303 8.12131L16.3093 6.00031H16.3073L7.82034 14.4893ZM17.7233 4.58531L19.8443 6.70731C20.6253 7.48831 20.6253 8.7543 19.8443 9.53531L10.0873 19.2933L5.13734 14.3433L14.8943 4.58531C15.2853 4.19531 15.7973 4.00031 16.3093 4.00031C16.8203 4.00031 17.3323 4.19531 17.7233 4.58531ZM5.20094 20.4097C4.49794 20.5537 3.87694 19.9327 4.02094 19.2297L4.80094 15.4207L9.00994 19.6297L5.20094 20.4097Z" fill="currentColor"/>
-                                                                                                </svg>
-                                                                                        </button>
-                                                                                </label>
-                                                                        )
-                                                                })}
-                                                        </div>
-                                                </div>
-                                                <button className="create-label-btn" onClick={() => {
-                                                        setCurrentLabelText('')
-                                                        setCurrentLabelColor('#4BCE97')
-                                                        setShowChangeALabel(true)
-                                                }}>Create a new label</button>
-                                                <div className="just-margin"></div>
-                                                <div className="color-blind-toggle">
-                                                        <label><input type="checkbox" /> <span>Enable colorblind friendly mode</span></label>
-                                                </div>
-                                        </>
-                                )}
-                        </div>
-                )
-        }
-
-        function ChecklistsPicker({ onAddChecklist, onClose }) {
-                const [newChecklistTitle, setNewChecklistTitle] = useState('')
-                return (
-                        <div className="picker-content">
-                                <div className="picker-header">
-                                        <h3>Add checklist</h3>
-                                        <button className="task-modal-close" onClick={onClose}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                </svg>
-                                        </button>
-                                </div>
-                                <div className="checklist-content">
-                                        <div className="title-section">
-                                                <label>Title</label>
-                                                <input type="text" className="title-input" value={newChecklistTitle} onChange={(ev) => setNewChecklistTitle(ev.target.value)} />
-                                        </div>
-                                        <div className="copy-section">
-                                                <label>Copy items from...</label>
-                                                <div className="copy-select">
-                                                        <select defaultValue="(none)">
-                                                                {checklists.map(checklist => (
-                                                                        <option key={checklist.id} value={checklist.id}>{checklist.title}</option>
-                                                                ))}
-                                                        </select>
-                                                </div>
-                                        </div>
-                                        <button className="add-checklist-btn" onClick={() => onAddChecklist(newChecklistTitle)}>Add</button>
-                                </div>
-                        </div>
-                )
-        }
-
-        function AttachmentsPicker({ onInsertAttachment, onClose }) {
-                const [attachmentFile, setAttachmentFile] = useState(null)
-                const [attachmentLink, setAttachmentLink] = useState("")
-                const [attachmentText, setAttachmentText] = useState("")
-                const fileInputRef = useRef(null)
-
-                function onFileSelected(ev) {
-                        const file = ev.target.files?.[0]
-                        if (file) setAttachmentFile(file)
-                }
-
-                return (
-                        <div className="picker-content">
-                                <div className="picker-header">
-                                        <div className="header-with-icon">
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z" fill="currentColor"/>
-                                                </svg>
-                                        </div>
-                                        <h3>Attach</h3>
-                                        <button className="task-modal-close" onClick={onClose}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                </svg>
-                                        </button>
-                                </div>
-                                <div className="attachment-content">
-                                        <input ref={fileInputRef} type="file" style={{ display: "none" }} onChange={onFileSelected} />
-                                        <div className="file-upload-section">
-                                                <h4>Attach a file from your computer</h4>
-                                                <p className="upload-hint">You can also drag and drop files to upload them.</p>
-                                                <button className="choose-file-btn" onClick={() => fileInputRef.current.click()}>
-                                                        Choose a file
-                                                </button>
-                                                {attachmentFile && (
-                                                        <p style={{ marginTop: "8px", color: "#026aa7" }}>
-                                                                Chosen file: <strong>{attachmentFile.name}</strong>
-                                                        </p>
-                                                )}
-                                        </div>
-                                        <div className="link-section">
-                                                Search or paste a link
-                                                <div className="link-input-container">
-                                                        <input type="text" placeholder="Find recent links or paste a new link" className="link-input" value={attachmentLink} onChange={(ev) => setAttachmentLink(ev.target.value)} />
-                                                </div>
-                                                Display text (optional)
-                                                <div className="display-text-container">
-                                                        <input type="text" placeholder="Text to display" className="display-text-input" value={attachmentText} onChange={(ev) => setAttachmentText(ev.target.value)} />
-                                                </div>
-                                        </div>
-                                        <div className="popup-footer">
-                                                <button className="cancel-btn" onClick={onClose}>Cancel</button>
-                                                <button className="insert-btn" onClick={(ev) => onInsertAttachment(ev, attachmentFile, attachmentLink, attachmentText)}>Insert</button>
-                                        </div>
-                                </div>
-                        </div>
-                )
-        }
-
-        function LocationPicker({ onPlaceChange, onClose }) {
-                return (
-                        <div className="picker-content">
-                                <div className="picker-header">
-                                        <h3>Add location</h3>
-                                        <button className="task-modal-close" onClick={onClose}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                </svg>
-                                        </button>
-                                </div>
-                                <div className="location-content">
-                                        {/* Uncomment and adjust if Google Maps integration is needed */}
-                                        {/* {isLoaded && <StandaloneSearchBox libraries={["places"]} onPlacesChanged={onPlaceChange} onLoad={(ref) => elGoogleSearch.current = ref}>
-                                                <div className="search-container">
-                                                        <input type="text" placeholder="Search Google Maps" className="location-input"/>
-                                                </div>
-                                        </StandaloneSearchBox>} */}
-                                </div>
-                        </div>
-                )
-        }
-
-        function CustomFieldsPicker({ badges, onCreateField, onClose }) {
-                const [showFieldsEditor, setShowFieldsEditor] = useState(false)
-                const [newFieldId, setNewFieldId] = useState(null)
-                const [newFieldTitle, setNewFieldTitle] = useState('')
-                const [newFieldOptions, setNewFieldOptions] = useState([])
-                const [newFieldOption, setNewFieldOption] = useState('')
-
-                return (
-                        <div className="picker-content">
-                                {!showFieldsEditor ? (
-                                        <>
-                                                <div className="picker-header">
-                                                        <div className="header-with-icon tooltip" data-tip="Select “New field” to build a completely customizable field. Fields will be added to every card on the board.">
-                                                                <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path fillRule="evenodd" clipRule="evenodd" d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="currentColor"></path>
-                                                                        <path d="M11 11C11 10.4477 11.4477 10 12 10C12.5523 10 13 10.4477 13 11V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V11Z" fill="currentColor"></path>
-                                                                        <path d="M13 8C13 8.55228 12.5523 9 12 9C11.4477 9 11 8.55228 11 8C11 7.44772 11.4477 7 12 7C12.5523 7 13 7.44772 13 8Z" fill="currentColor"></path>
-                                                                </svg>
-                                                        </div>
-                                                        <h3>Custom Fields</h3>
-                                                        <button className="task-modal-close" onClick={onClose}>
-                                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                                </svg>
-                                                        </button>
-                                                </div>
-                                                <div className="custom-fields-content">
-                                                        <div className="fields-list">
-                                                                {badges.map((badge) => (
-                                                                        <div className="field-item" key={badge.id} onClick={() => {
-                                                                                setNewFieldId(badge.id)
-                                                                                setNewFieldTitle(badge.categ)
-                                                                                setShowFieldsEditor(true)
-                                                                                setNewFieldOptions(badge.badgeOptions)
-                                                                        }}>
-                                                                                <div className="field-grip">
-                                                                                        <svg width="24" height="24" viewBox="0 0 24 24" role="presentation">
-                                                                                                <g fill="currentcolor" fillRule="evenodd">
-                                                                                                        <circle cx="10" cy="8" r="1"></circle>
-                                                                                                        <circle cx="14" cy="8" r="1"></circle>
-                                                                                                        <circle cx="10" cy="16" r="1"></circle>
-                                                                                                        <circle cx="14" cy="16" r="1"></circle>
-                                                                                                        <circle cx="10" cy="12" r="1"></circle>
-                                                                                                        <circle cx="14" cy="12" r="1"></circle>
-                                                                                                </g>
-                                                                                        </svg>
-                                                                                </div>
-                                                                                <div className="field-icon">
-                                                                                        <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M6 8C6 8.55228 5.55228 9 5 9C4.44772 9 4 8.55228 4 8C4 7.44772 4.44772 7 5 7C5.55228 7 6 7.44772 6 8ZM8 8C8 9.65685 6.65685 11 5 11C3.34315 11 2 9.65685 2 8C2 6.34315 3.34315 5 5 5C6.65685 5 8 6.34315 8 8ZM6 16C6 16.5523 5.55228 17 5 17C4.44772 17 4 16.5523 4 16C4 15.4477 4.44772 15 5 15C5.55228 15 6 15.4477 6 16ZM8 16C8 17.6569 6.65685 19 5 19C3.34315 19 2 17.6569 2 16C2 14.3431 3.34315 13 5 13C6.65685 13 8 14.3431 8 16ZM19 7H13C12.4477 7 12 7.44772 12 8C12 8.55228 12.4477 9 13 9H19C19.5523 9 20 8.55228 20 8C20 7.44772 19.5523 7 19 7ZM13 5C11.3431 5 10 6.34315 10 8C10 9.65685 11.3431 11 13 11H19C20.6569 11 22 9.65685 22 8C22 6.34315 20.6569 5 19 5H13ZM13 15H16C16.5523 15 17 15.4477 17 16C17 16.5523 16.5523 17 16 17H13C12.4477 17 12 16.5523 12 16C12 15.4477 12.4477 15 13 15ZM10 16C10 14.3431 11.3431 13 13 13H16C17.6569 13 19 14.3431 19 16C19 17.6569 17.6569 19 16 19H13C11.3431 19 10 17.6569 10 16Z" fill="currentColor"></path>
-                                                                                        </svg>
-                                                                                </div>
-                                                                                <span className="field-name">{badge.categ}</span>
-                                                                                <button className="field-chevron">
-                                                                                        <svg width="16" height="16" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                                <path d="M16.7071 12.7071L9.63606 19.7781C9.24554 20.1687 8.61237 20.1687 8.22185 19.7781C7.83132 19.3876 7.83132 18.7544 8.22185 18.3639L14.5858 12L8.22185 5.636C7.83132 5.24548 7.83132 4.61231 8.22185 4.22179C8.61237 3.83126 9.24554 3.83126 9.63606 4.22179L16.7071 11.2929C17.0977 11.6834 17.0977 12.3165 16.7071 12.7071Z" fill="currentColor"></path>
-                                                                                        </svg>
-                                                                                </button>
-                                                                        </div>
-                                                                ))}
-                                                        </div>
-                                                        <button className="new-field-btn" onClick={() => { setShowFieldsEditor(true); }}>
-                                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z" fill="currentColor"/>
-                                                                </svg>
-                                                                New field
-                                                        </button>
-                                                </div>
-                                        </>
-                                ) : (
-                                        <>
-                                                <div className="picker-header">
-                                                        <button className="back-btn" onClick={() => {
-                                                                setShowFieldsEditor(false)
-                                                                setNewFieldTitle('')
-                                                                setNewFieldOptions([])
-                                                                setNewFieldOption('')
-                                                                setNewFieldId('')
-                                                        }}>
-                                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C6.90237 12.3166 6.90237 11.6834 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z" fill="currentColor"/>
-                                                                </svg>
-                                                        </button>
-                                                        <h3>Edit Field</h3>
-                                                        <button className="task-modal-close" onClick={onClose}>
-                                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                                </svg>
-                                                        </button>
-                                                </div>
-                                                <div className="edit-field-content">
-                                                        <div className="field-section">
-                                                                <label>Title</label>
-                                                                <input type="text" className="title-input" value={newFieldTitle} onChange={(ev) => setNewFieldTitle(ev.target.value)} />
-                                                        </div>
-                                                        <div className="field-section">
-                                                                <label>Type</label>
-                                                                <select className="type-select" disabled>
-                                                                        <option>Dropdown</option>
-                                                                </select>
-                                                        </div>
-                                                        <div className="field-section">
-                                                                <label>Options</label>
-                                                                <div className="options-list">
-                                                                        {newFieldOptions.map((option, index) => (
-                                                                                <div className="option-item" key={index}>
-                                                                                        <input type="text" className="option-input" value={option} disabled />
-                                                                                        <button className="delete-option-btn" onClick={() => setNewFieldOptions(newFieldOptions.filter((_, i) => i !== index))}>Delete</button>
-                                                                                </div>
-                                                                        ))}
-                                                                </div>
-                                                                <div className="options-input">
-                                                                        <input type="text" placeholder="Add item..." className="option-input" value={newFieldOption} onChange={(ev) => setNewFieldOption(ev.target.value)} />
-                                                                        <button className="add-btn" onClick={() => { setNewFieldOptions([...newFieldOptions, newFieldOption]); setNewFieldOption(''); }}>Add</button>
-                                                                </div>
-                                                        </div>
-                                                        <div className="field-section checkbox-section">
-                                                                <label className="checkbox-label"><input type="checkbox" checked /><span>Show field on front of card</span></label>
-                                                        </div>
-                                                        <button className="save-field-btn" onClick={() => onCreateField(newFieldId, newFieldTitle, newFieldOptions)}>Create</button>
-                                                </div>
-                                        </>
-                                )}
-                        </div>
-                )
-        }
-
-        function DatesPicker({ date, onSaveDates, onRemoveDates, onClose }) {
-                const [calendarMonth, setCalendarMonth] = useState(new Date())
-                const [isStartDateEnabled, setIsStartDateEnabled] = useState(false)
-                const [isDueDateEnabled, setIsDueDateEnabled] = useState(!!taskToShow.dueDate)
-                const [startDate, setStartDate] = useState(taskToShow.startDate || null)
-                const [dueDate, setDueDate] = useState(new Date(taskToShow.dueDate) || null)
-                const [dueTime, setDueTime] = useState('8:43 PM')
-                const [dueDateReminder, setDueDateReminder] = useState('1 Day before')
-
-                function prevMonth() {
-                        setCalendarMonth(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1))
-                }
-
-                function nextMonth() {
-                        setCalendarMonth(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1))
-                }
-
-                function getCalendarDays(currentMonth) {
-                        const startOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1)
-                        const startDay = startOfMonth.getDay()
-                        const endOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0)
-                        const daysInMonth = endOfMonth.getDate()
-                        const days = []
-                        for (let i = 0; i < startDay; i++) {
-                                const dayNum = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 0).getDate() - (startDay - 1 - i)
-                                days.push({
-                                        date: new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, dayNum), isCurrentMonth: false,
-                                })
-                        }
-                        for (let d = 1; d <= daysInMonth; d++) {
-                                days.push({
-                                        date: new Date(currentMonth.getFullYear(), currentMonth.getMonth(), d), isCurrentMonth: true,
-                                })
-                        }
-                        const totalCellsSoFar = days.length
-                        const remainingCells = 42 - totalCellsSoFar
-                        for (let r = 1; r <= remainingCells; r++) {
-                                days.push({
-                                        date: new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, r), isCurrentMonth: false,
-                                })
-                        }
-                        return days
-                }
-
-                function onDayClick(clickedDateObj) {
-                        if (isDueDateEnabled) {
-                                setDueDate(clickedDateObj)
-                        } else if (isStartDateEnabled) {
-                                setStartDate(clickedDateObj)
-                        }
-                }
-
-                function formatMMDDYYYY(dateObj) {
-                        if (!dateObj) return ''
-                        const mm = (dateObj.getMonth() + 1).toString().padStart(2, '0')
-                        const dd = dateObj.getDate().toString().padStart(2, '0')
-                        const yyyy = dateObj.getFullYear()
-                        return `${mm}/${dd}/${yyyy}`
-                }
-
-                return (
-                        <div className="picker-content date-picker-content">
-                                <div className="picker-header">
-                                        <h3>Dates</h3>
-                                        <button className="task-modal-close" onClick={onClose}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                </svg>
-                                        </button>
-                                </div>
-                                <div className="calendar-header">
-                                        <button className="nav-btn" onClick={prevMonth}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C6.90237 12.3166 6.90237 11.6834 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z" fill="currentColor"/>
-                                                </svg>
-                                        </button>
-                                        <span className="month-year">{calendarMonth.toLocaleString('default', { month: 'long', year: 'numeric' })}</span>
-                                        <button className="nav-btn" onClick={nextMonth}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M8.29289 4.29289C7.90237 4.68342 7.90237 5.31658 8.29289 5.70711L14.5858 12L8.29289 18.2929C7.90237 18.6834 7.90237 19.3166 8.29289 19.7071C8.68342 20.0976 9.31658 20.0976 9.70711 19.7071L16.7071 12.7071C17.0976 12.3166 17.0976 11.6834 16.7071 11.2929L9.70711 4.29289C9.31658 3.90237 8.68342 3.90237 8.29289 4.29289Z" fill="currentColor"/>
-                                                </svg>
-                                        </button>
-                                </div>
-                                <div className="calendar-grid">
-                                        <div className="weekday">Sun</div>
-                                        <div className="weekday">Mon</div>
-                                        <div className="weekday">Tue</div>
-                                        <div className="weekday">Wed</div>
-                                        <div className="weekday">Thu</div>
-                                        <div className="weekday">Fri</div>
-                                        <div className="weekday">Sat</div>
-                                        {getCalendarDays(calendarMonth).map((dayObj, idx) => {
-                                                const dayNumber = dayObj.date.getDate()
-                                                const classes = ['day']
-                                                if (!dayObj.isCurrentMonth) classes.push('other-month')
-                                                if (dueDate && dayObj.date.toDateString() === new Date(dueDate).toDateString()) classes.push('current')
-                                                return (
-                                                        <div key={idx} className={classes.join(' ')} onClick={() => onDayClick(dayObj.date)}>
-                                                                {dayNumber}
-                                                        </div>
-                                                )
-                                        })}
-                                </div>
-                                <div className="date-options">
-                                        <div className="date-section">
-                                                <label>Due date</label>
-                                                <div className="date-inputs">
-                                                        <div className="date-input">
-                                                                <input type="checkbox" checked={isDueDateEnabled} onChange={(e) => {
-                                                                        setIsDueDateEnabled(e.target.checked)
-                                                                        if (!e.target.checked) setDueDate(null)
-                                                                }} />
-                                                                <input type="text" value={(dueDate && isDueDateEnabled) ? formatMMDDYYYY(dueDate) : ''} disabled={!isDueDateEnabled} />
-                                                        </div>
-                                                        <input type="text" value={dueTime} className="time-input" onChange={(e) => setDueTime(e.target.value)} disabled={!isDueDateEnabled} />
-                                                </div>
-                                        </div>
-                                        <div className="reminder-section">
-                                                <label>Set due date reminder</label>
-                                                <select className="reminder-select" value={dueDateReminder} onChange={(e) => setDueDateReminder(e.target.value)} disabled={!isDueDateEnabled}>
-                                                        <option value="None">None</option>
-                                                        <option value="At time of due date">At time of due date</option>
-                                                        <option value="5 minutes before">5 minutes before</option>
-                                                        <option value="15 minutes before">15 minutes before</option>
-                                                        <option value="1 Hour before">1 Hour before</option>
-                                                        <option value="1 Day before">1 Day before</option>
-                                                        <option value="2 Days before">2 Days before</option>
-                                                </select>
-                                                <p className="reminder-note">Reminders will be sent to all members and watchers of this card.</p>
-                                        </div>
-                                </div>
-                                <div className="date-actions">
-                                        <button className="save-btn" onClick={() => onSaveDates(isStartDateEnabled, startDate, isDueDateEnabled, dueDate, dueTime, dueDateReminder)}>Save</button>
-                                        <button className="remove-btn" onClick={onRemoveDates}>Remove</button>
-                                </div>
-                        </div>
-                )
-        }
-
-        function CoverPicker({ coverColor, coverImage, coverSize, onPickColor, onPickImage, onPickSize, onRemoveCover, onClose }) {
-                return (
-                        <div className="picker-content">
-                                <div className="picker-header">
-                                        <h3>Cover</h3>
-                                        <button className="task-modal-close" onClick={onClose}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                </svg>
-                                        </button>
-                                </div>
-                                <div className="cover-content">
-                                        <div className="size-section">
-                                                <label>Size</label>
-                                                <div className="size-options">
-                                                        <button className={`size-preview small ${coverSize === 'small' ? 'selected' : ''}`} onClick={() => onPickSize('small')}></button>
-                                                        <button className={`size-preview large ${coverSize === 'large' ? 'selected' : ''}`} onClick={() => onPickSize('large')}></button>
-                                                </div>
-                                                <button className="remove-cover-btn" onClick={onRemoveCover}>Remove cover</button>
-                                        </div>
-                                        <div className="colors-section">
-                                                <label>Colors</label>
-                                                <div className="color-grid">
-                                                        <button className={`color-btn ${coverColor === '#4BCE97' ? 'selected' : ''}`} style={{ backgroundColor: '#4BCE97' }} onClick={() => onPickColor('#4BCE97')}></button>
-                                                        <button className={`color-btn ${coverColor === '#F5CD47' ? 'selected' : ''}`} style={{ backgroundColor: '#F5CD47' }} onClick={() => onPickColor('#F5CD47')}></button>
-                                                        <button className={`color-btn ${coverColor === '#FAA53D' ? 'selected' : ''}`} style={{ backgroundColor: '#FAA53D' }} onClick={() => onPickColor('#FAA53D')}></button>
-                                                        <button className={`color-btn ${coverColor === '#F87168' ? 'selected' : ''}`} style={{ backgroundColor: '#F87168' }} onClick={() => onPickColor('#F87168')}></button>
-                                                        <button className={`color-btn ${coverColor === '#9F8FEF' ? 'selected' : ''}`} style={{ backgroundColor: '#9F8FEF' }} onClick={() => onPickColor('#9F8FEF')}></button>
-                                                        
-                                                </div>
-                                                <div className="color-blind-toggle">
-                                                        <label><input type="checkbox" /><span>Enable colorblind friendly mode</span></label>
-                                                </div>
-                                        </div>
-                                        <div className="attachments-section">
-                                                <label>Attachments</label>
-                                                <input type="file" style={{ display: 'none' }} ref={coverFileInputRef} onChange={(ev) => {
-                                                        const file = ev.target.files?.[0]
-                                                        if (file) {
-                                                                const reader = new FileReader()
-                                                                reader.onload = (event) => onPickImage(event.target.result)
-                                                                reader.readAsDataURL(file)
-                                                        }
-                                                }} />
-                                                <button className="upload-btn" onClick={() => coverFileInputRef.current.click()}>Upload a cover image</button>
-                                                <p className="upload-tip">Tip: Drag an image on to the card to upload it.</p>
-                                        </div>
-                                        {/* Unsplash section can be added here if needed */}
-                                </div>
-                        </div>
-                )
-        }
-
-        function MovePicker({ boards, selectedBoardId, selectedGroupId, selectedPosition, onSetSelectedBoardId, onSetSelectedGroupId, onSetSelectedPosition, onMoveCard, onClose }) {
-                return (
-                        <div className="picker-content">
-                                <div className="picker-header">
-                                        <h3>Move card</h3>
-                                        <button className="task-modal-close" onClick={onClose}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                </svg>
-                                        </button>
-                                </div>
-                                <div className="move-card-content">
-                                        <div className="select-section">
-                                                <h4>Select destination</h4>
-                                                <div className="select-group">
-                                                        <label>Board</label>
-                                                        <select className="board-select" value={selectedBoardId} onChange={(e) => {
-                                                                onSetSelectedBoardId(e.target.value)
-                                                                onSetSelectedGroupId('')
-                                                                onSetSelectedPosition(1)
-                                                        }}>
-                                                                {boards.map((b) => (
-                                                                        <option key={b._id} value={b._id}>{b.title}</option>
-                                                                ))}
-                                                        </select>
-                                                </div>
-                                                <div className="select-row">
-                                                        <div className="select-group">
-                                                                <label>List</label>
-                                                                <select className="list-select" value={selectedGroupId} onChange={(e) => {
-                                                                        onSetSelectedGroupId(e.target.value)
-                                                                        onSetSelectedPosition(1)
-                                                                }}>
-                                                                        {boards.find(b => b._id === selectedBoardId)?.groups.map((group) => (
-                                                                                <option key={group.id} value={group.id}>{group.title}</option>
-                                                                        ))}
-                                                                </select>
-                                                        </div>
-                                                        <div className="select-group">
-                                                                <label>Position</label>
-                                                                <select className="position-select" value={selectedPosition} onChange={(e) => onSetSelectedPosition(+e.target.value)}>
-                                                                        {(() => {
-                                                                                const grp = boards.find(b => b._id === selectedBoardId)?.groups.find(g => g.id === selectedGroupId)
-                                                                                const numTasks = grp ? grp.tasks.length : 0
-                                                                                const positions = []
-                                                                                for (let i = 1; i <= numTasks + 1; i++) positions.push(i)
-                                                                                return positions.map((pos) => (
-                                                                                        <option key={pos} value={pos}>{pos}</option>
-                                                                                ))
-                                                                        })()}
-                                                                </select>
-                                                        </div>
-                                                </div>
-                                        </div>
-                                        <button className="move-btn" onClick={onMoveCard}>Move</button>
-                                </div>
-                        </div>
-                )
-        }
-
-        function CopyPicker({ copyTitle, keepChecklists, keepLabels, keepMembers, onSetCopyTitle, onSetKeepChecklists, onSetKeepLabels, onSetKeepMembers, onCopyCard, onClose }) {
-                return (
-                        <div className="picker-content">
-                                <div className="picker-header">
-                                        <h3>Copy card</h3>
-                                        <button className="task-modal-close" onClick={onClose}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                </svg>
-                                        </button>
-                                </div>
-                                <div className="copy-card-content">
-                                        <div className="title-section">
-                                                <label>Name</label>
-                                                <input type="text" className="title-input" value={copyTitle} onChange={(e) => onSetCopyTitle(e.target.value)} />
-                                        </div>
-                                        <div className="keep-section">
-                                                <label>Keep...</label>
-                                                <div className="keep-options">
-                                                        <label className="keep-option">
-                                                                <input type="checkbox" checked={keepChecklists} onChange={(e) => onSetKeepChecklists(e.target.checked)} />
-                                                                <span>Checklists ({taskToShow.checklists?.length || 0})</span>
-                                                        </label>
-                                                        <label className="keep-option">
-                                                                <input type="checkbox" checked={keepLabels} onChange={(e) => onSetKeepLabels(e.target.checked)} />
-                                                                <span>Labels ({taskToShow.labelIds?.length || 0})</span>
-                                                        </label>
-                                                        <label className="keep-option">
-                                                                <input type="checkbox" checked={keepMembers} onChange={(e) => onSetKeepMembers(e.target.checked)} />
-                                                                <span>Members ({taskToShow.memberIds?.length || 0})</span>
-                                                        </label>
-                                                </div>
-                                        </div>
-                                        <div className="copy-to-section">
-                                                <h4>Copy to...</h4>
-                                                <div className="select-group">
-                                                        <label>Board</label>
-                                                        <select className="board-select" value={selectedBoardId} onChange={(e) => {
-                                                                setSelectedBoardId(e.target.value)
-                                                                setSelectedGroupId('')
-                                                                setSelectedPosition(1)
-                                                        }}>
-                                                                {boards.map((b) => (
-                                                                        <option key={b._id} value={b._id}>{b.title}</option>
-                                                                ))}
-                                                        </select>
-                                                </div>
-                                                <div className="select-row">
-                                                        <div className="select-group">
-                                                                <label>List</label>
-                                                                <select className="list-select" value={selectedGroupId} onChange={(e) => {
-                                                                        setSelectedGroupId(e.target.value)
-                                                                        setSelectedPosition(1)
-                                                                }}>
-                                                                        {boards.find(b => b._id === selectedBoardId)?.groups.map((group) => (
-                                                                                <option key={group.id} value={group.id}>{group.title}</option>
-                                                                        ))}
-                                                                </select>
-                                                        </div>
-                                                        <div className="select-group">
-                                                                <label>Position</label>
-                                                                <select className="position-select" value={selectedPosition} onChange={(e) => setSelectedPosition(+e.target.value)}>
-                                                                        {(() => {
-                                                                                const grp = boards.find(b => b._id === selectedBoardId)?.groups.find(g => g.id === selectedGroupId)
-                                                                                const numTasks = grp ? grp.tasks.length : 0
-                                                                                const positions = []
-                                                                                for (let i = 1; i <= numTasks + 1; i++) positions.push(i)
-                                                                                return positions.map((pos) => (
-                                                                                        <option key={pos} value={pos}>{pos}</option>
-                                                                                ))
-                                                                        })()}
-                                                                </select>
-                                                        </div>
-                                                </div>
-                                        </div>
-                                        <button className="create-btn" onClick={onCopyCard}>Create card</button>
-                                </div>
-                        </div>
-                )
-        }
-
-        function MirrorPicker({ onClose }) {
-                return (
-                        <div className="picker-content">
-                                <div className="picker-header">
-                                        <h3>Mirror card</h3>
-                                        <button className="task-modal-close" onClick={onClose}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                </svg>
-                                        </button>
-                                </div>
-                                <div className="mirror-card-content">
-                                        <p className="mirror-description">Mirror this card to view or edit it from another board</p>
-                                        <div className="select-group">
-                                                <label>Board</label>
-                                                <select className="board-select">
-                                                        <option value="">Select...</option>
-                                                </select>
-                                        </div>
-                                        <button className="mirror-btn">Mirror</button>
-                                        <div className="mirror-info">
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z" fill="currentColor"/>
-                                                </svg>
-                                                <span>Only people with access to this board will be able to view this mirror card</span>
-                                        </div>
-                                </div>
-                        </div>
-                )
-        }
-
-        function SharePicker({ onClose }) {
-                return (
-                        <div className="picker-content">
-                                <div className="picker-header">
-                                        <h3>Share and more...</h3>
-                                        <button className="task-modal-close" onClick={onClose}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"/>
-                                                </svg>
-                                        </button>
-                                </div>
-                                <div className="share-card-content">
-                                        <div className="action-group">
-                                                <div className="action-item"><span>Print...</span></div>
-                                                <div className="action-item"><span>Export JSON</span></div>
-                                        </div>
-                                        <div className="divider"></div>
-                                        <div className="link-section">
-                                                <div className="link-group">
-                                                        <label>Link to this card</label>
-                                                        <div className="link-field">
-                                                                <input type="text" value="https://trello.com/c/BuO4VPb" readOnly />
-                                                        </div>
-                                                </div>
-                                                <button className="qr-button">Show QR Code</button>
-                                        </div>
-                                        <div className="embed-section">
-                                                <label>Embed this card</label>
-                                                <div className="embed-field">
-                                                        <input type="text" value="<blockquote class='trello-card'><a href=" readOnly />
-                                                </div>
-                                        </div>
-                                        <div className="email-section">
-                                                <label>Email for this card</label>
-                                                <div className="email-field">
-                                                        <input type="text" value="yampeleg+33xpv3jsiolwd2l937s+33zgyhC" readOnly />
-                                                </div>
-                                                <p className="email-note">Emails sent to this address will appear as a comment by you on the card</p>
-                                        </div>
-                                        <div className="card-info">
-                                                <span>Card #23</span>
-                                                <span>Added Feb 13, 2025, 4:34 PM</span>
-                                        </div>
-                                </div>
-                        </div>
-                )
-        }
-
-        async function handlePlaceChange(ev) {
-                let address = elGoogleSearch.current.getPlaces()
-                const newLocation = { lat: address[0].geometry.location.lat(), lng: address[0].geometry.location.lng(), name: address[0].name, zoom: 12 }
-                setLocation({ ...newLocation })
-                taskToShow.location = { ...newLocation }
-                await updateBoard(getSelectedBoard())
-        }
-
-        function onCoverFileSelected(ev) {
-                const file = ev.target.files?.[0]
-                if (!file) return
-                const reader = new FileReader()
-                reader.onload = (event) => {
-                        const dataUrl = event.target.result
-                        setCoverColor('')
-                        setCoverImage(dataUrl)
-                }
-                reader.readAsDataURL(file)
-        }
-
-        function onCreateField(newFieldId, newFieldTitle, newFieldOptions) {
-                if (!newFieldId) {
-                        setBadges(badges => [{
-                                id: Date.now(), categ: newFieldTitle, color: '',
-                                badgeOptions: newFieldOptions,
-                        }, ...badges])
-                } else {
-                        setBadges(badges => badges.map(badge => {
-                                if (badge.id === newFieldId) {
-                                        return { ...badge, categ: newFieldTitle, badgeOptions: newFieldOptions }
-                                }
-                                return badge
-                        }))
-                }
-                setNewFieldTitle('')
-                setNewFieldOptions([])
-        }
-
-        function dropDuplicateMembers(cardMembers, boardMembers) {
-                return boardMembers.reduce((acc, member) => {
-                        if (!cardMembers.some(m => m._id === member._id)) {
-                                acc.push(member)
-                        }
-                        return acc
-                }, [])
-        }
-
-        const [boardMembersToShow, setBoardMembersToShow] = useState(dropDuplicateMembers(members, boardMembers))
-
-        function onAddMember(member) {
-                setMembers(prev => [...prev, member])
-                setBoardMembersToShow(prev => prev.filter(m => m._id !== member._id))
-        }
-
-        function onRemoveMember(member) {
-                setMembers(prev => prev.filter(m => m._id !== member._id))
-                setBoardMembersToShow(prev => [...prev, member])
-        }
-
-        function onAddChecklist(title) {
-                setChecklists(prev => [...prev, { id: Date.now(), title, todos: [] }])
-        }
-
-        function dropDuplicateLabels(labels) {
-                return labels.reduce((acc, label) => {
-                        if (!acc.some(l => ((l.color === label.color)))) {
-                                acc.push(label)
-                        }
-                        return acc
-                }, [])
-        }
-
-        const [cardLabels, setCardLabels] = useState(dropDuplicateLabels(taskToShow.labels || []))
-        const [groupLabels, setGroupLabels] = useState(dropDuplicateLabels(taskToShow.board.labels || []))
-
-        function onToggleLabel(label) {
-                setCardLabels(prev => {
-                        const isAlreadyAssigned = prev.some(l => l.color === label.color)
-                        if (isAlreadyAssigned) {
-                                return prev.filter(l => l.color !== label.color)
-                        } else {
-                                return [...prev, label]
-                        }
-                })
-        }
-
-        function onSaveLabelChange() {
-                if (groupLabels.some(l => l.color === previousLabelColor)) {
-                        setGroupLabels(prev => prev.map(l => l.color === previousLabelColor ? { color: currentLabelColor, title: currentLabelText } : l))
-                } else {
-                        setGroupLabels(prev => [...prev, { color: currentLabelColor, title: currentLabelText }])
-                        setCardLabels(prev => [...prev, { color: currentLabelColor, title: currentLabelText }])
-                }
-        }
-
-        function onDeleteLabel() {
-                setGroupLabels(groupLabels.filter(l => l.color !== previousLabelColor))
-        }
-
-        const boards = useSelector((state) => state.boardModule.boards)
-        const currentBoard = taskToShow.board
-        const currentGroup = taskToShow.group
-        const [selectedBoardId, setSelectedBoardId] = useState(currentBoard?._id || '')
-        const [selectedGroupId, setSelectedGroupId] = useState(currentGroup?.id || '')
-        const [selectedPosition, setSelectedPosition] = useState(1)
-
-        function getSelectedBoard() {
-                return (boards.find((b) => b._id === selectedBoardId))
-        }
-
-        function getSelectedGroup() {
-                const board = getSelectedBoard()
-                if (!board) return null
-                return board.groups.find((g) => g.id === selectedGroupId)
-        }
-
-        function cleanBoard(board) {
-                const boardCopy = { ...board }
-                boardCopy.groups = board.groups.map(group => {
-                        const groupCopy = { ...group }
-                        groupCopy.tasks = group.tasks.map(task => {
-                                const { board, group, taskList, ...cleanTask } = task
-                                return cleanTask
-                        })
-                        return groupCopy
-                })
-                return boardCopy
-        }
-
-        async function onMoveCard() {
-                const targetBoard = getSelectedBoard()
-                const targetGroup = getSelectedGroup()
-                if (!targetBoard || !targetGroup) return
-
-                if (targetBoard._id === currentBoard._id) {
-                        const boardCopy = cleanBoard(currentBoard)
-                        const oldGroupIdx = boardCopy.groups.findIndex(g => g.id === currentGroup.id)
-                        if (oldGroupIdx >= 0) {
-                                const taskIdx = boardCopy.groups[oldGroupIdx].tasks.findIndex(t => t.id === taskToShow.id)
-                                if (taskIdx >= 0) {
-                                        boardCopy.groups[oldGroupIdx].tasks.splice(taskIdx, 1)
-                                }
-                        }
-                        const newGroupIdx = boardCopy.groups.findIndex(g => g.id === targetGroup.id)
-                        if (newGroupIdx < 0) return
-                        const { board, group, taskList, ...cleanTask } = taskToShow
-                        const tasksArray = boardCopy.groups[newGroupIdx].tasks
-                        const pos = Math.min(selectedPosition - 1, tasksArray.length)
-                        tasksArray.splice(pos, 0, cleanTask)
-                        const cleaned = cleanBoard(boardCopy)
-                        await updateBoard(cleaned)
-                        return
-                }
-                const boardCopyOld = cleanBoard(currentBoard)
-                const oldGroupIdx = boardCopyOld.groups.findIndex(g => g.id === currentGroup.id)
-                if (oldGroupIdx >= 0) {
-                        const taskIdx = boardCopyOld.groups[oldGroupIdx].tasks.findIndex(t => t.id === taskToShow.id)
-                        if (taskIdx >= 0) {
-                                boardCopyOld.groups[oldGroupIdx].tasks.splice(taskIdx, 1)
-                        }
-                }
-                const boardCopyNew = cleanBoard(targetBoard)
-                const newGroupIdx = boardCopyNew.groups.findIndex(g => g.id === targetGroup.id)
-                if (newGroupIdx < 0) return
-                const { board, group, taskList, ...cleanTask } = taskToShow
-                const tasksArr = boardCopyNew.groups[newGroupIdx].tasks
-                const pos = Math.min(selectedPosition - 1, tasksArr.length)
-                tasksArr.splice(pos, 0, cleanTask)
-                const cleanedOld = cleanBoard(boardCopyOld)
-                const cleanedNew = cleanBoard(boardCopyNew)
-                await updateBoard(cleanedOld)
-                await updateBoard(cleanedNew)
-        }
-
-        function onSaveDates(isStartDateEnabled, startDate, isDueDateEnabled, dueDate, dueTime, dueDateReminder) {
-                const finalStart = isStartDateEnabled && startDate ? startDate : null
-                let finalDue = isDueDateEnabled && dueDate ? dueDate : null
-                if (finalDue && dueTime) {
-                        const [hours, mins] = parseTime(dueTime)
-                        finalDue.setHours(hours, mins, 0, 0)
-                }
-                const updatedTask = {
-                        ...taskToShow, startDate: finalStart, dueDate: finalDue, dueDateReminder,
-                }
-                setDate(finalDue)
-        }
-
-        function onRemoveDates() {
-                setIsStartDateEnabled(false)
-                setStartDate(null)
-                setIsDueDateEnabled(false)
-                setDueDate(null)
-                setDueTime('')
-                setDueDateReminder('None')
-                const updatedTask = {
-                        ...taskToShow, startDate: null, dueDate: null, dueDateReminder: null,
-                }
-                setDate(null)
-        }
-
-        function parseTime(timeStr) {
-                const [time, period] = timeStr.split(' ')
-                const [hours, mins] = time.split(':')
-                return [hours, mins, period]
-        }
-
-        function onDateChange(e) {
-                setDate(e.target.value)
-        }
-
-        function onDateClick() {
-                dateInputRef.current?.showPicker()
-        }
-
-        async function saveTask() {
-                const boardCopy = {
-                        ...taskToShow.board, groups: taskToShow.board.groups.map(g => ({
-                                ...g, tasks: g.tasks.map(t => {
-                                        const { group, board, taskList, ...rest } = t
-                                        return { ...rest }
-                                })
-                        }))
-                }
-                const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id)
-                if (groupIdx === -1) return
-                const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id)
-                if (taskIdx === -1) return
-                const updatedTask = {
-                        ...taskToShow, title: cardTitle, description, status: isDone ? 'done' : 'in-progress', isWatching, members, attachments, checklists, activity: activityLog, badges, labels: cardLabels, location, startDate: isStartDateEnabled ? startDate : null, dueDate: isDueDateEnabled ? date : null, dueDateReminder: isDueDateEnabled ? dueDateReminder : null, style: {
-                                ...taskToShow.style, backgroundColor: coverColor || '', backgroundImage: coverImage || '', coverSize: coverSize || 'small',
-                        }, group: {
-                                ...taskToShow.group, title: listName
-                        }
-                }
-                const { group, board, taskList, ...cleanTask } = updatedTask
-                boardCopy.groups[groupIdx].tasks[taskIdx] = cleanTask
-                updateBoard(boardCopy).then(() => onSaveTaskOuter(cleanTask))
-        }
-
-        const [attachmentFile, setAttachmentFile] = useState(null)
-        const [attachmentLink, setAttachmentLink] = useState("")
-        const [attachmentText, setAttachmentText] = useState("")
-
-        function onInsertAttachment(ev, file, link, text) {
-                if (file) {
-                        const newAttachment = {
-                                id: Date.now(), path: file.name, date: Date.now(), text: text || file.name, type: 'file'
-                        }
-                        setAttachments((prev) => [...prev, newAttachment])
-                } else if (link) {
-                        const newAttachment = {
-                                id: Date.now(), path: link, date: Date.now(), text: text || link, type: 'link'
-                        }
-                        setAttachments((prev) => [...prev, newAttachment])
-                }
-                setAttachmentFile(null)
-                setAttachmentLink("")
-                setAttachmentText("")
-        }
-
-        const [coverColor, setCoverColor] = useState(taskToShow.style.backgroundColor || '')
-        const [coverImage, setCoverImage] = useState(taskToShow.style.backgroundImage || '')
-        const [coverSize, setCoverSize] = useState(taskToShow.style.backgroundSize || 'small')
-
-        const [addingToChecklist, setAddingToChecklist] = useState(0)
-
-        function onPickColor(color) {
-                setCoverColor(color)
-                setCoverImage('')
-        }
-
-        function onPickImage(url) {
-                setCoverImage(url)
-                setCoverColor('')
-        }
-
-        function onPickSize(size) {
-                setCoverSize(size)
-        }
-
-        function onRemoveCover() {
-                setCoverColor('')
-                setCoverImage('')
-                setCoverSize('small')
-        }
-
-        useEffect(() => {
-                saveTask()
-        }, [isDone, cardTitle, listName, isWatching, description, attachments, checklists, newChecklistItem, activityLog, location, badges, members, boardMembers, date, showLabels, showMembers, showCustomFields, showDate, showMaps, showChecklist, showActivity, showAttachments, coverColor, coverImage, coverSize])
-
-        const [firsts, setFirsts] = useState([])
-
-        function addActivityLog(fullName, actionText, paramName) {
-                if (!firsts.includes(paramName)) {
-                        setFirsts(prev => [...prev, paramName])
-                        return
-                }
-                setActivityLog(prev => [...prev, {
-                        id: Date.now(), createdAt: Date.now(), byMember: { _id: 'u101', fullName, imgUrl: '' }, title: actionText
-                }])
-        }
-
-        useEffect(() => { addActivityLog('Roi', 'changed the card title', 'cardTitle'); }, [cardTitle])
-        useEffect(() => { addActivityLog('Roi', 'updated the card description', 'description'); }, [description])
-        useEffect(() => { addActivityLog('Roi', 'assigned/unassigned members', 'members'); }, [members])
-        useEffect(() => { addActivityLog('Roi', 'added/removed labels', 'cardLabels'); }, [cardLabels])
-        useEffect(() => { addActivityLog('Roi', 'updated location', 'location'); }, [location])
-        useEffect(() => { addActivityLog('Roi', 'adjusted custom badges', 'badges'); }, [badges])
-        useEffect(() => { addActivityLog('Roi', 'changed cover color/image', 'cover'); }, [coverColor, coverImage])
-        useEffect(() => { addActivityLog('Roi', isDone ? 'marked this card as done' : 'marked this card as in progress', 'isDone'); }, [isDone])
-        useEffect(() => { addActivityLog('Roi', isWatching ? 'started watching this card' : 'stopped watching this card', 'isWatching'); }, [isWatching])
-        useEffect(() => { addActivityLog('Roi', 'changed checklists', 'checklists'); }, [checklists])
-        useEffect(() => { addActivityLog('Roi', 'attached or removed files/links', 'attachments'); }, [attachments])
-        useEffect(() => { addActivityLog('Roi', 'changed the due date', 'date'); }, [date])
-
-        function onModalCloseInner(ev) {
-                ev.stopPropagation()
-                ev.preventDefault()
-                saveTask().then(() => onClose(ev)).catch(err => console.error(err))
-        }
-
-        const [copyTitle, setCopyTitle] = useState(taskToShow.title || '')
-        const [keepChecklists, setKeepChecklists] = useState(true)
-        const [keepLabels, setKeepLabels] = useState(true)
-        const [keepMembers, setKeepMembers] = useState(true)
-
-        async function onCopyCard() {
-                const targetBoard = getSelectedBoard()
-                const targetGroup = getSelectedGroup()
-                if (!targetBoard || !targetGroup) return
-
-                const boardCopy = cleanBoard(targetBoard)
-                const groupIdx = boardCopy.groups.findIndex(g => g.id === targetGroup.id)
-                if (groupIdx < 0) return
-
-                const newCard = {
-                        id: makeId(), title: copyTitle, description: taskToShow.description || '', checklists: keepChecklists ? JSON.parse(JSON.stringify(taskToShow.checklists || [])) : [], labels: keepLabels ? JSON.parse(JSON.stringify(taskToShow.labels || [])) : [], members: keepMembers ? JSON.parse(JSON.stringify(taskToShow.members || [])) : [], attachments: [], status: taskToShow.status || '', style: { ...taskToShow.style }, priority: taskToShow.priority || '', dueDate: taskToShow.dueDate || '', comments: [], labelIds: keepLabels ? JSON.parse(JSON.stringify(taskToShow.labelIds || [])) : [], byMember: taskToShow.byMember || '', badges: keepLabels ? [...(taskToShow.badges || [])] : [], isUserWatching: false, activity: [], location: { ...taskToShow.location }, group: { ...taskToShow.group }
-                }
-
-                const pos = Math.min(selectedPosition - 1, boardCopy.groups[groupIdx].tasks.length)
-                boardCopy.groups[groupIdx].tasks.splice(pos, 0, newCard)
-
-                const cleaned = cleanBoard(boardCopy)
-                await updateBoard(cleaned)
-        }
-
-        function onDeleteTask(ev) {
-                onClose(ev)
-                const boardCopy = cleanBoard(taskToShow.board)
-                const groupIdx = boardCopy.groups.findIndex(g => g.id === taskToShow.group.id)
-                if (groupIdx >= 0) {
-                        const taskIdx = boardCopy.groups[groupIdx].tasks.findIndex(t => t.id === taskToShow.id)
-                        if (taskIdx >= 0) {
-                                boardCopy.groups[groupIdx].tasks.splice(taskIdx, 1)
-                        }
-                }
-                updateBoard(boardCopy)
-        }
-
-        // const checklistItemCount = checklists.reduce((total, list) => total + list.todos.length, 0)
-        // const completedItemCount = checklists.reduce((total, list) => total + list.todos.filter(todo => todo.isDone).length, 0)
-        const attachmentCount = attachments.length
-        const activityCount = activityLog.length
-
-
-        // Render
-        return (
-                <>
-                        <div className="task-modal monday-task-modal" id="monday-task-modal">
-                                {(coverImage || coverColor) ? (
-                                        <div className="task-cover" style={{ backgroundImage: `url(${coverImage})` || '', backgroundColor: coverColor || '' }}>
-                                                <button className="task-modal-close" onClick={onModalCloseInner}>
-                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
-                                                        </svg>
-                                                </button>
-                                                <button className="change-cover-btn" onClick={() => setActivePicker('cover')}>
-                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                <path fillRule="evenodd" clipRule="evenodd" d="M5 5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5ZM19 7H5V13H19V7Z" fill="currentColor"></path>
-                                                        </svg>
-                                                        Cover
-                                                </button>
-                                        </div>
-                                ) : (
-                                        <div className="task-no-cover">
-                                                <button className="task-modal-close" onClick={onModalCloseInner}>
-                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                <path fillRule="evenodd" clipRule="evenodd" d="M10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12Z" fill="currentColor"></path>
-                                                        </svg>
-                                                </button>
-                                        </div>
-                                )}
-
-                                <div className="monday-task-modal-content">
-                                        <div className="monday-task-layout">
-
-                                                <div className="flex flex-col w-full h-full bg-white rounded-lg shadow-lg overflow-hidden">
-            {/* Status Header */}
-            <div className="px-6 py-4 flex items-center justify-between">
-                <div
-                    className="flex items-center gap-2 cursor-pointer p-1.5 hover:bg-gray-50 rounded-md transition-colors"
-                    onClick={() => setIsDone(!isDone)}
-                >
-                    <span>
-                        {isDone ?
-                            <CheckCircle className="text-emerald-500 w-4.5 h-4.5" /> :
-                            <Circle className="text-gray-400 w-4.5 h-4.5" />
-                        }
-                    </span>
-                    <span className={`text-sm font-medium ${isDone ? 'text-emerald-600' : 'text-gray-600'}`}>
-                        {isDone ? 'Completed' : 'In Progress'}
-                    </span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                    <button
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-md transition-colors"
-                        onClick={() => setActivePicker('members')}
-                    >
-                        <User className="w-4 h-4" />
-                        <span>Members</span>
-                    </button>
-                </div>
-            </div>
-
-            {/* Task Title */}
-            <div className="px-6 pt-6 pb-3">
-                <input
-                    type="text"
-                    className="w-full text-xl font-semibold text-gray-800 bg-transparent border-0 focus:outline-none focus:ring-1 focus:ring-blue-400 focus:ring-opacity-50 rounded px-1 py-0.5"
-                    value={cardTitle}
-                    onChange={(e) => setCardTitle(e.target.value)}
-                    placeholder="Task title"
-                />
-            </div>
-
-            {/* Labels */}
-            <div className="px-6 py-2">
-                {showLabels && cardLabels && cardLabels.length > 0 && (
-                    <div className="flex flex-wrap gap-2 items-center">
-                        {cardLabels.map(label => (
-                            <div
-                                key={label.color}
-                                className="px-2.5 py-1 rounded-md text-xs font-medium text-white"
-                                style={{ backgroundColor: `${label.color}` }}
-                            >
-                                {label.title}
-                            </div>
-                        ))}
-                        <button
-                            className="w-6 h-6 flex items-center justify-center rounded-md bg-gray-50 hover:bg-gray-100 transition-colors"
-                            onClick={() => setActivePicker('labels')}
-                        >
-                            <Plus className="w-3.5 h-3.5 text-gray-500" />
-                        </button>
-                    </div>
-                )}
-
-                {(!cardLabels || cardLabels.length === 0) && (
-                    <button
-                        className="flex items-center gap-2 px-3 py-1.5 text-sm rounded-md bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
-                        onClick={() => setActivePicker('labels')}
-                    >
-                        <Tag className="w-4 h-4" />
-                        <span>Add Label</span>
-                    </button>
-                )}
-            </div>
-
-            {/* Meta Information Row */}
-            <div className="px-6 py-3 flex flex-wrap gap-2 items-center">
-                {date && (
-                    <div
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium cursor-pointer ${
-                            new Date(date) < Date.now() 
-                                ? (isDone ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600') 
-                                : 'bg-blue-50 text-blue-600'
-                        }`}
-                        onClick={onDateClick}
-                    >
-                        <Calendar className="w-3.5 h-3.5" />
-                        <span>
-                            {new Date(date).toLocaleDateString('en-US', {
-                                month: 'short', day: 'numeric'
-                            })}
-                        </span>
-                        <input
-                            ref={dateInputRef}
-                            type="date"
-                            className="absolute invisible"
-                            onChange={onDateChange}
-                        />
-                    </div>
-                )}
-
-                <div
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium cursor-pointer ${
-                        isWatching ? 'bg-blue-50 text-blue-600' : 'bg-gray-50 text-gray-600'
-                    }`}
-                    onClick={() => setIsWatching(!isWatching)}
-                >
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>Watching</span>
-                </div>
-
-                {members && members.length > 0 && (
-                    <div className="flex -space-x-2 ml-2">
-                        {members.slice(0, 3).map((member, index) => (
-                            <div
-                                key={member.id || member._id}
-                                className="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium text-gray-700 border-2 border-white"
-                                style={member.imgUrl ? { backgroundImage: `url(${member.imgUrl})` } : {}}
-                            >
-                                {!member.imgUrl && (
-                                    <span>
-                                        {member.fullname?.split(' ').map(name => name[0]?.toUpperCase()).join('')}
-                                    </span>
-                                )}
-                            </div>
-                        ))}
-                        {members.length > 3 && (
-                            <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-xs font-medium text-gray-600 border-2 border-white">
-                                <span>+{members.length - 3}</span>
-                            </div>
-                        )}
-                    </div>
-                )}
-
-                <div
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium ml-auto cursor-pointer hover:bg-gray-50 transition-colors"
-                    onClick={() => setActivePicker('move')}
-                >
-                    <div
-                        className="w-2.5 h-2.5 rounded"
-                        style={{ backgroundColor: taskToShow.group.style?.backgroundColor || '#ddd' }}
-                    ></div>
-                    <span className="text-gray-600">{listName}</span>
-                </div>
-            </div>
-
-            {/* Custom Fields - Moved here */}
-            {badges && badges.length > 0 && (
-                <div className="mx-6 my-1">
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 border-t border-b border-gray-100 py-3">
-                        {badges.map(badge => (
-                            <div key={badge.id} className="flex items-center justify-between">
-                                <span className="text-xs text-gray-500">{badge.categ}</span>
-                                <div className="relative">
-                                    <select
-                                        className="appearance-none py-1 pl-0 pr-5 text-xs text-gray-700 bg-transparent border-0 focus:outline-none focus:ring-0 focus:border-blue-400"
-                                        value={badge.text || ''}
-                                        onChange={(e) => setBadges(badges.map(b =>
-                                            b.categ === badge.categ ? {...b, text: e.target.value} : b
-                                        ))}
-                                    >
-                                        <option value="">-</option>
-                                        {badge.badgeOptions && badge.badgeOptions.map(option => (
-                                            <option key={option} value={option}>{option}</option>
-                                        ))}
-                                    </select>
-                                    <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" />
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {/* Category Tags */}
-            <div className="px-6 py-3 flex gap-2">
-                <div className="px-2.5 py-1 rounded-md text-xs font-medium bg-amber-50 text-amber-700">Tasks</div>
-                <div className="px-2.5 py-1 rounded-md text-xs font-medium bg-gray-50 text-gray-600">Personal</div>
-            </div>
-
-            {/* Tab Navigation */}
-            <div className="mt-4">
-                <div className="flex px-6 border-b border-gray-100">
-                    <button
-                        className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium ${
-                            activeTab === 'overview' 
-                                ? 'text-blue-500 border-b-2 border-blue-400' 
-                                : 'text-gray-500 hover:text-gray-700'
-                        }`}
-                        onClick={() => setActiveTab('overview')}
-                    >
-                        <Grid className="w-4 h-4" />
-                        <span>Overview</span>
-                    </button>
-
-                    <button
-                        className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium ${
-                            activeTab === 'checklists' 
-                                ? 'text-blue-500 border-b-2 border-blue-400' 
-                                : 'text-gray-500 hover:text-gray-700'
-                        }`}
-                        onClick={() => setActiveTab('checklists')}
-                    >
-                        <CheckSquare className="w-4 h-4" />
-                        <span>Checklists</span>
-                        {checklistItemCount > 0 && (
-                            <span className="ml-1.5 text-xs font-normal text-gray-500">
-                                {completedItemCount}/{checklistItemCount}
-                            </span>
-                        )}
-                    </button>
-
-                    <button
-                        className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium ${
-                            activeTab === 'files' 
-                                ? 'text-blue-500 border-b-2 border-blue-400' 
-                                : 'text-gray-500 hover:text-gray-700'
-                        }`}
-                        onClick={() => setActiveTab('files')}
-                    >
-                        <Paperclip className="w-4 h-4" />
-                        <span>Files</span>
-                        {attachmentCount > 0 && (
-                            <span className="ml-1.5 text-xs font-normal text-gray-500">
-                                {attachmentCount}
-                            </span>
-                        )}
-                    </button>
-
-                    <button
-                        className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium ${
-                            activeTab === 'activity' 
-                                ? 'text-blue-500 border-b-2 border-blue-400' 
-                                : 'text-gray-500 hover:text-gray-700'
-                        }`}
-                        onClick={() => setActiveTab('activity')}
-                    >
-                        <MessageSquare className="w-4 h-4" />
-                        <span>Activity</span>
-                        {activityCount > 0 && (
-                            <span className="ml-1.5 text-xs font-normal text-gray-500">
-                                {activityCount}
-                            </span>
-                        )}
-                    </button>
-                </div>
-            </div>
-
-            {/* Tab Content */}
-            <div className="flex-1 overflow-y-auto p-6">
-                {/* Overview Tab */}
-                {activeTab === 'overview' && (
-                    <div className="space-y-8">
-                        {/* Description Section */}
-                        <div>
-                            <div className="flex items-center justify-between mb-3">
-                                <h3 className="text-sm font-medium text-gray-600">Description</h3>
-                                <button
-                                    className="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors"
-                                    onClick={() => setIsDescriptionEditing(!isDescriptionEditing)}
-                                >
-                                    <Edit className="w-4 h-4" />
-                                </button>
-                            </div>
-
-                            {isDescriptionEditing ? (
-                                <div
-                                    className="p-3 border-l-2 border-blue-400 bg-blue-50 rounded-r-md text-sm"
-                                    contentEditable
-                                    suppressContentEditableWarning
-                                    onBlur={(e) => {
-                                        setDescription(e.target.innerText)
-                                        setIsDescriptionEditing(false)
-                                    }}
-                                    dangerouslySetInnerHTML={{__html: description}}
-                                ></div>
-                            ) : (
-                                <div
-                                    className="p-3 text-sm text-gray-700 min-h-20 leading-relaxed border-l-2 border-gray-200 hover:border-blue-400 rounded-r-md cursor-pointer transition-colors"
-                                    onClick={() => setIsDescriptionEditing(true)}
-                                >
-                                    {description || 'Add a description...'}
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Custom Fields Section - Removed from here */}
-                    </div>
-                )}
-
-                {/* Checklists Tab */}
-                {activeTab === 'checklists' && (
-                    <div className="space-y-6">
-                        {checklists.length > 0 ? (
-                            <div className="space-y-6">
-                                {checklists.map(checklist => (
-                                    <div key={checklist.id} className="mb-4">
-                                        <div className="flex items-center justify-between mb-2">
-                                            <div className="flex items-center gap-3">
-                                                <h3 className="text-sm font-medium text-gray-500">{checklist.title}</h3>
-                                                {checklist.progress !== undefined && (
-                                                    <span className="text-xs font-medium text-gray-400">
-                                                        {checklist.progress}%
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <button
-                                                className="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-600"
-                                                onClick={() => setChecklists(checklists.filter(c => c.id !== checklist.id))}
-                                            >
-                                                <X className="w-4 h-4" />
-                                            </button>
-                                        </div>
-
-                                        {checklist.progress !== undefined && (
-                                            <div className="h-1 bg-gray-100 mb-3">
-                                                <div
-                                                    className="h-full bg-emerald-500 transition-all duration-300"
-                                                    style={{ width: `${checklist.progress}%` }}
-                                                ></div>
-                                            </div>
-                                        )}
-
-                                        <div className="p-4 space-y-2">
-                                            {checklist.todos.map(todo => (
-                                                <div
-                                                    key={todo.id}
-                                                    className={`flex items-start gap-3 p-2 rounded-md ${
-                                                        todo.isDone ? 'bg-gray-50' : 'hover:bg-gray-50'
-                                                    }`}
-                                                >
-                                                    <div className="pt-0.5">
-                                                        <input
-                                                            type="checkbox"
-                                                            id={`todo-${todo.id}`}
-                                                            checked={todo.isDone}
-                                                            onChange={() => {
-                                                                const newChecklists = checklists.map(c => {
-                                                                    if (c.id === checklist.id) {
-                                                                        return {
-                                                                            ...c,
-                                                                            todos: c.todos.map(t =>
-                                                                                t.id === todo.id ? {...t, isDone: !t.isDone} : t
-                                                                            )
-                                                                        }
-                                                                    }
-                                                                    return c
-                                                                })
-
-                                                                newChecklists.forEach(c => {
-                                                                    if (c.id === checklist.id && c.todos.length > 0) {
-                                                                        const doneTodos = c.todos.filter(t => t.isDone).length
-                                                                        c.progress = Math.floor((doneTodos / c.todos.length) * 100)
-                                                                    }
-                                                                })
-
-                                                                setChecklists(newChecklists)
-                                                            }}
-                                                            className="h-4 w-4 text-blue-500 rounded border-gray-300 focus:ring-blue-500"
-                                                        />
-                                                    </div>
-                                                    <label
-                                                        htmlFor={`todo-${todo.id}`}
-                                                        className={`text-sm flex-1 cursor-pointer ${
-                                                            todo.isDone ? 'text-gray-500 line-through' : 'text-gray-700'
-                                                        }`}
-                                                    >
-                                                        {todo.title}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
-
-                                        {addingToChecklist === checklist.id ? (
-                                            <div className="p-4 pt-0">
-                                                <input
-                                                    type="text"
-                                                    className="w-full p-2 mb-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                                    value={newChecklistItem}
-                                                    onChange={(e) => setNewChecklistItem(e.target.value)}
-                                                    placeholder="Add an item..."
-                                                    autoFocus
-                                                />
-                                                <div className="flex gap-2">
-                                                    <button
-                                                        className="px-3 py-1.5 text-xs font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
-                                                        onClick={() => {
-                                                            if (newChecklistItem.trim()) {
-                                                                setChecklists(checklists.map(c => {
-                                                                    if (c.id === checklist.id) {
-                                                                        return {
-                                                                            ...c,
-                                                                            todos: [...c.todos, {
-                                                                                id: Date.now(),
-                                                                                title: newChecklistItem,
-                                                                                isDone: false
-                                                                            }]
-                                                                        }
-                                                                    }
-                                                                    return c
-                                                                }))
-                                                                setNewChecklistItem('')
-                                                            }
-                                                        }}
-                                                    >
-                                                        Add
-                                                    </button>
-                                                    <button
-                                                        className="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
-                                                        onClick={() => {
-                                                            setNewChecklistItem('')
-                                                            setAddingToChecklist(0)
-                                                        }}
-                                                    >
-                                                        Cancel
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <button
-                                                className="flex items-center gap-2 w-full p-3 text-left text-sm text-gray-600 hover:bg-gray-50 border-t border-gray-200"
-                                                onClick={() => setAddingToChecklist(checklist.id)}
-                                            >
-                                                <Plus className="w-4 h-4" />
-                                                <span>Add an item</span>
-                                            </button>
-                                        )}
-                                    </div>
-                                ))}
-
-                                <button
-                                    className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 rounded-md border border-gray-200 hover:bg-gray-50"
-                                    onClick={() => setActivePicker('checklists')}
-                                >
-                                    <Plus className="w-4 h-4" />
-                                    <span>Add another checklist</span>
-                                </button>
-                            </div>
-                        ) : (
-                            <div className="flex flex-col items-center justify-center p-8 text-center">
-                                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                                    <CheckSquare className="w-6 h-6 text-gray-400" />
-                                </div>
-                                <p className="mb-2 text-gray-700 font-medium">No checklists yet</p>
-                                <button
-                                    className="mt-2 px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 transition-colors"
-                                    onClick={() => setActivePicker('checklists')}
-                                >
-                                    Add a checklist
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                )}
-
-                {/* Files Tab */}
-                {activeTab === 'files' && (
-                    <div className="space-y-6">
-                        {attachments.length > 0 ? (
-                            <div className="space-y-3">
-                                {attachments.map(attachment => (
-                                    <div
-                                        key={attachment.id}
-                                        className="flex items-center gap-4 p-3 border border-gray-200 rounded-lg hover:bg-gray-50"
-                                    >
-                                        <div className="flex-shrink-0 w-10 h-10 rounded bg-gray-100 flex items-center justify-center text-gray-500">
-                                            {attachment.type === 'file' ? (
-                                                <Paperclip className="w-5 h-5" />
-                                            ) : (
-                                                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                                                </svg>
-                                            )}
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <h4 className="text-sm font-medium text-gray-900 truncate">{attachment.text || attachment.path}</h4>
-                                            <p className="text-xs text-gray-500">
-                                                {new Date(attachment.date).toLocaleDateString('en-US', {
-                                                    month: 'short', day: 'numeric', year: 'numeric'
-                                                })}
-                                            </p>
-                                        </div>
-                                        <button
-                                            className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-200 text-gray-500"
-                                            onClick={() => setAttachments(attachments.filter(a => a.id !== attachment.id))}
-                                        >
-                                            <X className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                ))}
-
-                                <button
-                                    className="flex items-center gap-2 w-full p-3 text-left text-sm text-gray-600 rounded-md border border-gray-200 hover:bg-gray-50"
-                                    onClick={() => setActivePicker('attachments')}
-                                >
-                                    <Plus className="w-4 h-4" />
-                                    <span>Add attachment</span>
-                                </button>
-                            </div>
-                        ) : (
-                            <div className="flex flex-col items-center justify-center p-8 text-center">
-                                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                                    <Paperclip className="w-6 h-6 text-gray-400" />
-                                </div>
-                                <p className="mb-2 text-gray-700 font-medium">No files attached</p>
-                                <button
-                                    className="mt-2 px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 transition-colors"
-                                    onClick={() => setActivePicker('attachments')}
-                                >
-                                    Add an attachment
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                )}
-
-                {/* Activity Tab */}
-                {activeTab === 'activity' && (
-                    <div className="space-y-6">
-                        <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-md mb-6">
-                            <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                                {loggedUser?.imgUrl ? (
-                                    <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${loggedUser.imgUrl})` }}></div>
-                                ) : (
-                                    <span className="text-xs font-medium text-gray-600">
-                                        {loggedUser?.fullname?.[0] || 'U'}
-                                    </span>
-                                )}
-                            </div>
-
-                            <div className="flex-1 relative">
-                                <input
-                                    type="text"
-                                    className="w-full p-2 pr-9 border border-gray-200 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400"
-                                    placeholder="Write a comment..."
-                                    ref={activityInputRef}
-                                />
-                                <button
-                                    className="absolute right-1.5 top-1/2 transform -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors"
-                                    onClick={() => {
-                                        if (activityInputRef.current?.value) {
-                                            setActivityLog([...activityLog, {
-                                                id: Date.now(),
-                                                title: activityInputRef.current.value,
-                                                byMember: {
-                                                    fullname: loggedUser?.fullname || 'User',
-                                                    imgUrl: loggedUser?.imgUrl || ''
-                                                },
-                                                createdAt: Date.now()
-                                            }])
-                                            activityInputRef.current.value = ''
-                                        }
-                                    }}
-                                >
-                                    <Send className="w-3.5 h-3.5" />
-                                </button>
-                            </div>
-                        </div>
-
-                        {activityLog.length > 0 ? (
-                            <div className="space-y-4">
-                                {activityLog.map((entry, index) => (
-                                    <div key={entry.id || index} className="flex items-start gap-3 mb-4">
-                                        <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                                            {entry?.byMember?.imgUrl ? (
-                                                <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${entry.byMember.imgUrl})` }}></div>
-                                            ) : (
-                                                <span className="text-xs font-medium text-gray-600">
-                                                    {entry?.byMember?.fullname?.split(' ').map(name => name[0]?.toUpperCase()).join('') || 'U'}
-                                                </span>
-                                            )}
-                                        </div>
-
-                                        <div className="flex-1 p-3 bg-gray-50 rounded-md">
-                                            <div className="flex justify-between items-center mb-1.5">
-                                                <span className="text-sm font-medium text-gray-700">{entry?.byMember?.fullname}</span>
-                                                <span className="text-xs text-gray-400">
-                                                    {new Date(entry.createdAt).toLocaleDateString('en-US', {
-                                                        month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
-                                                    })}
-                                                </span>
-                                            </div>
-                                            <p className="text-sm text-gray-600 leading-relaxed">{entry.title}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="flex flex-col items-center justify-center py-10 text-center">
-                                <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center mb-3">
-                                    <MessageSquare className="w-5 h-5 text-gray-400" />
-                                </div>
-                                <p className="mb-1 text-gray-700 font-medium text-sm">No activity yet</p>
-                                <p className="text-xs text-gray-500">Comments and actions will appear here</p>
-                            </div>
-                        )}
-                    </div>
-                )}
-            </div>
-        </div>
-
-                                                {/* Right Side: Tabbed Pickers */}
-                                                <div className="monday-task-pickers">
-                                                        <div className="monday-tab-bar">
-                                                                <button className={`monday-tab-btn ${activePicker === 'members' ? 'active' : ''}`} onClick={() => setActivePicker('members')}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M12 13C14.7614 13 17 10.7614 17 8C17 5.23858 14.7614 3 12 3C9.23858 3 7 5.23858 7 8C7 9.44777 7.61532 10.7518 8.59871 11.6649C5.31433 13.0065 3 16.233 3 20C3 20.5523 3.44772 21 4 21H12C12.5523 21 13 20.5523 13 20C13 19.4477 12.5523 19 12 19H5.07089C5.55612 15.6077 8.47353 13 12 13ZM15 8C15 9.65685 13.6569 11 12 11C10.3431 11 9 9.65685 9 8C9 6.34315 10.3431 5 12 5C13.6569 5 15 6.34315 15 8Z" fill="currentColor"></path>
-                                                                                <path d="M17 14C17 13.4477 17.4477 13 18 13C18.5523 13 19 13.4477 19 14V16H21C21.5523 16 22 16.4477 22 17C22 17.5523 21.5523 18 21 18H19V20C19 20.5523 18.5523 21 18 21C17.4477 21 17 20.5523 17 20V18H15C14.4477 18 14 17.5523 14 17C14 16.4477 14.4477 16 15 16H17V14Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Members
-                                                                </button>
-                                                                <button className={`monday-tab-btn ${activePicker === 'labels' ? 'active' : ''}`} onClick={() => setActivePicker('labels')}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M13.1213 2.80762C12.3403 2.02657 11.0739 2.02657 10.2929 2.80762L3.92891 9.17158C1.19524 11.9052 1.19524 16.3374 3.92891 19.0711C6.66258 21.8047 11.0947 21.8047 13.8284 19.0711L20.1924 12.7071C20.9734 11.9261 20.9734 10.6597 20.1924 9.87869L13.1213 2.80762ZM18.7782 11.2929L11.7071 4.22183L5.34313 10.5858C3.39051 12.5384 3.39051 15.7042 5.34313 17.6569C7.29575 19.6095 10.4616 19.6095 12.4142 17.6569L18.7782 11.2929ZM10 14C10 14.5523 9.55228 15 9 15C8.44772 15 8 14.5523 8 14C8 13.4477 8.44772 13 9 13C9.55228 13 10 13.4477 10 14ZM12 14C12 15.6569 10.6569 17 9 17C7.34315 17 6 15.6569 6 14C6 12.3431 7.34315 11 9 11C10.6569 11 12 12.3431 12 14Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Labels
-                                                                </button>
-                                                                <button className={`monday-tab-btn ${activePicker === 'checklists' ? 'active' : ''}`} onClick={() => setActivePicker('checklists')}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M6 4C4.89543 4 4 4.89543 4 6V18C4 19.1046 4.89543 20 6 20H18C19.1046 20 20 19.1046 20 18V13C20 12.4477 19.5523 12 19 12C18.4477 12 18 12.4477 18 13V18H6V6L16 6C16.5523 6 17 5.55228 17 5C17 4.44772 16.5523 4 16 4H6ZM8.73534 10.3223C8.36105 9.91618 7.72841 9.89038 7.3223 10.2647C6.91619 10.639 6.89039 11.2716 7.26467 11.6777L10.8768 15.597C11.4143 16.1231 12.2145 16.1231 12.7111 15.6264L13.0754 15.2683C13.3699 14.9785 13.6981 14.6556 14.0516 14.3075C15.0614 13.313 16.0713 12.3169 17.014 11.3848L17.0543 11.3449C18.7291 9.68869 20.0004 8.42365 20.712 7.70223C21.0998 7.30904 21.0954 6.67589 20.7022 6.28805C20.309 5.90022 19.6759 5.90457 19.2881 6.29777C18.5843 7.01131 17.3169 8.27244 15.648 9.92281L15.6077 9.96263C14.6662 10.8937 13.6572 11.8889 12.6483 12.8825L11.8329 13.6851L8.73534 10.3223Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Checklist
-                                                                </button>
-                                                                <button className={`monday-tab-btn ${activePicker === 'dates' ? 'active' : ''}`} onClick={() => setActivePicker('dates')}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path d="M13 6C13 5.44772 12.5523 5 12 5C11.4477 5 11 5.44772 11 6V12C11 12.2652 11.1054 12.5196 11.2929 12.7071L13.7929 15.2071C14.1834 15.5976 14.8166 15.5976 15.2071 15.2071C15.5976 14.8166 15.5976 14.1834 15.2071 13.7929L13 11.5858V6Z" fill="currentColor"></path>
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Dates
-                                                                </button>
-                                                                <button className={`monday-tab-btn ${activePicker === 'attachments' ? 'active' : ''}`} onClick={() => setActivePicker('attachments')}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M11.6426 17.9647C10.1123 19.46 7.62736 19.4606 6.10092 17.9691C4.57505 16.478 4.57769 14.0467 6.10253 12.5566L13.2505 5.57184C14.1476 4.6952 15.5861 4.69251 16.4832 5.56921C17.3763 6.44184 17.3778 7.85135 16.4869 8.72199L9.78361 15.2722C9.53288 15.5172 9.12807 15.5163 8.86954 15.2636C8.61073 15.0107 8.60963 14.6158 8.86954 14.3618L15.0989 8.27463C15.4812 7.90109 15.4812 7.29546 15.0989 6.92192C14.7167 6.54838 14.0969 6.54838 13.7146 6.92192L7.48523 13.0091C6.45911 14.0118 6.46356 15.618 7.48523 16.6163C8.50674 17.6145 10.1511 17.6186 11.1679 16.6249L17.8712 10.0747C19.5274 8.45632 19.5244 5.83555 17.8676 4.2165C16.2047 2.59156 13.5266 2.59657 11.8662 4.21913L4.71822 11.2039C2.42951 13.4404 2.42555 17.083 4.71661 19.3218C7.00774 21.5606 10.7323 21.5597 13.0269 19.3174L19.7133 12.7837C20.0956 12.4101 20.0956 11.8045 19.7133 11.431C19.331 11.0574 18.7113 11.0574 18.329 11.431L11.6426 17.9647Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Attachment
-                                                                </button>
-                                                                <button className={`monday-tab-btn ${activePicker === 'location' ? 'active' : ''}`} onClick={() => setActivePicker('location')}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M12 21C14.2802 21 18 12.3137 18 9C18 5.68629 15.3137 3 12 3C8.68629 3 6 5.68629 6 9C6 12.3137 9.71981 21 12 21ZM12 12C13.6081 12 14.9118 10.6964 14.9118 9.08823C14.9118 7.48011 13.6081 6.17647 12 6.17647C10.3919 6.17647 9.08824 7.48011 9.08824 9.08823C9.08824 10.6964 10.3919 12 12 12Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Location
-                                                                </button>
-                                                                <button className={`monday-tab-btn ${activePicker === 'cover' ? 'active' : ''}`} onClick={() => setActivePicker('cover')}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M5 5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5ZM19 7H5V13H19V7ZM17 16C17 16.5523 17.4477 17 18 17C18.5523 17 19 16.5523 19 16C19 15.4477 18.5523 15 18 15C17.4477 15 17 15.4477 17 16ZM6 17C5.44772 17 5 16.5523 5 16C5 15.4477 5.44772 15 6 15H10C10.5523 15 11 15.4477 11 16C11 16.5523 10.5523 17 10 17H6Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Cover
-                                                                </button>
-                                                                <button className={`monday-tab-btn ${activePicker === 'customFields' ? 'active' : ''}`} onClick={() => setActivePicker('customFields')}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M3 6C2.44772 6 2 6.44772 2 7C2 7.55228 2.44772 8 3 8H11C11.5523 8 12 7.55228 12 7C12 6.44772 11.5523 6 11 6H3ZM4 16V12H20V16H4ZM2 12C2 10.8954 2.89543 10 4 10H20C21.1046 10 22 10.8954 22 12V16C22 17.1046 21.1046 18 20 18H4C2.89543 18 2 17.1046 2 16V12Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Custom Fields
-                                                                </button>
-                                                                <button className={`monday-tab-btn ${activePicker === 'move' ? 'active' : ''}`} onClick={() => setActivePicker('move')}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M12.292 4.29149C11.903 4.67949 11.903 5.31649 12.292 5.70549L17.586 10.9995H4C3.45 10.9995 3 11.4495 3 11.9995C3 12.5505 3.45 13.0005 4 13.0005H17.586L12.289 18.2965C11.9 18.6855 11.9 19.3215 12.289 19.7105C12.678 20.1005 13.315 20.1005 13.703 19.7105L20.702 12.7125C20.704 12.7115 20.706 12.7095 20.709 12.7075C20.903 12.5145 21 12.2565 21 11.9995C21 11.7425 20.903 11.4855 20.709 11.2915C20.706 11.2905 20.703 11.2885 20.701 11.2865L13.706 4.29149C13.512 4.09749 13.255 4.00049 12.999 4.00049C12.743 4.00049 12.486 4.09749 12.292 4.29149Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Move
-                                                                </button>
-                                                                <button className={`monday-tab-btn ${activePicker === 'copy' ? 'active' : ''}`} onClick={() => setActivePicker('copy')}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M5 16V4.99188C5 3.8918 5.90195 3 7.00853 3H14.9915L15 3.00002V5H7V16H5ZM8 19C8 20.1046 8.89543 21 10 21H18C19.1046 21 20 20.1046 20 19V8C20 6.89543 19.1046 6 18 6H10C8.89543 6 8 6.89543 8 8V19ZM10 8V19H18V8H10Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Copy
-                                                                </button>
-                                                                <button className={`monday-tab-btn ${activePicker === 'mirror' ? 'active' : ''}`} onClick={() => setActivePicker('mirror')}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M5 5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5ZM19 7H5V13H19V7ZM17 16C17 16.5523 17.4477 17 18 17C18.5523 17 19 16.5523 19 16C19 15.4477 18.5523 15 18 15C17.4477 15 17 15.4477 17 16ZM6 17C5.44772 17 5 16.5523 5 16C5 15.4477 5.44772 15 6 15H10C10.5523 15 11 15.4477 11 16C11 16.5523 10.5523 17 10 17H6Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Mirror
-                                                                </button>
-                                                                <button className={`monday-tab-btn ${activePicker === 'share' ? 'active' : ''}`} onClick={() => setActivePicker('share')}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path d="M6 15C6.79565 15 7.55871 14.6839 8.12132 14.1213C8.68393 13.5587 9 12.7956 9 12C9 11.2043 8.68393 10.4413 8.12132 9.87867C7.55871 9.31606 6.79565 8.99999 6 8.99999C5.20435 8.99999 4.44129 9.31606 3.87868 9.87867C3.31607 10.4413 3 11.2043 3 12C3 12.7956 3.31607 13.5587 3.87868 14.1213C4.44129 14.6839 5.20435 15 6 15ZM6 13C5.73478 13 5.48043 12.8946 5.29289 12.7071C5.10536 12.5196 5 12.2652 5 12C5 11.7348 5.10536 11.4804 5.29289 11.2929C5.48043 11.1053 5.73478 11 6 11C6.26522 11 6.51957 11.1053 6.70711 11.2929C6.89464 11.4804 7 11.7348 7 12C7 12.2652 6.89464 12.5196 6.70711 12.7071C6.51957 12.8946 6.26522 13 6 13ZM18 21C18.7956 21 19.5587 20.6839 20.1213 20.1213C20.6839 19.5587 21 18.7956 21 18C21 17.2043 20.6839 16.4413 20.1213 15.8787C19.5587 15.3161 18.7956 15 18 15C17.2044 15 16.4413 15.3161 15.8787 15.8787C15.3161 16.4413 15 17.2043 15 18C15 18.7956 15.3161 19.5587 15.8787 20.1213C16.4413 20.6839 17.2044 21 18 21ZM18 19C17.7348 19 17.4804 18.8946 17.2929 18.7071C17.1054 18.5196 17 18.2652 17 18C17 17.7348 17.1054 17.4804 17.2929 17.2929C17.4804 17.1053 17.7348 17 18 17C18.2652 17 18.5196 17.1053 18.7071 17.2929C18.8946 17.4804 19 17.7348 19 18C19 18.2652 18.8946 18.5196 18.7071 18.7071C18.5196 18.8946 18.2652 19 18 19Z" fill="currentColor"></path>
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M7 13.562L15.66 18.562L16.66 16.83L8 11.83L7 13.562Z" fill="currentColor"></path>
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M7 10.83L8 12.562L16.66 7.56199L15.66 5.82999L7 10.83Z" fill="currentColor"></path>
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M18 7C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5C17.4477 5 17 5.44772 17 6C17 6.55228 17.4477 7 18 7ZM18 9C19.6569 9 21 7.65685 21 6C21 4.34315 19.6569 3 18 3C16.3431 3 15 4.34315 15 6C15 7.65685 16.3431 9 18 9Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Share
-                                                                </button>
-                                                                <button className="monday-tab-btn" onClick={onDeleteTask}>
-                                                                        <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path d="M3.03418 5.59621C2.98604 5.04603 3.39303 4.56099 3.94322 4.51286L19.8823 3.11837C20.4325 3.07023 20.9175 3.47722 20.9657 4.02741L21.0528 5.0236L3.12133 6.5924L3.03418 5.59621Z" fill="currentColor"></path>
-                                                                                <path d="M9 12.9999C9 12.4476 9.44772 11.9999 10 11.9999H14C14.5523 11.9999 15 12.4476 15 12.9999C15 13.5522 14.5523 13.9999 14 13.9999H10C9.44772 13.9999 9 13.5522 9 12.9999Z" fill="currentColor"></path>
-                                                                                <path fillRule="evenodd" clipRule="evenodd" d="M3 18.9999V7.99993H21V18.9999C21 20.1045 20.1046 20.9999 19 20.9999H5C3.89543 20.9999 3 20.1045 3 18.9999ZM5 9.99993H19V18.9999H5L5 9.99993Z" fill="currentColor"></path>
-                                                                        </svg>
-                                                                        Archive
-                                                                </button>
-                                                        </div>
-
-                                                        <div className="monday-picker-panel">
-                                                                {activePicker === 'members' && (
-                                                                        <MembersPicker
-                                                                                members={members}
-                                                                                boardMembersToShow={boardMembersToShow}
-                                                                                onAddMember={onAddMember}
-                                                                                onRemoveMember={onRemoveMember}
-                                                                                onClose={() => setActivePicker(null)}
-                                                                        />
-                                                                )}
-                                                                {activePicker === 'labels' && (
-                                                                        <LabelsPicker
-                                                                                cardLabels={cardLabels}
-                                                                                groupLabels={groupLabels}
-                                                                                onToggleLabel={onToggleLabel}
-                                                                                onSaveLabelChange={onSaveLabelChange}
-                                                                                onDeleteLabel={onDeleteLabel}
-                                                                                onClose={() => setActivePicker(null)}
-                                                                        />
-                                                                )}
-                                                                {activePicker === 'checklists' && (
-                                                                        <ChecklistsPicker
-                                                                                onAddChecklist={(title) => { onAddChecklist(title); setActivePicker(null); }}
-                                                                                onClose={() => setActivePicker(null)}
-                                                                        />
-                                                                )}
-                                                                {activePicker === 'dates' && (
-                                                                        <DatesPicker
-                                                                                date={date}
-                                                                                onSaveDates={(isStart, start, isDue, due, time, reminder) => { onSaveDates(isStart, start, isDue, due, time, reminder); setActivePicker(null); }}
-                                                                                onRemoveDates={() => { onRemoveDates(); setActivePicker(null); }}
-                                                                                onClose={() => setActivePicker(null)}
-                                                                        />
-                                                                )}
-                                                                {activePicker === 'attachments' && (
-                                                                        <AttachmentsPicker
-                                                                                onInsertAttachment={(ev, file, link, text) => { onInsertAttachment(ev, file, link, text); setActivePicker(null); }}
-                                                                                onClose={() => setActivePicker(null)}
-                                                                        />
-                                                                )}
-                                                                {activePicker === 'location' && (
-                                                                        <LocationPicker
-                                                                                onPlaceChange={handlePlaceChange}
-                                                                                onClose={() => setActivePicker(null)}
-                                                                        />
-                                                                )}
-                                                                {activePicker === 'cover' && (
-                                                                        <CoverPicker
-                                                                                coverColor={coverColor}
-                                                                                coverImage={coverImage}
-                                                                                coverSize={coverSize}
-                                                                                onPickColor={onPickColor}
-                                                                                onPickImage={onPickImage}
-                                                                                onPickSize={onPickSize}
-                                                                                onRemoveCover={onRemoveCover}
-                                                                                onClose={() => setActivePicker(null)}
-                                                                        />
-                                                                )}
-                                                                {activePicker === 'customFields' && (
-                                                                        <CustomFieldsPicker
-                                                                                badges={badges}
-                                                                                onCreateField={(id, title, options) => { onCreateField(id, title, options); setActivePicker(null); }}
-                                                                                onClose={() => setActivePicker(null)}
-                                                                        />
-                                                                )}
-                                                                {activePicker === 'move' && (
-                                                                        <MovePicker
-                                                                                boards={boards}
-                                                                                selectedBoardId={selectedBoardId}
-                                                                                selectedGroupId={selectedGroupId}
-                                                                                selectedPosition={selectedPosition}
-                                                                                onSetSelectedBoardId={setSelectedBoardId}
-                                                                                onSetSelectedGroupId={setSelectedGroupId}
-                                                                                onSetSelectedPosition={setSelectedPosition}
-                                                                                onMoveCard={() => { onMoveCard(); setActivePicker(null); }}
-                                                                                onClose={() => setActivePicker(null)}
-                                                                        />
-                                                                )}
-                                                                {activePicker === 'copy' && (
-                                                                        <CopyPicker
-                                                                                copyTitle={copyTitle}
-                                                                                keepChecklists={keepChecklists}
-                                                                                keepLabels={keepLabels}
-                                                                                keepMembers={keepMembers}
-                                                                                onSetCopyTitle={setCopyTitle}
-                                                                                onSetKeepChecklists={setKeepChecklists}
-                                                                                onSetKeepLabels={setKeepLabels}
-                                                                                onSetKeepMembers={setKeepMembers}
-                                                                                onCopyCard={() => { onCopyCard(); setActivePicker(null); }}
-                                                                                onClose={() => setActivePicker(null)}
-                                                                        />
-                                                                )}
-                                                                {activePicker === 'mirror' && (
-                                                                        <MirrorPicker
-                                                                                onClose={() => setActivePicker(null)}
-                                                                        />
-                                                                )}
-                                                                {activePicker === 'share' && (
-                                                                        <SharePicker
-                                                                                onClose={() => setActivePicker(null)}
-                                                                        />
-                                                                )}
-                                                        </div>
-                                                </div>
-                                        </div>
-                                </div>
-                        </div>
-                </>
-        )
-}
 
 export function useToggle(initialState) {
 
@@ -3389,7 +1275,6 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
                                             <span>{task.title}</span>
                                     </blockquote>
 
-                                    {/* "Open" button or clickable area */}
                                     <div className="open-task-details" onClick={handleOpenTask}>
                                             <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                     <path d="M9 18l6-6-6-6"/>
@@ -3397,7 +1282,6 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
                                             <span className="open-btn"><svg width="24" height="24" viewBox="0 0 24 24" role="presentation"><path fill="currentcolor" d="M18.062 11 16.5 9.914A1 1 0 1 1 17.914 8.5l2.616 2.616c.28.167.47.5.47.884s-.19.717-.47.884L17.914 15.5a1 1 0 0 1-1.414-1.414L18.062 13h-3.68c-.487 0-.882-.448-.882-1s.395-1 .882-1zM3.47 12.884c-.28-.167-.47-.5-.47-.884s.19-.717.47-.884L6.086 8.5A1 1 0 0 1 7.5 9.914L5.938 11h3.68c.487 0 .882.448.882 1s-.395 1-.882 1h-3.68L7.5 14.086A1 1 0 0 1 6.086 15.5z"></path></svg></span>
                                     </div>
 
-                                    {/* Chat/Comments icon + count */}
                                     <div className="chat-icon">
 
                                         {!!(task.activity?.length && (!isSubtask) ) && (<div>
@@ -3418,7 +1302,6 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
                             </div>
                     </div>
 
-                    {/* Owner column */}
                     <section className="task-person">
                             <div className="members-imgs monday-members-imgs">
                                     {task.members?.length ? (task.members.slice(0, 2).map((member, idx) => (member.imgUrl ? (<img key={member.id} className={`smaller-imgs member-img${idx + 1} small-circle`} src={member.imgUrl.startsWith('/') ? member.imgUrl : '/' + member.imgUrl} alt="member"/>) : (<div key={member.id} className={`monday-user-circle small-circle smaller-imgs member-img${idx + 1} small-circle`}>
@@ -3429,13 +1312,11 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
                             </div>
                     </section>
 
-                    {/* Status column */}
                     <section className="status-priority-picker picker" style={{backgroundColor: statusToColor(task.status, task.dueDate)}}>
                             <div className="label-text status-text">{statusToText(task.status, task.dueDate)}</div>
                             <span className="fold"></span>
                     </section>
 
-                    {/* Due Date */}
                     <section className="picker date-picker-btn">
                             <div className="react-datepicker-wrapper">
                                     <div className="no-inner-input_styles">
@@ -3453,16 +1334,14 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
                             </div>
                     </section>
 
-                    {/* Priority Column */}
                     <section className="priority-priority-picker picker">
-                            {task.priority && (<div className="just-100-everything label-text status-text priority-indicator" style={{
+                            {task.priority && (<div className="just-100-everything label-text status-text priority-indicator priority-priority-indicator" style={{
                                             backgroundColor: task.priority.toLowerCase() === 'high' ? '#e44258' : task.priority.toLowerCase() === 'medium' ? '#fdab3d' : '#00c875'
                                     }}>
                                             {task.priority}
                                     </div>)}
                     </section>
 
-                    {/* Last Updated */}
                     <section className="last-update-picker picker">
                             {task.updatedAt && (<span>{formatDateNicely(task.updatedAt)}</span>)}
                     </section>
@@ -3472,7 +1351,6 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
                     </section>
 
 
-                    {/* Filler to align columns */}
                     <div className="empty-div"></div>
             </section>)
 }
@@ -3698,28 +1576,20 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                 <div className="group-header-title flex align-center">
 
 
-                    {/* Group menu */}
                     <div className="group-menu">
                         <svg
                             viewBox="0 0 24 24"
                             className="icon"
                             width="20"
                             height="20"
-                            onClick={() => {
-                                const actions = [
-                                    { label: 'Edit Group', action: handleGroupTitleEdit },
-                                    { label: 'Delete Group', action: handleDeleteGroup }
-                                ]
-                            }}
                         >
                             <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
                         </svg>
                     </div>
 
-                    {/* Group title & item count */}
+
                     <div className="group-title-info flex align-center">
 
-                            {/* Arrow icon toggling */}
                             <svg
                                     onClick={handleToggleCollapse}
                                     viewBox="0 0 22 22"
@@ -3761,7 +1631,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                 </div>
             </div>
 
-            {/* The main table "header" row with column titles */}
+
             <div className="monday-group-preview-content group-preview-content">
 
 
@@ -3775,18 +1645,20 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
 
 
 
-                <div className="title-container flex">
+                <div className="title-container flex hover-move-left">
                     <div className="sticky-div titles flex" style={{borderColor: mapTrelloToMonday(group.style?.backgroundColor)}}>
                         <div className="hidden"></div>
                         <div className="check-box">
                             <input type="checkbox" />
                         </div>
-                        <div className="monday-task title">Task</div>
+                        <div className="monday-task title">
+                            <span className="moving-text-hint">Task</span>
+                        </div>
                     </div>
 
-                    {/* Next columns: Owner, Status, Date, Priority, Updated, etc. */}
-                    <li className="monday-table-task-row member-picker cmp-order-title title">
-                        Owner
+
+                    <li className="monday-table-task-row member-picker cmp-order-title title hover-move-left">
+                        <span className="moving-text-hint">Owner</span>
                         <span className="open-modal-icon">
                             <svg viewBox="0 0 24 24" width="16" height="16">
                                 <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
@@ -3794,35 +1666,46 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                         </span>
                     </li>
 
-                    <li className="monday-table-task-row status-picker cmp-order-title title">
-                        Status
+                    <li className="monday-table-task-row status-picker cmp-order-title title hover-move-left">
+                        <span className="moving-text-hint">Status</span>
+
+                        <svg className="moving-text-hint" viewBox="0 0 20 20" fill="currentColor" width="14" height="14" aria-hidden="true"  data-testid="icon">
+                            <path d="M10 10.977c-.414 0-.75-.355-.75-.793V6.369c0-.438.336-.792.75-.792s.75.354.75.792v3.815c0 .438-.336.793-.75.793Zm0 3.1a1 1 0 1 0 0-2.002 1 1 0 0 0 0 2.002Z"></path>
+                            <path d="M15.638 15.636A7.97 7.97 0 1 1 4.366 4.364a7.97 7.97 0 0 1 11.272 11.272Zm-5.636.835a6.471 6.471 0 1 0 0-12.942 6.471 6.471 0 0 0 0 12.942Z" fillRule="evenodd" clipRule="evenodd"></path>
+                        </svg>
+
                         <span className="open-modal-icon">
                             <svg viewBox="0 0 24 24" width="16" height="16">
-                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
                             </svg>
                         </span>
                     </li>
 
-                    <li className="monday-table-task-row date-picker-btn cmp-order-title title">
-                        Due Date
+                    <li className="monday-table-task-row date-picker-btn cmp-order-title title hover-move-left">
+                        <span className="moving-text-hint">Due Date</span>
+
+                        <svg className="moving-text-hint" viewBox="0 0 20 20" fill="currentColor" width="14" height="14" aria-hidden="true" data-testid="icon">
+                            <path d="M10 10.977c-.414 0-.75-.355-.75-.793V6.369c0-.438.336-.792.75-.792s.75.354.75.792v3.815c0 .438-.336.793-.75.793Zm0 3.1a1 1 0 1 0 0-2.002 1 1 0 0 0 0 2.002Z"></path>
+                            <path d="M15.638 15.636A7.97 7.97 0 1 1 4.366 4.364a7.97 7.97 0 0 1 11.272 11.272Zm-5.636.835a6.471 6.471 0 1 0 0-12.942 6.471 6.471 0 0 0 0 12.942Z" fillRule="evenodd" clipRule="evenodd"></path>
+                        </svg>
+
                         <span className="open-modal-icon">
                             <svg viewBox="0 0 24 24" width="16" height="16">
-                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
                             </svg>
                         </span>
                     </li>
 
-                    <li className="monday-table-task-row priority-picker cmp-order-title title">
-                        Priority
-                        <span className="open-modal-icon">
+                    <li className="monday-table-task-row priority-picker cmp-order-title title hover-move-left">
+                        <span className="moving-text-hint">Priority</span> <span className="open-modal-icon">
                             <svg viewBox="0 0 24 24" width="16" height="16">
-                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
                             </svg>
                         </span>
                     </li>
 
-                    <li className="monday-table-task-row updated-picker cmp-order-title title">
-                        Last Updated
+                    <li className="monday-table-task-row updated-picker cmp-order-title title hover-move-left">
+                        <span className="moving-text-hint">Last Updated</span>
                         <span className="open-modal-icon">
                             <svg viewBox="0 0 24 24" width="16" height="16">
                                 <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
@@ -3841,7 +1724,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                     </div>
                 </div>
 
-                {/* Task rows */}
+
                 {!isCollapsed && (
                     <>
 
@@ -3875,7 +1758,6 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                             zIndex: 10
                         }}
                     >
-                        {/*{isExpanded ? '▼' : '►'}*/}
                     </div>
                 )}
             </li>
@@ -3986,7 +1868,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                         }}>
                         </div>
                         <div className="statistic-container flex">
-                            {/* For Owner column, we might not need stats */}
+
                             <div className="title first member-picker"></div>
 
                             <div className="title status-picker">
@@ -4737,7 +2619,7 @@ export function MondayTask({
                                                                                         onClick={(ev) => !showQuickEdit && onLoadTask(ev, task, currentGroup, group, boardToShow)}
                                                                                 >
                                                                                         <div className="task-card" ref={getCardRef(task.id)}>
-                                                                                                {/* Task Cover */}
+
                                                                                                 {task.style?.backgroundImage && (
                                                                                                         <div className="cover-img monday-cover-img">
                                                                                                                 <img src={`/${task.style.backgroundImage}`} alt="Task Cover" />

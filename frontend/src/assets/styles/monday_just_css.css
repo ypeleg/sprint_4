@@ -929,19 +929,19 @@ div.kanban-col>header.kanban-col-header>h2.kanban-col-title{
 }
 
 .right-colors .color-1 {
-    background-color: #33d391;
+    background-color: #00cc78;
     height: 100%;
     width: 100%;
 }
 
 .right-colors .color-2 {
-    background-color: #fdbc64;
+    background-color: #fdab3d;
     height: 100%;
     width: 100%;
 }
 
 .right-colors .color-3 {
-    background-color: #e8697d;
+    background-color: #e44258;
     height: 100%;
     width: 100%;
 }
@@ -1034,6 +1034,7 @@ section.board-filter {
 
 .search-task {
     padding-inline: 12px;
+    padding-left: 8px;
 }
 
 .search-task,

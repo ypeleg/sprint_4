@@ -865,13 +865,19 @@ blockquote {
 .group-preview .group-header .group-title-info:hover .task-count {
     opacity: 1;
 }
+.group-menu svg {
+    transition: 0.2s !important;
+    rotate: 90deg;
+}
+
 .group-preview .group-header .group-title-info .task-count {
     color: #676879;
     white-space: nowrap;
     font-size: calc($remSize * 1rem);
     line-height: 19px;
+    margin-top: 2px;
     margin-left: 8px;
-    /*transition: 0.2s;*/
+    transition: 0.2s;
     opacity: 0;
 }
 .group-preview .group-header .group-title-info.showBorder {
