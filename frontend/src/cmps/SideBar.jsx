@@ -34,7 +34,7 @@ export function SideBar({ backgrounColor, borderColor, onToggleSideBar, sideBarO
                 <div className="flex-space-between logo-insider">
                     <div className="board-logo">T</div>
                     <div className="near-logo">
-                        <div className="bold-text">Trello Workspace</div>
+                        <div className="bold-text">Roillo Workspace</div>
                         <div>Premium</div>
                     </div>
 
