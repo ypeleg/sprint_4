@@ -3826,7 +3826,7 @@ export function BoardDetails() {
 
     useEffect(() => {
         if (!boardToShow) return;
-        // if (colorsSetted) return;
+        if (colorsSetted) return;
 
         let rawUrl = boardToShow.style?.backgroundImage || "";
         const match = rawUrl.match(/url\(["']?(.*?)["']?\)/);
