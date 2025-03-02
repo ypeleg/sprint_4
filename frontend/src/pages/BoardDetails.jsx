@@ -3586,19 +3586,27 @@ export function BoardDetails() {
             let boardLabels = []
             currentBoard.groups.forEach(group => {
                 group.tasks.forEach(task => {
-                    boardLabels = boardLabels.concat(task.labels)
+                    task.labels.forEach(label =>{
+                        if(!boardLabels.length){
+                            boardLabels.push(label)
+                        }else if(!boardLabels.some(lbl => label.id === lbl.id)){
+                            boardLabels.push(label)
+                        }
+                    })
                 })
             })
-            boardLabels = boardLabels.filter((label, index, self) =>
-                index === self.findIndex((t) => ( () => {
-                    try {
-                        return t.id === label.id
-                    } catch {
-                        return false
-                    }
-                }
+            
+            // boardLabels = boardLabels.filter((label, index, self) =>
+            //     index === self.findIndex((t) => ( () => {
+            //         try {
+            //             return t.color === label.color
+            //         } catch {
+            //             return false
+            //         }
+            //     }
                     
-                )))
+            //     )))
+            //     debugger
             currentBoard.labels = boardLabels
             task.boardLabels = boardLabels
 
