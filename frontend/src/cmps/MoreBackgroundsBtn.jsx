@@ -27,9 +27,7 @@ export function MoreBackgroundsBtn({ onClose, onChangeBg, setSelectedBg, elMoreB
   const [backgroundImagesImages, setBackgroundImages] = useState(initialBackgroundImages)
   const [backgroundImagesColors, setBackgroundColors] = useState(initialBackgroundColor)
 
-  // useEffect(() => {
-  //   console.log(selectedBg)
-  // }, [selectedBg])
+
 
   function changeBg(bg) {
     setBackgroundImages((prevImages) =>
@@ -37,7 +35,7 @@ export function MoreBackgroundsBtn({ onClose, onChangeBg, setSelectedBg, elMoreB
         ...item,
         isSelected: item.name === bg.name,
       }))
-    );
+    )
 
     setBackgroundColors((prevColors) =>
       prevColors.map((item) => ({
@@ -92,7 +90,7 @@ export function MoreBackgroundsBtn({ onClose, onChangeBg, setSelectedBg, elMoreB
         ))}
       </section>
     </div>
-  );
+  )
 }
 
 

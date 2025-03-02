@@ -15,21 +15,11 @@ export function BoardHeader({ onSetActivityMenu, onSetTable, onStarBoard, isStar
     const filterBy = useSelector(state => state.boardModule.filterBy)
 
 
-    console.log('is filtered: ', filterBy)
-    console.log(filterBy?.title.length > 0, filterBy?.members?.length > 0, filterBy?.status, filterBy?.dueDate?.length > 0)
+   
 
     const isFilterd = (filterBy?.title?.length > 0 || filterBy?.members?.length > 0 || filterBy?.status?.length > 0 || filterBy?.dueDate?.length > 0)
 
-    console.log('isFilterd', isFilterd)
-
-    console.log('boardToShow', boardToShow)
-
-    // useEffect(() => {
-    //
-    //     clearFilter()
-    //
-    // } , [ShowFilter])
-    //
+    
     function clearFilter() {
         setFilterBy({
             title: '',
@@ -173,22 +163,7 @@ color: (useDarkTextColors? '#172b4d': 'white')
 
                 <div className={`${useDarkTextColors? 'divider': 'divider-white'}`}></div>
                 <div className="users">
-                    {/*<div className="user-icon">*/}
-                    {/*    <img src="roi.png" />*/}
-                    {/*    <img className="admin-rank" src="admin.png" />*/}
-                    {/*</div>*/}
-                    {/*<div className="user-icon">*/}
-                    {/*    <img src="roi.png" />*/}
-                    {/*    <img className="admin-rank" src="admin.png" />*/}
-                    {/*</div>*/}
-                    {/*<div className="user-icon">*/}
-                    {/*    <img src="roi.png" />*/}
-                    {/*    <img className="admin-rank" src="admin.png" />*/}
-                    {/*</div>*/}
-                    {/*<div className="user-icon">*/}
-                    {/*    <img src="roi.png" />*/}
-                    {/*    <img className="admin-rank" src="admin.png" />*/}
-                    {/*</div>*/}
+                
                     {boardToShow.members.map((member, index) => {
                         return ((index < 4)?
                             <div key={index} className="user-icon">

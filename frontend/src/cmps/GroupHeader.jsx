@@ -12,32 +12,11 @@ import {MoveListForm} from "./MoveListForm"
 
 export function GroupHeader({setGroup,group,onSetGroupEdit,setHeader}) {
     const boardToShow = useSelector(state => state.boardModule.board)
-    // const elHeader = useRef()
-    // const [showGroupEdit, SetGroupEdit] = useState(false)
-    // const [showCopyList, setCopyList] = useState(false)
-    // const [showMoveList, setMoveList] = useState(false)
-    // const [showMoveAll, setMoveAll] = useState(false)
-    console.log
+  
     const [groupTitle, setGroupTitle] = useState(group.title)
     const [showTitleEdit, setTitleEdit] = useState(false)
     const elInput  = useRef()
-    // useEffect(()=>{
-
-    //     function handleClick(ev){
-    //       if(elInput){
-
-    //           if((elInput.current.contains(ev.target))&&showTitleEdit&&(groupTitle !== group.title)){
-    //               debugger
-    //               saveGroupTitle()
-    //           }
-    //       }
-    //     }
-    //     document.addEventListener("mousedown",handleClick)
-    //     return ()=>{
-    //         document.removeEventListener("mousedown",handleClick)
-    //     }
-    // },[elInput])
-
+    
     function onSetHeader(ev){
         
         
@@ -63,10 +42,10 @@ export function GroupHeader({setGroup,group,onSetGroupEdit,setHeader}) {
     async function saveGroupTitle() {
         const updatedBoard = { ...boardToShow };
 
-    // Find the specific group and update its title
+    
     updatedBoard.groups = updatedBoard.groups.map(g => 
         g.id === group.id ? { ...g, title: groupTitle } : g
-    );
+    )
         await updateBoard(updatedBoard)
         onSetTitlEdit()
     }
@@ -86,7 +65,7 @@ export function GroupHeader({setGroup,group,onSetGroupEdit,setHeader}) {
                 fontFamily: "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Noto Sans\", Ubuntu, \"Droid Sans\", \"Helvetica Neue\", sans-serif"
             }} onClick={onSetTitlEdit}>{groupTitle}</span>}
             {showTitleEdit && <textarea ref={elInput} className="header-textarea change-header"   onChange={onChangeGroupTitle} 
-            // style={{height: height}}
+            
             onBlur={saveGroupTitle} 
             value={groupTitle}/>}
             <div className="group-list-headr-btns" style={{color: group.style?.color || '#172b4d'}}>
@@ -101,11 +80,7 @@ export function GroupHeader({setGroup,group,onSetGroupEdit,setHeader}) {
                     <path fillRule="evenodd" clipRule="evenodd" d="M5 14C6.10457 14 7 13.1046 7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12C3 13.1046 3.89543 14 5 14ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z" fill="currentColor"></path>
                 </svg>
             </div>
-            {/* {showGroupEdit && <GroupEdit onSetSort={onSetSort} onSetMoveAll={onSetMoveAll} onSetMoveList={onSetMoveList} onSetCopyList={onSetCopyList} group={group} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
-            {showCopyList && <CopyListForm group={group} onSetCopyList={onSetCopyList} onSetGroupEdit={onSetGroupEdit} header={elHeader.current}/>}
-            {showMoveList && <MoveListForm onSetMoveList={onSetMoveList} onSetGroupEdit={onSetGroupEdit} group={group} header={elHeader.current}/>}
-            {showMoveAll && <MoveAll onSetMoveAll={onSetMoveAll} group={group} header={elHeader.current} onSetGroupEdit={onSetGroupEdit}/>}
-            {showSort && <GroupSort header={elHeader.current} onSetGroupEdit={onSetGroupEdit} onSetSort={onSetSort} group={group}/>} */}
+     
         </div>
 
     )

@@ -28,7 +28,7 @@ export function AddTaskForm({ elFooter, selectedGroup, onSetShowForm }) {
                 else {
                     await onSubmit(ev)
                 }
-                // await onSubmit(ev)
+                
             }
         }
         

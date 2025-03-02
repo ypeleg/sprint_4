@@ -3,7 +3,7 @@
 
 
 import { useSelector } from "react-redux"
-// import { loadBoard } from "../store/store"
+
 import { useEffect, useRef, useState } from "react"
 import { setFilterBy } from "../store/actions/board.actions"
 
@@ -13,9 +13,7 @@ export function FilterCards({ el, setShowFilter }) {
     const filterBy = useSelector(state => state.boardModule.filterBy)
     const [completedSelected, setCompletedSelected] = useState()
 
-    // useEffect(() => {
-    //     loadBoard(boardToShow._id, filterBy)
-    // }, [filterBy])
+    
     useEffect(() => {
 
       
@@ -35,13 +33,13 @@ export function FilterCards({ el, setShowFilter }) {
             setFilterBy(UpdatedFilterBy)
         } else if (feild === 'members' || feild === 'dueDate') {
             const index = filterBy[feild].findIndex(f => f === value)
-            let updatedArray;
+            let updatedArray
             if (index !== -1) {
 
-                updatedArray = filterBy[feild].filter(f => f !== value);
+                updatedArray = filterBy[feild].filter(f => f !== value)
             } else {
 
-                updatedArray = [...filterBy[feild], value];
+                updatedArray = [...filterBy[feild], value]
             }
             const UpdatedFilterBy = { ...filterBy, [feild]: updatedArray }
             setFilterBy(UpdatedFilterBy)

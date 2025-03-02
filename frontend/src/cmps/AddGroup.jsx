@@ -15,7 +15,7 @@ export function AddGroup({useDarkTextColors}) {
     function handleChange({target}) {
 
         const {value, name: field} = target
-        console.log(value)
+      
         setGroup(prevGroup => {
             return {...prevGroup, [field]: value}
         })
@@ -54,7 +54,7 @@ export function AddGroup({useDarkTextColors}) {
         setGroup(getEmptyGroup())
         await updateBoard(copyBoard)
     }
-    console.log(group)
+   
     return (
         <div className="add-group">
             {(!showForm) ? <button onClick={() => setForm(true)} className="add-group-btn" style={{

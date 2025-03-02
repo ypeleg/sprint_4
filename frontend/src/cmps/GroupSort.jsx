@@ -29,7 +29,7 @@ export function GroupSort({ onSetGroupEdit, onSetSort, group,header }) {
     }
     function sortByTitle(){
         group.tasks.sort((t1,t2) => t1.title.localeCompare(t2.title))
-        console.log(group.tasks)
+       
         updateBoard(board)
         onSetSort()
     }

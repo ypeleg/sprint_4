@@ -1,30 +1,33 @@
 
+.task-modal{
 
+    .task-sidebar{
+        @media (max-width:420px) {
+            display: none;
+        }
+    }
+}
+.inner-component-left-padding{
 
-
+    .maps-container{
+        @media (max-width:420px) {
+            width: 100%;
+        }
+    }
+}
 .side-bar {
     @media (max-width:420px) {
-    /*background-color: #ffffff;*/
-    /*padding-inline: 20px;*/
-    /*!*width: 25%;*!*/
-    /*min-width: 200px;*/
-    /*border-left: 2px solid rgba(0,0,0,.2);*/
-    /*display: grid;*/
-    /*grid-template-rows: 1fr;*/
-    /*grid-template-columns: 1fr;*/
-    /*align-items: stretch;*/
-    /*z-index: 1;*/
+   
 
     transition: all 0.7s ease;
 
-    /*translate:  calc(-200% -100px);*/
+    
     translate: -200%;
-    /*margin-left: -200%;*/
+
     width: 0px;
     padding-inline: 0px;
     margin-inline: 0px;
-    /*min-width: 0;*/
-    /*display: none;*/
+   
     opacity: 0;
 }
 }
@@ -35,17 +38,11 @@
     #group-lists{
         @media (max-width:420px) {
             
-            // scroll-snap-type: x mandatory;
+            
             padding-left: 8px;
         }
     }
-// .task-list{
-//     @media (max-width:400px) {
-//         scroll-snap-align: start;
-//         height: 200px;
-//         width: 100%;
-//     }
-// }
+
 .list{
 
     &.base-components-list{
@@ -53,9 +50,7 @@
             scroll-snap-align: start;      
             width: 100%;
             
-            // &:first-of-type { 
-                // margin-left: 1000px;
-            // }
+         
 
         }
     }
@@ -75,6 +70,27 @@
     height: 100vh;
     width: 100vw;
     }
+}
+.task-main{
+    @media (max-width: 420px) {
+        width: 120%;
+    }
+}
+.mobile-menu{
+    display: none;
+}
+.mobile-menu{
+    @media (max-width: 420px) {
+       display: flex;
+       flex-wrap: wrap;
+       gap: 8px;
+    }
+}
+
+.task-layout{
+    @media (max-width: 420px) {
+       width: 120%;
+     }
 }
 
 
