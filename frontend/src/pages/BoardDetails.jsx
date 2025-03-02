@@ -3815,100 +3815,71 @@ export function BoardDetails() {
     }
 
 
-    const [useDarkTextColors, setUseDarkTextColors] = useState(true)
-    const [colorsSetted, setColorsSetted] = useState(false)
-    const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(208, 93%, 85%, 0.9)')
-    const [sidebarBorderColor, setSidebarBorderColor] = useState('hsla(208, 93%, 75%, 0.15)')
-    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('hsla(208, 93%, 88%, 0.95)')
-    const [headerBorderColor, setHeaderBorderColor] = useState('hsla(208, 93%, 75%, 0.15)')
-    const [useDarkTextColors, setUseDarkTextColors] = useState(true)
-    const [colorsSetted, setColorsSetted] = useState(false)
-    const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(208, 93%, 85%, 0.9)')
-    const [sidebarBorderColor, setSidebarBorderColor] = useState('hsla(208, 93%, 75%, 0.15)')
-    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('hsla(208, 93%, 88%, 0.95)')
-    const [headerBorderColor, setHeaderBorderColor] = useState('hsla(208, 93%, 75%, 0.15)')
+    const [useDarkTextColors, setUseDarkTextColors] = useState(true);
+    const [colorsSetted, setColorsSetted] = useState(false);
+    const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(208, 93%, 85%, 0.9)');
+    const [sidebarBorderColor, setSidebarBorderColor] = useState('hsla(208, 93%, 75%, 0.15)');
+    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('hsla(208, 93%, 88%, 0.95)');
+    const [headerBorderColor, setHeaderBorderColor] = useState('hsla(208, 93%, 75%, 0.15)');
 
     useEffect(() => {
-        if (!boardToShow) return
-        if (colorsSetted) return
+        if (!boardToShow) return;
+        if (colorsSetted) return;
 
-        let rawUrl = boardToShow.style?.backgroundImage || ""
-        const match = rawUrl.match(/url\(["']?(.*?)["']?\)/)
-        if (match && match[1]) rawUrl = match[1]
+        let rawUrl = boardToShow.style?.backgroundImage || "";
+        const match = rawUrl.match(/url\(["']?(.*?)["']?\)/);
+        if (match && match[1]) rawUrl = match[1];
         if (!rawUrl) {
-            rawUrl = "https://picsum.photos/600/300?random=877"
-            rawUrl = "https://picsum.photos/600/300?random=877"
+            rawUrl = "https://picsum.photos/600/300?random=877";
         }
 
-        let isCancelled = false
+        let isCancelled = false;
 
         function rgbToHsl(r, g, b) {
-            r /= 255
-            g /= 255
-            b /= 255
-            const max = Math.max(r, g, b)
-            const min = Math.min(r, g, b)
-            let h, s
-            let l = (max + min) / 2
-            r /= 255
-            g /= 255
-            b /= 255
-            const max = Math.max(r, g, b)
-            const min = Math.min(r, g, b)
-            let h, s
-            let l = (max + min) / 2
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s;
+            let l = (max + min) / 2;
 
             if (max === min) {
-                h = s = 0
-                h = s = 0
+                h = s = 0;
             } else {
-                const d = max - min
-                s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-                const d = max - min
-                s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
                 switch (max) {
                     case r:
-                        h = (g - b) / d + (g < b ? 6 : 0)
-                        break
-                        h = (g - b) / d + (g < b ? 6 : 0)
-                        break
+                        h = (g - b) / d + (g < b ? 6 : 0);
+                        break;
                     case g:
-                        h = (b - r) / d + 2
-                        break
-                        h = (b - r) / d + 2
-                        break
+                        h = (b - r) / d + 2;
+                        break;
                     case b:
-                        h = (r - g) / d + 4
-                        break
-                        h = (r - g) / d + 4
-                        break
+                        h = (r - g) / d + 4;
+                        break;
                     default:
-                        h = 0
-                        h = 0
+                        h = 0;
                 }
-                h /= 6
-                h /= 6
+                h /= 6;
             }
-            return [h * 360, s, l]
-            return [h * 360, s, l]
+            return [h * 360, s, l];
         }
 
         function getTrelloColors(r, g, b) {
-            let [h, s, l] = rgbToHsl(r, g, b)
-            let [h, s, l] = rgbToHsl(r, g, b)
+            let [h, s, l] = rgbToHsl(r, g, b);
 
             if (s < 0.1) {
-                h = 208
-                h = 208
+                h = 208;
             }
 
             const base = {
                 h: h,
                 s: 50,
-            }
-            }
+            };
 
-            if (l >= 0.5) { base.l = 90
+            if (l >= 0.5) { base.l = 90;
             } else { base.l = 40 }
 
             return {
@@ -3916,16 +3887,14 @@ export function BoardDetails() {
                 header: `hsla(${base.h}, ${base.s}%, ${Math.min(base.l + 5, 95)}%, 0.95)`,
                 border: `hsla(${base.h}, 40%, ${base.l >= 50 ? 75 : 35}%, 0.15)`,
                 isDark: base.l >= 50,
-            }
-            }
+            };
         }
         function applyFallbackColors() {
             const fallback = {
                 h: 208,
                 s: 50,
                 l: 90,
-            }
-            }
+            };
             setSidebarBackgroundColor(`hsla(${fallback.h}, ${fallback.s}%, ${fallback.l}%, 0.9)`)
             setHeaderBackgroundColor(`hsla(${fallback.h}, ${fallback.s}%, 95%, 0.95)`)
             setSidebarBorderColor(`hsla(${fallback.h}, 40%, 75%, 0.15)`)
@@ -3938,8 +3907,7 @@ export function BoardDetails() {
         img.crossOrigin = "Anonymous"
         img.referrerPolicy = "no-referrer"
         img.onload = () => {
-            if (isCancelled) return
-            if (isCancelled) return
+            if (isCancelled) return;
 
             try {
                 const canvas = document.createElement("canvas")
@@ -3953,22 +3921,15 @@ export function BoardDetails() {
                 const numPixels = 50 * 50
 
                 for (let i = 0; i < numPixels; i++) {
-                    const idx = i * 4
-                    rSum += data[idx]
-                    gSum += data[idx + 1]
-                    bSum += data[idx + 2]
-                    const idx = i * 4
-                    rSum += data[idx]
-                    gSum += data[idx + 1]
-                    bSum += data[idx + 2]
+                    const idx = i * 4;
+                    rSum += data[idx];
+                    gSum += data[idx + 1];
+                    bSum += data[idx + 2];
                 }
 
-                const r = Math.round(rSum / numPixels)
-                const g = Math.round(gSum / numPixels)
-                const b = Math.round(bSum / numPixels)
-                const r = Math.round(rSum / numPixels)
-                const g = Math.round(gSum / numPixels)
-                const b = Math.round(bSum / numPixels)
+                const r = Math.round(rSum / numPixels);
+                const g = Math.round(gSum / numPixels);
+                const b = Math.round(bSum / numPixels);
 
                 const colors = getTrelloColors(r, g, b)
                 setSidebarBackgroundColor(colors.sidebar)
@@ -3988,20 +3949,15 @@ export function BoardDetails() {
                 console.error("Error loading image")
                 applyFallbackColors()
             }
-        }
-        }
+        };
 
-        img.src = rawUrl
-        img.src = rawUrl
+        img.src = rawUrl;
         return () => {
-            isCancelled = true
-        }
-    }, [boardToShow])
-            isCancelled = true
-        }
-    }, [boardToShow])
+            isCancelled = true;
+        };
+    }, [boardToShow]);
 
-
+    
     if (!(boardToShow && colorsSetted)) return (<div className="trello-loader">
             <img src="trello-loader.svg" alt=""/>
         </div>)
