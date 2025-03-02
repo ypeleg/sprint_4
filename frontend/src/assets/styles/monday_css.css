@@ -120,6 +120,7 @@
     content: '\f39e';
     font-style: normal;
 }
+
 .fa.download::before {
     font-family: fa-solid;
     content: '\f019';
@@ -250,11 +251,7 @@ button {
     /*height: 100%;*/
     /*overflow: auto;*/
 }
-@media (max-width: calc($mobile-breakpoint + 40px)) {
-    .monday-board-main {
-        height: 92vh;
-    }
-}
+
 blockquote {
     margin: 0;
     padding: 0;
@@ -262,27 +259,7 @@ blockquote {
     align-items: center;
     cursor: text;
 }
-.fs12 {
-    font-size: calc($remSize * 1rem);
-}
-.fs14 {
-    font-size: calc($remSize * 1rem);
-}
-.fs18 {
-    font-size: calc($remSize * 1rem);
-}
-.fs20 {
-    font-size: calc($remSize * 1rem);
-}
-.fs24 {
-    font-size: calc($remSize * 1rem);
-}
-.fs28 {
-    font-size: calc($remSize * 1rem);
-}
-.fs30 {
-    font-size: calc($remSize * 1rem);
-}
+
 .flex {
     display: flex;
 }
@@ -327,7 +304,6 @@ blockquote {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: calc($remSize * 1rem);
     height: 32px;
     gap: 5px;
 }
@@ -382,9 +358,7 @@ blockquote {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-.board-filter .add-btn .drop-down-btn .icon {
-    font-size: calc($remSize * 1rem);
-}
+
 .board-filter .search-task {
     border-radius: 4px;
     color: #323338;
@@ -413,11 +387,7 @@ blockquote {
     outline: none;
     width: 140px;
 }
-@media (max-width: calc($mobile-breakpoint + 40px)) {
-    .board-filter .search-task input:focus-visible {
-        width: 120px;
-    }
-}
+
 .board-filter .search-task .icon {
     margin-left: 2px;
 }
@@ -429,8 +399,6 @@ blockquote {
     background-color: #cce5ff;
 }
 .board-filter .person-filter .member-img {
-    height: calc($remSize * 1rem);
-    width: calc($remSize * 1rem);
     border-radius: 50%;
 }
 .monday-board-header {
@@ -448,7 +416,6 @@ blockquote {
     display: flex;
     align-items: center;
     padding-top: 4px;
-    height: calc($remSize * 1rem);
     border-radius: 4px;
 }
 .monday-board-header .monday-board-title .board-info {
@@ -472,7 +439,6 @@ blockquote {
     background-color: #dcdfec;
 }
 .monday-board-header .monday-board-title .board-info .icon {
-    font-size: calc($remSize * 1rem);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -502,8 +468,6 @@ blockquote {
 }
 .monday-board-header .monday-board-title .board-tools .members-last-seen {
     width: max-content;
-    gap: 4px;
-    height: calc($remSize * 1rem);
 }
 .monday-board-header .monday-board-title .board-tools .members-last-seen:hover {
     background-color: #dcdfec;
@@ -511,13 +475,8 @@ blockquote {
 .monday-board-header .monday-board-title .board-tools .members-last-seen .last-seen-title {
     display: none;
 }
-@media (min-width: calc($narrow-breakpoint + 40px)) {
-    .monday-board-header .monday-board-title .board-tools .members-last-seen .last-seen-title {
-        display: block;
-    }
-}
+
 .monday-board-header .monday-board-title .board-tools .invite {
-    height: calc($remSize * 1rem);
     width: max-content;
 }
 .monday-board-header .monday-board-title .board-tools .invite:hover {
@@ -526,17 +485,11 @@ blockquote {
 .monday-board-header .monday-board-title .board-tools .invite-title {
     display: none;
 }
-@media (min-width: calc($narrow-breakpoint + 40px)) {
-    .monday-board-header .monday-board-title .board-tools .invite-title {
-        display: block;
-    }
-}
+
 .monday-board-header .monday-board-title .board-tools .invite .invite-icon {
     width: 32px;
 }
 .monday-board-header .monday-board-title .board-tools .members-imgs > * {
-    height: calc($remSize * 1rem);
-    width: calc($remSize * 1rem);
     border-radius: 50%;
 }
 .monday-board-header .monday-board-title .board-tools .members-imgs .member-img1 {
@@ -555,11 +508,9 @@ blockquote {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: calc($remSize * 1rem);
     background-color: white;
     margin-left: -5px;
     border: 1px solid #d0d4e466;
-    padding: calc(($pixels/$context) * 1em);
     text-align: center;
     width: 26px;
     height: 26px;
@@ -574,7 +525,6 @@ blockquote {
 }
 .monday-board-header .board-description-link {
     font-weight: 400;
-    font-size: calc($remSize * 1rem);
 }
 .monday-board-header .board-description span {
     color: #1f76c2;
@@ -592,7 +542,6 @@ blockquote {
     align-items: center;
     justify-content: center;
     padding: 0px 8px 0px 8px;
-    font-size: calc($remSize * 1rem);
     height: 32px;
     white-space: nowrap;
     cursor: pointer;
@@ -600,9 +549,7 @@ blockquote {
 .monday-board-header .board-display-btns .type-btn.active {
     border-bottom: 2px solid #0073ea;
 }
-.monday-board-header .board-display-btns .type-btn svg {
-    font-size: calc($remSize * 1rem);
-}
+
 .monday-board-header .board-display-btns .type-btn span {
     font-weight: 500;
     padding: 0 4px;
@@ -613,48 +560,10 @@ blockquote {
 .monday-board-header .board-display-btns .type-btn span.mobile {
     display: block;
 }
-@media (min-width: calc($mobile-breakpoint + 40px)) {
-    .monday-board-header .board-display-btns .type-btn:hover {
-        background-color: #dcdfec;
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
-    }
-    .monday-board-header .board-display-btns .type-btn span.wide {
-        display: block;
-    }
-    .monday-board-header .board-display-btns .type-btn span.mobile {
-        display: none;
-    }
-}
 .monday-board-header .board-border {
     height: 1px;
     width: 100%;
     background-color: rgba(143, 153, 191, 0.4);
-}
-@media (max-width: calc($mobile-breakpoint + 40px)) {
-    .monday-board-header {
-        padding: 16px 10px 0 10px;
-    }
-    .monday-board-header .board-info h1 {
-        font-size: calc($remSize * 1rem);
-        white-space: nowrap;
-    }
-    .monday-board-header .board-tools {
-        margin-right: auto;
-    }
-    .monday-board-header .board-description {
-        display: none;
-    }
-    .monday-board-header blockquote {
-        max-width: 180px;
-        white-space: nowrap;
-    }
-}
-@media (min-width: calc($mobile-breakpoint + 40px)) {
-    .monday-board-header .board-info h1 {
-        font-size: calc($remSize * 1rem);
-        line-height: 42px;
-    }
 }
 .monday-board-preview:hover .menu-icon-container {
     opacity: 1;
@@ -676,14 +585,12 @@ blockquote {
     opacity: 0;
 }
 .monday-board-preview .menu-icon-container .icon {
-    font-size: calc($remSize * 1rem);
 }
 .monday-board-preview .menu-icon-container.active {
     background-color: #cce5ff;
 }
 .board-menu-modal {
     color: #323338;
-    font-size: calc($remSize * 1rem);
 }
 .board-menu-modal > * {
     display: flex;
@@ -707,7 +614,6 @@ blockquote {
     justify-content: center;
     padding: 16px 0;
     line-height: 18px;
-    font-size: calc($remSize * 1rem);
     /*transition: opacity 0.3s ease-in-out, box-shadow 0.2s ease-in-out;*/
 }
 .get-started-btn:hover {
@@ -720,23 +626,11 @@ blockquote {
 .get-started-btn .arrow {
     margin-left: 8px;
     /*transition: transform 0.3s ease-in-out;*/
-    font-size: calc($remSize * 1rem);
-}
-@media (min-width: calc($narrow-breakpoint + 40px)) {
-    .get-started-btn {
-        width: max-content;
-        padding: 16px 32px;
-    }
 }
 .group-list {
     margin: 0 0 40px 40px;
     position: relative;
     color: #323338;
-}
-@media (max-width: calc($mobile-breakpoint + 40px)) {
-    .group-list {
-        margin: 0;
-    }
 }
 .group-preview {
     margin-bottom: 64px;
@@ -749,11 +643,7 @@ blockquote {
     height: 40px;
     background-color: white;
 }
-@media (max-width: calc($mobile-breakpoint + 40px)) {
-    .group-preview .hidden {
-        display: none;
-    }
-}
+
 .group-preview .cmp-order-title {
     position: relative;
 }
@@ -774,20 +664,11 @@ blockquote {
     position: sticky;
     top: 224px;
     left: 40px;
-    z-index: 2;
+    z-index: 200;
     background-color: #ffffff;
     width: 100%;
 }
-@media (min-width: calc($mobile-breakpoint + 40px)) {
-    .group-preview .title-container.not-des {
-        top: 186px;
-    }
-}
-@media (max-width: calc($mobile-breakpoint + 40px)) {
-    .group-preview .title-container {
-        top: 179px;
-    }
-}
+
 .group-preview .title-container .add-picker-task {
     border-top: 1px solid rgba(143, 153, 191, 0.4);
     border-bottom: 1px solid rgba(143, 153, 191, 0.4);
@@ -827,15 +708,9 @@ blockquote {
     height: 36px;
     border: 1px solid rgba(143, 153, 191, 0.4);
     border-left: 0px solid transparent;
-    font-size: calc($remSize * 1rem);
 }
 .group-preview .title.task {
     min-width: 336px;
-}
-@media (max-width: calc($mobile-breakpoint + 40px)) {
-    .group-preview .title.task {
-        min-width: 202px;
-    }
 }
 .group-preview .title.member-picker {
     min-width: 87px;
@@ -848,16 +723,6 @@ blockquote {
     height: 40px;
     width: 100%;
     line-height: 24px;
-}
-@media (min-width: calc($mobile-breakpoint + 40px)) {
-    .group-preview .group-header.not-des {
-        top: 158px;
-    }
-}
-@media (max-width: calc($mobile-breakpoint + 40px)) {
-    .group-preview .group-header {
-        top: 149px;
-    }
 }
 .group-preview .group-header .group-title-info {
     margin-bottom: 8px;
@@ -872,8 +737,7 @@ blockquote {
 
 .group-preview .group-header .group-title-info .task-count {
     color: #676879;
-    white-space: nowrap;
-    font-size: calc($remSize * 1rem);
+    white-space: nowrap;    
     line-height: 19px;
     margin-top: 2px;
     margin-left: 8px;
@@ -899,11 +763,6 @@ blockquote {
     left: 40px;
     z-index: 2;
 }
-@media (max-width: calc($mobile-breakpoint + 40px)) {
-    .group-preview .group-header .group-header-title {
-        left: 0;
-    }
-}
 .group-preview .group-header .group-title {
     width: 200px;
     white-space: nowrap;
@@ -913,14 +772,12 @@ blockquote {
     display: block;
 }
 .group-preview .group-header .arrow-icon {
-    font-size: calc($remSize * 1rem);
     margin-left: 13px;
     cursor: pointer;
 }
 .group-preview .group-header h4 {
     cursor: text;
     font-weight: 600;
-    font-size: calc($remSize * 1rem);
     padding: 4px;
 }
 .group-preview .group-header .group-menu {
@@ -937,15 +794,9 @@ blockquote {
     display: none;
     cursor: pointer;
     border-radius: 4px;
-    font-size: calc($remSize * 1rem);
 }
 .group-preview .group-header .group-menu .icon:hover {
     background-color: #d0d4e4;
-}
-@media (max-width: calc($mobile-breakpoint + 40px)) {
-    .group-preview .group-header .group-menu {
-        display: none;
-    }
 }
 .group-preview .check-box {
     min-width: 33px;
@@ -1003,12 +854,6 @@ blockquote {
     z-index: 1;
     left: 40px;
 }
-@media (max-width: calc($mobile-breakpoint + 40px)) {
-    .group-preview .sticky-div {
-        min-width: 240px;
-        left: 0;
-    }
-}
 .group-preview .sticky-div.titles {
     border-top-left-radius: 6px;
     z-index: 11;
@@ -1047,14 +892,7 @@ blockquote {
     width: 46px;
     top: -3px;
 }
-@media (max-width: calc($mobile-breakpoint + 40px)) {
-    .statistic .sticky-container {
-        min-width: 240px;
-        left: 0;
-    }
-}
 .statistic .statistic-number {
-    font-size: calc($remSize * 1rem);
     position: relative;
 }
 .statistic .statistic-number .number {
@@ -1063,7 +901,6 @@ blockquote {
 }
 .statistic .statistic-number .sum {
     color: #0073ea;
-    font-size: calc($remSize * 1rem);
     position: absolute;
 }
 .screenshot-section {
@@ -3234,7 +3071,7 @@ blockquote span {
 
 .add-task {
     background-color: white !important;
-    z-index: 200;
+    z-index: 100;
 }
 
 .add-task.check-box {
@@ -3396,3 +3233,8 @@ form.monday-add-task-form {
   .mondaymonday-add-task-form {
       background-color: white;
   }
+
+
+  .show-more-count{
+    font-size: 10px !important;
+}

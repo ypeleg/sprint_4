@@ -5746,6 +5746,7 @@ img.smaller-imgs.small-circle {
 .monday-group-header-primary {
     position: relative;
     margin-left: -40px;
+    width: 100vh !important;
 }
 
 .monday-group-header-primary::before {
