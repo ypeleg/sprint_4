@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { initializeApp } from "firebase/app";
-import { AppHeader } from "../cmps/AppHeader";
-import { useEffect, useState, useRef } from "react";
-import { userService } from "../services/user.service";
-import { DECLINE_CALL, OUTGOING_VIDEO_CALL, socketService } from "../services/util.service";
-import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot } from "firebase/firestore";
+import { useSelector } from "react-redux" 
+import { useParams } from "react-router-dom" 
+import { initializeApp } from "firebase/app" 
+import { AppHeader } from "../cmps/AppHeader" 
+import { useEffect, useState, useRef } from "react" 
+import { userService } from "../services/user.service" 
+import { DECLINE_CALL, OUTGOING_VIDEO_CALL, socketService } from "../services/util.service" 
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot } from "firebase/firestore" 
 
 
 const firebaseConfig = {
@@ -20,38 +20,38 @@ export function VideoCall() {
     const callInputRef = useRef(null)
     const remoteMediaStreamRef = useRef(new MediaStream())
 
-    const { callId: routeCallId } = useParams();
-    const loggedUser = useSelector((state) => state.userModule.user);
+    const { callId: routeCallId } = useParams() 
+    const loggedUser = useSelector((state) => state.userModule.user) 
 
-    const [firestore, setFirestore] = useState(null);
-    const [peerConnection, setPeerConnection] = useState(null);
+    const [firestore, setFirestore] = useState(null) 
+    const [peerConnection, setPeerConnection] = useState(null) 
 
-    const [localStream, setLocalStream] = useState(null);
-    const [remoteStream, setRemoteStream] = useState(null);
+    const [localStream, setLocalStream] = useState(null) 
+    const [remoteStream, setRemoteStream] = useState(null) 
 
-    const [callId, setCallId] = useState(routeCallId || "");
-    const [isConnecting, setIsConnecting] = useState(false);
+    const [callId, setCallId] = useState(routeCallId || "") 
+    const [isConnecting, setIsConnecting] = useState(false) 
 
-    const [isWebcamActive, setIsWebcamActive] = useState(false);
-    const [isVideoOn, setIsVideoOn] = useState(true);
-    const [isAudioOn, setIsAudioOn] = useState(true);
-    const [callTimer, setCallTimer] = useState(0);
-    const [timerInterval, setTimerInterval] = useState(null);
-    const [isLoadingCamera, setIsLoadingCamera] = useState(false);
+    const [isWebcamActive, setIsWebcamActive] = useState(false) 
+    const [isVideoOn, setIsVideoOn] = useState(true) 
+    const [isAudioOn, setIsAudioOn] = useState(true) 
+    const [callTimer, setCallTimer] = useState(0) 
+    const [timerInterval, setTimerInterval] = useState(null) 
+    const [isLoadingCamera, setIsLoadingCamera] = useState(false) 
 
-    const [showControls, setShowControls] = useState(true);
-    const [controlsTimeout, setControlsTimeout] = useState(null);
+    const [showControls, setShowControls] = useState(true) 
+    const [controlsTimeout, setControlsTimeout] = useState(null) 
 
-    const [userFilter, setUserFilter] = useState("");
-    const [showUserPicker, setShowUserPicker] = useState(true);
-    const [users, setUsers] = useState([]);
-    const [pickedUser, setPickedUser] = useState(null);
+    const [userFilter, setUserFilter] = useState("") 
+    const [showUserPicker, setShowUserPicker] = useState(true) 
+    const [users, setUsers] = useState([]) 
+    const [pickedUser, setPickedUser] = useState(null) 
     const [showDeclined, setShowDeclined] = useState(false)
     useEffect(async () => {
-        console.log("[VideoCall] Initializing Firebase + PeerConnection");
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        setFirestore(db);
+        console.log("[VideoCall] Initializing Firebase + PeerConnection") 
+        const app = initializeApp(firebaseConfig) 
+        const db = getFirestore(app) 
+        setFirestore(db) 
         socketService.on(DECLINE_CALL, (payload) => {
             // debugger
             if (payload === loggedUser.fullname) {
@@ -60,178 +60,178 @@ export function VideoCall() {
         })
         const servers = {
             iceServers: [{ urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"] },], iceCandidatePoolSize: 10,
-        };
-        const pc = new RTCPeerConnection(servers);
+        } 
+        const pc = new RTCPeerConnection(servers) 
         if (routeCallId) {
-            console.log("[Route] Auto-join ->", routeCallId);
-            setCallId(routeCallId);
+            console.log("[Route] Auto-join ->", routeCallId) 
+            setCallId(routeCallId) 
             (async () => {
-                startWebcam(pc);
-                answerCall(routeCallId, pc, db);
-            })();
+                startWebcam(pc) 
+                answerCall(routeCallId, pc, db) 
+            })() 
         }
 
         // ontrack -> add incoming tracks to single remote stream
         pc.ontrack = (event) => {
-            console.log("[ontrack] Remote track event ->", event.streams[0]);
-            const remoteStreamObj = remoteMediaStreamRef.current;
+            console.log("[ontrack] Remote track event ->", event.streams[0]) 
+            const remoteStreamObj = remoteMediaStreamRef.current 
             event.streams[0].getTracks().forEach(async (track) => {
-                console.log("[ontrack] Adding track ->", track.kind);
-                remoteStreamObj.addTrack(track);
-            });
+                console.log("[ontrack] Adding track ->", track.kind) 
+                remoteStreamObj.addTrack(track) 
+            }) 
             // debugger
-            setRemoteStream(remoteStreamObj);
-        };
+            setRemoteStream(remoteStreamObj) 
+        } 
 
         pc.oniceconnectionstatechange = () => {
-            console.log("[ICE State]", pc.iceConnectionState);
+            console.log("[ICE State]", pc.iceConnectionState) 
             if (pc.iceConnectionState === "connected" || pc.iceConnectionState === "completed") {
-                console.log("[ICE] connected -> call established");
-                setIsConnecting(false);
-                const interval = setInterval(() => setCallTimer((prev) => prev + 1), 1000);
-                setTimerInterval(0);
+                console.log("[ICE] connected -> call established") 
+                setIsConnecting(false) 
+                const interval = setInterval(() => setCallTimer((prev) => prev + 1), 1000) 
+                setTimerInterval(0) 
             } else if (pc.iceConnectionState === "disconnected" || pc.iceConnectionState === "failed") {
-                console.log("[ICE] disconnected/failed -> stop call");
-                setIsConnecting(false);
-                if (timerInterval) clearInterval(timerInterval);
-                setTimerInterval(null);
-                setCallTimer(0);
+                console.log("[ICE] disconnected/failed -> stop call") 
+                setIsConnecting(false) 
+                if (timerInterval) clearInterval(timerInterval) 
+                setTimerInterval(null) 
+                setCallTimer(0) 
             }
-        };
+        } 
 
-        setPeerConnection(pc);
+        setPeerConnection(pc) 
 
 
         return () => {
-            pc.close();
-            if (timerInterval) clearInterval(timerInterval);
-        };
-    }, []);
+            pc.close() 
+            if (timerInterval) clearInterval(timerInterval) 
+        } 
+    }, []) 
 
     useEffect(() => {
         if (localStream && webcamVideoRef.current) {
-            webcamVideoRef.current.srcObject = localStream;
+            webcamVideoRef.current.srcObject = localStream 
         }
-    }, [localStream]);
+    }, [localStream]) 
 
     useEffect(() => {
         if (remoteStream && remoteVideoRef.current) {
 
-            console.log("[RemoteStream] Attaching to remote video");
-            remoteVideoRef.current.srcObject = remoteStream;
+            console.log("[RemoteStream] Attaching to remote video") 
+            remoteVideoRef.current.srcObject = remoteStream 
             remoteVideoRef.current
                 .play()
-                .catch((err) => console.error("[RemoteStream] Play error:", err));
+                .catch((err) => console.error("[RemoteStream] Play error:", err)) 
         } else {
-            console.log("[RemoteStream] Not attaching yet - either ref is null or no stream");
+            console.log("[RemoteStream] Not attaching yet - either ref is null or no stream") 
         }
-    }, [remoteStream]);
+    }, [remoteStream]) 
 
 
     const startWebcam2 = async (pc = peerConnection) => {
         if (!pc) {
-            console.warn("[startWebcam] No PeerConnection yet");
-            return;
+            console.warn("[startWebcam] No PeerConnection yet") 
+            return 
         }
         if (localStream) {
-            console.warn("[startWebcam] Already have localStream, skipping");
-            return;
+            console.warn("[startWebcam] Already have localStream, skipping") 
+            return 
         }
-        setIsLoadingCamera(true);
+        setIsLoadingCamera(true) 
 
         try {
-            console.log("[startWebcam] Getting user media...");
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-            console.log("[startWebcam] localStream ->", stream);
-            setLocalStream(stream);
-            setIsWebcamActive(true);
-            setIsVideoOn(true);
-            setIsAudioOn(true);
+            console.log("[startWebcam] Getting user media...") 
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true }) 
+            console.log("[startWebcam] localStream ->", stream) 
+            setLocalStream(stream) 
+            setIsWebcamActive(true) 
+            setIsVideoOn(true) 
+            setIsAudioOn(true) 
 
             // Attach to local video
             if (webcamVideoRef.current) {
-                webcamVideoRef.current.srcObject = stream;
+                webcamVideoRef.current.srcObject = stream 
             }
 
             // Add tracks
             stream.getTracks().forEach(async (track) => {
-                console.log("[startWebcam] Adding local track ->", track.kind);
-                await pc.addTrack(track, stream);
-            });
+                console.log("[startWebcam] Adding local track ->", track.kind) 
+                await pc.addTrack(track, stream) 
+            }) 
         } catch (err) {
-            console.error("[startWebcam] Error:", err);
-            alert("Failed to access camera/mic. Please allow permissions.");
+            console.error("[startWebcam] Error:", err) 
+            alert("Failed to access camera/mic. Please allow permissions.") 
         }
-        setIsLoadingCamera(false);
+        setIsLoadingCamera(false) 
     }
 
     const startWebcam = async (pc = peerConnection) => {
         if (!pc) {
-            console.warn("[startWebcam] No PeerConnection yet");
-            return;
+            console.warn("[startWebcam] No PeerConnection yet") 
+            return 
         }
         if (localStream) {
-            console.warn("[startWebcam] Already have localStream, skipping");
-            return;
+            console.warn("[startWebcam] Already have localStream, skipping") 
+            return 
         }
-        setIsLoadingCamera(true);
+        setIsLoadingCamera(true) 
     
         try {
             // Try to silently check for permission status if the browser supports it
-            let hasPermission = false;
+            let hasPermission = false 
             try {
                 if (navigator.permissions && navigator.permissions.query) {
-                    const permissionStatus = await navigator.permissions.query({ name: 'camera' });
-                    hasPermission = permissionStatus.state === 'granted';
-                    console.log("[startWebcam] Camera permission status:", permissionStatus.state);
+                    const permissionStatus = await navigator.permissions.query({ name: 'camera' }) 
+                    hasPermission = permissionStatus.state === 'granted' 
+                    console.log("[startWebcam] Camera permission status:", permissionStatus.state) 
                 }
             } catch (permErr) {
-                console.warn("[startWebcam] Permission check failed:", permErr);
+                console.warn("[startWebcam] Permission check failed:", permErr) 
             }
             
             // Initialize variables for device enumeration and stream
-            let videoDevices = [];
-            let stream = null;
+            let videoDevices = [] 
+            let stream = null 
             
             // Get list of video devices
             try {
-                const devices = await navigator.mediaDevices.enumerateDevices();
-                videoDevices = devices.filter(device => device.kind === 'videoinput');
-                console.log("[startWebcam] Found", videoDevices.length, "video devices");
+                const devices = await navigator.mediaDevices.enumerateDevices() 
+                videoDevices = devices.filter(device => device.kind === 'videoinput') 
+                console.log("[startWebcam] Found", videoDevices.length, "video devices") 
             } catch (enumErr) {
-                console.warn("[startWebcam] Failed to enumerate devices:", enumErr);
+                console.warn("[startWebcam] Failed to enumerate devices:", enumErr) 
             }
             
             // If we have video devices, try each one until success
             if (videoDevices.length > 0) {
                 // Try to retrieve any previously successful camera index from localStorage
-                const lastSuccessfulIndex = localStorage.getItem('lastSuccessfulCameraIndex');
-                let startIndex = 0;
+                const lastSuccessfulIndex = localStorage.getItem('lastSuccessfulCameraIndex') 
+                let startIndex = 0 
                 
                 // If we have a previously successful index, try that one first
                 if (lastSuccessfulIndex !== null) {
-                    const index = parseInt(lastSuccessfulIndex);
+                    const index = parseInt(lastSuccessfulIndex) 
                     if (index >= 0 && index < videoDevices.length) {
-                        startIndex = index;
-                        console.log("[startWebcam] Starting with previously successful camera index:", startIndex);
+                        startIndex = index 
+                        console.log("[startWebcam] Starting with previously successful camera index:", startIndex) 
                     }
                 }
                 
                 // Function to reorder indices to try previously successful one first
                 const getOrderedIndices = (start, total) => {
-                    const indices = [];
-                    for (let i = 0; i < total; i++) {
-                        indices.push((start + i) % total);
+                    const indices = [] 
+                    for (let i = 0 ; i < total;  i++) {
+                        indices.push((start + i) % total) 
                     }
-                    return indices;
-                };
+                    return indices 
+                } 
                 
-                const orderedIndices = getOrderedIndices(startIndex, videoDevices.length);
+                const orderedIndices = getOrderedIndices(startIndex, videoDevices.length) 
                 
                 // Try cameras in the determined order
                 for (const i of orderedIndices) {
                     try {
-                        console.log(`[startWebcam] Trying camera index ${i}: ${videoDevices[i].label || 'Unnamed camera'}`);
+                        console.log(`[startWebcam] Trying camera index ${i}: ${videoDevices[i].label || 'Unnamed camera'}`) 
                         
                         // Specific constraints for this device
                         stream = await navigator.mediaDevices.getUserMedia({
@@ -241,14 +241,14 @@ export function VideoCall() {
                                 height: { ideal: 480 }
                             },
                             audio: true
-                        });
+                        }) 
                         
                         // If successful, save the index for future use
-                        localStorage.setItem('lastSuccessfulCameraIndex', i.toString());
-                        console.log(`[startWebcam] Successfully connected to camera ${i}`);
-                        break;
+                        localStorage.setItem('lastSuccessfulCameraIndex', i.toString()) 
+                        console.log(`[startWebcam] Successfully connected to camera ${i}`) 
+                        break 
                     } catch (err) {
-                        console.warn(`[startWebcam] Failed to access camera ${i}:`, err);
+                        console.warn(`[startWebcam] Failed to access camera ${i}:`, err) 
                         // Continue to next camera
                     }
                 }
@@ -256,7 +256,7 @@ export function VideoCall() {
             
             // If all specific cameras failed or we couldn't enumerate, try generic approach
             if (!stream) {
-                console.log("[startWebcam] Trying default camera with generic constraints");
+                console.log("[startWebcam] Trying default camera with generic constraints") 
                 try {
                     stream = await navigator.mediaDevices.getUserMedia({ 
                         video: { 
@@ -264,203 +264,203 @@ export function VideoCall() {
                             height: { ideal: 480 }
                         }, 
                         audio: true 
-                    });
-                    console.log("[startWebcam] Successfully connected to default camera");
+                    }) 
+                    console.log("[startWebcam] Successfully connected to default camera") 
                 } catch (err) {
-                    console.error("[startWebcam] Default camera failed:", err);
+                    console.error("[startWebcam] Default camera failed:", err) 
                     
                     // Final fallback: try video-only mode (no audio)
-                    console.log("[startWebcam] Final attempt: video-only mode");
+                    console.log("[startWebcam] Final attempt: video-only mode") 
                     stream = await navigator.mediaDevices.getUserMedia({ 
                         video: true,
                         audio: false
-                    });
+                    }) 
                 }
             }
             
             // Successfully got a stream at this point
-            console.log("[startWebcam] localStream ->", stream);
-            setLocalStream(stream);
-            setIsWebcamActive(true);
-            setIsVideoOn(true);
+            console.log("[startWebcam] localStream ->", stream) 
+            setLocalStream(stream) 
+            setIsWebcamActive(true) 
+            setIsVideoOn(true) 
             
             // Check if we have audio tracks and set status accordingly
-            const hasAudio = stream.getAudioTracks().length > 0;
-            setIsAudioOn(hasAudio);
+            const hasAudio = stream.getAudioTracks().length > 0 
+            setIsAudioOn(hasAudio) 
             if (!hasAudio) {
-                console.warn("[startWebcam] No audio tracks available in the stream");
+                console.warn("[startWebcam] No audio tracks available in the stream") 
             }
     
             // Attach to local video
             if (webcamVideoRef.current) {
-                webcamVideoRef.current.srcObject = stream;
+                webcamVideoRef.current.srcObject = stream 
             }
     
             // Add tracks to peer connection
             stream.getTracks().forEach(async (track) => {
-                console.log("[startWebcam] Adding local track ->", track.kind);
-                await pc.addTrack(track, stream);
-            });
+                console.log("[startWebcam] Adding local track ->", track.kind) 
+                await pc.addTrack(track, stream) 
+            }) 
         } catch (err) {
-            console.error("[startWebcam] All camera access attempts failed:", err);
+            console.error("[startWebcam] All camera access attempts failed:", err) 
             // Don't show alert to avoid disrupting the user experience
-            setIsWebcamActive(false);
+            setIsWebcamActive(false) 
         }
         
-        setIsLoadingCamera(false);
+        setIsLoadingCamera(false) 
     }
 
     const startWebcam3 = async (pc = peerConnection) => {
         if (!pc) {
-          console.warn("[startWebcam] No PeerConnection yet");
-          return;
+          console.warn("[startWebcam] No PeerConnection yet") 
+          return 
         }
         if (localStream) {
-          console.warn("[startWebcam] Already have localStream, skipping");
-          return;
+          console.warn("[startWebcam] Already have localStream, skipping") 
+          return 
         }
-        setIsLoadingCamera(true);
+        setIsLoadingCamera(true) 
       
         try {
           // 1) Request permission once, in broad terms (audio + any camera).
           //    This will trigger only one permission prompt if permission is not already granted.
-          console.log("[startWebcam] Requesting initial user media permission...");
+          console.log("[startWebcam] Requesting initial user media permission...") 
           const tempStream = await navigator.mediaDevices.getUserMedia({
             video: true,
             audio: true,
-          });
+          }) 
           // Stop this temp stream's tracks to free them while we enumerate devices
-          tempStream.getTracks().forEach((track) => track.stop());
+          tempStream.getTracks().forEach((track) => track.stop()) 
       
           // 2) Now that permission is granted, enumerate all devices
-          const devices = await navigator.mediaDevices.enumerateDevices();
-          const videoDevices = devices.filter((d) => d.kind === "videoinput");
-          console.log("[startWebcam] Found video devices:", videoDevices);
+          const devices = await navigator.mediaDevices.enumerateDevices() 
+          const videoDevices = devices.filter((d) => d.kind === "videoinput") 
+          console.log("[startWebcam] Found video devices:", videoDevices) 
       
-          let workingStream = null;
+          let workingStream = null 
       
           // 3) Try each camera one by one
           for (const device of videoDevices) {
             try {
-              console.log("[startWebcam] Trying camera:", device.label || device.deviceId);
+              console.log("[startWebcam] Trying camera:", device.label || device.deviceId) 
               const testStream = await navigator.mediaDevices.getUserMedia({
                 audio: true,
                 video: { deviceId: device.deviceId },
-              });
+              }) 
       
               // If successful, we have our working camera stream
-              workingStream = testStream;
-              console.log("[startWebcam] Found a working camera:", device.label || device.deviceId);
-              break;
+              workingStream = testStream 
+              console.log("[startWebcam] Found a working camera:", device.label || device.deviceId) 
+              break 
             } catch (err) {
-              console.warn("[startWebcam] This camera failed, trying next...", err);
+              console.warn("[startWebcam] This camera failed, trying next...", err) 
             }
           }
       
           if (!workingStream) {
-            throw new Error("No working camera found (all failed).");
+            throw new Error("No working camera found (all failed).") 
           }
       
           // 4) Once we get a working stream, set it as the local stream
-          setLocalStream(workingStream);
-          setIsWebcamActive(true);
-          setIsVideoOn(true);
-          setIsAudioOn(true);
+          setLocalStream(workingStream) 
+          setIsWebcamActive(true) 
+          setIsVideoOn(true) 
+          setIsAudioOn(true) 
       
           // Attach local stream to local video
           if (webcamVideoRef.current) {
-            webcamVideoRef.current.srcObject = workingStream;
+            webcamVideoRef.current.srcObject = workingStream 
           }
       
           // 5) Add tracks to your RTCPeerConnection
           workingStream.getTracks().forEach(async (track) => {
-            console.log("[startWebcam] Adding local track ->", track.kind);
-            await pc.addTrack(track, workingStream);
-          });
+            console.log("[startWebcam] Adding local track ->", track.kind) 
+            await pc.addTrack(track, workingStream) 
+          }) 
       
         } catch (err) {
-          console.error("[startWebcam] Error:", err);
-          alert("Failed to access camera/mic. Please allow permissions or check device availability.");
+          console.error("[startWebcam] Error:", err) 
+          alert("Failed to access camera/mic. Please allow permissions or check device availability.") 
         } finally {
-          setIsLoadingCamera(false);
+          setIsLoadingCamera(false) 
         }
-      };
+      } 
 
       const startWebcam4 = async (pc = peerConnection) => {
         if (!pc) {
-            console.warn("[startWebcam] No PeerConnection yet");
-            return;
+            console.warn("[startWebcam] No PeerConnection yet") 
+            return 
         }
         if (localStream) {
-            console.warn("[startWebcam] Already have localStream, skipping");
-            return;
+            console.warn("[startWebcam] Already have localStream, skipping") 
+            return 
         }
-        setIsLoadingCamera(true);
+        setIsLoadingCamera(true) 
     
         try {
             // Try to silently check for permission status if the browser supports it
-            let hasPermission = false;
+            let hasPermission = false 
             try {
                 if (navigator.permissions && navigator.permissions.query) {
-                    const permissionStatus = await navigator.permissions.query({ name: 'camera' });
-                    hasPermission = permissionStatus.state === 'granted';
-                    console.log("[startWebcam] Camera permission status:", permissionStatus.state);
+                    const permissionStatus = await navigator.permissions.query({ name: 'camera' }) 
+                    hasPermission = permissionStatus.state === 'granted' 
+                    console.log("[startWebcam] Camera permission status:", permissionStatus.state) 
                 }
             } catch (permErr) {
-                console.warn("[startWebcam] Permission check failed:", permErr);
+                console.warn("[startWebcam] Permission check failed:", permErr) 
             }
             
             // Initialize variables for device enumeration and stream
-            let videoDevices = [];
-            let stream = null;
+            let videoDevices = [] 
+            let stream = null 
             
             // Get list of video devices
             try {
-                const devices = await navigator.mediaDevices.enumerateDevices();
-                videoDevices = devices.filter(device => device.kind === 'videoinput');
-                console.log("[startWebcam] Found", videoDevices.length, "video devices");
+                const devices = await navigator.mediaDevices.enumerateDevices() 
+                videoDevices = devices.filter(device => device.kind === 'videoinput') 
+                console.log("[startWebcam] Found", videoDevices.length, "video devices") 
             } catch (enumErr) {
-                console.warn("[startWebcam] Failed to enumerate devices:", enumErr);
+                console.warn("[startWebcam] Failed to enumerate devices:", enumErr) 
             }
             
             // If we have video devices, try each one until success
             if (videoDevices.length > 0) {
                 // Try to retrieve any previously successful camera index from localStorage
-                const lastSuccessfulIndex = localStorage.getItem('lastSuccessfulCameraIndex');
-                let startIndex = 0;
+                const lastSuccessfulIndex = localStorage.getItem('lastSuccessfulCameraIndex') 
+                let startIndex = 0 
                 
                 // If we have a previously successful index, try that one first
                 if (lastSuccessfulIndex !== null) {
-                    const index = parseInt(lastSuccessfulIndex);
+                    const index = parseInt(lastSuccessfulIndex) 
                     if (index >= 0 && index < videoDevices.length) {
-                        startIndex = index;
-                        console.log("[startWebcam] Starting with previously successful camera index:", startIndex);
+                        startIndex = index 
+                        console.log("[startWebcam] Starting with previously successful camera index:", startIndex) 
                     }
                 }
                 
                 // Function to reorder indices to try previously successful one first
                 const getOrderedIndices = (start, total) => {
-                    const indices = [];
-                    for (let i = 0; i < total; i++) {
-                        indices.push((start + i) % total);
+                    const indices = [] 
+                    for (let i = 0;  i < total;  i++) {
+                        indices.push((start + i) % total) 
                     }
-                    return indices;
-                };
+                    return indices 
+                } 
                 
-                const orderedIndices = getOrderedIndices(startIndex, videoDevices.length);
+                const orderedIndices = getOrderedIndices(startIndex, videoDevices.length) 
                 
                 // Try cameras in the determined order
                 for (const i of orderedIndices) {
                     // Skip OBS virtual cameras
-                    const deviceLabel = videoDevices[i].label || '';
+                    const deviceLabel = videoDevices[i].label || '' 
                     if (deviceLabel.toLowerCase().includes('obs') || 
                         deviceLabel.toLowerCase().includes('virtual camera')) {
-                        console.log(`[startWebcam] Skipping OBS/virtual camera ${i}: ${deviceLabel}`);
-                        continue;
+                        console.log(`[startWebcam] Skipping OBS/virtual camera ${i}: ${deviceLabel}`) 
+                        continue 
                     }
                     
                     try {
-                        console.log(`[startWebcam] Trying camera index ${i}: ${deviceLabel || 'Unnamed camera'}`);
+                        console.log(`[startWebcam] Trying camera index ${i}: ${deviceLabel || 'Unnamed camera'}`) 
                         
                         // Specific constraints for this device
                         stream = await navigator.mediaDevices.getUserMedia({
@@ -470,14 +470,14 @@ export function VideoCall() {
                                 height: { ideal: 480 }
                             },
                             audio: true
-                        });
+                        }) 
                         
                         // If successful, save the index for future use
-                        localStorage.setItem('lastSuccessfulCameraIndex', i.toString());
-                        console.log(`[startWebcam] Successfully connected to camera ${i}`);
-                        break;
+                        localStorage.setItem('lastSuccessfulCameraIndex', i.toString()) 
+                        console.log(`[startWebcam] Successfully connected to camera ${i}`) 
+                        break 
                     } catch (err) {
-                        console.warn(`[startWebcam] Failed to access camera ${i}:`, err);
+                        console.warn(`[startWebcam] Failed to access camera ${i}:`, err) 
                         // Continue to next camera
                     }
                 }
@@ -485,7 +485,7 @@ export function VideoCall() {
             
             // If all specific cameras failed or we couldn't enumerate, try generic approach
             if (!stream) {
-                console.log("[startWebcam] Trying default camera with generic constraints");
+                console.log("[startWebcam] Trying default camera with generic constraints") 
                 try {
                     stream = await navigator.mediaDevices.getUserMedia({ 
                         video: { 
@@ -493,294 +493,294 @@ export function VideoCall() {
                             height: { ideal: 480 }
                         }, 
                         audio: true 
-                    });
-                    console.log("[startWebcam] Successfully connected to default camera");
+                    }) 
+                    console.log("[startWebcam] Successfully connected to default camera") 
                 } catch (err) {
-                    console.error("[startWebcam] Default camera failed:", err);
+                    console.error("[startWebcam] Default camera failed:", err) 
                     
                     // Final fallback: try video-only mode (no audio)
-                    console.log("[startWebcam] Final attempt: video-only mode");
+                    console.log("[startWebcam] Final attempt: video-only mode") 
                     stream = await navigator.mediaDevices.getUserMedia({ 
                         video: true,
                         audio: false
-                    });
+                    }) 
                 }
             }
             
             // Successfully got a stream at this point
-            console.log("[startWebcam] localStream ->", stream);
-            setLocalStream(stream);
-            setIsWebcamActive(true);
-            setIsVideoOn(true);
+            console.log("[startWebcam] localStream ->", stream) 
+            setLocalStream(stream) 
+            setIsWebcamActive(true) 
+            setIsVideoOn(true) 
             
             // Check if we have audio tracks and set status accordingly
-            const hasAudio = stream.getAudioTracks().length > 0;
-            setIsAudioOn(hasAudio);
+            const hasAudio = stream.getAudioTracks().length > 0 
+            setIsAudioOn(hasAudio) 
             if (!hasAudio) {
-                console.warn("[startWebcam] No audio tracks available in the stream");
+                console.warn("[startWebcam] No audio tracks available in the stream") 
             }
     
             // Attach to local video
             if (webcamVideoRef.current) {
-                webcamVideoRef.current.srcObject = stream;
+                webcamVideoRef.current.srcObject = stream 
             }
     
             // Add tracks to peer connection
             stream.getTracks().forEach(async (track) => {
-                console.log("[startWebcam] Adding local track ->", track.kind);
-                await pc.addTrack(track, stream);
-            });
+                console.log("[startWebcam] Adding local track ->", track.kind) 
+                await pc.addTrack(track, stream) 
+            }) 
         } catch (err) {
-            console.error("[startWebcam] All camera access attempts failed:", err);
+            console.error("[startWebcam] All camera access attempts failed:", err) 
             // Don't show alert to avoid disrupting the user experience
-            setIsWebcamActive(false);
+            setIsWebcamActive(false) 
         }
         
-        setIsLoadingCamera(false);
+        setIsLoadingCamera(false) 
     }
 
     const toggleVideo = () => {
-        if (!localStream) return;
-        const videoTrack = localStream.getVideoTracks()[0];
+        if (!localStream) return 
+        const videoTrack = localStream.getVideoTracks()[0] 
         if (videoTrack) {
-            videoTrack.enabled = !videoTrack.enabled;
-            setIsVideoOn(videoTrack.enabled);
-            console.log("[toggleVideo] ->", videoTrack.enabled ? "ON" : "OFF");
+            videoTrack.enabled = !videoTrack.enabled 
+            setIsVideoOn(videoTrack.enabled) 
+            console.log("[toggleVideo] ->", videoTrack.enabled ? "ON" : "OFF") 
         }
     }
 
     const toggleAudio = () => {
-        if (!localStream) return;
-        const audioTrack = localStream.getAudioTracks()[0];
+        if (!localStream) return 
+        const audioTrack = localStream.getAudioTracks()[0] 
         if (audioTrack) {
-            audioTrack.enabled = !audioTrack.enabled;
-            setIsAudioOn(audioTrack.enabled);
-            console.log("[toggleAudio] ->", audioTrack.enabled ? "ON" : "OFF");
+            audioTrack.enabled = !audioTrack.enabled 
+            setIsAudioOn(audioTrack.enabled) 
+            console.log("[toggleAudio] ->", audioTrack.enabled ? "ON" : "OFF") 
         }
     }
 
     const initiateCall = async (userToCall) => {
         if (!firestore) {
-            console.error("[initiateCall] No Firestore!");
-            return;
+            console.error("[initiateCall] No Firestore!") 
+            return 
         }
         if (!peerConnection) {
-            console.error("[initiateCall] No PeerConnection!");
-            return;
+            console.error("[initiateCall] No PeerConnection!") 
+            return 
         }
         if (!userToCall) {
-            alert("Please select a user to call.");
-            return;
+            alert("Please select a user to call.") 
+            return 
         }
-        if (!localStream) await startWebcam();
+        if (!localStream) await startWebcam() 
 
-        setPickedUser(userToCall);
-        setShowUserPicker(false);
-        setIsConnecting(true);
+        setPickedUser(userToCall) 
+        setShowUserPicker(false) 
+        setIsConnecting(true) 
 
         try {
-            console.log("[initiateCall] Creating Firestore doc...");
-            const callDocRef = doc(collection(firestore, "calls"));
-            const offerCandidates = collection(callDocRef, "offerCandidates");
-            const answerCandidates = collection(callDocRef, "answerCandidates");
-            setCallId(callDocRef.id);
+            console.log("[initiateCall] Creating Firestore doc...") 
+            const callDocRef = doc(collection(firestore, "calls")) 
+            const offerCandidates = collection(callDocRef, "offerCandidates") 
+            const answerCandidates = collection(callDocRef, "answerCandidates") 
+            setCallId(callDocRef.id) 
 
             peerConnection.onicecandidate = async (e) => {
                 if (e.candidate) {
-                    console.log("[initiateCall] Local ICE ->", e.candidate);
-                    await addDoc(offerCandidates, e.candidate.toJSON());
+                    console.log("[initiateCall] Local ICE ->", e.candidate) 
+                    await addDoc(offerCandidates, e.candidate.toJSON()) 
                 }
-            };
+            } 
 
-            console.log("[initiateCall] Creating offer...");
-            const offerDesc = await peerConnection.createOffer();
-            await peerConnection.setLocalDescription(offerDesc);
+            console.log("[initiateCall] Creating offer...") 
+            const offerDesc = await peerConnection.createOffer() 
+            await peerConnection.setLocalDescription(offerDesc) 
 
-            console.log("[initiateCall] Writing offer to Firestore...");
+            console.log("[initiateCall] Writing offer to Firestore...") 
             await setDoc(callDocRef, {
                 offer: { sdp: offerDesc.sdp, type: offerDesc.type },
-            });
+            }) 
 
-            console.log("[initiateCall] Emitting socket event (OUTGOING_VIDEO_CALL)...");
+            console.log("[initiateCall] Emitting socket event (OUTGOING_VIDEO_CALL)...") 
             socketService.emit(OUTGOING_VIDEO_CALL, {
                 callId: callDocRef.id,
                 callerName: loggedUser?.fullname || "Unknown",
                 callReceiver: userToCall._id,
                 callerImg: loggedUser?.imgUrl || "",
-            });
+            }) 
 
             onSnapshot(callDocRef, async (snapshot) => {
-                const data = snapshot.data();
+                const data = snapshot.data() 
                 if (data?.answer && !peerConnection.currentRemoteDescription) {
-                    console.log("[initiateCall] Remote answer ->", data.answer);
-                    const answerDesc = new RTCSessionDescription(data.answer);
-                    await peerConnection.setRemoteDescription(answerDesc);
+                    console.log("[initiateCall] Remote answer ->", data.answer) 
+                    const answerDesc = new RTCSessionDescription(data.answer) 
+                    await peerConnection.setRemoteDescription(answerDesc) 
                 }
-            });
+            }) 
 
             onSnapshot(answerCandidates, async (snapshot) => {
                 snapshot.docChanges().forEach(async (change) => {
                     if (change.type === "added") {
-                        const candidateData = change.doc.data();
-                        console.log("[initiateCall] Remote ICE ->", candidateData);
-                        const candidate = new RTCIceCandidate(candidateData);
-                        await peerConnection.addIceCandidate(candidate);
+                        const candidateData = change.doc.data() 
+                        console.log("[initiateCall] Remote ICE ->", candidateData) 
+                        const candidate = new RTCIceCandidate(candidateData) 
+                        await peerConnection.addIceCandidate(candidate) 
                     }
-                });
-            });
+                }) 
+            }) 
         } catch (err) {
-            console.error("[initiateCall] Error:", err);
-            alert("Failed to create call. Try again.");
-            setIsConnecting(false);
+            console.error("[initiateCall] Error:", err) 
+            alert("Failed to create call. Try again.") 
+            setIsConnecting(false) 
         }
-    };
+    } 
 
     const answerCall = async (callIdToJoin, pc = peerConnection, db = firestore) => {
         if (!callIdToJoin) {
-            alert("Need a valid call ID");
-            return;
+            alert("Need a valid call ID") 
+            return 
         }
         if (!db) {
-            console.error("[answerCall] Firestore not init");
-            return;
+            console.error("[answerCall] Firestore not init") 
+            return 
         }
         if (!pc) {
-            console.error("[answerCall] No PeerConnection");
-            return;
+            console.error("[answerCall] No PeerConnection") 
+            return 
         }
-        if (!localStream) await startWebcam(pc);
+        if (!localStream) await startWebcam(pc) 
 
-        setIsConnecting(true);
+        setIsConnecting(true) 
 
         try {
-            console.log("[answerCall] Reading doc: calls/", callIdToJoin);
-            const callDocRef = doc(db, "calls", callIdToJoin);
-            const offerCandidates = collection(callDocRef, "offerCandidates");
-            const answerCandidates = collection(callDocRef, "answerCandidates");
+            console.log("[answerCall] Reading doc: calls/", callIdToJoin) 
+            const callDocRef = doc(db, "calls", callIdToJoin) 
+            const offerCandidates = collection(callDocRef, "offerCandidates") 
+            const answerCandidates = collection(callDocRef, "answerCandidates") 
 
             pc.onicecandidate = async (e) => {
                 if (e.candidate) {
-                    console.log("[answerCall] Local ICE ->", e.candidate);
-                    await addDoc(answerCandidates, e.candidate.toJSON());
+                    console.log("[answerCall] Local ICE ->", e.candidate) 
+                    await addDoc(answerCandidates, e.candidate.toJSON()) 
                 }
-            };
+            } 
 
-            const docSnap = await getDoc(callDocRef);
+            const docSnap = await getDoc(callDocRef) 
             if (!docSnap.exists()) {
-                alert("Call ID not found");
-                setIsConnecting(false);
-                return;
+                alert("Call ID not found") 
+                setIsConnecting(false) 
+                return 
             }
-            const callData = docSnap.data();
+            const callData = docSnap.data() 
             if (!callData.offer) {
-                alert("No valid offer in Firestore doc");
-                setIsConnecting(false);
-                return;
+                alert("No valid offer in Firestore doc") 
+                setIsConnecting(false) 
+                return 
             }
 
-            console.log("[answerCall] Setting remote desc from offer...");
-            const offerDesc = new RTCSessionDescription(callData.offer);
-            await pc.setRemoteDescription(offerDesc);
+            console.log("[answerCall] Setting remote desc from offer...") 
+            const offerDesc = new RTCSessionDescription(callData.offer) 
+            await pc.setRemoteDescription(offerDesc) 
 
-            console.log("[answerCall] Creating answer...");
-            const answerDesc = await pc.createAnswer();
-            await pc.setLocalDescription(answerDesc);
+            console.log("[answerCall] Creating answer...") 
+            const answerDesc = await pc.createAnswer() 
+            await pc.setLocalDescription(answerDesc) 
 
-            console.log("[answerCall] Saving answer in Firestore...");
-            await setDoc(callDocRef, { answer: { type: answerDesc.type, sdp: answerDesc.sdp } }, { merge: true });
+            console.log("[answerCall] Saving answer in Firestore...") 
+            await setDoc(callDocRef, { answer: { type: answerDesc.type, sdp: answerDesc.sdp } }, { merge: true }) 
 
             onSnapshot(offerCandidates, (snapshot) => {
                 snapshot.docChanges().forEach(async (change) => {
                     if (change.type === "added") {
-                        const candidateData = change.doc.data();
-                        console.log("[answerCall] Remote ICE (caller) ->", candidateData);
-                        const candidate = new RTCIceCandidate(candidateData);
-                        await pc.addIceCandidate(candidate);
+                        const candidateData = change.doc.data() 
+                        console.log("[answerCall] Remote ICE (caller) ->", candidateData) 
+                        const candidate = new RTCIceCandidate(candidateData) 
+                        await pc.addIceCandidate(candidate) 
                     }
-                });
-            });
+                }) 
+            }) 
         } catch (err) {
-            console.error("[answerCall] Error:", err);
-            alert("Failed to join call. Invalid ID?");
-            setIsConnecting(false);
+            console.error("[answerCall] Error:", err) 
+            alert("Failed to join call. Invalid ID?") 
+            setIsConnecting(false) 
         }
-    };
+    } 
 
     const hangUp = () => {
-        console.log("[hangUp] Closing call");
-        if (peerConnection) peerConnection.close();
-        if (localStream) localStream.getTracks().forEach((track) => track.stop());
-        if (timerInterval) clearInterval(timerInterval);
+        console.log("[hangUp] Closing call") 
+        if (peerConnection) peerConnection.close() 
+        if (localStream) localStream.getTracks().forEach((track) => track.stop()) 
+        if (timerInterval) clearInterval(timerInterval) 
 
-        setTimerInterval(null);
-        setCallTimer(0);
-        setLocalStream(null);
-        setRemoteStream(null);
-        setIsWebcamActive(false);
-        setCallId("");
-        setPickedUser(null);
-        setUserFilter("");
-        setIsConnecting(false);
+        setTimerInterval(null) 
+        setCallTimer(0) 
+        setLocalStream(null) 
+        setRemoteStream(null) 
+        setIsWebcamActive(false) 
+        setCallId("") 
+        setPickedUser(null) 
+        setUserFilter("") 
+        setIsConnecting(false) 
 
-        remoteMediaStreamRef.current = new MediaStream();
+        remoteMediaStreamRef.current = new MediaStream() 
 
         const servers = {
             iceServers: [{ urls: ["stun:stun1.l.google.com:19302"] }], iceCandidatePoolSize: 10,
-        };
-        const newPc = new RTCPeerConnection(servers);
+        } 
+        const newPc = new RTCPeerConnection(servers) 
         newPc.ontrack = (event) => {
-            const rs = remoteMediaStreamRef.current;
-            event.streams[0].getTracks().forEach((track) => rs.addTrack(track));
-            setRemoteStream(rs);
-        };
+            const rs = remoteMediaStreamRef.current 
+            event.streams[0].getTracks().forEach((track) => rs.addTrack(track)) 
+            setRemoteStream(rs) 
+        } 
         newPc.oniceconnectionstatechange = () => {
             if (newPc.iceConnectionState === "connected" || newPc.iceConnectionState === "completed") {
-                setIsConnecting(false);
-                const interval = setInterval(() => setCallTimer((prev) => prev + 1), 1000);
-                setTimerInterval(interval);
+                setIsConnecting(false) 
+                const interval = setInterval(() => setCallTimer((prev) => prev + 1), 1000) 
+                setTimerInterval(interval) 
             } else if (newPc.iceConnectionState === "disconnected" || newPc.iceConnectionState === "failed") {
-                setIsConnecting(false);
-                if (timerInterval) clearInterval(timerInterval);
-                setTimerInterval(null);
-                setCallTimer(0);
+                setIsConnecting(false) 
+                if (timerInterval) clearInterval(timerInterval) 
+                setTimerInterval(null) 
+                setCallTimer(0) 
             }
-        };
-        setPeerConnection(newPc);
-    };
+        } 
+        setPeerConnection(newPc) 
+    } 
 
     const onUserFilter = async (ev) => {
-        const value = ev.target.value;
-        setUserFilter(value);
+        const value = ev.target.value 
+        setUserFilter(value) 
         if (!value) {
-            setShowUserPicker(false);
-            setUsers([]);
-            return;
+            setShowUserPicker(false) 
+            setUsers([]) 
+            return 
         }
         try {
-            const filteredUsers = await userService.getUsers(value);
-            const available = filteredUsers.filter((u) => u._id !== loggedUser?._id);
-            setUsers(available);
-            setShowUserPicker(true);
+            const filteredUsers = await userService.getUsers(value) 
+            const available = filteredUsers.filter((u) => u._id !== loggedUser?._id) 
+            setUsers(available) 
+            setShowUserPicker(true) 
         } catch (err) {
-            console.error("[onUserFilter] Error:", err);
+            console.error("[onUserFilter] Error:", err) 
         }
-    };
+    } 
 
     const formatTimer = (seconds) => {
-        const hh = Math.floor(seconds / 3600);
-        const mm = Math.floor((seconds % 3600) / 60);
-        const ss = seconds % 60;
-        return `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`;
-    };
+        const hh = Math.floor(seconds / 3600) 
+        const mm = Math.floor((seconds % 3600) / 60) 
+        const ss = seconds % 60 
+        return `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}` 
+    } 
 
     const handleMouseMove = () => {
-        setShowControls(true);
-        if (controlsTimeout) clearTimeout(controlsTimeout);
-        const timeout = setTimeout(() => setShowControls(false), 3000);
-        setControlsTimeout(timeout);
-    };
+        setShowControls(true) 
+        if (controlsTimeout) clearTimeout(controlsTimeout) 
+        const timeout = setTimeout(() => setShowControls(false), 3000) 
+        setControlsTimeout(timeout) 
+    } 
 
-    const hideUserPicker = Boolean(isConnecting || callId);
+    const hideUserPicker = Boolean(isConnecting || callId) 
     console.log('ha')
     return (<div className="video-call-container" onMouseMove={handleMouseMove}>
         <AppHeader useDarkTextColors={false} />
@@ -867,6 +867,6 @@ export function VideoCall() {
             </button>
         </div>}
 
-    </div>);
+    </div>)
 }
 
