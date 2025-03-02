@@ -13,7 +13,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
     const [isModalOpen, setIsModalopen] = useState(false)
     const [openAccountPopup, setOpenAccountPopup] = useState(false)
     const loggedUser = useSelector(state => state.userModule.user)
-    // console.log('loggedUser', loggedUser)
+  
     const [showPremiumTrial, setShowPremiumTrial] = useState(false)
     const [showQuestionMarkPopup, setShowQuestionMarkPopup] = useState(false)
     const [showBellPopup, setShowBellPopup] = useState(false)
@@ -64,11 +64,11 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
                         <span>Roillo</span>
                      
                     </span>}
-                     {/* {!useDarkTextColors && <img className="main-logo-white" src="trello_white.gif" />} */}
+                     
 
                 </div>
 
-                {/*<div className="dropdown-menu nav-highlight-hint">*/} {/*    <span>Workspace</span> <i className="fa-regular fa-chevron-down"></i>*/} {/*</div>*/}
+               
                 <div className="btn-popup-container">
                     <div className="dropdown-menu nav-highlight-hint" onClick={() => {
                         closeAllPopups();
@@ -121,7 +121,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
                                 <ul className="board-list-popup">
                                     {boards.map(board => (<li key={board.id} className="board-item">
                                         <div className="board-thumbnail" style={{
-                                            // background: board.style.imgUrl.startsWith('#') ? board.style.imgUrl : 'transparent',
+                                          
                                             backgroundImage: board?.style?.backgroundImage ? `url(${board.style.backgroundImage})` : 'none', backgroundSize: 'cover'
                                         }} />
                                         <div className="board-info">
@@ -138,7 +138,7 @@ export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
                     </>)}
                 </div>
 
-                {/*<div className="dropdown-menu nav-highlight-hint">*/} {/*    <span>Starred</span> <i className="fa-regular fa-chevron-down"></i>*/} {/*</div>*/}
+              
 
                 <div className="btn-popup-container">
                     <div className="dropdown-menu nav-highlight-hint" onClick={() => {

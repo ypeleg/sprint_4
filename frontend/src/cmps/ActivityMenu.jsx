@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux"
 import { getForamtedDate, utilService } from "../services/util.service"
 import { useState } from "react"
-import { updateBoard } from "../store/store";
-
+import { updateBoard } from "../store/store"
 
 
 const imageUrls = [
@@ -25,7 +24,7 @@ const imageUrls = [
     "https://images.unsplash.com/photo-1736969826083-7bfb095ef213?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDY2fDB8MXxjb2xsZWN0aW9ufDI0fDMxNzA5OXx8fHx8Mnx8MTczOTk4NzkwNXw&ixlib=rb-4.0.3&q=90&w=2000",
     "https://images.unsplash.com/photo-1736855719599-c0298b8faf95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDY2fDB8MXxjb2xsZWN0aW9ufDI2fDMxNzA5OXx8fHx8Mnx8MTczOTk4NzkwNXw&ixlib=rb-4.0.3&q=90&w=2000",
     "https://images.unsplash.com/photo-1735527919007-3ba8d909049e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDY2fDB8MXxjb2xsZWN0aW9ufDI4fDMxNzA5OXx8fHx8Mnx8MTczOTk4NzkwNXw&ixlib=rb-4.0.3&q=90&w=2000"
-];
+]
 const colors = [
     "color_1.svg",
     "color_2.svg",
@@ -38,11 +37,7 @@ const colors = [
     "color_10.svg",
     "color_11.svg",
     
-    // "https://trello.com/assets/13425f9db06517de0f7f.svg",
-    // "https://trello.com/assets/707f35bc691220846678.svg",
-    // "https://trello.com/assets/d106776cb297f000b1f4.svg",
-    // "https://trello.com/assets/8ab3b35f3a786bb6cdac.svg",
-    // "https://trello.com/assets/a7c521b94eb153008f2d.svg"
+   
   ]
 
 export function ActivityMenu({ onSetActivityMenu }) {

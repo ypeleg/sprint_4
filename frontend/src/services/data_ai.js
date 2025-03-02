@@ -1722,7 +1722,7 @@ const userFriendlyTopics = [
 
 
 import OpenAI from 'openai'
-import { API_KEY } from './secrets.js'
+const API_KEY = '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'
 import { random, showUserMsg, showSuccessMsg, showErrorMsg, showSpinner } from './util.service.js'
 
 

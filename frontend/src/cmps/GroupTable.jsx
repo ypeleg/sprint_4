@@ -4,70 +4,70 @@ import {updateBoard} from "../store/actions/board.actions"; // Adjust path as ne
 
 export function GroupTable() {
     const boardToShow = useSelector((state) => state.boardModule.board);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const flatTasks = boardToShow.groups.flatMap((group) => group.tasks.map((task) => ({
         ...task, groupId: group.id, groupTitle: group.title,
-    })));
+    })))
 
     const handleDragEnd = (result) => {
-        const {source, destination} = result;
-        if (!destination) return;
+        const {source, destination} = result
+        if (!destination) return
 
-        const sourceIndex = source.index;
-        const destIndex = destination.index;
+        const sourceIndex = source.index
+        const destIndex = destination.index
 
-        const tasksCopy = Array.from(flatTasks);
-        const [movedTask] = tasksCopy.splice(sourceIndex, 1);
-        tasksCopy.splice(destIndex, 0, movedTask);
+        const tasksCopy = Array.from(flatTasks)
+        const [movedTask] = tasksCopy.splice(sourceIndex, 1)
+        tasksCopy.splice(destIndex, 0, movedTask)
 
         const updatedGroups = boardToShow.groups.map((group) => ({
             ...group, tasks: [],
-        }));
+        }))
 
         tasksCopy.forEach((task, index) => {
-            const originalGroupIndex = boardToShow.groups.findIndex((g) => g.id === task.groupId);
-            const prevTask = index > 0 ? tasksCopy[index - 1] : null;
-            const nextTask = index < tasksCopy.length - 1 ? tasksCopy[index + 1] : null;
+            const originalGroupIndex = boardToShow.groups.findIndex((g) => g.id === task.groupId)
+            const prevTask = index > 0 ? tasksCopy[index - 1] : null
+            const nextTask = index < tasksCopy.length - 1 ? tasksCopy[index + 1] : null
 
-            let targetGroupId = task.groupId;
+            let targetGroupId = task.groupId
             if (prevTask && prevTask.groupId !== task.groupId) {
-                targetGroupId = prevTask.groupId;
+                targetGroupId = prevTask.groupId
             } else if (nextTask && nextTask.groupId !== task.groupId) {
-                targetGroupId = nextTask.groupId;
+                targetGroupId = nextTask.groupId
             }
 
-            const groupIndex = updatedGroups.findIndex((g) => g.id === targetGroupId);
+            const groupIndex = updatedGroups.findIndex((g) => g.id === targetGroupId)
             if (groupIndex === -1) {
                 updatedGroups[originalGroupIndex].tasks.push({
                     ...task, groupId: undefined, groupTitle: undefined,
-                });
+                })
             } else {
                 updatedGroups[groupIndex].tasks.push({
                     ...task, groupId: undefined, groupTitle: undefined,
-                });
+                })
             }
-        });
+        })
 
-        const updatedBoard = {...boardToShow, groups: updatedGroups};
-        dispatch(updateBoard(updatedBoard));
-    };
+        const updatedBoard = {...boardToShow, groups: updatedGroups}
+        dispatch(updateBoard(updatedBoard))
+    }
 
     const handleTitleBlur = (e, taskId) => {
-        const newTitle = e.target.innerText;
+        const newTitle = e.target.innerText
         const updatedGroups = boardToShow.groups.map((group) => ({
             ...group, tasks: group.tasks.map((task) => task.id === taskId ? {...task, title: newTitle} : task),
-        }));
-        const updatedBoard = {...boardToShow, groups: updatedGroups};
-        dispatch(updateBoard(updatedBoard));
-    };
+        }))
+        const updatedBoard = {...boardToShow, groups: updatedGroups}
+        dispatch(updateBoard(updatedBoard))
+    }
 
     const handleGroupTitleBlur = (e, groupId) => {
-        const newTitle = e.target.innerText;
-        const updatedGroups = boardToShow.groups.map((group) => group.id === groupId ? {...group, title: newTitle} : group);
-        const updatedBoard = {...boardToShow, groups: updatedGroups};
-        dispatch(updateBoard(updatedBoard));
-    };
+        const newTitle = e.target.innerText
+        const updatedGroups = boardToShow.groups.map((group) => group.id === groupId ? {...group, title: newTitle} : group)
+        const updatedBoard = {...boardToShow, groups: updatedGroups}
+        dispatch(updateBoard(updatedBoard))
+    }
 
     return (<DragDropContext onDragEnd={handleDragEnd}>
             <div className="table-scroll-container">
