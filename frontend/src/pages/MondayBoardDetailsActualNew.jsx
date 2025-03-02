@@ -1,11 +1,12 @@
 
 
 
-import { useParams } from "react-router"
 import { Tooltip } from 'react-tooltip'
-import { useSelector, useDispatch } from "react-redux"
+import { useParams } from "react-router"
 import { NavLink } from 'react-router-dom'
+import {AppSwitch} from "../cmps/AppSwitcher"
 import { AddTaskForm } from '../cmps/AddTaskForm'
+import { useSelector, useDispatch } from "react-redux"
 import { eventBus } from '../services/util.service.js'
 import { loadBoard, updateBoard, removeBoard, addBoard } from "../store/store.js"
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
@@ -2928,6 +2929,8 @@ export function MondayBoardDetails() {
                                 <div className="popup-backdrop"></div>
                                 {/*onClick={closePopupOnlyIfClickedOutOfIt}>*/}
                         </>}
+
+                        <AppSwitch currentlyShowing={'monday'}/>
 
                         <TopHeader/>
                         <section className="board-details flex">
