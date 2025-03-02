@@ -155,7 +155,7 @@ textarea.task-description {
     font-weight: 500;
     outline: 0;
     cursor: pointer;
-    transition: background .2s ease, box-shadow .2s ease;
+    /* transition: background .2s ease, box-shadow .2s ease; */
     background-color: #e2e4ea;
     background-repeat: no-repeat;
     background-position: right 10px center;
@@ -6508,9 +6508,13 @@ main {
 
 .last-height-element {
     background-color: transparent;
-    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.1));
+    
 }
 
+
+.monday-group-preview-content {
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.1));
+}
 
 .integrate-btn  {
     @media (max-width:920) {
@@ -6783,6 +6787,7 @@ main {
 
 .app-switch-panel {
     height: 380px;
+    
     width: 100%;
     background: radial-gradient(ellipse at top, #333 0%, #222 50%, #111 100%);
     display: flex;
@@ -6791,8 +6796,9 @@ main {
     justify-content: center;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+    /* box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5); */
     padding: 40px 0;
+    /* padding-bottom: 100px; */
 }
 
 .app-switch-panel::before {
@@ -6811,7 +6817,7 @@ main {
 
 .switch-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     position: relative;
     z-index: 2;
 }
@@ -6883,7 +6889,7 @@ main {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    transition: transform 0.3s, opacity 0.3s;
+    /* transition: transform 0.3s, opacity 0.3s; */
     z-index: 2;
     width: 100px;
 }
@@ -6911,7 +6917,7 @@ main {
     position: relative;
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s;
+    /* transition: box-shadow 0.3s; */
 }
 
 .monday-icon {
@@ -6942,9 +6948,7 @@ main {
     #ffffff 40%,
     #f0f0f0 60%,
     #d0d0d0 100%);
-    transition: left 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55),
-    background 0.3s,
-    box-shadow 0.3s;
+    transition: left 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), background 0.3s, box-shadow 0.3s;
     box-shadow:
             0 5px 20px rgba(0, 0, 0, 0.5),
             inset 0 -2px 5px rgba(0, 0, 0, 0.2),
@@ -6999,10 +7003,11 @@ main {
 }
 
 .status-indicator {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    /* position: absolute; */
+    /* bottom: 20px; */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+    margin-top: 20px;
     padding: 8px 16px;
     background: rgba(0, 0, 0, 0.4);
     border-radius: 20px;
@@ -7013,7 +7018,7 @@ main {
     align-items: center;
     gap: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    animation: heroText 0.5s ease-out;
+    /* animation: heroText 0.5s ease-out; */
 }
 
 .status-dot {
@@ -7022,6 +7027,7 @@ main {
     border-radius: 50%;
     background-color: #026aa7;
     box-shadow: 0 0 5px #026aa7;
+    animation: pulse 2s infinite;
 }
 
 @media (max-width: 768px) {
@@ -7046,6 +7052,7 @@ main {
 
     .app-switch-panel {
         height: 350px;
+    
     }
 }
 
@@ -7088,7 +7095,7 @@ main {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    transition: transform 0.3s, opacity 0.3s;
+    /* transition: transform 0.3s, opacity 0.3s; */
     z-index: 2;
     width: 90px;
 }
@@ -7162,6 +7169,23 @@ main {
     color: #ffffff;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
     letter-spacing: 0.5px;
+}
+
+.monday-group-header-primary {
+    
+    /* background-color: white; */
+    z-index: 200;
+
+    /* box-shadow: 0 0 5px rgba(0,0,0,0.8); */
+    -webkit-clip-path: inset(-5px 0px -5px -5px);
+    clip-path: inset(-5px 0px -5px -5px);
+
+    clip-path: inset(0px -10px -10px -10px) !important;
+    background: white !important;
+}
+
+.monday-board-header {
+    z-index: 300;
 }
 
 

@@ -1,17 +1,22 @@
 
 
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useLocation, useParams } from 'react-router-dom'
+import { useNavigate, useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 
 export function AppSwitch({currentlyShowing = 'trello'}) {
-    const [isExpanded, setIsExpanded] = useState(false)
+    
     const [currentApp, setCurrentApp] = useState(currentlyShowing)
     const [isAnimating, setIsAnimating] = useState(false)
 
     const navigate = useNavigate()
     const location = useLocation()
     const params = useParams()
+    const [searchParams] = useSearchParams()
+
+    const [isExpanded, setIsExpanded] = useState(searchParams.get('expanded') || false)
+
+    console.log(searchParams.get('expanded'))
 
     useEffect(() => {
         setCurrentApp(currentlyShowing)
@@ -41,12 +46,8 @@ export function AppSwitch({currentlyShowing = 'trello'}) {
 
         setCurrentApp(targetApp)
 
-        if (window.navigator && window.navigator.vibrate) {
-            window.navigator.vibrate(50)
-        }
-
         setTimeout(() => {
-            navigate(targetUrl)
+            navigate(targetUrl + '?expanded=true')
             setIsAnimating(false)
             // setIsExpanded(false)
         }, 700)
@@ -85,7 +86,7 @@ export function AppSwitch({currentlyShowing = 'trello'}) {
                 </div>
 
                 <div className="status-indicator">
-                    <span className="status-dot"></span> <span>Currently using {currentApp}</span>
+                    <span className="status-dot"></span> <span>Currently using {currentApp? 'Roillo': 'Wednesday'}</span>
                 </div>
             </div>
 

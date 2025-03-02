@@ -5737,3 +5737,75 @@ img.smaller-imgs.small-circle {
     rotate: 90deg;
     padding: 4px;
 }
+
+.monday-group-preview {
+    padding-top: 0px !important;
+}
+
+
+.monday-group-header-primary {
+    position: relative;
+    margin-left: -40px;
+}
+
+.monday-group-header-primary::before {
+    position: absolute;
+    content: '';
+    height: 40px;
+    width: 160px;
+    translate: -100px;
+    background-color: white;
+    z-index: 2000;
+    
+}
+
+
+/* .title-container {
+    
+    
+}
+
+.sticky-div {
+    background-color: white !important;
+} */
+
+.first-checkbox {
+    border-top: 1px solid #d2d6e5 !important;
+    border-bottom: 1px solid #d2d6e5 !important;
+    /* border-left: 5px solid #d2d6e5 !important; */
+    /* border-radius: 0px 0px 0px 0px !important; */
+    
+}
+
+.task-menu {
+    opacity: 0;
+}
+
+.sticky-div:hover .task-menu,
+.subtask-row:hover .task-menu {     
+    opacity: 1;
+}
+
+.chat-icon {
+    height: 100%;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid #d2d6e5 !important;
+    color: #d2d6e5;
+}
+
+.count-comment {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: #0073ea;
+    color: white;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+
+
+}

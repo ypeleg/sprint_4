@@ -3958,7 +3958,7 @@ export function BoardDetails() {
     }, [boardToShow]);
 
     
-    if (!(boardToShow && colorsSetted)) return (<div className="trello-loader">
+    if (!(boardToShow)) return (<div className="trello-loader">
             <img src="trello-loader.svg" alt=""/>
         </div>)
 

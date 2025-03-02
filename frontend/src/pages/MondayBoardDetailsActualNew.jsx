@@ -1010,10 +1010,84 @@ function Placeholder({placeholderHeight}) {
 
 
 
+function mapTrelloToMonday(hex, alpha = 1.0) {
+    if (!hex) return undefined;    
+    let purifiedHex = hex;
+    if (hex.length === 9) {
+        alpha = parseInt(hex.slice(7), 16) / 255;
+        purifiedHex = hex.slice(0, 7);
+    } 
+    else if (hex.length === 5) {
+        alpha = parseInt(hex.slice(4), 16) / 15;
+        purifiedHex = hex.slice(0, 4);
+    }    
+    const mondayColors = [
+        {hex: '#33d391', h: 151.2, s: 1.0, l: 0.39},        // strong green
+        {hex: '#66ccff', h: 200.0, s: 1.0, l: 0.70},        // light blue
+        {hex: '#782bff', h: 258.3, s: 1.0, l: 0.58},        // deep purple
+        {hex: '#a358df', h: 275.4, s: 0.68, l: 0.61},     // purple
+        {hex: '#5559df', h: 238.7, s: 0.68, l: 0.61},     // indigo
+        {hex: '#00a9cf', h: 190.7, s: 1.0, l: 0.41},        // teal
+        {hex: '#0086c0', h: 199.3, s: 1.0, l: 0.38},        // darker teal/blue
+        {hex: '#bb3354', h: 346.2, s: 0.57, l: 0.47},     // burgundy
+        {hex: '#e8697d', h: 350.6, s: 0.71, l: 0.66},     // bright red
+        {hex: '#003f69', h: 208.7, s: 1.0, l: 0.21},        // navy
+        {hex: '#323338', h: 240.0, s: 0.04, l: 0.20},     // dark grey
+        {hex: '#fdab3d', h: 35.4, s: 0.98, l: 0.62},        // orange
+        {hex: '#fdbc64', h: 48.0, s: 1.0, l: 0.50},         // yellow
+        {hex: '#784bd1', h: 258.0, s: 0.59, l: 0.56},     // purple
+        {hex: '#579bfc', h: 215.6, s: 0.96, l: 0.66},     // lighter blue
+        {hex: '#faa1f2', h: 305.3, s: 0.89, l: 0.79},     // pink
+        {hex: '#e2445c', h: 0.0, s: 1.0, l: 0.73},            // salmon
+        {hex: '#225091', h: 213.7, s: 0.62, l: 0.35},     // medium blue
+        {hex: '#9aadbd', h: 207.3, s: 0.20, l: 0.68},     // light grey-blue
+        {hex: '#c4c4c4', h: 0.0, s: 0.0, l: 0.77},            // mid grey
+        {hex: '#bda8f9', h: 253.2, s: 0.88, l: 0.82},     // lavender
+        {hex: '#6c6cff', h: 240.0, s: 1.0, l: 0.71},        // pastel violet/blue
+        {hex: '#3dd1f0', h: 190.9, s: 0.85, l: 0.59},     // light teal
+        {hex: '#68d391', h: 142.5, s: 0.60, l: 0.62},     // minty green
+        {hex: '#fdbc64', h: 34.5, s: 0.97, l: 0.69},        // orange/yellow
+        {hex: '#e8697d', h: 350.6, s: 0.71, l: 0.66}        // pinkish-red
+    ];
+    const [h, s, l] = hexToHSL(purifiedHex);
+    if (s < 0.1) {
+        const closestGray = findClosestGray(h, l);
+        return applyAlpha(closestGray, alpha);
+    }
+    let closestColor = mondayColors[0].hex;
+    let minDistance = Infinity;
+    for (const color of mondayColors) {
+        const distance = calculateColorDistance(h, s, l, color.h, color.s, color.l);
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestColor = color.hex;
+        }
+    }
+    return applyAlpha(closestColor, alpha);
+
+    function findClosestGray(targetH, targetL) {
+        const grays = ['#323338', '#9aadbd', '#c4c4c4'];
+        return grays.reduce((closest, gray) => {
+            const grayL = hexToHSL(gray)[2];
+            return Math.abs(grayL - targetL) < Math.abs(hexToHSL(closest)[2] - targetL)
+                ? gray
+                : closest;
+        }, grays[0]);
+    }
+    function applyAlpha(hexColor, alphaValue) {
+        if (alphaValue === 1) {
+            return hexColor;
+        }
+        const alphaHex = Math.round(alphaValue * 255).toString(16).padStart(2, '0');
+        return `${hexColor}${alphaHex}`;
+    }
+}
 
 
 
-function mapTrelloToMonday(hex) {
+
+
+function mapTrelloToMonday1(hex) {
         if (!hex) return undefined
         const mondayColors = [
                 {hex: '#33d391', h: 151.2, s: 1.0, l: 0.39},        // strong green
@@ -1285,12 +1359,12 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
 
                                     <div className="chat-icon">
 
-                                        {!!(task.activity?.length && (!isSubtask) ) && (<div>
+                                        {!!(task.activity?.length && (!isSubtask) ) && (<>
                                                     <svg className="comment-chat" strokeWidth="1.5" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true" data-testid="icon">
                                                             <path d="M10.4339 1.95001C11.5975 1.94802 12.7457 2.2162 13.7881 2.73345C14.8309 3.25087 15.7392 4.0034 16.4416 4.93172C17.1439 5.86004 17.6211 6.93879 17.8354 8.08295C18.0498 9.22712 17.9955 10.4054 17.6769 11.525C17.3582 12.6447 16.7839 13.675 15.9992 14.5348C15.2144 15.3946 14.2408 16.0604 13.1549 16.4798C12.0689 16.8991 10.9005 17.0606 9.74154 16.9514C8.72148 16.8553 7.73334 16.5518 6.83716 16.0612L4.29488 17.2723C3.23215 17.7786 2.12265 16.6693 2.6287 15.6064L3.83941 13.0637C3.26482 12.0144 2.94827 10.8411 2.91892 9.64118C2.88616 8.30174 3.21245 6.97794 3.86393 5.80714C4.51541 4.63635 5.46834 3.66124 6.62383 2.98299C7.77896 2.30495 9.09445 1.9483 10.4339 1.95001ZM10.4339 1.95001C10.4343 1.95001 10.4347 1.95001 10.4351 1.95001L10.434 2.70001L10.4326 1.95001C10.433 1.95001 10.4334 1.95001 10.4339 1.95001ZM13.1214 4.07712C12.2867 3.66294 11.3672 3.44826 10.4354 3.45001L10.4329 3.45001C9.3608 3.44846 8.30778 3.73387 7.38315 4.2766C6.45852 4.81934 5.69598 5.59963 5.17467 6.5365C4.65335 7.47337 4.39226 8.53268 4.41847 9.6045C4.44469 10.6763 4.75726 11.7216 5.32376 12.6319C5.45882 12.8489 5.47405 13.1198 5.36416 13.3506L4.28595 15.6151L6.54996 14.5366C6.78072 14.4266 7.05158 14.4418 7.26863 14.5768C8.05985 15.0689 8.95456 15.3706 9.88225 15.458C10.8099 15.5454 11.7452 15.4162 12.6145 15.0805C13.4837 14.7448 14.2631 14.2119 14.8912 13.5236C15.5194 12.8354 15.9791 12.0106 16.2341 11.1144C16.4892 10.2182 16.5327 9.27504 16.3611 8.35918C16.1895 7.44332 15.8075 6.57983 15.2453 5.83674C14.6831 5.09366 13.9561 4.49129 13.1214 4.07712Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
                                                     </svg>
                                                     <div className="count-comment">{task.activity.length}</div>
-                                            </div>)}
+                                            </>)}
 
                                         {((isSubtask) ||  (!(task.activity?.length)))  && (<div>
                                             <svg className="no-comment-chat" strokeWidth="1.5" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true" data-testid="icon">
@@ -1530,22 +1604,17 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
         }
 
 
-    // Add this inside the MondayTableGroup component
     useEffect(() => {
-    // When tasks change from the store
     const newTasks = group.tasks.filter(task => 
       !prevTasks.some(prevTask => prevTask.id === task.id)
     );
     
-    // For any new tasks/subtasks from store, add animation class
     if (newTasks.length > 0) {
-      // Allow DOM to update first
       setTimeout(() => {
         newTasks.forEach(task => {
           const taskEl = document.getElementById(`task-${task.id}`);
           if (taskEl) taskEl.classList.add('store-updated');
           
-          // If it has subtasks, those are new too
           if (task.checklists && task.checklists.length > 0) {
             task.checklists[0].todos.forEach(todo => {
               const todoEl = document.getElementById(`subtask-${todo.id}`);
@@ -1556,20 +1625,18 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
       }, 0);
     }
     
-    // Update the previous tasks reference
     setPrevTasks(group.tasks);
   }, [group.tasks]);
   
-  // Add this state at the top of your component
   const [prevTasks, setPrevTasks] = useState(group.tasks || []);
 
 
     return (
-        <ul className="monday-group-header monday-group-preview group-preview flex column last-height-element"
+        <ul className="monday-group-header monday-group-preview group-preview flex column last-height-element "
         style={{ backgroundColor: "transparent" }}
         >
             <div
-                className="monday-group-header group-header flex align-center"
+                className="monday-group-header-primary monday-group-header group-header flex align-center"
                 style={{ color: mapTrelloToMonday(group.style?.backgroundColor),
                     backgroundColor: "transparent"
                 }}
@@ -1642,14 +1709,14 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
 
 
 
-                <div className="monday-group-preview-content-before" style={{backgroundColor: mapTrelloToMonday(group.style?.backgroundColor)}}></div>
+                <div className="monday-group-preview-content-before" style={{backgroundColor: mapTrelloToMonday(group.style?.backgroundColor, 1.0)}}></div>
 
 
 
                 <div className="title-container flex hover-move-left">
                     <div className="sticky-div titles flex" style={{borderColor: mapTrelloToMonday(group.style?.backgroundColor)}}>
                         <div className="hidden"></div>
-                        <div className="check-box">
+                        <div className="check-box first-checkbox">
                             <input type="checkbox" />
                         </div>
                         <div className="monday-task title">
@@ -1764,8 +1831,9 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
             </li>
 
             {isExpanded && hasSubtasks && task.checklists[0].todos.map(    (todo, subIdx) => (
-                // <li id={`subtask-${todo.id}`} key={todo.id} className="subtask-row" data-parent={task.id}>
+                // <li id={`subtask-${todo.id}`} key={todo.id} className="subtask-row" data-parent={task.id}>                
                 <li id={`subtask-${todo.id}`} key={todo.id} className={`subtask-row ${((subIdx === 0)? "first-sub": '')}`} style={{ paddingLeft: '40px' }} data-parent={task.id}>
+                    <div className="add-subtask-row-before" style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor, 0.3) }}></div>
                     <MondayTableTask
                         idx={`${idx}-sub-${todo.id}`}
                         task={{
@@ -1801,7 +1869,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
 
             {isExpanded && hasSubtasks && (
                 <li className="add-subtask-row" style={{ paddingLeft: '40px' }}>
-                        <div className="add-subtask-row-before" style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor) }}></div>
+                        <div className="add-subtask-row-before" style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor, 0.3) }}></div>
                     <div className="add-task flex">
                         <div
                             className="sticky-div"
@@ -1983,6 +2051,7 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
                     <ul>
                         {board.groups.map((group) => (
                             <li key={group.id}>
+                                
                                 <MondayTableGroup
                                     group={group}
                                     board={board}
@@ -2906,7 +2975,7 @@ export function MondayBoardDetails() {
         }
 
         function onCloseSideBar() {
-                setShowSideBar(false)
+                setShowSideBar(!showSideBar)
         }
 
 
