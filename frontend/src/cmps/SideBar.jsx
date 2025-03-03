@@ -6,9 +6,12 @@ import { loadBoards, loadBoard } from "../store/store"
 
 
 export function SideBar({ backgrounColor, borderColor, onToggleSideBar, sideBarOpen, useDarkTextColors }) {
+
     const navgite = useNavigate()
+
     const boards = useSelector(state => state.boardModule.boards)
     const selectedBoard = useSelector(state => state.boardModule.board)
+
     if (!boards.length) {
         loadBoards()
     }

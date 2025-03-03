@@ -70,11 +70,7 @@ export function TaskList({ grp,
     const [showFirstForm, setShowFirstForm] = useState(false)
     const [tasks, setTasks] = useState(group.tasks)
 
-
-
-
     const [shadow, setShadow] = useState(null)
-
 
     const cardRefs = useRef({})
     function getCardRef(taskId) {
@@ -83,7 +79,6 @@ export function TaskList({ grp,
         }
         return cardRefs.current[taskId]
     }
-
 
     const listRef = useRef(null)
 
@@ -98,7 +93,6 @@ export function TaskList({ grp,
         return () => unsub()
     }, [])
 
-
     function onToggleDone(ev, task) {
         ev.stopPropagation()
         setTasks((prev) =>
@@ -111,16 +105,13 @@ export function TaskList({ grp,
         )
     }
 
-
     function onSetShowForm() {
         setShowForm(!showForm)
     }
+
     function onSetFirstForm() {
         setShowFirstForm(!showFirstForm)
     }
-
-
-
 
     useEffect(() => {
         tasks.forEach((task) => {
@@ -172,10 +163,6 @@ export function TaskList({ grp,
                             // Append the cloned element into the wrapper
                             // const fixedContainer = document.getElementById('drag-preview-container')
                             // fixedContainer.innerHTML = ''
-
-
-
-
 
                             wrapper.appendChild(clone)
                             container.appendChild(wrapper)

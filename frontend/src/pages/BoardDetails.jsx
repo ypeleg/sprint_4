@@ -1100,72 +1100,70 @@ const AnyReactComponent = ({ text }) => <div style={{ fontSize: '22px', position
 
 
 export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
+
     const { board, group, taskList, ...cleanTask } = taskToShow
+
     const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script', googleMapsApiKey: 'AIzaSyDxZo6xL5uDfEutSxJsA7sjMfIsQiVENg8', libraries: ["places"]
+        id: 'google-map-script',
+        googleMapsApiKey: 'AIzaSyDxZo6xL5uDfEutSxJsA7sjMfIsQiVENg8',
+        libraries: ["places"]
     })
 
-    
+    const [newChecklistItem, setNewChecklistItem] = useState([])
     const [isDone, setIsDone] = useState(taskToShow.status === 'done')
     const [cardTitle, setCardTitle] = useState(taskToShow.title || '')
-    const [listName, setListName] = useState(taskToShow.group?.title || '')
-    const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)
-    const [description, setDescription] = useState(taskToShow.description || [])
-    const [attachments, setAttachments] = useState(taskToShow.attachments || [])
-    const [checklists, setChecklists] = useState(taskToShow.checklists || [])
-    const [newChecklistItem, setNewChecklistItem] = useState([])
-    const [activityLog, setActivityLog] = useState(taskToShow.activity || [])
     const [location, setLocation] = useState(taskToShow.location || {})
-   
+    const [listName, setListName] = useState(taskToShow.group?.title || '')
+    const [checklists, setChecklists] = useState(taskToShow.checklists || [])
+    const [activityLog, setActivityLog] = useState(taskToShow.activity || [])
+    const [attachments, setAttachments] = useState(taskToShow.attachments || [])
+    const [description, setDescription] = useState(taskToShow.description || [])
+    const [isWatching, setIsWatching] = useState(taskToShow.isUserWatching || null)
 
 
     function onSetDescrption({ target }) {
         const txt = target.value
         setDescription(txt)
-
     }
-  
+
     const elGoogleSearch = useRef()
-    const [badges, setBadges] = useState(taskToShow.badges || [])
-    const [members, setMembers] = useState(taskToShow.members || [])
-    const [boardMembers, setBoardMembers] = useState(taskToShow.board.members || [])
-    const [date, setDate] = useState(taskToShow.dueDate || "")
+    const coverFileInputRef = useRef(null)
     const dateInputRef = useRef(null)
     const activityInputRef = useRef(null)
 
-    const [showLabels, setShowLabels] = useState(true)
-    const [showMembers, setShowMembers] = useState(true)
-    const [showCustomFields, setShowCustomFields] = useState(true)
-    const [showDate, setShowDate] = useState(true)
-    const [showMaps, setShowMaps] = useState(true)
-    const [showChecklist, setShowChecklist] = useState(false)
-    const [showActivity, setShowActivity] = useState(false)
-    const [showAttachments, setShowAttachments] = useState(false)
-
-    const [showPicker, setShowPicker] = useState(false)
-    const [showPickerDate, setShowPickerDate] = useState(false)
-    const [showPickerCustomBadges, setShowPickerCustomBadges] = useState(false)
-    const [showPickerLocation, setShowPickerLocation] = useState(false)
-    const [showPickerAttachments, setShowPickerAttachments] = useState(false)
-    const [showPickerChecklists, setShowPickerChecklists] = useState(false)
-    const [showPickerLabels, setShowPickerLabels] = useState(false)
-    const [showPickerMembers, setShowPickerMembers] = useState(false)
-    const [showPickerMoveCard, setShowPickerMoveCard] = useState(false)
-    const [showPickerCopyCard, setShowPickerCopyCard] = useState(false)
-    const [showPickerMirrorCard, setShowPickerMirrorCard] = useState(false)
-    const [showPickerShareCard, setShowPickerShareCard] = useState(false)
-    const [showPickerChangeALabel, setShowPickerChangeALabel] = useState(false)
-    const [showPickerUnderConstruction, setShowPickerUnderConstruction] = useState(false)
-    const [showPickerCover, setShowPickerCover] = useState(false)
-
-    const [showFieldsEditor, setShowFieldsEditor] = useState(false)
-
     const [pickerTop, setPickerTop] = useState('0px')
     const [pickerLeft, setPickerLeft] = useState('0px')
+    const [showDate, setShowDate] = useState(true)
+    const [showMaps, setShowMaps] = useState(true)
+    const [showLabels, setShowLabels] = useState(true)
+    const [showPicker, setShowPicker] = useState(false)
+    const [showMembers, setShowMembers] = useState(true)
+    const [showActivity, setShowActivity] = useState(false)
+    const [showChecklist, setShowChecklist] = useState(false)
+    const [date, setDate] = useState(taskToShow.dueDate || "")
+    const [showPickerDate, setShowPickerDate] = useState(false)
+    const [showPickerCover, setShowPickerCover] = useState(false)
+    const [showAttachments, setShowAttachments] = useState(false)
+    const [badges, setBadges] = useState(taskToShow.badges || [])
+    const [showCustomFields, setShowCustomFields] = useState(true)
+    const [showFieldsEditor, setShowFieldsEditor] = useState(false)
+    const [showPickerLabels, setShowPickerLabels] = useState(false)
+    const [members, setMembers] = useState(taskToShow.members || [])
+    const [showPickerMembers, setShowPickerMembers] = useState(false)
+    const [showPickerMoveCard, setShowPickerMoveCard] = useState(false)
+    const [showPickerLocation, setShowPickerLocation] = useState(false)
+    const [showPickerCopyCard, setShowPickerCopyCard] = useState(false)
+    const [showPickerShareCard, setShowPickerShareCard] = useState(false)
+    const [showPickerChecklists, setShowPickerChecklists] = useState(false)
+    const [showPickerMirrorCard, setShowPickerMirrorCard] = useState(false)
+    const [showPickerAttachments, setShowPickerAttachments] = useState(false)
+    const [showPickerCustomBadges, setShowPickerCustomBadges] = useState(false)
+    const [showPickerChangeALabel, setShowPickerChangeALabel] = useState(false)
+    const [boardMembers, setBoardMembers] = useState(taskToShow.board.members || [])
+    const [showPickerUnderConstruction, setShowPickerUnderConstruction] = useState(false)
 
-    const coverFileInputRef = useRef(null)
 
-    async function handlePlaceChange(ev) {
+    async function onPlaceChange(ev) {
         let address = elGoogleSearch.current.getPlaces()
         const newLocation = { lat: address[0].geometry.location.lat(), lng: address[0].geometry.location.lng(), name: address[0].name, zoom: 12 }
 
@@ -1186,7 +1184,6 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
         }
         reader.readAsDataURL(file)
     }
-
 
     // custom fields
     const [newFieldId, setNewFieldId] = useState(null)
@@ -1240,9 +1237,6 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
         setMembers(prev => prev.filter(m => m._id !== member._id))
         setBoardMembersToShow(prev => [...prev, member])
     }
-
-   
-
 
     // labels
     function onAddChecklist(ev) {
@@ -1819,7 +1813,7 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
             elTextArea?.current?.focus()
 
         }
-        async function handleKey(ev) {
+        async function onKeyPress(ev) {
 
             if (ev.key === "Enter") {
                 ev.preventDefault()
@@ -1837,10 +1831,10 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
             }
         }
 
-        window.addEventListener("keydown", handleKey)
+        window.addEventListener("keydown", onKeyPress)
 
         return () => {
-            window.removeEventListener("keydown", handleKey)
+            window.removeEventListener("keydown", onKeyPress)
 
         }
     }, [])
@@ -2817,7 +2811,7 @@ export function TaskModal({ taskToShow, onClose, popupRef, onSaveTaskOuter }) {
             </div>
 
             <div className="location-content">
-                {isLoaded && <StandaloneSearchBox libraries={["places"]} onPlacesChanged={handlePlaceChange} onLoad={(ref) => elGoogleSearch.current = ref}>
+                {isLoaded && <StandaloneSearchBox libraries={["places"]} onPlacesChanged={onPlaceChange} onLoad={(ref) => elGoogleSearch.current = ref}>
                     <div className="search-container">
 
                         <input type="text" placeholder="Search Google Maps" className="location-input" />
@@ -3815,71 +3809,71 @@ export function BoardDetails() {
     }
 
 
-    const [useDarkTextColors, setUseDarkTextColors] = useState(true);
-    const [colorsSetted, setColorsSetted] = useState(false);
-    const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(208, 93%, 85%, 0.9)');
-    const [sidebarBorderColor, setSidebarBorderColor] = useState('hsla(208, 93%, 75%, 0.15)');
-    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('hsla(208, 93%, 88%, 0.95)');
-    const [headerBorderColor, setHeaderBorderColor] = useState('hsla(208, 93%, 75%, 0.15)');
+    const [useDarkTextColors, setUseDarkTextColors] = useState(true)
+    const [colorsSetted, setColorsSetted] = useState(false)
+    const [sidebarBackgroundColor, setSidebarBackgroundColor] = useState('hsla(208, 93%, 85%, 0.9)')
+    const [sidebarBorderColor, setSidebarBorderColor] = useState('hsla(208, 93%, 75%, 0.15)')
+    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('hsla(208, 93%, 88%, 0.95)')
+    const [headerBorderColor, setHeaderBorderColor] = useState('hsla(208, 93%, 75%, 0.15)')
 
     useEffect(() => {
-        if (!boardToShow) return;
-        if (colorsSetted) return;
+        if (!boardToShow) return
+        if (colorsSetted) return
 
-        let rawUrl = boardToShow.style?.backgroundImage || "";
-        const match = rawUrl.match(/url\(["']?(.*?)["']?\)/);
-        if (match && match[1]) rawUrl = match[1];
+        let rawUrl = boardToShow.style?.backgroundImage || ""
+        const match = rawUrl.match(/url\(["']?(.*?)["']?\)/)
+        if (match && match[1]) rawUrl = match[1]
         if (!rawUrl) {
-            rawUrl = "https://picsum.photos/600/300?random=877";
+            rawUrl = "https://picsum.photos/600/300?random=877"
         }
 
-        let isCancelled = false;
+        let isCancelled = false
 
         function rgbToHsl(r, g, b) {
-            r /= 255;
-            g /= 255;
-            b /= 255;
-            const max = Math.max(r, g, b);
-            const min = Math.min(r, g, b);
-            let h, s;
-            let l = (max + min) / 2;
+            r /= 255
+            g /= 255
+            b /= 255
+            const max = Math.max(r, g, b)
+            const min = Math.min(r, g, b)
+            let h, s
+            let l = (max + min) / 2
 
             if (max === min) {
-                h = s = 0;
+                h = s = 0
             } else {
-                const d = max - min;
-                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                const d = max - min
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
                 switch (max) {
                     case r:
-                        h = (g - b) / d + (g < b ? 6 : 0);
-                        break;
+                        h = (g - b) / d + (g < b ? 6 : 0)
+                        break
                     case g:
-                        h = (b - r) / d + 2;
-                        break;
+                        h = (b - r) / d + 2
+                        break
                     case b:
-                        h = (r - g) / d + 4;
-                        break;
+                        h = (r - g) / d + 4
+                        break
                     default:
-                        h = 0;
+                        h = 0
                 }
-                h /= 6;
+                h /= 6
             }
-            return [h * 360, s, l];
+            return [h * 360, s, l]
         }
 
         function getTrelloColors(r, g, b) {
-            let [h, s, l] = rgbToHsl(r, g, b);
+            let [h, s, l] = rgbToHsl(r, g, b)
 
             if (s < 0.1) {
-                h = 208;
+                h = 208
             }
 
             const base = {
                 h: h,
                 s: 50,
-            };
+            }
 
-            if (l >= 0.5) { base.l = 90;
+            if (l >= 0.5) { base.l = 90
             } else { base.l = 40 }
 
             return {
@@ -3887,14 +3881,14 @@ export function BoardDetails() {
                 header: `hsla(${base.h}, ${base.s}%, ${Math.min(base.l + 5, 95)}%, 0.95)`,
                 border: `hsla(${base.h}, 40%, ${base.l >= 50 ? 75 : 35}%, 0.15)`,
                 isDark: base.l >= 50,
-            };
+            }
         }
         function applyFallbackColors() {
             const fallback = {
                 h: 208,
                 s: 50,
                 l: 90,
-            };
+            }
             setSidebarBackgroundColor(`hsla(${fallback.h}, ${fallback.s}%, ${fallback.l}%, 0.9)`)
             setHeaderBackgroundColor(`hsla(${fallback.h}, ${fallback.s}%, 95%, 0.95)`)
             setSidebarBorderColor(`hsla(${fallback.h}, 40%, 75%, 0.15)`)
@@ -3907,7 +3901,7 @@ export function BoardDetails() {
         img.crossOrigin = "Anonymous"
         img.referrerPolicy = "no-referrer"
         img.onload = () => {
-            if (isCancelled) return;
+            if (isCancelled) return
 
             try {
                 const canvas = document.createElement("canvas")
@@ -3921,15 +3915,15 @@ export function BoardDetails() {
                 const numPixels = 50 * 50
 
                 for (let i = 0; i < numPixels; i++) {
-                    const idx = i * 4;
-                    rSum += data[idx];
-                    gSum += data[idx + 1];
-                    bSum += data[idx + 2];
+                    const idx = i * 4
+                    rSum += data[idx]
+                    gSum += data[idx + 1]
+                    bSum += data[idx + 2]
                 }
 
-                const r = Math.round(rSum / numPixels);
-                const g = Math.round(gSum / numPixels);
-                const b = Math.round(bSum / numPixels);
+                const r = Math.round(rSum / numPixels)
+                const g = Math.round(gSum / numPixels)
+                const b = Math.round(bSum / numPixels)
 
                 const colors = getTrelloColors(r, g, b)
                 setSidebarBackgroundColor(colors.sidebar)
@@ -3949,13 +3943,13 @@ export function BoardDetails() {
                 console.error("Error loading image")
                 applyFallbackColors()
             }
-        };
+        }
 
-        img.src = rawUrl;
+        img.src = rawUrl
         return () => {
-            isCancelled = true;
-        };
-    }, [boardToShow]);
+            isCancelled = true
+        }
+    }, [boardToShow])
 
     
     if (!(boardToShow)) return (<div className="trello-loader">
@@ -3975,9 +3969,15 @@ export function BoardDetails() {
     return (<div key={boardToShow._id} className={`everything ${(isPopupShown) ? 'popup-open' : ''}`} style={{
         backgroundImage: `url(${boardToShow.style?.backgroundImage})`, color: (useDarkTextColors) ? '#172B4D' : 'white',
     }}>
-        {/*onMouseMove={handleMouseMove}>*/} {showShare && <ShareModal onSetShowShare={onSetShowShare} />} {/*<div id="drag-preview-container"*/} {/*style={{*/} {/*    top: coord.y + 'px',*/} {/*    left: coord.x + 'px',*/} {/*}}*/} {/*></div>*/}
+        {/*onMouseMove={handleMouseMove}>*/}
+        
+        {showShare && <ShareModal onSetShowShare={onSetShowShare} />}
+        
+        {/*<div id="drag-preview-container"*/} {/*style={{*/} {/*    top: coord.y + 'px',*/} {/*    left: coord.x + 'px',*/} {/*}}*/} {/*></div>*/}
 
-        {/* <button className="open-chat-btn" onClick={togglePopup}>💬</button> */} {isPopupShown && (!!taskToShow) && <>
+        {/* <button className="open-chat-btn" onClick={togglePopup}>💬</button> */}
+        
+        {isPopupShown && (!!taskToShow) && <>
 
             <div className="popup" ref={popupRef} onClick={closePopupOnlyIfClickedOutOfIt}>
 
@@ -3985,7 +3985,9 @@ export function BoardDetails() {
 
             </div>
             <div className="popup-backdrop"></div>
+            
             {/*onClick={closePopupOnlyIfClickedOutOfIt}>*/}
+            
         </>}
 
 

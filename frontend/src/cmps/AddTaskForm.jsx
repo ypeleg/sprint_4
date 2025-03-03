@@ -1,17 +1,20 @@
 
 
-import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
+import { useEffect, useRef, useState } from "react"
 import { getEmptyTask, updateBoard } from "../store/store"
 
 
 export function AddTaskForm({ elFooter, selectedGroup, onSetShowForm }) {
-    const board = useSelector(state => state.boardModule.board)
-    const user = useSelector(state => state.userModule.user)
-    const [task, setTask] = useState(getEmptyTask())
-    const elTextArea = useRef()
-    const elCont = useRef()
 
+
+    const elCont = useRef()
+    const elTextArea = useRef()
+
+    const [task, setTask] = useState(getEmptyTask())
+
+    const user = useSelector(state => state.userModule.user)
+    const board = useSelector(state => state.boardModule.board)
 
 
     useEffect(() => {
@@ -19,37 +22,28 @@ export function AddTaskForm({ elFooter, selectedGroup, onSetShowForm }) {
             elTextArea?.current?.focus()
             elCont?.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
         }
-        async function handleKey(ev) {
-
+        async function onKey(ev) {
             if (ev.key === "Enter") {
                 ev.preventDefault()
-
                 if (!task.title) return onSetShowForm()
                 else {
                     await onSubmit(ev)
                 }
-                
             }
         }
-        
-        window.addEventListener("keydown", handleKey)
-      
+        window.addEventListener("keydown", onKey)
         return () => {
-            window.removeEventListener("keydown", handleKey)
+            window.removeEventListener("keydown", onKey)
         
         }
     }, [task])
 
-
-    function handleChange({ target }) {
-
+    function onChange({ target }) {
         const { value, name: field } = target
-
         setTask(prevTask => {
             return { ...prevTask, [field]: value }
         })
     }
-
 
 
     async function onSubmit(ev) {
@@ -60,11 +54,10 @@ export function AddTaskForm({ elFooter, selectedGroup, onSetShowForm }) {
         setTask(getEmptyTask())
         await updateBoard(board)
 
-
     }
 
     return (<div ref={elCont} onSubmit={onSubmit} className="add-task-form">
-        <textarea ref={elTextArea} autoFocus onChange={ev => handleChange(ev)} value={task.title} placeholder="Enter a title or paste a link" className="task-title" name="title" id="title"></textarea>
+        <textarea ref={elTextArea} autoFocus onChange={ev => onChange(ev)} value={task.title} placeholder="Enter a title or paste a link" className="task-title" name="title" id="title"></textarea>
         <div className="btn-container">
             <button onClick={() => { onSetShowForm(); onSubmit() }} className="add-card-btn" type="submit">Add card</button>
             <button 

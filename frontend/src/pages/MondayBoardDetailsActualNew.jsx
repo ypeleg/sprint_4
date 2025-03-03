@@ -8,62 +8,58 @@ import {AppSwitch} from "../cmps/AppSwitcher"
 import { AddTaskForm } from '../cmps/AddTaskForm'
 import { useSelector, useDispatch } from "react-redux"
 import { eventBus } from '../services/util.service.js'
-import { loadBoard, updateBoard, removeBoard, addBoard } from "../store/store.js"
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { random, makeId, debounce } from "../services/util.service.js"
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
+import { loadBoard, updateBoard, removeBoard, addBoard } from "../store/store.js"
 import { StandaloneSearchBox, useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api'
+import { CheckCircle, Circle, User, Calendar, Eye, Tag, Grid, CheckSquare, Paperclip, MessageSquare, Edit, ChevronDown, Plus, X, Send, MoreHorizontal, Link2, Clock, ArrowRight, } from 'lucide-react'
 
 
-
-
-import {
-    CheckCircle, Circle, User, Calendar, Eye, Tag, Grid,
-        CheckSquare, Paperclip, MessageSquare, Edit, ChevronDown,
-        Plus, X, Send, MoreHorizontal, Link2, Clock, ArrowRight,
-} from 'lucide-react'
 
 export function TaskModal () {
+
     const [isDone, setIsDone] = useState(false)
+    const [date, setDate] = useState('2025-07-22')
+    const [isHovering, setIsHovering] = useState({})
+    const [isWatching, setIsWatching] = useState(true)
+    const [showLabels, setShowLabels] = useState(true)
+    const [activeTab, setActiveTab] = useState('overview')
+    const [activeDropdown, setActiveDropdown] = useState(null)
+    const [newChecklistItem, setNewChecklistItem] = useState('')
+    const [addingToChecklist, setAddingToChecklist] = useState(0)
+    const [isCustomFieldsOpen, setIsCustomFieldsOpen] = useState(true)
+    const [isDescriptionEditing, setIsDescriptionEditing] = useState(false)
     const [cardTitle, setCardTitle] = useState('Evaluate Community Feedback')
     const [description, setDescription] = useState('Analyze the feedback collected from last month\'s community engagement session and summarize the key points for the upcoming board meeting')
-    const [isDescriptionEditing, setIsDescriptionEditing] = useState(false)
-    const [date, setDate] = useState('2025-07-22')
-    const [isWatching, setIsWatching] = useState(true)
-    const [activeTab, setActiveTab] = useState('overview')
-    const [isCustomFieldsOpen, setIsCustomFieldsOpen] = useState(true)
-    const [showLabels, setShowLabels] = useState(true)
-    const [addingToChecklist, setAddingToChecklist] = useState(0)
-    const [newChecklistItem, setNewChecklistItem] = useState('')
-    const [activeDropdown, setActiveDropdown] = useState(null)
-    const [isHovering, setIsHovering] = useState({})
 
     const dateInputRef = useRef(null)
-    const activityInputRef = useRef(null)
     const titleInputRef = useRef(null)
     const descriptionRef = useRef(null)
+    const activityInputRef = useRef(null)
+
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const onClickOutside = (event) => {
             if (activeDropdown && !event.target.closest('.dropdown-container')) {
                 setActiveDropdown(null)
             }
         }
 
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => document.removeEventListener('mousedown', handleClickOutside)
+        document.addEventListener('mousedown', onClickOutside)
+        return () => document.removeEventListener('mousedown', onClickOutside)
     }, [activeDropdown])
 
     useEffect(() => {
-        const handleKeyDown = (e) => {
+        const onKeyDown = (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 't' && titleInputRef.current) {
                 e.preventDefault()
                 titleInputRef.current.focus()
             }
         }
 
-        window.addEventListener('keydown', handleKeyDown)
-        return () => window.removeEventListener('keydown', handleKeyDown)
+        window.addEventListener('keydown', onKeyDown)
+        return () => window.removeEventListener('keydown', onKeyDown)
     }, [])
 
     const [badges, setBadges] = useState([
@@ -121,7 +117,7 @@ export function TaskModal () {
     const attachmentCount = attachments.length
     const activityCount = activityLog.length
 
-    const getDueDateStatus = () => {
+    function getDueDateStatus() {
         const today = new Date()
         const dueDate = new Date(date)
         if (isDone) return 'completed'
@@ -134,21 +130,21 @@ export function TaskModal () {
         return 'upcoming'
     }
 
-    const onDateClick = () => {
+    function onDateClick() {
         if (dateInputRef.current) {
             dateInputRef.current.click()
         }
     }
 
-    const onDateChange = (e) => {
+    function onDateChange(e) {
         setDate(e.target.value)
     }
 
-    const setActivePicker = (picker) => {
+    function setActivePicker(picker) {
         console.log(`Opening ${picker} picker`)
     }
 
-    const toggleChecklistItem = (checklistId, todoId) => {
+    function toggleChecklistItem(checklistId, todoId) {
         const newChecklists = checklists.map(c => {
             if (c.id === checklistId) {
                 return {
@@ -172,7 +168,7 @@ export function TaskModal () {
     }
 
     
-    const addChecklistItem = (checklistId) => {
+    function addChecklistItem(checklistId) {
         if (newChecklistItem.trim()) {
             setChecklists(checklists.map(c => {
                 if (c.id === checklistId) {
@@ -197,12 +193,12 @@ export function TaskModal () {
         }
     }
 
-    const deleteAttachment = (attachmentId) => {
+    function deleteAttachment(attachmentId) {
         setAttachments(attachments.filter(a => a.id !== attachmentId))
     }
 
     
-    const addComment = () => {
+    function addComment() {
         if (activityInputRef.current?.value.trim()) {
             setActivityLog([...activityLog, {
                 id: Date.now(),
@@ -218,7 +214,7 @@ export function TaskModal () {
     }
 
     
-    const handleCommentKeyDown = (e) => {
+    function onCommentKeyDown(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault()
             addComment()
@@ -226,7 +222,7 @@ export function TaskModal () {
     }
 
     
-    const formatRelativeTime = (timestamp) => {
+    function formatRelativeTime(timestamp) {
         const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
         const now = Date.now()
         const diffInSeconds = Math.floor((timestamp - now) / 1000)
@@ -265,7 +261,7 @@ export function TaskModal () {
     }
 
     
-    const getFormattedDate = (dateString) => {
+    function getFormattedDate(dateString) {
         const date = new Date(dateString)
         return new Date(date).toLocaleDateString('en-US', {
             month: 'short',
@@ -859,7 +855,7 @@ export function TaskModal () {
                                         className="w-full p-3 pr-10 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 min-h-10 max-h-32 transition-shadow"
                                         placeholder="Write a comment..."
                                         rows={1}
-                                        onKeyDown={handleCommentKeyDown}
+                                        onKeyDown={onCommentKeyDown}
                                     ></textarea>
                                     <button
                                         className="absolute right-2 bottom-2 p-1.5 text-blue-500 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
@@ -984,11 +980,6 @@ export function TaskModal () {
     )
 }
 
-
-
-
-
-
 export function useToggle(initialState) {
 
         const [isOn, setIsOn] = useState(initialState)
@@ -1008,18 +999,16 @@ function Placeholder({placeholderHeight}) {
         return <div style={{height: placeholderHeight + "px", background: "rgba(0,0,0,0.2)", borderRadius: "8px", margin: "4px 0"}}/>
 }
 
-
-
 function mapTrelloToMonday(hex, alpha = 1.0) {
     if (!hex) return undefined;    
-    let purifiedHex = hex;
+    let purifiedHex = hex
     if (hex.length === 9) {
-        alpha = parseInt(hex.slice(7), 16) / 255;
-        purifiedHex = hex.slice(0, 7);
+        alpha = parseInt(hex.slice(7), 16) / 255
+        purifiedHex = hex.slice(0, 7)
     } 
     else if (hex.length === 5) {
-        alpha = parseInt(hex.slice(4), 16) / 15;
-        purifiedHex = hex.slice(0, 4);
+        alpha = parseInt(hex.slice(4), 16) / 15
+        purifiedHex = hex.slice(0, 4)
     }    
     const mondayColors = [
         {hex: '#33d391', h: 151.2, s: 1.0, l: 0.39},        // strong green
@@ -1048,105 +1037,39 @@ function mapTrelloToMonday(hex, alpha = 1.0) {
         {hex: '#68d391', h: 142.5, s: 0.60, l: 0.62},     // minty green
         {hex: '#fdbc64', h: 34.5, s: 0.97, l: 0.69},        // orange/yellow
         {hex: '#e8697d', h: 350.6, s: 0.71, l: 0.66}        // pinkish-red
-    ];
-    const [h, s, l] = hexToHSL(purifiedHex);
+    ]
+    const [h, s, l] = hexToHSL(purifiedHex)
     if (s < 0.1) {
-        const closestGray = findClosestGray(h, l);
-        return applyAlpha(closestGray, alpha);
+        const closestGray = findClosestGray(h, l)
+        return applyAlpha(closestGray, alpha)
     }
-    let closestColor = mondayColors[0].hex;
-    let minDistance = Infinity;
+    let closestColor = mondayColors[0].hex
+    let minDistance = Infinity
     for (const color of mondayColors) {
-        const distance = calculateColorDistance(h, s, l, color.h, color.s, color.l);
+        const distance = calculateColorDistance(h, s, l, color.h, color.s, color.l)
         if (distance < minDistance) {
-            minDistance = distance;
-            closestColor = color.hex;
+            minDistance = distance
+            closestColor = color.hex
         }
     }
-    return applyAlpha(closestColor, alpha);
+    return applyAlpha(closestColor, alpha)
 
     function findClosestGray(targetH, targetL) {
-        const grays = ['#323338', '#9aadbd', '#c4c4c4'];
+        const grays = ['#323338', '#9aadbd', '#c4c4c4']
         return grays.reduce((closest, gray) => {
-            const grayL = hexToHSL(gray)[2];
+            const grayL = hexToHSL(gray)[2]
             return Math.abs(grayL - targetL) < Math.abs(hexToHSL(closest)[2] - targetL)
                 ? gray
-                : closest;
-        }, grays[0]);
+                : closest
+        }, grays[0])
     }
     function applyAlpha(hexColor, alphaValue) {
         if (alphaValue === 1) {
-            return hexColor;
+            return hexColor
         }
-        const alphaHex = Math.round(alphaValue * 255).toString(16).padStart(2, '0');
-        return `${hexColor}${alphaHex}`;
+        const alphaHex = Math.round(alphaValue * 255).toString(16).padStart(2, '0')
+        return `${hexColor}${alphaHex}`
     }
-}
-
-
-
-
-
-function mapTrelloToMonday1(hex) {
-        if (!hex) return undefined
-        const mondayColors = [
-                {hex: '#33d391', h: 151.2, s: 1.0, l: 0.39},        // strong green
-                {hex: '#66ccff', h: 200.0, s: 1.0, l: 0.70},        // light blue
-                {hex: '#782bff', h: 258.3, s: 1.0, l: 0.58},        // deep purple
-                {hex: '#a358df', h: 275.4, s: 0.68, l: 0.61},     // purple
-                {hex: '#5559df', h: 238.7, s: 0.68, l: 0.61},     // indigo
-                {hex: '#00a9cf', h: 190.7, s: 1.0, l: 0.41},        // teal
-                {hex: '#0086c0', h: 199.3, s: 1.0, l: 0.38},        // darker teal/blue
-                {hex: '#bb3354', h: 346.2, s: 0.57, l: 0.47},     // burgundy
-                {hex: '#e8697d', h: 350.6, s: 0.71, l: 0.66},     // bright red
-                {hex: '#003f69', h: 208.7, s: 1.0, l: 0.21},        // navy
-                {hex: '#323338', h: 240.0, s: 0.04, l: 0.20},     // dark grey
-                {hex: '#fdab3d', h: 35.4, s: 0.98, l: 0.62},        // orange
-                {hex: '#fdbc64', h: 48.0, s: 1.0, l: 0.50},         // yellow
-                {hex: '#784bd1', h: 258.0, s: 0.59, l: 0.56},     // purple
-                {hex: '#579bfc', h: 215.6, s: 0.96, l: 0.66},     // lighter blue
-                {hex: '#faa1f2', h: 305.3, s: 0.89, l: 0.79},     // pink
-                {hex: '#e2445c', h: 0.0, s: 1.0, l: 0.73},            // salmon
-                {hex: '#225091', h: 213.7, s: 0.62, l: 0.35},     // medium blue
-                {hex: '#9aadbd', h: 207.3, s: 0.20, l: 0.68},     // light grey-blue
-                {hex: '#c4c4c4', h: 0.0, s: 0.0, l: 0.77},            // mid grey
-                {hex: '#bda8f9', h: 253.2, s: 0.88, l: 0.82},     // lavender
-                {hex: '#6c6cff', h: 240.0, s: 1.0, l: 0.71},        // pastel violet/blue
-                {hex: '#3dd1f0', h: 190.9, s: 0.85, l: 0.59},     // light teal
-                {hex: '#68d391', h: 142.5, s: 0.60, l: 0.62},     // minty green
-                {hex: '#fdbc64', h: 34.5, s: 0.97, l: 0.69},        // orange/yellow
-                {hex: '#e8697d', h: 350.6, s: 0.71, l: 0.66}        // pinkish-red
-        ]
-
-        const [h, s, l] = hexToHSL(hex)
-
-        if (s < 0.1) {
-                return findClosestGray(h, l)
-        }
-
-        
-        let closestColor = mondayColors[0].hex
-        let minDistance = Infinity
-
-        for (const color of mondayColors) {
-                const distance = calculateColorDistance(h, s, l, color.h, color.s, color.l)
-                if (distance < minDistance) {
-                        minDistance = distance
-                        closestColor = color.hex
-                }
-        }
-
-        return closestColor
-
-        function findClosestGray(targetH, targetL) {
-                const grays = ['#323338', '#9aadbd', '#c4c4c4']
-                return grays.reduce((closest, gray) => {
-                        const grayL = hexToHSL(gray)[2]
-                        return Math.abs(grayL - targetL) < Math.abs(hexToHSL(closest)[2] - targetL)
-                                ? gray
-                                : closest
-                }, grays[0])
-        }
 }
 
 function hexToHSL(hex) {
@@ -1293,7 +1216,7 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
         dispatch(updateBoard(updatedBoard))
     }
 
-    function handleOpenTask(ev) {
+    function onOpenTask(ev) {
         ev.stopPropagation()
         onLoadTask(ev, task, null, group, board)
     }
@@ -1342,7 +1265,7 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
                             </div>
                             <div className="monday-task-title picker flex align-center space-between">
 
-                                    <div className="open-task-details" onClick={handleOpenTask}>
+                                    <div className="open-task-details" onClick={onOpenTask}>
                                             <i className="fa-solid fa-chevron-right arrow-icon"></i>
                                     </div>
 
@@ -1350,7 +1273,7 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
                                             <span>{task.title}</span>
                                     </blockquote>
 
-                                    <div className="open-task-details" onClick={handleOpenTask}>
+                                    <div className="open-task-details" onClick={onOpenTask}>
                                             <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                     <path d="M9 18l6-6-6-6"/>
                                             </svg>
@@ -1432,7 +1355,7 @@ function MondayTableTask({ idx, task, group, board, onLoadTask, isSubtask = fals
 
 function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, sortBy}) {
     const dispatch = useDispatch()
-    const [isCollapsed, setIsCollapsed] = useState(false)
+    const [isCollapsed, setIsCollapsed] = useState((group?.isMinimaized) || false)
     const [isEditing, setIsEditing] = useState(false)
     const [groupTitle, setGroupTitle] = useState(group.title)
     const [newTaskTitle, setNewTaskTitle] = useState('')
@@ -1440,19 +1363,19 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
     const filteredTasks = useFilteredTasks(group.tasks, searchQuery, filterText)
     const sortedTasks = useSortedTasks(filteredTasks, sortBy)
 
-    const handleToggleCollapse = () => {
+    const onToggleCollapse = () => {
         setIsCollapsed(!isCollapsed)
     }
 
-    const handleGroupTitleEdit = () => {
+    const onGroupTitleEdit = () => {
         setIsEditing(true)
     }
 
-    const handleGroupTitleChange = (e) => {
+    const onGroupTitleChange = (e) => {
         setGroupTitle(e.target.value)
     }
 
-    const handleGroupTitleSave = () => {
+    const onGroupTitleSave = () => {
         if (groupTitle.trim() === '') return
 
         const updatedGroup = { ...group, title: groupTitle }
@@ -1465,20 +1388,20 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
         setIsEditing(false)
     }
 
-    const handleGroupTitleKeyDown = (e) => {
+    const onGroupTitleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            handleGroupTitleSave()
+            onGroupTitleSave()
         } else if (e.key === 'Escape') {
             setGroupTitle(group.title)
             setIsEditing(false)
         }
     }
 
-    const handleNewTaskChange = (e) => {
+    const onNewTaskChange = (e) => {
         setNewTaskTitle(e.target.value)
     }
 
-    const handleNewTaskSubmit = (e) => {
+    const onNewTaskSubmit = (e) => {
         e.preventDefault()
 
         if (newTaskTitle.trim() === '') return
@@ -1508,7 +1431,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
         setNewTaskTitle('')
     }
 
-    const handleDeleteGroup = () => {
+    const onDeleteGroup = () => {
         if (window.confirm('Are you sure you want to delete this group?')) {
             const updatedBoard = {
                 ...board,
@@ -1607,28 +1530,28 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
     useEffect(() => {
     const newTasks = group.tasks.filter(task => 
       !prevTasks.some(prevTask => prevTask.id === task.id)
-    );
+    )
     
     if (newTasks.length > 0) {
       setTimeout(() => {
         newTasks.forEach(task => {
-          const taskEl = document.getElementById(`task-${task.id}`);
-          if (taskEl) taskEl.classList.add('store-updated');
+          const taskEl = document.getElementById(`task-${task.id}`)
+          if (taskEl) taskEl.classList.add('store-updated')
           
           if (task.checklists && task.checklists.length > 0) {
             task.checklists[0].todos.forEach(todo => {
-              const todoEl = document.getElementById(`subtask-${todo.id}`);
-              if (todoEl) todoEl.classList.add('store-updated');
-            });
+              const todoEl = document.getElementById(`subtask-${todo.id}`)
+              if (todoEl) todoEl.classList.add('store-updated')
+            })
           }
-        });
-      }, 0);
+        })
+      }, 0)
     }
     
-    setPrevTasks(group.tasks);
-  }, [group.tasks]);
+    setPrevTasks(group.tasks)
+  }, [group.tasks])
   
-  const [prevTasks, setPrevTasks] = useState(group.tasks || []);
+  const [prevTasks, setPrevTasks] = useState(group.tasks || [])
 
 
     return (
@@ -1659,7 +1582,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                     <div className="group-title-info flex align-center">
 
                             <svg
-                                    onClick={handleToggleCollapse}
+                                    onClick={onToggleCollapse}
                                     viewBox="0 0 22 22"
                                     className={`arrow-icon ${isCollapsed ? 'collapsed' : ''}`}
                                     width="26"
@@ -1672,20 +1595,20 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
 
                         {/*<svg viewBox="0 0 20 20" fill="currentColor" width="24" height="24"*/}
 
-                        {/*        onClick={handleToggleCollapse}*/}
+                        {/*        onClick={onToggleCollapse}*/}
                         {/*        className={`arrow-icon ${isCollapsed ? 'collapsed' : ''}`}*/}
                         {/*        height="20"*/}
                         {/*>*/}
                         {/*    <path d="M10.5303 12.5303L10 12L9.46967 12.5303C9.76256 12.8232 10.2374 12.8232 10.5303 12.5303ZM10 10.9393L6.53033 7.46967C6.23744 7.17678 5.76256 7.17678 5.46967 7.46967C5.17678 7.76256 5.17678 8.23744 5.46967 8.53033L9.46967 12.5303L10 12L10.5303 12.5303L14.5303 8.53033C14.8232 8.23744 14.8232 7.76256 14.5303 7.46967C14.2374 7.17678 13.7626 7.17678 13.4697 7.46967L10 10.9393Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>*/}
                         {/*</svg>*/}
-                        <blockquote className="group-title monday-group-title" onClick={handleGroupTitleEdit}>
+                        <blockquote className="group-title monday-group-title" onClick={onGroupTitleEdit}>
                             {isEditing ? (
                                 <input
                                     type="text"
                                     value={groupTitle}
-                                    onChange={handleGroupTitleChange}
-                                    onBlur={handleGroupTitleSave}
-                                    onKeyDown={handleGroupTitleKeyDown}
+                                    onChange={onGroupTitleChange}
+                                    onBlur={onGroupTitleSave}
+                                    onKeyDown={onGroupTitleKeyDown}
                                     autoFocus
                                 />
                             ) : (
@@ -1799,7 +1722,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
 {sortedTasks.map((task, idx) => {
     const hasSubtasks = task.checklists && task.checklists.length > 0 &&
                                          task.checklists[0].todos && task.checklists[0].todos.length > 0
-    const isExpanded = true;
+    const isExpanded = true
 
     return (
         <React.Fragment key={task.id}>
@@ -1914,14 +1837,14 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
 
                                 <form
                                     className=" no-inner-input_styles add-task-form mondaymonday-add-task-form flex align-center"
-                                    onSubmit={handleNewTaskSubmit}
+                                    onSubmit={onNewTaskSubmit}
                                 >
                                     <input
                                         type="text"
                                         name="title"
                                         placeholder="+ Add Task"
                                         value={newTaskTitle}
-                                        onChange={handleNewTaskChange}
+                                        onChange={onNewTaskChange}
                                     />
                                 </form>
                             </div>
@@ -1964,15 +1887,15 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
     const [showAddGroup, setShowAddGroup] = useState(false)
     const [newGroupTitle, setNewGroupTitle] = useState('')
 
-    const handleAddGroup = () => {
+    const onAddGroup = () => {
         setShowAddGroup(true)
     }
 
-    const handleNewGroupChange = (e) => {
+    const onNewGroupChange = (e) => {
         setNewGroupTitle(e.target.value)
     }
 
-    const handleNewGroupSubmit = (e) => {
+    const onNewGroupSubmit = (e) => {
         e.preventDefault()
 
         if (newGroupTitle.trim() === '') return
@@ -1997,7 +1920,7 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
         setShowAddGroup(false)
     }
 
-    const handleDragEnd = (result) => {
+    const onDragEnd = (result) => {
         const { source, destination, draggableId } = result
 
         if (!destination) return
@@ -2045,7 +1968,7 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
     }
 
     return (
-        <DragDropContext onDragEnd={handleDragEnd}>
+        <DragDropContext onDragEnd={onDragEnd}>
             <div className="monday-board-table-container">
                 <section className="group-list">
                     <ul>
@@ -2066,13 +1989,13 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
 
                     {showAddGroup ? (
                         <div className="add-group-form">
-                            <form className="add-group-form" onSubmit={handleNewGroupSubmit}>
+                            <form className="add-group-form" onSubmit={onNewGroupSubmit}>
                                 <input
                                     className="monday-group-input"
                                     type="text"
                                     placeholder="Enter group title..."
                                     value={newGroupTitle}
-                                    onChange={handleNewGroupChange}
+                                    onChange={onNewGroupChange}
                                     autoFocus
                                 />
                                 <div className="add-group-buttons">
@@ -2091,7 +2014,7 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
                             </form>
                         </div>
                     ) : (
-                        <div className="add-group" onClick={handleAddGroup}>
+                        <div className="add-group" onClick={onAddGroup}>
                             <button className="monday-add-group-buttons">
                                 <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
                                     <path d="M10 2.5C10.2761 2.5 10.5 2.72386 10.5 3V9.5H17C17.2761 9.5 17.5 9.72386 17.5 10C17.5 10.2761 17.2761 10.5 17 10.5H10.5V17C10.5 17.2761 10.2761 17.5 10 17.5C9.72386 17.5 9.5 17.2761 9.5 17V10.5H3C2.72386 10.5 2.5 10.2761 2.5 10C2.5 9.72386 2.72386 9.5 3 9.5H9.5V3C9.5 2.72386 9.72386 2.5 10 2.5Z" />
@@ -2105,10 +2028,6 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
         </DragDropContext>
     )
 }
-
-
-
-
 
 export function TopHeader({ }) {
         const loggedUser = useSelector((state) => state.userModule.user)
@@ -2226,7 +2145,6 @@ export function TopHeader({ }) {
         )
 }
 
-
 export function MondaySidebarEmpty({ onCloseSideBar }) {
     const boards = useSelector((state) => state.boardModule.boards)
 
@@ -2244,7 +2162,6 @@ export function MondaySidebarEmpty({ onCloseSideBar }) {
             </section>
         </div>)
 }
-
 
 export function MondaySidebar({ onCloseSideBar }) {
         const boards = useSelector((state) => state.boardModule.boards)
@@ -2378,12 +2295,12 @@ export function MondaySidebar({ onCloseSideBar }) {
 export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterText, setFilterText, sortBy, setSortBy, onSetShowKanban, showKanban, showSideBar, loggedUser}) {
         const dispatch = useDispatch()
 
-        const handleTitleChange = (e) => {
+        const onTitleChange = (e) => {
                 const newTitle = e.target.innerText
                 dispatch(updateBoard({ ...board, title: newTitle }))
         }
 
-        const handleSubtitleChange = (e) => {
+        const onSubtitleChange = (e) => {
                 const newSubtitle = e.target.innerText
                 dispatch(updateBoard({ ...board, description: newSubtitle }))
         }
@@ -2398,7 +2315,7 @@ export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterTe
                                 <div className="board-info flex">
                                         <blockquote
                                                 contentEditable="true"
-                                                onBlur={handleTitleChange}
+                                                onBlur={onTitleChange}
                                                 suppressContentEditableWarning={true}
                                                 aria-label="Click to edit"
                                                 data-mui-internal-clone-element="true"
@@ -2647,7 +2564,7 @@ export function MondayTask({
                 dispatch(updateBoard(updatedBoard))
         }
 
-        function handleDragEnd(result) {
+        function onDragEnd(result) {
                 const { source, destination } = result
                 if (!destination) return
 
@@ -2672,7 +2589,7 @@ export function MondayTask({
                                 <h2 className="kanban-col-title">{group.title} ({group.tasks.length})</h2>
                         </header>
 
-                        <DragDropContext onDragEnd={handleDragEnd}>
+                        <DragDropContext onDragEnd={onDragEnd}>
                                 <Droppable droppableId={group.id}>
                                         {(provided) => (
                                                 <div className="kanban-items" {...provided.droppableProps} ref={provided.innerRef}>

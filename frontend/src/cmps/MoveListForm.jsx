@@ -1,18 +1,24 @@
-import { useEffect, useRef, useState } from "react"
+
+
 import { useSelector } from "react-redux"
-import { updateBoard } from "../store/store"
 import { useNavigate } from "react-router"
+import { updateBoard } from "../store/store"
+import { useEffect, useRef, useState } from "react"
 
 
 export function MoveListForm({ header, group, onSetMoveList, onSetGroupEdit }) {
+
     const board = useSelector(state => state.boardModule.board)
     const boards = useSelector(state => state.boardModule.boards)
-    const [selectedBoard, setSelectedBoard] = useState(board)
+
     const [pos, setPos] = useState(0)
+    const [selectedBoard, setSelectedBoard] = useState(board)
     const [showBoardSelect, SetBoardSelect] = useState(false)
     const [showPositionSelect, setPostionSelect] = useState(false)
+
     const navgite = useNavigate()
-        const inset = `auto ${header.left }px auto ${header.top}px`
+
+    const inset = `auto ${header.left }px auto ${header.top}px`
 
     function onSetBoardSelect() {
         SetBoardSelect(!showBoardSelect)
@@ -23,16 +29,16 @@ export function MoveListForm({ header, group, onSetMoveList, onSetGroupEdit }) {
     }
 
     function onChangeBoard(id) {
-
         const newBoard = boards.find(brd => brd._id === id)
-
         setSelectedBoard(prevboard => (newBoard))
         onSetBoardSelect()
     }
+
     function onchangePos(idx) {
         setPos(idx)
         onSetPostionSelect()
     }
+
     async function move() {
         const idx = board.groups.findIndex(grp => grp.id == group.id)
         board.groups.splice(idx, 1)
@@ -65,10 +71,9 @@ export function MoveListForm({ header, group, onSetMoveList, onSetGroupEdit }) {
                     <span className="options-head">Trello workspace</span>
                     {boards.map((brd, idx) => {
                         return (
-
-
-                            <div onClick={() => onChangeBoard(brd._id)} className={`option ${(brd._id === selectedBoard._id) ? 'active' : ''}`} key={idx} value={brd._id} defaultValue={(brd._id === selectedBoard._id)} >{`${brd.title} `}{(brd._id === board._id)? <span className="current">(Current)</span>:''}</div>
-
+                            <div onClick={() => onChangeBoard(brd._id)} className={`option ${(brd._id === selectedBoard._id) ? 'active' : ''}`} key={idx} value={brd._id} defaultValue={(brd._id === selectedBoard._id)}>
+                                {`${brd.title} `}{(brd._id === board._id)? <span className="current">(Current)</span>:''}
+                            </div>
                         )
                     })}
                 </div>}

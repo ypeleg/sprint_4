@@ -1,25 +1,24 @@
 
 
+import React, { useState, useEffect, useRef } from "react"
+
+
 import { TaskList } from "./TaskList"
 import { AddGroup } from "./AddGroup"
+import { MoveAll } from "./MoveAll.jsx"
 import { useSelector } from "react-redux"
+import { GroupEdit } from "./GroupEdit.jsx"
+import { GroupSort } from "./GroupSort.jsx"
 import { GroupHeader } from "./GroupHeader"
+import { updateBoard } from "../store/store.js"
+import { CopyListForm } from "./CopyListForm.jsx"
+import { MoveListForm } from "./MoveListForm.jsx"
 import { MinimaizedGRoup } from "./MinimaizedGroup"
-import React, { useState, useEffect, useRef } from "react"
 import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/reorder-with-edge"
 import { draggable, dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
 import { preserveOffsetOnSource } from "@atlaskit/pragmatic-drag-and-drop/element/preserve-offset-on-source"
 import { attachClosestEdge, extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge"
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview"
-
-import { store, updateBoard } from "../store/store.js"
-import { GroupEdit } from "./GroupEdit.jsx"
-import { CopyListForm } from "./CopyListForm.jsx"
-import { MoveListForm } from "./MoveListForm.jsx"
-import { MoveAll } from "./MoveAll.jsx"
-import { GroupSort } from "./GroupSort.jsx"
-import { SOCKET_UPDATE_BOARD, socketService } from "../services/util.service.js"
-import { UPDATE_BOARD } from "../store/reducers/board.reducer.js"
 
 const GROUP_SYMBOL = Symbol("group")
 
@@ -46,24 +45,26 @@ export function GroupList({
     showQuickEdit,
     useDarkTextColors,
 }) {
-    const boardToShow = useSelector((state) => state.boardModule.board)
-    const [largeLabels, setLargeLabels] = useState(false)
-    const [showGroupEdit, SetGroupEdit] = useState(false)
-    const [showCopyList, setCopyList] = useState(false)
-    const [showMoveList, setMoveList] = useState(false)
-    const [showMoveAll, setMoveAll] = useState(false)
-    const [showSort, setSort] = useState(false)
-    const [header, setHeader] = useState(null)
-    const [grp, setGroup] = useState(null)
 
+    const groupRefs = useRef({})
     const containerRef = useRef(null)
 
+    const [grp, setGroup] = useState(null)
+    const [header, setHeader] = useState(null)
+    const [showSort, setSort] = useState(false)
+    const [showMoveAll, setMoveAll] = useState(false)
+    const [showMoveList, setMoveList] = useState(false)
+    const [showCopyList, setCopyList] = useState(false)
+    const [shadowGroup, setShadowGroup] = useState(null)
+    const [showGroupEdit, SetGroupEdit] = useState(false)
+    const [largeLabels, setLargeLabels] = useState(false)
     const [isGenerateModalOpen, setIsGenerateModalOpen] = useState(false)
+
+    const boardToShow = useSelector((state) => state.boardModule.board)
 
     function toggleGenerateModal() {
         setIsGenerateModalOpen(prev => !prev)
     }
-
 
     function onSetSort() {
         setSort(!showSort)
@@ -85,18 +86,18 @@ export function GroupList({
 
         setMoveAll(!showMoveAll)
     }
+
     function toggleLargeLabels(ev) {
         ev.stopPropagation()
         setLargeLabels(!largeLabels)
     }
-    const groupRefs = useRef({})
+
     function getGroupRef(groupId) {
         if (!groupRefs.current[groupId]) {
             groupRefs.current[groupId] = React.createRef()
         }
         return groupRefs.current[groupId]
     }
-    const [shadowGroup, setShadowGroup] = useState(null)
 
     useEffect(() => {
         if (!boardToShow?.groups) return
@@ -114,6 +115,7 @@ export function GroupList({
                         rect: element.getBoundingClientRect(),
                     })
                 },
+
                 onGenerateDragPreview({ location, nativeSetDragImage, source }) {
                     setCustomNativeDragPreview({
                         nativeSetDragImage,
@@ -231,7 +233,6 @@ export function GroupList({
         boardCopy.groups = reordered
         updateBoard(boardCopy)
     }
-
 
     return (
         <section id="group-lists" className="group-lists" 

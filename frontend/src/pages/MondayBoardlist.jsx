@@ -14,127 +14,6 @@ import React, {useState, useEffect, useRef, Fragment} from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 
-// START OF TRELLO BOARD INDEX COMPONENTS
-export function TrelloBoardPreview({ board }) {
-
-    async function setIsStarred(ev) {
-        ev.stopPropagation()
-        board.isStarred = !board.isStarred
-        console.log(board.isStarred);
-        const boardToSave = await updateBoard(board)
-        console.log(boardToSave);
-
-    }
-
-    return <article className="board-preview" style={{ backgroundImage: `url(${board.style.backgroundImage})` }}>
-        <div className="title">{board.title}</div>
-        {!board.isStarred ? (<div className="fa-solid fa-star star-btn" onClick={setIsStarred}></div>)
-            : (<div className="fill-star" onClick={setIsStarred}>
-                {/* <div className="fa-solid fa-star star-btn-solid" onClick={setIsStarred}></div> */}
-                <img src="star-solid.svg" alt="" />
-            </div>)}
-    </article>
-}
-
-export function TrelloBoardIndex() {
-
-    const boards = useSelector(state => state.boardModule.boards)
-    const loggedUser = useSelector(state => state.userModule.user)
-    let userFirstName = 'guest'
-    try {
-        userFirstName = getFirstName(loggedUser.fullname)
-    } catch {
-
-    }
-
-    // console.log(boards);
-
-    useEffect(() => {
-        loadBoards()
-    }, [])
-
-    return (
-        <>
-            <AppHeader useDarkTextColors={true} />
-            <div className="home-container">
-                <NavBarPageIndex loggedUser={userFirstName} />
-
-                <div className="all-boards">
-                    <div className="category-container">
-                        <div className="board-logo-large">{userFirstName.charAt(0)}</div>
-                        <div className="description-container">
-                            <div className="edit-workspace">
-                                <h2>{`${userFirstName}'s Workspace`}</h2>
-                            </div>
-                            <div style={{ display: 'flex', gap: 6, fontSize: 12, color: '#44546f' }}>
-                                <span style={{ marginBlockEnd: 1 }}>Premium </span>
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <img src="lock.svg" /> Private
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <section className='star-boards'>
-                        {(boards.filter(board => board.isStarred).length !== 0) &&
-                            <div>
-                                <h3><span className="fa-solid fa-user"></span> Starred boards</h3>
-                                <BoardList boards={boards.filter(board => board.isStarred)} />
-                            </div>
-                        }
-
-                    </section>
-                    <section className='my-boards'>
-                        <h3><span className="fa-solid fa-user" style={{ marginLeft: 5 }}></span>Your boards</h3>
-                        <BoardList boards={boards} addBoard={true} />
-                    </section>
-                </div>
-            </div>
-        </>)
-}
-
-export function TrelloBoardList({ boards, addBoard = false }) {
-
-    const [isModalOpen, setIsModalopen] = useState(false)
-    const navgite = useNavigate()
-    const elCreatePreview = useRef()
-
-    function onClose() {
-        setIsModalopen(false)
-    }
-
-    return (
-        <section>
-            <ul className="board-list">
-
-                {boards.map(board =>
-                    <li key={board._id}
-                        onClick={() => navgite(`/${board._id}`)}
-                    >
-                        <TrelloBoardPreview board={board} />
-                    </li>)
-                }
-                {addBoard &&
-                    <article className="board-preview create-board-preview"
-                        onClick={() => setIsModalopen(!isModalOpen)}
-                    >
-                        <div className="create-board-title" ref={elCreatePreview}>Create new board</div>
-                        {/*{isModalOpen &&*/}
-                        {/*    <CreateBoardModal onClose={onClose} createModal={elCreatePreview.current} />*/}
-                        {/*}*/}
-                    </article>
-                }
-            </ul>
-        </section>
-    )
-}
-// END OF TRELLO BOARD INDEX COMPONENTS
-
-
-
-
-// START OF MONDAY TASKS
-
 export function MondayTask({
     group,
     currentBoard,
@@ -149,82 +28,82 @@ export function MondayTask({
     onsetQuickEdit,
     showQuickEdit,
 }) {
-    const [showForm, setShowForm] = useState(false);
-    const [showFirstForm, setShowFirstForm] = useState(false);
-    const [tasks, setTasks] = useState(group.tasks);
-    const [shadow, setShadow] = useState(null);
+    const [showForm, setShowForm] = useState(false)
+    const [showFirstForm, setShowFirstForm] = useState(false)
+    const [tasks, setTasks] = useState(group.tasks)
+    const [shadow, setShadow] = useState(null)
 
-    const cardRefs = useRef({});
-    const listRef = useRef(null);
+    const cardRefs = useRef({})
+    const listRef = useRef(null)
 
-    const dispatch = useDispatch();
-    const boardToShow = useSelector((state) => state.boardModule.board);
+    const dispatch = useDispatch()
+    const boardToShow = useSelector((state) => state.boardModule.board)
 
     useEffect(() => {
-        setTasks(group.tasks);
-    }, [group.tasks, boardToShow]);
+        setTasks(group.tasks)
+    }, [group.tasks, boardToShow])
 
     useEffect(() => {
         const unsub = eventBus.on("showAddGroup", (data) => {
-            setShowFirstForm(data);
-        });
-        return () => unsub();
-    }, []);
+            setShowFirstForm(data)
+        })
+        return () => unsub()
+    }, [])
 
     function onToggleDone(ev, task) {
-        ev.stopPropagation();
+        ev.stopPropagation()
         const updatedTasks = tasks.map((t) =>
             t.id === task.id ? { ...t, status: t.status === "done" ? "" : "done" } : t
-        );
-        setTasks(updatedTasks);
-        updateBoardState(updatedTasks);
+        )
+        setTasks(updatedTasks)
+        updateBoardState(updatedTasks)
     }
 
     function onSetShowForm() {
-        setShowForm(!showForm);
+        setShowForm(!showForm)
     }
 
     function onSetFirstForm() {
-        setShowFirstForm(!showFirstForm);
+        setShowFirstForm(!showFirstForm)
     }
 
     function onDeleteTask(ev, taskId) {
-        ev.stopPropagation();
-        ev.preventDefault();
-        const currentRef = getCardRef(taskId);
-        currentRef.current.style.display = 'none';
-        const updatedGroup = { ...group, tasks: group.tasks.filter((task) => task.id !== taskId) };
-        const updatedBoard = { ...currentBoard, groups: currentBoard.groups.map((g) => (g.id === group.id ? updatedGroup : g)) };
-        dispatch(updateBoard(updatedBoard));
+        ev.stopPropagation()
+        ev.preventDefault()
+        const currentRef = getCardRef(taskId)
+        currentRef.current.style.display = 'none'
+        const updatedGroup = { ...group, tasks: group.tasks.filter((task) => task.id !== taskId) }
+        const updatedBoard = { ...currentBoard, groups: currentBoard.groups.map((g) => (g.id === group.id ? updatedGroup : g)) }
+        dispatch(updateBoard(updatedBoard))
     }
 
     function getCardRef(taskId) {
         if (!cardRefs.current[taskId]) {
-            cardRefs.current[taskId] = React.createRef();
+            cardRefs.current[taskId] = React.createRef()
         }
-        return cardRefs.current[taskId];
+        return cardRefs.current[taskId]
     }
 
     function updateBoardState(updatedTasks) {
-        const updatedGroup = { ...group, tasks: updatedTasks };
-        const updatedBoard = { ...currentBoard, groups: currentBoard.groups.map((g) => (g.id === group.id ? updatedGroup : g)) };
-        dispatch(updateBoard(updatedBoard));
+        const updatedGroup = { ...group, tasks: updatedTasks }
+        const updatedBoard = { ...currentBoard, groups: currentBoard.groups.map((g) => (g.id === group.id ? updatedGroup : g)) }
+        dispatch(updateBoard(updatedBoard))
     }
 
-    function handleDragEnd(result) {
-        const { source, destination } = result;
-        if (!destination) return;
+    function onDragEnd(result) {
+        const { source, destination } = result
+        if (!destination) return
 
-        const updatedTasks = Array.from(tasks);
-        const [movedTask] = updatedTasks.splice(source.index, 1);
+        const updatedTasks = Array.from(tasks)
+        const [movedTask] = updatedTasks.splice(source.index, 1)
 
         if (source.droppableId === destination.droppableId) {
-            updatedTasks.splice(destination.index, 0, movedTask);
-            setTasks(updatedTasks);
-            onReorderCard && onReorderCard(movedTask, updatedTasks[destination.index], "top", group.id);
-            updateBoardState(updatedTasks);
+            updatedTasks.splice(destination.index, 0, movedTask)
+            setTasks(updatedTasks)
+            onReorderCard && onReorderCard(movedTask, updatedTasks[destination.index], "top", group.id)
+            updateBoardState(updatedTasks)
         } else {
-            onMoveCard && onMoveCard(movedTask, group.id, destination.droppableId, null, null);
+            onMoveCard && onMoveCard(movedTask, group.id, destination.droppableId, null, null)
         }
     }
 
@@ -236,7 +115,7 @@ export function MondayTask({
                 <h2 className="kanban-col-title">{group.title} ({group.tasks.length})</h2>
             </header>
 
-            <DragDropContext onDragEnd={handleDragEnd}>
+            <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId={group.id}>
                     {(provided) => (
                         <div className="kanban-items" {...provided.droppableProps} ref={provided.innerRef}>
@@ -389,7 +268,7 @@ export function MondayTask({
                     <i className="fa-regular fa-plus"></i> Add a card
                 </button>
             </div>)}
-        </div>);
+        </div>)
 }
 
 export function MondayTaskList({board, onLoadTask}) {
@@ -400,14 +279,6 @@ export function MondayTaskList({board, onLoadTask}) {
             </div>
         </section>)
 }
-
-// END OF MONDAY TASKS
-
-
-
-
-
-
 
 export function TopHeader({  }) {
     return (
@@ -525,9 +396,9 @@ export function TopHeader({  }) {
 }
 
 export function MondaySidebar() {
-    const boards = useSelector((state) => state.boardModule.boards);
+    const boards = useSelector((state) => state.boardModule.boards)
 
-    const favorites = boards.filter(board => board.isStarred);
+    const favorites = boards.filter(board => board.isStarred)
 
     return (
         <div className="sidebar flex">
@@ -650,25 +521,25 @@ export function MondaySidebar() {
                 </section>
             </section>
         </div>
-    );
+    )
 }
 
 export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterText, setFilterText, sortBy, setSortBy}) {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const handleTitleChange = (e) => {
-        const newTitle = e.target.innerText;
-        dispatch(updateBoard({ ...board, title: newTitle }));
-    };
+        const newTitle = e.target.innerText
+        dispatch(updateBoard({ ...board, title: newTitle }))
+    }
 
     const handleSubtitleChange = (e) => {
-        const newSubtitle = e.target.innerText;
-        dispatch(updateBoard({ ...board, description: newSubtitle }));
-    };
+        const newSubtitle = e.target.innerText
+        dispatch(updateBoard({ ...board, description: newSubtitle }))
+    }
 
     const toggleStar = () => {
-        dispatch(updateBoard({ ...board, isStarred: !board.isStarred }));
-    };
+        dispatch(updateBoard({ ...board, isStarred: !board.isStarred }))
+    }
 
     return (
         <header className="monday-board-header">
@@ -831,21 +702,21 @@ export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterTe
                 </div>
             </section>
         </header>
-    );
+    )
 }
 
 
 export function MondayBoardList({boards, loggedUser}) {
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const starredBoards = boards.filter((board) => board.isStarred);
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const starredBoards = boards.filter((board) => board.isStarred)
 
     function onToggleStar(board, ev) {
-        ev.stopPropagation();
-        const updatedBoard = {...board, isStarred: !board.isStarred};
-        dispatch(updateBoard(updatedBoard));
+        ev.stopPropagation()
+        const updatedBoard = {...board, isStarred: !board.isStarred}
+        dispatch(updateBoard(updatedBoard))
     }
 
     function onCreateBoard() {
@@ -855,13 +726,13 @@ export function MondayBoardList({boards, loggedUser}) {
     function FilledStarSVG() {
         return (<svg viewBox="0 0 20 20" fill="#FFD700" width="20" height="20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-            </svg>);
+            </svg>)
     }
 
     function OutlineStarSVG() {
         return (<svg viewBox="0 0 20 20" fill="none" stroke="#FFFFFF" width="20" height="20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-            </svg>);
+            </svg>)
     }
 
     return (<div className="monday-board-list flex">
@@ -906,7 +777,7 @@ export function MondayBoardList({boards, loggedUser}) {
 
                             <div className="monday-star-btn-right" onClick={(ev) => {
                                 ev.stopPropagation();  // You forgot this
-                                onToggleStar(board, ev);
+                                onToggleStar(board, ev)
                             }}>
                                 {board.isStarred ? <FilledStarSVG/> : <OutlineStarSVG/>}
                             </div>
@@ -969,8 +840,8 @@ export function MondayBoardList({boards, loggedUser}) {
                             </div>
 
                             <div className="monday-star-btn-right" onClick={(ev) => {
-                                ev.stopPropagation();
-                                onToggleStar(board, ev);
+                                ev.stopPropagation()
+                                onToggleStar(board, ev)
                             }}>
                                 {board.isStarred ? <FilledStarSVG/> : <OutlineStarSVG/>}
                             </div>
@@ -1017,7 +888,7 @@ export function MondayBoardList({boards, loggedUser}) {
             <h2>Create New Board</h2>
             <button onClick={() => setIsModalOpen(false)}>Close</button>
         </div>)}
-    </div>);
+    </div>)
 }
 
 

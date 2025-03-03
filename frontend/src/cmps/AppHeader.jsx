@@ -1,29 +1,33 @@
 
 import { useState, useRef } from "react"
 import { useSelector } from "react-redux"
+import { logout } from "../store/store.js"
 import { useNavigate } from "react-router"
 import { CreateBoardModal } from '../pages/CreateBoardModal.jsx'
-import { logout } from "../store/store.js"
 
-export function AppHeader({ backgrounColor, borderColor, useDarkTextColors,
-    onToggleSideBar, sideBarOpen, onToggleUpperBar, upperBarOpen }) {
 
-    const boards = useSelector(state => state.boardModule.boards)
 
+export function AppHeader({ backgrounColor, borderColor, useDarkTextColors, onToggleSideBar, sideBarOpen, onToggleUpperBar, upperBarOpen }) {
+
+    const navgite = useNavigate()
+
+    const getCreateBoardRef = useRef(null)
+
+
+    const [boardsFilter,SetBoardFilter] = useState('')
+    const [showRecent, setShowRecent] = useState(false)
     const [isModalOpen, setIsModalopen] = useState(false)
+    const [showStarred, setShowStarred] = useState(false)
+    const [showBellPopup, setShowBellPopup] = useState(false)
+    const [showWorkspace, setShowWorkspace] = useState(false)
+    const [showUnreadOnly, setShowUnreadOnly] = useState(false)
     const [openAccountPopup, setOpenAccountPopup] = useState(false)
-    const loggedUser = useSelector(state => state.userModule.user)
-  
     const [showPremiumTrial, setShowPremiumTrial] = useState(false)
     const [showQuestionMarkPopup, setShowQuestionMarkPopup] = useState(false)
-    const [showBellPopup, setShowBellPopup] = useState(false)
-    const [showUnreadOnly, setShowUnreadOnly] = useState(false)
-    const [showRecent, setShowRecent] = useState(false)
-    const [showWorkspace, setShowWorkspace] = useState(false)
-    const [showStarred, setShowStarred] = useState(false)
-    const getCreateBoardRef = useRef(null)
-    const navgite = useNavigate()
-    const [boardsFilter,SetBoardFilter] = useState('')
+
+    const boards = useSelector(state => state.boardModule.boards)
+    const loggedUser = useSelector(state => state.userModule.user)
+
     function closeAllPopups() {
         setShowPremiumTrial(false)
         setShowQuestionMarkPopup(false)

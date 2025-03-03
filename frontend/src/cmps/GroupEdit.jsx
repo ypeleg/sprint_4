@@ -1,31 +1,28 @@
 
 
-import { useState } from "react"
 import { useSelector } from "react-redux"
 import { updateBoard } from "../store/store"
-import { CopyListForm } from "./CopyListForm"
 import { eventBus } from "../services/util.service.js"
 import { getColorFromBackgroundColor } from "../services/data.js"
 
 
-
 export function GroupEdit({ onSetMoveAll, group, onSetCopyList, header, onSetGroupEdit, onSetMoveList, onSetSort }) {
+
     const board = useSelector(state => state.boardModule.board)
 
     function addGroup() {
         eventBus.emit('showAddGroup', group.id)
         onSetGroupEdit()
     }
+
     function onSetIsWatched() {
         group.watched = !group.watched
         updateBoard(board)
     }
-    
 
     const inset = `auto ${header.left }px auto ${header.top}px`
 
     function changeColor({ target }) {
-        
         const backgroundColor = target.value
         if (backgroundColor) {
             const color = getColorFromBackgroundColor(backgroundColor)

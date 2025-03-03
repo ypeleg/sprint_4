@@ -20,7 +20,7 @@ export function BoardIndex() {
 
     }
 
-    // console.log(boards);
+    // console.log(boards)
 
     useEffect(() => {
         loadBoards()

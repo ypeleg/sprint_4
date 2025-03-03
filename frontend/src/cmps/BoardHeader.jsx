@@ -1,21 +1,24 @@
 
 
-import { useRef, useState, useEffect } from "react"
-import { FilterCards } from "./FilterCards"
+
 import { useSelector } from "react-redux"
-import { setFilterBy, updateBoard } from "../store/actions/board.actions"
 import { ShareModal } from "./ShareModal"
 import { useNavigate } from "react-router"
+import { FilterCards } from "./FilterCards"
+import { useRef, useState, useEffect } from "react"
+import { setFilterBy, updateBoard } from "../store/actions/board.actions"
 
-export function BoardHeader({ onSetActivityMenu, onSetTable, onStarBoard, isStarred,backgrounColor, borderColor,onSetShowShare, useDarkTextColors}) {
+
+export function BoardHeader({ onSetActivityMenu, onSetTable, onStarBoard, isStarred, backgrounColor, borderColor, onSetShowShare, useDarkTextColors}) {
+
+
     const elFilter = useRef()
-    const [ShowFilter, setShowFilter] = useState(false)
     const navigate = useNavigate()
+
+    const [ShowFilter, setShowFilter] = useState(false)
     const boardToShow = useSelector(state => state.boardModule.board)
     const filterBy = useSelector(state => state.boardModule.filterBy)
 
-
-   
 
     const isFilterd = (filterBy?.title?.length > 0 || filterBy?.members?.length > 0 || filterBy?.status?.length > 0 || filterBy?.dueDate?.length > 0)
 

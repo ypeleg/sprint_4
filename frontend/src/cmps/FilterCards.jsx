@@ -3,7 +3,6 @@
 
 
 import { useSelector } from "react-redux"
-
 import { useEffect, useRef, useState } from "react"
 import { setFilterBy } from "../store/actions/board.actions"
 
@@ -13,16 +12,13 @@ export function FilterCards({ el, setShowFilter }) {
     const filterBy = useSelector(state => state.boardModule.filterBy)
     const [completedSelected, setCompletedSelected] = useState()
 
-    
-    useEffect(() => {
 
-      
-    }, [])
     function onSetCompltedSelected(value) {
         if (completedSelected === value) setCompletedSelected(null)
         else setCompletedSelected(value)
 
     }
+
     function onChangeFilter({ target }) {
         console.log('inside on change filter')
         let { type, value, name: feild } = target
@@ -52,7 +48,8 @@ export function FilterCards({ el, setShowFilter }) {
             setFilterBy(UpdatedFilterBy)
         }
     }
-    console.log(boardToShow)
+
+
     return (
         <div tabIndex="0" className="filter-cards-container header-popup recent-popup popup-opens-right"  >
             <div className="filter-content">

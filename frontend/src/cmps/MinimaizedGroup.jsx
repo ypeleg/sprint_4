@@ -1,7 +1,7 @@
+
+
 import { useSelector } from "react-redux"
 import { updateBoard } from "../store/store"
-
-
 
 
 export function MinimaizedGRoup({ group, style, getGroupRef }) {

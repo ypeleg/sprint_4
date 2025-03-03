@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react"
 import { userService } from "../services/user.service.js"
 
 
-
 export function ShareModal({onSetShowShare}) {
     const board = useSelector(state => state.boardModule.board)
     const [showUserPicker, setShowUserPicker] = useState(null)
@@ -21,6 +20,7 @@ export function ShareModal({onSetShowShare}) {
         setPickedUser(user)
         setUserFilter(user.fullname)
     }
+
     async function onUserFilter({ target }) {
         setUserFilter(target.value)
         if (!target.value) {
@@ -32,9 +32,9 @@ export function ShareModal({onSetShowShare}) {
             setShowUserPicker(true)
         }
     }
+
    async function addMember() {
         if (!pickedUser) return
-
         board.members.push(pickedUser)
        await updateBoard(board)
        setUserFilter('')

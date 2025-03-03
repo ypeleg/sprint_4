@@ -1,16 +1,20 @@
-import {useSelector, useDispatch} from "react-redux";
-import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
-import {updateBoard} from "../store/actions/board.actions"; // Adjust path as needed
+
+
+import {useSelector, useDispatch} from "react-redux"
+import {updateBoard} from "../store/actions/board.actions"
+import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd"
+
 
 export function GroupTable() {
-    const boardToShow = useSelector((state) => state.boardModule.board);
-    const dispatch = useDispatch()
 
+    const dispatch = useDispatch()
+    const boardToShow = useSelector((state) => state.boardModule.board)
     const flatTasks = boardToShow.groups.flatMap((group) => group.tasks.map((task) => ({
         ...task, groupId: group.id, groupTitle: group.title,
     })))
 
-    const handleDragEnd = (result) => {
+    
+    function onDragEnd(result) {
         const {source, destination} = result
         if (!destination) return
 
@@ -53,7 +57,7 @@ export function GroupTable() {
         dispatch(updateBoard(updatedBoard))
     }
 
-    const handleTitleBlur = (e, taskId) => {
+    function onTitleBlur(e, taskId) {
         const newTitle = e.target.innerText
         const updatedGroups = boardToShow.groups.map((group) => ({
             ...group, tasks: group.tasks.map((task) => task.id === taskId ? {...task, title: newTitle} : task),
@@ -62,14 +66,14 @@ export function GroupTable() {
         dispatch(updateBoard(updatedBoard))
     }
 
-    const handleGroupTitleBlur = (e, groupId) => {
+    function onGroupTitleBlur(e, groupId) {
         const newTitle = e.target.innerText
         const updatedGroups = boardToShow.groups.map((group) => group.id === groupId ? {...group, title: newTitle} : group)
         const updatedBoard = {...boardToShow, groups: updatedGroups}
         dispatch(updateBoard(updatedBoard))
     }
 
-    return (<DragDropContext onDragEnd={handleDragEnd}>
+    return (<DragDropContext handleDragEnd={onDragEnd}>
             <div className="table-scroll-container">
                 <div className="group-table">
                     <div className="table-header first-row">
@@ -89,20 +93,20 @@ export function GroupTable() {
                                                                 <path fill="currentColor" fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m12.326-2.52-1.152-.96L6.75 9.828 4.826 7.52l-1.152.96 2.5 3a.75.75 0 0 0 1.152 0z" clipRule="evenodd"></path>
                                                             </svg>)} {task.status !== "done" && (<div className="task-checkbox-table"></div>)}
                                                     </div>
-                                                    <span contentEditable={true} suppressContentEditableWarning={true} onBlur={(e) => handleTitleBlur(e, task.id)} onKeyDown={(e) => {
+                                                    <span contentEditable={true} suppressContentEditableWarning={true} onBlur={(e) => onTitleBlur(e, task.id)} onKeyDown={(e) => {
                                                         if (e.key === "Enter") {
-                                                            e.preventDefault();
-                                                            e.target.blur();
+                                                            e.preventDefault()
+                                                            e.target.blur()
                                                         }
                                                     }} className="span-task-title">
                             {task.title}
                           </span>
                                                 </div>
                                                 <div className="col-2-group-title">
-                          <span contentEditable={true} suppressContentEditableWarning={true} onBlur={(e) => handleGroupTitleBlur(e, task.groupId)} onKeyDown={(e) => {
+                          <span contentEditable={true} suppressContentEditableWarning={true} onBlur={(e) => onGroupTitleBlur(e, task.groupId)} onKeyDown={(e) => {
                               if (e.key === "Enter") {
-                                  e.preventDefault();
-                                  e.target.blur();
+                                  e.preventDefault()
+                                  e.target.blur()
                               }
                           }}>
                             {task.groupTitle}
@@ -120,12 +124,12 @@ export function GroupTable() {
                                                                     if (member?.imgUrl) {
                                                                         return (<div className="user-circle task-user-icon" key={member.id} style={{
                                                                                 backgroundImage: `url(${member.imgUrl})`,
-                                                                            }}></div>);
+                                                                            }}></div>)
                                                                     } else {
-                                                                        const initials = member?.fullname?.split(" ");
+                                                                        const initials = member?.fullname?.split(" ")
                                                                         return (<div key={member.id} className="member-circle task-user-icon">
                                                                                 {initials?.[0]?.[0].toUpperCase() || ""} {initials?.[1]?.[0].toUpperCase() || ""}
-                                                                            </div>);
+                                                                            </div>)
                                                                     }
                                                                 })}
                                                             </div>)}
@@ -143,5 +147,5 @@ export function GroupTable() {
                     </Droppable>
                 </div>
             </div>
-        </DragDropContext>);
+        </DragDropContext>)
 }

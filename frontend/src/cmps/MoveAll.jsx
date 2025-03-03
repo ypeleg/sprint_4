@@ -1,11 +1,13 @@
-import { useSelector } from "react-redux";
-import { updateBoard } from "../store/store";
 
 
+import { useSelector } from "react-redux"
+import { updateBoard } from "../store/store"
 
-export function MoveAll({header,onSetMoveAll,onSetGroupEdit,group}){
+
+export function MoveAll({ header, onSetMoveAll, onSetGroupEdit, group }) {
+
     const board = useSelector(state => state.boardModule.board)
-       const inset = `auto ${header.left }px auto ${header.top}px`
+    const inset = `auto ${header.left }px auto ${header.top}px`
 
     function Movetasks({target}){
         const idx = board.groups.findIndex(grp => grp.id === target.value)
