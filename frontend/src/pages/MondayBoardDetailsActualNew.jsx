@@ -17,6 +17,257 @@ import { CheckCircle, Circle, User, Calendar, Eye, Tag, Grid, CheckSquare, Paper
 
 
 
+export function MondayTaskList({ board, onLoadTask }) {
+    const dispatch = useDispatch()
+
+    const onDragEnd = (result) => {
+        const { source, destination, draggableId } = result
+
+        if (!destination || (source.droppableId === destination.droppableId && source.index === destination.index)) return
+
+        const sourceGroup = board.groups.find(group => group.id === source.droppableId)
+        const destGroup = board.groups.find(group => group.id === destination.droppableId)
+        const draggedTask = sourceGroup.tasks.find(task => task.id === draggableId)
+
+        const updatedBoard = { ...board }
+        updatedBoard.groups = board.groups.map(group => {
+            if (group.id === sourceGroup.id) {
+                const newTasks = [...group.tasks]
+                newTasks.splice(source.index, 1)
+                if (sourceGroup.id === destGroup.id) {
+                    newTasks.splice(destination.index, 0, draggedTask)
+                    return { ...group, tasks: newTasks }
+                }
+                return { ...group, tasks: newTasks }
+            }
+            if (group.id === destGroup.id) {
+                const newTasks = [...group.tasks]
+                newTasks.splice(destination.index, 0, draggedTask)
+                return { ...group, tasks: newTasks }
+            }
+            return group
+        })
+        dispatch(updateBoard(updatedBoard))
+    }
+
+    return (
+        <DragDropContext onDragEnd={onDragEnd}>
+            <section className="kanban-container-of-container flex">
+                <div className="kanban-container flex">
+                    {board.groups.map((group) => (
+                        <MondayTask
+                            key={group.id}
+                            group={group}
+                            onLoadTask={onLoadTask}
+                            currentBoard={board}
+                        />
+                    ))}
+                </div>
+            </section>
+        </DragDropContext>
+    )
+}
+
+export function MondayTask({ group, currentBoard, onLoadTask, largeLabels, toggleLargeLabels, onsetQuickEdit, showQuickEdit }) {
+    const [showForm, setShowForm] = useState(false)
+    const [showFirstForm, setShowFirstForm] = useState(false)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const unsub = eventBus.on('showAddGroup', (data) => setShowFirstForm(data))
+        return () => unsub()
+    }, [])
+
+    const onToggleDone = (ev, task) => {
+        ev.stopPropagation()
+        const updatedTask = { ...task, status: task.status === 'done' ? '' : 'done' }
+        const updatedGroup = { ...group, tasks: group.tasks.map(t => t.id === task.id ? updatedTask : t) }
+        const updatedBoard = { ...currentBoard, groups: currentBoard.groups.map(g => g.id === group.id ? updatedGroup : g) }
+        dispatch(updateBoard(updatedBoard))
+    }
+
+    const onDeleteTask = (ev, taskId) => {
+        ev.stopPropagation()
+        ev.preventDefault()
+        const updatedGroup = { ...group, tasks: group.tasks.filter(task => task.id !== taskId) }
+        const updatedBoard = { ...currentBoard, groups: currentBoard.groups.map(g => g.id === group.id ? updatedGroup : g) }
+        dispatch(updateBoard(updatedBoard))
+    }
+
+    const onSetShowForm = () => setShowForm(!showForm)
+    const onSetFirstForm = () => setShowFirstForm(!showFirstForm)
+
+    return (
+        <div className="kanban-col">
+            <header className="kanban-col-header" style={{ backgroundColor: mapTrelloToMonday(group.style?.backgroundColor), color: group.style?.color || '' }}>
+                <h2 className="kanban-col-title">{group.title} ({group.tasks.length})</h2>
+            </header>
+
+            <Droppable droppableId={group.id}>
+                {(provided) => (
+                    <div
+                        className="kanban-items"
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        style={{ minHeight: '100px' }}
+                    >
+                        {showFirstForm && <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
+                        {group.tasks.map((task, index) => (
+                            <Draggable key={task.id} draggableId={task.id} index={index}>
+                                {(provided) => (
+                                    <div
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                        className="kanban-item"
+                                        onClick={(ev) => !showQuickEdit && onLoadTask(ev, task, null, group, currentBoard)}
+                                        style={{ ...provided.draggableProps.style, margin: '4px 0' }}
+                                    >
+                                        <div className="task-card">
+                                            {task.style?.backgroundImage && (
+                                                <div className="cover-img monday-cover-img">
+                                                    <img src={`/${task.style.backgroundImage}`} alt="Task Cover" />
+                                                </div>
+                                            )}
+                                            <div className="labels">
+                                                {task.badges?.map((label) => (
+                                                    <div
+                                                        key={label.id}
+                                                        className="status-priority-badge badge"
+                                                        onClick={toggleLargeLabels}
+                                                        data-after-color={label.color}
+                                                    >
+                                                        <div className="label-text">{label.categ} {label.chosenOption}</div>
+                                                        <div className="status-priority-badge-after" style={{ backgroundColor: mapTrelloToMonday(label.color) || '#61bd4f' }}></div>
+                                                    </div>
+                                                ))}
+                                                {task.labels?.map((label) => (
+                                                    <div
+                                                        key={label.id}
+                                                        className="status-priority-badge badge"
+                                                        onClick={toggleLargeLabels}
+                                                        data-after-color={label.color}
+                                                    >
+                                                        <div className="label-text">{label.title.split(' ')[0]}..</div>
+                                                        <div className="status-priority-badge-after" style={{ backgroundColor: mapTrelloToMonday(label.color) || '#61bd4f' }}></div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div className="task-upper-btns">
+                                                <div onClick={(ev) => onsetQuickEdit(ev)} className="monday-edit-btn tooltip" data-tooltip-id="edit-tooltip" data-tooltip-content="Edit Task">
+                                                    <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true" className="icon_a821328549 noFocusStyle_32df5ee696" data-testid="icon">
+                                                        <path d="M13.8542 3.59561C13.8541 3.59568 13.8542 3.59555 13.8542 3.59561L4.80915 12.6503L3.81363 16.189L7.35682 15.1957L16.4018 6.14C16.4746 6.06722 16.5161 5.96795 16.5161 5.86503C16.5161 5.76221 16.4753 5.6636 16.4026 5.59083C16.4025 5.59076 16.4026 5.59091 16.4026 5.59083L14.4038 3.59568C14.3309 3.52292 14.232 3.48197 14.1289 3.48197C14.026 3.48197 13.927 3.52297 13.8542 3.59561ZM12.8051 2.54754C13.1562 2.19695 13.6324 2 14.1289 2C14.6254 2 15.1016 2.19693 15.4527 2.54747C15.4527 2.5475 15.4527 2.54745 15.4527 2.54747L17.4515 4.54263C17.8026 4.89333 18 5.36914 18 5.86503C18 6.36091 17.8028 6.8365 17.4518 7.18719L8.26993 16.3799C8.17984 16.4701 8.06798 16.5356 7.94516 16.57L2.94244 17.9724C2.68418 18.0448 2.4069 17.9723 2.21725 17.7829C2.0276 17.5934 1.95512 17.3165 2.02768 17.0586L3.43296 12.0633C3.46728 11.9413 3.53237 11.8301 3.62199 11.7404L12.8051 2.54754Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                    <Tooltip id="edit-tooltip" />
+                                                </div>
+                                                <div onClick={(ev) => onDeleteTask(ev, task.id)} className="monday-delete-btn tooltip" data-tooltip-id="delete-tooltip" data-tooltip-content="Delete Task">
+                                                    <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" className="icon_a821328549 noFocusStyle_32df5ee696" data-testid="icon">
+                                                        <path d="M6 10.5C6 11.3284 5.32843 12 4.5 12 3.67157 12 3 11.3284 3 10.5 3 9.67157 3.67157 9 4.5 9 5.32843 9 6 9.67157 6 10.5zM11.8333 10.5C11.8333 11.3284 11.1618 12 10.3333 12 9.50492 12 8.83334 11.3284 8.83334 10.5 8.83334 9.67157 9.50492 9 10.3333 9 11.1618 9 11.8333 9.67157 11.8333 10.5zM17.6667 10.5C17.6667 11.3284 16.9951 12 16.1667 12 15.3383 12 14.6667 11.3284 14.6667 10.5 14.6667 9.67157 15.3383 9 16.1667 9 16.9951 9 17.6667 9.67157 17.6667 10.5z" fill="currentColor"></path>
+                                                    </svg>
+                                                    <Tooltip id="delete-tooltip" />
+                                                </div>
+                                            </div>
+                                            <div className="task-card-header flex align-center space-between">
+                                                <span>{task.title}</span>
+                                                <div className="task-checkbox" onClick={(ev) => onToggleDone(ev, task)}>
+                                                    {task.status === 'done' ? (
+                                                        <svg style={{ color: 'rgb(34, 160, 107)' }} width="16" height="16" fill="none" viewBox="0 0 16 16">
+                                                            <path fill="currentColor" fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m12.326-2.52..." clipRule="evenodd" />
+                                                        </svg>
+                                                    ) : (
+                                                        <div className="task-checkbox-empty"></div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className="task-card-body">
+                                                {task.dueDate && (
+                                                    <div className="badge tooltip" data-tooltip-id={`due-${task.id}`} data-tooltip-content="Due Date">
+                                                        <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true" className="icon_f74f57d4ab dateCompactFieldLabelIcon--Ci6OH noFocusStyle_fabcf1d9d4" data-testid="icon">
+                                                            <path d="M6.85925 2.77417C6.85925 2.35996 6.52346 2.02417 6.10925 2.02417C5.69504 2.02417 5.35925 2.35996 5.35925 2.77417V4.99746V7.22083C5.35925 7.63504 5.69504 7.97083 6.10925 7.97083C6.52346 7.97083 6.85925 7.63504 6.85925 7.22083V5.74746H11.6676C12.0818 5.74746 12.4176 5.41168 12.4176 4.99746C12.4176 4.58325 12.0818 4.24746 11.6676 4.24746H6.85925V2.77417ZM2.56946 4.79273C2.91859 4.4436 3.39211 4.24746 3.88586 4.24746C4.30007 4.24746 4.63586 4.58325 4.63586 4.99746C4.63586 5.41168 4.30007 5.74746 3.88586 5.74746C3.78994 5.74746 3.69795 5.78556 3.63012 5.85339C3.5623 5.92122 3.52419 6.01321 3.52419 6.10913V8.69411H16.4758V6.10913C16.4758 6.01321 16.4377 5.92122 16.3699 5.85339C16.3021 5.78556 16.2101 5.74746 16.1141 5.74746H14.6409V7.22083C14.6409 7.63504 14.3051 7.97083 13.8909 7.97083C13.4767 7.97083 13.1409 7.63504 13.1409 7.22083V5.0069L13.1408 4.99746L13.1409 4.98802V2.77417C13.1409 2.35996 13.4767 2.02417 13.8909 2.02417C14.3051 2.02417 14.6409 2.35996 14.6409 2.77417V4.24746H16.1141C16.6079 4.24746 17.0814 4.4436 17.4305 4.79273C17.7797 5.14186 17.9758 5.61538 17.9758 6.10913V9.44411V16.1141C17.9758 16.6079 17.7797 17.0814 17.4305 17.4305C17.0814 17.7796 16.6079 17.9758 16.1141 17.9758H3.88586C3.39211 17.9758 2.91859 17.7796 2.56946 17.4305C2.22033 17.0814 2.02419 16.6079 2.02419 16.1141V9.44411V6.10913C2.02419 5.61538 2.22033 5.14186 2.56946 4.79273ZM3.52419 16.1141V10.1941H16.4758V16.1141C16.4758 16.21 16.4377 16.302 16.3699 16.3699C16.302 16.4377 16.2101 16.4758 16.1141 16.4758H3.88586C3.78994 16.4758 3.69795 16.4377 3.63012 16.3699C3.5623 16.302 3.52419 16.21 3.52419 16.1141Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+                                                        </svg>
+                                                        <span>{new Date(task.dueDate).toLocaleDateString()}</span>
+                                                        <Tooltip id={`due-${task.id}`} />
+                                                    </div>
+                                                )}
+                                                {task.checklists?.length > 0 && (
+                                                    <div className="tasklist-icon tooltip" data-tooltip-id={`checklist-${task.id}`} data-tooltip-content="Checklists">
+                                                        <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" className="icon_a821328549 aXsDV nFT4_ noFocusStyle_32df5ee696" data-testid="icon">
+                                                            <path d="M2 2.75C2 2.33579 2.33579 2 2.75 2H6.75C7.16421 2 7.5 2.33579 7.5 2.75C7.5 3.16421 7.16421 3.5 6.75 3.5H5.4502V7.25H9V6.5C9 5.94772 9.44772 5.5 10 5.5H17C17.5523 5.5 18 5.94772 18 6.5V9.5C18 10.0523 17.5523 10.5 17 10.5H10C9.44772 10.5 9 10.0523 9 9.5V8.75H5.4502V14.5C5.4502 14.6381 5.56212 14.75 5.7002 14.75H9V14C9 13.4477 9.44772 13 10 13H17C17.5523 13 18 13.4477 18 14V17C18 17.5523 17.5523 18 17 18H10C9.44772 18 9 17.5523 9 17V16.25H5.7002C4.7337 16.25 3.9502 15.4665 3.9502 14.5V3.5H2.75C2.33579 3.5 2 3.16421 2 2.75ZM10.5 7V9H16.5V7H10.5ZM10.5 16.5V14.5H16.5V16.5H10.5Z" fill-rule="evenodd" clip-rule="evenodd"></path>
+                                                        </svg>
+                                                        <span>{task.checklists.length}</span>
+                                                        <Tooltip id={`checklist-${task.id}`} />
+                                                    </div>
+                                                )}
+                                                {task.attachments?.length > 0 && (
+                                                    <div className="tasklist-icon tooltip" data-tooltip-id={`attach-${task.id}`} data-tooltip-content="Attachments">
+                                                        <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" className="icon_92124e0247 noFocusStyle_140c8fd42e" data-testid="icon">
+                                                            <path d="M13.3715 16.2871C12.4839 17.2191 11.2719 17.75 10 17.75C8.72809 17.75 7.51613 17.2191 6.62847 16.2871C5.74199 15.3563 5.25 14.1013 5.25 12.8L5.25 8.61244C5.25 8.19822 5.58579 7.86244 6 7.86244C6.41421 7.86244 6.75 8.19822 6.75 8.61244L6.75 12.8C6.75 13.7265 7.10086 14.6081 7.71468 15.2526C8.32731 15.8959 9.15018 16.25 10 16.25C10.8498 16.25 11.6727 15.8959 12.2853 15.2526C12.8991 14.6081 13.25 13.7265 13.25 12.8L13.25 5.8C13.25 5.24482 13.0396 4.7193 12.6758 4.33734C12.3133 3.95663 11.8295 3.75 11.3333 3.75C10.8371 3.75 10.3534 3.95663 9.99082 4.33734C9.62705 4.7193 9.41667 5.24482 9.41667 5.8L9.41667 12.8C9.41667 12.9839 9.48658 13.1533 9.60029 13.2727C9.71283 13.3909 9.85742 13.45 10 13.45C10.1426 13.45 10.2872 13.3909 10.3997 13.2727C10.5134 13.1533 10.5833 12.9839 10.5833 12.8L10.5833 8.62363C10.5833 8.20942 10.9191 7.87363 11.3333 7.87363C11.7475 7.87363 12.0833 8.20942 12.0833 8.62363L12.0833 12.8C12.0833 13.3587 11.8723 13.9015 11.4859 14.3072C11.0983 14.7141 10.5647 14.95 10 14.95C9.43533 14.95 8.90165 14.7141 8.51409 14.3072C8.12771 13.9015 7.91667 13.3587 7.91667 12.8L7.91667 5.8C7.91667 4.86997 8.26818 3.97111 8.90461 3.30286C9.54222 2.63337 10.415 2.25 11.3333 2.25C12.2516 2.25 13.1244 2.63337 13.7621 3.30286C14.3985 3.97111 14.75 4.86997 14.75 5.8L14.75 12.8C14.75 14.1013 14.258 15.3563 13.3715 16.2871Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+                                                        </svg>
+                                                        <span>{task.attachments.length}</span>
+                                                        <Tooltip id={`attach-${task.id}`} />
+                                                    </div>
+                                                )}
+                                                {task.activity?.length > 0 && (
+                                                    <div className="tasklist-icon tooltip" data-tooltip-id={`activity-${task.id}`} data-tooltip-content="Comments">
+                                                        <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" className="icon_a821328549 aXsDV nFT4_ noFocusStyle_32df5ee696" data-testid="icon">
+                                                            <path d="M10.4339 1.95001C11.5975 1.94802 12.7457 2.2162 13.7881 2.73345C14.8309 3.25087 15.7392 4.0034 16.4416 4.93172C17.1439 5.86004 17.6211 6.93879 17.8354 8.08295C18.0498 9.22712 17.9955 10.4054 17.6769 11.525C17.3582 12.6447 16.7839 13.675 15.9992 14.5348C15.2144 15.3946 14.2408 16.0604 13.1549 16.4798C12.0689 16.8991 10.9005 17.0606 9.74154 16.9514C8.72148 16.8553 7.73334 16.5518 6.83716 16.0612L4.29488 17.2723C3.23215 17.7786 2.12265 16.6693 2.6287 15.6064L3.83941 13.0637C3.26482 12.0144 2.94827 10.8411 2.91892 9.64118C2.88616 8.30174 3.21245 6.97794 3.86393 5.80714C4.51541 4.63635 5.46834 3.66124 6.62383 2.98299C7.77896 2.30495 9.09445 1.9483 10.4339 1.95001ZM10.4339 1.95001C10.4343 1.95001 10.4347 1.95001 10.4351 1.95001L10.434 2.70001L10.4326 1.95001C10.433 1.95001 10.4334 1.95001 10.4339 1.95001ZM13.1214 4.07712C12.2867 3.66294 11.3672 3.44826 10.4354 3.45001L10.4329 3.45001C9.3608 3.44846 8.30778 3.73387 7.38315 4.2766C6.45852 4.81934 5.69598 5.59963 5.17467 6.5365C4.65335 7.47337 4.39226 8.53268 4.41847 9.6045C4.44469 10.6763 4.75726 11.7216 5.32376 12.6319C5.45882 12.8489 5.47405 13.1198 5.36416 13.3506L4.28595 15.6151L6.54996 14.5366C6.78072 14.4266 7.05158 14.4418 7.26863 14.5768C8.05985 15.0689 8.95456 15.3706 9.88225 15.458C10.8099 15.5454 11.7452 15.4162 12.6145 15.0805C13.4837 14.7448 14.2631 14.2119 14.8912 13.5236C15.5194 12.8354 15.9791 12.0106 16.2341 11.1144C16.4892 10.2182 16.5327 9.27504 16.3611 8.35918C16.1895 7.44332 15.8075 6.57983 15.2453 5.83674C14.6831 5.09366 13.9561 4.49129 13.1214 4.07712Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+                                                        </svg>
+                                                        <span>{task.activity.length}</span>
+                                                        <Tooltip id={`activity-${task.id}`} />
+                                                    </div>
+                                                )}
+                                                {task.isUserWatching && (
+                                                    <div className="tooltip" data-tooltip-id={`watch-${task.id}`} data-tooltip-content="You are watching this task">
+                                                        <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" className="icon_f74f57d4ab noFocusStyle_fabcf1d9d4" data-testid="icon">
+                                                            <path d="M10 2.04999C10.4143 2.04999 10.75 2.38577 10.75 2.79999V3.61058C12.0546 3.75821 13.2785 4.34336 14.2159 5.28079C15.309 6.37389 15.9231 7.85644 15.9231 9.4023C15.9231 11.7406 16.1727 13.0548 16.3959 13.758C16.5068 14.1075 16.6088 14.2984 16.6645 14.3868C16.6835 14.4168 16.697 14.435 16.7038 14.4435C16.9179 14.6455 16.9953 14.9565 16.8964 15.2377C16.7908 15.538 16.5072 15.7389 16.1889 15.7389H12.9529C12.9516 15.8038 12.9418 15.8695 12.9226 15.9348C12.7439 16.5449 12.3725 17.0809 11.864 17.4623C11.3554 17.8437 10.7371 18.05 10.1015 18.05C9.46584 18.05 8.84746 17.8437 8.33891 17.4623C7.83037 17.0809 7.45905 16.5449 7.28027 15.9348C7.26115 15.8695 7.2513 15.8038 7.24997 15.7389H4.00001C3.71313 15.7389 3.45138 15.5752 3.32575 15.3173C3.20248 15.0643 3.23145 14.764 3.39963 14.5394C3.40133 14.5369 3.40486 14.5316 3.41004 14.5235C3.42459 14.5005 3.45231 14.4542 3.48918 14.3812C3.56285 14.2352 3.67358 13.9813 3.78854 13.5917C4.01863 12.812 4.26574 11.4886 4.26574 9.4023C4.26574 7.85644 4.87984 6.37389 5.97293 5.28079C6.865 4.38872 8.01646 3.81567 9.25004 3.63507V2.79999C9.25004 2.38577 9.58582 2.04999 10 2.04999ZM8.80705 15.7389C8.90698 15.9443 9.05465 16.1241 9.2389 16.2623C9.488 16.4491 9.79062 16.55 10.1015 16.55C10.4123 16.55 10.7149 16.4491 10.964 16.2623C11.1483 16.1241 11.2959 15.9443 11.3959 15.7389H8.80705ZM7.03359 6.34145C7.84538 5.52967 8.9464 5.07361 10.0944 5.07361C11.2425 5.07361 12.3435 5.52967 13.1553 6.34145C13.9671 7.15324 14.4231 8.25426 14.4231 9.4023C14.4231 11.8353 14.6814 13.3144 14.9661 14.2117L14.9748 14.2389H5.15815C5.18119 14.1682 5.20426 14.0941 5.22721 14.0163C5.50499 13.075 5.76574 11.6052 5.76574 9.4023C5.76574 8.25426 6.2218 7.15324 7.03359 6.34145Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+                                                        </svg>
+                                                        <Tooltip id={`watch-${task.id}`} />
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="card-bottom">
+                                                {task.members?.length > 0 && (
+                                                    <div className="task-members">
+                                                        {task.members.slice(0, 5).map((member) => (
+                                                            <React.Fragment key={member.id}>
+                                                                {member.imgUrl ? (
+                                                                    <div className="small-circle flex align-center justify-center tooltip" data-tooltip-id={`member-${member.id}`} data-tooltip-content={member.fullname}>
+                                                                        <img src={`/${member.imgUrl}`} alt={member.fullname} className="member-img" />
+                                                                    </div>
+                                                                ) : (
+                                                                    <span className="monday-user-circle small-circle">
+                                                                        {member.fullname.split(' ').map((n) => n[0]).join('').toUpperCase()}
+                                                                    </span>
+                                                                )}
+                                                                <Tooltip id={`member-${member.id}`} />
+                                                            </React.Fragment>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </Draggable>
+                        ))}
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Droppable>
+
+            {showForm && <AddTaskForm onSetShowForm={onSetShowForm} selectedGroup={group} />}
+            {!showForm && (
+                <div className="group-list-footer" style={{ color: group.style?.color || '#172b4d' }}>
+                    <button className="monday-add-card-btn add-card-btn" onClick={onSetShowForm}>
+                        <i className="fa-regular fa-plus"></i> Add a card
+                    </button>
+                </div>
+            )}
+        </div>
+    )
+}
+
+
 export function TaskModal () {
 
     const [isDone, setIsDone] = useState(false)
@@ -932,49 +1183,6 @@ export function TaskModal () {
                 </div>
             </div>
 
-            <style jsx>{`
-                @keyframes flashInOut {
-                    0%, 100% { opacity: 0; }
-                    50% { opacity: 0.25; }
-                }
-                
-                .flash-in-out {
-                    animation: flashInOut 1s ease-in-out
-                }
-                
-                @keyframes fadeIn {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
-                }
-                
-                .animate-fadeIn {
-                    animation: fadeIn 0.3s ease-in-out
-                }
-                
-                /* Custom scrollbar */
-                .scrollbar-thin::-webkit-scrollbar {
-                    width: 6px
-                }
-                
-                .scrollbar-thin::-webkit-scrollbar-track {
-                    background: transparent
-                }
-                
-                .scrollbar-thin::-webkit-scrollbar-thumb {
-                    background-color: rgba(203, 213, 225, 0.8)
-                    border-radius: 3px
-                }
-                
-                .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-                    background-color: rgba(148, 163, 184, 0.8)
-                }
-                
-                /* Hide scrollbar for Firefox */
-                .scrollbar-thin {
-                    scrollbar-width: thin
-                    scrollbar-color: rgba(203, 213, 225, 0.8) transparent
-                }
-            `}</style>
         </div>
             </div>
     )
@@ -1361,6 +1569,7 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
     const [newTaskTitle, setNewTaskTitle] = useState('')
 
     const filteredTasks = useFilteredTasks(group.tasks, searchQuery, filterText)
+
     const sortedTasks = useSortedTasks(filteredTasks, sortBy)
 
     const onToggleCollapse = () => {
@@ -2488,271 +2697,6 @@ export function MondayBoardHeader({ board, searchQuery, setSearchQuery, filterTe
         )
 }
 
-export function MondayTask({
-        group,
-        currentBoard,
-        currentGroup,
-        onLoadTask,
-        largeLabels,
-        toggleLargeLabels,
-        onMoveCard,
-        onReorderCard,
-        onSetPlaceholderHeight,
-        placeholderHeight,
-        onsetQuickEdit,
-        showQuickEdit,
-}) {
-        const [showForm, setShowForm] = useState(false)
-        const [showFirstForm, setShowFirstForm] = useState(false)
-        const [tasks, setTasks] = useState(group.tasks)
-        const [shadow, setShadow] = useState(null)
-
-        const cardRefs = useRef({})
-        const listRef = useRef(null)
-
-        const dispatch = useDispatch()
-        const boardToShow = useSelector((state) => state.boardModule.board)
-
-        useEffect(() => {
-                setTasks(group.tasks)
-        }, [group.tasks, boardToShow])
-
-        useEffect(() => {
-                const unsub = eventBus.on("showAddGroup", (data) => {
-                        setShowFirstForm(data)
-                })
-                return () => unsub()
-        }, [])
-
-        function onToggleDone(ev, task) {
-                ev.stopPropagation()
-                const updatedTasks = tasks.map((t) =>
-                        t.id === task.id ? { ...t, status: t.status === "done" ? "" : "done" } : t
-                )
-                setTasks(updatedTasks)
-                updateBoardState(updatedTasks)
-        }
-
-        function onSetShowForm() {
-                setShowForm(!showForm)
-        }
-
-        function onSetFirstForm() {
-                setShowFirstForm(!showFirstForm)
-        }
-
-        function onDeleteTask(ev, taskId) {
-                ev.stopPropagation()
-                ev.preventDefault()
-                const currentRef = getCardRef(taskId)
-                currentRef.current.style.display = 'none'
-                const updatedGroup = { ...group, tasks: group.tasks.filter((task) => task.id !== taskId) }
-                const updatedBoard = { ...currentBoard, groups: currentBoard.groups.map((g) => (g.id === group.id ? updatedGroup : g)) }
-                dispatch(updateBoard(updatedBoard))
-        }
-
-        function getCardRef(taskId) {
-                if (!cardRefs.current[taskId]) {
-                        cardRefs.current[taskId] = React.createRef()
-                }
-                return cardRefs.current[taskId]
-        }
-
-        function updateBoardState(updatedTasks) {
-                const updatedGroup = { ...group, tasks: updatedTasks }
-                const updatedBoard = { ...currentBoard, groups: currentBoard.groups.map((g) => (g.id === group.id ? updatedGroup : g)) }
-                dispatch(updateBoard(updatedBoard))
-        }
-
-        function onDragEnd(result) {
-                const { source, destination } = result
-                if (!destination) return
-
-                const updatedTasks = Array.from(tasks)
-                const [movedTask] = updatedTasks.splice(source.index, 1)
-
-                if (source.droppableId === destination.droppableId) {
-                        updatedTasks.splice(destination.index, 0, movedTask)
-                        setTasks(updatedTasks)
-                        onReorderCard && onReorderCard(movedTask, updatedTasks[destination.index], "top", group.id)
-                        updateBoardState(updatedTasks)
-                } else {
-                        onMoveCard && onMoveCard(movedTask, group.id, destination.droppableId, null, null)
-                }
-        }
-
-        return (
-                <div className="kanban-col" ref={listRef}>
-                        <header className="kanban-col-header"
-                                                        style={{ backgroundColor: mapTrelloToMonday(group.style?.backgroundColor) || "",
-                                                                         color: group.style?.color || "" }}>
-                                <h2 className="kanban-col-title">{group.title} ({group.tasks.length})</h2>
-                        </header>
-
-                        <DragDropContext onDragEnd={onDragEnd}>
-                                <Droppable droppableId={group.id}>
-                                        {(provided) => (
-                                                <div className="kanban-items" {...provided.droppableProps} ref={provided.innerRef}>
-                                                        {showFirstForm && <AddTaskForm onSetShowForm={onSetFirstForm} selectedGroup={group} />}
-
-                                                        {tasks.map((task, index) => (
-                                                                <Draggable key={task.id} draggableId={task.id} index={index}>
-                                                                        {(provided) => (
-                                                                                <div
-                                                                                        ref={provided.innerRef}
-                                                                                        {...provided.draggableProps}
-                                                                                        {...provided.dragHandleProps}
-                                                                                        className="kanban-item"
-                                                                                        onClick={(ev) => !showQuickEdit && onLoadTask(ev, task, currentGroup, group, boardToShow)}
-                                                                                >
-                                                                                        <div className="task-card" ref={getCardRef(task.id)}>
-
-                                                                                                {task.style?.backgroundImage && (
-                                                                                                        <div className="cover-img monday-cover-img">
-                                                                                                                <img src={`/${task.style.backgroundImage}`} alt="Task Cover" />
-                                                                                                        </div>
-                                                                                                )}
-
-                                                                                                <div className="labels">
-                                                                                                        {task.badges?.map((label) => (
-                                                                                                                <div
-                                                                                                                                key={label.id}
-                                                                                                                                className={`status-priority-badge badge`}
-                                                                                                                                // style={{ backgroundColor: label.color || "#61bd4f" }}
-                                                                                                                                onClick={toggleLargeLabels}
-                                                                                                                                // data-tooltip-id={`label-${label.id}`}
-                                                                                                                                // data-tooltip-content={label.title}
-                                                                                                                                data-after-color={label.color}
-                                                                                                                >
-                                                                                                                        <div className="label-text">{label.categ} {label.chosenOption}</div>
-                                                                                                                        <div className="status-priority-badge-after" style={{ backgroundColor: mapTrelloToMonday(label.color) || "#61bd4f" }}></div>
-                                                                                                                </div>
-                                                                                                        ))}
-
-                                                                                                        {task.labels?.map((label) => (
-                                                                                                                <div
-                                                                                                                        key={label.id}
-                                                                                                                        className={`status-priority-badge badge`}
-                                                                                                                        // style={{ backgroundColor: label.color || "#61bd4f" }}
-                                                                                                                        onClick={toggleLargeLabels}
-                                                                                                                        // data-tooltip-id={`label-${label.id}`}
-                                                                                                                        // data-tooltip-content={label.title}
-                                                                                                                        data-after-color={label.color}
-                                                                                                                >
-                                                                                                                        <div className="label-text">{label.title.split(' ')[0]}..</div>
-                                                                                                                        <div className="status-priority-badge-after" style={{ backgroundColor: mapTrelloToMonday(label.color) || "#61bd4f" }}></div>
-                                                                                                                </div>
-                                                                                                        ))}
-
-
-                                                                                                </div>
-
-                                                                                                <div className="task-upper-btns">
-                                                                                                        <div onClick={(ev) => onsetQuickEdit(ev)} className="monday-edit-btn tooltip" data-tooltip-id="edit-tooltip" data-tooltip-content="Edit Task">
-                                                                                                                <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true" className="icon_a821328549 noFocusStyle_32df5ee696" data-testid="icon">
-                                                                                                                        <path d="M13.8542 3.59561C13.8541 3.59568 13.8542 3.59555 13.8542 3.59561L4.80915 12.6503L3.81363 16.189L7.35682 15.1957L16.4018 6.14C16.4746 6.06722 16.5161 5.96795 16.5161 5.86503C16.5161 5.76221 16.4753 5.6636 16.4026 5.59083C16.4025 5.59076 16.4026 5.59091 16.4026 5.59083L14.4038 3.59568C14.3309 3.52292 14.232 3.48197 14.1289 3.48197C14.026 3.48197 13.927 3.52297 13.8542 3.59561ZM12.8051 2.54754C13.1562 2.19695 13.6324 2 14.1289 2C14.6254 2 15.1016 2.19693 15.4527 2.54747C15.4527 2.5475 15.4527 2.54745 15.4527 2.54747L17.4515 4.54263C17.8026 4.89333 18 5.36914 18 5.86503C18 6.36091 17.8028 6.8365 17.4518 7.18719L8.26993 16.3799C8.17984 16.4701 8.06798 16.5356 7.94516 16.57L2.94244 17.9724C2.68418 18.0448 2.4069 17.9723 2.21725 17.7829C2.0276 17.5934 1.95512 17.3165 2.02768 17.0586L3.43296 12.0633C3.46728 11.9413 3.53237 11.8301 3.62199 11.7404L12.8051 2.54754Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
-                                                                                                                </svg>
-                                                                                                                <Tooltip id="edit-tooltip"/>
-                                                                                                        </div>
-                                                                                                        <div onClick={(ev) => onDeleteTask(ev, task.id)} className="monday-delete-btn tooltip" data-tooltip-id="delete-tooltip" data-tooltip-content="Delete Task">
-                                                                                                                <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" className="icon_a821328549 noFocusStyle_32df5ee696" data-testid="icon"><path d="M6 10.5C6 11.3284 5.32843 12 4.5 12 3.67157 12 3 11.3284 3 10.5 3 9.67157 3.67157 9 4.5 9 5.32843 9 6 9.67157 6 10.5zM11.8333 10.5C11.8333 11.3284 11.1618 12 10.3333 12 9.50492 12 8.83334 11.3284 8.83334 10.5 8.83334 9.67157 9.50492 9 10.3333 9 11.1618 9 11.8333 9.67157 11.8333 10.5zM17.6667 10.5C17.6667 11.3284 16.9951 12 16.1667 12 15.3383 12 14.6667 11.3284 14.6667 10.5 14.6667 9.67157 15.3383 9 16.1667 9 16.9951 9 17.6667 9.67157 17.6667 10.5z" fill="currentColor"></path></svg>
-                                                                                                                <Tooltip id="delete-tooltip"/>
-                                                                                                        </div>
-
-
-                                                                                                </div>
-
-                                                                                                <div className="task-card-header flex align-center space-between">
-                                                                                                        <span>{task.title}</span>
-                                                                                                        <div className="task-checkbox" onClick={(ev) => onToggleDone(ev, task)}>
-                                                                                                                {task.status === "done" ? (<svg style={{color: 'rgb(34, 160, 107)'}} width="16" height="16" fill="none" viewBox="0 0 16 16">
-                                                                                                                                <path fill="currentColor" fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m12.326-2.52..." clipRule="evenodd"/>
-                                                                                                                        </svg>) : (<div className="task-checkbox-empty"></div>)}
-                                                                                                        </div>
-                                                                                                </div>
-
-                                                                                                <div className="task-card-body">
-
-                                                                                                        {task.dueDate && (<div className="badge tooltip" data-tooltip-id={`due-${task.id}`} data-tooltip-content="Due Date">
-                                                                                                        <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true" className="icon_f74f57d4ab dateCompactFieldLabelIcon--Ci6OH noFocusStyle_fabcf1d9d4" data-testid="icon">
-                                                                                                                <path d="M6.85925 2.77417C6.85925 2.35996 6.52346 2.02417 6.10925 2.02417C5.69504 2.02417 5.35925 2.35996 5.35925 2.77417V4.99746V7.22083C5.35925 7.63504 5.69504 7.97083 6.10925 7.97083C6.52346 7.97083 6.85925 7.63504 6.85925 7.22083V5.74746H11.6676C12.0818 5.74746 12.4176 5.41168 12.4176 4.99746C12.4176 4.58325 12.0818 4.24746 11.6676 4.24746H6.85925V2.77417ZM2.56946 4.79273C2.91859 4.4436 3.39211 4.24746 3.88586 4.24746C4.30007 4.24746 4.63586 4.58325 4.63586 4.99746C4.63586 5.41168 4.30007 5.74746 3.88586 5.74746C3.78994 5.74746 3.69795 5.78556 3.63012 5.85339C3.5623 5.92122 3.52419 6.01321 3.52419 6.10913V8.69411H16.4758V6.10913C16.4758 6.01321 16.4377 5.92122 16.3699 5.85339C16.3021 5.78556 16.2101 5.74746 16.1141 5.74746H14.6409V7.22083C14.6409 7.63504 14.3051 7.97083 13.8909 7.97083C13.4767 7.97083 13.1409 7.63504 13.1409 7.22083V5.0069L13.1408 4.99746L13.1409 4.98802V2.77417C13.1409 2.35996 13.4767 2.02417 13.8909 2.02417C14.3051 2.02417 14.6409 2.35996 14.6409 2.77417V4.24746H16.1141C16.6079 4.24746 17.0814 4.4436 17.4305 4.79273C17.7797 5.14186 17.9758 5.61538 17.9758 6.10913V9.44411V16.1141C17.9758 16.6079 17.7797 17.0814 17.4305 17.4305C17.0814 17.7796 16.6079 17.9758 16.1141 17.9758H3.88586C3.39211 17.9758 2.91859 17.7796 2.56946 17.4305C2.22033 17.0814 2.02419 16.6079 2.02419 16.1141V9.44411V6.10913C2.02419 5.61538 2.22033 5.14186 2.56946 4.79273ZM3.52419 16.1141V10.1941H16.4758V16.1141C16.4758 16.21 16.4377 16.302 16.3699 16.3699C16.302 16.4377 16.2101 16.4758 16.1141 16.4758H3.88586C3.78994 16.4758 3.69795 16.4377 3.63012 16.3699C3.5623 16.302 3.52419 16.21 3.52419 16.1141Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
-                                                                                                        </svg>
-
-                                                                                                        <span>{new Date(task.dueDate).toLocaleDateString()}</span> <Tooltip id={`due-${task.id}`}/>
-                                                                                                </div>)}
-
-                                                                                                        {task.checklists?.length > 0 && (<div className="tasklist-icon tooltip" data-tooltip-id={`checklist-${task.id}`} data-tooltip-content="Checklists">
-                                                                                                        <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" className="icon_a821328549 aXsDV nFT4_ noFocusStyle_32df5ee696" data-testid="icon"><path d="M2 2.75C2 2.33579 2.33579 2 2.75 2H6.75C7.16421 2 7.5 2.33579 7.5 2.75C7.5 3.16421 7.16421 3.5 6.75 3.5H5.4502V7.25H9V6.5C9 5.94772 9.44772 5.5 10 5.5H17C17.5523 5.5 18 5.94772 18 6.5V9.5C18 10.0523 17.5523 10.5 17 10.5H10C9.44772 10.5 9 10.0523 9 9.5V8.75H5.4502V14.5C5.4502 14.6381 5.56212 14.75 5.7002 14.75H9V14C9 13.4477 9.44772 13 10 13H17C17.5523 13 18 13.4477 18 14V17C18 17.5523 17.5523 18 17 18H10C9.44772 18 9 17.5523 9 17V16.25H5.7002C4.7337 16.25 3.9502 15.4665 3.9502 14.5V3.5H2.75C2.33579 3.5 2 3.16421 2 2.75ZM10.5 7V9H16.5V7H10.5ZM10.5 16.5V14.5H16.5V16.5H10.5Z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-                                                                                                        <span>{task.checklists.length}</span> <Tooltip id={`checklist-${task.id}`}/>
-                                                                                                </div>)}
-
-                                                                                                        {task.attachments?.length > 0 && (<div className="tasklist-icon tooltip" data-tooltip-id={`attach-${task.id}`} data-tooltip-content="Attachments">
-                                                                                                        <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" className="icon_92124e0247 noFocusStyle_140c8fd42e" data-testid="icon">
-                                                                                                                <path d="M13.3715 16.2871C12.4839 17.2191 11.2719 17.75 10 17.75C8.72809 17.75 7.51613 17.2191 6.62847 16.2871C5.74199 15.3563 5.25 14.1013 5.25 12.8L5.25 8.61244C5.25 8.19822 5.58579 7.86244 6 7.86244C6.41421 7.86244 6.75 8.19822 6.75 8.61244L6.75 12.8C6.75 13.7265 7.10086 14.6081 7.71468 15.2526C8.32731 15.8959 9.15018 16.25 10 16.25C10.8498 16.25 11.6727 15.8959 12.2853 15.2526C12.8991 14.6081 13.25 13.7265 13.25 12.8L13.25 5.8C13.25 5.24482 13.0396 4.7193 12.6758 4.33734C12.3133 3.95663 11.8295 3.75 11.3333 3.75C10.8371 3.75 10.3534 3.95663 9.99082 4.33734C9.62705 4.7193 9.41667 5.24482 9.41667 5.8L9.41667 12.8C9.41667 12.9839 9.48658 13.1533 9.60029 13.2727C9.71283 13.3909 9.85742 13.45 10 13.45C10.1426 13.45 10.2872 13.3909 10.3997 13.2727C10.5134 13.1533 10.5833 12.9839 10.5833 12.8L10.5833 8.62363C10.5833 8.20942 10.9191 7.87363 11.3333 7.87363C11.7475 7.87363 12.0833 8.20942 12.0833 8.62363L12.0833 12.8C12.0833 13.3587 11.8723 13.9015 11.4859 14.3072C11.0983 14.7141 10.5647 14.95 10 14.95C9.43533 14.95 8.90165 14.7141 8.51409 14.3072C8.12771 13.9015 7.91667 13.3587 7.91667 12.8L7.91667 5.8C7.91667 4.86997 8.26818 3.97111 8.90461 3.30286C9.54222 2.63337 10.415 2.25 11.3333 2.25C12.2516 2.25 13.1244 2.63337 13.7621 3.30286C14.3985 3.97111 14.75 4.86997 14.75 5.8L14.75 12.8C14.75 14.1013 14.258 15.3563 13.3715 16.2871Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
-                                                                                                        </svg>
-                                                                                                        <span>{task.attachments.length}</span> <Tooltip id={`attach-${task.id}`}/>
-                                                                                                </div>)}
-
-                                                                                                        {task.activity?.length > 0 && (<div className="tasklist-icon tooltip" data-tooltip-id={`activity-${task.id}`} data-tooltip-content="Comments">
-                                                                                                        <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" className="icon_a821328549 aXsDV nFT4_ noFocusStyle_32df5ee696" data-testid="icon">
-                                                                                                                <path d="M10.4339 1.95001C11.5975 1.94802 12.7457 2.2162 13.7881 2.73345C14.8309 3.25087 15.7392 4.0034 16.4416 4.93172C17.1439 5.86004 17.6211 6.93879 17.8354 8.08295C18.0498 9.22712 17.9955 10.4054 17.6769 11.525C17.3582 12.6447 16.7839 13.675 15.9992 14.5348C15.2144 15.3946 14.2408 16.0604 13.1549 16.4798C12.0689 16.8991 10.9005 17.0606 9.74154 16.9514C8.72148 16.8553 7.73334 16.5518 6.83716 16.0612L4.29488 17.2723C3.23215 17.7786 2.12265 16.6693 2.6287 15.6064L3.83941 13.0637C3.26482 12.0144 2.94827 10.8411 2.91892 9.64118C2.88616 8.30174 3.21245 6.97794 3.86393 5.80714C4.51541 4.63635 5.46834 3.66124 6.62383 2.98299C7.77896 2.30495 9.09445 1.9483 10.4339 1.95001ZM10.4339 1.95001C10.4343 1.95001 10.4347 1.95001 10.4351 1.95001L10.434 2.70001L10.4326 1.95001C10.433 1.95001 10.4334 1.95001 10.4339 1.95001ZM13.1214 4.07712C12.2867 3.66294 11.3672 3.44826 10.4354 3.45001L10.4329 3.45001C9.3608 3.44846 8.30778 3.73387 7.38315 4.2766C6.45852 4.81934 5.69598 5.59963 5.17467 6.5365C4.65335 7.47337 4.39226 8.53268 4.41847 9.6045C4.44469 10.6763 4.75726 11.7216 5.32376 12.6319C5.45882 12.8489 5.47405 13.1198 5.36416 13.3506L4.28595 15.6151L6.54996 14.5366C6.78072 14.4266 7.05158 14.4418 7.26863 14.5768C8.05985 15.0689 8.95456 15.3706 9.88225 15.458C10.8099 15.5454 11.7452 15.4162 12.6145 15.0805C13.4837 14.7448 14.2631 14.2119 14.8912 13.5236C15.5194 12.8354 15.9791 12.0106 16.2341 11.1144C16.4892 10.2182 16.5327 9.27504 16.3611 8.35918C16.1895 7.44332 15.8075 6.57983 15.2453 5.83674C14.6831 5.09366 13.9561 4.49129 13.1214 4.07712Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
-                                                                                                        </svg>
-                                                                                                        <span>{task.activity.length}</span> <Tooltip id={`activity-${task.id}`}/>
-                                                                                                </div>)}
-
-                                                                                                        {task.isUserWatching && (<div className="tooltip" data-tooltip-id={`watch-${task.id}`} data-tooltip-content="You are watching this task">
-                                                                                                        <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true" className="icon_f74f57d4ab noFocusStyle_fabcf1d9d4" data-testid="icon">
-                                                                                                                <path d="M10 2.04999C10.4143 2.04999 10.75 2.38577 10.75 2.79999V3.61058C12.0546 3.75821 13.2785 4.34336 14.2159 5.28079C15.309 6.37389 15.9231 7.85644 15.9231 9.4023C15.9231 11.7406 16.1727 13.0548 16.3959 13.758C16.5068 14.1075 16.6088 14.2984 16.6645 14.3868C16.6835 14.4168 16.697 14.435 16.7038 14.4435C16.9179 14.6455 16.9953 14.9565 16.8964 15.2377C16.7908 15.538 16.5072 15.7389 16.1889 15.7389H12.9529C12.9516 15.8038 12.9418 15.8695 12.9226 15.9348C12.7439 16.5449 12.3725 17.0809 11.864 17.4623C11.3554 17.8437 10.7371 18.05 10.1015 18.05C9.46584 18.05 8.84746 17.8437 8.33891 17.4623C7.83037 17.0809 7.45905 16.5449 7.28027 15.9348C7.26115 15.8695 7.2513 15.8038 7.24997 15.7389H4.00001C3.71313 15.7389 3.45138 15.5752 3.32575 15.3173C3.20248 15.0643 3.23145 14.764 3.39963 14.5394C3.40133 14.5369 3.40486 14.5316 3.41004 14.5235C3.42459 14.5005 3.45231 14.4542 3.48918 14.3812C3.56285 14.2352 3.67358 13.9813 3.78854 13.5917C4.01863 12.812 4.26574 11.4886 4.26574 9.4023C4.26574 7.85644 4.87984 6.37389 5.97293 5.28079C6.865 4.38872 8.01646 3.81567 9.25004 3.63507V2.79999C9.25004 2.38577 9.58582 2.04999 10 2.04999ZM8.80705 15.7389C8.90698 15.9443 9.05465 16.1241 9.2389 16.2623C9.488 16.4491 9.79062 16.55 10.1015 16.55C10.4123 16.55 10.7149 16.4491 10.964 16.2623C11.1483 16.1241 11.2959 15.9443 11.3959 15.7389H8.80705ZM7.03359 6.34145C7.84538 5.52967 8.9464 5.07361 10.0944 5.07361C11.2425 5.07361 12.3435 5.52967 13.1553 6.34145C13.9671 7.15324 14.4231 8.25426 14.4231 9.4023C14.4231 11.8353 14.6814 13.3144 14.9661 14.2117L14.9748 14.2389H5.15815C5.18119 14.1682 5.20426 14.0941 5.22721 14.0163C5.50499 13.075 5.76574 11.6052 5.76574 9.4023C5.76574 8.25426 6.2218 7.15324 7.03359 6.34145Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
-                                                                                                        </svg>
-                                                                                                        <Tooltip id={`watch-${task.id}`}/>
-                                                                                                </div>)}
-
-
-
-                                                                                                {/*        {task.badges?.map((badge) => (*/}
-                                                                                                {/*                <div key={badge.id} className="badge tooltip" */}
-                                                                                                {/*                        style={{backgroundColor: badge.color, color: badge.textColor}}*/}
-                                                                                                {/*                        data-tooltip-id={`badge-${badge.id}`} data-tooltip-content={`${badge.categ}: ${badge.chosenOption}`}>*/}
-                                                                                                {/*        {badge.chosenOption} <Tooltip id={`badge-${badge.id}`}/>*/}
-                                                                                                {/*</div>))}*/}
-                                                                                                </div>
-
-
-                                                                                                <div className="card-bottom">
-                                                                                                        {task.members?.length > 0 && (<div className="task-members">
-                                                                                                                        {task.members.slice(0, 5).map((member) => (
-
-                                                                                                                                <>{member.imgUrl ? (<div key={member.id} className="small-circle flex align-center justify-center tooltip" data-tooltip-id={`member-${member.id}`} data-tooltip-content={member.fullname}>
-                                                                                                                                                <img src={`/${member.imgUrl}`} alt={member.fullname} className="member-img"/>
-                                                                                                                                        </div>) : (<span className="monday-user-circle small-circle">
-                                                                                                                                                    {member.fullname.split(" ").map((n) => n[0]).join("").toUpperCase()}
-                                                                                                                                                </span>)} <Tooltip id={`member-${member.id}`}/>
-                                                                                                                                </>
-                                                                                                                        ))}
-                                                                                                                </div>)}
-                                                                                                </div>
-                                                                                        </div>
-                                                                                </div>)}
-                                                                </Draggable>))} {provided.placeholder}
-                                                </div>)}
-                                </Droppable> </DragDropContext>
-
-                        {showForm && <AddTaskForm onSetShowForm={onSetShowForm} selectedGroup={group}/>} {!showForm && (<div className="group-list-footer" style={{color: group.style?.color || "#172b4d"}}>
-                                <button className="monday-add-card-btn add-card-btn" onClick={onSetShowForm} >
-                                        <i className="fa-regular fa-plus"></i> Add a card
-                                </button>
-                        </div>)}
-                </div>)
-}
-
-export function MondayTaskList({board, onLoadTask}) {
-        return (
-                <section className="kanban-container-of-container flex">
-                        <div className="kanban-container flex">
-                                {board.groups.map((group) => (<MondayTask key={group.id} group={group} onLoadTask={onLoadTask}/>))}
-                        </div>
-                </section>)
-}
 
 export function MondayBoardDetails() {
 
