@@ -21,9 +21,27 @@ export function MondayTaskList({ board, onLoadTask }) {
     const dispatch = useDispatch()
 
     const onDragEnd = (result) => {
-        const { source, destination, draggableId } = result
+        const { source, destination, draggableId, type } = result
 
-        if (!destination || (source.droppableId === destination.droppableId && source.index === destination.index)) return
+        if (!destination) return
+
+        if (type === 'GROUP') {
+            if (source.index === destination.index) return
+
+            const newGroups = Array.from(board.groups)
+            const [removed] = newGroups.splice(source.index, 1)
+            newGroups.splice(destination.index, 0, removed)
+
+            const updatedBoard = {
+                ...board,
+                groups: newGroups
+            }
+
+            dispatch(updateBoard(updatedBoard))
+            return
+        }
+
+        if (source.droppableId === destination.droppableId && source.index === destination.index) return
 
         const sourceGroup = board.groups.find(group => group.id === source.droppableId)
         const destGroup = board.groups.find(group => group.id === destination.droppableId)
@@ -52,23 +70,50 @@ export function MondayTaskList({ board, onLoadTask }) {
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
-            <section className="kanban-container-of-container flex">
-                <div className="kanban-container flex">
-                    {board.groups.map((group) => (
-                        <MondayTask
-                            key={group.id}
-                            group={group}
-                            onLoadTask={onLoadTask}
-                            currentBoard={board}
-                        />
-                    ))}
-                </div>
-            </section>
+            <Droppable droppableId="all-groups" direction="horizontal" type="GROUP">
+                {(provided) => (
+                    <section 
+                        className="kanban-container-of-container flex"
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                    >
+                        <div className="kanban-container flex">
+                            {board.groups.map((group, index) => (
+                                <Draggable 
+                                    key={group.id} 
+                                    draggableId={group.id} 
+                                    index={index}
+                                >
+                                    {(provided) => (
+                                        <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            style={{
+                                                ...provided.draggableProps.style,
+                                                marginRight: '8px'
+                                            }}
+                                        >
+                                            <MondayTask
+                                                key={group.id}
+                                                group={group}
+                                                onLoadTask={onLoadTask}
+                                                currentBoard={board}
+                                                dragHandleProps={provided.dragHandleProps}
+                                            />
+                                        </div>
+                                    )}
+                                </Draggable>
+                            ))}
+                            {provided.placeholder}
+                        </div>
+                    </section>
+                )}
+            </Droppable>
         </DragDropContext>
     )
 }
 
-export function MondayTask({ group, currentBoard, onLoadTask, largeLabels, toggleLargeLabels, onsetQuickEdit, showQuickEdit }) {
+export function MondayTask({ group, currentBoard, onLoadTask, largeLabels, toggleLargeLabels, onsetQuickEdit, showQuickEdit, dragHandleProps }) {
     const [showForm, setShowForm] = useState(false)
     const [showFirstForm, setShowFirstForm] = useState(false)
     const dispatch = useDispatch()
@@ -99,11 +144,15 @@ export function MondayTask({ group, currentBoard, onLoadTask, largeLabels, toggl
 
     return (
         <div className="kanban-col">
-            <header className="kanban-col-header" style={{ backgroundColor: mapTrelloToMonday(group.style?.backgroundColor), color: group.style?.color || '' }}>
+            <header 
+                className="kanban-col-header" 
+                style={{ backgroundColor: mapTrelloToMonday(group.style?.backgroundColor), color: group.style?.color || '' }}
+                {...dragHandleProps}
+            >
                 <h2 className="kanban-col-title">{group.title} ({group.tasks.length})</h2>
             </header>
 
-            <Droppable droppableId={group.id}>
+            <Droppable droppableId={group.id} type="TASK">
                 {(provided) => (
                     <div
                         className="kanban-items"
@@ -126,7 +175,13 @@ export function MondayTask({ group, currentBoard, onLoadTask, largeLabels, toggl
                                         <div className="task-card">
                                             {task.style?.backgroundImage && (
                                                 <div className="cover-img monday-cover-img">
-                                                    <img src={`/${task.style.backgroundImage}`} alt="Task Cover" />
+                                                    <img src={`${
+                                                        
+                                                        (!task.style.backgroundImage.includes('http'))? 
+                                                        ('/' + task.style.backgroundImage):
+                                                        (task.style.backgroundImage)
+
+                                                    }`} alt="Task Cover" />
                                                 </div>
                                             )}
                                             <div className="labels">
@@ -154,7 +209,7 @@ export function MondayTask({ group, currentBoard, onLoadTask, largeLabels, toggl
                                                 ))}
                                             </div>
                                             <div className="task-upper-btns">
-                                                <div onClick={(ev) => onsetQuickEdit(ev)} className="monday-edit-btn tooltip" data-tooltip-id="edit-tooltip" data-tooltip-content="Edit Task">
+                                                <div onClick={(ev) => onsetQuickEdit && onsetQuickEdit(ev)} className="monday-edit-btn tooltip" data-tooltip-id="edit-tooltip" data-tooltip-content="Edit Task">
                                                     <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true" className="icon_a821328549 noFocusStyle_32df5ee696" data-testid="icon">
                                                         <path d="M13.8542 3.59561C13.8541 3.59568 13.8542 3.59555 13.8542 3.59561L4.80915 12.6503L3.81363 16.189L7.35682 15.1957L16.4018 6.14C16.4746 6.06722 16.5161 5.96795 16.5161 5.86503C16.5161 5.76221 16.4753 5.6636 16.4026 5.59083C16.4025 5.59076 16.4026 5.59091 16.4026 5.59083L14.4038 3.59568C14.3309 3.52292 14.232 3.48197 14.1289 3.48197C14.026 3.48197 13.927 3.52297 13.8542 3.59561ZM12.8051 2.54754C13.1562 2.19695 13.6324 2 14.1289 2C14.6254 2 15.1016 2.19693 15.4527 2.54747C15.4527 2.5475 15.4527 2.54745 15.4527 2.54747L17.4515 4.54263C17.8026 4.89333 18 5.36914 18 5.86503C18 6.36091 17.8028 6.8365 17.4518 7.18719L8.26993 16.3799C8.17984 16.4701 8.06798 16.5356 7.94516 16.57L2.94244 17.9724C2.68418 18.0448 2.4069 17.9723 2.21725 17.7829C2.0276 17.5934 1.95512 17.3165 2.02768 17.0586L3.43296 12.0633C3.46728 11.9413 3.53237 11.8301 3.62199 11.7404L12.8051 2.54754Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
                                                     </svg>
@@ -1567,9 +1622,10 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
     const [isEditing, setIsEditing] = useState(false)
     const [groupTitle, setGroupTitle] = useState(group.title)
     const [newTaskTitle, setNewTaskTitle] = useState('')
+    const [expandedTaskIds, setExpandedTaskIds] = useState(new Set())
+    const [prevTasks, setPrevTasks] = useState(group.tasks || [])
 
     const filteredTasks = useFilteredTasks(group.tasks, searchQuery, filterText)
-
     const sortedTasks = useSortedTasks(filteredTasks, sortBy)
 
     const onToggleCollapse = () => {
@@ -1651,6 +1707,67 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
         }
     }
 
+    const toggleTaskExpansion = (taskId, event) => {
+        event.stopPropagation()
+        setExpandedTaskIds(prev => {
+            const newSet = new Set(prev)
+            if (newSet.has(taskId)) {
+                newSet.delete(taskId)
+            } else {
+                newSet.add(taskId)
+            }
+            return newSet
+        })
+    }
+
+    const addSubtask = (taskId, title) => {
+        if (!title.trim()) return
+
+        const updatedBoard = { ...board }
+        const groupIndex = updatedBoard.groups.findIndex(g => g.id === group.id)
+        const taskIndex = updatedBoard.groups[groupIndex].tasks.findIndex(t => t.id === taskId)
+
+        if (!updatedBoard.groups[groupIndex].tasks[taskIndex].checklists) {
+            updatedBoard.groups[groupIndex].tasks[taskIndex].checklists = [{
+                id: makeId(),
+                title: 'Subtasks',
+                todos: []
+            }]
+        }
+
+        updatedBoard.groups[groupIndex].tasks[taskIndex].checklists[0].todos.push({
+            id: makeId(),
+            title: title,
+            isDone: false
+        })
+
+        dispatch(updateBoard(updatedBoard))
+    }
+
+    useEffect(() => {
+        const newTasks = group.tasks.filter(task => 
+            !prevTasks.some(prevTask => prevTask.id === task.id)
+        )
+        
+        if (newTasks.length > 0) {
+            setTimeout(() => {
+                newTasks.forEach(task => {
+                    const taskEl = document.getElementById(`task-${task.id}`)
+                    if (taskEl) taskEl.classList.add('store-updated')
+                    
+                    if (task.checklists && task.checklists.length > 0) {
+                        task.checklists[0].todos.forEach(todo => {
+                            const todoEl = document.getElementById(`subtask-${todo.id}`)
+                            if (todoEl) todoEl.classList.add('store-updated')
+                        })
+                    }
+                })
+            }, 0)
+        }
+        
+        setPrevTasks(group.tasks)
+    }, [group.tasks])
+
     const statusDistribution = useMemo(() => {
         if (!group.tasks.length) return {}
 
@@ -1693,79 +1810,9 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
         return `${formatDateNicely(earliest)} - ${formatDateNicely(latest)}`
     }, [group.tasks])
 
-        
-        const [expandedTaskIds, setExpandedTaskIds] = useState(new Set())
-
-
-        const toggleTaskExpansion = (taskId, event) => {
-                event.stopPropagation()
-                setExpandedTaskIds(prev => {
-                        const newSet = new Set(prev)
-                        if (newSet.has(taskId)) {
-                                newSet.delete(taskId)
-                        } else {
-                                newSet.add(taskId)
-                        }
-                        return newSet
-                })
-        }
-
-
-        const addSubtask = (taskId, title) => {
-                if (!title.trim()) return
-
-                const updatedBoard = { ...board }
-                const groupIndex = updatedBoard.groups.findIndex(g => g.id === group.id)
-                const taskIndex = updatedBoard.groups[groupIndex].tasks.findIndex(t => t.id === taskId)
-
-                if (!updatedBoard.groups[groupIndex].tasks[taskIndex].checklists) {
-                        updatedBoard.groups[groupIndex].tasks[taskIndex].checklists = [{
-                                id: makeId(),
-                                title: 'Subtasks',
-                                todos: []
-                        }]
-                }
-
-                updatedBoard.groups[groupIndex].tasks[taskIndex].checklists[0].todos.push({
-                        id: makeId(),
-                        title: title,
-                        isDone: false
-                })
-
-                dispatch(updateBoard(updatedBoard))
-        }
-
-
-    useEffect(() => {
-    const newTasks = group.tasks.filter(task => 
-      !prevTasks.some(prevTask => prevTask.id === task.id)
-    )
-    
-    if (newTasks.length > 0) {
-      setTimeout(() => {
-        newTasks.forEach(task => {
-          const taskEl = document.getElementById(`task-${task.id}`)
-          if (taskEl) taskEl.classList.add('store-updated')
-          
-          if (task.checklists && task.checklists.length > 0) {
-            task.checklists[0].todos.forEach(todo => {
-              const todoEl = document.getElementById(`subtask-${todo.id}`)
-              if (todoEl) todoEl.classList.add('store-updated')
-            })
-          }
-        })
-      }, 0)
-    }
-    
-    setPrevTasks(group.tasks)
-  }, [group.tasks])
-  
-  const [prevTasks, setPrevTasks] = useState(group.tasks || [])
-
-
     return (
-        <ul className="monday-group-header monday-group-preview group-preview flex column last-height-element "
-        style={{ backgroundColor: "transparent" }}
+        <ul className="monday-group-header monday-group-preview group-preview flex column last-height-element"
+            style={{ backgroundColor: "transparent" }}
         >
             <div
                 className="monday-group-header-primary monday-group-header group-header flex align-center"
@@ -1774,8 +1821,6 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                 }}
             >
                 <div className="group-header-title flex align-center">
-
-
                     <div className="group-menu">
                         <svg
                             viewBox="0 0 24 24"
@@ -1787,29 +1832,18 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                         </svg>
                     </div>
 
-
                     <div className="group-title-info flex align-center">
+                        <svg
+                            onClick={onToggleCollapse}
+                            viewBox="0 0 22 22"
+                            className={`arrow-icon ${isCollapsed ? 'collapsed' : ''}`}
+                            width="26"
+                            height="26"
+                            style={{ fill: mapTrelloToMonday(group.style?.backgroundColor) }}
+                        >
+                            <path d={isCollapsed ? 'M8 5v14l11-7z' : 'M7 10l5 5 5-5z'} />
+                        </svg>
 
-                            <svg
-                                    onClick={onToggleCollapse}
-                                    viewBox="0 0 22 22"
-                                    className={`arrow-icon ${isCollapsed ? 'collapsed' : ''}`}
-                                    width="26"
-                                    height="26"
-                                    style={{ fill: mapTrelloToMonday(group.style?.backgroundColor) }}
-                            >
-                                    <path d={isCollapsed ? 'M8 5v14l11-7z' : 'M7 10l5 5 5-5z'} />
-                            </svg>
-
-
-                        {/*<svg viewBox="0 0 20 20" fill="currentColor" width="24" height="24"*/}
-
-                        {/*        onClick={onToggleCollapse}*/}
-                        {/*        className={`arrow-icon ${isCollapsed ? 'collapsed' : ''}`}*/}
-                        {/*        height="20"*/}
-                        {/*>*/}
-                        {/*    <path d="M10.5303 12.5303L10 12L9.46967 12.5303C9.76256 12.8232 10.2374 12.8232 10.5303 12.5303ZM10 10.9393L6.53033 7.46967C6.23744 7.17678 5.76256 7.17678 5.46967 7.46967C5.17678 7.76256 5.17678 8.23744 5.46967 8.53033L9.46967 12.5303L10 12L10.5303 12.5303L14.5303 8.53033C14.8232 8.23744 14.8232 7.76256 14.5303 7.46967C14.2374 7.17678 13.7626 7.17678 13.4697 7.46967L10 10.9393Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>*/}
-                        {/*</svg>*/}
                         <blockquote className="group-title monday-group-title" onClick={onGroupTitleEdit}>
                             {isEditing ? (
                                 <input
@@ -1831,19 +1865,8 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                 </div>
             </div>
 
-
             <div className="monday-group-preview-content group-preview-content">
-
-
-                {/*{sortedTasks.map((task, idx) => {*/}
-                {/*    return task.checklists && task.checklists.length > 0 && task.checklists[0].todos && task.checklists[0].todos.length > 0*/}
-                {/*})}*/}
-
-
-
                 <div className="monday-group-preview-content-before" style={{backgroundColor: mapTrelloToMonday(group.style?.backgroundColor, 1.0)}}></div>
-
-
 
                 <div className="title-container flex hover-move-left">
                     <div className="sticky-div titles flex" style={{borderColor: mapTrelloToMonday(group.style?.backgroundColor)}}>
@@ -1855,7 +1878,6 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                             <span className="moving-text-hint">Task</span>
                         </div>
                     </div>
-
 
                     <li className="monday-table-task-row member-picker cmp-order-title title hover-move-left">
                         <span className="moving-text-hint">Owner</span>
@@ -1924,116 +1946,135 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                     </div>
                 </div>
 
-
                 {!isCollapsed && (
                     <>
+                        <Droppable droppableId={group.id} type="TASK">
+                            {(provided) => (
+                                <div
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                >
+                                    {sortedTasks.map((task, idx) => {
+                                        const hasSubtasks = task.checklists && 
+                                            task.checklists.length > 0 &&
+                                            task.checklists[0].todos && 
+                                            task.checklists[0].todos.length > 0;
+                                        const isExpanded = expandedTaskIds.has(task.id);
+                                            
+                                        return (
+                                            <React.Fragment key={task.id}>
+                                                <Draggable
+                                                    key={task.id}
+                                                    draggableId={task.id}
+                                                    index={idx}
+                                                >
+                                                    {(provided) => (
+                                                        <li 
+                                                            id={`task-${task.id}`}
+                                                            ref={provided.innerRef}
+                                                            {...provided.draggableProps}
+                                                            {...provided.dragHandleProps}
+                                                        >
+                                                            <MondayTableTask
+                                                                idx={idx}
+                                                                task={task}
+                                                                group={group}
+                                                                board={board}
+                                                                onLoadTask={onLoadTask}
+                                                                isSubTask={false}
+                                                            />
+                                                            {hasSubtasks && (
+                                                                <div
+                                                                    className="expand-subtasks-button"
+                                                                    onClick={(e) => toggleTaskExpansion(task.id, e)}
+                                                                    style={{
+                                                                        position: 'absolute',
+                                                                        left: '10px',
+                                                                        top: '50%',
+                                                                        transform: 'translateY(-50%)',
+                                                                        cursor: 'pointer',
+                                                                        zIndex: 10
+                                                                    }}
+                                                                >
+                                                                </div>
+                                                            )}
+                                                        </li>
+                                                    )}
+                                                </Draggable>
 
-{sortedTasks.map((task, idx) => {
-    const hasSubtasks = task.checklists && task.checklists.length > 0 &&
-                                         task.checklists[0].todos && task.checklists[0].todos.length > 0
-    const isExpanded = true
+                                                {isExpanded && hasSubtasks && task.checklists[0].todos.map((todo, subIdx) => (
+                                                    <li id={`subtask-${todo.id}`} key={todo.id} className={`subtask-row ${((subIdx === 0)? "first-sub": '')}`} style={{ paddingLeft: '40px' }} data-parent={task.id}>
+                                                        <div className="add-subtask-row-before" style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor, 0.3) }}></div>
+                                                        <MondayTableTask
+                                                            idx={`${idx}-sub-${todo.id}`}
+                                                            task={{
+                                                                ...task,
+                                                                id: todo.id,
+                                                                title: todo.title,
+                                                                status: todo.isDone ? 'done' : '',
+                                                            }}
+                                                            group={group}
+                                                            board={board}
+                                                            onLoadTask={() => {
+                                                                const updatedBoard = { ...board }
+                                                                const groupIndex = updatedBoard.groups.findIndex(g => g.id === group.id)
+                                                                const taskIndex = updatedBoard.groups[groupIndex].tasks.findIndex(t => t.id === task.id)
 
-    return (
-        <React.Fragment key={task.id}>
-            <li id={`task-${task.id}`} key={task.id}>
-                <MondayTableTask
-                    idx={idx}
+                                                                if (updatedBoard.groups[groupIndex].tasks[taskIndex].checklists) {
+                                                                    const todoIndex = updatedBoard.groups[groupIndex].tasks[taskIndex].checklists[0].todos.findIndex(t => t.id === todo.id)
 
-                    task={task}
-                    group={group}
-                    board={board}
-                    onLoadTask={onLoadTask}
-                        isSubTask={false}
-                />
-                {hasSubtasks && (
-                    <div
-                        className="expand-subtasks-button"
-                        onClick={(e) => toggleTaskExpansion(task.id, e)}
-                        style={{
-                            position: 'absolute',
-                            left: '10px',
-                            top: '50%',
-                            transform: 'translateY(-50%)',
-                            cursor: 'pointer',
-                            zIndex: 10
-                        }}
-                    >
-                    </div>
-                )}
-            </li>
+                                                                    if (todoIndex !== -1) {
+                                                                        updatedBoard.groups[groupIndex].tasks[taskIndex].checklists[0].todos[todoIndex].isDone =
+                                                                            !updatedBoard.groups[groupIndex].tasks[taskIndex].checklists[0].todos[todoIndex].isDone
 
-            {isExpanded && hasSubtasks && task.checklists[0].todos.map(    (todo, subIdx) => (
-                // <li id={`subtask-${todo.id}`} key={todo.id} className="subtask-row" data-parent={task.id}>                
-                <li id={`subtask-${todo.id}`} key={todo.id} className={`subtask-row ${((subIdx === 0)? "first-sub": '')}`} style={{ paddingLeft: '40px' }} data-parent={task.id}>
-                    <div className="add-subtask-row-before" style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor, 0.3) }}></div>
-                    <MondayTableTask
-                        idx={`${idx}-sub-${todo.id}`}
-                        task={{
-                            ...task,
-                            id: todo.id,
-                            title: todo.title,
-                            status: todo.isDone ? 'done' : '',
-                            
-                        }}
-                        group={group}
-                        board={board}
-                        onLoadTask={() => {
-                            
-                            const updatedBoard = { ...board }
-                            const groupIndex = updatedBoard.groups.findIndex(g => g.id === group.id)
-                            const taskIndex = updatedBoard.groups[groupIndex].tasks.findIndex(t => t.id === task.id)
+                                                                        dispatch(updateBoard(updatedBoard))
+                                                                    }
+                                                                }
+                                                            }}
+                                                            isSubtask={true}
+                                                        />
+                                                    </li>
+                                                ))}
 
-                            if (updatedBoard.groups[groupIndex].tasks[taskIndex].checklists) {
-                                const todoIndex = updatedBoard.groups[groupIndex].tasks[taskIndex].checklists[0].todos.findIndex(t => t.id === todo.id)
+                                                {isExpanded && hasSubtasks && (
+                                                    <li className="add-subtask-row" style={{ paddingLeft: '40px' }}>
+                                                        <div className="add-subtask-row-before" style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor, 0.3) }}></div>
+                                                        <div className="add-task flex">
+                                                            <div
+                                                                className="sticky-div"
+                                                                style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor) }}
+                                                            >
+                                                                <div className="check-box add-task">
+                                                                    <input type="checkbox" disabled />
+                                                                </div>
 
-                                if (todoIndex !== -1) {
-                                    updatedBoard.groups[groupIndex].tasks[taskIndex].checklists[0].todos[todoIndex].isDone =
-                                        !updatedBoard.groups[groupIndex].tasks[taskIndex].checklists[0].todos[todoIndex].isDone
-
-                                    dispatch(updateBoard(updatedBoard))
-                                }
-                            }
-                        }}
-                        isSubtask={true}
-                    />
-                </li>
-            ))}
-
-            {isExpanded && hasSubtasks && (
-                <li className="add-subtask-row" style={{ paddingLeft: '40px' }}>
-                        <div className="add-subtask-row-before" style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor, 0.3) }}></div>
-                    <div className="add-task flex">
-                        <div
-                            className="sticky-div"
-                            style={{ borderColor: mapTrelloToMonday(group.style?.backgroundColor) }}
-                        >
-                            <div className="check-box add-task">
-                                <input type="checkbox" disabled />
-                            </div>
-
-                            <form
-                                className="no-inner-input_styles add-task-form flex align-center"
-                                onSubmit={(e) => {
-                                    e.preventDefault()
-                                    const input = e.target.elements.title
-                                    addSubtask(task.id, input.value)
-                                    input.value = ''
-                                }}
-                            >
-                                <input
-                                    type="text"
-                                    name="title"
-                                    placeholder="+ Add Subitem"
-                                />
-                            </form>
-                        </div>
-                        <div className="empty-div"></div>
-                    </div>
-                </li>
-            )}
-        </React.Fragment>
-    )
-})}
+                                                                <form
+                                                                    className="no-inner-input_styles add-task-form flex align-center"
+                                                                    onSubmit={(e) => {
+                                                                        e.preventDefault()
+                                                                        const input = e.target.elements.title
+                                                                        addSubtask(task.id, input.value)
+                                                                        input.value = ''
+                                                                    }}
+                                                                >
+                                                                    <input
+                                                                        type="text"
+                                                                        name="title"
+                                                                        placeholder="+ Add Subitem"
+                                                                    />
+                                                                </form>
+                                                            </div>
+                                                            <div className="empty-div"></div>
+                                                        </div>
+                                                    </li>
+                                                )}
+                                            </React.Fragment>
+                                        );
+                                    })}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
 
                         <div className="add-task flex ">
                             <div
@@ -2069,7 +2110,6 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                         }}>
                         </div>
                         <div className="statistic-container flex">
-
                             <div className="title first member-picker"></div>
 
                             <div className="title status-picker">
@@ -2085,7 +2125,8 @@ function MondayTableGroup({group, board, onLoadTask, searchQuery, filterText, so
                             <div className="title updated-picker"></div>
                             <div className="title last-empty"></div>
                         </div>
-                    </div>)}
+                    </div>
+                )}
             </div>
         </ul>
     )
@@ -2130,48 +2171,50 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
     }
 
     const onDragEnd = (result) => {
-        const { source, destination, draggableId } = result
+        const { source, destination, draggableId, type } = result
 
         if (!destination) return
 
+        if (type === 'GROUP') {
+            if (source.index === destination.index) return
+
+            const newGroups = Array.from(board.groups)
+            const [removed] = newGroups.splice(source.index, 1)
+            newGroups.splice(destination.index, 0, removed)
+
+            const updatedBoard = {
+                ...board,
+                groups: newGroups
+            }
+
+            dispatch(updateBoard(updatedBoard))
+            return
+        }
         
         if (source.droppableId === destination.droppableId && source.index === destination.index) return
 
-        
         const sourceGroup = board.groups.find(group => group.id === source.droppableId)
-        const task = sourceGroup.tasks.find(task => task.id === draggableId)
+        const destGroup = board.groups.find(group => group.id === destination.droppableId)
+        const draggedTask = sourceGroup.tasks.find(task => task.id === draggableId)
 
         const updatedBoard = { ...board }
-
-        const sourceGroupIndex = updatedBoard.groups.findIndex(group => group.id === source.droppableId)
-        updatedBoard.groups[sourceGroupIndex] = {
-            ...sourceGroup,
-            tasks: sourceGroup.tasks.filter(t => t.id !== draggableId)
-        }
-
-        if (source.droppableId !== destination.droppableId) {
-            const destGroup = board.groups.find(group => group.id === destination.droppableId)
-            const destGroupIndex = updatedBoard.groups.findIndex(group => group.id === destination.droppableId)
-
-            
-            const destTasks = [...destGroup.tasks]
-            destTasks.splice(destination.index, 0, task)
-
-            updatedBoard.groups[destGroupIndex] = {
-                ...destGroup,
-                tasks: destTasks
+        updatedBoard.groups = board.groups.map(group => {
+            if (group.id === sourceGroup.id) {
+                const newTasks = [...group.tasks]
+                newTasks.splice(source.index, 1)
+                if (sourceGroup.id === destGroup.id) {
+                    newTasks.splice(destination.index, 0, draggedTask)
+                    return { ...group, tasks: newTasks }
+                }
+                return { ...group, tasks: newTasks }
             }
-        } else {
-            
-            const tasks = [...sourceGroup.tasks]
-            tasks.splice(source.index, 1)
-            tasks.splice(destination.index, 0, task)
-
-            updatedBoard.groups[sourceGroupIndex] = {
-                ...sourceGroup,
-                tasks
+            if (group.id === destGroup.id) {
+                const newTasks = [...group.tasks]
+                newTasks.splice(destination.index, 0, draggedTask)
+                return { ...group, tasks: newTasks }
             }
-        }
+            return group
+        })
 
         dispatch(updateBoard(updatedBoard))
     }
@@ -2179,60 +2222,90 @@ export function MondayBoardTableView({ board, onLoadTask, searchQuery, filterTex
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <div className="monday-board-table-container">
-                <section className="group-list">
-                    <ul>
-                        {board.groups.map((group) => (
-                            <li key={group.id}>
-                                
-                                <MondayTableGroup
-                                    group={group}
-                                    board={board}
-                                    onLoadTask={onLoadTask}
-                                    searchQuery={searchQuery}
-                                    filterText={filterText}
-                                    sortBy={sortBy}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-
-                    {showAddGroup ? (
-                        <div className="add-group-form">
-                            <form className="add-group-form" onSubmit={onNewGroupSubmit}>
-                                <input
-                                    className="monday-group-input"
-                                    type="text"
-                                    placeholder="Enter group title..."
-                                    value={newGroupTitle}
-                                    onChange={onNewGroupChange}
-                                    autoFocus
-                                />
-                                <div className="add-group-buttons">
-                                    <button type="submit" className="add-button">Add Group</button>
-                                    <button
-                                        type="button"
-                                        className="cancel-button"
-                                        onClick={() => {
-                                            setShowAddGroup(false)
-                                            setNewGroupTitle('')
-                                        }}
+                <Droppable droppableId="all-table-groups" type="GROUP">
+                    {(provided) => (
+                        <section 
+                            className="group-list"
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                        >
+                            <ul>
+                                {board.groups.map((group, index) => (
+                                    <Draggable 
+                                        key={group.id} 
+                                        draggableId={group.id} 
+                                        index={index}
                                     >
-                                        Cancel
+                                        {(provided) => (
+                                            <li
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                key={group.id}
+                                                style={{
+                                                    ...provided.draggableProps.style,
+                                                    position: 'relative'
+                                                }}
+                                            >
+                                                <div 
+                                                    className="monday-group-drag-handle"
+                                                    {...provided.dragHandleProps}
+                                                >
+                                                    <div className="monday-drag-icon">⋮⋮</div>
+                                                </div>
+                                                <MondayTableGroup
+                                                    group={group}
+                                                    board={board}
+                                                    onLoadTask={onLoadTask}
+                                                    searchQuery={searchQuery}
+                                                    filterText={filterText}
+                                                    sortBy={sortBy}
+                                                />
+                                            </li>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
+                            </ul>
+
+                            {showAddGroup ? (
+                                <div className="add-group-form">
+                                    <form className="add-group-form" onSubmit={onNewGroupSubmit}>
+                                        <input
+                                            className="monday-group-input"
+                                            type="text"
+                                            placeholder="Enter group title..."
+                                            value={newGroupTitle}
+                                            onChange={onNewGroupChange}
+                                            autoFocus
+                                        />
+                                        <div className="add-group-buttons">
+                                            <button type="submit" className="add-button">Add Group</button>
+                                            <button
+                                                type="button"
+                                                className="cancel-button"
+                                                onClick={() => {
+                                                    setShowAddGroup(false)
+                                                    setNewGroupTitle('')
+                                                }}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            ) : (
+                                <div className="add-group" onClick={onAddGroup}>
+                                    <button className="monday-add-group-buttons">
+                                        <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                                            <path d="M10 2.5C10.2761 2.5 10.5 2.72386 10.5 3V9.5H17C17.2761 9.5 17.5 9.72386 17.5 10C17.5 10.2761 17.2761 10.5 17 10.5H10.5V17C10.5 17.2761 10.2761 17.5 10 17.5C9.72386 17.5 9.5 17.2761 9.5 17V10.5H3C2.72386 10.5 2.5 10.2761 2.5 10C2.5 9.72386 2.72386 9.5 3 9.5H9.5V3C9.5 2.72386 9.72386 2.5 10 2.5Z" />
+                                        </svg>
+                                        Add Group
                                     </button>
                                 </div>
-                            </form>
-                        </div>
-                    ) : (
-                        <div className="add-group" onClick={onAddGroup}>
-                            <button className="monday-add-group-buttons">
-                                <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
-                                    <path d="M10 2.5C10.2761 2.5 10.5 2.72386 10.5 3V9.5H17C17.2761 9.5 17.5 9.72386 17.5 10C17.5 10.2761 17.2761 10.5 17 10.5H10.5V17C10.5 17.2761 10.2761 17.5 10 17.5C9.72386 17.5 9.5 17.2761 9.5 17V10.5H3C2.72386 10.5 2.5 10.2761 2.5 10C2.5 9.72386 2.72386 9.5 3 9.5H9.5V3C9.5 2.72386 9.72386 2.5 10 2.5Z" />
-                                </svg>
-                                Add Group
-                            </button>
-                        </div>
+                            )}
+                        </section>
                     )}
-                </section>
+                </Droppable>
             </div>
         </DragDropContext>
     )

@@ -7222,8 +7222,8 @@ main {
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: rgba(203, 213, 225, 0.8)
-    border-radius: 3px
+    background-color: rgba(203, 213, 225, 0.8);
+    border-radius: 3px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
@@ -7232,8 +7232,85 @@ main {
 
 /* Hide scrollbar for Firefox */
 .scrollbar-thin {
-    scrollbar-width: thin
-    scrollbar-color: rgba(203, 213, 225, 0.8) transparent
+    scrollbar-width: thin;
+    scrollbar-color: rgba(203, 213, 225, 0.8) transparent;
 }
+
+
+
+
+.monday-group-drag-handle {
+    position: absolute;
+    left: -30px;
+    top: 25px;
+    width: 20px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    opacity: 0.3;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+}
+
+.monday-group-drag-handle:hover {
+    opacity: 1;
+}
+
+.monday-drag-icon {
+    font-size: 16px;
+    line-height: 1;
+    color: #666;
+    user-select: none;
+}
+
+/* Kanban header drag handle style */
+.kanban-col-header {
+    cursor: grab;
+}
+
+/* When dragging */
+.monday-group-drag-handle:active,
+.kanban-col-header:active {
+    cursor: grabbing;
+}
+
+
+/* Critical fix for dragging calculations */
+body.drag-active {
+    cursor: grabbing !important;
+}
+
+/* Fix for the drag ghost appearance and positioning */
+[data-rbd-drag-handle-draggable-id] {
+    cursor: grab;
+}
+
+[data-rbd-draggable-id][data-rbd-drag-handle-context-id] {
+    transform-origin: 0 0;
+}
+
+/* Ensure drag is always at the top */
+.monday-board-table-container [data-rbd-draggable-id] {
+    position: relative;
+}
+
+/* Fix table view row offsets specifically */
+.monday-board-table-container [data-rbd-draggable-id].dragging {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    z-index: 9999;
+    pointer-events: none;
+    transform: -3000px -3000px;
+}
+
+/* Ensure no conflicting transforms */
+.monday-group-header {
+    transform: none !important;  /* Prevents transform interference */
+}
+
 
 
